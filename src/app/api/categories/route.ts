@@ -10,26 +10,61 @@ export const revalidate = 0
 
 export async function GET() {
   try {
-    console.log('📝 GET /api/categories called')
-    console.log('📝 DATABASE_URL:', process.env.DATABASE_URL ? 'configured' : 'NOT SET')
-    console.log('📝 NODE_ENV:', process.env.NODE_ENV)
+    // Environment check
+    const dbUrl = process.env.DATABASE_URL
+    const nodeEnv = process.env.NODE_ENV
+
+    console.log('=== START: GET /api/categories ===')
+    console.log('TIME:', new Date().toISOString())
+    console.log('DATABASE_URL configured:', !!dbUrl)
+    console.log('NODE_ENV:', nodeEnv)
+
+    if (!dbUrl) {
+      console.error('❌ DATABASE_URL is NOT configured!')
+      return NextResponse.json(
+        {
+          error: 'カテゴリ取得に失敗しました',
+          reason: 'DATABASE_URL not configured',
+          timestamp: new Date().toISOString()
+        },
+        { status: 500 }
+      )
+    }
+
+    console.log('DATABASE_URL starts with:', dbUrl.substring(0, 20) + '...')
+    console.log('Attempting to query categories...')
 
     const categories = await prisma.category.findMany({
       include: { _count: { select: { prompts: true } } },
       orderBy: { order: 'asc' },
     })
-    console.log('✅ Categories fetched successfully:', categories.length)
+
+    console.log('✅ Categories fetched successfully:', categories.length, 'records')
+    console.log('=== END: GET /api/categories (SUCCESS) ===')
     return NextResponse.json(categories)
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error)
-    const errorStack = error instanceof Error ? error.stack : ''
-    console.error('❌ Failed to fetch categories:', errorMsg)
-    console.error('❌ Error stack:', errorStack)
+    const errorCode = (error as any)?.code || 'UNKNOWN'
+    const errorName = error instanceof Error ? error.name : 'UnknownError'
+
+    console.error('=== ERROR: GET /api/categories ===')
+    console.error('Error Name:', errorName)
+    console.error('Error Code:', errorCode)
+    console.error('Error Message:', errorMsg)
+    console.error('Full Error:', JSON.stringify(error, null, 2))
+    console.error('=== END: GET /api/categories (ERROR) ===')
+
     return NextResponse.json(
       {
         error: 'カテゴリ取得に失敗しました',
+        errorName,
+        errorCode,
         message: errorMsg,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        environment: {
+          nodeEnv: process.env.NODE_ENV,
+          databaseUrlSet: !!process.env.DATABASE_URL
+        }
       },
       { status: 500 }
     )

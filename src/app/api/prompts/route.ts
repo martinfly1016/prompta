@@ -9,6 +9,26 @@ export const revalidate = 0
 // GET /api/prompts - Public endpoint, shows only published prompts
 export async function GET(request: NextRequest) {
   try {
+    const dbUrl = process.env.DATABASE_URL
+    const nodeEnv = process.env.NODE_ENV
+
+    console.log('=== START: GET /api/prompts ===')
+    console.log('TIME:', new Date().toISOString())
+    console.log('DATABASE_URL configured:', !!dbUrl)
+    console.log('NODE_ENV:', nodeEnv)
+
+    if (!dbUrl) {
+      console.error('❌ DATABASE_URL is NOT configured!')
+      return NextResponse.json(
+        {
+          error: 'プロンプト取得に失敗しました',
+          reason: 'DATABASE_URL not configured',
+          timestamp: new Date().toISOString()
+        },
+        { status: 500 }
+      )
+    }
+
     const searchParams = request.nextUrl.searchParams
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
@@ -28,6 +48,8 @@ export async function GET(request: NextRequest) {
       ]
     }
 
+    console.log('Executing parallel queries for prompts and count...')
+
     const [prompts, total] = await Promise.all([
       prisma.prompt.findMany({
         where,
@@ -39,6 +61,9 @@ export async function GET(request: NextRequest) {
       prisma.prompt.count({ where }),
     ])
 
+    console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
+    console.log('=== END: GET /api/prompts (SUCCESS) ===')
+
     return NextResponse.json({
       prompts,
       pagination: {
@@ -49,9 +74,29 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('❌ Failed to fetch prompts:', error)
+    const errorMsg = error instanceof Error ? error.message : String(error)
+    const errorCode = (error as any)?.code || 'UNKNOWN'
+    const errorName = error instanceof Error ? error.name : 'UnknownError'
+
+    console.error('=== ERROR: GET /api/prompts ===')
+    console.error('Error Name:', errorName)
+    console.error('Error Code:', errorCode)
+    console.error('Error Message:', errorMsg)
+    console.error('Full Error:', JSON.stringify(error, null, 2))
+    console.error('=== END: GET /api/prompts (ERROR) ===')
+
     return NextResponse.json(
-      { error: 'プロンプト取得に失敗しました', details: String(error) },
+      {
+        error: 'プロンプト取得に失敗しました',
+        errorName,
+        errorCode,
+        message: errorMsg,
+        timestamp: new Date().toISOString(),
+        environment: {
+          nodeEnv: process.env.NODE_ENV,
+          databaseUrlSet: !!process.env.DATABASE_URL
+        }
+      },
       { status: 500 }
     )
   }
