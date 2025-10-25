@@ -10,15 +10,27 @@ export const revalidate = 0
 
 export async function GET() {
   try {
+    console.log('📝 GET /api/categories called')
+    console.log('📝 DATABASE_URL:', process.env.DATABASE_URL ? 'configured' : 'NOT SET')
+    console.log('📝 NODE_ENV:', process.env.NODE_ENV)
+
     const categories = await prisma.category.findMany({
       include: { _count: { select: { prompts: true } } },
       orderBy: { order: 'asc' },
     })
+    console.log('✅ Categories fetched successfully:', categories.length)
     return NextResponse.json(categories)
   } catch (error) {
-    console.error('❌ Failed to fetch categories:', error)
+    const errorMsg = error instanceof Error ? error.message : String(error)
+    const errorStack = error instanceof Error ? error.stack : ''
+    console.error('❌ Failed to fetch categories:', errorMsg)
+    console.error('❌ Error stack:', errorStack)
     return NextResponse.json(
-      { error: 'カテゴリ取得に失敗しました', details: String(error) },
+      {
+        error: 'カテゴリ取得に失敗しました',
+        message: errorMsg,
+        timestamp: new Date().toISOString()
+      },
       { status: 500 }
     )
   }
