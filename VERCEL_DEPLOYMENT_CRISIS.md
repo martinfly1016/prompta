@@ -154,17 +154,18 @@ To https://github.com/martinfly1016/prompta.git
 
 ### 优先级 1: 手动触发 Vercel 部署
 
-1. 访问: https://vercel.com/martinfly1016/prompta/deployments
+1. 访问: https://vercel.com/martinfly1016s-projects/~/deployments
 2. 查找最新的部署
 3. 检查部署状态是 "Ready" 还是有其他状态
 4. 尝试从 Vercel 仪表板手动触发新部署
 
 ### 优先级 2: 检查 Vercel GitHub 集成
 
-1. 访问: https://vercel.com/integrations/github
-2. 检查 Vercel GitHub App 是否正确连接
-3. 检查权限是否正确
-4. 考虑重新连接 GitHub 账户
+1. 访问 Vercel 项目设置: https://vercel.com/martinfly1016s-projects/prompta/settings
+2. 查找 "Git Integrations" 或 "GitHub" 部分
+3. 检查 Vercel GitHub App 是否正确连接
+4. 检查权限是否正确
+5. 考虑重新连接 GitHub 账户
 
 ### 优先级 3: 检查 Vercel 构建日志
 
