@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { prisma } from '@/lib/prisma'
 import { BarChart3, FileText, Layers, Eye } from 'lucide-react'
 
