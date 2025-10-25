@@ -49,6 +49,31 @@ model Prompt {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
+  images      PromptImage[]
+
   @@index([categoryId])
   @@index([isPublished])
+}
+
+model PromptImage {
+  id        String   @id @default(cuid())
+  promptId  String
+  prompt    Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  url       String   // Vercel Blob URL
+  blobKey   String   // Blob storage key for deletion
+  fileName  String   // Original filename
+  fileSize  Int      // File size in bytes
+  mimeType  String   // image/jpeg, image/png, etc.
+  width     Int?     // Image width
+  height    Int?     // Image height
+
+  order     Int      @default(0) // Display order in gallery
+  altText   String?  // Alt text for accessibility
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([promptId])
+  @@index([order])
 }

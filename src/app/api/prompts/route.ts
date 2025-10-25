@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const [prompts, total] = await Promise.all([
       prisma.prompt.findMany({
         where,
-        include: { category: true },
+        include: { category: true, images: { orderBy: { order: 'asc' } } },
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
@@ -70,11 +70,18 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, tags, author, isPublished } = body
+    const { title, description, content, categoryId, tags, author, isPublished, images } = body
 
     if (!title || !description || !content || !categoryId) {
       return NextResponse.json(
         { error: '必須項目が不足しています' },
+        { status: 400 }
+      )
+    }
+
+    if (!images || images.length === 0) {
+      return NextResponse.json(
+        { error: '少なくとも1枚の画像が必要です' },
         { status: 400 }
       )
     }
@@ -88,8 +95,18 @@ export async function POST(request: NextRequest) {
         tags: JSON.stringify(tags || []),
         author: author || (session.user?.email || 'Anonymous'),
         isPublished: isPublished || false,
+        images: {
+          create: images.map((img: any) => ({
+            url: img.url,
+            blobKey: img.url.split('/').pop() || 'unknown',
+            fileName: img.fileName,
+            fileSize: img.fileSize,
+            mimeType: img.mimeType,
+            order: img.order,
+          })),
+        },
       },
-      include: { category: true },
+      include: { category: true, images: { orderBy: { order: 'asc' } } },
     })
 
     return NextResponse.json(prompt, { status: 201 })

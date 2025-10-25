@@ -2,8 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+
+interface PromptImage {
+  url: string
+  altText?: string
+}
 
 interface Prompt {
   id: string
@@ -11,6 +17,7 @@ interface Prompt {
   description: string
   views: number
   createdAt: string
+  images?: PromptImage[]
 }
 
 interface Category {
@@ -93,20 +100,39 @@ export default function CategoryPage() {
                 このカテゴリにはまだプロンプトがありません。
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {prompts.map((prompt) => (
                   <Link
                     key={prompt.id}
                     href={`/prompt/${prompt.id}`}
-                    className="block p-6 bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg hover:border-primary transition-all"
+                    className="group bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg hover:border-primary transition-all overflow-hidden"
                   >
-                    <h3 className="text-xl font-semibold mb-2 hover:text-primary">
-                      {prompt.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-3">{prompt.description}</p>
-                    <span className="text-xs text-muted-foreground">
-                      👁️ {prompt.views}回閲覧
-                    </span>
+                    {/* 图片 */}
+                    {prompt.images && prompt.images.length > 0 ? (
+                      <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
+                        <Image
+                          src={prompt.images[0].url}
+                          alt={prompt.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-full aspect-video bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                        <span className="text-4xl">🖼️</span>
+                      </div>
+                    )}
+
+                    {/* 内容 */}
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                        {prompt.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-3 line-clamp-2">{prompt.description}</p>
+                      <span className="text-xs text-muted-foreground">
+                        👁️ {prompt.views}回閲覧
+                      </span>
+                    </div>
                   </Link>
                 ))}
               </div>

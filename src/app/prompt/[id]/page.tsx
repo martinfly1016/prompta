@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { Copy, Check, Share2, ArrowLeft } from 'lucide-react'
+import { ImageGallery } from '@/components/ImageGallery'
+
+interface PromptImage {
+  url: string
+  altText?: string
+}
 
 interface Prompt {
   id: string
@@ -14,6 +20,7 @@ interface Prompt {
   tags: string
   views: number
   createdAt: string
+  images?: PromptImage[]
 }
 
 export default function PromptPage() {
@@ -151,6 +158,14 @@ export default function PromptPage() {
                 </span>
               </div>
             </div>
+
+            {/* Image Gallery */}
+            {prompt.images && prompt.images.length > 0 && (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold">効果画像</h2>
+                <ImageGallery images={prompt.images} />
+              </div>
+            )}
 
             {/* Tags */}
             {tags.length > 0 && (

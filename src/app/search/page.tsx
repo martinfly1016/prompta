@@ -2,7 +2,13 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search as SearchIcon } from 'lucide-react'
+
+interface PromptImage {
+  url: string
+  altText?: string
+}
 
 interface Prompt {
   id: string
@@ -10,6 +16,7 @@ interface Prompt {
   description: string
   category: { name: string }
   views: number
+  images?: PromptImage[]
 }
 
 export default function SearchPage() {
@@ -86,30 +93,51 @@ export default function SearchPage() {
                 「{query}」に一致するプロンプトが見つかりませんでした。
               </div>
             ) : (
-              <div className="space-y-4">
+              <div>
                 <p className="text-muted-foreground mb-6">
                   {prompts.length}個のプロンプトが見つかりました
                 </p>
-                {prompts.map((prompt) => (
-                  <Link
-                    key={prompt.id}
-                    href={`/prompt/${prompt.id}`}
-                    className="block p-6 bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg hover:border-primary transition-all"
-                  >
-                    <h3 className="text-xl font-semibold mb-2 hover:text-primary">
-                      {prompt.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-3">{prompt.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                        {prompt.category.name}
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        👁️ {prompt.views}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {prompts.map((prompt) => (
+                    <Link
+                      key={prompt.id}
+                      href={`/prompt/${prompt.id}`}
+                      className="group bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg hover:border-primary transition-all overflow-hidden"
+                    >
+                      {/* 图片 */}
+                      {prompt.images && prompt.images.length > 0 ? (
+                        <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
+                          <Image
+                            src={prompt.images[0].url}
+                            alt={prompt.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-full aspect-video bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                          <span className="text-4xl">🖼️</span>
+                        </div>
+                      )}
+
+                      {/* 内容 */}
+                      <div className="p-6">
+                        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                          {prompt.title}
+                        </h3>
+                        <p className="text-muted-foreground mb-3 line-clamp-2">{prompt.description}</p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                            {prompt.category.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            👁️ {prompt.views}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>

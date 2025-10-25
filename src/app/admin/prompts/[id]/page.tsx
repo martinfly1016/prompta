@@ -5,10 +5,17 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+import { ImageUpload } from '@/components/ImageUpload'
 
 interface Category {
   id: string
   name: string
+}
+
+interface UploadedImage {
+  url: string
+  size: number
+  type: string
 }
 
 export default function EditPromptPage() {
@@ -23,6 +30,7 @@ export default function EditPromptPage() {
   const [categoryId, setCategoryId] = useState('')
   const [tags, setTags] = useState('')
   const [isPublished, setIsPublished] = useState(false)
+  const [images, setImages] = useState<UploadedImage[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
@@ -61,6 +69,13 @@ export default function EditPromptPage() {
       setCategoryId(data.categoryId)
       setTags(Array.isArray(JSON.parse(data.tags)) ? JSON.parse(data.tags).join(', ') : '')
       setIsPublished(data.isPublished)
+      if (data.images && Array.isArray(data.images)) {
+        setImages(data.images.map((img: any) => ({
+          url: img.url,
+          size: img.fileSize,
+          type: img.mimeType,
+        })))
+      }
     } catch (error) {
       console.error('Failed to fetch prompt:', error)
       setError('プロンプトの読込に失敗しました')
@@ -75,6 +90,11 @@ export default function EditPromptPage() {
 
     if (!title || !description || !content || !categoryId) {
       setError('すべての項目を入力してください')
+      return
+    }
+
+    if (images.length === 0) {
+      setError('少なくとも1枚の画像をアップロードしてください')
       return
     }
 
@@ -95,6 +115,13 @@ export default function EditPromptPage() {
           categoryId,
           tags: tagArray,
           isPublished,
+          images: images.map((img, index) => ({
+            url: img.url,
+            fileName: `image-${index}`,
+            fileSize: img.size,
+            mimeType: img.type,
+            order: index,
+          })),
         }),
       })
 
@@ -201,6 +228,22 @@ export default function EditPromptPage() {
               className="w-full h-64 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono text-sm"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">
+              効果画像 *
+            </label>
+            <ImageUpload
+              images={images}
+              onImagesChange={setImages}
+              maxImages={10}
+            />
+            {images.length === 0 && (
+              <p className="text-red-500 text-sm mt-1">
+                少なくとも1枚の画像をアップロードしてください
+              </p>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, ArrowRight } from 'lucide-react'
 
 interface Category {
@@ -12,12 +13,18 @@ interface Category {
   _count?: { prompts: number }
 }
 
+interface PromptImage {
+  url: string
+  altText?: string
+}
+
 interface Prompt {
   id: string
   title: string
   description: string
   category: { name: string; slug: string }
   views: number
+  images?: PromptImage[]
 }
 
 export default function Home() {
@@ -150,21 +157,40 @@ export default function Home() {
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
-                  className="group p-6 bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg transition-all hover:border-primary"
+                  className="group bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg transition-all hover:border-primary overflow-hidden"
                 >
-                  <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    {prompt.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                    {prompt.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
-                      {prompt.category.name}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      👁️ {prompt.views}
-                    </span>
+                  {/* 图片 */}
+                  {prompt.images && prompt.images.length > 0 ? (
+                    <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
+                      <Image
+                        src={prompt.images[0].url}
+                        alt={prompt.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full aspect-video bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
+                      <span className="text-4xl">🖼️</span>
+                    </div>
+                  )}
+
+                  {/* 内容 */}
+                  <div className="p-6">
+                    <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {prompt.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                      {prompt.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                        {prompt.category.name}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        👁️ {prompt.views}
+                      </span>
+                    </div>
                   </div>
                 </Link>
               ))}

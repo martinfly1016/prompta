@@ -14,7 +14,7 @@ export async function GET(
 
     const prompt = await prisma.prompt.findUnique({
       where: { id: params.id },
-      include: { category: true },
+      include: { category: true, images: { orderBy: { order: 'asc' } } },
     })
 
     if (!prompt) {
@@ -49,7 +49,14 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, tags, isPublished } = body
+    const { title, description, content, categoryId, tags, isPublished, images } = body
+
+    // First, delete existing images if images are provided
+    if (images && images.length >= 0) {
+      await prisma.promptImage.deleteMany({
+        where: { promptId: params.id },
+      })
+    }
 
     const prompt = await prisma.prompt.update({
       where: { id: params.id },
@@ -60,8 +67,20 @@ export async function PUT(
         categoryId,
         tags: JSON.stringify(tags || []),
         isPublished,
+        ...(images && images.length > 0 && {
+          images: {
+            create: images.map((img: any) => ({
+              url: img.url,
+              blobKey: img.url.split('/').pop() || 'unknown',
+              fileName: img.fileName,
+              fileSize: img.fileSize,
+              mimeType: img.mimeType,
+              order: img.order,
+            })),
+          },
+        }),
       },
-      include: { category: true },
+      include: { category: true, images: { orderBy: { order: 'asc' } } },
     })
 
     return NextResponse.json(prompt)
