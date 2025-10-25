@@ -7,6 +7,22 @@ import { prisma } from '@/lib/prisma'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
 
+  // Return basic sitemap during build if database is unavailable
+  const basicSitemap: MetadataRoute.Sitemap = [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/search`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+  ]
+
   try {
     const [categories, prompts] = await Promise.all([
       prisma.category.findMany(),
@@ -42,11 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...promptUrls,
     ]
   } catch (error) {
-    return [
-      {
-        url: baseUrl,
-        lastModified: new Date(),
-      },
-    ]
+    console.error('Failed to generate full sitemap:', error)
+    return basicSitemap
   }
 }
