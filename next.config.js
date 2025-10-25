@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   output: 'standalone',
   skipMiddlewareUrlNormalize: true,
+  staticPageGenerationTimeout: 120,
   images: {
     remotePatterns: [
       {
@@ -40,6 +41,9 @@ const nextConfig = {
         ],
       },
     ]
+  },
+  experimental: {
+    isrMemoryCacheSize: 0,
   },
 }
 
