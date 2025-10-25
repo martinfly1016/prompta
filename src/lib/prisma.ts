@@ -8,9 +8,14 @@ let prismaInstance: PrismaClient | null = null
 
 export function getPrisma() {
   if (!prismaInstance) {
-    prismaInstance = global.prisma || new PrismaClient()
-    if (process.env.NODE_ENV !== 'production') {
-      global.prisma = prismaInstance
+    try {
+      prismaInstance = global.prisma || new PrismaClient()
+      if (process.env.NODE_ENV !== 'production') {
+        global.prisma = prismaInstance
+      }
+    } catch (error) {
+      console.error('Failed to initialize Prisma client:', error)
+      throw error
     }
   }
   return prismaInstance
