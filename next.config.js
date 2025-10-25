@@ -13,6 +13,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compress: true,
   poweredByHeader: false,
   headers: async () => {

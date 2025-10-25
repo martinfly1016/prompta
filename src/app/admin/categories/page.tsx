@@ -16,7 +16,6 @@ export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [icon, setIcon] = useState('')
