@@ -59,7 +59,6 @@ export default function CategoriesPage() {
       setDescription('')
       setIcon('')
       setShowForm(false)
-      setEditingId(null)
       await fetchCategories()
     } catch (error) {
       setError('保存に失敗しました')
@@ -85,7 +84,6 @@ export default function CategoriesPage() {
         <button
           onClick={() => {
             setShowForm(!showForm)
-            setEditingId(null)
             setName('')
             setDescription('')
             setIcon('')
