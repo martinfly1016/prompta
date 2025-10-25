@@ -6,18 +6,9 @@ import { prisma } from '@/lib/prisma'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-// GET /api/prompts
+// GET /api/prompts - Public endpoint, shows only published prompts
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-
-    if (!session) {
-      return NextResponse.json(
-        { error: '認証が必要です' },
-        { status: 401 }
-      )
-    }
-
     const searchParams = request.nextUrl.searchParams
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
@@ -26,7 +17,9 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: any = {
+      isPublished: true, // Only show published prompts for public API
+    }
     if (categoryId) where.categoryId = categoryId
     if (search) {
       where.OR = [
