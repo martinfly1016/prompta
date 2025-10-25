@@ -4,10 +4,23 @@ declare global {
   var prisma: PrismaClient | undefined
 }
 
-export const prisma = global.prisma || new PrismaClient()
+let prismaInstance: PrismaClient | null = null
 
-if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma
+export function getPrisma() {
+  if (!prismaInstance) {
+    prismaInstance = global.prisma || new PrismaClient()
+    if (process.env.NODE_ENV !== 'production') {
+      global.prisma = prismaInstance
+    }
+  }
+  return prismaInstance
 }
+
+// For backwards compatibility
+export const prisma = new Proxy({} as PrismaClient, {
+  get: (_target, prop) => {
+    return getPrisma()[prop as keyof PrismaClient]
+  },
+})
 
 export default prisma
