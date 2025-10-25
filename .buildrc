@@ -1,0 +1,5 @@
+# Build configuration for Vercel
+# Forces specific build behaviors
+
+# Ensure fresh build each time
+VERCEL_SKIP_BUILD_CACHE=1
