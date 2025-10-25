@@ -25,7 +25,6 @@ export default function EditPromptPage() {
   const id = params.id
 
   const [categories, setCategories] = useState<Category[]>([])
-  const [prompt, setPrompt] = useState<Prompt | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [content, setContent] = useState('')
@@ -64,7 +63,6 @@ export default function EditPromptPage() {
     try {
       const res = await fetch(`/api/prompts/${id}`)
       const data = await res.json()
-      setPrompt(data)
       setTitle(data.title)
       setDescription(data.description)
       setContent(data.content)
