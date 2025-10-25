@@ -49,9 +49,9 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error('Failed to fetch prompts:', error)
+    console.error('❌ Failed to fetch prompts:', error)
     return NextResponse.json(
-      { error: 'プロンプト取得に失敗しました' },
+      { error: 'プロンプト取得に失敗しました', details: String(error) },
       { status: 500 }
     )
   }

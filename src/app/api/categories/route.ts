@@ -16,8 +16,9 @@ export async function GET() {
     })
     return NextResponse.json(categories)
   } catch (error) {
+    console.error('❌ Failed to fetch categories:', error)
     return NextResponse.json(
-      { error: 'カテゴリ取得に失敗しました' },
+      { error: 'カテゴリ取得に失敗しました', details: String(error) },
       { status: 500 }
     )
   }
