@@ -6,6 +6,10 @@ const nextConfig = {
   output: 'standalone',
   skipMiddlewareUrlNormalize: true,
   staticPageGenerationTimeout: 120,
+  env: {
+    BUILD_TIMESTAMP: new Date().toISOString(),
+    BUILD_ID: Math.random().toString(36).substring(7),
+  },
   images: {
     remotePatterns: [
       {
