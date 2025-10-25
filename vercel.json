@@ -1,4 +1,12 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "env": {
+    "SKIP_ENV_VALIDATION": "true"
+  },
+  "functions": {
+    "src/app/**/*.ts": {
+      "maxDuration": 60
+    }
+  }
 }
