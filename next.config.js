@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: true,
   swcMinify: true,
   output: 'standalone',
   skipMiddlewareUrlNormalize: true,

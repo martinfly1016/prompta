@@ -109,6 +109,10 @@ export default function Home() {
 
           {isLoading ? (
             <div className="text-center text-muted-foreground">読み込み中...</div>
+          ) : categories.length === 0 ? (
+            <div className="text-center text-muted-foreground">
+              カテゴリが読み込めませんでした。後でもう一度お試しください。
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categories.map((cat) => (
@@ -151,6 +155,10 @@ export default function Home() {
 
           {isLoading ? (
             <div className="text-center text-muted-foreground">読み込み中...</div>
+          ) : prompts.length === 0 ? (
+            <div className="text-center text-muted-foreground py-12">
+              プロンプトはまだ利用できません。
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {prompts.map((prompt) => (
