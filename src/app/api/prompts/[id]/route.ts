@@ -1,17 +1,17 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { prisma } from '@/lib/prisma'
+import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function GET(
-  _request: unknown,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  context: any
 ) {
   try {
+    const { prisma } = await import('@/lib/prisma')
+    const params = await context.params
+
     const prompt = await prisma.prompt.findUnique({
       where: { id: params.id },
       include: { category: true },
@@ -35,9 +35,14 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: any
 ) {
   try {
+    const { getServerSession } = await import('next-auth')
+    const { authOptions } = await import('@/lib/auth')
+    const { prisma } = await import('@/lib/prisma')
+    const params = await context.params
+
     const session = await getServerSession(authOptions)
     if (!session) {
       return NextResponse.json({ error: '認証が必要です' }, { status: 401 })
@@ -69,10 +74,15 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: unknown,
-  { params }: { params: { id: string } }
+  _request: NextRequest,
+  context: any
 ) {
   try {
+    const { getServerSession } = await import('next-auth')
+    const { authOptions } = await import('@/lib/auth')
+    const { prisma } = await import('@/lib/prisma')
+    const params = await context.params
+
     const session = await getServerSession(authOptions)
     if (!session) {
       return NextResponse.json({ error: '認証が必要です' }, { status: 401 })
