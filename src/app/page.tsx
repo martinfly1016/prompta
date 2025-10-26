@@ -75,7 +75,7 @@ function CategoryNavigation({
             onClick={() => handleCategoryClick(null)}
             className={`category-nav-item ${
               !selectedCategory
-                ? 'bg-blue-500/20 text-blue-400 border-b-2 border-blue-400'
+                ? 'category-nav-item-selected'
                 : ''
             }`}
           >
@@ -88,7 +88,7 @@ function CategoryNavigation({
               onClick={() => handleCategoryClick(cat.slug)}
               className={`category-nav-item ${
                 selectedCategory === cat.slug
-                  ? 'bg-blue-500/20 text-blue-400 border-b-2 border-blue-400'
+                  ? 'category-nav-item-selected'
                   : ''
               }`}
             >

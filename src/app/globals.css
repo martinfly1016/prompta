@@ -219,11 +219,12 @@ body {
   }
 
   /* Selected state for category navigation */
-  .category-nav-item.bg-blue-500\/20 {
+  .category-nav-item-selected {
     background: rgba(59, 130, 246, 0.2) !important;
     color: rgb(96, 165, 250) !important;
-    border-bottom: 2px solid rgb(96, 165, 250) !important;
+    border-bottom: 3px solid rgb(96, 165, 250) !important;
     border-color: rgb(96, 165, 250) !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3) !important;
   }
 
   .category-nav-icon {
