@@ -97,7 +97,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Category Navigation Bar */}
+      {/* Category Navigation Bar - Client Side Rendering */}
       {isClient && !isLoading && categories.length > 0 && (
         <nav className="category-nav-bar">
           <button
