@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import TagChip from '@/components/TagChip'
+import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface PromptImage {
   url: string
@@ -147,11 +147,10 @@ export default function CategoryPage() {
                 {/* 画像 */}
                 <div className="relative w-full aspect-square bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-slate-800 dark:to-slate-700 overflow-hidden flex-shrink-0">
                   {prompt.images && prompt.images.length > 0 ? (
-                    <Image
-                      src={prompt.images[0].url}
+                    <img
+                      src={getImageProxyUrl(prompt.images[0].url)}
                       alt={prompt.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-4xl">

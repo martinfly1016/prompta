@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Search, ArrowRight } from 'lucide-react'
 import TagChip from '@/components/TagChip'
 import { getImageProxyUrl } from '@/lib/image-proxy'
