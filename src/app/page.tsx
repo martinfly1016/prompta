@@ -44,8 +44,15 @@ export default function Home() {
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isClient) return
+
     const fetchData = async () => {
       try {
         const [catsRes, promptsRes] = await Promise.all([
@@ -72,7 +79,7 @@ export default function Home() {
     }
 
     fetchData()
-  }, [searchParams])
+  }, [searchParams, isClient])
 
   const handleCategoryClick = (categorySlug: string | null) => {
     setSelectedCategory(categorySlug)
@@ -91,7 +98,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       {/* Category Navigation Bar */}
-      {!isLoading && categories.length > 0 && (
+      {isClient && !isLoading && categories.length > 0 && (
         <nav className="category-nav-bar">
           <button
             onClick={() => handleCategoryClick(null)}
