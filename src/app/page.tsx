@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Search, ArrowRight } from 'lucide-react'
+import { Search } from 'lucide-react'
 import TagChip from '@/components/TagChip'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
@@ -87,6 +87,22 @@ export default function Home() {
           </nav>
         </div>
       </header>
+
+      {/* Category Navigation Bar */}
+      {!isLoading && categories.length > 0 && (
+        <nav className="category-nav-bar">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/category/${cat.slug}`}
+              className="category-nav-item"
+            >
+              <span className="category-nav-icon">{cat.icon || '📌'}</span>
+              <span>{cat.name}</span>
+            </Link>
+          ))}
+        </nav>
+      )}
 
       {/* Hero Section - Enhanced */}
       <section className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
@@ -194,54 +210,6 @@ export default function Home() {
                         👁️ {prompt.views}
                       </span>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section id="categories" className="py-20 bg-slate-50 dark:bg-slate-900/50">
-        <div className="container mx-auto px-4">
-          <div className="mb-14">
-            <div className="text-sm font-semibold text-primary mb-2">カテゴリ一覧</div>
-            <h2 className="text-4xl font-bold">用途別プロンプト</h2>
-          </div>
-
-          {isLoading ? (
-            <div className="text-center text-muted-foreground">読み込み中...</div>
-          ) : categories.length === 0 ? (
-            <div className="text-center text-muted-foreground">
-              カテゴリが読み込めませんでした。後でもう一度お試しください。
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {categories.map((cat) => (
-                <Link
-                  key={cat.id}
-                  href={`/category/${cat.slug}`}
-                  className="group relative p-7 border border-border rounded-xl hover:border-primary/50 bg-white dark:bg-slate-800 hover:shadow-lg transition-all duration-300 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-indigo-500/0 group-hover:from-blue-500/5 group-hover:to-indigo-500/5 transition-all duration-300"></div>
-
-                  <div className="relative flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 inline-block">
-                        {cat.icon || '📌'}
-                      </div>
-                      <h3 className="text-xl font-bold group-hover:text-primary transition-colors mb-2">
-                        {cat.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {cat._count?.prompts || 0}個のプロンプト
-                      </p>
-                    </div>
-                    <ArrowRight
-                      size={24}
-                      className="text-muted-foreground group-hover:text-primary transition-colors transform group-hover:translate-x-1 duration-300 flex-shrink-0"
-                    />
                   </div>
                 </Link>
               ))}
