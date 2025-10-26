@@ -45,7 +45,11 @@ export default function PromptPage() {
         setPrompt(data)
 
         // Increment view count
-        await fetch(`/api/prompts/${id}/view`, { method: 'POST' }).catch(() => {})
+        await fetch(`/api/view`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ promptId: id })
+        }).catch(() => {})
       } catch (error) {
         console.error('Failed to fetch prompt:', error)
       } finally {
