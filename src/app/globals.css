@@ -119,7 +119,8 @@ body {
 
   /* Card styling - direct CSS instead of Tailwind classes */
   .auto-grid-responsive a[href*="/prompt/"] {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6)) !important;
+    background-image: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6)) !important;
+    background-color: rgba(30, 41, 59, 0.3) !important;
     backdrop-filter: blur(4px) !important;
     border-radius: 1rem !important;
     overflow: hidden !important;
