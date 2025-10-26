@@ -49,25 +49,27 @@ model Prompt {
   updatedAt   DateTime  @updatedAt
 
   images      PromptImage[]
-  tags        Tag[]              @relation("PromptTags")
+  // tags relationship temporarily disabled due to production migration pending
+  // tags        Tag[]              @relation("PromptTags")
 
   @@index([categoryId])
   @@index([isPublished])
 }
 
-model Tag {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  slug        String    @unique
-  color       String    @default("blue") // Color variant: blue, purple, pink, green, etc.
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+// Tag model temporarily disabled due to production migration pending
+// model Tag {
+//   id          String    @id @default(cuid())
+//   name        String    @unique
+//   slug        String    @unique
+//   color       String    @default("blue") // Color variant: blue, purple, pink, green, etc.
+//   description String?
+//   createdAt   DateTime  @default(now())
+//   updatedAt   DateTime  @updatedAt
 
-  prompts     Prompt[]           @relation("PromptTags")
+//   prompts     Prompt[]           @relation("PromptTags")
 
-  @@index([slug])
-}
+//   @@index([slug])
+// }
 
 model PromptImage {
   id        String   @id @default(cuid())
