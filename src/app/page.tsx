@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { Search } from 'lucide-react'
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -36,53 +36,29 @@ interface Prompt {
   tags?: Tag[]
 }
 
-export default function Home() {
+// Separate component to handle useSearchParams with Suspense
+function CategoryNavigation({
+  categories,
+  isLoading,
+  onCategoryChange,
+}: {
+  categories: Category[]
+  isLoading: boolean
+  onCategoryChange: (slug: string | null) => void
+}) {
   const searchParams = useSearchParams()
   const router = useRouter()
-
-  const [categories, setCategories] = useState<Category[]>([])
-  const [prompts, setPrompts] = useState<Prompt[]>([])
-  const [isLoading, setIsLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  useEffect(() => {
-    if (!isClient) return
-
-    const fetchData = async () => {
-      try {
-        const [catsRes, promptsRes] = await Promise.all([
-          fetch('/api/categories'),
-          fetch('/api/prompts?limit=12'),
-        ])
-
-        const catsData = await catsRes.json()
-        const promptsData = await promptsRes.json()
-
-        setCategories(catsData)
-        setPrompts(promptsData.prompts || [])
-
-        // Get category from URL params
-        const categoryParam = searchParams.get('category')
-        if (categoryParam) {
-          setSelectedCategory(categoryParam)
-        }
-      } catch (error) {
-        console.error('Failed to fetch data:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [searchParams, isClient])
+    const categoryParam = searchParams.get('category')
+    setSelectedCategory(categoryParam)
+    onCategoryChange(categoryParam)
+  }, [searchParams, onCategoryChange])
 
   const handleCategoryClick = (categorySlug: string | null) => {
     setSelectedCategory(categorySlug)
+    onCategoryChange(categorySlug)
     if (categorySlug) {
       router.push(`?category=${categorySlug}`)
     } else {
@@ -90,15 +66,9 @@ export default function Home() {
     }
   }
 
-  // Filter prompts based on selected category
-  const filteredPrompts = selectedCategory
-    ? prompts.filter(p => p.category.slug === selectedCategory)
-    : prompts
-
   return (
-    <main className="min-h-screen bg-background">
-      {/* Category Navigation Bar - Client Side Rendering */}
-      {isClient && !isLoading && categories.length > 0 && (
+    <>
+      {!isLoading && categories.length > 0 && (
         <nav className="category-nav-bar">
           <button
             onClick={() => handleCategoryClick(null)}
@@ -127,6 +97,59 @@ export default function Home() {
           ))}
         </nav>
       )}
+    </>
+  )
+}
+
+export default function Home() {
+  const [categories, setCategories] = useState<Category[]>([])
+  const [prompts, setPrompts] = useState<Prompt[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [catsRes, promptsRes] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/prompts?limit=12'),
+        ])
+
+        const catsData = await catsRes.json()
+        const promptsData = await promptsRes.json()
+
+        setCategories(catsData)
+        setPrompts(promptsData.prompts || [])
+      } catch (error) {
+        console.error('Failed to fetch data:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Update selected category when it changes from the nav component
+  const handleSelectedCategoryChange = (slug: string | null) => {
+    setSelectedCategory(slug)
+  }
+
+  // Filter prompts based on selected category
+  const filteredPrompts = selectedCategory
+    ? prompts.filter(p => p.category.slug === selectedCategory)
+    : prompts
+
+  return (
+    <main className="min-h-screen bg-background">
+      {/* Category Navigation Bar - Wrapped in Suspense */}
+      <Suspense fallback={null}>
+        <CategoryNavigation
+          categories={categories}
+          isLoading={isLoading}
+          onCategoryChange={handleSelectedCategoryChange}
+        />
+      </Suspense>
 
       {/* Hero Section - Enhanced */}
       <section className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
