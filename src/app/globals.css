@@ -130,17 +130,31 @@ body {
     flex-direction: column !important;
     height: 100% !important;
     text-decoration: none !important;
-    color: inherit !important;
+    color: hsl(var(--foreground)) !important;
   }
 
-  .auto-grid-responsive a[href*="/prompt/"] * {
-    color: inherit !important;
+  /* Remove underline from all text inside cards */
+  .auto-grid-responsive a[href*="/prompt/"] h3,
+  .auto-grid-responsive a[href*="/prompt/"] p,
+  .auto-grid-responsive a[href*="/prompt/"] span {
+    color: hsl(var(--foreground)) !important;
     text-decoration: none !important;
+  }
+
+  .auto-grid-responsive a[href*="/prompt/"]:visited {
+    color: hsl(var(--foreground)) !important;
   }
 
   .auto-grid-responsive a[href*="/prompt/"]:hover {
     transform: scale(1.02) !important;
     box-shadow: 0 20px 25px -5px rgba(33, 150, 243, 0.2), 0 0 0 1px rgba(51, 170, 255, 0.2) !important;
     border-color: rgba(51, 170, 255, 0.2) !important;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .auto-grid-responsive a[href*="/prompt/"]:hover h3,
+  .auto-grid-responsive a[href*="/prompt/"]:hover p,
+  .auto-grid-responsive a[href*="/prompt/"]:hover span {
+    color: hsl(var(--foreground)) !important;
   }
 }
