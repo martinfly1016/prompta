@@ -62,7 +62,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, tags, isPublished, images } = body
+    const { title, description, content, categoryId, isPublished, images } = body
 
     // First, delete existing images if images are provided
     if (images && images.length >= 0) {

@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, tags, author, isPublished, images } = body
+    const { title, description, content, categoryId, author, isPublished, images } = body
 
     if (!title || !description || !content || !categoryId) {
       return NextResponse.json(
