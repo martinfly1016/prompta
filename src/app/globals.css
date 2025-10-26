@@ -164,20 +164,20 @@ body {
 
   /* Category Navigation Bar */
   .category-nav-bar {
-    position: sticky;
-    top: 72px;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
-    background: hsl(var(--card) / 0.95);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid hsl(var(--border));
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
+    position: sticky !important;
+    top: 72px !important;
+    z-index: 40 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 1rem !important;
+    background: hsl(var(--card) / 0.95) !important;
+    backdrop-filter: blur(8px) !important;
+    border-bottom: 1px solid hsl(var(--border)) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .category-nav-bar::-webkit-scrollbar {
