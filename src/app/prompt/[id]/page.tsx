@@ -118,7 +118,12 @@ export default function PromptPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+      <header
+        className="shadow-lg"
+        style={{
+          background: 'linear-gradient(to right, rgb(37, 99, 235), rgb(147, 51, 234))',
+        }}
+      >
         <div className="container mx-auto px-4 py-8">
           <Link href="/" className="text-3xl font-bold text-white">
             プロンプタ
