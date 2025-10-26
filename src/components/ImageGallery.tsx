@@ -189,7 +189,13 @@ export function ImageGallery({ images }: ImageGalleryProps) {
       {/* 灯箱 - 全屏覆盖，支持缩放和拖动 */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/98 overflow-hidden"
+          className="fixed z-50 flex items-center justify-center bg-black/98 overflow-hidden"
+          style={{
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
           onClick={closeLightbox}
           onWheel={handleWheel}
           onMouseDown={handleMouseDown}
