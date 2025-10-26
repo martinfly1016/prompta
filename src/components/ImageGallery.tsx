@@ -191,10 +191,10 @@ export function ImageGallery({ images }: ImageGalleryProps) {
         <div
           className="fixed z-50 flex items-center justify-center bg-black/98 overflow-hidden"
           style={{
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            top: '0px',
+            left: '0px',
+            right: '0px',
+            bottom: '0px',
           }}
           onClick={closeLightbox}
           onWheel={handleWheel}
