@@ -37,6 +37,7 @@ interface Prompt {
 }
 
 // Separate component to handle useSearchParams with Suspense
+// This component renders category navigation with dynamic selection state
 function CategoryNavigation({
   categories,
   isLoading,
