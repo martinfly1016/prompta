@@ -113,6 +113,47 @@ export async function PUT(
   }
 }
 
+export async function POST(
+  request: NextRequest,
+  context: any
+) {
+  try {
+    const { prisma } = await import('@/lib/prisma')
+    const params = await context.params
+
+    // Check if this is a view count increment request
+    // The URL pattern for view increment is /api/prompts/[id]/view
+    // But since we're handling it here, we need to check the URL
+    const url = new URL(request.url)
+    const isViewRequest = url.pathname.includes('/view')
+
+    if (isViewRequest) {
+      // Increment view count
+      await prisma.prompt.update({
+        where: { id: params.id },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      })
+      return NextResponse.json({ success: true })
+    }
+
+    // Otherwise, it's a general POST request (not implemented)
+    return NextResponse.json(
+      { error: 'この操作はサポートされていません' },
+      { status: 400 }
+    )
+  } catch (error) {
+    console.error('Failed to process POST request:', error)
+    return NextResponse.json(
+      { error: 'リクエスト処理に失敗しました' },
+      { status: 500 }
+    )
+  }
+}
+
 export async function DELETE(
   _request: NextRequest,
   context: any
