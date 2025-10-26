@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface ImageGalleryProps {
   images: Array<{ url: string; altText?: string }>
@@ -30,12 +31,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     <>
       <div className="space-y-4">
         {/* 主图片 */}
-        <div className="relative w-full aspect-video bg-gray-200 rounded-lg overflow-hidden cursor-pointer group">
-          <Image
-            src={currentImage.url}
+        <div className="relative w-full bg-gray-200 rounded-lg overflow-hidden cursor-pointer group" style={{paddingBottom: '56.25%'}}>
+          <img
+            src={getImageProxyUrl(currentImage.url)}
             alt={currentImage.altText || `效果图 ${currentIndex + 1}`}
-            fill
-            className="object-cover"
+            className="absolute inset-0 w-full h-full object-cover"
           />
           <button
             onClick={() => setIsLightboxOpen(true)}
@@ -112,12 +112,11 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             </button>
 
             {/* 灯箱图片 */}
-            <div className="relative w-full h-full max-h-[90vh] max-w-[90vw]">
-              <Image
-                src={currentImage.url}
+            <div className="relative w-full h-full max-h-[90vh] max-w-[90vw] flex items-center justify-center">
+              <img
+                src={getImageProxyUrl(currentImage.url)}
                 alt={currentImage.altText || `效果图 ${currentIndex + 1}`}
-                fill
-                className="object-contain"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
 

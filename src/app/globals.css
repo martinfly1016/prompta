@@ -4,18 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark theme as default - no media query override */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.6%;
-  --border: 0 0% 89.8%;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 0 0% 3.6%;
-    --foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-  }
+  --background: 220 20% 12%;       /* 深蓝黑色 #1a1d2e */
+  --foreground: 0 0% 95%;          /* 几乎白色 */
+  --border: 220 15% 22%;           /* 深色边框 #313547 */
+  --primary: 210 100% 60%;         /* 明亮蓝色 */
+  --primary-foreground: 0 0% 100%;
+  --muted-foreground: 220 8% 55%;  /* 中灰色 */
+  --card: 220 18% 16%;             /* 深色卡片 #252838 */
+  --card-foreground: 0 0% 95%;
 }
 
 html {
@@ -26,4 +24,23 @@ body {
   font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+/* 美化滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
 }

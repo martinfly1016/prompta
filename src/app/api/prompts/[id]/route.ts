@@ -14,7 +14,11 @@ export async function GET(
 
     const prompt = await prisma.prompt.findUnique({
       where: { id: params.id },
-      include: { category: true, images: { orderBy: { order: 'asc' } } },
+      include: {
+        category: true,
+        images: { orderBy: { order: 'asc' } },
+        tags: true,
+      },
     })
 
     if (!prompt) {
@@ -58,6 +62,29 @@ export async function PUT(
       })
     }
 
+    // Handle tag connections
+    const tagConnections = []
+    if (Array.isArray(tags) && tags.length > 0) {
+      for (const tag of tags) {
+        if (typeof tag === 'string') {
+          // If tag is a string, find or create it
+          const tagRecord = await prisma.tag.upsert({
+            where: { slug: tag.toLowerCase().replace(/\s+/g, '-') },
+            update: {},
+            create: {
+              name: tag,
+              slug: tag.toLowerCase().replace(/\s+/g, '-'),
+              color: 'blue', // Default color
+            },
+          })
+          tagConnections.push({ id: tagRecord.id })
+        } else if (typeof tag === 'object' && tag.id) {
+          // If tag is an object with id, just connect it
+          tagConnections.push({ id: tag.id })
+        }
+      }
+    }
+
     const prompt = await prisma.prompt.update({
       where: { id: params.id },
       data: {
@@ -65,8 +92,11 @@ export async function PUT(
         description,
         content,
         categoryId,
-        tags: JSON.stringify(tags || []),
         isPublished,
+        tags: {
+          set: [], // Clear existing tags
+          connect: tagConnections, // Connect new tags
+        },
         ...(images && images.length > 0 && {
           images: {
             create: images.map((img: any) => ({
@@ -80,7 +110,11 @@ export async function PUT(
           },
         }),
       },
-      include: { category: true, images: { orderBy: { order: 'asc' } } },
+      include: {
+        category: true,
+        images: { orderBy: { order: 'asc' } },
+        tags: true,
+      },
     })
 
     return NextResponse.json(prompt)

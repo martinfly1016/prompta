@@ -1,13 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search as SearchIcon } from 'lucide-react'
+import { Search as SearchIcon, X } from 'lucide-react'
+import TagChip from '@/components/TagChip'
+import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface PromptImage {
   url: string
   altText?: string
+}
+
+interface Tag {
+  id: string
+  name: string
+  color?: string
 }
 
 interface Prompt {
@@ -17,23 +25,55 @@ interface Prompt {
   category: { name: string }
   views: number
   images?: PromptImage[]
+  tags?: Tag[]
+}
+
+interface Category {
+  id: string
+  name: string
+  slug: string
 }
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
   const [prompts, setPrompts] = useState<Prompt[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [hasSearched, setHasSearched] = useState(false)
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('/api/categories')
+        setCategories(await res.json())
+      } catch (error) {
+        console.error('Failed to fetch categories:', error)
+      }
+    }
+    fetchCategories()
+  }, [])
+
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!query.trim() && !selectedCategory) return
+
     setIsLoading(true)
     setHasSearched(true)
 
     try {
-      const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&limit=50`)
+      let url = '/api/prompts?limit=50'
+      if (query) url += `&search=${encodeURIComponent(query)}`
+
+      const res = await fetch(url)
       const data = await res.json()
-      setPrompts(data.prompts.filter((p: any) => p.isPublished))
+      let filtered = data.prompts.filter((p: any) => p.isPublished)
+
+      if (selectedCategory) {
+        filtered = filtered.filter((p: any) => p.category.slug === selectedCategory)
+      }
+
+      setPrompts(filtered)
     } catch (error) {
       console.error('Failed to search:', error)
     } finally {
@@ -41,93 +81,201 @@ export default function SearchPage() {
     }
   }
 
+  const handleClearFilters = () => {
+    setQuery('')
+    setSelectedCategory('')
+    setPrompts([])
+    setHasSearched(false)
+  }
+
   return (
     <main className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold">
+      <header className="sticky top-0 z-50 border-b border-border bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
             プロンプタ
           </Link>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl mx-auto mb-12">
-          <h1 className="text-4xl font-bold mb-8 text-center">プロンプトを検索</h1>
+      {/* Search Hero Section */}
+      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h1 className="text-5xl font-bold mb-4">
+              プロンプトを<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">検索</span>
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8">
+              あなたにぴったりのプロンプトを見つけましょう
+            </p>
+          </div>
 
-          <form onSubmit={handleSearch} className="flex gap-2">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="プロンプトを検索..."
-              className="flex-1 px-6 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-            <button
-              type="submit"
-              className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-            >
-              <SearchIcon size={20} />
-              検索
-            </button>
-          </form>
+          {/* Search Form */}
+          <div className="max-w-3xl mx-auto">
+            <form onSubmit={handleSearch} className="space-y-4">
+              {/* 検索入力 */}
+              <div className="relative">
+                <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="キーワードで検索（例：文章作成、コード生成）..."
+                  className="w-full pl-12 pr-4 py-4 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-slate-800 transition-all"
+                />
+              </div>
+
+              {/* フィルター */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="md:col-span-2">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full px-4 py-3 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-slate-800 transition-all"
+                  >
+                    <option value="">すべてのカテゴリ</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.slug}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* 検索ボタン */}
+                <button
+                  type="submit"
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 font-semibold"
+                >
+                  <SearchIcon size={20} />
+                  検索
+                </button>
+              </div>
+
+              {/* クリアボタン */}
+              {(query || selectedCategory) && (
+                <button
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
+                >
+                  <X size={16} />
+                  フィルターをクリア
+                </button>
+              )}
+            </form>
+          </div>
         </div>
+      </section>
 
+      {/* Results Section */}
+      <div className="container mx-auto px-4 py-16">
         {isLoading && (
-          <div className="text-center text-muted-foreground">検索中...</div>
+          <div className="flex justify-center items-center py-20">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+              <p className="text-muted-foreground">検索中...</p>
+            </div>
+          </div>
         )}
 
         {!hasSearched && !isLoading && (
-          <div className="text-center text-muted-foreground max-w-2xl mx-auto">
-            <p className="text-lg">
-              検索キーワードを入力してプロンプトを探してください。
+          <div className="text-center py-20">
+            <div className="text-6xl mb-6">🔍</div>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              キーワードまたはカテゴリを選択して検索してください。
+              <br />
+              あなたが探しているプロンプトが見つかります。
             </p>
           </div>
         )}
 
         {hasSearched && !isLoading && (
-          <div className="max-w-2xl mx-auto">
+          <div>
             {prompts.length === 0 ? (
-              <div className="text-center text-muted-foreground py-12">
-                「{query}」に一致するプロンプトが見つかりませんでした。
+              <div className="text-center py-20">
+                <div className="text-6xl mb-6">😕</div>
+                <h2 className="text-2xl font-bold mb-2">マッチするプロンプトが見つかりませんでした</h2>
+                <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  「{query || selectedCategory}」に一致するプロンプトはありません。
+                  <br />
+                  別のキーワードまたはカテゴリで試してください。
+                </p>
+                <button
+                  onClick={handleClearFilters}
+                  className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+                >
+                  フィルターをリセット
+                </button>
               </div>
             ) : (
               <div>
-                <p className="text-muted-foreground mb-6">
-                  {prompts.length}個のプロンプトが見つかりました
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="mb-8 flex items-center justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold">
+                      {prompts.length}個のプロンプトが見つかりました
+                    </h2>
+                    {query && (
+                      <p className="text-muted-foreground mt-2">
+                        「{query}」
+                        {selectedCategory && ` in ${categories.find(c => c.slug === selectedCategory)?.name}`}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
                   {prompts.map((prompt) => (
                     <Link
                       key={prompt.id}
                       href={`/prompt/${prompt.id}`}
-                      className="group bg-white dark:bg-slate-800 border border-border rounded-lg hover:shadow-lg hover:border-primary transition-all overflow-hidden"
+                      className="group flex flex-col h-full bg-white dark:bg-slate-900 rounded-xl border border-border dark:border-slate-700 hover:border-primary/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:dark:shadow-primary/20"
                     >
-                      {/* 图片 */}
-                      {prompt.images && prompt.images.length > 0 ? (
-                        <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
-                          <Image
-                            src={prompt.images[0].url}
+                      {/* 画像 */}
+                      <div className="relative w-full bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-slate-800 dark:to-slate-700 overflow-hidden flex-shrink-0" style={{paddingBottom: '100%'}}>
+                        {prompt.images && prompt.images.length > 0 ? (
+                          <img
+                            src={getImageProxyUrl(prompt.images[0].url)}
                             alt={prompt.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
-                        </div>
-                      ) : (
-                        <div className="w-full aspect-video bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
-                          <span className="text-4xl">🖼️</span>
-                        </div>
-                      )}
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center text-4xl">
+                            📝
+                          </div>
+                        )}
+                      </div>
 
-                      {/* 内容 */}
-                      <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      {/* コンテンツ */}
+                      <div className="p-4 flex flex-col flex-1">
+                        <h3 className="font-semibold mb-1.5 group-hover:text-primary transition-colors line-clamp-2 text-sm">
                           {prompt.title}
                         </h3>
-                        <p className="text-muted-foreground mb-3 line-clamp-2">{prompt.description}</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2 flex-1">
+                          {prompt.description}
+                        </p>
+
+                        {/* Tags */}
+                        {prompt.tags && prompt.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {prompt.tags.slice(0, 3).map((tag) => (
+                              <TagChip
+                                key={tag.id}
+                                name={tag.name}
+                                color={tag.color}
+                              />
+                            ))}
+                            {prompt.tags.length > 3 && (
+                              <span className="text-xs text-muted-foreground px-2.5 py-1">
+                                +{prompt.tags.length - 3}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between pt-3 border-t border-border dark:border-slate-700/50">
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full font-medium">
                             {prompt.category.name}
                           </span>
                           <span className="text-xs text-muted-foreground">

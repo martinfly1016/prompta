@@ -42,7 +42,6 @@ model Prompt {
   content     String
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  String
-  tags        String    @default("") // JSON array as string
   author      String?
   isPublished Boolean   @default(false)
   views       Int       @default(0)
@@ -50,9 +49,24 @@ model Prompt {
   updatedAt   DateTime  @updatedAt
 
   images      PromptImage[]
+  tags        Tag[]              @relation("PromptTags")
 
   @@index([categoryId])
   @@index([isPublished])
+}
+
+model Tag {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  color       String    @default("blue") // Color variant: blue, purple, pink, green, etc.
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  prompts     Prompt[]           @relation("PromptTags")
+
+  @@index([slug])
 }
 
 model PromptImage {

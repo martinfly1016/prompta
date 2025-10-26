@@ -11,13 +11,19 @@ interface PromptImage {
   altText?: string
 }
 
+interface Tag {
+  id: string
+  name: string
+  color?: string
+}
+
 interface Prompt {
   id: string
   title: string
   description: string
   content: string
   category: { name: string; slug: string }
-  tags: string
+  tags?: Tag[]
   views: number
   createdAt: string
   images?: PromptImage[]
@@ -103,9 +109,7 @@ export default function PromptPage() {
     )
   }
 
-  const tags = Array.isArray(JSON.parse(prompt.tags || '[]'))
-    ? JSON.parse(prompt.tags)
-    : []
+  const tags = Array.isArray(prompt.tags) ? prompt.tags : []
 
   return (
     <main className="min-h-screen bg-background">
@@ -170,12 +174,12 @@ export default function PromptPage() {
             {/* Tags */}
             {tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag: string) => (
+                {tags.map((tag: Tag) => (
                   <span
-                    key={tag}
+                    key={tag.id}
                     className="text-xs bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full"
                   >
-                    #{tag}
+                    {tag.name}
                   </span>
                 ))}
               </div>

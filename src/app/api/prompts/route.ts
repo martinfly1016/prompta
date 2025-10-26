@@ -53,7 +53,11 @@ export async function GET(request: NextRequest) {
     const [prompts, total] = await Promise.all([
       prisma.prompt.findMany({
         where,
-        include: { category: true, images: { orderBy: { order: 'asc' } } },
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+          tags: true,
+        },
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
@@ -131,13 +135,35 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Create or connect tags
+    const tagConnections = []
+    if (Array.isArray(tags) && tags.length > 0) {
+      for (const tag of tags) {
+        if (typeof tag === 'string') {
+          // If tag is a string, find or create it
+          const tagRecord = await prisma.tag.upsert({
+            where: { slug: tag.toLowerCase().replace(/\s+/g, '-') },
+            update: {},
+            create: {
+              name: tag,
+              slug: tag.toLowerCase().replace(/\s+/g, '-'),
+              color: 'blue', // Default color
+            },
+          })
+          tagConnections.push({ id: tagRecord.id })
+        } else if (typeof tag === 'object' && tag.id) {
+          // If tag is an object with id, just connect it
+          tagConnections.push({ id: tag.id })
+        }
+      }
+    }
+
     const prompt = await prisma.prompt.create({
       data: {
         title,
         description,
         content,
         categoryId,
-        tags: JSON.stringify(tags || []),
         author: author || (session.user?.email || 'Anonymous'),
         isPublished: isPublished || false,
         images: {
@@ -150,8 +176,15 @@ export async function POST(request: NextRequest) {
             order: img.order,
           })),
         },
+        tags: {
+          connect: tagConnections,
+        },
       },
-      include: { category: true, images: { orderBy: { order: 'asc' } } },
+      include: {
+        category: true,
+        images: { orderBy: { order: 'asc' } },
+        tags: true,
+      },
     })
 
     return NextResponse.json(prompt, { status: 201 })
