@@ -14,7 +14,7 @@ export async function GET(
 
     // Fetch without tags to avoid migration conflicts
     // Tags will be included once the migration is applied in production
-    prompt = await prisma.prompt.findUnique({
+    let promptData = await prisma.prompt.findUnique({
       where: { id: params.id },
       include: {
         category: true,
@@ -23,8 +23,11 @@ export async function GET(
     })
 
     // Add empty tags array for UI compatibility
-    if (prompt) {
-      prompt = { ...prompt, tags: [] }
+    let prompt
+    if (promptData) {
+      prompt = { ...promptData, tags: [] }
+    } else {
+      prompt = null
     }
 
     if (!prompt) {
