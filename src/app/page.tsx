@@ -65,32 +65,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-            プロンプタ
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="#categories" className="text-sm hover:text-primary transition-colors">
-              カテゴリ
-            </Link>
-            <Link href="/search" className="text-sm hover:text-primary transition-colors">
-              検索
-            </Link>
-            <Link
-              href="/admin/login"
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity text-sm"
-            >
-              管理画面
-            </Link>
-          </nav>
-        </div>
-      </header>
-
       {/* Category Navigation Bar */}
       {!isLoading && categories.length > 0 && (
         <nav className="category-nav-bar">
+          <Link href="/" className="category-nav-item">
+            <span className="category-nav-icon">📂</span>
+            <span>全部</span>
+          </Link>
           {categories.map((cat) => (
             <Link
               key={cat.id}
