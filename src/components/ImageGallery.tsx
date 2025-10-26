@@ -96,50 +96,53 @@ export function ImageGallery({ images }: ImageGalleryProps) {
       {/* 灯箱 */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 overflow-hidden"
           onClick={() => setIsLightboxOpen(false)}
         >
           <div
-            className="relative w-full h-full flex items-center justify-center max-w-6xl mx-auto"
+            className="relative w-full h-full flex items-center justify-center px-4 py-4"
             onClick={(e) => e.stopPropagation()}
           >
             {/* 关闭按钮 */}
             <button
               onClick={() => setIsLightboxOpen(false)}
-              className="absolute top-4 right-4 z-10 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+              className="absolute top-4 right-4 z-20 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+              aria-label="关闭"
             >
-              <X size={24} />
+              <X size={28} />
             </button>
 
-            {/* 灯箱图片 */}
-            <div className="relative w-full h-full max-h-[90vh] max-w-[90vw] flex items-center justify-center">
+            {/* 灯箱图片容器 - 使用 flexbox 确保图片完整显示 */}
+            <div className="relative flex items-center justify-center w-full h-full">
               <img
                 src={getImageProxyUrl(currentImage.url)}
                 alt={currentImage.altText || `效果图 ${currentIndex + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-[90vw] max-h-[85vh] object-contain"
               />
             </div>
 
-            {/* 导航按钮 */}
+            {/* 导航按钮 - 固定位置，确保始终可见 */}
             {images.length > 1 && (
               <>
                 <button
                   onClick={goToPrevious}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors"
+                  aria-label="上一张"
                 >
                   <ChevronLeft size={32} />
                 </button>
                 <button
                   onClick={goToNext}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 text-white p-2 rounded-full hover:bg-white/30 transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors"
+                  aria-label="下一张"
                 >
                   <ChevronRight size={32} />
                 </button>
               </>
             )}
 
-            {/* 计数器 */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/20 text-white px-4 py-2 rounded-full">
+            {/* 计数器 - 底部始终可见 */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 bg-black/60 text-white px-4 py-2 rounded-full text-sm font-medium">
               {currentIndex + 1} / {images.length}
             </div>
           </div>
