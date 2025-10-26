@@ -124,7 +124,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     <>
       <div className="space-y-4">
         {/* 主图片 */}
-        <div className="relative w-full bg-gray-200 rounded-lg overflow-hidden cursor-pointer group" style={{paddingBottom: '56.25%'}}>
+        <div className="relative mx-auto bg-gray-200 rounded-lg overflow-hidden cursor-pointer group max-w-[800px]" style={{paddingBottom: '56.25%'}}>
           <img
             src={getImageProxyUrl(currentImage.url)}
             alt={currentImage.altText || `效果图 ${currentIndex + 1}`}

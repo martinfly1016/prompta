@@ -118,9 +118,9 @@ export default function PromptPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4 py-6">
-          <Link href="/" className="text-2xl font-bold">
+      <header className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+        <div className="container mx-auto px-4 py-8">
+          <Link href="/" className="text-3xl font-bold text-white">
             プロンプタ
           </Link>
         </div>
@@ -151,14 +151,14 @@ export default function PromptPage() {
           </div>
 
           {/* Main Content */}
-          <article className="space-y-8">
-            {/* Header */}
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold">{prompt.title}</h1>
-              <p className="text-xl text-muted-foreground">{prompt.description}</p>
+          <article className="space-y-6">
+            {/* Header - Card Style */}
+            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md p-8 space-y-4">
+              <h1 className="text-5xl font-bold text-foreground">{prompt.title}</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
 
-              <div className="flex items-center gap-4 pt-4 border-t border-border">
-                <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+              <div className="flex items-center gap-4 pt-4 border-t border-border flex-wrap">
+                <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full font-medium">
                   {prompt.category.name}
                 </span>
                 <span className="text-sm text-muted-foreground">
@@ -167,10 +167,10 @@ export default function PromptPage() {
               </div>
             </div>
 
-            {/* Image Gallery */}
+            {/* Image Gallery - Card Style */}
             {prompt.images && prompt.images.length > 0 && (
-              <div className="space-y-4">
-                <h2 className="text-2xl font-bold">効果画像</h2>
+              <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md p-8 space-y-4">
+                <h2 className="text-3xl font-bold text-foreground">効果画像</h2>
                 <ImageGallery images={prompt.images} />
               </div>
             )}
@@ -189,14 +189,16 @@ export default function PromptPage() {
               </div>
             )}
 
-            {/* Content */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">プロンプト</h2>
-                <div className="flex gap-2">
+            {/* Content - Emphasized Card Style */}
+            <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-xl shadow-lg p-8 space-y-4 border-l-4 border-blue-500">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  プロンプト
+                </h2>
+                <div className="flex gap-3">
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
                   >
                     {copied ? (
                       <>
@@ -212,7 +214,7 @@ export default function PromptPage() {
                   </button>
                   <button
                     onClick={handleShare}
-                    className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors font-medium"
                   >
                     <Share2 size={18} />
                     共有
@@ -220,20 +222,23 @@ export default function PromptPage() {
                 </div>
               </div>
 
-              <pre className="p-6 bg-slate-900 text-white rounded-lg overflow-x-auto font-mono text-sm whitespace-pre-wrap break-words">
-                {prompt.content}
-              </pre>
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg overflow-hidden shadow-inner">
+                <pre className="p-6 text-white overflow-x-auto font-mono text-sm whitespace-pre-wrap break-words">
+                  {prompt.content}
+                </pre>
+              </div>
             </div>
 
-            {/* Info */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-              <h3 className="font-semibold text-blue-900 dark:text-blue-200 mb-2">
+            {/* Info - Card Style */}
+            <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 rounded-lg p-8 shadow-md">
+              <h3 className="text-lg font-bold text-blue-900 dark:text-blue-200 mb-4 flex items-center gap-2">
+                <span className="text-2xl">💡</span>
                 このプロンプトの使い方
               </h3>
-              <ol className="text-sm text-blue-800 dark:text-blue-300 space-y-2 list-decimal list-inside">
-                <li>上の「コピー」ボタンをクリックしてプロンプトをコピーします</li>
-                <li>ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</li>
-                <li>Enterキーを押して実行します</li>
+              <ol className="text-base text-blue-800 dark:text-blue-300 space-y-3 list-decimal list-inside">
+                <li className="font-medium">上の「コピー」ボタンをクリックしてプロンプトをコピーします</li>
+                <li className="font-medium">ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</li>
+                <li className="font-medium">Enterキーを押して実行します</li>
               </ol>
             </div>
           </article>
