@@ -12,32 +12,19 @@ export async function GET(
     const { prisma } = await import('@/lib/prisma')
     const params = await context.params
 
-    let prompt
+    // Fetch without tags to avoid migration conflicts
+    // Tags will be included once the migration is applied in production
+    prompt = await prisma.prompt.findUnique({
+      where: { id: params.id },
+      include: {
+        category: true,
+        images: { orderBy: { order: 'asc' } },
+      },
+    })
 
-    try {
-      // Try to fetch with tags (requires tag migration)
-      prompt = await prisma.prompt.findUnique({
-        where: { id: params.id },
-        include: {
-          category: true,
-          images: { orderBy: { order: 'asc' } },
-          tags: true,
-        },
-      })
-    } catch (tagError) {
-      console.log('⚠️ Tags not available yet, fetching without tags...')
-      // Fallback: fetch without tags if table doesn't exist
-      prompt = await prisma.prompt.findUnique({
-        where: { id: params.id },
-        include: {
-          category: true,
-          images: { orderBy: { order: 'asc' } },
-        },
-      })
-      // Add empty tags array for compatibility
-      if (prompt) {
-        prompt = { ...prompt, tags: [] }
-      }
+    // Add empty tags array for UI compatibility
+    if (prompt) {
+      prompt = { ...prompt, tags: [] }
     }
 
     if (!prompt) {
@@ -81,98 +68,39 @@ export async function PUT(
       })
     }
 
-    // Handle tag connections
-    const tagConnections = []
-    if (Array.isArray(tags) && tags.length > 0) {
-      for (const tag of tags) {
-        if (typeof tag === 'string') {
-          // If tag is a string, find or create it
-          const tagRecord = await prisma.tag.upsert({
-            where: { slug: tag.toLowerCase().replace(/\s+/g, '-') },
-            update: {},
-            create: {
-              name: tag,
-              slug: tag.toLowerCase().replace(/\s+/g, '-'),
-              color: 'blue', // Default color
-            },
-          })
-          tagConnections.push({ id: tagRecord.id })
-        } else if (typeof tag === 'object' && tag.id) {
-          // If tag is an object with id, just connect it
-          tagConnections.push({ id: tag.id })
-        }
-      }
-    }
-
-    let prompt
-
-    try {
-      // Try to update with tags (requires tag migration)
-      prompt = await prisma.prompt.update({
-        where: { id: params.id },
-        data: {
-          title,
-          description,
-          content,
-          categoryId,
-          isPublished,
-          tags: {
-            set: [], // Clear existing tags
-            connect: tagConnections, // Connect new tags
+    // Update without tags to avoid migration conflicts
+    // Tags will be updated once the migration is applied in production
+    const prompt = await prisma.prompt.update({
+      where: { id: params.id },
+      data: {
+        title,
+        description,
+        content,
+        categoryId,
+        isPublished,
+        ...(images && images.length > 0 && {
+          images: {
+            create: images.map((img: any) => ({
+              url: img.url,
+              blobKey: img.url.split('/').pop() || 'unknown',
+              fileName: img.fileName,
+              fileSize: img.fileSize,
+              mimeType: img.mimeType,
+              order: img.order,
+            })),
           },
-          ...(images && images.length > 0 && {
-            images: {
-              create: images.map((img: any) => ({
-                url: img.url,
-                blobKey: img.url.split('/').pop() || 'unknown',
-                fileName: img.fileName,
-                fileSize: img.fileSize,
-                mimeType: img.mimeType,
-                order: img.order,
-              })),
-            },
-          }),
-        },
-        include: {
-          category: true,
-          images: { orderBy: { order: 'asc' } },
-          tags: true,
-        },
-      })
-    } catch (tagError) {
-      console.log('⚠️ Tags not available yet, updating without tags...')
-      // Fallback: update without tags if table doesn't exist
-      prompt = await prisma.prompt.update({
-        where: { id: params.id },
-        data: {
-          title,
-          description,
-          content,
-          categoryId,
-          isPublished,
-          ...(images && images.length > 0 && {
-            images: {
-              create: images.map((img: any) => ({
-                url: img.url,
-                blobKey: img.url.split('/').pop() || 'unknown',
-                fileName: img.fileName,
-                fileSize: img.fileSize,
-                mimeType: img.mimeType,
-                order: img.order,
-              })),
-            },
-          }),
-        },
-        include: {
-          category: true,
-          images: { orderBy: { order: 'asc' } },
-        },
-      })
-      // Add empty tags array for compatibility
-      prompt = { ...prompt, tags: [] }
-    }
+        }),
+      },
+      include: {
+        category: true,
+        images: { orderBy: { order: 'asc' } },
+      },
+    })
 
-    return NextResponse.json(prompt)
+    // Add empty tags array for UI compatibility
+    const promptWithTags = { ...prompt, tags: [] }
+
+    return NextResponse.json(promptWithTags)
   } catch (error) {
     console.error('Failed to update prompt:', error)
     return NextResponse.json(

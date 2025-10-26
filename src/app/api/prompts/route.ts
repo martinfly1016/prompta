@@ -50,49 +50,30 @@ export async function GET(request: NextRequest) {
 
     console.log('Executing parallel queries for prompts and count...')
 
-    let prompts, total
+    // Fetch without tags to avoid migration conflicts
+    // Tags will be included once the migration is applied in production
+    const [prompts, total] = await Promise.all([
+      prisma.prompt.findMany({
+        where,
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+        },
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      prisma.prompt.count({ where }),
+    ])
 
-    try {
-      // Try to fetch with tags (requires tag migration)
-      [prompts, total] = await Promise.all([
-        prisma.prompt.findMany({
-          where,
-          include: {
-            category: true,
-            images: { orderBy: { order: 'asc' } },
-            tags: true,
-          },
-          skip,
-          take: limit,
-          orderBy: { createdAt: 'desc' },
-        }),
-        prisma.prompt.count({ where }),
-      ])
-    } catch (tagError) {
-      console.log('⚠️ Tags not available yet, fetching without tags...')
-      // Fallback: fetch without tags if table doesn't exist
-      [prompts, total] = await Promise.all([
-        prisma.prompt.findMany({
-          where,
-          include: {
-            category: true,
-            images: { orderBy: { order: 'asc' } },
-          },
-          skip,
-          take: limit,
-          orderBy: { createdAt: 'desc' },
-        }),
-        prisma.prompt.count({ where }),
-      ])
-      // Add empty tags array for compatibility
-      prompts = prompts.map(p => ({ ...p, tags: [] }))
-    }
+    // Add empty tags array for UI compatibility
+    const promptsWithTags = prompts.map(p => ({ ...p, tags: [] }))
 
     console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
     console.log('=== END: GET /api/prompts (SUCCESS) ===')
 
     return NextResponse.json({
-      prompts,
+      prompts: promptsWithTags,
       pagination: {
         page,
         limit,
@@ -158,29 +139,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create or connect tags
-    const tagConnections = []
-    if (Array.isArray(tags) && tags.length > 0) {
-      for (const tag of tags) {
-        if (typeof tag === 'string') {
-          // If tag is a string, find or create it
-          const tagRecord = await prisma.tag.upsert({
-            where: { slug: tag.toLowerCase().replace(/\s+/g, '-') },
-            update: {},
-            create: {
-              name: tag,
-              slug: tag.toLowerCase().replace(/\s+/g, '-'),
-              color: 'blue', // Default color
-            },
-          })
-          tagConnections.push({ id: tagRecord.id })
-        } else if (typeof tag === 'object' && tag.id) {
-          // If tag is an object with id, just connect it
-          tagConnections.push({ id: tag.id })
-        }
-      }
-    }
-
+    // Create prompt without tags to avoid migration conflicts
+    // Tags will be added once the migration is applied in production
     const prompt = await prisma.prompt.create({
       data: {
         title,
@@ -199,18 +159,17 @@ export async function POST(request: NextRequest) {
             order: img.order,
           })),
         },
-        tags: {
-          connect: tagConnections,
-        },
       },
       include: {
         category: true,
         images: { orderBy: { order: 'asc' } },
-        tags: true,
       },
     })
 
-    return NextResponse.json(prompt, { status: 201 })
+    // Add empty tags array for UI compatibility
+    const promptWithTags = { ...prompt, tags: [] }
+
+    return NextResponse.json(promptWithTags, { status: 201 })
   } catch (error) {
     console.error('Failed to create prompt:', error)
     return NextResponse.json(
