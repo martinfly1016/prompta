@@ -164,11 +164,15 @@ body {
 
   /* Category Navigation Bar */
   .category-nav-bar {
+    position: sticky;
+    top: 72px;
+    z-index: 40;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 1rem;
-    background: hsl(var(--card));
+    background: hsl(var(--card) / 0.95);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid hsl(var(--border));
     overflow-x: auto;
     overflow-y: hidden;
