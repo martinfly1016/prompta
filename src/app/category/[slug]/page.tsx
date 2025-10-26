@@ -186,7 +186,7 @@ export default function CategoryPage() {
                     </div>
                   )}
 
-                  <div className="pt-3 border-t border-slate-700/30">
+                  <div className="mt-3">
                     <span className="text-xs text-slate-400 font-medium">
                       👁️ {prompt.views} 回閲覧
                     </span>

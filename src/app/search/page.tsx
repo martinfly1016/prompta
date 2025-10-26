@@ -273,7 +273,7 @@ export default function SearchPage() {
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-3 border-t border-slate-700/30">
+                        <div className="flex items-center justify-between mt-3">
                           <span className="text-xs bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 px-3 py-1.5 rounded-full font-medium border border-blue-400/20 backdrop-blur-sm">
                             {prompt.category.name}
                           </span>
