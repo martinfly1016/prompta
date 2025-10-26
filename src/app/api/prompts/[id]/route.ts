@@ -12,14 +12,33 @@ export async function GET(
     const { prisma } = await import('@/lib/prisma')
     const params = await context.params
 
-    const prompt = await prisma.prompt.findUnique({
-      where: { id: params.id },
-      include: {
-        category: true,
-        images: { orderBy: { order: 'asc' } },
-        tags: true,
-      },
-    })
+    let prompt
+
+    try {
+      // Try to fetch with tags (requires tag migration)
+      prompt = await prisma.prompt.findUnique({
+        where: { id: params.id },
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+          tags: true,
+        },
+      })
+    } catch (tagError) {
+      console.log('⚠️ Tags not available yet, fetching without tags...')
+      // Fallback: fetch without tags if table doesn't exist
+      prompt = await prisma.prompt.findUnique({
+        where: { id: params.id },
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+        },
+      })
+      // Add empty tags array for compatibility
+      if (prompt) {
+        prompt = { ...prompt, tags: [] }
+      }
+    }
 
     if (!prompt) {
       return NextResponse.json(
@@ -85,40 +104,77 @@ export async function PUT(
       }
     }
 
-    const prompt = await prisma.prompt.update({
-      where: { id: params.id },
-      data: {
-        title,
-        description,
-        content,
-        categoryId,
-        isPublished,
-        tags: {
-          set: [], // Clear existing tags
-          connect: tagConnections, // Connect new tags
-        },
-        ...(images && images.length > 0 && {
-          images: {
-            create: images.map((img: any) => ({
-              url: img.url,
-              blobKey: img.url.split('/').pop() || 'unknown',
-              fileName: img.fileName,
-              fileSize: img.fileSize,
-              mimeType: img.mimeType,
-              order: img.order,
-            })),
+    let prompt
+
+    try {
+      // Try to update with tags (requires tag migration)
+      prompt = await prisma.prompt.update({
+        where: { id: params.id },
+        data: {
+          title,
+          description,
+          content,
+          categoryId,
+          isPublished,
+          tags: {
+            set: [], // Clear existing tags
+            connect: tagConnections, // Connect new tags
           },
-        }),
-      },
-      include: {
-        category: true,
-        images: { orderBy: { order: 'asc' } },
-        tags: true,
-      },
-    })
+          ...(images && images.length > 0 && {
+            images: {
+              create: images.map((img: any) => ({
+                url: img.url,
+                blobKey: img.url.split('/').pop() || 'unknown',
+                fileName: img.fileName,
+                fileSize: img.fileSize,
+                mimeType: img.mimeType,
+                order: img.order,
+              })),
+            },
+          }),
+        },
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+          tags: true,
+        },
+      })
+    } catch (tagError) {
+      console.log('⚠️ Tags not available yet, updating without tags...')
+      // Fallback: update without tags if table doesn't exist
+      prompt = await prisma.prompt.update({
+        where: { id: params.id },
+        data: {
+          title,
+          description,
+          content,
+          categoryId,
+          isPublished,
+          ...(images && images.length > 0 && {
+            images: {
+              create: images.map((img: any) => ({
+                url: img.url,
+                blobKey: img.url.split('/').pop() || 'unknown',
+                fileName: img.fileName,
+                fileSize: img.fileSize,
+                mimeType: img.mimeType,
+                order: img.order,
+              })),
+            },
+          }),
+        },
+        include: {
+          category: true,
+          images: { orderBy: { order: 'asc' } },
+        },
+      })
+      // Add empty tags array for compatibility
+      prompt = { ...prompt, tags: [] }
+    }
 
     return NextResponse.json(prompt)
   } catch (error) {
+    console.error('Failed to update prompt:', error)
     return NextResponse.json(
       { error: 'プロンプト更新に失敗しました' },
       { status: 500 }
