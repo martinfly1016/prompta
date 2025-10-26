@@ -160,7 +160,7 @@ export default function Home() {
                   </div>
 
                   {/* 内容 */}
-                  <div className="p-4 flex flex-col flex-1">
+                  <div className="p-6 flex flex-col flex-1">
                     <h3 className="font-semibold mb-2 text-base leading-snug group-hover:text-primary transition-colors line-clamp-2 text-slate-100">
                       {prompt.title}
                     </h3>
