@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Search } from 'lucide-react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import TagChip from '@/components/TagChip'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
@@ -36,9 +37,13 @@ interface Prompt {
 }
 
 export default function Home() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   const [categories, setCategories] = useState<Category[]>([])
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +58,12 @@ export default function Home() {
 
         setCategories(catsData)
         setPrompts(promptsData.prompts || [])
+
+        // Get category from URL params
+        const categoryParam = searchParams.get('category')
+        if (categoryParam) {
+          setSelectedCategory(categoryParam)
+        }
       } catch (error) {
         console.error('Failed to fetch data:', error)
       } finally {
@@ -61,26 +72,51 @@ export default function Home() {
     }
 
     fetchData()
-  }, [])
+  }, [searchParams])
+
+  const handleCategoryClick = (categorySlug: string | null) => {
+    setSelectedCategory(categorySlug)
+    if (categorySlug) {
+      router.push(`?category=${categorySlug}`)
+    } else {
+      router.push('/')
+    }
+  }
+
+  // Filter prompts based on selected category
+  const filteredPrompts = selectedCategory
+    ? prompts.filter(p => p.category.slug === selectedCategory)
+    : prompts
 
   return (
     <main className="min-h-screen bg-background">
       {/* Category Navigation Bar */}
       {!isLoading && categories.length > 0 && (
         <nav className="category-nav-bar">
-          <Link href="/" className="category-nav-item">
+          <button
+            onClick={() => handleCategoryClick(null)}
+            className={`category-nav-item ${
+              !selectedCategory
+                ? 'bg-blue-500/20 text-blue-400 border-b-2 border-blue-400'
+                : ''
+            }`}
+          >
             <span className="category-nav-icon">📂</span>
             <span>全部</span>
-          </Link>
+          </button>
           {categories.map((cat) => (
-            <Link
+            <button
               key={cat.id}
-              href={`/category/${cat.slug}`}
-              className="category-nav-item"
+              onClick={() => handleCategoryClick(cat.slug)}
+              className={`category-nav-item ${
+                selectedCategory === cat.slug
+                  ? 'bg-blue-500/20 text-blue-400 border-b-2 border-blue-400'
+                  : ''
+              }`}
             >
               <span className="category-nav-icon">{cat.icon || '📌'}</span>
               <span>{cat.name}</span>
-            </Link>
+            </button>
           ))}
         </nav>
       )}
@@ -119,8 +155,14 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex items-end justify-between mb-14">
             <div>
-              <div className="text-sm font-semibold text-primary mb-2">人気のプロンプト</div>
-              <h2 className="text-4xl font-bold">トレンドプロンプト</h2>
+              <div className="text-sm font-semibold text-primary mb-2">
+                {selectedCategory ? 'カテゴリプロンプト' : '人気のプロンプト'}
+              </div>
+              <h2 className="text-4xl font-bold">
+                {selectedCategory
+                  ? categories.find(c => c.slug === selectedCategory)?.name
+                  : 'トレンドプロンプト'}
+              </h2>
             </div>
             <Link href="/search" className="text-primary hover:underline text-sm font-medium">
               すべて見る →
@@ -129,13 +171,15 @@ export default function Home() {
 
           {isLoading ? (
             <div className="text-center text-muted-foreground">読み込み中...</div>
-          ) : prompts.length === 0 ? (
+          ) : filteredPrompts.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
-              プロンプトはまだ利用できません。
+              {selectedCategory
+                ? 'このカテゴリにはプロンプトがありません。'
+                : 'プロンプトはまだ利用できません。'}
             </div>
           ) : (
             <div className="auto-grid-responsive">
-              {prompts.slice(0, 12).map((prompt) => (
+              {filteredPrompts.slice(0, 12).map((prompt) => (
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
