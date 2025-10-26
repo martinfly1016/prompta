@@ -165,8 +165,8 @@ body {
   /* Category Navigation Bar */
   .category-nav-bar {
     position: sticky !important;
-    top: 72px !important;
-    z-index: 40 !important;
+    top: 0 !important;
+    z-index: 60 !important;
     display: flex !important;
     align-items: center !important;
     gap: 0.5rem !important;
