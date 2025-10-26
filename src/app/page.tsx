@@ -137,8 +137,8 @@ export default function Home() {
               プロンプトはまだ利用できません。
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {prompts.slice(0, 8).map((prompt) => (
+            <div className="auto-grid-responsive">
+              {prompts.slice(0, 12).map((prompt) => (
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
