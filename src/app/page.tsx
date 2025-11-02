@@ -277,7 +277,7 @@ export default function Home() {
       </section>
 
       {/* Featured Prompts - Moved Up */}
-      <section className="pt-16 pb-32">
+      <section className="pt-16 pb-40">
         <div className="container mx-auto px-4">
           <div className="mb-12">
             <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-2">
