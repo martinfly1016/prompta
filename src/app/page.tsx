@@ -461,27 +461,22 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-16 border-t border-slate-800">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <footer className="bg-slate-900 text-slate-300 py-10 border-t border-slate-800">
+        <div className="mx-auto px-4 min-w-[800px] max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div>
-              <h3 className="font-bold text-white mb-4 text-lg">プロンプタ</h3>
+              <h3 className="font-bold text-white mb-3 text-lg">プロンプタ</h3>
               <p className="text-sm text-slate-400">
                 AIプロンプトの共有プラットフォーム。ChatGPT、Claudeなど様々なAIに対応。
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">ナビゲーション</h4>
-              <ul className="space-y-3 text-sm">
+              <h4 className="font-semibold text-white mb-3">ナビゲーション</h4>
+              <ul className="space-y-2 text-sm">
                 <li>
                   <Link href="/" className="hover:text-white transition-colors">
                     ホーム
                   </Link>
-                </li>
-                <li>
-                  <span className="text-slate-500 cursor-default">
-                    プロンプト検索 (ナビゲーションバー)
-                  </span>
                 </li>
                 <li>
                   <Link href="#categories" className="hover:text-white transition-colors">
@@ -491,22 +486,12 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-4">管理</h4>
-              <ul className="space-y-3 text-sm">
-                <li>
-                  <Link href="/admin/login" className="hover:text-white transition-colors">
-                    管理画面
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">言語</h4>
+              <h4 className="font-semibold text-white mb-3">言語</h4>
               <p className="text-sm">日本語 (日本)</p>
             </div>
           </div>
 
-          <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
+          <div className="border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
             <p>&copy; 2024 Prompta. All rights reserved.</p>
           </div>
         </div>
