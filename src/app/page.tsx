@@ -431,26 +431,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="bg-white border-2 border-blue-200 rounded-lg p-12 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">プロンプト作成者様へ</h2>
-            <p className="text-base text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              あなたが作成したプロンプトを共有しませんか?
-              <br className="hidden sm:block" />
-              管理画面からプロンプトを追加・管理できます。
-            </p>
-            <Link
-              href="/admin/login"
-              className="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
-            >
-              管理画面へログイン
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-10 border-t border-slate-800">
         <div className="container mx-auto px-4">
