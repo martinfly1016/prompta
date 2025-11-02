@@ -370,7 +370,7 @@ function HomeContent() {
       </section>
 
       {/* Featured Prompts - Moved Up */}
-      <section className="pt-16" style={{ paddingBottom: '22rem' }}>
+      <section className="pt-16" style={{ paddingBottom: '11rem' }}>
         <div className="container mx-auto px-4">
           <div className="mb-12">
             <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-2">
