@@ -219,17 +219,21 @@ export default function PromptPage() {
         <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
       </Suspense>
       <main className="min-h-screen bg-background">
-        <div className="px-4 py-8">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
-          >
-            <ArrowLeft size={20} />
-            ホームに戻る
-          </Link>
+        {/* Full-width back button section */}
+        <div className="w-full px-4 py-8">
+          <div style={{ maxWidth: '1920px', margin: '0 auto' }}>
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
+            >
+              <ArrowLeft size={20} />
+              ホームに戻る
+            </Link>
+          </div>
         </div>
 
-        <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
+        {/* Fixed 1920px width container for main content */}
+        <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="w-full px-4 py-12">
           {/* Breadcrumb */}
           {prompt.category && (
             <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
