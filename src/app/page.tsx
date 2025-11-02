@@ -432,7 +432,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-10 border-t border-slate-800">
+      <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 border-t border-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-3 gap-6 mb-8">
             <div>
