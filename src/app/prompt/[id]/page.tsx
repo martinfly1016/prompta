@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { Copy, Check, Share2, ArrowLeft } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
@@ -180,7 +179,6 @@ export default function PromptPage() {
   if (isLoading) {
     return (
       <>
-        <Header />
         <Suspense fallback={null}>
           <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
         </Suspense>
@@ -197,7 +195,6 @@ export default function PromptPage() {
   if (!prompt) {
     return (
       <>
-        <Header />
         <Suspense fallback={null}>
           <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
         </Suspense>
@@ -218,7 +215,6 @@ export default function PromptPage() {
 
   return (
     <>
-      <Header />
       <Suspense fallback={null}>
         <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
       </Suspense>
