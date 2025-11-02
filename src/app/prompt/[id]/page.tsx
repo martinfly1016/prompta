@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { Copy, Check, Share2, ArrowLeft } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 interface PromptImage {
   url: string
@@ -92,68 +94,66 @@ export default function PromptPage() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-12 text-center text-muted-foreground">
-          読み込み中...
-        </div>
-      </main>
+      <>
+        <Header />
+        <main className="min-h-screen bg-background">
+          <div className="container mx-auto px-4 py-12 text-center text-muted-foreground">
+            読み込み中...
+          </div>
+        </main>
+        <Footer />
+      </>
     )
   }
 
   if (!prompt) {
     return (
-      <main className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-12 text-center">
-          <p className="text-muted-foreground">プロンプトが見つかりません</p>
-          <Link href="/" className="text-primary hover:underline mt-4 inline-block">
-            ホームに戻る
-          </Link>
-        </div>
-      </main>
+      <>
+        <Header />
+        <main className="min-h-screen bg-background">
+          <div className="container mx-auto px-4 py-12 text-center">
+            <p className="text-muted-foreground">プロンプトが見つかりません</p>
+            <Link href="/" className="text-primary hover:underline mt-4 inline-block">
+              ホームに戻る
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </>
     )
   }
 
   const tags = Array.isArray(prompt.tags) ? prompt.tags : []
 
   return (
-    <main className="min-h-screen bg-background">
-      {/* Header */}
-      <header
-        className="shadow-lg"
-        style={{
-          background: 'linear-gradient(to right, rgb(37, 99, 235), rgb(147, 51, 234))',
-        }}
-      >
-        <div className="container mx-auto px-4 py-8">
-          <Link href="/" className="text-3xl font-bold text-white">
-            プロンプタ
+    <>
+      <Header />
+      <main className="min-h-screen bg-background">
+        <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
+          >
+            <ArrowLeft size={20} />
+            ホームに戻る
           </Link>
-        </div>
-      </header>
 
-      <div className="container mx-auto px-4 py-12">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
-        >
-          <ArrowLeft size={20} />
-          ホームに戻る
-        </Link>
-
-        <div className="max-w-3xl mx-auto">
+          <div className="max-w-3xl mx-auto">
           {/* Breadcrumb */}
-          <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground">
-              ホーム
-            </Link>
-            <span>/</span>
-            <Link
-              href={`/category/${prompt.category.slug}`}
-              className="hover:text-foreground"
-            >
-              {prompt.category.name}
-            </Link>
-          </div>
+          {prompt.category && (
+            <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+              <Link href="/" className="hover:text-foreground">
+                ホーム
+              </Link>
+              <span>/</span>
+              <Link
+                href={`/category/${prompt.category.slug}`}
+                className="hover:text-foreground"
+              >
+                {prompt.category.name}
+              </Link>
+            </div>
+          )}
 
           {/* Main Content */}
           <article className="space-y-6">
@@ -163,9 +163,11 @@ export default function PromptPage() {
               <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
 
               <div className="flex items-center gap-4 pt-4 border-t border-border flex-wrap">
-                <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full font-medium">
-                  {prompt.category.name}
-                </span>
+                {prompt.category && (
+                  <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full font-medium">
+                    {prompt.category.name}
+                  </span>
+                )}
                 <span className="text-sm text-muted-foreground">
                   👁️ {prompt.views}回閲覧
                 </span>
@@ -248,7 +250,9 @@ export default function PromptPage() {
             </div>
           </article>
         </div>
-      </div>
-    </main>
+        </div>
+      </main>
+      <Footer />
+    </>
   )
 }
