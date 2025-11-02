@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import TagChip from '@/components/TagChip'
+import SearchBar from '@/components/SearchBar'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface PromptImage {
@@ -24,6 +25,7 @@ interface Prompt {
   description: string
   views: number
   createdAt: string
+  category: { name: string; slug: string }
   images?: PromptImage[]
   tags?: Tag[]
 }
@@ -41,6 +43,10 @@ export default function CategoryPage() {
   const [category, setCategory] = useState<Category | null>(null)
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Prompt[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [isSearchMode, setIsSearchMode] = useState(false)
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -75,6 +81,39 @@ export default function CategoryPage() {
     fetchPrompts()
   }, [slug])
 
+  // Handle search within category
+  const handleSearch = async (query: string) => {
+    if (!query.trim()) return
+
+    setSearchQuery(query)
+    setIsSearching(true)
+    setIsSearchMode(true)
+
+    try {
+      const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&limit=50`)
+      const data = await res.json()
+      const results = (data.prompts || []).filter(
+        (p: Prompt) => p.category.slug === slug
+      )
+      setSearchResults(results)
+    } catch (error) {
+      console.error('Failed to search:', error)
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  // Handle search clear
+  const handleSearchClear = () => {
+    setSearchQuery('')
+    setSearchResults([])
+    setIsSearchMode(false)
+  }
+
+  // Filter prompts based on search mode
+  const filteredPrompts = isSearchMode ? searchResults : prompts
+
   return (
     <main className="min-h-screen bg-background">
       {/* Breadcrumb & Hero */}
@@ -89,15 +128,25 @@ export default function CategoryPage() {
               ホームに戻る
             </Link>
 
-            <div className="max-w-3xl">
+            <div className="max-w-3xl mb-12">
               <div className="text-6xl mb-6">{category?.icon || '📌'}</div>
               <h1 className="text-5xl md:text-6xl font-bold mb-4">{category?.name}</h1>
               <p className="text-lg text-muted-foreground">
                 {category?.description}
               </p>
               <div className="mt-6 text-sm font-medium text-primary">
-                全 {prompts.length} 件のプロンプト
+                全 {isSearchMode ? filteredPrompts.length : prompts.length} 件のプロンプト
               </div>
+            </div>
+
+            {/* Search Bar in Hero */}
+            <div className="max-w-md">
+              <SearchBar
+                onSearch={handleSearch}
+                onClear={handleSearchClear}
+                isSearching={isSearching}
+                hasResults={isSearchMode}
+              />
             </div>
           </div>
         </section>
@@ -110,6 +159,29 @@ export default function CategoryPage() {
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
               <p className="text-muted-foreground">読み込み中...</p>
             </div>
+          </div>
+        ) : isSearching ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+              <p className="text-muted-foreground">検索中...</p>
+            </div>
+          </div>
+        ) : isSearchMode && filteredPrompts.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-6">😕</div>
+            <h2 className="text-2xl font-bold mb-2">該当する内容が見つかりませんでした</h2>
+            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              「{searchQuery}」に一致するプロンプトはありません。
+              <br />
+              別のキーワードで試してください。
+            </p>
+            <button
+              onClick={handleSearchClear}
+              className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+            >
+              検索をクリア
+            </button>
           </div>
         ) : prompts.length === 0 ? (
           <div className="text-center py-20">
@@ -129,7 +201,7 @@ export default function CategoryPage() {
           </div>
         ) : (
           <div className="auto-grid-responsive">
-            {prompts.map((prompt) => (
+            {filteredPrompts.map((prompt) => (
               <Link
                 key={prompt.id}
                 href={`/prompt/${prompt.id}`}

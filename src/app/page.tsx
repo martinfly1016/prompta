@@ -2,9 +2,9 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { Search } from 'lucide-react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import TagChip from '@/components/TagChip'
+import SearchBar from '@/components/SearchBar'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface Category {
@@ -42,10 +42,18 @@ function CategoryNavigation({
   categories,
   isLoading,
   onCategoryChange,
+  onSearch,
+  onSearchClear,
+  isSearching,
+  hasSearchResults,
 }: {
   categories: Category[]
   isLoading: boolean
   onCategoryChange: (slug: string | null) => void
+  onSearch: (query: string) => void
+  onSearchClear: () => void
+  isSearching: boolean
+  hasSearchResults: boolean
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -96,6 +104,13 @@ function CategoryNavigation({
               <span>{cat.name}</span>
             </button>
           ))}
+          <div className="search-bar-nav-spacer"></div>
+          <SearchBar
+            onSearch={onSearch}
+            onClear={onSearchClear}
+            isSearching={isSearching}
+            hasResults={hasSearchResults}
+          />
         </nav>
       )}
     </>
@@ -107,6 +122,10 @@ export default function Home() {
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Prompt[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [isSearchMode, setIsSearchMode] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -136,10 +155,40 @@ export default function Home() {
     setSelectedCategory(slug)
   }
 
-  // Filter prompts based on selected category
-  const filteredPrompts = selectedCategory
-    ? prompts.filter(p => p.category.slug === selectedCategory)
-    : prompts
+  // Handle search
+  const handleSearch = async (query: string) => {
+    if (!query.trim()) return
+
+    setSearchQuery(query)
+    setIsSearching(true)
+    setIsSearchMode(true)
+
+    try {
+      const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&limit=50`)
+      const data = await res.json()
+      const results = (data.prompts || []).filter((p: Prompt) => p)
+      setSearchResults(results)
+    } catch (error) {
+      console.error('Failed to search:', error)
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  // Handle search clear
+  const handleSearchClear = () => {
+    setSearchQuery('')
+    setSearchResults([])
+    setIsSearchMode(false)
+  }
+
+  // Filter prompts based on selected category or search mode
+  const filteredPrompts = isSearchMode
+    ? searchResults
+    : selectedCategory
+      ? prompts.filter(p => p.category.slug === selectedCategory)
+      : prompts
 
   return (
     <main className="min-h-screen bg-background">
@@ -149,6 +198,10 @@ export default function Home() {
           categories={categories}
           isLoading={isLoading}
           onCategoryChange={handleSelectedCategoryChange}
+          onSearch={handleSearch}
+          onSearchClear={handleSearchClear}
+          isSearching={isSearching}
+          hasSearchResults={isSearchMode}
         />
       </Suspense>
 
@@ -170,13 +223,9 @@ export default function Home() {
               仕事の効率化から創造性の向上まで、あらゆるシーンで役立つプロンプト。
             </p>
 
-            <Link
-              href="/search"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200"
-            >
-              <Search size={22} />
-              プロンプトを検索
-            </Link>
+            <p className="text-md text-primary font-semibold">
+              💡 上部のナビゲーションバーから簡単に検索できます
+            </p>
           </div>
         </div>
       </section>
@@ -187,21 +236,47 @@ export default function Home() {
           <div className="flex items-end justify-between mb-14">
             <div>
               <div className="text-sm font-semibold text-primary mb-2">
-                {selectedCategory ? 'カテゴリプロンプト' : '人気のプロンプト'}
+                {isSearchMode
+                  ? `検索結果: "${searchQuery}"`
+                  : selectedCategory
+                    ? 'カテゴリプロンプト'
+                    : '人気のプロンプト'}
               </div>
               <h2 className="text-4xl font-bold">
-                {selectedCategory
-                  ? categories.find(c => c.slug === selectedCategory)?.name
-                  : 'トレンドプロンプト'}
+                {isSearchMode
+                  ? `${filteredPrompts.length}個見つかりました`
+                  : selectedCategory
+                    ? categories.find(c => c.slug === selectedCategory)?.name
+                    : 'トレンドプロンプト'}
               </h2>
             </div>
-            <Link href="/search" className="text-primary hover:underline text-sm font-medium">
-              すべて見る →
-            </Link>
           </div>
 
           {isLoading ? (
             <div className="text-center text-muted-foreground">読み込み中...</div>
+          ) : isSearching ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+                <p className="text-muted-foreground">検索中...</p>
+              </div>
+            </div>
+          ) : isSearchMode && filteredPrompts.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-6">😕</div>
+              <h2 className="text-2xl font-bold mb-2">該当する内容が見つかりませんでした</h2>
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                「{searchQuery}」に一致するプロンプトはありません。
+                <br />
+                別のキーワードで試してください。
+              </p>
+              <button
+                onClick={handleSearchClear}
+                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+              >
+                検索をクリア
+              </button>
+            </div>
           ) : filteredPrompts.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               {selectedCategory
@@ -315,9 +390,9 @@ export default function Home() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/search" className="hover:text-white transition-colors">
-                    プロンプト検索
-                  </Link>
+                  <span className="text-slate-500 cursor-default">
+                    プロンプト検索 (ナビゲーションバー)
+                  </span>
                 </li>
                 <li>
                   <Link href="#categories" className="hover:text-white transition-colors">
