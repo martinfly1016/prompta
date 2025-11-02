@@ -7,14 +7,12 @@ interface SearchBarProps {
   onSearch: (query: string) => void
   onClear: () => void
   isSearching?: boolean
-  hasResults?: boolean
 }
 
 export default function SearchBar({
   onSearch,
   onClear,
   isSearching = false,
-  hasResults = false,
 }: SearchBarProps) {
   const [query, setQuery] = useState('')
 
@@ -56,7 +54,7 @@ export default function SearchBar({
             className="search-bar-input"
             disabled={isSearching}
           />
-          {query && hasResults && (
+          {query && (
             <button
               type="button"
               onClick={handleClear}

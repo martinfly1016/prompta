@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import TagChip from '@/components/TagChip'
 import SearchBar from '@/components/SearchBar'
+import SkeletonNav from '@/components/SkeletonNav'
+import PromptCardSkeleton from '@/components/PromptCardSkeleton'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface Category {
@@ -45,7 +47,6 @@ function CategoryNavigation({
   onSearch,
   onSearchClear,
   isSearching,
-  hasSearchResults,
 }: {
   categories: Category[]
   isLoading: boolean
@@ -53,7 +54,6 @@ function CategoryNavigation({
   onSearch: (query: string) => void
   onSearchClear: () => void
   isSearching: boolean
-  hasSearchResults: boolean
 }) {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -77,7 +77,9 @@ function CategoryNavigation({
 
   return (
     <>
-      {!isLoading && categories.length > 0 && (
+      {isLoading ? (
+        <SkeletonNav />
+      ) : (
         <nav className="category-nav-bar">
           <button
             onClick={() => handleCategoryClick(null)}
@@ -109,7 +111,6 @@ function CategoryNavigation({
             onSearch={onSearch}
             onClear={onSearchClear}
             isSearching={isSearching}
-            hasResults={hasSearchResults}
           />
         </nav>
       )}
@@ -126,14 +127,22 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState<Prompt[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [isSearchMode, setIsSearchMode] = useState(false)
+  const [isCategoryTransitioning, setIsCategoryTransitioning] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [searchError, setSearchError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setError(null)
         const [catsRes, promptsRes] = await Promise.all([
           fetch('/api/categories'),
           fetch('/api/prompts?limit=12'),
         ])
+
+        if (!catsRes.ok || !promptsRes.ok) {
+          throw new Error('データの取得に失敗しました。もう一度お試しください。')
+        }
 
         const catsData = await catsRes.json()
         const promptsData = await promptsRes.json()
@@ -142,6 +151,7 @@ export default function Home() {
         setPrompts(promptsData.prompts || [])
       } catch (error) {
         console.error('Failed to fetch data:', error)
+        setError(error instanceof Error ? error.message : 'ページの読み込みに失敗しました。')
       } finally {
         setIsLoading(false)
       }
@@ -152,7 +162,13 @@ export default function Home() {
 
   // Update selected category when it changes from the nav component
   const handleSelectedCategoryChange = (slug: string | null) => {
-    setSelectedCategory(slug)
+    // Only show transition loading if category actually changed
+    if (slug !== selectedCategory) {
+      setIsCategoryTransitioning(true)
+      setSelectedCategory(slug)
+      // Remove loading state after brief transition for smooth effect
+      setTimeout(() => setIsCategoryTransitioning(false), 150)
+    }
   }
 
   // Handle search
@@ -162,14 +178,19 @@ export default function Home() {
     setSearchQuery(query)
     setIsSearching(true)
     setIsSearchMode(true)
+    setSearchError(null)
 
     try {
       const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&limit=50`)
+      if (!res.ok) {
+        throw new Error('検索に失敗しました。もう一度お試しください。')
+      }
       const data = await res.json()
       const results = (data.prompts || []).filter((p: Prompt) => p)
       setSearchResults(results)
     } catch (error) {
       console.error('Failed to search:', error)
+      setSearchError(error instanceof Error ? error.message : '検索中にエラーが発生しました。')
       setSearchResults([])
     } finally {
       setIsSearching(false)
@@ -181,6 +202,37 @@ export default function Home() {
     setSearchQuery('')
     setSearchResults([])
     setIsSearchMode(false)
+    setSearchError(null)
+  }
+
+  // Retry function for loading
+  const handleRetryLoad = () => {
+    setIsLoading(true)
+    setError(null)
+    const fetchData = async () => {
+      try {
+        const [catsRes, promptsRes] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/prompts?limit=12'),
+        ])
+
+        if (!catsRes.ok || !promptsRes.ok) {
+          throw new Error('データの取得に失敗しました。もう一度お試しください。')
+        }
+
+        const catsData = await catsRes.json()
+        const promptsData = await promptsRes.json()
+
+        setCategories(catsData)
+        setPrompts(promptsData.prompts || [])
+      } catch (error) {
+        console.error('Failed to fetch data:', error)
+        setError(error instanceof Error ? error.message : 'ページの読み込みに失敗しました。')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchData()
   }
 
   // Filter prompts based on selected category or search mode
@@ -201,7 +253,6 @@ export default function Home() {
           onSearch={handleSearch}
           onSearchClear={handleSearchClear}
           isSearching={isSearching}
-          hasSearchResults={isSearchMode}
         />
       </Suspense>
 
@@ -252,14 +303,46 @@ export default function Home() {
             </div>
           </div>
 
-          {isLoading ? (
-            <div className="text-center text-muted-foreground">読み込み中...</div>
+          {error ? (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-6">⚠️</div>
+              <h2 className="text-2xl font-bold mb-2">データの読み込みエラー</h2>
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                {error}
+              </p>
+              <button
+                onClick={handleRetryLoad}
+                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+              >
+                もう一度試す
+              </button>
+            </div>
+          ) : isLoading ? (
+            <div className="auto-grid-responsive">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <PromptCardSkeleton key={i} />
+              ))}
+            </div>
           ) : isSearching ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-center">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
                 <p className="text-muted-foreground">検索中...</p>
               </div>
+            </div>
+          ) : searchError ? (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-6">⚠️</div>
+              <h2 className="text-2xl font-bold mb-2">検索エラー</h2>
+              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                {searchError}
+              </p>
+              <button
+                onClick={handleSearchClear}
+                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+              >
+                検索をクリア
+              </button>
             </div>
           ) : isSearchMode && filteredPrompts.length === 0 ? (
             <div className="text-center py-20">
@@ -284,7 +367,12 @@ export default function Home() {
                 : 'プロンプトはまだ利用できません。'}
             </div>
           ) : (
-            <div className="auto-grid-responsive">
+            <div
+              className="auto-grid-responsive transition-opacity duration-150"
+              style={{
+                opacity: isCategoryTransitioning ? 0.5 : 1,
+              }}
+            >
               {filteredPrompts.slice(0, 12).map((prompt) => (
                 <Link
                   key={prompt.id}
@@ -297,6 +385,7 @@ export default function Home() {
                       <img
                         src={getImageProxyUrl(prompt.images[0].url)}
                         alt={prompt.title}
+                        loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       />
                     ) : (

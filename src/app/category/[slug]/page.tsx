@@ -47,6 +47,7 @@ export default function CategoryPage() {
   const [searchResults, setSearchResults] = useState<Prompt[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [isSearchMode, setIsSearchMode] = useState(false)
+  const [isSearchTransitioning, setIsSearchTransitioning] = useState(false)
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -87,6 +88,7 @@ export default function CategoryPage() {
 
     setSearchQuery(query)
     setIsSearching(true)
+    setIsSearchTransitioning(true)
     setIsSearchMode(true)
 
     try {
@@ -101,14 +103,19 @@ export default function CategoryPage() {
       setSearchResults([])
     } finally {
       setIsSearching(false)
+      // Remove transition loading after brief delay for smooth effect
+      setTimeout(() => setIsSearchTransitioning(false), 150)
     }
   }
 
   // Handle search clear
   const handleSearchClear = () => {
+    setIsSearchTransitioning(true)
     setSearchQuery('')
     setSearchResults([])
     setIsSearchMode(false)
+    // Remove transition loading after brief delay
+    setTimeout(() => setIsSearchTransitioning(false), 150)
   }
 
   // Filter prompts based on search mode
@@ -145,7 +152,6 @@ export default function CategoryPage() {
                 onSearch={handleSearch}
                 onClear={handleSearchClear}
                 isSearching={isSearching}
-                hasResults={isSearchMode}
               />
             </div>
           </div>
@@ -200,7 +206,12 @@ export default function CategoryPage() {
             </Link>
           </div>
         ) : (
-          <div className="auto-grid-responsive">
+          <div
+            className="auto-grid-responsive transition-opacity duration-150"
+            style={{
+              opacity: isSearchTransitioning ? 0.5 : 1,
+            }}
+          >
             {filteredPrompts.map((prompt) => (
               <Link
                 key={prompt.id}
@@ -213,6 +224,7 @@ export default function CategoryPage() {
                     <img
                       src={getImageProxyUrl(prompt.images[0].url)}
                       alt={prompt.title}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                   ) : (
