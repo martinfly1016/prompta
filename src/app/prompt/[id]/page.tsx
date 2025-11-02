@@ -248,11 +248,11 @@ export default function PromptPage() {
           {/* Main Content */}
           <article className="space-y-6">
             {/* Header - Card Style */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-gray-700 p-8 space-y-4">
+            <div className="bg-white dark:bg-slate-900 rounded-xl p-8 space-y-4">
               <h1 className="text-5xl font-bold text-foreground">{prompt.title}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
 
-              <div className="flex items-center gap-4 pt-4 border-t border-border flex-wrap">
+              <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex-wrap">
                 {prompt.category && (
                   <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full font-medium">
                     {prompt.category.name}
@@ -266,7 +266,7 @@ export default function PromptPage() {
 
             {/* Image Gallery - Card Style */}
             {prompt.images && prompt.images.length > 0 && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-gray-700 p-8 space-y-4">
+              <div className="bg-white dark:bg-slate-900 rounded-xl p-8 space-y-4">
                 <h2 className="text-3xl font-bold text-foreground">効果画像</h2>
                 <ImageGallery images={prompt.images} />
               </div>
@@ -287,7 +287,7 @@ export default function PromptPage() {
             )}
 
             {/* Content - Emphasized Card Style */}
-            <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 space-y-4 border-l-4 border-blue-500">
+            <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border-l-4 border-l-blue-500 p-8 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   プロンプト
@@ -319,7 +319,7 @@ export default function PromptPage() {
                 </div>
               </div>
 
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-700">
+              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg overflow-hidden">
                 <pre className="p-6 text-white overflow-x-auto font-mono text-sm whitespace-pre-wrap break-words">
                   {prompt.content}
                 </pre>
@@ -327,7 +327,7 @@ export default function PromptPage() {
             </div>
 
             {/* Info - Card Style */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 border-l-4 border-l-blue-500 rounded-lg p-8">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-l-blue-500 rounded-lg p-8">
               <h3 className="text-lg font-bold text-blue-900 dark:text-blue-200 mb-4 flex items-center gap-2">
                 <span className="text-2xl">💡</span>
                 このプロンプトの使い方
