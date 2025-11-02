@@ -1,12 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { Copy, Check, Share2, ArrowLeft } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SearchBar from '@/components/SearchBar'
+import SkeletonNav from '@/components/SkeletonNav'
 
 interface PromptImage {
   url: string
@@ -17,6 +19,14 @@ interface Tag {
   id: string
   name: string
   color?: string
+}
+
+interface Category {
+  id: string
+  name: string
+  slug: string
+  icon?: string
+  _count?: { prompts: number }
 }
 
 interface Prompt {
@@ -31,6 +41,60 @@ interface Prompt {
   images?: PromptImage[]
 }
 
+// Navigation component for detail page
+function CategoryNavigation({
+  categories,
+  isLoading,
+}: {
+  categories: Category[]
+  isLoading: boolean
+}) {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const handleCategoryClick = (categorySlug: string | null) => {
+    if (categorySlug) {
+      router.push(`/?category=${categorySlug}`)
+    } else {
+      router.push('/')
+    }
+  }
+
+  return (
+    <>
+      {isLoading ? (
+        <SkeletonNav />
+      ) : (
+        <nav className="category-nav-bar">
+          <button
+            onClick={() => handleCategoryClick(null)}
+            className="category-nav-item"
+          >
+            <span className="category-nav-icon">📂</span>
+            <span>全部</span>
+          </button>
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryClick(cat.slug)}
+              className="category-nav-item"
+            >
+              <span className="category-nav-icon">{cat.icon || '📌'}</span>
+              <span>{cat.name}</span>
+            </button>
+          ))}
+          <div className="search-bar-nav-spacer"></div>
+          <SearchBar
+            onSearch={() => {}}
+            onClear={() => {}}
+            isSearching={false}
+          />
+        </nav>
+      )}
+    </>
+  )
+}
+
 export default function PromptPage() {
   const params = useParams()
   const id = params.id as string
@@ -38,6 +102,8 @@ export default function PromptPage() {
   const [prompt, setPrompt] = useState<Prompt | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [copied, setCopied] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [categoriesLoading, setCategoriesLoading] = useState(true)
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -61,6 +127,25 @@ export default function PromptPage() {
 
     fetchPrompt()
   }, [id])
+
+  // Fetch categories for navigation
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('/api/categories')
+        if (res.ok) {
+          const data = await res.json()
+          setCategories(data)
+        }
+      } catch (error) {
+        console.error('Failed to fetch categories:', error)
+      } finally {
+        setCategoriesLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
 
   const handleCopy = async () => {
     if (!prompt) return
@@ -96,6 +181,9 @@ export default function PromptPage() {
     return (
       <>
         <Header />
+        <Suspense fallback={null}>
+          <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+        </Suspense>
         <main className="min-h-screen bg-background">
           <div className="container mx-auto px-4 py-12 text-center text-muted-foreground">
             読み込み中...
@@ -110,6 +198,9 @@ export default function PromptPage() {
     return (
       <>
         <Header />
+        <Suspense fallback={null}>
+          <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+        </Suspense>
         <main className="min-h-screen bg-background">
           <div className="container mx-auto px-4 py-12 text-center">
             <p className="text-muted-foreground">プロンプトが見つかりません</p>
@@ -128,6 +219,9 @@ export default function PromptPage() {
   return (
     <>
       <Header />
+      <Suspense fallback={null}>
+        <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+      </Suspense>
       <main className="min-h-screen bg-background">
         <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
           <Link
