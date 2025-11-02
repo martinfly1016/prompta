@@ -463,7 +463,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-10 border-t border-slate-800">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-6 mb-8">
             <div>
               <h3 className="font-bold text-white mb-3 text-lg">プロンプタ</h3>
               <p className="text-sm text-slate-400">
