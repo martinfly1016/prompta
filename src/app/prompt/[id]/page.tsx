@@ -48,7 +48,6 @@ function CategoryNavigation({
   categories: Category[]
   isLoading: boolean
 }) {
-  const searchParams = useSearchParams()
   const router = useRouter()
 
   const handleCategoryClick = (categorySlug: string | null) => {
@@ -292,7 +291,7 @@ export default function PromptPage() {
             )}
 
             {/* Content - Emphasized Card Style - Light Blue Background */}
-            <div className="rounded-lg border-l-4 border-l-blue-500 p-8 space-y-4 mt-2.5" style={{ backgroundColor: '#f0f7ff' }}>
+            <div className="rounded-lg border-l-4 border-l-blue-500 p-8 space-y-4 !mt-8" style={{ backgroundColor: '#f0f7ff' }}>
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   プロンプト
