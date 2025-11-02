@@ -253,7 +253,7 @@ export default function PromptPage() {
           {/* Main Content */}
           <article className="space-y-6">
             {/* Header - Card Style */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl p-8 space-y-4">
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-8 space-y-4">
               <h1 className="text-5xl font-bold text-foreground">{prompt.title}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
 
@@ -271,7 +271,7 @@ export default function PromptPage() {
 
             {/* Image Gallery - Card Style */}
             {prompt.images && prompt.images.length > 0 && (
-              <div className="bg-white dark:bg-slate-900 rounded-xl p-8 space-y-4">
+              <div className="bg-gray-50 dark:bg-slate-800 rounded-lg p-8 space-y-4">
                 <h2 className="text-3xl font-bold text-foreground">効果画像</h2>
                 <ImageGallery images={prompt.images} />
               </div>
@@ -292,7 +292,7 @@ export default function PromptPage() {
             )}
 
             {/* Content - Emphasized Card Style */}
-            <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-xl border-l-4 border-l-blue-500 p-8 space-y-4">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border-l-4 border-l-blue-500 p-8 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   プロンプト
@@ -332,12 +332,12 @@ export default function PromptPage() {
             </div>
 
             {/* Info - Card Style */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-l-blue-500 rounded-lg p-8">
-              <h3 className="text-lg font-bold text-blue-900 dark:text-blue-200 mb-4 flex items-center gap-2">
+            <div className="bg-gray-50 dark:bg-slate-800 border-l-4 border-l-blue-500 rounded-lg p-8">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
                 <span className="text-2xl">💡</span>
                 このプロンプトの使い方
               </h3>
-              <ol className="text-base text-blue-800 dark:text-blue-300 space-y-3 list-decimal list-inside">
+              <ol className="text-base text-gray-700 dark:text-gray-300 space-y-3 list-decimal list-inside">
                 <li className="font-medium">上の「コピー」ボタンをクリックしてプロンプトをコピーします</li>
                 <li className="font-medium">ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</li>
                 <li className="font-medium">Enterキーを押して実行します</li>
