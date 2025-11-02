@@ -221,7 +221,7 @@ export default function PromptPage() {
       <main className="min-h-screen bg-background">
         {/* Full-width back button section */}
         <div className="px-4 py-8">
-          <div className="mx-auto" style={{ maxWidth: '1888px' }}>
+          <div className="mx-auto" style={{ maxWidth: '1280px' }}>
             <Link
               href="/"
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
@@ -232,8 +232,8 @@ export default function PromptPage() {
           </div>
         </div>
 
-        {/* Fixed 1920px width container for main content */}
-        <div className="mx-auto px-4 py-12" style={{ maxWidth: '1888px' }}>
+        {/* Fixed 1280px width container for main content */}
+        <div className="mx-auto px-4 py-12" style={{ maxWidth: '1280px' }}>
           {/* Breadcrumb */}
           {prompt.category && (
             <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
