@@ -243,7 +243,7 @@ export default function Home() {
       : prompts
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-gray-50">
       {/* Category Navigation Bar - Wrapped in Suspense */}
       <Suspense fallback={null}>
         <CategoryNavigation
@@ -256,25 +256,20 @@ export default function Home() {
         />
       </Suspense>
 
-      {/* Hero Section - Enhanced */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl dark:bg-blue-900/20"></div>
-          <div className="absolute bottom-20 right-10 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl dark:bg-indigo-900/20"></div>
-        </div>
-
-        <div className="relative container mx-auto px-4 py-24">
+      {/* Hero Section - Simplified */}
+      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 py-24">
+        <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white">
-              AIを使いこなすための<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">プロンプト集</span>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              AIを使いこなすための<span className="text-blue-600">プロンプト集</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-700 dark:text-slate-300 mb-10 leading-relaxed font-medium">
+            <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed">
               ChatGPT、Claude、その他のAIツール向けの高品質なプロンプトを無料で提供。
               <br className="hidden sm:block" />
               仕事の効率化から創造性の向上まで、あらゆるシーンで役立つプロンプト。
             </p>
 
-            <p className="text-base text-blue-600 dark:text-blue-400 font-semibold">
+            <p className="text-sm text-blue-600 font-semibold">
               💡 上部のナビゲーションバーから簡単に検索できます
             </p>
           </div>
@@ -282,37 +277,35 @@ export default function Home() {
       </section>
 
       {/* Featured Prompts - Moved Up */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex items-end justify-between mb-14">
-            <div>
-              <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-3">
-                {isSearchMode
-                  ? `検索結果: "${searchQuery}"`
-                  : selectedCategory
-                    ? 'カテゴリプロンプト'
-                    : '人気のプロンプト'}
-              </div>
-              <h2 className="text-5xl font-bold text-gray-900 dark:text-white">
-                {isSearchMode
-                  ? `${filteredPrompts.length}個見つかりました`
-                  : selectedCategory
-                    ? categories.find(c => c.slug === selectedCategory)?.name
-                    : 'トレンドプロンプト'}
-              </h2>
+          <div className="mb-12">
+            <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-2">
+              {isSearchMode
+                ? `検索結果: "${searchQuery}"`
+                : selectedCategory
+                  ? 'カテゴリプロンプト'
+                  : '人気のプロンプト'}
             </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              {isSearchMode
+                ? `${filteredPrompts.length}個見つかりました`
+                : selectedCategory
+                  ? categories.find(c => c.slug === selectedCategory)?.name
+                  : 'トレンドプロンプト'}
+            </h2>
           </div>
 
           {error ? (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-6">⚠️</div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">データの読み込みエラー</h2>
-              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
+              <div className="text-6xl mb-4">⚠️</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">データの読み込みエラー</h2>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                 {error}
               </p>
               <button
                 onClick={handleRetryLoad}
-                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
               >
                 もう一度試す
               </button>
@@ -331,31 +324,31 @@ export default function Home() {
               </div>
             </div>
           ) : searchError ? (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-6">⚠️</div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">検索エラー</h2>
-              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
+              <div className="text-6xl mb-4">⚠️</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">検索エラー</h2>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                 {searchError}
               </p>
               <button
                 onClick={handleSearchClear}
-                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
               >
                 検索をクリア
               </button>
             </div>
           ) : isSearchMode && filteredPrompts.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-6">😕</div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">該当する内容が見つかりませんでした</h2>
-              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 text-center">
+              <div className="text-6xl mb-4">😕</div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">該当する内容が見つかりませんでした</h2>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
                 「{searchQuery}」に一致するプロンプトはありません。
                 <br />
                 別のキーワードで試してください。
               </p>
               <button
                 onClick={handleSearchClear}
-                className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+                className="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
               >
                 検索をクリア
               </button>
@@ -377,16 +370,16 @@ export default function Home() {
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
-                  className="group flex flex-col h-full bg-gradient-to-br from-slate-800/40 to-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20 ring-1 ring-white/5 hover:ring-primary/30 card-shine"
+                  className="group flex flex-col h-full bg-white border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:border-blue-300 hover:shadow-md"
                 >
-                  {/* 图片 */}
-                  <div className="relative w-full bg-gradient-to-br from-slate-700/50 via-slate-800/50 to-slate-900/50 overflow-hidden flex-shrink-0 image-overlay" style={{paddingBottom: '100%'}}>
+                  {/* 画像 */}
+                  <div className="relative w-full bg-gray-100 overflow-hidden flex-shrink-0" style={{paddingBottom: '100%'}}>
                     {prompt.images && prompt.images.length > 0 ? (
                       <img
                         src={getImageProxyUrl(prompt.images[0].url)}
                         alt={prompt.title}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-4xl">
@@ -395,16 +388,16 @@ export default function Home() {
                     )}
                   </div>
 
-                  {/* 内容 */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-bold mb-3 text-lg leading-snug group-hover:text-primary transition-colors line-clamp-2 text-white">
+                  {/* コンテンツ */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-bold mb-2 text-base leading-snug text-gray-900 line-clamp-2">
                       {prompt.title}
                     </h3>
-                    <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-1 leading-relaxed">
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1 leading-relaxed">
                       {prompt.description}
                     </p>
 
-                    {/* Tags */}
+                    {/* タグ */}
                     {prompt.tags && prompt.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-3">
                         {prompt.tags.slice(0, 3).map((tag) => (
@@ -415,18 +408,18 @@ export default function Home() {
                           />
                         ))}
                         {prompt.tags.length > 3 && (
-                          <span className="text-xs text-slate-400 px-2.5 py-1">
+                          <span className="text-xs text-gray-500 px-2">
                             +{prompt.tags.length - 3}
                           </span>
                         )}
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-auto">
-                      <span className="text-xs bg-gradient-to-r from-blue-500/30 to-indigo-500/30 text-blue-200 px-3 py-1.5 rounded-full font-semibold border border-blue-400/30 backdrop-blur-sm">
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                      <span className="text-xs bg-blue-50 border border-blue-200 text-blue-700 px-2.5 py-1 rounded font-medium">
                         {prompt.category.name}
                       </span>
-                      <span className="text-xs text-slate-500 font-semibold">
+                      <span className="text-xs text-gray-500 font-medium">
                         👁️ {prompt.views}
                       </span>
                     </div>
@@ -439,24 +432,22 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
-        </div>
-
-        <div className="relative container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold mb-6 text-white">プロンプト作成者様へ</h2>
-          <p className="text-lg mb-10 max-w-2xl mx-auto text-blue-50 font-medium leading-relaxed">
-            あなたが作成したプロンプトを共有しませんか?
-            <br className="hidden sm:block" />
-            管理画面からプロンプトを追加・管理できます。
-          </p>
-          <Link
-            href="/admin/login"
-            className="inline-block px-10 py-4 bg-white text-blue-600 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-200"
-          >
-            管理画面へログイン
-          </Link>
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="bg-white border-2 border-blue-200 rounded-lg p-12 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">プロンプト作成者様へ</h2>
+            <p className="text-base text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              あなたが作成したプロンプトを共有しませんか?
+              <br className="hidden sm:block" />
+              管理画面からプロンプトを追加・管理できます。
+            </p>
+            <Link
+              href="/admin/login"
+              className="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+            >
+              管理画面へログイン
+            </Link>
+          </div>
         </div>
       </section>
 

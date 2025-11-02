@@ -122,7 +122,7 @@ export default function CategoryPage() {
   const filteredPrompts = isSearchMode ? searchResults : prompts
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-gray-50">
       {/* Breadcrumb & Hero */}
       {!isLoading && category && (
         <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 py-16">
@@ -174,33 +174,33 @@ export default function CategoryPage() {
             </div>
           </div>
         ) : isSearchMode && filteredPrompts.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-6">😕</div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">該当する内容が見つかりませんでした</h2>
-            <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 text-center">
+            <div className="text-6xl mb-4">😕</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">該当する内容が見つかりませんでした</h2>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               「{searchQuery}」に一致するプロンプトはありません。
               <br />
               別のキーワードで試してください。
             </p>
             <button
               onClick={handleSearchClear}
-              className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
               検索をクリア
             </button>
           </div>
         ) : prompts.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-6xl mb-6">📭</div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">プロンプトがありません</h2>
-            <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
+            <div className="text-6xl mb-4">📭</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">プロンプトがありません</h2>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               このカテゴリにはまだプロンプトが登録されていません。
               <br />
               近日公開予定です。
             </p>
             <Link
               href="/"
-              className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
+              className="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
               ホームに戻る
             </Link>
@@ -216,30 +216,30 @@ export default function CategoryPage() {
               <Link
                 key={prompt.id}
                 href={`/prompt/${prompt.id}`}
-                className="group flex flex-col h-full bg-gradient-to-br from-slate-800/40 to-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20 ring-1 ring-white/5 hover:ring-primary/30 card-shine"
+                className="group flex flex-col h-full bg-white border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:border-blue-300 hover:shadow-md"
               >
                 {/* 画像 */}
-                <div className="relative w-full aspect-square bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-slate-800 dark:to-slate-700 overflow-hidden flex-shrink-0 image-overlay">
+                <div className="relative w-full bg-gray-100 overflow-hidden flex-shrink-0" style={{paddingBottom: '100%'}}>
                   {prompt.images && prompt.images.length > 0 ? (
                     <img
                       src={getImageProxyUrl(prompt.images[0].url)}
                       alt={prompt.title}
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl">
+                    <div className="absolute inset-0 flex items-center justify-center text-4xl">
                       ✨
                     </div>
                   )}
                 </div>
 
                 {/* コンテンツ */}
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-bold mb-3 text-lg leading-snug group-hover:text-primary transition-colors line-clamp-2 text-white">
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="font-bold mb-2 text-base leading-snug text-gray-900 line-clamp-2">
                     {prompt.title}
                   </h3>
-                  <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-1 leading-relaxed">
+                  <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1 leading-relaxed">
                     {prompt.description}
                   </p>
 
@@ -254,15 +254,15 @@ export default function CategoryPage() {
                         />
                       ))}
                       {prompt.tags.length > 3 && (
-                        <span className="text-xs text-muted-foreground px-2.5 py-1">
+                        <span className="text-xs text-gray-500 px-2">
                           +{prompt.tags.length - 3}
                         </span>
                       )}
                     </div>
                   )}
 
-                  <div className="mt-auto">
-                    <span className="text-xs text-slate-500 font-semibold">
+                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                    <span className="text-xs text-gray-500 font-medium">
                       👁️ {prompt.views} 回閲覧
                     </span>
                   </div>
