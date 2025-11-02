@@ -7,6 +7,7 @@ import TagChip from '@/components/TagChip'
 import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
 import PromptCardSkeleton from '@/components/PromptCardSkeleton'
+import Pagination from '@/components/Pagination'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface Category {
@@ -118,7 +119,17 @@ function CategoryNavigation({
   )
 }
 
-export default function Home() {
+interface PaginationData {
+  page: number
+  limit: number
+  total: number
+  pages: number
+}
+
+function HomeContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   const [categories, setCategories] = useState<Category[]>([])
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -130,6 +141,27 @@ export default function Home() {
   const [isCategoryTransitioning, setIsCategoryTransitioning] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [searchError, setSearchError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pagination, setPagination] = useState<PaginationData>({
+    page: 1,
+    limit: 20,
+    total: 0,
+    pages: 0,
+  })
+  const [searchPagination, setSearchPagination] = useState<PaginationData>({
+    page: 1,
+    limit: 20,
+    total: 0,
+    pages: 0,
+  })
+
+  // Initialize page from URL params
+  useEffect(() => {
+    const pageParam = searchParams.get('page')
+    if (pageParam) {
+      setCurrentPage(parseInt(pageParam) || 1)
+    }
+  }, [searchParams])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -137,7 +169,7 @@ export default function Home() {
         setError(null)
         const [catsRes, promptsRes] = await Promise.all([
           fetch('/api/categories'),
-          fetch('/api/prompts?limit=12'),
+          fetch(`/api/prompts?page=${currentPage}&limit=20`),
         ])
 
         if (!catsRes.ok || !promptsRes.ok) {
@@ -149,6 +181,12 @@ export default function Home() {
 
         setCategories(catsData)
         setPrompts(promptsData.prompts || [])
+        setPagination(promptsData.pagination || {
+          page: currentPage,
+          limit: 20,
+          total: 0,
+          pages: 0,
+        })
       } catch (error) {
         console.error('Failed to fetch data:', error)
         setError(error instanceof Error ? error.message : 'ページの読み込みに失敗しました。')
@@ -158,7 +196,7 @@ export default function Home() {
     }
 
     fetchData()
-  }, [])
+  }, [currentPage])
 
   // Update selected category when it changes from the nav component
   const handleSelectedCategoryChange = (slug: string | null) => {
@@ -176,18 +214,26 @@ export default function Home() {
     if (!query.trim()) return
 
     setSearchQuery(query)
+    setCurrentPage(1)
     setIsSearching(true)
     setIsSearchMode(true)
     setSearchError(null)
 
     try {
-      const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&limit=50`)
+      const res = await fetch(`/api/prompts?search=${encodeURIComponent(query)}&page=1&limit=20`)
       if (!res.ok) {
         throw new Error('検索に失敗しました。もう一度お試しください。')
       }
       const data = await res.json()
       const results = (data.prompts || []).filter((p: Prompt) => p)
       setSearchResults(results)
+      setSearchPagination(data.pagination || {
+        page: 1,
+        limit: 20,
+        total: 0,
+        pages: 0,
+      })
+      router.push(`/?search=${encodeURIComponent(query)}&page=1`)
     } catch (error) {
       console.error('Failed to search:', error)
       setSearchError(error instanceof Error ? error.message : '検索中にエラーが発生しました。')
@@ -203,6 +249,8 @@ export default function Home() {
     setSearchResults([])
     setIsSearchMode(false)
     setSearchError(null)
+    setCurrentPage(1)
+    router.push('/')
   }
 
   // Retry function for loading
@@ -213,7 +261,7 @@ export default function Home() {
       try {
         const [catsRes, promptsRes] = await Promise.all([
           fetch('/api/categories'),
-          fetch('/api/prompts?limit=12'),
+          fetch(`/api/prompts?page=${currentPage}&limit=20`),
         ])
 
         if (!catsRes.ok || !promptsRes.ok) {
@@ -225,6 +273,12 @@ export default function Home() {
 
         setCategories(catsData)
         setPrompts(promptsData.prompts || [])
+        setPagination(promptsData.pagination || {
+          page: currentPage,
+          limit: 20,
+          total: 0,
+          pages: 0,
+        })
       } catch (error) {
         console.error('Failed to fetch data:', error)
         setError(error instanceof Error ? error.message : 'ページの読み込みに失敗しました。')
@@ -233,6 +287,45 @@ export default function Home() {
       }
     }
     fetchData()
+  }
+
+  // Handle pagination page change
+  const handlePageChange = (page: number) => {
+    if (isSearchMode) {
+      router.push(`/?search=${encodeURIComponent(searchQuery)}&page=${page}`)
+    } else if (selectedCategory) {
+      router.push(`/?category=${selectedCategory}&page=${page}`)
+    } else {
+      router.push(`/?page=${page}`)
+    }
+    setCurrentPage(page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Handle search pagination
+  const handleSearchPageChange = async (page: number) => {
+    try {
+      const res = await fetch(
+        `/api/prompts?search=${encodeURIComponent(searchQuery)}&page=${page}&limit=20`
+      )
+      if (!res.ok) {
+        throw new Error('ページの読み込みに失敗しました。')
+      }
+      const data = await res.json()
+      const results = (data.prompts || []).filter((p: Prompt) => p)
+      setSearchResults(results)
+      setSearchPagination(data.pagination || {
+        page,
+        limit: 20,
+        total: 0,
+        pages: 0,
+      })
+      router.push(`/?search=${encodeURIComponent(searchQuery)}&page=${page}`)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (error) {
+      console.error('Failed to fetch search page:', error)
+      setSearchError(error instanceof Error ? error.message : 'ページの読み込みに失敗しました。')
+    }
   }
 
   // Filter prompts based on selected category or search mode
@@ -360,13 +453,14 @@ export default function Home() {
                 : 'プロンプトはまだ利用できません。'}
             </div>
           ) : (
-            <div
-              className="auto-grid-responsive transition-opacity duration-150"
-              style={{
-                opacity: isCategoryTransitioning ? 0.5 : 1,
-              }}
-            >
-              {filteredPrompts.slice(0, 12).map((prompt) => (
+            <>
+              <div
+                className="auto-grid-responsive transition-opacity duration-150"
+                style={{
+                  opacity: isCategoryTransitioning ? 0.5 : 1,
+                }}
+              >
+                {filteredPrompts.map((prompt) => (
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
@@ -425,8 +519,24 @@ export default function Home() {
                     </div>
                   </div>
                 </Link>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {isSearchMode ? (
+                <Pagination
+                  currentPage={searchPagination.page}
+                  totalPages={searchPagination.pages}
+                  onPageChange={handleSearchPageChange}
+                />
+              ) : (
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.pages}
+                  onPageChange={handlePageChange}
+                />
+              )}
+            </>
           )}
         </div>
       </section>
@@ -468,5 +578,13 @@ export default function Home() {
         </div>
       </footer>
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   )
 }
