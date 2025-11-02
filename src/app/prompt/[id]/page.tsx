@@ -219,7 +219,7 @@ export default function PromptPage() {
         <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
       </Suspense>
       <main className="min-h-screen bg-background">
-        <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
+        <div className="px-4 py-8">
           <Link
             href="/"
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
@@ -227,7 +227,9 @@ export default function PromptPage() {
             <ArrowLeft size={20} />
             ホームに戻る
           </Link>
+        </div>
 
+        <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
           <div className="max-w-3xl mx-auto">
           {/* Breadcrumb */}
           {prompt.category && (
