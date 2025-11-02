@@ -230,7 +230,6 @@ export default function PromptPage() {
         </div>
 
         <div style={{ maxWidth: '1920px', margin: '0 auto' }} className="px-4 py-12">
-          <div className="max-w-3xl mx-auto">
           {/* Breadcrumb */}
           {prompt.category && (
             <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
@@ -341,7 +340,6 @@ export default function PromptPage() {
               </ol>
             </div>
           </article>
-        </div>
         </div>
       </main>
       <Footer />
