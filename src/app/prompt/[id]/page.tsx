@@ -252,7 +252,7 @@ export default function PromptPage() {
 
           {/* Main Content */}
           <article className="space-y-6">
-            {/* Header - Card Style */}
+            {/* Header - Card Style - White Background */}
             <div className="bg-white dark:bg-slate-900 rounded-lg p-8 space-y-4">
               <h1 className="text-5xl font-bold text-foreground">{prompt.title}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
@@ -269,7 +269,7 @@ export default function PromptPage() {
               </div>
             </div>
 
-            {/* Image Gallery - Card Style */}
+            {/* Image Gallery - Card Style - Light Gray Background */}
             {prompt.images && prompt.images.length > 0 && (
               <div className="bg-gray-50 dark:bg-slate-800 rounded-lg p-8 space-y-4">
                 <h2 className="text-3xl font-bold text-foreground">効果画像</h2>
@@ -291,7 +291,7 @@ export default function PromptPage() {
               </div>
             )}
 
-            {/* Content - Emphasized Card Style */}
+            {/* Content - Emphasized Card Style - White Background */}
             <div className="bg-white dark:bg-slate-900 rounded-lg border-l-4 border-l-blue-500 p-8 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -331,7 +331,7 @@ export default function PromptPage() {
               </div>
             </div>
 
-            {/* Info - Card Style */}
+            {/* Info - Card Style - Light Gray Background */}
             <div className="bg-gray-50 dark:bg-slate-800 border-l-4 border-l-blue-500 rounded-lg p-8">
               <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
                 <span className="text-2xl">💡</span>
