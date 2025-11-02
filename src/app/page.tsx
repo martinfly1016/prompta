@@ -265,16 +265,16 @@ export default function Home() {
 
         <div className="relative container mx-auto px-4 py-24">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+            <h1 className="text-5xl md:text-6xl font-bold mb-8 text-gray-900 dark:text-white">
               AIを使いこなすための<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">プロンプト集</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-10">
+            <p className="text-lg md:text-xl text-gray-700 dark:text-slate-300 mb-10 leading-relaxed font-medium">
               ChatGPT、Claude、その他のAIツール向けの高品質なプロンプトを無料で提供。
               <br className="hidden sm:block" />
               仕事の効率化から創造性の向上まで、あらゆるシーンで役立つプロンプト。
             </p>
 
-            <p className="text-md text-primary font-semibold">
+            <p className="text-base text-blue-600 dark:text-blue-400 font-semibold">
               💡 上部のナビゲーションバーから簡単に検索できます
             </p>
           </div>
@@ -286,14 +286,14 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex items-end justify-between mb-14">
             <div>
-              <div className="text-sm font-semibold text-primary mb-2">
+              <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-3">
                 {isSearchMode
                   ? `検索結果: "${searchQuery}"`
                   : selectedCategory
                     ? 'カテゴリプロンプト'
                     : '人気のプロンプト'}
               </div>
-              <h2 className="text-4xl font-bold">
+              <h2 className="text-5xl font-bold text-gray-900 dark:text-white">
                 {isSearchMode
                   ? `${filteredPrompts.length}個見つかりました`
                   : selectedCategory
@@ -306,8 +306,8 @@ export default function Home() {
           {error ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-6">⚠️</div>
-              <h2 className="text-2xl font-bold mb-2">データの読み込みエラー</h2>
-              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">データの読み込みエラー</h2>
+              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
                 {error}
               </p>
               <button
@@ -333,8 +333,8 @@ export default function Home() {
           ) : searchError ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-6">⚠️</div>
-              <h2 className="text-2xl font-bold mb-2">検索エラー</h2>
-              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">検索エラー</h2>
+              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
                 {searchError}
               </p>
               <button
@@ -347,8 +347,8 @@ export default function Home() {
           ) : isSearchMode && filteredPrompts.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-6">😕</div>
-              <h2 className="text-2xl font-bold mb-2">該当する内容が見つかりませんでした</h2>
-              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">該当する内容が見つかりませんでした</h2>
+              <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
                 「{searchQuery}」に一致するプロンプトはありません。
                 <br />
                 別のキーワードで試してください。
@@ -397,10 +397,10 @@ export default function Home() {
 
                   {/* 内容 */}
                   <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-semibold mb-2 text-base leading-snug group-hover:text-primary transition-colors line-clamp-2 text-slate-100">
+                    <h3 className="font-bold mb-3 text-lg leading-snug group-hover:text-primary transition-colors line-clamp-2 text-white">
                       {prompt.title}
                     </h3>
-                    <p className="text-sm text-slate-400 mb-3 line-clamp-2 flex-1 leading-relaxed">
+                    <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-1 leading-relaxed">
                       {prompt.description}
                     </p>
 
@@ -422,11 +422,11 @@ export default function Home() {
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-3">
-                      <span className="text-xs bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 px-3 py-1.5 rounded-full font-medium border border-blue-400/20 backdrop-blur-sm">
+                    <div className="flex items-center justify-between mt-auto">
+                      <span className="text-xs bg-gradient-to-r from-blue-500/30 to-indigo-500/30 text-blue-200 px-3 py-1.5 rounded-full font-semibold border border-blue-400/30 backdrop-blur-sm">
                         {prompt.category.name}
                       </span>
-                      <span className="text-xs text-slate-400 font-medium">
+                      <span className="text-xs text-slate-500 font-semibold">
                         👁️ {prompt.views}
                       </span>
                     </div>
@@ -445,8 +445,8 @@ export default function Home() {
         </div>
 
         <div className="relative container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">プロンプト作成者様へ</h2>
-          <p className="text-lg mb-10 max-w-2xl mx-auto text-blue-100">
+          <h2 className="text-5xl font-bold mb-6 text-white">プロンプト作成者様へ</h2>
+          <p className="text-lg mb-10 max-w-2xl mx-auto text-blue-50 font-medium leading-relaxed">
             あなたが作成したプロンプトを共有しませんか?
             <br className="hidden sm:block" />
             管理画面からプロンプトを追加・管理できます。
@@ -461,37 +461,37 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-10 border-t border-slate-800">
+      <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-8 mb-10">
             <div>
-              <h3 className="font-bold text-white mb-3 text-lg">プロンプタ</h3>
-              <p className="text-sm text-slate-400">
+              <h3 className="font-bold text-white mb-3 text-xl">プロンプタ</h3>
+              <p className="text-sm text-slate-400 leading-relaxed">
                 AIプロンプトの共有プラットフォーム。ChatGPT、Claudeなど様々なAIに対応。
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-3">ナビゲーション</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-white mb-4 text-base">ナビゲーション</h4>
+              <ul className="space-y-2.5 text-sm">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="text-slate-400 hover:text-white transition-colors font-medium">
                     ホーム
                   </Link>
                 </li>
                 <li>
-                  <Link href="#categories" className="hover:text-white transition-colors">
+                  <Link href="#categories" className="text-slate-400 hover:text-white transition-colors font-medium">
                     カテゴリ
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-3">言語</h4>
-              <p className="text-sm">日本語 (日本)</p>
+              <h4 className="font-semibold text-white mb-4 text-base">言語</h4>
+              <p className="text-sm text-slate-400">日本語 (日本)</p>
             </div>
           </div>
 
-          <div className="border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
+          <div className="border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
             <p>&copy; 2024 Prompta. All rights reserved.</p>
           </div>
         </div>

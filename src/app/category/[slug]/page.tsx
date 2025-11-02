@@ -137,11 +137,11 @@ export default function CategoryPage() {
 
             <div className="max-w-3xl mb-12">
               <div className="text-6xl mb-6">{category?.icon || '📌'}</div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-4">{category?.name}</h1>
-              <p className="text-lg text-muted-foreground">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">{category?.name}</h1>
+              <p className="text-lg text-gray-700 dark:text-slate-400 mb-8 leading-relaxed font-medium">
                 {category?.description}
               </p>
-              <div className="mt-6 text-sm font-medium text-primary">
+              <div className="mt-6 text-base font-semibold text-blue-600 dark:text-blue-400">
                 全 {isSearchMode ? filteredPrompts.length : prompts.length} 件のプロンプト
               </div>
             </div>
@@ -176,8 +176,8 @@ export default function CategoryPage() {
         ) : isSearchMode && filteredPrompts.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-6">😕</div>
-            <h2 className="text-2xl font-bold mb-2">該当する内容が見つかりませんでした</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">該当する内容が見つかりませんでした</h2>
+            <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
               「{searchQuery}」に一致するプロンプトはありません。
               <br />
               別のキーワードで試してください。
@@ -192,8 +192,8 @@ export default function CategoryPage() {
         ) : prompts.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-6">📭</div>
-            <h2 className="text-2xl font-bold mb-2">プロンプトがありません</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">プロンプトがありません</h2>
+            <p className="text-gray-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-base">
               このカテゴリにはまだプロンプトが登録されていません。
               <br />
               近日公開予定です。
@@ -236,10 +236,10 @@ export default function CategoryPage() {
 
                 {/* コンテンツ */}
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-semibold mb-2 text-base leading-snug group-hover:text-primary transition-colors line-clamp-2 text-slate-100">
+                  <h3 className="font-bold mb-3 text-lg leading-snug group-hover:text-primary transition-colors line-clamp-2 text-white">
                     {prompt.title}
                   </h3>
-                  <p className="text-sm text-slate-400 mb-3 line-clamp-2 flex-1 leading-relaxed">
+                  <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-1 leading-relaxed">
                     {prompt.description}
                   </p>
 
@@ -261,8 +261,8 @@ export default function CategoryPage() {
                     </div>
                   )}
 
-                  <div className="mt-3">
-                    <span className="text-xs text-slate-400 font-medium">
+                  <div className="mt-auto">
+                    <span className="text-xs text-slate-500 font-semibold">
                       👁️ {prompt.views} 回閲覧
                     </span>
                   </div>
