@@ -4,16 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark theme as default - no media query override */
+/* Light theme as default - V2 Design */
 :root {
-  --background: 220 20% 12%;       /* 深蓝黑色 #1a1d2e */
-  --foreground: 0 0% 95%;          /* 几乎白色 */
-  --border: 220 15% 22%;           /* 深色边框 #313547 */
+  --background: 0 0% 97%;          /* 浅灰色 #f5f5f5 */
+  --foreground: 220 20% 12%;       /* 深蓝黑色文字 */
+  --border: 220 15% 90%;           /* 浅灰色边框 */
   --primary: 210 100% 60%;         /* 明亮蓝色 */
   --primary-foreground: 0 0% 100%;
-  --muted-foreground: 220 8% 55%;  /* 中灰色 */
-  --card: 220 18% 16%;             /* 深色卡片 #252838 */
-  --card-foreground: 0 0% 95%;
+  --muted-foreground: 220 8% 50%;  /* 中灰色 */
+  --card: 0 0% 100%;               /* 白色卡片 */
+  --card-foreground: 220 20% 12%;
 
   /* Design system tokens for easy reference */
   --spacing-xs: 0.5rem;
