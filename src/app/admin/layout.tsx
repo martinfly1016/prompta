@@ -55,27 +55,54 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen bg-slate-50">
+    <div className="flex h-screen" style={{ backgroundColor: '#f8fafc' }}>
       {/* Sidebar */}
       <div
         className={`${
           sidebarOpen ? 'w-64' : 'w-20'
-        } bg-white border-r border-slate-200 transition-all duration-300 flex flex-col`}
+        } transition-all duration-300 flex flex-col`}
+        style={{
+          backgroundColor: '#ffffff',
+          borderRight: '1px solid #e2e8f0'
+        }}
       >
         {/* Logo */}
-        <div className="px-6 py-6 border-b border-slate-200">
+        <div style={{
+          padding: '24px',
+          borderBottom: '1px solid #e2e8f0'
+        }}>
           {sidebarOpen ? (
             <div>
-              <h1 className="text-lg font-bold text-slate-900">プロンプタ</h1>
-              <p className="text-xs text-slate-500 mt-1">管理画面</p>
+              <h1 style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                color: '#0f172a',
+                margin: 0
+              }}>プロンプタ</h1>
+              <p style={{
+                fontSize: '12px',
+                color: '#64748b',
+                marginTop: '4px',
+                margin: 0
+              }}>管理画面</p>
             </div>
           ) : (
-            <div className="text-lg font-bold text-slate-900">P</div>
+            <div style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              color: '#0f172a'
+            }}>P</div>
           )}
         </div>
 
         {/* Menu Items */}
-        <nav className="flex-1 p-4 space-y-2">
+        <nav style={{
+          flex: 1,
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
+        }}>
           {menuItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -83,30 +110,70 @@ export default function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                  isActive
-                    ? 'bg-blue-50 text-blue-600 font-medium'
-                    : 'text-slate-600 hover:bg-slate-100'
-                }`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 16px',
+                  borderRadius: '6px',
+                  transition: 'all 0.2s',
+                  textDecoration: 'none',
+                  backgroundColor: isActive ? 'rgba(2, 132, 199, 0.1)' : 'transparent',
+                  color: isActive ? '#0284c7' : '#475569',
+                  fontWeight: isActive ? '600' : '500'
+                }}
               >
-                <Icon size={20} />
-                {sidebarOpen && <span className="text-sm">{item.label}</span>}
+                <Icon size={20} color={isActive ? '#0284c7' : '#475569'} />
+                {sidebarOpen && <span style={{ fontSize: '14px' }}>{item.label}</span>}
               </Link>
             )
           })}
         </nav>
 
         {/* User Info & Logout */}
-        <div className="p-4 border-t border-slate-200">
+        <div style={{
+          padding: '16px',
+          borderTop: '1px solid #e2e8f0'
+        }}>
           {sidebarOpen && (
             <>
-              <p className="text-xs text-slate-500 mb-3">ログイン中</p>
-              <p className="text-sm font-medium text-slate-900 truncate mb-3">{session?.user?.email}</p>
+              <p style={{
+                fontSize: '12px',
+                color: '#64748b',
+                marginBottom: '12px',
+                margin: 0
+              }}>ログイン中</p>
+              <p style={{
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#0f172a',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                marginBottom: '12px',
+                margin: 0
+              }}>{session?.user?.email}</p>
             </>
           )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium"
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              padding: '10px 16px',
+              backgroundColor: '#f1f5f9',
+              border: 'none',
+              color: '#475569',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e2e8f0'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
           >
             <LogOut size={16} />
             {sidebarOpen && <span>ログアウト</span>}
@@ -114,10 +181,27 @@ export default function AdminLayout({
         </div>
 
         {/* Toggle Button */}
-        <div className="p-4 border-t border-slate-200">
+        <div style={{
+          padding: '16px',
+          borderTop: '1px solid #e2e8f0'
+        }}>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="w-full flex items-center justify-center p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              color: '#475569',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -127,15 +211,37 @@ export default function AdminLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="h-16 bg-white border-b border-slate-200 flex items-center px-8 shadow-sm">
-          <h2 className="text-2xl font-bold text-slate-900">
+        <div style={{
+          height: '64px',
+          backgroundColor: '#ffffff',
+          borderBottom: '1px solid #e2e8f0',
+          display: 'flex',
+          alignItems: 'center',
+          paddingLeft: '32px',
+          paddingRight: '32px',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#0f172a',
+            margin: 0
+          }}>
             {menuItems.find((item) => item.href === pathname)?.label || 'ダッシュボード'}
           </h2>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto bg-slate-50">
-          <div className="max-w-7xl mx-auto p-8">
+        <div style={{
+          flex: 1,
+          overflow: 'auto',
+          backgroundColor: '#f8fafc'
+        }}>
+          <div style={{
+            maxWidth: '1280px',
+            margin: '0 auto',
+            padding: '32px'
+          }}>
             {children}
           </div>
         </div>
