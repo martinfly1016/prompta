@@ -48,13 +48,13 @@ export default function PromptsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">プロンプト管理</h1>
+        <h1 className="text-3xl font-bold text-slate-900">プロンプト管理</h1>
         <Link
           href="/admin/prompts/new"
-          className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-colors font-medium"
         >
           <Plus size={20} />
           新規作成
@@ -62,57 +62,65 @@ export default function PromptsPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-lg shadow overflow-hidden">
+      <div
+        className="bg-white rounded-xl border border-slate-200 overflow-hidden"
+        style={{
+          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+        }}
+      >
         {isLoading ? (
-          <div className="p-8 text-center text-muted-foreground">
+          <div className="p-12 text-center text-slate-600">
             読み込み中...
           </div>
         ) : prompts.length === 0 ? (
-          <div className="p-8 text-center text-muted-foreground">
+          <div className="p-12 text-center text-slate-600">
             プロンプトがまだありません。
           </div>
         ) : (
           <table className="w-full">
-            <thead className="bg-slate-50 dark:bg-slate-900 border-b border-border">
-              <tr>
-                <th className="text-left px-6 py-3 font-semibold">タイトル</th>
-                <th className="text-left px-6 py-3 font-semibold">カテゴリ</th>
-                <th className="text-left px-6 py-3 font-semibold">状態</th>
-                <th className="text-right px-6 py-3 font-semibold">操作</th>
+            <thead style={{ backgroundColor: '#f5f5f5' }}>
+              <tr className="border-b border-slate-200">
+                <th className="text-left px-6 py-4 font-semibold text-slate-900">タイトル</th>
+                <th className="text-left px-6 py-4 font-semibold text-slate-900">カテゴリ</th>
+                <th className="text-left px-6 py-4 font-semibold text-slate-900">状態</th>
+                <th className="text-right px-6 py-4 font-semibold text-slate-900">操作</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-slate-200">
               {prompts.map((prompt) => (
-                <tr key={prompt.id} className="hover:bg-slate-50 dark:hover:bg-slate-700">
-                  <td className="px-6 py-4">
+                <tr
+                  key={prompt.id}
+                  className="hover:bg-slate-50 transition-colors"
+                >
+                  <td className="px-6 py-5">
                     <div>
-                      <p className="font-medium">{prompt.title}</p>
-                      <p className="text-sm text-muted-foreground">{prompt.description}</p>
+                      <p className="font-medium text-slate-900">{prompt.title}</p>
+                      <p className="text-sm text-slate-600 mt-1">{prompt.description}</p>
                     </div>
                   </td>
-                  <td className="px-6 py-4">{prompt.category.name}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-5 text-slate-700">{prompt.category.name}</td>
+                  <td className="px-6 py-5">
                     <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        prompt.isPublished
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
+                      className="px-4 py-2 rounded-full text-sm font-medium"
+                      style={{
+                        backgroundColor: prompt.isPublished ? '#dcfce7' : '#f3f4f6',
+                        color: prompt.isPublished ? '#15803d' : '#374151'
+                      }}
                     >
                       {prompt.isPublished ? '公開' : '下書き'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2">
+                  <td className="px-6 py-5 text-right">
+                    <div className="flex items-center justify-end gap-3">
                       <Link
                         href={`/admin/prompts/${prompt.id}`}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-200"
                       >
                         <Edit2 size={18} />
                       </Link>
                       <button
                         onClick={() => handleDelete(prompt.id)}
-                        className="p-2 hover:bg-red-100 dark:hover:bg-red-900 text-red-600 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-all duration-200"
                       >
                         <Trash2 size={18} />
                       </button>

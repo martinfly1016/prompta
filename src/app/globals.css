@@ -184,10 +184,10 @@ body {
     color: hsl(var(--foreground)) !important;
   }
 
-  /* Ensure content padding is applied */
-  .auto-grid-responsive a[href*="/prompt/"] > div:last-child {
+  /* Ensure content padding is applied - removed to use inline styles instead */
+  /* .auto-grid-responsive a[href*="/prompt/"] > div:last-child {
     padding: 1.5rem !important;
-  }
+  } */
 
   /* Category Navigation Bar */
   .category-nav-bar {

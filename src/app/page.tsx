@@ -336,7 +336,7 @@ function HomeContent() {
       : prompts
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
       {/* Category Navigation Bar - Wrapped in Suspense */}
       <Suspense fallback={null}>
         <CategoryNavigation
@@ -349,38 +349,38 @@ function HomeContent() {
         />
       </Suspense>
 
-      {/* Hero Section - Simplified */}
-      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              AIを使いこなすための<span className="text-blue-600">プロンプト集</span>
+      {/* Hero Section - Optimized with proper spacing */}
+      <section style={{ backgroundColor: '#f8fafc', paddingTop: '60px', paddingBottom: '60px' }}>
+        <div className="container mx-auto px-6" style={{ maxWidth: '1280px' }}>
+          <div style={{ textAlign: 'center', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+            <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '24px', color: '#0f172a', lineHeight: 1.3 }}>
+              AIを使いこなすための<span style={{ color: '#0284c7' }}>プロンプト集</span>
             </h1>
-            <p className="text-base md:text-lg text-gray-600 mb-8 leading-relaxed">
+            <p style={{ fontSize: '16px', color: '#475569', marginBottom: '28px', lineHeight: 1.6 }}>
               ChatGPT、Claude、その他のAIツール向けの高品質なプロンプトを無料で提供。
               <br className="hidden sm:block" />
               仕事の効率化から創造性の向上まで、あらゆるシーンで役立つプロンプト。
             </p>
 
-            <p className="text-sm text-blue-600 font-semibold">
+            <p style={{ fontSize: '14px', color: '#0284c7', fontWeight: 500 }}>
               💡 上部のナビゲーションバーから簡単に検索できます
             </p>
           </div>
         </div>
       </section>
 
-      {/* Featured Prompts - Moved Up */}
-      <section className="pt-16" style={{ paddingBottom: '11rem' }}>
-        <div className="container mx-auto px-4">
-          <div className="mb-12">
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-2">
+      {/* Featured Prompts - Optimized */}
+      <section style={{ backgroundColor: '#ffffff', paddingTop: '40px', paddingBottom: '60px' }}>
+        <div className="container mx-auto px-6" style={{ maxWidth: '1280px' }}>
+          <div style={{ marginBottom: '32px' }}>
+            <div style={{ fontSize: '12px', fontWeight: 600, color: '#0284c7', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
               {isSearchMode
                 ? `検索結果: "${searchQuery}"`
                 : selectedCategory
                   ? 'カテゴリプロンプト'
                   : '人気のプロンプト'}
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            <h2 style={{ fontSize: '28px', fontWeight: 700, color: '#0f172a', margin: 0 }}>
               {isSearchMode
                 ? `${filteredPrompts.length}個見つかりました`
                 : selectedCategory
@@ -390,15 +390,17 @@ function HomeContent() {
           </div>
 
           {error ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-              <div className="text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">データの読み込みエラー</h2>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚠️</div>
+              <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', marginBottom: '12px', margin: 0 }}>データの読み込みエラー</h2>
+              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
                 {error}
               </p>
               <button
                 onClick={handleRetryLoad}
-                className="inline-block px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                style={{ display: 'inline-block', paddingLeft: '24px', paddingRight: '24px', paddingTop: '12px', paddingBottom: '12px', backgroundColor: '#dc2626', color: '#ffffff', borderRadius: '6px', fontWeight: 500, border: 'none', cursor: 'pointer', fontSize: '14px', transition: 'all 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
               >
                 もう一度試す
               </button>
@@ -417,37 +419,41 @@ function HomeContent() {
               </div>
             </div>
           ) : searchError ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
-              <div className="text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">検索エラー</h2>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚠️</div>
+              <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', margin: 0, marginBottom: '12px' }}>検索エラー</h2>
+              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
                 {searchError}
               </p>
               <button
                 onClick={handleSearchClear}
-                className="inline-block px-6 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                style={{ display: 'inline-block', paddingLeft: '24px', paddingRight: '24px', paddingTop: '12px', paddingBottom: '12px', backgroundColor: '#dc2626', color: '#ffffff', borderRadius: '6px', fontWeight: 500, border: 'none', cursor: 'pointer', fontSize: '14px', transition: 'all 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
               >
                 検索をクリア
               </button>
             </div>
           ) : isSearchMode && filteredPrompts.length === 0 ? (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-8 text-center">
-              <div className="text-6xl mb-4">😕</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">該当する内容が見つかりませんでした</h2>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fed7aa', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>😕</div>
+              <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', margin: 0, marginBottom: '12px' }}>該当する内容が見つかりませんでした</h2>
+              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
                 「{searchQuery}」に一致するプロンプトはありません。
                 <br />
                 別のキーワードで試してください。
               </p>
               <button
                 onClick={handleSearchClear}
-                className="inline-block px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                style={{ display: 'inline-block', paddingLeft: '24px', paddingRight: '24px', paddingTop: '12px', paddingBottom: '12px', backgroundColor: '#0284c7', color: '#ffffff', borderRadius: '6px', fontWeight: 500, border: 'none', cursor: 'pointer', fontSize: '14px', transition: 'all 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
               >
                 検索をクリア
               </button>
             </div>
           ) : filteredPrompts.length === 0 ? (
-            <div className="text-center text-muted-foreground py-12">
+            <div style={{ textAlign: 'center', color: '#64748b', paddingTop: '48px', paddingBottom: '48px' }}>
               {selectedCategory
                 ? 'このカテゴリにはプロンプトがありません。'
                 : 'プロンプトはまだ利用できません。'}
@@ -483,17 +489,17 @@ function HomeContent() {
                   </div>
 
                   {/* コンテンツ */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-bold mb-2 text-base leading-snug text-gray-900 line-clamp-2">
+                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <h3 style={{ fontWeight: 700, marginBottom: '12px', fontSize: '16px', lineHeight: 1.4, color: '#0f172a' }} className="line-clamp-2">
                       {prompt.title}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-1 leading-relaxed">
+                    <p style={{ fontSize: '14px', color: '#475569', marginBottom: '16px', flex: 1, lineHeight: 1.5 }} className="line-clamp-2">
                       {prompt.description}
                     </p>
 
                     {/* タグ */}
                     {prompt.tags && prompt.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
                         {prompt.tags.slice(0, 3).map((tag) => (
                           <TagChip
                             key={tag.id}
@@ -502,18 +508,18 @@ function HomeContent() {
                           />
                         ))}
                         {prompt.tags.length > 3 && (
-                          <span className="text-xs text-gray-500 px-2">
+                          <span style={{ fontSize: '12px', color: '#64748b', paddingLeft: '8px' }}>
                             +{prompt.tags.length - 3}
                           </span>
                         )}
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
-                      <span className="text-xs bg-blue-50 border border-blue-200 text-blue-700 px-2.5 py-1 rounded font-medium">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid #e2e8f0' }}>
+                      <span style={{ fontSize: '12px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', color: '#0284c7', paddingLeft: '10px', paddingRight: '10px', paddingTop: '4px', paddingBottom: '4px', borderRadius: '4px', fontWeight: 500 }}>
                         {prompt.category.name}
                       </span>
-                      <span className="text-xs text-gray-500 font-medium">
+                      <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 500 }}>
                         👁️ {prompt.views}
                       </span>
                     </div>
@@ -542,38 +548,38 @@ function HomeContent() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 pt-24 pb-10 border-t border-slate-800">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-3 gap-6 mb-8">
+      <footer style={{ backgroundColor: '#0f172a', color: '#cbd5e1', paddingTop: '60px', paddingBottom: '40px', borderTop: '1px solid #1e293b' }}>
+        <div className="container mx-auto px-6" style={{ maxWidth: '1280px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', marginBottom: '32px' }}>
             <div>
-              <h3 className="font-bold text-white mb-3 text-lg">プロンプタ</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
+              <h3 style={{ fontWeight: 700, color: '#ffffff', marginBottom: '12px', fontSize: '18px' }}>プロンプタ</h3>
+              <p style={{ fontSize: '14px', color: '#94a3b8', lineHeight: 1.6 }}>
                 AIプロンプトの共有プラットフォーム。ChatGPT、Claudeなど様々なAIに対応。
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-3">ナビゲーション</h4>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="/" className="text-slate-400 hover:text-white transition-colors">
+              <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>ナビゲーション</h4>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '8px' }}>
+                  <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
                     ホーム
                   </Link>
                 </li>
-                <li>
-                  <Link href="#categories" className="text-slate-400 hover:text-white transition-colors">
+                <li style={{ marginBottom: '8px' }}>
+                  <Link href="#categories" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
                     カテゴリ
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-3">言語</h4>
-              <p className="text-sm text-slate-400">日本語 (日本)</p>
+              <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>言語</h4>
+              <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0 }}>日本語 (日本)</p>
             </div>
           </div>
 
-          <div className="border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
-            <p>&copy; 2024 Prompta. All rights reserved.</p>
+          <div style={{ borderTop: '1px solid #1e293b', paddingTop: '24px', textAlign: 'center', fontSize: '13px', color: '#64748b' }}>
+            <p style={{ margin: 0 }}>&copy; 2024 Prompta. All rights reserved.</p>
           </div>
         </div>
       </footer>

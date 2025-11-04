@@ -219,7 +219,7 @@ export default function PromptPage() {
       </Suspense>
       <main className="min-h-screen bg-background">
         {/* Full-width back button section */}
-        <div className="px-4 py-8">
+        <div className="px-6 py-6">
           <div className="mx-auto" style={{ maxWidth: '1280px' }}>
             <Link
               href="/"
@@ -232,7 +232,7 @@ export default function PromptPage() {
         </div>
 
         {/* Fixed 1280px width container for main content */}
-        <div className="mx-auto px-4 py-12" style={{ maxWidth: '1280px' }}>
+        <div className="mx-auto px-6 py-8" style={{ maxWidth: '1280px' }}>
           {/* Breadcrumb */}
           {prompt.category && (
             <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
@@ -252,13 +252,19 @@ export default function PromptPage() {
           {/* Main Content */}
           <article className="space-y-6">
             {/* Header - Card Style - White Background */}
-            <div className="rounded-lg p-8 space-y-4" style={{ backgroundColor: '#ffffff' }}>
-              <h1 className="text-5xl font-bold text-foreground">{prompt.title}</h1>
+            <div className="rounded-lg space-y-4" style={{ backgroundColor: '#ffffff', padding: '32px' }}>
+              <h1 className="text-2xl font-bold text-foreground">{prompt.title}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed">{prompt.description}</p>
 
-              <div className="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex-wrap">
+              <div className="flex items-center gap-4 pt-4 flex-wrap" style={{ borderTop: '1px solid #e2e8f0' }}>
                 {prompt.category && (
-                  <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full font-medium">
+                  <span
+                    className="text-xs px-4 py-2 rounded-full font-medium"
+                    style={{
+                      backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                      color: '#0284c7'
+                    }}
+                  >
                     {prompt.category.name}
                   </span>
                 )}
@@ -270,36 +276,55 @@ export default function PromptPage() {
 
             {/* Image Gallery - Card Style - Light Gray Background */}
             {prompt.images && prompt.images.length > 0 && (
-              <div className="rounded-lg p-8 space-y-4" style={{ backgroundColor: '#f9fafb' }}>
-                <h2 className="text-3xl font-bold text-foreground">効果画像</h2>
+              <div className="rounded-lg space-y-4" style={{ backgroundColor: '#f1f5f9', padding: '32px' }}>
+                <h2 className="text-xl font-semibold text-foreground">効果画像</h2>
                 <ImageGallery images={prompt.images} />
               </div>
             )}
 
             {/* Tags */}
             {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag: Tag) => (
-                  <span
-                    key={tag.id}
-                    className="text-xs bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full"
-                  >
-                    {tag.name}
-                  </span>
-                ))}
+              <div className="rounded-lg" style={{ backgroundColor: '#ffffff', padding: '32px' }}>
+                <h3 className="text-base font-semibold text-foreground mb-4">タグ</h3>
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag: Tag) => (
+                    <span
+                      key={tag.id}
+                      className="text-xs px-3 py-1 rounded-full"
+                      style={{
+                        backgroundColor: '#f1f5f9',
+                        color: '#475569'
+                      }}
+                    >
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
-            {/* Content - Emphasized Card Style - Light Blue Background */}
-            <div className="rounded-lg border-l-4 border-l-blue-500 p-8 space-y-4 !mt-8" style={{ backgroundColor: '#f0f7ff' }}>
+            {/* Spacing divider */}
+            <div className="h-4"></div>
+
+            {/* Content - Emphasized Card Style - White Background */}
+            <div className="rounded-lg border-l-4 space-y-4" style={{ backgroundColor: '#ffffff', borderLeftColor: '#0284c7', padding: '32px' }}>
               <div className="flex items-center justify-between flex-wrap gap-4">
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h2 className="text-xl font-semibold" style={{ color: '#0284c7' }}>
                   プロンプト
                 </h2>
                 <div className="flex gap-3">
                   <button
                     onClick={handleCopy}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+                    className="flex items-center gap-2 text-white font-medium transition-all duration-200"
+                    style={{
+                      padding: '12px 20px',
+                      backgroundColor: '#0284c7',
+                      borderRadius: '6px',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
                   >
                     {copied ? (
                       <>
@@ -315,7 +340,17 @@ export default function PromptPage() {
                   </button>
                   <button
                     onClick={handleShare}
-                    className="flex items-center gap-2 px-4 py-2 border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors font-medium"
+                    className="flex items-center gap-2 font-medium transition-all duration-200"
+                    style={{
+                      padding: '12px 20px',
+                      backgroundColor: 'transparent',
+                      borderRadius: '6px',
+                      border: '2px solid #0284c7',
+                      color: '#0284c7',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(2, 132, 199, 0.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                   >
                     <Share2 size={18} />
                     共有
@@ -331,8 +366,8 @@ export default function PromptPage() {
             </div>
 
             {/* Info - Card Style - Light Gray Background */}
-            <div className="border-l-4 border-l-blue-500 rounded-lg p-8" style={{ backgroundColor: '#f9fafb' }}>
-              <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+            <div className="border-l-4 rounded-lg" style={{ backgroundColor: '#f1f5f9', borderLeftColor: '#0284c7', padding: '32px' }}>
+              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <span className="text-2xl">💡</span>
                 このプロンプトの使い方
               </h3>

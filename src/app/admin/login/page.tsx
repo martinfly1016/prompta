@@ -40,74 +40,146 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md">
-        <div className="bg-white dark:bg-slate-900 rounded-lg shadow-xl p-8">
-          <h1 className="text-3xl font-bold text-center mb-2 text-foreground">
-            プロンプトギャラリー
-          </h1>
-          <p className="text-center text-muted-foreground mb-8">
-            管理画面へようこそ
-          </p>
+    <div className="min-h-screen flex items-center justify-center px-6 py-12" style={{ backgroundColor: '#f8fafc' }}>
+      <div style={{ width: '100%', maxWidth: '400px' }}>
+        {/* Card Container */}
+        <div className="rounded-lg shadow-lg overflow-hidden" style={{ backgroundColor: '#ffffff' }}>
+          {/* Header Section */}
+          <div style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0', padding: '32px 32px 24px 32px' }}>
+            <h1 style={{ fontSize: '24px', fontWeight: '700', margin: '0 0 8px 0', color: '#0f172a' }}>
+              ログイン
+            </h1>
+            <p style={{ fontSize: '14px', margin: 0, color: '#64748b' }}>
+              管理画面へアクセス
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {error}
+          {/* Form Content */}
+          <div style={{ padding: '32px' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {/* Error Message */}
+              {error && (
+                <div className="rounded text-sm font-medium px-4 py-3" style={{ backgroundColor: '#fef2f2', borderLeft: '4px solid #dc2626', color: '#991b1b' }}>
+                  {error}
+                </div>
+              )}
+
+              {/* Email Input */}
+              <div>
+                <label htmlFor="email" style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '8px', color: '#334155' }}>
+                  メールアドレス
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '6px',
+                    color: '#0f172a',
+                    backgroundColor: '#ffffff',
+                    fontSize: '14px',
+                    boxSizing: 'border-box',
+                    transition: 'all 0.2s',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#0284c7';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#cbd5e1';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                  placeholder="admin@example.com"
+                  required
+                />
               </div>
-            )}
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                メールアドレス
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="admin@example.com"
-                required
-              />
+              {/* Password Input */}
+              <div>
+                <label htmlFor="password" style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '8px', color: '#334155' }}>
+                  パスワード
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    border: '1px solid #cbd5e1',
+                    borderRadius: '6px',
+                    color: '#0f172a',
+                    backgroundColor: '#ffffff',
+                    fontSize: '14px',
+                    boxSizing: 'border-box',
+                    transition: 'all 0.2s',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#0284c7';
+                    e.target.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#cbd5e1';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  backgroundColor: isLoading ? '#94a3b8' : '#0284c7',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  cursor: isLoading ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s',
+                  marginTop: '8px',
+                  boxSizing: 'border-box',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isLoading) {
+                    e.currentTarget.style.backgroundColor = '#0369a1';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isLoading) {
+                    e.currentTarget.style.backgroundColor = '#0284c7';
+                  }
+                }}
+              >
+                {isLoading ? 'ログイン中...' : 'ログイン'}
+              </button>
+            </form>
+
+            {/* Test Account Info */}
+            <div style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
+              <p style={{ fontSize: '13px', fontWeight: '500', margin: '0 0 12px 0', color: '#64748b' }}>テストアカウント:</p>
+              <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.9' }}>
+                <div style={{ marginBottom: '8px' }}>メール: <code style={{ color: '#0284c7', fontFamily: 'monospace', fontWeight: '500' }}>admin@example.com</code></div>
+                <div>パスワード: <code style={{ color: '#0284c7', fontFamily: 'monospace', fontWeight: '500' }}>changeme</code></div>
+              </div>
             </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-1">
-                パスワード
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-primary text-primary-foreground py-2 rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
-            >
-              {isLoading ? 'ログイン中...' : 'ログイン'}
-            </button>
-          </form>
-
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            デフォルトアカウント:
-            <br />
-            メール: admin@example.com
-            <br />
-            パスワード: changeme
-          </p>
+          </div>
         </div>
 
-        <div className="text-center mt-6">
-          <Link href="/" className="text-primary hover:underline">
-            トップページへ戻る
+        {/* Footer Link */}
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
+          <Link href="/" style={{ fontSize: '13px', color: '#64748b', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#0284c7'} onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}>
+            ← トップページへ戻る
           </Link>
         </div>
       </div>

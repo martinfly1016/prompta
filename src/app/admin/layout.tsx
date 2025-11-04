@@ -18,6 +18,9 @@ export default function AdminLayout({
   const { data: session } = useSession()
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
+  // 如果是登录页面，不显示侧边栏和顶部栏
+  const isLoginPage = pathname === '/admin/login'
+
   const menuItems = [
     {
       href: '/admin/dashboard',
@@ -46,23 +49,28 @@ export default function AdminLayout({
     router.push('/admin/login')
   }
 
+  // 如果是登录页面，只返回 children
+  if (isLoginPage) {
+    return children
+  }
+
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-slate-50">
       {/* Sidebar */}
       <div
         className={`${
           sidebarOpen ? 'w-64' : 'w-20'
-        } bg-slate-900 text-white transition-all duration-300 flex flex-col`}
+        } bg-white border-r border-slate-200 transition-all duration-300 flex flex-col`}
       >
         {/* Logo */}
-        <div className="p-4 border-b border-slate-700">
+        <div className="px-6 py-6 border-b border-slate-200">
           {sidebarOpen ? (
             <div>
-              <h1 className="text-xl font-bold">プロンプタ</h1>
-              <p className="text-xs text-slate-400">管理画面</p>
+              <h1 className="text-lg font-bold text-slate-900">プロンプタ</h1>
+              <p className="text-xs text-slate-500 mt-1">管理画面</p>
             </div>
           ) : (
-            <div className="text-xl font-bold">P</div>
+            <div className="text-lg font-bold text-slate-900">P</div>
           )}
         </div>
 
@@ -75,30 +83,30 @@ export default function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                   isActive
-                    ? 'bg-slate-700 text-white'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-blue-50 text-blue-600 font-medium'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <Icon size={20} />
-                {sidebarOpen && <span>{item.label}</span>}
+                {sidebarOpen && <span className="text-sm">{item.label}</span>}
               </Link>
             )
           })}
         </nav>
 
         {/* User Info & Logout */}
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-4 border-t border-slate-200">
           {sidebarOpen && (
             <>
-              <p className="text-xs text-slate-400 mb-3">ログイン中</p>
-              <p className="text-sm font-medium truncate mb-3">{session?.user?.email}</p>
+              <p className="text-xs text-slate-500 mb-3">ログイン中</p>
+              <p className="text-sm font-medium text-slate-900 truncate mb-3">{session?.user?.email}</p>
             </>
           )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-sm"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors text-sm font-medium"
           >
             <LogOut size={16} />
             {sidebarOpen && <span>ログアウト</span>}
@@ -106,10 +114,10 @@ export default function AdminLayout({
         </div>
 
         {/* Toggle Button */}
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-4 border-t border-slate-200">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="w-full flex items-center justify-center p-2 hover:bg-slate-800 rounded-lg"
+            className="w-full flex items-center justify-center p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
           >
             {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -119,15 +127,15 @@ export default function AdminLayout({
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="h-16 bg-white border-b border-border flex items-center px-6">
-          <h2 className="text-2xl font-bold text-foreground">
+        <div className="h-16 bg-white border-b border-slate-200 flex items-center px-8 shadow-sm">
+          <h2 className="text-2xl font-bold text-slate-900">
             {menuItems.find((item) => item.href === pathname)?.label || 'ダッシュボード'}
           </h2>
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-auto bg-slate-50 dark:bg-slate-950">
-          <div className="max-w-7xl mx-auto p-6">
+        <div className="flex-1 overflow-auto bg-slate-50">
+          <div className="max-w-7xl mx-auto p-8">
             {children}
           </div>
         </div>
