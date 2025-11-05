@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { ImageUpload } from '@/components/ImageUpload'
+import { SingleImageUpload } from '@/components/SingleImageUpload'
 
 interface Category {
   id: string
@@ -31,6 +32,8 @@ export default function EditPromptPage() {
   const [tags, setTags] = useState('')
   const [isPublished, setIsPublished] = useState(false)
   const [images, setImages] = useState<UploadedImage[]>([])
+  const [originalImage, setOriginalImage] = useState<UploadedImage | null>(null)
+  const [showOriginalImageUpload, setShowOriginalImageUpload] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
@@ -67,14 +70,37 @@ export default function EditPromptPage() {
       setDescription(data.description)
       setContent(data.content)
       setCategoryId(data.categoryId)
-      setTags(Array.isArray(JSON.parse(data.tags)) ? JSON.parse(data.tags).join(', ') : '')
+      // Handle tags safely - they may be null, undefined, or invalid JSON
+      try {
+        if (data.tags && data.tags !== 'undefined') {
+          const parsed = JSON.parse(data.tags)
+          setTags(Array.isArray(parsed) ? parsed.join(', ') : '')
+        } else {
+          setTags('')
+        }
+      } catch (e) {
+        console.error('Error parsing tags:', e)
+        setTags('')
+      }
       setIsPublished(data.isPublished)
       if (data.images && Array.isArray(data.images)) {
-        setImages(data.images.map((img: any) => ({
+        const effectImages = data.images.filter((img: any) => img.imageType !== 'original')
+        const originalImg = data.images.find((img: any) => img.imageType === 'original')
+
+        setImages(effectImages.map((img: any) => ({
           url: img.url,
           size: img.fileSize,
           type: img.mimeType,
         })))
+
+        if (originalImg) {
+          setOriginalImage({
+            url: originalImg.url,
+            size: originalImg.fileSize,
+            type: originalImg.mimeType,
+          })
+          setShowOriginalImageUpload(true)
+        }
       }
     } catch (error) {
       console.error('Failed to fetch prompt:', error)
@@ -105,6 +131,25 @@ export default function EditPromptPage() {
       const url = isNew ? '/api/prompts' : `/api/prompts/${id}`
       const tagArray = tags.split(',').map((t) => t.trim()).filter(Boolean)
 
+      const allImages = [
+        ...images.map((img, index) => ({
+          url: img.url,
+          fileName: `image-${index}`,
+          fileSize: img.size,
+          mimeType: img.type,
+          order: index,
+          imageType: 'effect',
+        })),
+        ...(originalImage ? [{
+          url: originalImage.url,
+          fileName: 'original',
+          fileSize: originalImage.size,
+          mimeType: originalImage.type,
+          order: -1,
+          imageType: 'original',
+        }] : [])
+      ]
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -115,13 +160,7 @@ export default function EditPromptPage() {
           categoryId,
           tags: tagArray,
           isPublished,
-          images: images.map((img, index) => ({
-            url: img.url,
-            fileName: `image-${index}`,
-            fileSize: img.size,
-            mimeType: img.type,
-            order: index,
-          })),
+          images: allImages,
         }),
       })
 
@@ -141,58 +180,150 @@ export default function EditPromptPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <button
         onClick={() => router.back()}
-        className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          color: '#64748b',
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '14px',
+          transition: 'color 0.2s'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.color = '#0f172a'}
+        onMouseLeave={(e) => e.currentTarget.style.color = '#64748b'}
       >
         <ArrowLeft size={20} />
         戻る
       </button>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <div style={{
+            backgroundColor: '#fee2e2',
+            border: '1px solid #fca5a5',
+            color: '#dc2626',
+            padding: '16px',
+            borderRadius: '6px',
+            fontSize: '14px'
+          }}>
             {error}
           </div>
         )}
 
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-6 space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-1">
-              タイトル *
+        <div style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+          padding: '32px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label htmlFor="title" style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
+              タイトル <span style={{ color: '#dc2626' }}>*</span>
             </label>
             <input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                fontSize: '14px',
+                transition: 'all 0.2s',
+                fontFamily: 'inherit'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0284c7';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="description" className="block text-sm font-medium mb-1">
-              説明 *
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label htmlFor="description" style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
+              説明 <span style={{ color: '#dc2626' }}>*</span>
             </label>
             <input
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                fontSize: '14px',
+                transition: 'all 0.2s',
+                fontFamily: 'inherit'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0284c7';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="category" className="block text-sm font-medium mb-1">
-              カテゴリ *
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label htmlFor="category" style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
+              カテゴリ <span style={{ color: '#dc2626' }}>*</span>
             </label>
             <select
               id="category"
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                fontSize: '14px',
+                transition: 'all 0.2s',
+                fontFamily: 'inherit',
+                backgroundColor: '#ffffff'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0284c7';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               required
             >
               <option value="">選択してください</option>
@@ -204,8 +335,13 @@ export default function EditPromptPage() {
             </select>
           </div>
 
-          <div>
-            <label htmlFor="tags" className="block text-sm font-medium mb-1">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label htmlFor="tags" style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
               タグ (カンマで区切る)
             </label>
             <input
@@ -213,65 +349,217 @@ export default function EditPromptPage() {
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="例: 文章作成, ChatGPT"
-              className="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                fontSize: '14px',
+                transition: 'all 0.2s',
+                fontFamily: 'inherit',
+                color: '#0f172a'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0284c7';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             />
           </div>
 
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium mb-1">
-              プロンプト内容 *
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label htmlFor="content" style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
+              プロンプト内容 <span style={{ color: '#dc2626' }}>*</span>
             </label>
             <textarea
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full h-64 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono text-sm"
+              style={{
+                width: '100%',
+                height: '256px',
+                padding: '12px',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                fontSize: '13px',
+                transition: 'all 0.2s',
+                fontFamily: 'monospace',
+                fontFamily: "'Monaco', 'Menlo', 'Ubuntu Mono', 'Courier New', 'source-code-pro', monospace",
+                resize: 'vertical',
+                color: '#0f172a'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#0284c7';
+                e.currentTarget.style.boxShadow = '0 0 0 3px rgba(2, 132, 199, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              効果画像 *
-            </label>
-            <ImageUpload
-              images={images}
-              onImagesChange={setImages}
-              maxImages={10}
-            />
-            {images.length === 0 && (
-              <p className="text-red-500 text-sm mt-1">
-                少なくとも1枚の画像をアップロードしてください
-              </p>
-            )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {/* Effect Images - Full Width */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <label style={{
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#0f172a'
+              }}>
+                効果画像 <span style={{ color: '#dc2626' }}>*</span>
+              </label>
+              <ImageUpload
+                images={images}
+                onImagesChange={setImages}
+                maxImages={10}
+              />
+              {images.length === 0 && (
+                <p style={{
+                  color: '#dc2626',
+                  fontSize: '13px',
+                  marginTop: '6px'
+                }}>
+                  少なくとも1枚の画像をアップロードしてください
+                </p>
+              )}
+            </div>
+
+            {/* Original Image Section */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '12px', borderTop: '1px solid #e2e8f0' }}>
+              {/* Add Original Image Checkbox */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input
+                  id="addOriginalImage"
+                  type="checkbox"
+                  checked={showOriginalImageUpload}
+                  onChange={(e) => setShowOriginalImageUpload(e.target.checked)}
+                  style={{
+                    width: '16px',
+                    height: '16px',
+                    cursor: 'pointer',
+                    accentColor: '#0284c7'
+                  }}
+                />
+                <label htmlFor="addOriginalImage" style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#0f172a',
+                  cursor: 'pointer'
+                }}>
+                  添加原图
+                </label>
+              </div>
+
+              {/* Original Image Upload - Conditional */}
+              {showOriginalImageUpload && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '12px' }}>
+                  <label style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#0f172a'
+                  }}>
+                    原图
+                  </label>
+                  <SingleImageUpload
+                    image={originalImage}
+                    onImageChange={setOriginalImage}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            paddingTop: '12px',
+            borderTop: '1px solid #e2e8f0'
+          }}>
             <input
               id="published"
               type="checkbox"
               checked={isPublished}
               onChange={(e) => setIsPublished(e.target.checked)}
-              className="w-4 h-4 rounded border-border"
+              style={{
+                width: '16px',
+                height: '16px',
+                cursor: 'pointer',
+                accentColor: '#0284c7'
+              }}
             />
-            <label htmlFor="published" className="text-sm font-medium cursor-pointer">
+            <label htmlFor="published" style={{
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#0f172a',
+              cursor: 'pointer'
+            }}>
               公開する
             </label>
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div style={{ display: 'flex', gap: '12px' }}>
           <button
             type="submit"
             disabled={isSaving}
-            className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 disabled:opacity-50 font-medium"
+            style={{
+              padding: '12px 24px',
+              backgroundColor: isSaving ? '#cbd5e1' : '#0284c7',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: '600',
+              fontSize: '14px',
+              cursor: isSaving ? 'not-allowed' : 'pointer',
+              transition: 'all 0.2s',
+              opacity: isSaving ? 0.6 : 1
+            }}
+            onMouseEnter={(e) => {
+              if (!isSaving) {
+                e.currentTarget.style.backgroundColor = '#0369a1';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isSaving) {
+                e.currentTarget.style.backgroundColor = '#0284c7';
+              }
+            }}
           >
             {isSaving ? '保存中...' : '保存'}
           </button>
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-6 py-2 border border-border rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
+            style={{
+              padding: '12px 24px',
+              backgroundColor: '#ffffff',
+              color: '#475569',
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              fontWeight: '600',
+              fontSize: '14px',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#ffffff';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
           >
             キャンセル
           </button>

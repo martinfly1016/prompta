@@ -235,12 +235,15 @@ export default function AdminLayout({
         <div style={{
           flex: 1,
           overflow: 'auto',
-          backgroundColor: '#f8fafc'
+          backgroundColor: '#f8fafc',
+          width: '100%'
         }}>
           <div style={{
             maxWidth: '1280px',
+            width: '100%',
             margin: '0 auto',
-            padding: '32px'
+            padding: '32px',
+            boxSizing: 'border-box'
           }}>
             {children}
           </div>

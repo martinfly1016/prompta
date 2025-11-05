@@ -90,6 +90,7 @@ export async function PUT(
               fileSize: img.fileSize,
               mimeType: img.mimeType,
               order: img.order,
+              imageType: img.imageType || 'effect',
             })),
           },
         }),

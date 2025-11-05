@@ -10,11 +10,13 @@ export async function GET() {
     const nextAuthUrl = process.env.NEXTAUTH_URL
     const nodeEnv = process.env.NODE_ENV
     const vercelEnv = process.env.VERCEL_ENV
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
     console.log('=== DEBUG: Environment Variables ===')
     console.log('DATABASE_URL:', dbUrl ? '✅ SET' : '❌ NOT SET')
     console.log('NEXTAUTH_SECRET:', nextAuthSecret ? '✅ SET' : '❌ NOT SET')
     console.log('NEXTAUTH_URL:', nextAuthUrl ? `✅ SET (${nextAuthUrl})` : '❌ NOT SET')
+    console.log('BLOB_READ_WRITE_TOKEN:', blobToken ? '✅ SET' : '❌ NOT SET')
     console.log('NODE_ENV:', nodeEnv)
     console.log('VERCEL_ENV:', vercelEnv)
 
@@ -26,6 +28,10 @@ export async function GET() {
           : 'NOT SET',
         NEXTAUTH_SECRET_SET: !!nextAuthSecret,
         NEXTAUTH_URL: nextAuthUrl,
+        BLOB_READ_WRITE_TOKEN_SET: !!blobToken,
+        BLOB_READ_WRITE_TOKEN_PREVIEW: blobToken
+          ? `${blobToken.substring(0, 20)}...${blobToken.substring(blobToken.length - 5)}`
+          : 'NOT SET',
         NODE_ENV: nodeEnv,
         VERCEL_ENV: vercelEnv,
         timestamp: new Date().toISOString(),

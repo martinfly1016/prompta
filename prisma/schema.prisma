@@ -84,6 +84,7 @@ model PromptImage {
   width     Int?     // Image width
   height    Int?     // Image height
 
+  imageType String   @default("effect") // "effect" or "original"
   order     Int      @default(0) // Display order in gallery
   altText   String?  // Alt text for accessibility
 
@@ -92,4 +93,5 @@ model PromptImage {
 
   @@index([promptId])
   @@index([order])
+  @@index([imageType])
 }

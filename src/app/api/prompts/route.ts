@@ -157,6 +157,7 @@ export async function POST(request: NextRequest) {
             fileSize: img.fileSize,
             mimeType: img.mimeType,
             order: img.order,
+            imageType: img.imageType || 'effect',
           })),
         },
       },

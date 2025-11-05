@@ -124,20 +124,12 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     <>
       <div className="space-y-4">
         {/* 主图片 */}
-        <div className="relative mx-auto bg-gray-200 rounded-lg overflow-hidden cursor-pointer group max-w-[800px]" style={{paddingBottom: '56.25%'}}>
+        <div className="mx-auto bg-gray-200 rounded-lg overflow-hidden cursor-pointer max-w-[800px]" onClick={() => setIsLightboxOpen(true)}>
           <img
             src={getImageProxyUrl(currentImage.url)}
             alt={currentImage.altText || `效果图 ${currentIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="w-full h-auto object-contain"
           />
-          <button
-            onClick={() => setIsLightboxOpen(true)}
-            className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors"
-          >
-            <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium">
-              点击放大
-            </div>
-          </button>
 
           {/* 导航按钮 */}
           {images.length > 1 && (

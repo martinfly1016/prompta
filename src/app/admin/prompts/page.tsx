@@ -48,13 +48,33 @@ export default function PromptsPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-slate-900">プロンプト管理</h1>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <h1 style={{
+          fontSize: '28px',
+          fontWeight: '700',
+          color: '#0f172a',
+          margin: 0
+        }}>プロンプト管理</h1>
         <Link
           href="/admin/prompts/new"
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-colors font-medium"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: '#0284c7',
+            color: '#ffffff',
+            padding: '12px 20px',
+            borderRadius: '6px',
+            textDecoration: 'none',
+            fontWeight: '600',
+            transition: 'all 0.2s',
+            cursor: 'pointer',
+            fontSize: '14px'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
         >
           <Plus size={20} />
           新規作成
@@ -63,64 +83,179 @@ export default function PromptsPage() {
 
       {/* Table */}
       <div
-        className="bg-white rounded-xl border border-slate-200 overflow-hidden"
         style={{
-          boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)'
+          backgroundColor: '#ffffff',
+          borderRadius: '8px',
+          border: '1px solid #e2e8f0',
+          overflow: 'hidden',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
         }}
       >
         {isLoading ? (
-          <div className="p-12 text-center text-slate-600">
+          <div style={{
+            padding: '48px 32px',
+            textAlign: 'center',
+            color: '#64748b',
+            fontSize: '14px'
+          }}>
             読み込み中...
           </div>
         ) : prompts.length === 0 ? (
-          <div className="p-12 text-center text-slate-600">
+          <div style={{
+            padding: '48px 32px',
+            textAlign: 'center',
+            color: '#64748b',
+            fontSize: '14px'
+          }}>
             プロンプトがまだありません。
           </div>
         ) : (
-          <table className="w-full">
-            <thead style={{ backgroundColor: '#f5f5f5' }}>
-              <tr className="border-b border-slate-200">
-                <th className="text-left px-6 py-4 font-semibold text-slate-900">タイトル</th>
-                <th className="text-left px-6 py-4 font-semibold text-slate-900">カテゴリ</th>
-                <th className="text-left px-6 py-4 font-semibold text-slate-900">状態</th>
-                <th className="text-right px-6 py-4 font-semibold text-slate-900">操作</th>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+              <tr>
+                <th style={{
+                  textAlign: 'left',
+                  padding: '16px 24px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  fontSize: '14px'
+                }}>タイトル</th>
+                <th style={{
+                  textAlign: 'left',
+                  padding: '16px 24px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  fontSize: '14px'
+                }}>カテゴリ</th>
+                <th style={{
+                  textAlign: 'left',
+                  padding: '16px 24px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  fontSize: '14px'
+                }}>状態</th>
+                <th style={{
+                  textAlign: 'right',
+                  padding: '16px 24px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  fontSize: '14px'
+                }}>操作</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
-              {prompts.map((prompt) => (
+            <tbody>
+              {prompts.map((prompt, index) => (
                 <tr
                   key={prompt.id}
-                  className="hover:bg-slate-50 transition-colors"
+                  style={{
+                    borderBottom: index !== prompts.length - 1 ? '1px solid #e2e8f0' : 'none',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffffff'}
                 >
-                  <td className="px-6 py-5">
+                  <td style={{
+                    padding: '16px 24px',
+                    borderBottom: 'inherit'
+                  }}>
                     <div>
-                      <p className="font-medium text-slate-900">{prompt.title}</p>
-                      <p className="text-sm text-slate-600 mt-1">{prompt.description}</p>
+                      <p style={{
+                        fontWeight: '600',
+                        color: '#0f172a',
+                        margin: 0,
+                        fontSize: '14px'
+                      }}>{prompt.title}</p>
+                      <p style={{
+                        fontSize: '12px',
+                        color: '#64748b',
+                        marginTop: '6px',
+                        margin: 0
+                      }}>{prompt.description}</p>
                     </div>
                   </td>
-                  <td className="px-6 py-5 text-slate-700">{prompt.category.name}</td>
-                  <td className="px-6 py-5">
+                  <td style={{
+                    padding: '16px 24px',
+                    color: '#475569',
+                    fontSize: '14px',
+                    borderBottom: 'inherit'
+                  }}>
+                    {prompt.category.name}
+                  </td>
+                  <td style={{
+                    padding: '16px 24px',
+                    borderBottom: 'inherit'
+                  }}>
                     <span
-                      className="px-4 py-2 rounded-full text-sm font-medium"
                       style={{
-                        backgroundColor: prompt.isPublished ? '#dcfce7' : '#f3f4f6',
-                        color: prompt.isPublished ? '#15803d' : '#374151'
+                        padding: '6px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        display: 'inline-block',
+                        backgroundColor: prompt.isPublished ? 'rgba(2, 132, 199, 0.1)' : '#f1f5f9',
+                        color: prompt.isPublished ? '#0284c7' : '#64748b'
                       }}
                     >
                       {prompt.isPublished ? '公開' : '下書き'}
                     </span>
                   </td>
-                  <td className="px-6 py-5 text-right">
-                    <div className="flex items-center justify-end gap-3">
+                  <td style={{
+                    padding: '16px 24px',
+                    textAlign: 'right',
+                    borderBottom: 'inherit'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'flex-end',
+                      gap: '8px'
+                    }}>
                       <Link
                         href={`/admin/prompts/${prompt.id}`}
-                        className="p-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all duration-200"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '8px',
+                          color: '#475569',
+                          borderRadius: '6px',
+                          transition: 'all 0.2s',
+                          cursor: 'pointer',
+                          textDecoration: 'none'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(2, 132, 199, 0.1)';
+                          e.currentTarget.style.color = '#0284c7';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#475569';
+                        }}
                       >
                         <Edit2 size={18} />
                       </Link>
                       <button
                         onClick={() => handleDelete(prompt.id)}
-                        className="p-2 text-slate-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-all duration-200"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '8px',
+                          color: '#475569',
+                          borderRadius: '6px',
+                          border: 'none',
+                          backgroundColor: 'transparent',
+                          transition: 'all 0.2s',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#fee2e2';
+                          e.currentTarget.style.color = '#dc2626';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                          e.currentTarget.style.color = '#475569';
+                        }}
                       >
                         <Trash2 size={18} />
                       </button>
