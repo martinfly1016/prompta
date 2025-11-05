@@ -55,7 +55,7 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: '#f8fafc' }}>
+    <div className="flex h-screen" style={{ backgroundColor: '#f8fafc' }} data-admin-layout>
       {/* Sidebar */}
       <div
         className={`${

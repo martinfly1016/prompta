@@ -45,13 +45,20 @@
 
 html {
   scroll-behavior: smooth;
-  overflow: hidden;
 }
 
 body {
   font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+/* Only hide overflow in admin pages to prevent double scrollbars */
+html:has([data-admin-layout]) {
+  overflow: hidden;
+}
+
+html:has([data-admin-layout]) body {
   height: 100vh;
 }
 
