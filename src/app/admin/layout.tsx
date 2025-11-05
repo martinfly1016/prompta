@@ -243,8 +243,7 @@ export default function AdminLayout({
             width: '100%',
             margin: '0 auto',
             padding: '32px',
-            boxSizing: 'border-box',
-            minHeight: '100%'
+            boxSizing: 'border-box'
           }}>
             {children}
           </div>
