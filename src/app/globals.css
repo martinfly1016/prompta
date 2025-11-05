@@ -45,12 +45,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 body {
   font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  height: 100vh;
 }
 
 /* 美化滚动条 */
