@@ -44,9 +44,20 @@ export async function POST(request: NextRequest) {
     }
 
     // 上传到 Vercel Blob
+    const token = process.env.BLOB_READ_WRITE_TOKEN
+
+    if (!token) {
+      console.error('BLOB_READ_WRITE_TOKEN not found in environment')
+      return NextResponse.json(
+        { error: '上传服务未配置' },
+        { status: 500 }
+      )
+    }
+
     const blob = await put(file.name, file, {
       access: 'public',
       addRandomSuffix: true,
+      token: token,
     })
 
     // 返回上传结果
