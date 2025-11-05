@@ -3,6 +3,8 @@ import { put } from '@vercel/blob'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
+// 在生产环境中，Vercel 会自动提供环境变量
+// 在本地开发中，确保 BLOB_READ_WRITE_TOKEN 已在 .env 中配置
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
