@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
@@ -20,6 +20,14 @@ export default function AdminLayout({
 
   // 如果是登录页面，不显示侧边栏和顶部栏
   const isLoginPage = pathname === '/admin/login'
+
+  // Add admin-layout class to body on mount
+  useEffect(() => {
+    document.body.classList.add('admin-layout')
+    return () => {
+      document.body.classList.remove('admin-layout')
+    }
+  }, [])
 
   const menuItems = [
     {
@@ -55,7 +63,7 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen" style={{ backgroundColor: '#f8fafc' }} data-admin-layout>
+    <div className="flex h-screen" style={{ backgroundColor: '#f8fafc' }}>
       {/* Sidebar */}
       <div
         className={`${

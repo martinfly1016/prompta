@@ -54,12 +54,13 @@ body {
 }
 
 /* Only hide overflow in admin pages to prevent double scrollbars */
-html:has([data-admin-layout]) {
+body.admin-layout {
+  height: 100vh;
   overflow: hidden;
 }
 
-html:has([data-admin-layout]) body {
-  height: 100vh;
+html body.admin-layout {
+  overflow: hidden;
 }
 
 /* 美化滚动条 */
