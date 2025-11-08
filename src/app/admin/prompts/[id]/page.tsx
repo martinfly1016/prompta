@@ -275,8 +275,9 @@ export default function EditPromptPage() {
     return <div className="text-center text-muted-foreground">読み込み中...</div>
   }
 
-  // Extract just the effect images for the ImageUpload component
-  const effectImages = imagePairs.map(pair => pair.effect)
+  // Don't pass existing images to ImageUpload - it should only show the upload area for NEW images
+  // The imagePairs grid above already displays all existing effect images
+  const effectImages: UploadedImage[] = []
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
