@@ -6,7 +6,18 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface ImageGalleryProps {
-  images: Array<{ url: string; altText?: string }>
+  images: Array<{
+    id: string
+    url: string
+    altText?: string
+    imageType?: string
+    parentImageId?: string | null
+    originalImages?: Array<{
+      id: string
+      url: string
+      altText?: string
+    }>
+  }>
 }
 
 interface ImageTransform {
@@ -32,15 +43,22 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     return null
   }
 
+  // Filter to show only effect images
+  const effectImages = images.filter(img => img.imageType !== 'original')
+
+  if (!effectImages || effectImages.length === 0) {
+    return null
+  }
+
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+    setCurrentIndex((prev) => (prev === 0 ? effectImages.length - 1 : prev - 1))
   }
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+    setCurrentIndex((prev) => (prev === effectImages.length - 1 ? 0 : prev + 1))
   }
 
-  const currentImage = images[currentIndex]
+  const currentImage = effectImages[currentIndex]
 
   // 重置图片变换状态
   const resetImageTransform = () => {
@@ -124,15 +142,40 @@ export function ImageGallery({ images }: ImageGalleryProps) {
     <>
       <div className="space-y-4">
         {/* 主图片 */}
-        <div className="mx-auto bg-gray-200 rounded-lg overflow-hidden cursor-pointer max-w-[800px]" onClick={() => setIsLightboxOpen(true)}>
+        <div className="mx-auto bg-gray-200 rounded-lg overflow-hidden cursor-pointer max-w-[800px] relative" onClick={() => setIsLightboxOpen(true)}>
           <img
             src={getImageProxyUrl(currentImage.url)}
             alt={currentImage.altText || `效果图 ${currentIndex + 1}`}
             className="w-full h-auto object-contain"
           />
 
+          {/* 原图缩略图覆层 - 显示在右下角 */}
+          {currentImage.originalImages && currentImage.originalImages.length > 0 && (
+            <div className="absolute bottom-4 right-4 z-10">
+              <div className="flex gap-2">
+                {currentImage.originalImages.map((original, idx) => (
+                  <div
+                    key={original.id}
+                    className="relative rounded-lg overflow-hidden border-2 border-white shadow-lg"
+                    style={{
+                      width: '120px',
+                      height: 'auto',
+                      aspectRatio: '1',
+                    }}
+                  >
+                    <img
+                      src={getImageProxyUrl(original.url)}
+                      alt={original.altText || `原图 ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* 导航按钮 */}
-          {images.length > 1 && (
+          {effectImages.length > 1 && (
             <>
               <button
                 onClick={goToPrevious}
@@ -148,19 +191,19 @@ export function ImageGallery({ images }: ImageGalleryProps) {
               </button>
 
               {/* 计数器 */}
-              <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                {currentIndex + 1} / {images.length}
+              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                {currentIndex + 1} / {effectImages.length}
               </div>
             </>
           )}
         </div>
 
-        {/* 缩略图 */}
-        {images.length > 1 && (
+        {/* 缩略图 - 仅显示效果图像 */}
+        {effectImages.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-2">
-            {images.map((image, index) => (
+            {effectImages.map((image, index) => (
               <button
-                key={index}
+                key={image.id}
                 onClick={() => setCurrentIndex(index)}
                 className={`flex-shrink-0 relative w-16 h-16 rounded-lg overflow-hidden transition-all ${
                   index === currentIndex ? 'ring-2 ring-blue-500' : 'opacity-60 hover:opacity-100'
@@ -229,7 +272,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
             </div>
 
             {/* 导航按钮 - 固定位置，确保始终可见 */}
-            {images.length > 1 && (
+            {effectImages.length > 1 && (
               <>
                 <button
                   onClick={goToPrevious}
@@ -252,7 +295,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
             {/* 计数器 - 底部始终可见 */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 bg-black/70 text-white px-6 py-3 rounded-full text-sm font-medium">
-              {currentIndex + 1} / {images.length}
+              {currentIndex + 1} / {effectImages.length}
             </div>
 
             {/* 缩放提示 */}

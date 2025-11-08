@@ -18,9 +18,34 @@ export async function GET(
       where: { id: params.id },
       include: {
         category: true,
-        images: { orderBy: { order: 'asc' } },
+        images: {
+          orderBy: { order: 'asc' },
+        },
       },
     })
+
+    // If we have images, enrich effect images with their original images
+    if (promptData && promptData.images) {
+      try {
+        const enrichedImages = []
+        for (const img of promptData.images) {
+          if (img.imageType === 'effect') {
+            // Fetch original images for this effect image
+            const originalImages = await prisma.promptImage.findMany({
+              where: { parentImageId: img.id },
+              orderBy: { createdAt: 'asc' }
+            })
+            enrichedImages.push({ ...img, originalImages })
+          } else {
+            enrichedImages.push(img)
+          }
+        }
+        promptData.images = enrichedImages
+      } catch (enrichError) {
+        // If enrichment fails, just return the basic image data
+        console.error('Error enriching images:', enrichError)
+      }
+    }
 
     // Add empty tags array for UI compatibility
     let prompt

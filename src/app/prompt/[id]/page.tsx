@@ -10,8 +10,12 @@ import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
 
 interface PromptImage {
+  id: string
   url: string
   altText?: string
+  imageType: string // 'effect' or 'original'
+  parentImageId?: string | null // Reference to effect image for original images
+  originalImages?: PromptImage[] // Original images for this effect image
 }
 
 interface Tag {
