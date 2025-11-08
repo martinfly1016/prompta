@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Trash2 } from 'lucide-react'
 import { ImageUpload } from '@/components/ImageUpload'
 import { SingleImageUpload } from '@/components/SingleImageUpload'
 
@@ -19,6 +19,14 @@ interface UploadedImage {
   type: string
 }
 
+// New structure to pair effect images with their original images
+interface EffectImageWithOriginal {
+  id?: string  // Database ID for existing effect images
+  effect: UploadedImage
+  original: UploadedImage | null
+  showOriginalUpload: boolean
+}
+
 export default function EditPromptPage() {
   const router = useRouter()
   const params = useParams()
@@ -31,9 +39,10 @@ export default function EditPromptPage() {
   const [categoryId, setCategoryId] = useState('')
   const [tags, setTags] = useState('')
   const [isPublished, setIsPublished] = useState(false)
-  const [images, setImages] = useState<UploadedImage[]>([])
-  const [originalImage, setOriginalImage] = useState<UploadedImage | null>(null)
-  const [showOriginalImageUpload, setShowOriginalImageUpload] = useState(false)
+
+  // New state structure: array of image pairs instead of separate images and originalImage
+  const [imagePairs, setImagePairs] = useState<EffectImageWithOriginal[]>([])
+
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
@@ -70,6 +79,7 @@ export default function EditPromptPage() {
       setDescription(data.description)
       setContent(data.content)
       setCategoryId(data.categoryId)
+
       // Handle tags safely - they may be null, undefined, or invalid JSON
       try {
         if (data.tags && data.tags !== 'undefined') {
@@ -82,25 +92,36 @@ export default function EditPromptPage() {
         console.error('Error parsing tags:', e)
         setTags('')
       }
+
       setIsPublished(data.isPublished)
+
+      // Reconstruct image pairs from the database images
       if (data.images && Array.isArray(data.images)) {
         const effectImages = data.images.filter((img: any) => img.imageType !== 'original')
-        const originalImg = data.images.find((img: any) => img.imageType === 'original')
 
-        setImages(effectImages.map((img: any) => ({
-          url: img.url,
-          size: img.fileSize,
-          type: img.mimeType,
-        })))
+        // For each effect image, find its paired original image
+        const pairs: EffectImageWithOriginal[] = effectImages.map((effectImg: any) => {
+          const originalImg = data.images.find(
+            (img: any) => img.imageType === 'original' && img.parentImageId === effectImg.id
+          )
 
-        if (originalImg) {
-          setOriginalImage({
-            url: originalImg.url,
-            size: originalImg.fileSize,
-            type: originalImg.mimeType,
-          })
-          setShowOriginalImageUpload(true)
-        }
+          return {
+            id: effectImg.id,
+            effect: {
+              url: effectImg.url,
+              size: effectImg.fileSize,
+              type: effectImg.mimeType,
+            },
+            original: originalImg ? {
+              url: originalImg.url,
+              size: originalImg.fileSize,
+              type: originalImg.mimeType,
+            } : null,
+            showOriginalUpload: !!originalImg, // Show upload area if original exists
+          }
+        })
+
+        setImagePairs(pairs)
       }
     } catch (error) {
       console.error('Failed to fetch prompt:', error)
@@ -108,6 +129,68 @@ export default function EditPromptPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Handler for when user uploads new effect images
+  const handleEffectImagesChange = (newImages: UploadedImage[]) => {
+    // Add new pairs for newly uploaded images
+    const currentEffectUrls = imagePairs.map(pair => pair.effect.url)
+    const addedImages = newImages.filter(img => !currentEffectUrls.includes(img.url))
+
+    // Remove pairs for deleted images
+    const newImageUrls = newImages.map(img => img.url)
+    const remainingPairs = imagePairs.filter(pair => newImageUrls.includes(pair.effect.url))
+
+    // Create new pairs for added images
+    const newPairs = addedImages.map(img => ({
+      effect: img,
+      original: null,
+      showOriginalUpload: false,
+    }))
+
+    setImagePairs([...remainingPairs, ...newPairs])
+  }
+
+  // Toggle showing the original image upload for a specific pair
+  const handleToggleOriginalUpload = (index: number) => {
+    setImagePairs(pairs => {
+      const updated = [...pairs]
+      updated[index] = {
+        ...updated[index],
+        showOriginalUpload: !updated[index].showOriginalUpload
+      }
+      return updated
+    })
+  }
+
+  // Handler for when user uploads an original image for a specific pair
+  const handleOriginalImageUpload = (index: number, image: UploadedImage | null) => {
+    setImagePairs(pairs => {
+      const updated = [...pairs]
+      updated[index] = {
+        ...updated[index],
+        original: image,
+        // Keep upload area visible after upload so user can see/change it
+      }
+      return updated
+    })
+  }
+
+  // Remove a specific effect image and its original
+  const handleRemoveEffectImage = (index: number) => {
+    setImagePairs(pairs => pairs.filter((_, i) => i !== index))
+  }
+
+  // Remove just the original image from a pair
+  const handleRemoveOriginal = (index: number) => {
+    setImagePairs(pairs => {
+      const updated = [...pairs]
+      updated[index] = {
+        ...updated[index],
+        original: null,
+      }
+      return updated
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -119,7 +202,7 @@ export default function EditPromptPage() {
       return
     }
 
-    if (images.length === 0) {
+    if (imagePairs.length === 0) {
       setError('少なくとも1枚の画像をアップロードしてください')
       return
     }
@@ -131,24 +214,37 @@ export default function EditPromptPage() {
       const url = isNew ? '/api/prompts' : `/api/prompts/${id}`
       const tagArray = tags.split(',').map((t) => t.trim()).filter(Boolean)
 
-      const allImages = [
-        ...images.map((img, index) => ({
-          url: img.url,
-          fileName: `image-${index}`,
-          fileSize: img.size,
-          mimeType: img.type,
+      // Transform imagePairs into the format expected by the API
+      const allImages = imagePairs.flatMap((pair, index) => {
+        const images: any[] = [{
+          url: pair.effect.url,
+          fileName: `effect-${index}`,
+          fileSize: pair.effect.size,
+          mimeType: pair.effect.type,
           order: index,
           imageType: 'effect',
-        })),
-        ...(originalImage ? [{
-          url: originalImage.url,
-          fileName: 'original',
-          fileSize: originalImage.size,
-          mimeType: originalImage.type,
-          order: -1,
-          imageType: 'original',
-        }] : [])
-      ]
+        }]
+
+        // Include the database ID if this is an existing image
+        if (pair.id) {
+          images[0].effectImageId = pair.id
+        }
+
+        // Add the original image if it exists
+        if (pair.original) {
+          images.push({
+            url: pair.original.url,
+            fileName: `original-${index}`,
+            fileSize: pair.original.size,
+            mimeType: pair.original.type,
+            order: index,
+            imageType: 'original',
+            parentImageId: pair.id, // Reference to the effect image
+          })
+        }
+
+        return images
+      })
 
       const res = await fetch(url, {
         method,
@@ -178,6 +274,9 @@ export default function EditPromptPage() {
   if (isLoading) {
     return <div className="text-center text-muted-foreground">読み込み中...</div>
   }
+
+  // Extract just the effect images for the ImageUpload component
+  const effectImages = imagePairs.map(pair => pair.effect)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -408,75 +507,183 @@ export default function EditPromptPage() {
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {/* Effect Images - Full Width */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <label style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#0f172a'
+          {/* Images Section - Now with paired structure */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <label style={{
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#0f172a'
+            }}>
+              効果画像 <span style={{ color: '#dc2626' }}>*</span>
+            </label>
+
+            {/* Display existing effect images with their original image controls */}
+            {imagePairs.length > 0 && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: '16px',
+                marginBottom: '16px'
               }}>
-                効果画像 <span style={{ color: '#dc2626' }}>*</span>
-              </label>
-              <ImageUpload
-                images={images}
-                onImagesChange={setImages}
-                maxImages={10}
-              />
-              {images.length === 0 && (
-                <p style={{
-                  color: '#dc2626',
-                  fontSize: '13px',
-                  marginTop: '6px'
-                }}>
-                  少なくとも1枚の画像をアップロードしてください
-                </p>
-              )}
-            </div>
+                {imagePairs.map((pair, index) => (
+                  <div
+                    key={pair.effect.url}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                      padding: '12px',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '8px',
+                      backgroundColor: '#f8fafc'
+                    }}
+                  >
+                    {/* Effect Image Preview */}
+                    <div style={{ position: 'relative' }}>
+                      <img
+                        src={pair.effect.url}
+                        alt={`Effect ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '150px',
+                          objectFit: 'cover',
+                          borderRadius: '6px'
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveEffectImage(index)}
+                        style={{
+                          position: 'absolute',
+                          top: '6px',
+                          right: '6px',
+                          backgroundColor: 'rgba(239, 68, 68, 0.9)',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '4px',
+                          padding: '6px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                        title="Delete effect image"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
 
-            {/* Original Image Section */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '12px', borderTop: '1px solid #e2e8f0' }}>
-              {/* Add Original Image Checkbox */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <input
-                  id="addOriginalImage"
-                  type="checkbox"
-                  checked={showOriginalImageUpload}
-                  onChange={(e) => setShowOriginalImageUpload(e.target.checked)}
-                  style={{
-                    width: '16px',
-                    height: '16px',
-                    cursor: 'pointer',
-                    accentColor: '#0284c7'
-                  }}
-                />
-                <label htmlFor="addOriginalImage" style={{
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  color: '#0f172a',
-                  cursor: 'pointer'
-                }}>
-                  添加原图
-                </label>
+                    {/* Toggle Original Upload Button */}
+                    <button
+                      type="button"
+                      onClick={() => handleToggleOriginalUpload(index)}
+                      style={{
+                        padding: '6px 12px',
+                        backgroundColor: pair.showOriginalUpload ? '#e2e8f0' : '#0284c7',
+                        color: pair.showOriginalUpload ? '#475569' : '#ffffff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        fontSize: '12px',
+                        fontWeight: '500',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {pair.showOriginalUpload ? '原图を隠す' : '添加原图'}
+                    </button>
+
+                    {/* Original Image Upload Area */}
+                    {pair.showOriginalUpload && (
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        marginTop: '8px',
+                        paddingTop: '8px',
+                        borderTop: '1px solid #e2e8f0'
+                      }}>
+                        {pair.original ? (
+                          <div style={{ position: 'relative' }}>
+                            <div style={{
+                              fontSize: '11px',
+                              fontWeight: '600',
+                              color: '#64748b',
+                              marginBottom: '4px'
+                            }}>
+                              原図
+                            </div>
+                            <img
+                              src={pair.original.url}
+                              alt="Original"
+                              style={{
+                                width: '100%',
+                                height: '120px',
+                                objectFit: 'cover',
+                                borderRadius: '4px',
+                                border: '2px solid #0284c7'
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveOriginal(index)}
+                              style={{
+                                position: 'absolute',
+                                top: '24px',
+                                right: '6px',
+                                backgroundColor: 'rgba(239, 68, 68, 0.9)',
+                                color: '#ffffff',
+                                border: 'none',
+                                borderRadius: '4px',
+                                padding: '4px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                              title="Delete original image"
+                            >
+                              <Trash2 size={12} />
+                            </button>
+                          </div>
+                        ) : (
+                          <div>
+                            <div style={{
+                              fontSize: '11px',
+                              fontWeight: '600',
+                              color: '#64748b',
+                              marginBottom: '4px'
+                            }}>
+                              原図
+                            </div>
+                            <SingleImageUpload
+                              image={pair.original}
+                              onImageChange={(img) => handleOriginalImageUpload(index, img)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
+            )}
 
-              {/* Original Image Upload - Conditional */}
-              {showOriginalImageUpload && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '12px' }}>
-                  <label style={{
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    color: '#0f172a'
-                  }}>
-                    原图
-                  </label>
-                  <SingleImageUpload
-                    image={originalImage}
-                    onImageChange={setOriginalImage}
-                  />
-                </div>
-              )}
-            </div>
+            {/* Upload area for new effect images */}
+            <ImageUpload
+              images={effectImages}
+              onImagesChange={handleEffectImagesChange}
+              maxImages={10}
+            />
+
+            {imagePairs.length === 0 && (
+              <p style={{
+                color: '#dc2626',
+                fontSize: '13px',
+                marginTop: '6px'
+              }}>
+                少なくとも1枚の画像をアップロードしてください
+              </p>
+            )}
           </div>
 
           <div style={{

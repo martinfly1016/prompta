@@ -91,6 +91,8 @@ export async function PUT(
               mimeType: img.mimeType,
               order: img.order,
               imageType: img.imageType || 'effect',
+              // Support parentImageId for original images paired with effect images
+              ...(img.parentImageId && { parentImageId: img.parentImageId }),
             })),
           },
         }),

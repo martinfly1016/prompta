@@ -88,10 +88,16 @@ model PromptImage {
   order     Int      @default(0) // Display order in gallery
   altText   String?  // Alt text for accessibility
 
+  // For original images: points to the effect image they are associated with
+  parentImageId String?
+  parentImage   PromptImage? @relation("OriginalToEffect", fields: [parentImageId], references: [id], onDelete: Cascade)
+  originalImages PromptImage[] @relation("OriginalToEffect")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([promptId])
   @@index([order])
   @@index([imageType])
+  @@index([parentImageId])
 }
