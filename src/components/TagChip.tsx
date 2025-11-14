@@ -11,7 +11,6 @@ interface TagChipProps {
 
 export default function TagChip({
   name,
-  color = 'blue',
   onClick,
   className = '',
 }: TagChipProps) {

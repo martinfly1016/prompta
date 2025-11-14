@@ -2,8 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import Image from 'next/image'
-import { X, Upload, Loader2 } from 'lucide-react'
+import { Upload, Loader2 } from 'lucide-react'
 
 interface UploadedImage {
   url: string
@@ -63,23 +62,6 @@ export function ImageUpload({
     disabled: uploading || images.length >= maxImages,
   })
 
-  const removeImage = async (index: number) => {
-    const imageToRemove = images[index]
-
-    try {
-      await fetch('/api/upload/delete', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: imageToRemove.url }),
-      })
-
-      const newImages = images.filter((_, i) => i !== index)
-      onImagesChange(newImages)
-    } catch (error) {
-      console.error('Delete error:', error)
-      alert('删除失败，请重试')
-    }
-  }
 
   return (
     <div className="space-y-4">

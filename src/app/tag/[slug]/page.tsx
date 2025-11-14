@@ -4,20 +4,11 @@ import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
-import TagChip from '@/components/TagChip'
 import SearchBar from '@/components/SearchBar'
 import Footer from '@/components/Footer'
 import SkeletonNav from '@/components/SkeletonNav'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
-// Helper function to slugify tag names (supports Japanese and other languages)
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]/g, '') // Keep Japanese characters
-}
 
 interface PromptImage {
   url: string

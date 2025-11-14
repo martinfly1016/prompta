@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { Copy, Check, Share2 } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
 import Footer from '@/components/Footer'
@@ -114,7 +114,6 @@ function CategoryNavigation({
 
 export default function PromptPage() {
   const params = useParams()
-  const router = useRouter()
   const id = params.id as string
 
   const [prompt, setPrompt] = useState<Prompt | null>(null)

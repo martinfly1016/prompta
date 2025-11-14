@@ -445,7 +445,7 @@ function HomeContent() {
             <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚠️</div>
               <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', marginBottom: '12px', margin: 0 }}>データの読み込みエラー</h2>
-              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
+              <p style={{ color: '#475569', maxWidth: '600px', margin: '12px auto 24px auto' }}>
                 {error}
               </p>
               <button
@@ -474,7 +474,7 @@ function HomeContent() {
             <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>⚠️</div>
               <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', margin: 0, marginBottom: '12px' }}>検索エラー</h2>
-              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
+              <p style={{ color: '#475569', maxWidth: '600px', margin: '12px auto 24px auto' }}>
                 {searchError}
               </p>
               <button
@@ -490,7 +490,7 @@ function HomeContent() {
             <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fed7aa', borderRadius: '8px', padding: '32px', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>😕</div>
               <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', margin: 0, marginBottom: '12px' }}>該当する内容が見つかりませんでした</h2>
-              <p style={{ color: '#475569', marginBottom: '24px', maxWidth: '600px', margin: '0 auto', marginTop: '12px', marginBottom: '24px' }}>
+              <p style={{ color: '#475569', maxWidth: '600px', margin: '12px auto 24px auto' }}>
                 「{searchQuery}」に一致するプロンプトはありません。
                 <br />
                 別のキーワードで試してください。
@@ -565,7 +565,7 @@ function HomeContent() {
                       }
                       return tags && tags.length > 0 ? (
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
-                          {tags.slice(0, 3).map((tag, idx) => (
+                          {tags.slice(0, 3).map((tag: any, idx: number) => (
                             <TagChip
                               key={typeof tag === 'string' ? `tag-${idx}` : tag.id}
                               name={typeof tag === 'string' ? tag : tag.name}
