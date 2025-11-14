@@ -36,9 +36,9 @@ export async function GET(
               orderBy: { createdAt: 'asc' }
             })
             enrichedImages.push({ ...img, originalImages })
-          } else {
-            enrichedImages.push(img)
           }
+          // Only include effect images in the main array
+          // Original images are nested in the originalImages field of their parent effect image
         }
         promptData.images = enrichedImages
       } catch (enrichError) {
@@ -47,10 +47,10 @@ export async function GET(
       }
     }
 
-    // Add empty tags array for UI compatibility
+    // Return tags as is (they are stored as JSON string in database)
     let prompt
     if (promptData) {
-      prompt = { ...promptData, tags: [] }
+      prompt = promptData
     } else {
       prompt = null
     }
@@ -87,51 +87,134 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, isPublished, images } = body
+    const { title, description, content, categoryId, isPublished, images, tags } = body
 
-    // First, delete existing images if images are provided
-    if (images && images.length >= 0) {
+    // Only handle image deletion and recreation if new images are actually provided
+    if (images && images.length > 0) {
+      // First, delete existing images if new images are provided
+      // Need to delete in correct order: original images first, then effect images
       await prisma.promptImage.deleteMany({
-        where: { promptId: params.id },
+        where: {
+          promptId: params.id,
+          imageType: 'original'
+        },
       })
+      // Then delete effect images
+      await prisma.promptImage.deleteMany({
+        where: {
+          promptId: params.id,
+          imageType: 'effect'
+        },
+      })
+
+      // Separate effect and original images
+      const effectImages = images.filter((img: any) => img.imageType !== 'original')
+      const originalImages = images.filter((img: any) => img.imageType === 'original')
+
+      console.log('DEBUG: Creating images', {
+        effectImagesCount: effectImages.length,
+        originalImagesCount: originalImages.length,
+        effectImages: effectImages.map((img: any) => ({ order: img.order, url: img.url.substring(0, 50) })),
+        originalImages: originalImages.map((img: any) => ({ parentImageIndex: img.parentImageIndex, order: img.order }))
+      })
+
+      // Create effect images first, then original images can reference them
+      // Map effect images by their order to easily find the correct parent
+      const createdEffectImagesByOrder: { [key: number]: any } = {}
+      const createdEffectImagesByIndex: any[] = []
+
+      // Create all effect images first
+      for (const img of effectImages) {
+        const created = await prisma.promptImage.create({
+          data: {
+            promptId: params.id,
+            url: img.url,
+            blobKey: img.url.split('/').pop() || 'unknown',
+            fileName: img.fileName,
+            fileSize: img.fileSize,
+            mimeType: img.mimeType,
+            order: img.order,
+            imageType: 'effect',
+          },
+        })
+        createdEffectImagesByOrder[img.order] = created
+        createdEffectImagesByIndex.push(created)
+      }
+
+      // Then create original images, linking them to the correct effect image
+      for (const img of originalImages) {
+        // Original images have parentImageIndex that tells us which effect image (by index) they belong to
+        let parentEffectImage = null
+
+        if (typeof img.parentImageIndex === 'number' && img.parentImageIndex >= 0) {
+          // Use parentImageIndex as array index to find the correct effect image
+          parentEffectImage = createdEffectImagesByIndex[img.parentImageIndex]
+        } else {
+          // Fallback: use order or default to first effect image
+          const parentOrder = img.order
+          parentEffectImage = createdEffectImagesByOrder[parentOrder] || createdEffectImagesByIndex[0]
+        }
+
+        console.log('DEBUG: Creating original image', {
+          parentImageIndex: img.parentImageIndex,
+          parentEffectImageId: parentEffectImage?.id,
+          parentEffectImageOrder: parentEffectImage?.order
+        })
+
+        if (!parentEffectImage) {
+          console.error('ERROR: No parent effect image found for original image with parentImageIndex:', img.parentImageIndex)
+          // Skip this original image if we can't find its parent
+          continue
+        }
+
+        console.log('DEBUG: Creating original image with valid parent')
+        await prisma.promptImage.create({
+          data: {
+            promptId: params.id,
+            url: img.url,
+            blobKey: img.url.split('/').pop() || 'unknown',
+            fileName: img.fileName,
+            fileSize: img.fileSize,
+            mimeType: img.mimeType,
+            order: img.order,
+            imageType: 'original',
+            parentImageId: parentEffectImage.id,
+          },
+        })
+      }
     }
 
-    // Update without tags to avoid migration conflicts
-    // Tags will be updated once the migration is applied in production
+    // Now update the prompt with other fields
+    // Note: We need to use connect for relationships, not direct ID assignment
+    const updateData: any = {
+      title,
+      description,
+      content,
+      isPublished,
+    }
+
+    // Only include tags if they're being updated
+    if (tags !== undefined) {
+      updateData.tags = tags ? JSON.stringify(tags) : null
+    }
+
+    // Only update category if categoryId is provided
+    if (categoryId) {
+      updateData.category = {
+        connect: { id: categoryId }
+      }
+    }
+
     const prompt = await prisma.prompt.update({
       where: { id: params.id },
-      data: {
-        title,
-        description,
-        content,
-        categoryId,
-        isPublished,
-        ...(images && images.length > 0 && {
-          images: {
-            create: images.map((img: any) => ({
-              url: img.url,
-              blobKey: img.url.split('/').pop() || 'unknown',
-              fileName: img.fileName,
-              fileSize: img.fileSize,
-              mimeType: img.mimeType,
-              order: img.order,
-              imageType: img.imageType || 'effect',
-              // Support parentImageId for original images paired with effect images
-              ...(img.parentImageId && { parentImageId: img.parentImageId }),
-            })),
-          },
-        }),
-      },
+      data: updateData,
       include: {
         category: true,
         images: { orderBy: { order: 'asc' } },
       },
     })
 
-    // Add empty tags array for UI compatibility
-    const promptWithTags = { ...prompt, tags: [] }
-
-    return NextResponse.json(promptWithTags)
+    return NextResponse.json(prompt)
   } catch (error) {
     console.error('Failed to update prompt:', error)
     return NextResponse.json(

@@ -83,32 +83,6 @@ export function ImageUpload({
 
   return (
     <div className="space-y-4">
-      {/* 已上传图片预览 */}
-      {images.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {images.map((image, index) => (
-            <div key={index} className="relative group aspect-square">
-              <Image
-                src={image.url}
-                alt={`上传图片 ${index + 1}`}
-                fill
-                className="object-cover rounded-lg"
-              />
-              <button
-                type="button"
-                onClick={() => removeImage(index)}
-                className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <X size={16} />
-              </button>
-              <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                {index + 1}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
       {/* 上传区域 */}
       {images.length < maxImages && (
         <div

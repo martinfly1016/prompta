@@ -3,11 +3,20 @@
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { Copy, Check, Share2, ArrowLeft } from 'lucide-react'
+import { Copy, Check, Share2 } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
 import Footer from '@/components/Footer'
 import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
+
+// Helper function to slugify tag names (supports Japanese and other languages)
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]/g, '') // Keep Japanese characters
+}
 
 interface PromptImage {
   id: string
@@ -38,8 +47,7 @@ interface Prompt {
   description: string
   content: string
   category: { name: string; slug: string }
-  tags?: Tag[]
-  views: number
+  tags?: Tag[] | string
   createdAt: string
   images?: PromptImage[]
 }
@@ -48,9 +56,13 @@ interface Prompt {
 function CategoryNavigation({
   categories,
   isLoading,
+  onSearch,
+  onSearchClear,
 }: {
   categories: Category[]
   isLoading: boolean
+  onSearch: (query: string) => void
+  onSearchClear: () => void
 }) {
   const router = useRouter()
 
@@ -68,6 +80,9 @@ function CategoryNavigation({
         <SkeletonNav />
       ) : (
         <nav className="category-nav-bar">
+          <Link href="/" className="logo-link">
+            <img src="/logo.png" alt="Prompta Logo" className="logo-image" />
+          </Link>
           <button
             onClick={() => handleCategoryClick(null)}
             className="category-nav-item"
@@ -87,8 +102,8 @@ function CategoryNavigation({
           ))}
           <div className="search-bar-nav-spacer"></div>
           <SearchBar
-            onSearch={() => {}}
-            onClear={() => {}}
+            onSearch={onSearch}
+            onClear={onSearchClear}
             isSearching={false}
           />
         </nav>
@@ -99,6 +114,7 @@ function CategoryNavigation({
 
 export default function PromptPage() {
   const params = useParams()
+  const router = useRouter()
   const id = params.id as string
 
   const [prompt, setPrompt] = useState<Prompt | null>(null)
@@ -107,19 +123,24 @@ export default function PromptPage() {
   const [categories, setCategories] = useState<Category[]>([])
   const [categoriesLoading, setCategoriesLoading] = useState(true)
 
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      // Navigate to homepage which has built-in search functionality
+      const encodedQuery = encodeURIComponent(query)
+      window.location.href = `/?search=${encodedQuery}`
+    }
+  }
+
+  const handleSearchClear = () => {
+    window.location.href = '/'
+  }
+
   useEffect(() => {
     const fetchPrompt = async () => {
       try {
         const res = await fetch(`/api/prompts/${id}`)
         const data = await res.json()
         setPrompt(data)
-
-        // Increment view count
-        await fetch(`/api/view`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ promptId: id })
-        }).catch(() => {})
       } catch (error) {
         console.error('Failed to fetch prompt:', error)
       } finally {
@@ -183,7 +204,12 @@ export default function PromptPage() {
     return (
       <>
         <Suspense fallback={null}>
-          <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+          <CategoryNavigation
+            categories={categories}
+            isLoading={categoriesLoading}
+            onSearch={handleSearch}
+            onSearchClear={handleSearchClear}
+          />
         </Suspense>
         <main className="min-h-screen bg-background">
           <div className="container mx-auto px-4 py-12 text-center text-muted-foreground">
@@ -199,7 +225,12 @@ export default function PromptPage() {
     return (
       <>
         <Suspense fallback={null}>
-          <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+          <CategoryNavigation
+            categories={categories}
+            isLoading={categoriesLoading}
+            onSearch={handleSearch}
+            onSearchClear={handleSearchClear}
+          />
         </Suspense>
         <main className="min-h-screen bg-background">
           <div className="container mx-auto px-4 py-12 text-center">
@@ -214,45 +245,35 @@ export default function PromptPage() {
     )
   }
 
-  const tags = Array.isArray(prompt.tags) ? prompt.tags : []
+  // Parse tags from string or array
+  const parseTags = (): string[] => {
+    if (!prompt.tags) return []
+    if (typeof prompt.tags === 'string') {
+      try {
+        const parsed = JSON.parse(prompt.tags)
+        return Array.isArray(parsed) ? parsed : []
+      } catch {
+        return []
+      }
+    }
+    return Array.isArray(prompt.tags) ? prompt.tags.map(t => (typeof t === 'string' ? t : t.name)) : []
+  }
+
+  const tagList = parseTags()
 
   return (
     <>
       <Suspense fallback={null}>
-        <CategoryNavigation categories={categories} isLoading={categoriesLoading} />
+        <CategoryNavigation
+          categories={categories}
+          isLoading={categoriesLoading}
+          onSearch={handleSearch}
+          onSearchClear={handleSearchClear}
+        />
       </Suspense>
       <main className="min-h-screen bg-background">
-        {/* Full-width back button section */}
-        <div className="px-6 py-6">
-          <div className="mx-auto" style={{ maxWidth: '1280px' }}>
-            <Link
-              href="/"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8"
-            >
-              <ArrowLeft size={20} />
-              ホームに戻る
-            </Link>
-          </div>
-        </div>
-
         {/* Fixed 1280px width container for main content */}
         <div className="mx-auto px-6 py-8" style={{ maxWidth: '1280px' }}>
-          {/* Breadcrumb */}
-          {prompt.category && (
-            <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-              <Link href="/" className="hover:text-foreground">
-                ホーム
-              </Link>
-              <span>/</span>
-              <Link
-                href={`/category/${prompt.category.slug}`}
-                className="hover:text-foreground"
-              >
-                {prompt.category.name}
-              </Link>
-            </div>
-          )}
-
           {/* Main Content */}
           <article className="space-y-6">
             {/* Header - Card Style - White Background */}
@@ -272,11 +293,37 @@ export default function PromptPage() {
                     {prompt.category.name}
                   </span>
                 )}
-                <span className="text-sm text-muted-foreground">
-                  👁️ {prompt.views}回閲覧
-                </span>
               </div>
             </div>
+
+            {/* Clickable Tags Section - Separate Card */}
+            {tagList.length > 0 && (
+              <div className="rounded-lg" style={{ backgroundColor: '#faf5ff', padding: '24px' }}>
+                <div className="flex flex-wrap" style={{ gap: '16px', rowGap: '16px' }}>
+                  {tagList.map((tag: string) => (
+                    <Link
+                      key={tag}
+                      href={`/tag/${slugify(tag)}`}
+                      className="rounded-full font-medium transition-all duration-200 hover:opacity-80 no-underline"
+                      style={{
+                        display: 'inline-block',
+                        paddingLeft: '16px',
+                        paddingRight: '16px',
+                        paddingTop: '8px',
+                        paddingBottom: '8px',
+                        fontSize: '1rem',
+                        backgroundColor: 'transparent',
+                        color: '#9333ea',
+                        border: '1px solid #9333ea',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {tag}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Image Gallery - Card Style - Light Gray Background */}
             {prompt.images && prompt.images.length > 0 && (
@@ -286,58 +333,49 @@ export default function PromptPage() {
               </div>
             )}
 
-            {/* Tags */}
-            {tags.length > 0 && (
-              <div className="rounded-lg" style={{ backgroundColor: '#ffffff', padding: '32px' }}>
-                <h3 className="text-base font-semibold text-foreground mb-4">タグ</h3>
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag: Tag) => (
-                    <span
-                      key={tag.id}
-                      className="text-xs px-3 py-1 rounded-full"
-                      style={{
-                        backgroundColor: '#f1f5f9',
-                        color: '#475569'
-                      }}
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            {/* Tags - Duplicate section removed as tags are already displayed above */}
 
             {/* Spacing divider */}
             <div className="h-4"></div>
 
-            {/* Content - Emphasized Card Style - White Background */}
-            <div className="rounded-lg border-l-4 space-y-4" style={{ backgroundColor: '#ffffff', borderLeftColor: '#0284c7', padding: '32px' }}>
+            {/* Content - Apple Style Design - White Background */}
+            <div className="rounded-lg space-y-4" style={{ backgroundColor: '#ffffff', padding: '32px' }}>
               <div className="flex items-center justify-between flex-wrap gap-4">
-                <h2 className="text-xl font-semibold" style={{ color: '#0284c7' }}>
+                <h2 className="text-2xl font-semibold" style={{ color: '#1d1d1f' }}>
                   プロンプト
                 </h2>
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   <button
                     onClick={handleCopy}
                     className="flex items-center gap-2 text-white font-medium transition-all duration-200"
                     style={{
-                      padding: '12px 20px',
-                      backgroundColor: '#0284c7',
-                      borderRadius: '6px',
+                      padding: '10px 24px',
+                      backgroundColor: '#0071e3',
+                      borderRadius: '980px',
                       border: 'none',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(0, 113, 227, 0.15)',
+                      fontSize: '15px'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0077ed'
+                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 113, 227, 0.25)'
+                      e.currentTarget.style.transform = 'translateY(-1px)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#0071e3'
+                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 113, 227, 0.15)'
+                      e.currentTarget.style.transform = 'translateY(0)'
+                    }}
                   >
                     {copied ? (
                       <>
-                        <Check size={18} />
+                        <Check size={16} />
                         コピーしました
                       </>
                     ) : (
                       <>
-                        <Copy size={18} />
+                        <Copy size={16} />
                         コピー
                       </>
                     )}
@@ -346,40 +384,124 @@ export default function PromptPage() {
                     onClick={handleShare}
                     className="flex items-center gap-2 font-medium transition-all duration-200"
                     style={{
-                      padding: '12px 20px',
+                      padding: '10px 24px',
                       backgroundColor: 'transparent',
-                      borderRadius: '6px',
-                      border: '2px solid #0284c7',
-                      color: '#0284c7',
-                      cursor: 'pointer'
+                      borderRadius: '980px',
+                      border: '1.5px solid #0071e3',
+                      color: '#0071e3',
+                      cursor: 'pointer',
+                      fontSize: '15px'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(2, 132, 199, 0.1)'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgba(0, 113, 227, 0.08)'
+                      e.currentTarget.style.borderColor = '#0077ed'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent'
+                      e.currentTarget.style.borderColor = '#0071e3'
+                    }}
                   >
-                    <Share2 size={18} />
+                    <Share2 size={16} />
                     共有
                   </button>
                 </div>
               </div>
 
-              <div className="bg-slate-900 dark:bg-slate-950 rounded-lg overflow-hidden">
-                <pre className="p-6 text-white overflow-x-auto font-mono text-sm whitespace-pre-wrap break-words">
+              {/* Code container with shallow gray background */}
+              <div style={{
+                background: '#f5f5f7',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                border: '1px solid #e5e5e7'
+              }}>
+                <pre style={{
+                  padding: '24px',
+                  color: '#1d1d1f',
+                  margin: 0,
+                  fontFamily: "'SF Mono', 'Monaco', 'Menlo', monospace",
+                  fontSize: '15px',
+                  lineHeight: '1.6',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-word',
+                  overflowX: 'auto'
+                }}>
                   {prompt.content}
                 </pre>
               </div>
             </div>
 
-            {/* Info - Card Style - Light Gray Background */}
-            <div className="border-l-4 rounded-lg" style={{ backgroundColor: '#f1f5f9', borderLeftColor: '#0284c7', padding: '32px' }}>
-              <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                <span className="text-2xl">💡</span>
+            {/* Info - Apple Style Design - Light Gray Background */}
+            <div className="rounded-lg" style={{ backgroundColor: '#fafafa', border: '1px solid #e5e5e7', padding: '32px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)' }}>
+              <h3 className="font-medium mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#6e6e73' }}>
+                <span className="text-xl">💡</span>
                 このプロンプトの使い方
               </h3>
-              <ol className="text-base text-gray-700 dark:text-gray-300 space-y-3 list-decimal list-inside">
-                <li className="font-medium">上の「コピー」ボタンをクリックしてプロンプトをコピーします</li>
-                <li className="font-medium">ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</li>
-                <li className="font-medium">Enterキーを押して実行します</li>
-              </ol>
+              <ul className="space-y-4" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                <li className="flex items-start gap-4">
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '24px',
+                      height: '24px',
+                      backgroundColor: '#0071e3',
+                      color: 'white',
+                      borderRadius: '50%',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      flexShrink: 0,
+                      marginTop: '3px'
+                    }}
+                  >
+                    1
+                  </span>
+                  <span style={{ fontSize: '14px', color: '#6e6e73', lineHeight: '1.5' }}>上の「コピー」ボタンをクリックしてプロンプトをコピーします</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '24px',
+                      height: '24px',
+                      backgroundColor: '#0071e3',
+                      color: 'white',
+                      borderRadius: '50%',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      flexShrink: 0,
+                      marginTop: '3px'
+                    }}
+                  >
+                    2
+                  </span>
+                  <span style={{ fontSize: '14px', color: '#6e6e73', lineHeight: '1.5' }}>ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '24px',
+                      height: '24px',
+                      backgroundColor: '#0071e3',
+                      color: 'white',
+                      borderRadius: '50%',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      flexShrink: 0,
+                      marginTop: '3px'
+                    }}
+                  >
+                    3
+                  </span>
+                  <span style={{ fontSize: '14px', color: '#6e6e73', lineHeight: '1.5' }}>Enterキーを押して実行します</span>
+                </li>
+              </ul>
             </div>
           </article>
         </div>

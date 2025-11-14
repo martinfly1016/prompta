@@ -96,32 +96,36 @@ export default function EditPromptPage() {
       setIsPublished(data.isPublished)
 
       // Reconstruct image pairs from the database images
+      // The API returns enriched data where originalImages are nested in effect images
       if (data.images && Array.isArray(data.images)) {
-        const effectImages = data.images.filter((img: any) => img.imageType !== 'original')
+        try {
+          const pairs: EffectImageWithOriginal[] = data.images.map((effectImg: any) => {
+            // Check if this effect image has nested originalImages (from enriched API response)
+            const originalImg = effectImg.originalImages && Array.isArray(effectImg.originalImages) && effectImg.originalImages.length > 0
+              ? effectImg.originalImages[0]  // Get first original image if available
+              : null
 
-        // For each effect image, find its paired original image
-        const pairs: EffectImageWithOriginal[] = effectImages.map((effectImg: any) => {
-          const originalImg = data.images.find(
-            (img: any) => img.imageType === 'original' && img.parentImageId === effectImg.id
-          )
+            return {
+              id: effectImg.id,
+              effect: {
+                url: effectImg.url,
+                size: effectImg.fileSize,
+                type: effectImg.mimeType,
+              },
+              original: originalImg ? {
+                url: originalImg.url,
+                size: originalImg.fileSize,
+                type: originalImg.mimeType,
+              } : null,
+              showOriginalUpload: !!originalImg, // Show upload area if original exists
+            }
+          })
 
-          return {
-            id: effectImg.id,
-            effect: {
-              url: effectImg.url,
-              size: effectImg.fileSize,
-              type: effectImg.mimeType,
-            },
-            original: originalImg ? {
-              url: originalImg.url,
-              size: originalImg.fileSize,
-              type: originalImg.mimeType,
-            } : null,
-            showOriginalUpload: !!originalImg, // Show upload area if original exists
-          }
-        })
-
-        setImagePairs(pairs)
+          setImagePairs(pairs)
+        } catch (e) {
+          console.error('Error reconstructing image pairs:', e)
+          setImagePairs([])
+        }
       }
     } catch (error) {
       console.error('Failed to fetch prompt:', error)
@@ -239,7 +243,8 @@ export default function EditPromptPage() {
             mimeType: pair.original.type,
             order: index,
             imageType: 'original',
-            parentImageId: pair.id, // Reference to the effect image
+            parentImageId: pair.id, // Reference to the effect image (if exists)
+            parentImageIndex: index, // Use index when parentImageId is unavailable (for new prompts)
           })
         }
 
@@ -275,9 +280,9 @@ export default function EditPromptPage() {
     return <div className="text-center text-muted-foreground">読み込み中...</div>
   }
 
-  // Don't pass existing images to ImageUpload - it should only show the upload area for NEW images
-  // The imagePairs grid above already displays all existing effect images
-  const effectImages: UploadedImage[] = []
+  // Pass existing effect images to ImageUpload so it can properly handle adding multiple images
+  // The ImageUpload component needs to know about existing images to avoid replacing them when new ones are uploaded
+  const effectImages: UploadedImage[] = imagePairs.map(pair => pair.effect)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -491,7 +496,6 @@ export default function EditPromptPage() {
                 borderRadius: '6px',
                 fontSize: '13px',
                 transition: 'all 0.2s',
-                fontFamily: 'monospace',
                 fontFamily: "'Monaco', 'Menlo', 'Ubuntu Mono', 'Courier New', 'source-code-pro', monospace",
                 resize: 'vertical',
                 color: '#0f172a'
@@ -539,18 +543,27 @@ export default function EditPromptPage() {
                       backgroundColor: '#f8fafc'
                     }}
                   >
-                    {/* Effect Image Preview */}
-                    <div style={{ position: 'relative' }}>
+                    {/* Effect Image Preview with Original Image Overlay */}
+                    <div style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '150px',
+                      borderRadius: '6px',
+                      overflow: 'visible'
+                    }}>
                       <img
                         src={pair.effect.url}
                         alt={`Effect ${index + 1}`}
                         style={{
                           width: '100%',
-                          height: '150px',
+                          height: '100%',
                           objectFit: 'cover',
-                          borderRadius: '6px'
+                          borderRadius: '6px',
+                          display: 'block'
                         }}
                       />
+
+                      {/* Delete Effect Image Button */}
                       <button
                         type="button"
                         onClick={() => handleRemoveEffectImage(index)}
@@ -566,12 +579,69 @@ export default function EditPromptPage() {
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center'
+                          justifyContent: 'center',
+                          zIndex: 5
                         }}
                         title="Delete effect image"
                       >
                         <Trash2 size={14} />
                       </button>
+
+                      {/* Original Image Overlay - Bottom Right */}
+                      {pair.original && (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            bottom: '6px',
+                            right: '6px',
+                            width: '70px',
+                            height: '70px',
+                            border: '2px solid #ffffff',
+                            borderRadius: '4px',
+                            overflow: 'hidden',
+                            zIndex: 10,
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <img
+                            src={pair.original.url}
+                            alt="Original"
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover'
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveOriginal(index)}
+                            style={{
+                              position: 'absolute',
+                              top: '-8px',
+                              right: '-8px',
+                              backgroundColor: 'rgba(239, 68, 68, 0.95)',
+                              color: '#ffffff',
+                              border: 'none',
+                              borderRadius: '50%',
+                              width: '24px',
+                              height: '24px',
+                              padding: '0',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              zIndex: 11
+                            }}
+                            title="Delete original image"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     {/* Toggle Original Upload Button */}
@@ -593,8 +663,8 @@ export default function EditPromptPage() {
                       {pair.showOriginalUpload ? '原图を隠す' : '添加原图'}
                     </button>
 
-                    {/* Original Image Upload Area */}
-                    {pair.showOriginalUpload && (
+                    {/* Original Image Upload Area - Only show when toggled AND no image exists */}
+                    {pair.showOriginalUpload && !pair.original && (
                       <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -603,65 +673,18 @@ export default function EditPromptPage() {
                         paddingTop: '8px',
                         borderTop: '1px solid #e2e8f0'
                       }}>
-                        {pair.original ? (
-                          <div style={{ position: 'relative' }}>
-                            <div style={{
-                              fontSize: '11px',
-                              fontWeight: '600',
-                              color: '#64748b',
-                              marginBottom: '4px'
-                            }}>
-                              原図
-                            </div>
-                            <img
-                              src={pair.original.url}
-                              alt="Original"
-                              style={{
-                                width: '100%',
-                                height: '120px',
-                                objectFit: 'cover',
-                                borderRadius: '4px',
-                                border: '2px solid #0284c7'
-                              }}
-                            />
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveOriginal(index)}
-                              style={{
-                                position: 'absolute',
-                                top: '24px',
-                                right: '6px',
-                                backgroundColor: 'rgba(239, 68, 68, 0.9)',
-                                color: '#ffffff',
-                                border: 'none',
-                                borderRadius: '4px',
-                                padding: '4px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}
-                              title="Delete original image"
-                            >
-                              <Trash2 size={12} />
-                            </button>
-                          </div>
-                        ) : (
-                          <div>
-                            <div style={{
-                              fontSize: '11px',
-                              fontWeight: '600',
-                              color: '#64748b',
-                              marginBottom: '4px'
-                            }}>
-                              原図
-                            </div>
-                            <SingleImageUpload
-                              image={pair.original}
-                              onImageChange={(img) => handleOriginalImageUpload(index, img)}
-                            />
-                          </div>
-                        )}
+                        <div style={{
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          color: '#64748b',
+                          marginBottom: '4px'
+                        }}>
+                          原図
+                        </div>
+                        <SingleImageUpload
+                          image={pair.original}
+                          onImageChange={(img) => handleOriginalImageUpload(index, img)}
+                        />
                       </div>
                     )}
                   </div>

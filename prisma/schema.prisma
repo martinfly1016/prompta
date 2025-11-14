@@ -44,7 +44,7 @@ model Prompt {
   categoryId  String
   author      String?
   isPublished Boolean   @default(false)
-  views       Int       @default(0)
+  tags        String?   // JSON string array of tags, e.g. "[\"tag1\",\"tag2\"]"
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

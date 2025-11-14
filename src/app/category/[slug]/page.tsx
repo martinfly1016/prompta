@@ -23,7 +23,6 @@ interface Prompt {
   id: string
   title: string
   description: string
-  views: number
   createdAt: string
   category: { name: string; slug: string }
   images?: PromptImage[]
@@ -260,12 +259,6 @@ export default function CategoryPage() {
                       )}
                     </div>
                   )}
-
-                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
-                    <span className="text-xs text-gray-500 font-medium">
-                      👁️ {prompt.views} 回閲覧
-                    </span>
-                  </div>
                 </div>
               </Link>
             ))}

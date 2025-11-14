@@ -34,7 +34,6 @@ interface Prompt {
   title: string
   description: string
   category: { name: string; slug: string }
-  views: number
   images?: PromptImage[]
   tags?: Tag[]
 }
@@ -82,6 +81,9 @@ function CategoryNavigation({
         <SkeletonNav />
       ) : (
         <nav className="category-nav-bar">
+          <Link href="/" className="logo-link">
+            <img src="/logo.png" alt="Prompta Logo" className="logo-image" />
+          </Link>
           <button
             onClick={() => handleCategoryClick(null)}
             className={`category-nav-item ${
@@ -155,13 +157,63 @@ function HomeContent() {
     pages: 0,
   })
 
-  // Initialize page from URL params
+  // Initialize search from URL params
   useEffect(() => {
+    const searchParam = searchParams.get('search')
     const pageParam = searchParams.get('page')
-    if (pageParam) {
-      setCurrentPage(parseInt(pageParam) || 1)
+
+    if (searchParam) {
+      // Trigger search when search param is present
+      setSearchQuery(searchParam)
+      setIsSearchMode(true)
+      setCurrentPage(pageParam ? parseInt(pageParam) || 1 : 1)
+    } else {
+      // Reset search mode if no search param
+      const categoryParam = searchParams.get('category')
+      if (categoryParam) {
+        setSelectedCategory(categoryParam)
+      }
+      if (pageParam) {
+        setCurrentPage(parseInt(pageParam) || 1)
+      }
+      setIsSearchMode(false)
+      setSearchQuery('')
     }
   }, [searchParams])
+
+  // Handle search query changes from URL
+  useEffect(() => {
+    if (isSearchMode && searchQuery) {
+      const fetchSearchResults = async () => {
+        setIsSearching(true)
+        setSearchError(null)
+        try {
+          const res = await fetch(
+            `/api/prompts?search=${encodeURIComponent(searchQuery)}&page=${currentPage}&limit=20`
+          )
+          if (!res.ok) {
+            throw new Error('検索に失敗しました。もう一度お試しください。')
+          }
+          const data = await res.json()
+          const results = (data.prompts || []).filter((p: Prompt) => p)
+          setSearchResults(results)
+          setSearchPagination(data.pagination || {
+            page: currentPage,
+            limit: 20,
+            total: 0,
+            pages: 0,
+          })
+        } catch (error) {
+          console.error('Failed to search:', error)
+          setSearchError(error instanceof Error ? error.message : '検索中にエラーが発生しました。')
+          setSearchResults([])
+        } finally {
+          setIsSearching(false)
+        }
+      }
+      fetchSearchResults()
+    }
+  }, [isSearchMode, searchQuery, currentPage])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -498,29 +550,40 @@ function HomeContent() {
                     </p>
 
                     {/* タグ */}
-                    {prompt.tags && prompt.tags.length > 0 && (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
-                        {prompt.tags.slice(0, 3).map((tag) => (
-                          <TagChip
-                            key={tag.id}
-                            name={tag.name}
-                            color={tag.color}
-                          />
-                        ))}
-                        {prompt.tags.length > 3 && (
-                          <span style={{ fontSize: '12px', color: '#64748b', paddingLeft: '8px' }}>
-                            +{prompt.tags.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    )}
+                    {(() => {
+                      let tags = []
+                      if (prompt.tags) {
+                        if (typeof prompt.tags === 'string') {
+                          try {
+                            tags = JSON.parse(prompt.tags)
+                          } catch {
+                            tags = []
+                          }
+                        } else if (Array.isArray(prompt.tags)) {
+                          tags = prompt.tags
+                        }
+                      }
+                      return tags && tags.length > 0 ? (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
+                          {tags.slice(0, 3).map((tag, idx) => (
+                            <TagChip
+                              key={typeof tag === 'string' ? `tag-${idx}` : tag.id}
+                              name={typeof tag === 'string' ? tag : tag.name}
+                              color={typeof tag === 'string' ? undefined : tag.color}
+                            />
+                          ))}
+                          {tags.length > 3 && (
+                            <span style={{ fontSize: '12px', color: '#64748b', paddingLeft: '8px' }}>
+                              +{tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      ) : null
+                    })()}
 
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid #e2e8f0' }}>
                       <span style={{ fontSize: '12px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', color: '#0284c7', paddingLeft: '10px', paddingRight: '10px', paddingTop: '4px', paddingBottom: '4px', borderRadius: '4px', fontWeight: 500 }}>
                         {prompt.category.name}
-                      </span>
-                      <span style={{ fontSize: '12px', color: '#64748b', fontWeight: 500 }}>
-                        👁️ {prompt.views}
                       </span>
                     </div>
                   </div>

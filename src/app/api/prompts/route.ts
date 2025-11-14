@@ -66,8 +66,8 @@ export async function GET(request: NextRequest) {
       prisma.prompt.count({ where }),
     ])
 
-    // Add empty tags array for UI compatibility
-    const promptsWithTags = prompts.map(p => ({ ...p, tags: [] }))
+    // Include tags from database
+    const promptsWithTags = prompts.map(p => ({ ...p, tags: p.tags || [] }))
 
     console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
     console.log('=== END: GET /api/prompts (SUCCESS) ===')
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, author, isPublished, images } = body
+    const { title, description, content, categoryId, author, isPublished, images, tags } = body
 
     if (!title || !description || !content || !categoryId) {
       return NextResponse.json(
@@ -139,8 +139,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create prompt without tags to avoid migration conflicts
-    // Tags will be added once the migration is applied in production
+    // Separate effect images (parentImageId is null or undefined) from original images
+    const effectImages = images.filter((img: any) => !img.parentImageId)
+    const originalImages = images.filter((img: any) => img.parentImageId || img.parentImageIndex !== undefined)
+
+    if (effectImages.length === 0) {
+      return NextResponse.json(
+        { error: 'エフェクト画像が必要です' },
+        { status: 400 }
+      )
+    }
+
+    // Phase 1: Create prompt with effect images only
     const prompt = await prisma.prompt.create({
       data: {
         title,
@@ -149,26 +159,62 @@ export async function POST(request: NextRequest) {
         categoryId,
         author: author || (session.user?.email || 'Anonymous'),
         isPublished: isPublished || false,
+        tags: tags ? JSON.stringify(tags) : null,
         images: {
-          create: images.map((img: any) => ({
+          create: effectImages.map((img: any) => ({
             url: img.url,
             blobKey: img.url.split('/').pop() || 'unknown',
             fileName: img.fileName,
             fileSize: img.fileSize,
             mimeType: img.mimeType,
             order: img.order,
-            imageType: img.imageType || 'effect',
+            imageType: 'effect',
           })),
         },
       },
+      include: {
+        images: { orderBy: { order: 'asc' } },
+      },
+    })
+
+    // Phase 2: Add original images with proper parentImageId references
+    if (originalImages.length > 0) {
+      for (const origImg of originalImages) {
+        // Find the parent effect image based on parentImageIndex or order
+        const parentIndex = origImg.parentImageIndex !== undefined ? origImg.parentImageIndex : origImg.order
+        const parentEffectImage = prompt.images.find(
+          (img: any) => img.order === parentIndex
+        )
+
+        if (parentEffectImage) {
+          await prisma.promptImage.create({
+            data: {
+              promptId: prompt.id,
+              url: origImg.url,
+              blobKey: origImg.url.split('/').pop() || 'unknown',
+              fileName: origImg.fileName,
+              fileSize: origImg.fileSize,
+              mimeType: origImg.mimeType,
+              order: origImg.order,
+              imageType: 'original',
+              parentImageId: parentEffectImage.id,
+            },
+          })
+        }
+      }
+    }
+
+    // Fetch the complete prompt with enriched images
+    const completedPrompt = await prisma.prompt.findUnique({
+      where: { id: prompt.id },
       include: {
         category: true,
         images: { orderBy: { order: 'asc' } },
       },
     })
 
-    // Add empty tags array for UI compatibility
-    const promptWithTags = { ...prompt, tags: [] }
+    // Include tags from database
+    const promptWithTags = { ...completedPrompt, tags: completedPrompt?.tags || [] }
 
     return NextResponse.json(promptWithTags, { status: 201 })
   } catch (error) {

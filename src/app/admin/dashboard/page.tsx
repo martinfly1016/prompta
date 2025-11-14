@@ -1,24 +1,20 @@
 export const dynamic = 'force-dynamic'
 
 import { prisma } from '@/lib/prisma'
-import { BarChart3, FileText, Layers, Eye } from 'lucide-react'
+import { BarChart3, FileText, Layers } from 'lucide-react'
 import QuickActionsSection from './QuickActionsSection'
 
 async function getDashboardStats() {
-  const [totalPrompts, publishedPrompts, totalCategories, totalViews] = await Promise.all([
+  const [totalPrompts, publishedPrompts, totalCategories] = await Promise.all([
     prisma.prompt.count(),
     prisma.prompt.count({ where: { isPublished: true } }),
     prisma.category.count(),
-    prisma.prompt.aggregate({
-      _sum: { views: true },
-    }),
   ])
 
   return {
     totalPrompts,
     publishedPrompts,
     totalCategories,
-    totalViews: totalViews._sum.views || 0,
   }
 }
 
@@ -44,13 +40,6 @@ export default async function DashboardPage() {
       title: 'カテゴリ数',
       value: stats.totalCategories,
       icon: Layers,
-      color: '#0284c7',
-      bgColor: 'rgba(2, 132, 199, 0.1)',
-    },
-    {
-      title: '総閲覧数',
-      value: stats.totalViews,
-      icon: Eye,
       color: '#0284c7',
       bgColor: 'rgba(2, 132, 199, 0.1)',
     },

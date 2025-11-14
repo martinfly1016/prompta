@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苹果风格优化预览 - プロンプト详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: #f5f5f7;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* 对比标题 */
+        .comparison-header {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .comparison-header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+
+        .comparison-header p {
+            color: #6e6e73;
+            font-size: 16px;
+        }
+
+        /* 原始样式区域 */
+        .original-section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ff3b30;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* 原始按钮样式 */
+        .original-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .original-btn-copy {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .original-btn-share {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: transparent;
+            color: #0284c7;
+            border: 2px solid #0284c7;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* 原始代码框 */
+        .original-code {
+            background: #0f172a;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .original-code pre {
+            color: #f5f5f7;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* 原始使用说明 */
+        .original-usage {
+            background: #f1f5f9;
+            border-left: 4px solid #0284c7;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .original-usage h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .original-usage ol {
+            list-style-position: inside;
+            color: #475569;
+        }
+
+        .original-usage li {
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        /* ============ 苹果风格优化样式 ============ */
+        .apple-section {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f5f5f7;
+        }
+
+        .apple-label {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #34c759;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* 标题区域 */
+        .prompt-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .prompt-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
+        }
+
+        /* 苹果风格按钮 */
+        .apple-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .apple-btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 980px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.15);
+        }
+
+        .apple-btn-copy:hover {
+            background: #0077ed;
+            box-shadow: 0 4px 16px rgba(0, 113, 227, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .apple-btn-copy:active {
+            transform: translateY(0);
+        }
+
+        .apple-btn-share {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: #0071e3;
+            border: 1.5px solid #0071e3;
+            border-radius: 980px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .apple-btn-share:hover {
+            background: rgba(0, 113, 227, 0.08);
+            border-color: #0077ed;
+        }
+
+        /* 代码容器 - macOS风格 */
+        .apple-code-container {
+            background: #1d1d1f;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid #2c2c2e;
+            margin-top: 24px;
+        }
+
+        /* macOS窗口顶栏 */
+        .code-header {
+            background: #2c2c2e;
+            padding: 12px 20px;
+            border-bottom: 1px solid #3a3a3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f57;
+        }
+
+        .code-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .code-dot:nth-child(3) {
+            background: #28c940;
+        }
+
+        /* 代码内容 */
+        .apple-code {
+            padding: 24px;
+            color: #f5f5f7;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .apple-code pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* 滚动条样式 */
+        .apple-code::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .apple-code::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .apple-code::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .apple-code::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 使用说明卡片 */
+        .apple-usage {
+            background: #fafafa;
+            border-radius: 18px;
+            padding: 32px;
+            border: 1px solid #e5e5e7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            margin-top: 24px;
+        }
+
+        .apple-usage-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .usage-icon {
+            font-size: 24px;
+        }
+
+        /* 列表样式 */
+        .apple-usage-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .apple-usage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #1d1d1f;
+        }
+
+        .usage-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #0071e3;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .usage-text {
+            padding-top: 4px;
+            font-weight: 400;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            .container {
+                gap: 24px;
+            }
+
+            .apple-section,
+            .original-section {
+                padding: 24px;
+            }
+
+            .prompt-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .apple-buttons,
+            .original-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .apple-btn-copy,
+            .apple-btn-share,
+            .original-btn-copy,
+            .original-btn-share {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题 -->
+        <div class="comparison-header">
+            <h1>🍎 苹果风格优化对比</h1>
+            <p>查看优化前后的视觉效果差异</p>
+        </div>
+
+        <!-- 原始样式 -->
+        <div class="original-section">
+            <span class="section-label">❌ 优化前</span>
+
+            <div>
+                <h2 style="font-size: 20px; font-weight: 600; color: #0284c7; margin-bottom: 16px;">
+                    プロンプト
+                </h2>
+
+                <div class="original-buttons">
+                    <button class="original-btn-copy">
+                        📋 コピー
+                    </button>
+                    <button class="original-btn-share">
+                        🔗 共有
+                    </button>
+                </div>
+            </div>
+
+            <div class="original-code">
+                <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+            </div>
+
+            <div class="original-usage">
+                <h3>💡 このプロンプトの使い方</h3>
+                <ol>
+                    <li>上の「コピー」ボタンをクリックしてプロンプトをコピーします</li>
+                    <li>ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</li>
+                    <li>Enterキーを押して実行します</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 苹果风格优化 -->
+        <div class="apple-section">
+            <span class="apple-label">✅ 苹果风格优化后</span>
+
+            <div class="prompt-header">
+                <h2 class="prompt-title">プロンプト</h2>
+
+                <div class="apple-buttons">
+                    <button class="apple-btn-copy">
+                        📋 コピー
+                    </button>
+                    <button class="apple-btn-share">
+                        🔗 共有
+                    </button>
+                </div>
+            </div>
+
+            <div class="apple-code-container">
+                <div class="code-header">
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                </div>
+                <div class="apple-code">
+                    <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+                </div>
+            </div>
+
+            <div class="apple-usage">
+                <div class="apple-usage-title">
+                    <span class="usage-icon">💡</span>
+                    このプロンプトの使い方
+                </div>
+
+                <ul class="apple-usage-list">
+                    <li class="apple-usage-item">
+                        <span class="usage-number">1</span>
+                        <span class="usage-text">上の「コピー」ボタンをクリックしてプロンプトをコピーします</span>
+                    </li>
+                    <li class="apple-usage-item">
+                        <span class="usage-number">2</span>
+                        <span class="usage-text">ChatGPT、Claude、その他のAIツールのチャット欄に貼り付けます</span>
+                    </li>
+                    <li class="apple-usage-item">
+                        <span class="usage-number">3</span>
+                        <span class="usage-text">Enterキーを押して実行します</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 设计说明 -->
+        <div style="background: white; border-radius: 18px; padding: 32px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);">
+            <h3 style="font-size: 24px; font-weight: 600; color: #1d1d1f; margin-bottom: 20px;">
+                🎨 主要改进点
+            </h3>
+
+            <div style="display: grid; gap: 16px; color: #1d1d1f;">
+                <div style="padding: 16px; background: #f5f5f7; border-radius: 12px;">
+                    <strong>✨ 按钮优化</strong>
+                    <p style="margin-top: 8px; color: #6e6e73;">完全圆角设计 (border-radius: 980px)，使用苹果标准蓝色 #0071E3，添加悬停动画和阴影效果</p>
+                </div>
+
+                <div style="padding: 16px; background: #f5f5f7; border-radius: 12px;">
+                    <strong>🖥️ 代码框升级</strong>
+                    <p style="margin-top: 8px; color: #6e6e73;">macOS窗口风格（红黄绿三色圆点），背景色改为苹果标准深色 #1D1D1F，16px圆角</p>
+                </div>
+
+                <div style="padding: 16px; background: #f5f5f7; border-radius: 12px;">
+                    <strong>📝 使用说明重设计</strong>
+                    <p style="margin-top: 8px; color: #6e6e73;">移除边框条，使用圆形数字标签，浅灰背景 #FAFAFA，增加项目间距</p>
+                </div>
+
+                <div style="padding: 16px; background: #f5f5f7; border-radius: 12px;">
+                    <strong>🎯 整体视觉</strong>
+                    <p style="margin-top: 8px; color: #6e6e73;">极简阴影、统一18px圆角、200ms流畅过渡、高对比度配色</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 添加按钮交互效果
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalText = this.textContent;
+                if (this.textContent.includes('コピー')) {
+                    this.textContent = '✓ コピーしました';
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

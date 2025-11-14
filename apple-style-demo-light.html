@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苹果风格优化预览（浅色代码） - プロンプト详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+            background: #f5f5f7;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* 对比标题 */
+        .comparison-header {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .comparison-header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+
+        .comparison-header p {
+            color: #6e6e73;
+            font-size: 16px;
+        }
+
+        /* 深色代码框区域 */
+        .dark-code-section {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f5f5f7;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ff3b30;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 24px;
+        }
+
+        /* 深色代码容器 */
+        .code-container-dark {
+            background: #1d1d1f;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 4px 16px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            border: 1px solid #2c2c2e;
+        }
+
+        /* macOS窗口顶栏 */
+        .code-header {
+            background: #2c2c2e;
+            padding: 12px 20px;
+            border-bottom: 1px solid #3a3a3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f57;
+        }
+
+        .code-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .code-dot:nth-child(3) {
+            background: #28c940;
+        }
+
+        /* 代码内容 */
+        .code-content-dark {
+            padding: 24px;
+            color: #f5f5f7;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-content-dark pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ============ 浅色代码框优化 ============ */
+        .light-code-section {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f5f5f7;
+        }
+
+        .light-label {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #34c759;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* 浅色代码容器 - 方案1: 浅灰背景 */
+        .code-container-light-v1 {
+            background: #f5f5f7;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e5e5e7;
+        }
+
+        .code-content-light-v1 {
+            padding: 24px;
+            color: #1d1d1f;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-content-light-v1 pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ============ 浅色代码框优化 - 方案2: 极浅背景 ============ */
+        .code-container-light-v2 {
+            background: #fafafa;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e5e5e7;
+        }
+
+        .code-content-light-v2 {
+            padding: 24px;
+            color: #1d1d1f;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-content-light-v2 pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ============ 浅色代码框优化 - 方案3: 蓝色亮色背景 ============ */
+        .code-container-light-v3 {
+            background: linear-gradient(135deg, #e8f0ff 0%, #f0f4ff 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 71, 233, 0.08);
+            border: 1px solid #cfe0ff;
+        }
+
+        .code-content-light-v3 {
+            padding: 24px;
+            color: #1d1d1f;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-content-light-v3 pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* 方案标题和说明 */
+        .scheme-container {
+            margin-top: 24px;
+        }
+
+        .scheme-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scheme-description {
+            font-size: 14px;
+            color: #6e6e73;
+            margin-bottom: 16px;
+        }
+
+        /* 对比网格 */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f5f5f7;
+        }
+
+        .comparison-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+        }
+
+        .comparison-card p {
+            font-size: 14px;
+            color: #6e6e73;
+            line-height: 1.6;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                gap: 24px;
+            }
+
+            .dark-code-section,
+            .light-code-section {
+                padding: 24px;
+            }
+        }
+
+        /* 滚动条样式 */
+        .code-content-light-v1::-webkit-scrollbar,
+        .code-content-light-v2::-webkit-scrollbar,
+        .code-content-light-v3::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .code-content-light-v1::-webkit-scrollbar-track,
+        .code-content-light-v2::-webkit-scrollbar-track,
+        .code-content-light-v3::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        .code-content-light-v1::-webkit-scrollbar-thumb,
+        .code-content-light-v2::-webkit-scrollbar-thumb,
+        .code-content-light-v3::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .code-content-light-v1::-webkit-scrollbar-thumb:hover,
+        .code-content-light-v2::-webkit-scrollbar-thumb:hover,
+        .code-content-light-v3::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题 -->
+        <div class="comparison-header">
+            <h1>🍎 浅色代码框优化方案对比</h1>
+            <p>深色 vs 三种浅色方案选择</p>
+        </div>
+
+        <!-- 深色代码框（原始优化） -->
+        <div class="dark-code-section">
+            <span class="section-label">深色方案</span>
+            <h2 class="section-title">プロンプト</h2>
+
+            <div class="code-container-dark">
+                <div class="code-header">
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                </div>
+                <div class="code-content-dark">
+                    <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; color: #6e6e73; font-size: 14px;">
+                ✓ 专业感强 ✓ 代码对比突出 ✗ 白天看可能有点沉闷
+            </p>
+        </div>
+
+        <!-- 浅色方案1: 浅灰背景 -->
+        <div class="light-code-section">
+            <span class="light-label">浅色方案1</span>
+            <h2 class="section-title">浅灰背景 (#f5f5f7)</h2>
+
+            <div class="code-container-light-v1">
+                <div class="code-content-light-v1">
+                    <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; color: #6e6e73; font-size: 14px;">
+                ✓ 轻盈简洁 ✓ 苹果官网常用 ✓ 适合白天使用 ✗ 对比度略低
+            </p>
+        </div>
+
+        <!-- 浅色方案2: 极浅背景 -->
+        <div class="light-code-section">
+            <span class="light-label">浅色方案2</span>
+            <h2 class="section-title">极浅背景 (#fafafa)</h2>
+
+            <div class="code-container-light-v2">
+                <div class="code-content-light-v2">
+                    <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; color: #6e6e73; font-size: 14px;">
+                ✓ 最轻盈 ✓ 现代感强 ✓ 视觉干净 ✗ 边界感不够明显
+            </p>
+        </div>
+
+        <!-- 浅色方案3: 蓝色亮色背景 -->
+        <div class="light-code-section">
+            <span class="light-label">浅色方案3</span>
+            <h2 class="section-title">蓝色亮色背景 (渐变)</h2>
+
+            <div class="code-container-light-v3">
+                <div class="code-content-light-v3">
+                    <pre>このプロンプトを使用して、画像の表示機能をテストします。</pre>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; color: #6e6e73; font-size: 14px;">
+                ✓ 视觉突出 ✓ 品牌感强 ✓ 对比度好 ✗ 可能显得不够低调
+            </p>
+        </div>
+
+        <!-- 对比分析 -->
+        <div style="background: white; border-radius: 18px; padding: 32px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);">
+            <h3 style="font-size: 24px; font-weight: 600; color: #1d1d1f; margin-bottom: 20px;">
+                📊 方案对比分析
+            </h3>
+
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3>深色方案</h3>
+                    <p>经典专业，代码展示效果最佳。适合需要强调代码内容的场景，但可能显得稍微沉重。</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h3>浅灰方案</h3>
+                    <p>平衡方案，兼具轻盈和清晰。苹果官网的常见做法，整体调性和谐统一。</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h3>极浅方案</h3>
+                    <p>最轻盈现代，极简主义风格。但需要注意文字与背景的对比度，确保可读性。</p>
+                </div>
+
+                <div class="comparison-card">
+                    <h3>蓝色方案</h3>
+                    <p>具有品牌识别度，视觉冲击力强。但需要谨慎，以免显得过于炫耀。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐 -->
+        <div style="background: linear-gradient(135deg, #e8f0ff 0%, #f0f4ff 100%); border-radius: 18px; padding: 32px; border: 1px solid #cfe0ff;">
+            <h3 style="font-size: 20px; font-weight: 600; color: #0071e3; margin-bottom: 12px;">
+                ⭐ 个人推荐
+            </h3>
+            <p style="font-size: 16px; color: #1d1d1f; line-height: 1.6;">
+                <strong>浅灰方案 (#f5f5f7)</strong> 是最佳选择。它既保持了苹果官网的设计语言，又能很好地展示代码内容，同时整个页面的调性也更加统一和谐。如果你希望更轻盈现代，可以考虑极浅方案。蓝色方案适合想要突出品牌的场景。
+            </p>
+        </div>
+    </div>
+</body>
+</html>
