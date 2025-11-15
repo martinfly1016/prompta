@@ -545,11 +545,11 @@ function HomeContent() {
                   </div>
 
                   {/* コンテンツ */}
-                  <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    <h3 style={{ fontWeight: 700, marginBottom: '12px', fontSize: '16px', lineHeight: 1.4, color: '#0f172a' }} className="line-clamp-2">
+                  <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <h3 style={{ fontWeight: 700, marginBottom: '10px', fontSize: '15px', lineHeight: 1.3, color: '#0f172a' }} className="line-clamp-2">
                       {prompt.title}
                     </h3>
-                    <p style={{ fontSize: '14px', color: '#475569', marginBottom: '16px', flex: 1, lineHeight: 1.5 }} className="line-clamp-2">
+                    <p style={{ fontSize: '13px', color: '#475569', marginBottom: '12px', flex: 1, lineHeight: 1.4 }} className="line-clamp-2">
                       {prompt.description}
                     </p>
 
@@ -568,7 +568,7 @@ function HomeContent() {
                         }
                       }
                       return tags && tags.length > 0 ? (
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '10px' }}>
                           {tags.slice(0, 3).map((tag: any, idx: number) => (
                             <TagChip
                               key={typeof tag === 'string' ? `tag-${idx}` : tag.id}
@@ -585,7 +585,7 @@ function HomeContent() {
                       ) : null
                     })()}
 
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid #e2e8f0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
                       <span style={{ fontSize: '12px', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', color: '#0284c7', paddingLeft: '10px', paddingRight: '10px', paddingTop: '4px', paddingBottom: '4px', borderRadius: '4px', fontWeight: 500 }}>
                         {prompt.category.name}
                       </span>

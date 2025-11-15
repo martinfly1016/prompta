@@ -20,13 +20,13 @@ export default function TagChip({
   // Unified purple border style for all tags - compact size for card display
   const baseStyle: React.CSSProperties = {
     display: 'inline-block',
-    paddingLeft: '12px',
-    paddingRight: '12px',
-    paddingTop: '6px',
-    paddingBottom: '6px',
+    paddingLeft: '8px',
+    paddingRight: '8px',
+    paddingTop: '4px',
+    paddingBottom: '4px',
     borderRadius: '9999px',
     fontWeight: 500,
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
     backgroundColor: 'transparent',
     border: '1px solid #9333ea',
     transition: 'opacity 0.2s ease',
@@ -39,10 +39,10 @@ export default function TagChip({
     if (spanRef.current && !onClick) {
       spanRef.current.setAttribute('style', `
         display: inline-block;
-        padding: 6px 12px;
+        padding: 4px 8px;
         border-radius: 9999px;
         font-weight: 500;
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         background-color: transparent;
         color: #9333ea !important;
         border: 1px solid #9333ea;
