@@ -527,7 +527,7 @@ function HomeContent() {
                   {/* 画像 */}
                   <div className="relative w-full bg-gray-100 overflow-hidden flex-shrink-0" style={{paddingBottom: '100%'}}>
                     {prompt.images && prompt.images.length > 0 ? (() => {
-                      const effectImages = prompt.images.filter(img => img.imageType === 'effect')
+                      const effectImages = prompt.images.filter((img: any) => img.imageType === 'effect')
                       const displayImage = effectImages.length > 0 ? effectImages[effectImages.length - 1] : prompt.images[0]
                       return (
                         <img
