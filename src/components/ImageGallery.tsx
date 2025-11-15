@@ -47,7 +47,14 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
             {/* 原图缩略图覆层 - 显示在图片右下角 */}
             {image.originalImages && image.originalImages.length > 0 && (
-              <div className="absolute bottom-4 right-4 z-10">
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '16px',
+                  right: '16px',
+                  zIndex: 10,
+                }}
+              >
                 <div className="flex gap-2">
                   {image.originalImages.map((original, idx) => (
                     <div
