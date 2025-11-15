@@ -41,7 +41,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
           <img
             src={getImageProxyUrl(image.url)}
             alt={image.altText || `効果図 ${index + 1}`}
-            className="w-full h-auto object-contain rounded-lg relative z-0"
+            className="max-w-full h-auto object-contain rounded-lg relative z-0"
             style={{ display: 'block' }}
           />
 
