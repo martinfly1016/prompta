@@ -35,14 +35,14 @@ export function ImageGallery({ images }: ImageGalleryProps) {
       {effectImages.map((image, index) => (
         <div
           key={image.id}
-          className="mx-auto max-w-[800px] flex justify-center items-center"
+          className="flex justify-center"
         >
           {/* 图片容器 - 作为原图浮层定位参照 */}
-          <div className="relative">
+          <div className="relative inline-block">
             <img
               src={getImageProxyUrl(image.url)}
               alt={image.altText || `効果図 ${index + 1}`}
-              className="max-w-full h-auto object-contain rounded-lg"
+              className="max-w-full h-auto object-contain rounded-lg block"
             />
 
             {/* 原图缩略图覆层 - 显示在图片右下角 */}
