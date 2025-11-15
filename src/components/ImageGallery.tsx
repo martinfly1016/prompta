@@ -35,38 +35,39 @@ export function ImageGallery({ images }: ImageGalleryProps) {
       {effectImages.map((image, index) => (
         <div
           key={image.id}
-          className="mx-auto rounded-lg max-w-[800px] relative"
-          style={{ overflow: 'visible' }}
+          className="mx-auto max-w-[800px] flex justify-center items-center"
         >
-          <img
-            src={getImageProxyUrl(image.url)}
-            alt={image.altText || `効果図 ${index + 1}`}
-            className="max-w-full h-auto object-contain rounded-lg relative z-0"
-            style={{ display: 'block' }}
-          />
+          {/* 图片容器 - 作为原图浮层定位参照 */}
+          <div className="relative">
+            <img
+              src={getImageProxyUrl(image.url)}
+              alt={image.altText || `効果図 ${index + 1}`}
+              className="max-w-full h-auto object-contain rounded-lg"
+            />
 
-          {/* 原图缩略图覆层 - 显示在右下角 */}
-          {image.originalImages && image.originalImages.length > 0 && (
-            <div className="absolute z-10" style={{ bottom: '16px', right: '16px' }}>
-              <div className="flex gap-2">
-                {image.originalImages.map((original, idx) => (
-                  <div
-                    key={original.id}
-                    className="relative rounded-lg overflow-hidden border-2 border-white shadow-lg"
-                    style={{
-                      width: '150px',
-                    }}
-                  >
-                    <img
-                      src={getImageProxyUrl(original.url)}
-                      alt={original.altText || `原図 ${idx + 1}`}
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                ))}
+            {/* 原图缩略图覆层 - 显示在图片右下角 */}
+            {image.originalImages && image.originalImages.length > 0 && (
+              <div className="absolute bottom-4 right-4 z-10">
+                <div className="flex gap-2">
+                  {image.originalImages.map((original, idx) => (
+                    <div
+                      key={original.id}
+                      className="relative rounded-lg overflow-hidden border-2 border-white shadow-lg"
+                      style={{
+                        width: '150px',
+                      }}
+                    >
+                      <img
+                        src={getImageProxyUrl(original.url)}
+                        alt={original.altText || `原図 ${idx + 1}`}
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       ))}
     </div>
