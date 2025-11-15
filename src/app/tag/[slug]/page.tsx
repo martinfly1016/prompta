@@ -382,14 +382,18 @@ export default function TagPage() {
               >
                 {/* 画像 */}
                 <div className="relative w-full bg-gray-100 overflow-hidden flex-shrink-0" style={{paddingBottom: '100%'}}>
-                  {prompt.images && prompt.images.length > 0 ? (
-                    <img
-                      src={getImageProxyUrl(prompt.images[0].url)}
-                      alt={prompt.title}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
+                  {prompt.images && prompt.images.length > 0 ? (() => {
+                    const effectImages = prompt.images.filter(img => img.imageType === 'effect')
+                    const displayImage = effectImages.length > 0 ? effectImages[effectImages.length - 1] : prompt.images[0]
+                    return (
+                      <img
+                        src={getImageProxyUrl(displayImage.url)}
+                        alt={prompt.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )
+                  })() : (
                     <div className="absolute inset-0 flex items-center justify-center text-4xl">
                       ✨
                     </div>
