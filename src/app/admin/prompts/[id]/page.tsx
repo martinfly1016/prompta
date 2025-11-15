@@ -547,7 +547,6 @@ export default function EditPromptPage() {
                     <div style={{
                       position: 'relative',
                       width: '100%',
-                      height: '150px',
                       borderRadius: '6px',
                       overflow: 'visible'
                     }}>
@@ -556,8 +555,9 @@ export default function EditPromptPage() {
                         alt={`Effect ${index + 1}`}
                         style={{
                           width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
+                          height: 'auto',
+                          maxHeight: '300px',
+                          objectFit: 'contain',
                           borderRadius: '6px',
                           display: 'block'
                         }}
@@ -613,7 +613,7 @@ export default function EditPromptPage() {
                             style={{
                               width: '100%',
                               height: '100%',
-                              objectFit: 'cover'
+                              objectFit: 'contain'
                             }}
                           />
                           <button
