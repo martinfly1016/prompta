@@ -107,8 +107,8 @@ export async function PUT(
         },
       })
 
-      // Separate effect and original images
-      const effectImages = images.filter((img: any) => img.imageType !== 'original')
+      // Separate effect and original images using imageType field
+      const effectImages = images.filter((img: any) => img.imageType === 'effect')
       const originalImages = images.filter((img: any) => img.imageType === 'original')
 
       console.log('DEBUG: Creating images', {

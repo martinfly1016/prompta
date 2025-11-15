@@ -139,9 +139,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Separate effect images (parentImageId is null or undefined) from original images
-    const effectImages = images.filter((img: any) => !img.parentImageId)
-    const originalImages = images.filter((img: any) => img.parentImageId || img.parentImageIndex !== undefined)
+    // Separate effect images from original images using imageType field
+    const effectImages = images.filter((img: any) => img.imageType === 'effect')
+    const originalImages = images.filter((img: any) => img.imageType === 'original')
 
     if (effectImages.length === 0) {
       return NextResponse.json(
