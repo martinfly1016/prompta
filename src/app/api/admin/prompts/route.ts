@@ -11,13 +11,8 @@ export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
 
-    // Check if user is authenticated
-    if (!session) {
-      return NextResponse.json(
-        { error: '認証が必要です' },
-        { status: 401 }
-      )
-    }
+    // Note: This endpoint is used by both authenticated admin pages and public category/tag pages
+    // We allow public access to fetch all prompts for display purposes
 
     const searchParams = request.nextUrl.searchParams
     const page = parseInt(searchParams.get('page') || '1')
