@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     console.log('=== START: GET /api/admin/prompts ===')
     console.log('TIME:', new Date().toISOString())
-    console.log('User:', session.user?.email)
+    console.log('User:', session?.user?.email || 'unauthenticated')
 
     // Fetch all prompts (no isPublished filter for admin)
     const [prompts, total] = await Promise.all([
