@@ -219,9 +219,15 @@ function HomeContent() {
     const fetchData = async () => {
       try {
         setError(null)
+        // When category is selected, fetch from /api/admin/prompts (all prompts)
+        // When no category is selected, fetch from /api/prompts (published only)
+        const promptsEndpoint = selectedCategory
+          ? `/api/admin/prompts?page=${currentPage}&limit=20`
+          : `/api/prompts?page=${currentPage}&limit=20`
+
         const [catsRes, promptsRes] = await Promise.all([
           fetch('/api/categories'),
-          fetch(`/api/prompts?page=${currentPage}&limit=20`),
+          fetch(promptsEndpoint),
         ])
 
         if (!catsRes.ok || !promptsRes.ok) {
@@ -253,7 +259,7 @@ function HomeContent() {
     }
 
     fetchData()
-  }, [currentPage])
+  }, [currentPage, selectedCategory])
 
   // Update selected category when it changes from the nav component
   const handleSelectedCategoryChange = (slug: string | null) => {
@@ -316,9 +322,15 @@ function HomeContent() {
     setError(null)
     const fetchData = async () => {
       try {
+        // When category is selected, fetch from /api/admin/prompts (all prompts)
+        // When no category is selected, fetch from /api/prompts (published only)
+        const promptsEndpoint = selectedCategory
+          ? `/api/admin/prompts?page=${currentPage}&limit=20`
+          : `/api/prompts?page=${currentPage}&limit=20`
+
         const [catsRes, promptsRes] = await Promise.all([
           fetch('/api/categories'),
-          fetch(`/api/prompts?page=${currentPage}&limit=20`),
+          fetch(promptsEndpoint),
         ])
 
         if (!catsRes.ok || !promptsRes.ok) {
