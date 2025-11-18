@@ -232,7 +232,12 @@ function HomeContent() {
         const promptsData = await promptsRes.json()
 
         setCategories(catsData)
-        setPrompts(promptsData.prompts || [])
+        // Parse tags from string format if needed
+        const promptsWithParsedTags = (promptsData.prompts || []).map((p: any) => ({
+          ...p,
+          tags: typeof p.tags === 'string' ? JSON.parse(p.tags || '[]') : (p.tags || [])
+        }))
+        setPrompts(promptsWithParsedTags)
         setPagination(promptsData.pagination || {
           page: currentPage,
           limit: 20,
@@ -324,7 +329,12 @@ function HomeContent() {
         const promptsData = await promptsRes.json()
 
         setCategories(catsData)
-        setPrompts(promptsData.prompts || [])
+        // Parse tags from string format if needed
+        const promptsWithParsedTags = (promptsData.prompts || []).map((p: any) => ({
+          ...p,
+          tags: typeof p.tags === 'string' ? JSON.parse(p.tags || '[]') : (p.tags || [])
+        }))
+        setPrompts(promptsWithParsedTags)
         setPagination(promptsData.pagination || {
           page: currentPage,
           limit: 20,

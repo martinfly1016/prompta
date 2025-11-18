@@ -69,7 +69,12 @@ export default function CategoryPage() {
         const filtered = data.prompts.filter(
           (p: any) => p.category.slug === slug
         )
-        setPrompts(filtered)
+        // Parse tags from string format if needed
+        const promptsWithParsedTags = filtered.map((p: any) => ({
+          ...p,
+          tags: typeof p.tags === 'string' ? JSON.parse(p.tags || '[]') : (p.tags || [])
+        }))
+        setPrompts(promptsWithParsedTags)
       } catch (error) {
         console.error('Failed to fetch prompts:', error)
       } finally {

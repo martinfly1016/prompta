@@ -186,9 +186,15 @@ export default function TagPage() {
         const res = await fetch('/api/prompts?limit=100')
         const data = await res.json()
 
+        // Parse tags from string format if needed
+        const promptsWithParsedTags = (data.prompts || []).map((p: any) => ({
+          ...p,
+          tags: typeof p.tags === 'string' ? JSON.parse(p.tags || '[]') : (p.tags || [])
+        }))
+
         // Filter prompts by current tag - use the decoded slug for comparison
         const decodedSlug = decodeURIComponent(slug)
-        const filtered = (data.prompts || []).filter((p: Prompt) =>
+        const filtered = promptsWithParsedTags.filter((p: Prompt) =>
           tagMatches(p.tags, decodedSlug)
         )
 
