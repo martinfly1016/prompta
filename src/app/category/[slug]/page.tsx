@@ -64,7 +64,7 @@ export default function CategoryPage() {
 
     const fetchPrompts = async () => {
       try {
-        const res = await fetch('/api/prompts')
+        const res = await fetch('/api/admin/prompts?limit=1000')
         const data = await res.json()
         const filtered = data.prompts.filter(
           (p: any) => p.category.slug === slug

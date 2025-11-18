@@ -183,7 +183,7 @@ export default function TagPage() {
 
     const fetchPrompts = async () => {
       try {
-        const res = await fetch('/api/prompts?limit=100')
+        const res = await fetch('/api/admin/prompts?limit=1000')
         const data = await res.json()
 
         // Parse tags from string format if needed
