@@ -498,6 +498,27 @@ export default function PromptPage() {
                   >
                     3
                   </span>
+                  <span style={{ fontSize: '14px', color: '#6e6e73', lineHeight: '1.5' }}>画像生成が必要な場合は、ご自身の画像をアップロードしてください</span>
+                </li>
+                <li className="flex items-start gap-4">
+                  <span
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '24px',
+                      height: '24px',
+                      backgroundColor: '#0071e3',
+                      color: 'white',
+                      borderRadius: '50%',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      flexShrink: 0,
+                      marginTop: '3px'
+                    }}
+                  >
+                    4
+                  </span>
                   <span style={{ fontSize: '14px', color: '#6e6e73', lineHeight: '1.5' }}>Enterキーを押して実行します</span>
                 </li>
               </ul>
