@@ -67,7 +67,7 @@ export default function CategoryPage() {
         const res = await fetch('/api/prompts')
         const data = await res.json()
         const filtered = data.prompts.filter(
-          (p: any) => p.category.slug === slug && p.isPublished
+          (p: any) => p.category.slug === slug
         )
         setPrompts(filtered)
       } catch (error) {

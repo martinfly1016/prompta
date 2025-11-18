@@ -735,7 +735,7 @@ export default function EditPromptPage() {
               color: '#0f172a',
               cursor: 'pointer'
             }}>
-              公開する
+              推荐到首页
             </label>
           </div>
         </div>

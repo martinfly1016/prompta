@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Trash2, Edit2 } from 'lucide-react'
+import Pagination from '@/components/Pagination'
 
 interface Prompt {
   id: string
@@ -15,19 +16,35 @@ interface Prompt {
   createdAt: string
 }
 
+interface PaginationData {
+  page: number
+  limit: number
+  total: number
+  pages: number
+}
+
 export default function PromptsPage() {
   const [prompts, setPrompts] = useState<Prompt[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pagination, setPagination] = useState<PaginationData>({
+    page: 1,
+    limit: 20,
+    total: 0,
+    pages: 0
+  })
 
   useEffect(() => {
-    fetchPrompts()
-  }, [])
+    fetchPrompts(currentPage)
+  }, [currentPage])
 
-  const fetchPrompts = async () => {
+  const fetchPrompts = async (page: number) => {
     try {
-      const res = await fetch('/api/prompts')
+      setIsLoading(true)
+      const res = await fetch(`/api/admin/prompts?page=${page}&limit=20`)
       const data = await res.json()
       setPrompts(data.prompts)
+      setPagination(data.pagination)
     } catch (error) {
       console.error('Failed to fetch prompts:', error)
     } finally {
@@ -40,7 +57,8 @@ export default function PromptsPage() {
 
     try {
       await fetch(`/api/prompts/${id}`, { method: 'DELETE' })
-      setPrompts(prompts.filter((p) => p.id !== id))
+      // Refetch prompts to update list and pagination
+      fetchPrompts(currentPage)
     } catch (error) {
       console.error('Failed to delete prompt:', error)
       alert('削除に失敗しました')
@@ -56,7 +74,7 @@ export default function PromptsPage() {
           fontWeight: '700',
           color: '#0f172a',
           margin: 0
-        }}>プロンプト管理</h1>
+        }}>プロンプト管理 {pagination.total > 0 && <span style={{ color: '#64748b', fontSize: '24px' }}>({pagination.total}件)</span>}</h1>
         <Link
           href="/admin/prompts/new"
           style={{
@@ -196,7 +214,7 @@ export default function PromptsPage() {
                         color: prompt.isPublished ? '#0284c7' : '#64748b'
                       }}
                     >
-                      {prompt.isPublished ? '公開' : '下書き'}
+                      {prompt.isPublished ? '推荐中' : '未推荐'}
                     </span>
                   </td>
                   <td style={{
@@ -267,6 +285,15 @@ export default function PromptsPage() {
           </table>
         )}
       </div>
+
+      {/* Pagination */}
+      {pagination.pages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={pagination.pages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      )}
     </div>
   )
 }
