@@ -26,6 +26,11 @@ export default function Footer() {
                   カテゴリ
                 </Link>
               </li>
+              <li style={{ marginBottom: '8px' }}>
+                <Link href="/all-prompts" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                  すべてのプロンプト
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
