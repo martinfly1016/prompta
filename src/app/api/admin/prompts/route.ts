@@ -3,7 +3,8 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export const revalidate = 60 // Cache for 1 minute for admin purposes
+export const dynamic = 'force-dynamic'
+export const revalidate = 0 // No caching for admin backend - must always show latest data
 
 // GET /api/admin/prompts - Admin endpoint, shows all prompts (published and unpublished)
 export async function GET(request: NextRequest) {
