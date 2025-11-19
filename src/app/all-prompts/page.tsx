@@ -49,7 +49,10 @@ export const metadata: Metadata = {
     description: 'Promptaの全プロンプト一覧。ChatGPT、Claude、Gemini、Grok対応のAIプロンプトが全て揃っています。',
     url: 'https://prompta.jp/all-prompts',
     type: 'website',
-  }
+  },
+  alternates: {
+    canonical: 'https://prompta.jp/all-prompts',
+  },
 }
 
 export default async function AllPromptsPage() {

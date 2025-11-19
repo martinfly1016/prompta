@@ -28,6 +28,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  alternates: {
+    canonical: 'https://prompta.jp/',
+  },
 }
 
 export default function RootLayout({
