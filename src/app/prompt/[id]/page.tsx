@@ -34,9 +34,13 @@ interface Prompt {
 // Fetch prompt data on the server
 async function getPrompt(id: string): Promise<Prompt | null> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    // For server-side rendering, construct the absolute URL using VERCEL_URL
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
     const res = await fetch(`${baseUrl}/api/prompts/${id}`, {
-      next: { revalidate: 60 } // Cache for 60 seconds
+      next: { revalidate: 0 } // No caching - fetch fresh data every time
     })
     if (!res.ok) return null
     return res.json()
