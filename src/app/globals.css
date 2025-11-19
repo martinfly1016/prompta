@@ -857,4 +857,13 @@ html body.admin-layout {
   .focus-ring:focus {
     box-shadow: 0 0 0 3px hsl(var(--primary) / 0.3);
   }
+
+  /* Footer link styles for SEO-friendly static rendering */
+  .footer-link {
+    transition: color 0.2s ease-out !important;
+  }
+
+  .footer-link:hover {
+    color: #ffffff !important;
+  }
 }

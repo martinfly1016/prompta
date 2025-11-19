@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 
 export default function Footer() {
@@ -17,17 +15,17 @@ export default function Footer() {
             <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>ナビゲーション</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                <Link href="/" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
                   ホーム
                 </Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="#categories" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                <Link href="#categories" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
                   カテゴリ
                 </Link>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <Link href="/all-prompts" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                <Link href="/all-prompts" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
                   すべてのプロンプト
                 </Link>
               </li>
@@ -41,12 +39,12 @@ export default function Footer() {
             <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>お問い合わせ</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               <li style={{ marginBottom: '8px' }}>
-                <a href="https://twitter.com/prompta_jp" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                <a href="https://twitter.com/prompta_jp" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
                   X: @prompta_jp
                 </a>
               </li>
               <li style={{ marginBottom: '8px' }}>
-                <a href="mailto:prompta.jp@gmail.com" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                <a href="mailto:prompta.jp@gmail.com" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
                   メール: prompta.jp@gmail.com
                 </a>
               </li>
