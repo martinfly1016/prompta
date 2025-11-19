@@ -37,7 +37,7 @@ async function getPrompts(): Promise<Prompt[]> {
       baseUrl = 'http://localhost:3000'
     }
     const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     })
     if (!res.ok) {
       console.error('Failed to fetch prompts:', res.status, res.statusText)
