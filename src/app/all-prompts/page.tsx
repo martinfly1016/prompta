@@ -34,7 +34,7 @@ async function getPrompts(): Promise<Prompt[]> {
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
     const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
-      next: { revalidate: 60 }
+      next: { revalidate: 0 } // No caching - fetch fresh data every time
     })
     if (!res.ok) {
       console.error('Failed to fetch prompts:', res.status, res.statusText)
