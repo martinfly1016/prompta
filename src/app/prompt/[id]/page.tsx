@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
-import Footer from '@/components/Footer'
 import { generatePromptSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import PromptPageClient from './page.client'
 
@@ -122,7 +121,6 @@ export default async function PromptPage({
       <Suspense fallback={null}>
         <PromptPageClient prompt={prompt} promptId={id} />
       </Suspense>
-      <Footer />
     </>
   )
 }

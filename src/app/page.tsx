@@ -9,7 +9,6 @@ import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
 import PromptCardSkeleton from '@/components/PromptCardSkeleton'
 import Pagination from '@/components/Pagination'
-import Footer from '@/components/Footer'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 import { generateOrganizationSchema } from '@/lib/schema'
 
@@ -655,7 +654,6 @@ function HomeContent() {
       </section>
 
     </main>
-    <Footer />
     </>
   )
 }

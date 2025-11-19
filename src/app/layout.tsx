@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './providers'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'プロンプタ | AI プロンプト集 - ChatGPT・Claude対応',
@@ -44,6 +45,7 @@ export default function RootLayout({
         <Providers>
           {children}
         </Providers>
+        <Footer />
       </body>
     </html>
   )

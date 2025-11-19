@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getImageProxyUrl } from '@/lib/image-proxy'
-import Footer from '@/components/Footer'
 import { generateBreadcrumbSchema } from '@/lib/schema'
 
 // This page is not cached - always fetches fresh data
@@ -181,7 +180,6 @@ export default async function AllPromptsPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
