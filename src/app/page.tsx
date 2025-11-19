@@ -95,8 +95,8 @@ function CategoryNavigation({
                 : ''
             }`}
           >
-            <span className="category-nav-icon">📂</span>
-            <span>全部</span>
+            <span className="category-nav-icon">🏠</span>
+            <span>ホーム</span>
           </button>
           {categories.map((cat) => (
             <button
