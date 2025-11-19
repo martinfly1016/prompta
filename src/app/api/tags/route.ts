@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 3600 // Cache for 1 hour
 
 // Helper function to slugify tag names (supports Japanese and other languages)
 function slugify(text: string): string {
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
     const sortBy = searchParams.get('sortBy') || 'count' // 'count' or 'name'
 
-    // Fetch all published prompts with tags
+    // Optimized: Only fetch tags field from published prompts
     const prompts = await prisma.prompt.findMany({
       where: {
         isPublished: true,
