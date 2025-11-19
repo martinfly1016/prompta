@@ -5,6 +5,9 @@ import Footer from '@/components/Footer'
 import { generatePromptSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import PromptPageClient from './page.client'
 
+// This page is not cached - always fetches fresh data
+export const dynamic = 'force-dynamic'
+
 interface PromptImage {
   id: string
   url: string
@@ -39,9 +42,7 @@ async function getPrompt(id: string): Promise<Prompt | null> {
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-    const res = await fetch(`${baseUrl}/api/prompts/${id}`, {
-      next: { revalidate: 0 } // No caching - fetch fresh data every time
-    })
+    const res = await fetch(`${baseUrl}/api/prompts/${id}`)
     if (!res.ok) return null
     return res.json()
   } catch (error) {

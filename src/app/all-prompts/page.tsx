@@ -5,6 +5,9 @@ import { getImageProxyUrl } from '@/lib/image-proxy'
 import Footer from '@/components/Footer'
 import { generateBreadcrumbSchema } from '@/lib/schema'
 
+// This page is not cached - always fetches fresh data
+export const dynamic = 'force-dynamic'
+
 interface PromptImage {
   url: string
   altText?: string
@@ -33,9 +36,7 @@ async function getPrompts(): Promise<Prompt[]> {
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
-      next: { revalidate: 0 } // No caching - fetch fresh data every time
-    })
+    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`)
     if (!res.ok) {
       console.error('Failed to fetch prompts:', res.status, res.statusText)
       return []
