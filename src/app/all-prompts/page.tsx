@@ -28,11 +28,21 @@ interface Prompt {
 
 async function getPrompts(): Promise<Prompt[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    // Use absolute URL for server-side fetching in production
+    let baseUrl = process.env.NEXT_PUBLIC_API_URL
+    if (!baseUrl && process.env.VERCEL_URL) {
+      baseUrl = `https://${process.env.VERCEL_URL}`
+    }
+    if (!baseUrl) {
+      baseUrl = 'http://localhost:3000'
+    }
     const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
       next: { revalidate: 3600 }
     })
-    if (!res.ok) return []
+    if (!res.ok) {
+      console.error('Failed to fetch prompts:', res.status, res.statusText)
+      return []
+    }
     const data = await res.json()
     return data.prompts || []
   } catch (error) {
