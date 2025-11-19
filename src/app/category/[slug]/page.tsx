@@ -1,3 +1,44 @@
+import type { Metadata } from 'next'
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://prompta-blush.vercel.app'
+
+  try {
+    const res = await fetch(`${baseUrl}/api/categories`, {
+      cache: 'no-store'
+    })
+    const categories = await res.json()
+    const category = categories.find((c: any) => c.slug === slug)
+
+    if (!category) {
+      return {
+        title: 'カテゴリ | プロンプタ',
+        description: 'プロンプトカテゴリ'
+      }
+    }
+
+    return {
+      title: `${category.name} | プロンプタ`,
+      description: category.description || `${category.name}カテゴリのプロンプト一覧`,
+      keywords: [category.name, 'プロンプト', 'カテゴリ'],
+      openGraph: {
+        title: `${category.name} - プロンプタ`,
+        description: category.description || `${category.name}カテゴリ`,
+        type: 'website',
+        url: `${baseUrl}/category/${slug}`,
+      }
+    }
+  } catch (error) {
+    return {
+      title: 'カテゴリ | プロンプタ',
+      description: 'プロンプトカテゴリページ'
+    }
+  }
+}
+
 'use client'
 
 import { useState, useEffect } from 'react'

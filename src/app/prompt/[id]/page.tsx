@@ -1,3 +1,62 @@
+import type { Metadata } from 'next'
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ id: string }> }
+): Promise<Metadata> {
+  const { id } = await params
+
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://prompta-blush.vercel.app'
+    const res = await fetch(`${baseUrl}/api/prompts/${id}`, {
+      cache: 'no-store'
+    })
+
+    if (!res.ok) {
+      return {
+        title: 'プロンプト | プロンプタ',
+        description: 'プロンプトが見つかりません'
+      }
+    }
+
+    const prompt = await res.json()
+
+    const imageUrl = prompt.images?.[0]?.url || `${baseUrl}/logo.png`
+
+    return {
+      title: `${prompt.title} | プロンプタ`,
+      description: prompt.description,
+      keywords: [
+        prompt.title,
+        prompt.category?.name,
+        'プロンプト',
+        'ChatGPT',
+        'Claude'
+      ],
+      openGraph: {
+        title: prompt.title,
+        description: prompt.description,
+        type: 'article',
+        images: [{
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: prompt.title
+        }],
+        url: `${baseUrl}/prompt/${id}`,
+      },
+      other: {
+        'article:published_time': prompt.createdAt,
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch prompt metadata:', error)
+    return {
+      title: 'プロンプト | プロンプタ',
+      description: 'プロンプトの詳細ページ'
+    }
+  }
+}
+
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'

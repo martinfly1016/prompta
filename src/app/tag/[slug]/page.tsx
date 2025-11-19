@@ -1,3 +1,25 @@
+import type { Metadata } from 'next'
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://prompta-blush.vercel.app'
+  const decodedSlug = decodeURIComponent(slug)
+
+  return {
+    title: `${decodedSlug} | プロンプタ`,
+    description: `${decodedSlug}タグのプロンプト一覧です。ChatGPT、Claude、その他のAIツール向けのプロンプトを探せます。`,
+    keywords: [decodedSlug, 'プロンプト', 'タグ'],
+    openGraph: {
+      title: `${decodedSlug} - プロンプタ`,
+      description: `${decodedSlug}タグのプロンプト一覧`,
+      type: 'website',
+      url: `${baseUrl}/tag/${slug}`,
+    }
+  }
+}
+
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
