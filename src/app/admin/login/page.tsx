@@ -164,15 +164,6 @@ export default function LoginPage() {
                 {isLoading ? 'ログイン中...' : 'ログイン'}
               </button>
             </form>
-
-            {/* Test Account Info */}
-            <div style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-              <p style={{ fontSize: '13px', fontWeight: '500', margin: '0 0 12px 0', color: '#64748b' }}>テストアカウント:</p>
-              <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.9' }}>
-                <div style={{ marginBottom: '8px' }}>メール: <code style={{ color: '#0284c7', fontFamily: 'monospace', fontWeight: '500' }}>admin@example.com</code></div>
-                <div>パスワード: <code style={{ color: '#0284c7', fontFamily: 'monospace', fontWeight: '500' }}>changeme</code></div>
-              </div>
-            </div>
           </div>
         </div>
 
