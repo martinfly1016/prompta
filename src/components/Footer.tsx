@@ -32,6 +32,21 @@ export default function Footer() {
             <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>言語</h4>
             <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0 }}>日本語 (日本)</p>
           </div>
+          <div>
+            <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>お問い合わせ</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              <li style={{ marginBottom: '8px' }}>
+                <a href="https://twitter.com/prompta_jp" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                  X: @prompta_jp
+                </a>
+              </li>
+              <li style={{ marginBottom: '8px' }}>
+                <a href="mailto:prompta.jp@gmail.com" style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s', fontSize: '14px' }} onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'} onMouseLeave={(e) => e.currentTarget.style.color = '#94a3b8'}>
+                  メール: prompta.jp@gmail.com
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div style={{ borderTop: '1px solid #1e293b', paddingTop: '24px', textAlign: 'center', fontSize: '13px', color: '#64748b' }}>
