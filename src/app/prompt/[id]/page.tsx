@@ -20,14 +20,6 @@ interface Tag {
   color?: string
 }
 
-interface Category {
-  id: string
-  name: string
-  slug: string
-  icon?: string
-  _count?: { prompts: number }
-}
-
 interface Prompt {
   id: string
   title: string
