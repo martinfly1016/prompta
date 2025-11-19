@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ja_JP',
-    url: 'https://prompta.example.com',
+    url: 'https://prompta.jp',
     title: 'プロンプタ | AI プロンプト集',
     description: 'ChatGPTやClaudeなど、AIツール向けの高品質なプロンプト集。',
     siteName: 'Prompta',
