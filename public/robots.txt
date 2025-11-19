@@ -18,4 +18,4 @@ User-agent: Baiduspider
 Crawl-delay: 1
 Request-rate: 1/1s
 
-Sitemap: /sitemap.xml
+Sitemap: https://prompta.jp/sitemap.xml

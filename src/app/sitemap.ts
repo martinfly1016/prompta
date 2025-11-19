@@ -1,89 +1,123 @@
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+import type { MetadataRoute } from 'next'
 
-import { MetadataRoute } from 'next'
-import { prisma } from '@/lib/prisma'
+interface Prompt {
+  id: string
+  createdAt: string
+  updatedAt?: string
+}
+
+interface Category {
+  slug: string
+  updatedAt?: string
+}
+
+interface Tag {
+  slug: string
+  updatedAt?: string
+}
+
+async function getPrompts(): Promise<Prompt[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/admin/prompts?limit=10000`, {
+      next: { revalidate: 3600 } // Cache for 1 hour
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.prompts || []
+  } catch (error) {
+    console.error('Failed to fetch prompts for sitemap:', error)
+    return []
+  }
+}
+
+async function getCategories(): Promise<Category[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/categories`, {
+      next: { revalidate: 3600 }
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    return data || []
+  } catch (error) {
+    console.error('Failed to fetch categories for sitemap:', error)
+    return []
+  }
+}
+
+async function getTags(): Promise<Tag[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/tags`, {
+      next: { revalidate: 3600 }
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.tags || []
+  } catch (error) {
+    console.error('Failed to fetch tags for sitemap:', error)
+    return []
+  }
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+  const baseUrl = 'https://prompta.jp'
 
-  // Return basic sitemap during build if database is unavailable
-  const basicSitemap: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/search`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+  // Fetch all data in parallel
+  const [prompts, categories, tags] = await Promise.all([
+    getPrompts(),
+    getCategories(),
+    getTags(),
+  ])
+
+  const routes: MetadataRoute.Sitemap = []
+
+  // Homepage
+  routes.push({
+    url: baseUrl,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1.0,
+  })
+
+  // All prompts page
+  routes.push({
+    url: `${baseUrl}/all-prompts`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.9,
+  })
+
+  // Category pages
+  categories.forEach((category: any) => {
+    routes.push({
+      url: `${baseUrl}/category/${category.slug}`,
+      lastModified: category.updatedAt ? new Date(category.updatedAt) : new Date(),
+      changeFrequency: 'weekly',
       priority: 0.8,
-    },
-  ]
-
-  try {
-    const [categories, prompts] = await Promise.all([
-      prisma.category.findMany(),
-      prisma.prompt.findMany({ where: { isPublished: true }, take: 10000 }),
-    ])
-
-    const categoryUrls: MetadataRoute.Sitemap = categories.map((cat) => ({
-      url: `${baseUrl}/category/${cat.slug}`,
-      lastModified: cat.updatedAt,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }))
-
-    const promptUrls: MetadataRoute.Sitemap = prompts.map((prompt, idx) => ({
-      url: `${baseUrl}/prompt/${prompt.id}`,
-      lastModified: prompt.updatedAt,
-      changeFrequency: 'daily' as const,
-      priority: Math.max(0.5, 1 - (idx / prompts.length) * 0.5),
-    }))
-
-    // Extract unique tags from prompts
-    const tagSet = new Set<string>()
-    prompts.forEach(p => {
-      if (p.tags) {
-        try {
-          const parsed = JSON.parse(p.tags)
-          if (Array.isArray(parsed)) {
-            parsed.forEach(tag => {
-              if (typeof tag === 'string') tagSet.add(tag)
-              else if (tag.name) tagSet.add(tag.name)
-            })
-          }
-        } catch {}
-      }
     })
+  })
 
-    const tagUrls: MetadataRoute.Sitemap = Array.from(tagSet).map((tag) => ({
-      url: `${baseUrl}/tag/${encodeURIComponent(tag)}`,
-      changeFrequency: 'weekly' as const,
+  // Tag pages
+  tags.forEach((tag: any) => {
+    routes.push({
+      url: `${baseUrl}/tag/${tag.slug}`,
+      lastModified: tag.updatedAt ? new Date(tag.updatedAt) : new Date(),
+      changeFrequency: 'weekly',
       priority: 0.7,
-    }))
+    })
+  })
 
-    return [
-      {
-        url: baseUrl,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 1,
-      },
-      {
-        url: `${baseUrl}/search`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-      },
-      ...categoryUrls,
-      ...promptUrls,
-      ...tagUrls,
-    ]
-  } catch (error) {
-    console.error('Failed to generate full sitemap:', error)
-    return basicSitemap
-  }
+  // Prompt detail pages
+  prompts.forEach((prompt: any) => {
+    routes.push({
+      url: `${baseUrl}/prompt/${prompt.id}`,
+      lastModified: prompt.updatedAt ? new Date(prompt.updatedAt) : new Date(prompt.createdAt),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    })
+  })
+
+  return routes
 }
