@@ -18,8 +18,10 @@ interface Tag {
 
 async function getPrompts(): Promise<Prompt[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/admin/prompts?limit=10000`, {
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
       next: { revalidate: 3600 } // Cache for 1 hour
     })
     if (!res.ok) return []
@@ -33,7 +35,9 @@ async function getPrompts(): Promise<Prompt[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
     const res = await fetch(`${baseUrl}/api/categories`, {
       next: { revalidate: 3600 }
     })
@@ -48,7 +52,9 @@ async function getCategories(): Promise<Category[]> {
 
 async function getTags(): Promise<Tag[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
     const res = await fetch(`${baseUrl}/api/tags`, {
       next: { revalidate: 3600 }
     })
