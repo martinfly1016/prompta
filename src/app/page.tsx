@@ -411,6 +411,7 @@ function HomeContent() {
       : prompts
 
   return (
+    <>
     <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
       {/* Category Navigation Bar - Wrapped in Suspense */}
       <Suspense fallback={null}>
@@ -639,6 +640,7 @@ function HomeContent() {
 
     </main>
     <Footer />
+    </>
   )
 }
 
