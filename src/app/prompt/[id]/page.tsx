@@ -8,6 +8,7 @@ import { ImageGallery } from '@/components/ImageGallery'
 import Footer from '@/components/Footer'
 import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
+import { generatePromptSchema, generateBreadcrumbSchema } from '@/lib/schema'
 
 // Helper function to slugify tag names (supports Japanese and other languages)
 function slugify(text: string): string {
@@ -260,8 +261,32 @@ export default function PromptPage() {
 
   const tagList = parseTags()
 
+  // Generate schema markup for SEO
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+  const promptSchema = prompt ? generatePromptSchema(prompt, { baseUrl, siteName: 'Prompta' }) : null
+  const breadcrumbSchema = prompt ? generateBreadcrumbSchema(
+    [
+      { name: 'ホーム', url: '/' },
+      { name: prompt.category.name, url: `/category/${prompt.category.slug}` },
+      { name: prompt.title, url: `/prompt/${id}` }
+    ],
+    baseUrl
+  ) : null
+
   return (
     <>
+      {promptSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(promptSchema) }}
+        />
+      )}
+      {breadcrumbSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+      )}
       <Suspense fallback={null}>
         <CategoryNavigation
           categories={categories}

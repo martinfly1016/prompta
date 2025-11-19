@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import TagChip from '@/components/TagChip'
@@ -216,7 +217,7 @@ export default function CategoryPage() {
               opacity: isSearchTransitioning ? 0.5 : 1,
             }}
           >
-            {filteredPrompts.map((prompt) => (
+            {filteredPrompts.map((prompt, index) => (
               <Link
                 key={prompt.id}
                 href={`/prompt/${prompt.id}`}
@@ -228,10 +229,14 @@ export default function CategoryPage() {
                     const effectImages = prompt.images.filter((img: any) => img.imageType === 'effect')
                     const displayImage = effectImages.length > 0 ? effectImages[effectImages.length - 1] : prompt.images[0]
                     return (
-                      <img
+                      <Image
                         src={getImageProxyUrl(displayImage.url)}
                         alt={prompt.title}
-                        loading="lazy"
+                        width={400}
+                        height={300}
+                        quality={80}
+                        priority={index === 0}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )

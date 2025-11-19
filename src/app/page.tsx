@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import TagChip from '@/components/TagChip'
 import SearchBar from '@/components/SearchBar'
@@ -10,6 +11,7 @@ import PromptCardSkeleton from '@/components/PromptCardSkeleton'
 import Pagination from '@/components/Pagination'
 import Footer from '@/components/Footer'
 import { getImageProxyUrl } from '@/lib/image-proxy'
+import { generateOrganizationSchema } from '@/lib/schema'
 
 interface Category {
   id: string
@@ -410,25 +412,35 @@ function HomeContent() {
       ? prompts.filter(p => p.category.slug === selectedCategory)
       : prompts
 
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
+  const schemaMarkup = generateOrganizationSchema({
+    baseUrl,
+    siteName: 'Prompta'
+  })
+
   return (
     <>
-    <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-      {/* Category Navigation Bar - Wrapped in Suspense */}
-      <Suspense fallback={null}>
-        <CategoryNavigation
-          categories={categories}
-          isLoading={isLoading}
-          onCategoryChange={handleSelectedCategoryChange}
-          onSearch={handleSearch}
-          onSearchClear={handleSearchClear}
-          isSearching={isSearching}
-        />
-      </Suspense>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }}
+      />
+      <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+        {/* Category Navigation Bar - Wrapped in Suspense */}
+        <Suspense fallback={null}>
+          <CategoryNavigation
+            categories={categories}
+            isLoading={isLoading}
+            onCategoryChange={handleSelectedCategoryChange}
+            onSearch={handleSearch}
+            onSearchClear={handleSearchClear}
+            isSearching={isSearching}
+          />
+        </Suspense>
 
-      {/* Hero Section - Optimized with proper spacing */}
-      <section style={{ backgroundColor: '#f8fafc', paddingTop: '60px', paddingBottom: '60px' }}>
-        <div className="container mx-auto px-6" style={{ maxWidth: '1280px' }}>
-          <div style={{ textAlign: 'center', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+        {/* Hero Section - Optimized with proper spacing */}
+        <section style={{ backgroundColor: '#f8fafc', paddingTop: '60px', paddingBottom: '60px' }}>
+          <div className="container mx-auto px-6" style={{ maxWidth: '1280px' }}>
+            <div style={{ textAlign: 'center', maxWidth: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
             <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '24px', color: '#0f172a', lineHeight: 1.3 }}>
               AIを使いこなすための<span style={{ color: '#0284c7' }}>プロンプト集</span>
             </h1>
@@ -542,7 +554,7 @@ function HomeContent() {
                   opacity: isCategoryTransitioning ? 0.5 : 1,
                 }}
               >
-                {filteredPrompts.map((prompt) => (
+                {filteredPrompts.map((prompt, index) => (
                 <Link
                   key={prompt.id}
                   href={`/prompt/${prompt.id}`}
@@ -554,10 +566,14 @@ function HomeContent() {
                       const effectImages = prompt.images.filter((img: any) => img.imageType === 'effect')
                       const displayImage = effectImages.length > 0 ? effectImages[effectImages.length - 1] : prompt.images[0]
                       return (
-                        <img
+                        <Image
                           src={getImageProxyUrl(displayImage.url)}
                           alt={prompt.title}
-                          loading="lazy"
+                          width={400}
+                          height={300}
+                          quality={80}
+                          priority={index === 0}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       )

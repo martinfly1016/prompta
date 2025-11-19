@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { getImageProxyUrl } from '@/lib/image-proxy'
 
 interface ImageGalleryProps {
@@ -39,9 +40,14 @@ export function ImageGallery({ images }: ImageGalleryProps) {
         >
           {/* 图片容器 - 作为原图浮层定位参照 */}
           <div className="relative inline-block">
-            <img
+            <Image
               src={getImageProxyUrl(image.url)}
               alt={image.altText || `効果図 ${index + 1}`}
+              width={800}
+              height={600}
+              quality={85}
+              priority={index === 0}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 800px"
               className="max-w-full h-auto object-contain rounded-lg block"
             />
 
@@ -64,9 +70,12 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                         width: '150px',
                       }}
                     >
-                      <img
+                      <Image
                         src={getImageProxyUrl(original.url)}
                         alt={original.altText || `原図 ${idx + 1}`}
+                        width={150}
+                        height={150}
+                        quality={80}
                         className="w-full h-auto object-contain"
                       />
                     </div>
