@@ -30,20 +30,26 @@ async function getPrompts(): Promise<Prompt[]> {
   try {
     // Use absolute URL for server-side fetching in production
     let baseUrl = process.env.NEXT_PUBLIC_API_URL
+    console.log('NEXT_PUBLIC_API_URL:', baseUrl)
     if (!baseUrl && process.env.VERCEL_URL) {
       baseUrl = `https://${process.env.VERCEL_URL}`
+      console.log('Using VERCEL_URL, baseUrl:', baseUrl)
     }
     if (!baseUrl) {
       baseUrl = 'http://localhost:3000'
+      console.log('Using localhost fallback')
     }
+    console.log('Final baseUrl:', baseUrl)
     const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
       next: { revalidate: 60 }
     })
+    console.log('Fetch response status:', res.status)
     if (!res.ok) {
       console.error('Failed to fetch prompts:', res.status, res.statusText)
       return []
     }
     const data = await res.json()
+    console.log('Number of prompts fetched:', data.prompts?.length || 0)
     return data.prompts || []
   } catch (error) {
     console.error('Failed to fetch prompts:', error)
