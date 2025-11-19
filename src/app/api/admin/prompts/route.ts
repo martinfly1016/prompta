@@ -3,8 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+export const revalidate = 60 // Cache for 1 minute for admin purposes
 
 // GET /api/admin/prompts - Admin endpoint, shows all prompts (published and unpublished)
 export async function GET(request: NextRequest) {
@@ -33,12 +32,12 @@ export async function GET(request: NextRequest) {
     console.log('TIME:', new Date().toISOString())
     console.log('User:', session?.user?.email || 'unauthenticated')
 
-    // Fetch all prompts (no isPublished filter for admin)
+    // Optimized parallel queries with selective field loading
     const [prompts, total] = await Promise.all([
       prisma.prompt.findMany({
         where,
         include: {
-          category: true,
+          category: { select: { id: true, name: true, slug: true } },
           images: { orderBy: { order: 'asc' } },
         },
         skip,

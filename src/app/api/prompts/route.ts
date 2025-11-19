@@ -49,13 +49,12 @@ export async function GET(request: NextRequest) {
 
     console.log('Executing parallel queries for prompts and count...')
 
-    // Fetch without tags to avoid migration conflicts
-    // Tags will be included once the migration is applied in production
+    // Optimized parallel queries with proper field selection
     const [prompts, total] = await Promise.all([
       prisma.prompt.findMany({
         where,
         include: {
-          category: true,
+          category: { select: { id: true, name: true, slug: true } },
           images: { orderBy: { order: 'asc' } },
         },
         skip,

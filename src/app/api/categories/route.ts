@@ -33,8 +33,18 @@ export async function GET() {
     console.log('DATABASE_URL starts with:', dbUrl.substring(0, 20) + '...')
     console.log('Attempting to query categories...')
 
+    // Optimized query with selective field loading
     const categories = await prisma.category.findMany({
-      include: { _count: { select: { prompts: true } } },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        icon: true,
+        order: true,
+        isActive: true,
+        _count: { select: { prompts: true } },
+      },
       orderBy: { order: 'asc' },
     })
 
