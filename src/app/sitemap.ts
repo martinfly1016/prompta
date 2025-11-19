@@ -21,11 +21,22 @@ async function getPrompts(): Promise<Prompt[]> {
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
+    console.log('Fetching prompts from:', `${baseUrl}/api/prompts?limit=10000`)
+
     const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
       next: { revalidate: 3600 } // Cache for 1 hour
     })
-    if (!res.ok) return []
+
+    console.log('Prompts response status:', res.status)
+
+    if (!res.ok) {
+      console.error('Failed to fetch prompts, status:', res.status)
+      return []
+    }
+
     const data = await res.json()
+    console.log('Fetched prompts count:', data.prompts?.length || 0)
     return data.prompts || []
   } catch (error) {
     console.error('Failed to fetch prompts for sitemap:', error)
@@ -38,11 +49,18 @@ async function getCategories(): Promise<Category[]> {
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
     const res = await fetch(`${baseUrl}/api/categories`, {
       next: { revalidate: 3600 }
     })
-    if (!res.ok) return []
+
+    if (!res.ok) {
+      console.error('Failed to fetch categories, status:', res.status)
+      return []
+    }
+
     const data = await res.json()
+    console.log('Fetched categories count:', data?.length || 0)
     return data || []
   } catch (error) {
     console.error('Failed to fetch categories for sitemap:', error)
@@ -55,11 +73,18 @@ async function getTags(): Promise<Tag[]> {
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
     const res = await fetch(`${baseUrl}/api/tags`, {
       next: { revalidate: 3600 }
     })
-    if (!res.ok) return []
+
+    if (!res.ok) {
+      console.error('Failed to fetch tags, status:', res.status)
+      return []
+    }
+
     const data = await res.json()
+    console.log('Fetched tags count:', data.tags?.length || 0)
     return data.tags || []
   } catch (error) {
     console.error('Failed to fetch tags for sitemap:', error)
