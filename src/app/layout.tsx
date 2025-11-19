@@ -4,8 +4,8 @@ import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'プロンプタ | AI プロンプト集 - ChatGPT・Claude対応',
-  description: 'ChatGPTやClaudeなど、AIツール向けの高品質なプロンプト集。仕事の効率化、創造性の向上に役立つプロンプトを無料で提供します。',
-  keywords: ['プロンプト', 'ChatGPT', 'Claude', 'AI', '生成AI'],
+  description: 'ChatGPTやClaude、Gemini、Grok、nanobananaなど、AIツール向けの高品質なプロンプト集。仕事の効率化、創造性の向上に役立つプロンプトを無料で提供します。',
+  keywords: ['プロンプト', 'ChatGPT', 'Claude', 'Gemini', 'Grok', 'nanobanana', 'AI', '生成AI'],
   authors: [{ name: 'Prompta' }],
   creator: 'Prompta',
   publisher: 'Prompta',
