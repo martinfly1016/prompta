@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   alternates: {
-    canonical: 'https://prompta.jp/all-prompts',
+    canonical: 'https://prompta.jp/',
   },
 }
 
