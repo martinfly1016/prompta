@@ -29,7 +29,7 @@ interface Prompt {
 async function getPrompts(): Promise<Prompt[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/admin/prompts?limit=10000`, {
+    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
       next: { revalidate: 3600 }
     })
     if (!res.ok) return []
