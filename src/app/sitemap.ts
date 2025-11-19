@@ -18,26 +18,35 @@ interface Tag {
 
 async function getPrompts(): Promise<Prompt[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    // Try multiple URLs in order of preference
+    const urls = [
+      'https://prompta.jp/api/prompts?limit=10000',  // Production domain
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/prompts?limit=10000` : null,
+      process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/prompts?limit=10000` : null,
+      'http://localhost:3000/api/prompts?limit=10000'  // Fallback for local dev
+    ].filter(Boolean) as string[]
 
-    console.log('Fetching prompts from:', `${baseUrl}/api/prompts?limit=10000`)
+    let data = null
+    for (const url of urls) {
+      try {
+        console.log('Attempting to fetch prompts from:', url)
+        const res = await fetch(url, {
+          next: { revalidate: 3600 } // Cache for 1 hour
+        })
 
-    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`, {
-      next: { revalidate: 3600 } // Cache for 1 hour
-    })
-
-    console.log('Prompts response status:', res.status)
-
-    if (!res.ok) {
-      console.error('Failed to fetch prompts, status:', res.status)
-      return []
+        if (res.ok) {
+          data = await res.json()
+          console.log('Successfully fetched prompts from:', url, 'Count:', data.prompts?.length || 0)
+          return data.prompts || []
+        }
+      } catch (e) {
+        console.error('Failed to fetch from', url, ':', e)
+        continue
+      }
     }
 
-    const data = await res.json()
-    console.log('Fetched prompts count:', data.prompts?.length || 0)
-    return data.prompts || []
+    console.error('Failed to fetch prompts from all URLs')
+    return []
   } catch (error) {
     console.error('Failed to fetch prompts for sitemap:', error)
     return []
@@ -46,22 +55,31 @@ async function getPrompts(): Promise<Prompt[]> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const urls = [
+      'https://prompta.jp/api/categories',
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/categories` : null,
+      process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/categories` : null,
+      'http://localhost:3000/api/categories'
+    ].filter(Boolean) as string[]
 
-    const res = await fetch(`${baseUrl}/api/categories`, {
-      next: { revalidate: 3600 }
-    })
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          next: { revalidate: 3600 }
+        })
 
-    if (!res.ok) {
-      console.error('Failed to fetch categories, status:', res.status)
-      return []
+        if (res.ok) {
+          const data = await res.json()
+          console.log('Successfully fetched categories from:', url, 'Count:', data?.length || 0)
+          return data || []
+        }
+      } catch (e) {
+        console.error('Failed to fetch categories from', url)
+        continue
+      }
     }
 
-    const data = await res.json()
-    console.log('Fetched categories count:', data?.length || 0)
-    return data || []
+    return []
   } catch (error) {
     console.error('Failed to fetch categories for sitemap:', error)
     return []
@@ -70,22 +88,31 @@ async function getCategories(): Promise<Category[]> {
 
 async function getTags(): Promise<Tag[]> {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const urls = [
+      'https://prompta.jp/api/tags',
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/tags` : null,
+      process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/tags` : null,
+      'http://localhost:3000/api/tags'
+    ].filter(Boolean) as string[]
 
-    const res = await fetch(`${baseUrl}/api/tags`, {
-      next: { revalidate: 3600 }
-    })
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          next: { revalidate: 3600 }
+        })
 
-    if (!res.ok) {
-      console.error('Failed to fetch tags, status:', res.status)
-      return []
+        if (res.ok) {
+          const data = await res.json()
+          console.log('Successfully fetched tags from:', url, 'Count:', data.tags?.length || 0)
+          return data.tags || []
+        }
+      } catch (e) {
+        console.error('Failed to fetch tags from', url)
+        continue
+      }
     }
 
-    const data = await res.json()
-    console.log('Fetched tags count:', data.tags?.length || 0)
-    return data.tags || []
+    return []
   } catch (error) {
     console.error('Failed to fetch tags for sitemap:', error)
     return []
