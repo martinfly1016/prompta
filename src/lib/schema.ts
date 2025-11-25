@@ -61,12 +61,18 @@ export function generateBreadcrumbSchema(
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, idx) => ({
-      "@type": "ListItem",
-      "position": idx + 1,
-      "name": item.name,
-      "item": item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
-    }))
+    "itemListElement": items.map((item, idx) => {
+      const isLast = idx === items.length - 1;
+      const fullUrl = item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`;
+
+      return {
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": item.name,
+        // Exclude 'item' field for the last breadcrumb (current page) per Google's guidelines
+        ...(isLast ? {} : { "item": fullUrl })
+      };
+    })
   }
 }
 
