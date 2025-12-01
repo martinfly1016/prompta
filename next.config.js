@@ -27,6 +27,22 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
+  // Redirect non-www to www for SEO consistency
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'prompta.jp',
+          },
+        ],
+        destination: 'https://www.prompta.jp/:path*',
+        permanent: true,
+      },
+    ]
+  },
   headers: async () => {
     return [
       {
