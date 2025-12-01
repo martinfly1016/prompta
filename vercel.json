@@ -9,6 +9,19 @@
       "maxDuration": 60
     }
   },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "prompta.jp"
+        }
+      ],
+      "destination": "https://www.prompta.jp/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/api/:path*",
