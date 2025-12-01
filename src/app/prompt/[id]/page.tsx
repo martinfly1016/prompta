@@ -71,7 +71,7 @@ export async function generateMetadata(
       title: prompt.title,
       description: prompt.description,
       type: 'article',
-      url: `https://prompta.jp/prompt/${id}`,
+      url: `https://www.prompta.jp/prompt/${id}`,
       images: prompt.images && prompt.images.length > 0
         ? [{ url: prompt.images[0].url, alt: prompt.title }]
         : []
@@ -80,7 +80,10 @@ export async function generateMetadata(
       card: 'summary_large_image',
       title: prompt.title,
       description: prompt.description,
-    }
+    },
+    alternates: {
+      canonical: `https://www.prompta.jp/prompt/${id}`,
+    },
   }
 }
 
@@ -97,7 +100,7 @@ export default async function PromptPage({
   }
 
   // Generate schema markup for SEO
-  const baseUrl = 'https://prompta.jp'
+  const baseUrl = 'https://www.prompta.jp'
   const promptSchema = generatePromptSchema(prompt, { baseUrl, siteName: 'Prompta' })
   const breadcrumbSchema = generateBreadcrumbSchema(
     [

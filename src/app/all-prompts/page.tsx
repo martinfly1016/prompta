@@ -54,11 +54,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'すべてのプロンプト | Prompta',
     description: 'Promptaの全プロンプト一覧。ChatGPT、Claude、Gemini、Grok対応のAIプロンプトが全て揃っています。',
-    url: 'https://prompta.jp/all-prompts',
+    url: 'https://www.prompta.jp/all-prompts',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://prompta.jp/',
+    canonical: 'https://www.prompta.jp/all-prompts',
   },
 }
 
@@ -70,7 +70,7 @@ export default async function AllPromptsPage() {
       { name: 'ホーム', url: '/' },
       { name: 'すべてのプロンプト', url: '/all-prompts' }
     ],
-    'https://prompta.jp'
+    'https://www.prompta.jp'
   )
 
   // Generate ItemList schema for all prompts
@@ -80,7 +80,7 @@ export default async function AllPromptsPage() {
     itemListElement: prompts.slice(0, 100).map((prompt, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: `https://prompta.jp/prompt/${prompt.id}`,
+      url: `https://www.prompta.jp/prompt/${prompt.id}`,
       name: prompt.title,
       description: prompt.description
     }))

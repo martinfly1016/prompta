@@ -20,7 +20,7 @@ async function getPrompts(): Promise<Prompt[]> {
   try {
     // Try multiple URLs in order of preference
     const urls = [
-      'https://prompta.jp/api/prompts?limit=10000',  // Production domain
+      'https://www.prompta.jp/api/prompts?limit=10000',  // Production domain
       process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/prompts?limit=10000` : null,
       process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/prompts?limit=10000` : null,
       'http://localhost:3000/api/prompts?limit=10000'  // Fallback for local dev
@@ -56,7 +56,7 @@ async function getPrompts(): Promise<Prompt[]> {
 async function getCategories(): Promise<Category[]> {
   try {
     const urls = [
-      'https://prompta.jp/api/categories',
+      'https://www.prompta.jp/api/categories',
       process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/categories` : null,
       process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/categories` : null,
       'http://localhost:3000/api/categories'
@@ -89,7 +89,7 @@ async function getCategories(): Promise<Category[]> {
 async function getTags(): Promise<Tag[]> {
   try {
     const urls = [
-      'https://prompta.jp/api/tags',
+      'https://www.prompta.jp/api/tags',
       process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/tags` : null,
       process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/tags` : null,
       'http://localhost:3000/api/tags'
@@ -120,7 +120,7 @@ async function getTags(): Promise<Tag[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://prompta.jp'
+  const baseUrl = 'https://www.prompta.jp'
 
   // Fetch all data in parallel
   const [prompts, categories, tags] = await Promise.all([

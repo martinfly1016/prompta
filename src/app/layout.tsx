@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ja_JP',
-    url: 'https://prompta.jp',
+    url: 'https://www.prompta.jp',
     title: 'プロンプタ | AI プロンプト集',
     description: 'ChatGPTやClaudeなど、AIツール向けの高品質なプロンプト集。',
     siteName: 'Prompta',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://prompta.jp/',
+    canonical: 'https://www.prompta.jp/',
   },
 }
 
