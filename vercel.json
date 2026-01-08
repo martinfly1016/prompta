@@ -11,14 +11,30 @@
   },
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "prompta.jp"
         }
       ],
-      "destination": "https://www.prompta.jp/:path*",
+      "destination": "https://www.prompta.jp/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.prompta.jp"
+        },
+        {
+          "type": "header",
+          "key": "x-forwarded-proto",
+          "value": "http"
+        }
+      ],
+      "destination": "https://www.prompta.jp/$1",
       "permanent": true
     }
   ],
