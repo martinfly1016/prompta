@@ -32,8 +32,29 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>言語</h4>
-            <p style={{ fontSize: '14px', color: '#94a3b8', margin: 0 }}>日本語 (日本)</p>
+            <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>学習リソース</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              <li style={{ marginBottom: '8px' }}>
+                <Link href="/guides" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
+                  ガイド一覧
+                </Link>
+              </li>
+              <li style={{ marginBottom: '8px' }}>
+                <Link href="/guides/prompt-engineering-basics" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
+                  プロンプト入門
+                </Link>
+              </li>
+              <li style={{ marginBottom: '8px' }}>
+                <Link href="/guides/effective-prompt-writing" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
+                  効果的な書き方
+                </Link>
+              </li>
+              <li style={{ marginBottom: '8px' }}>
+                <Link href="/guides/chatgpt-vs-claude" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }} className="footer-link">
+                  ChatGPT vs Claude
+                </Link>
+              </li>
+            </ul>
           </div>
           <div>
             <h4 style={{ fontWeight: 600, color: '#ffffff', marginBottom: '12px', fontSize: '14px' }}>お問い合わせ</h4>

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { guides } from '@/content/guides'
 
 interface Prompt {
   id: string
@@ -146,6 +147,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
     changeFrequency: 'daily',
     priority: 0.9,
+  })
+
+  // Guides list page
+  routes.push({
+    url: `${baseUrl}/guides`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  })
+
+  // Individual guide pages
+  guides.forEach((guide) => {
+    routes.push({
+      url: `${baseUrl}/guides/${guide.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    })
   })
 
   // Category pages
