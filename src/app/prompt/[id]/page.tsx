@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { generatePromptSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import { generateMetaDescription } from '@/lib/seo'
@@ -114,7 +114,7 @@ export default async function PromptPage({
   // 301 redirect: If accessed via CUID and prompt has a slug, redirect to slug URL
   // This preserves SEO value while transitioning to new URL structure
   if (isCuid(id) && prompt.slug) {
-    redirect(`/prompt/${prompt.slug}`)
+    permanentRedirect(`/prompt/${prompt.slug}`)
   }
 
   // Use slug for URL if available, otherwise use ID
