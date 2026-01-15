@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { isCuid } from '@/lib/slug'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -11,18 +12,35 @@ export async function GET(
   try {
     const { prisma } = await import('@/lib/prisma')
     const params = await context.params
+    const idOrSlug = params.id
 
-    // Fetch without tags to avoid migration conflicts
-    // Tags will be included once the migration is applied in production
-    let promptData = await prisma.prompt.findUnique({
-      where: { id: params.id },
-      include: {
-        category: true,
-        images: {
-          orderBy: { order: 'asc' },
+    // Determine if the parameter is a CUID or a slug
+    // Try to find by ID first if it looks like a CUID, otherwise by slug
+    let promptData = null
+
+    if (isCuid(idOrSlug)) {
+      // Look up by ID (CUID)
+      promptData = await prisma.prompt.findUnique({
+        where: { id: idOrSlug },
+        include: {
+          category: true,
+          images: {
+            orderBy: { order: 'asc' },
+          },
         },
-      },
-    })
+      })
+    } else {
+      // Look up by slug
+      promptData = await prisma.prompt.findUnique({
+        where: { slug: idOrSlug },
+        include: {
+          category: true,
+          images: {
+            orderBy: { order: 'asc' },
+          },
+        },
+      })
+    }
 
     // If we have images, enrich effect images with their original images
     if (promptData && promptData.images) {

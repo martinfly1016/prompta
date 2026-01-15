@@ -37,6 +37,7 @@ model Category {
 
 model Prompt {
   id          String    @id @default(cuid())
+  slug        String?   @unique // SEO-friendly URL slug (e.g., "chatgpt-creative-writing")
   title       String
   description String
   content     String
@@ -54,6 +55,7 @@ model Prompt {
 
   @@index([categoryId])
   @@index([isPublished])
+  @@index([slug])
 }
 
 // Tag model temporarily disabled due to production migration pending

@@ -12,6 +12,7 @@ interface Props {
 
 interface Prompt {
   id: string
+  slug?: string | null
   title: string
   description: string
   createdAt: Date | string
@@ -273,7 +274,7 @@ export default async function TagPage({ params }: Props) {
                 {prompts.map((prompt, index) => (
                   <Link
                     key={prompt.id}
-                    href={`/prompt/${prompt.id}`}
+                    href={`/prompt/${prompt.slug || prompt.id}`}
                     className="group flex flex-col h-full bg-white border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:border-blue-300 hover:shadow-md"
                   >
                     {/* 画像 */}

@@ -7,6 +7,7 @@ import { Copy, Check, Share2 } from 'lucide-react'
 import { ImageGallery } from '@/components/ImageGallery'
 import SearchBar from '@/components/SearchBar'
 import SkeletonNav from '@/components/SkeletonNav'
+import RelatedPrompts from '@/components/RelatedPrompts'
 
 interface PromptImage {
   id: string
@@ -366,10 +367,10 @@ export default function PromptPageClient({
 
             {/* Info - Apple Style Design - Light Gray Background */}
             <div className="rounded-lg" style={{ backgroundColor: '#fafafa', border: '1px solid #e5e5e7', padding: '32px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.03)' }}>
-              <h3 className="font-medium mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#6e6e73' }}>
+              <h2 className="font-medium mb-6 flex items-center gap-2" style={{ fontSize: '14px', color: '#6e6e73' }}>
                 <span className="text-xl">💡</span>
                 このプロンプトの使い方
-              </h3>
+              </h2>
               <ul className="space-y-4" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                 <li className="flex items-start gap-4">
                   <span
@@ -457,6 +458,14 @@ export default function PromptPageClient({
                 </li>
               </ul>
             </div>
+
+            {/* Related Prompts */}
+            <RelatedPrompts
+              currentPromptId={promptId}
+              categorySlug={initialPrompt.category.slug}
+              tags={tagList}
+              limit={4}
+            />
           </article>
         </div>
       </main>

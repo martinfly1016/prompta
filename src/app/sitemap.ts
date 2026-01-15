@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 
 interface Prompt {
   id: string
+  slug?: string | null
   createdAt: string
   updatedAt?: string
 }
@@ -167,10 +168,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   })
 
-  // Prompt detail pages
+  // Prompt detail pages - use slug if available for SEO-friendly URLs
   prompts.forEach((prompt: any) => {
     routes.push({
-      url: `${baseUrl}/prompt/${prompt.id}`,
+      url: `${baseUrl}/prompt/${prompt.slug || prompt.id}`,
       lastModified: prompt.updatedAt ? new Date(prompt.updatedAt) : new Date(prompt.createdAt),
       changeFrequency: 'monthly',
       priority: 0.6,

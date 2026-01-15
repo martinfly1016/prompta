@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { generatePromptSchema, generateBreadcrumbSchema } from '@/lib/schema'
+import { generateMetaDescription } from '@/lib/seo'
+import { isCuid } from '@/lib/slug'
 import PromptPageClient from './page.client'
 
 // This page is not cached - always fetches fresh data
@@ -24,6 +26,7 @@ interface Tag {
 
 interface Prompt {
   id: string
+  slug?: string | null
   title: string
   description: string
   content: string
@@ -64,14 +67,23 @@ export async function generateMetadata(
     }
   }
 
+  const optimizedDescription = generateMetaDescription({
+    title: prompt.title,
+    description: prompt.description,
+    category: prompt.category,
+  })
+
+  // Use slug for canonical URL if available, otherwise use ID
+  const promptUrlPath = prompt.slug || prompt.id
+
   return {
     title: `${prompt.title} | Prompta`,
-    description: prompt.description,
+    description: optimizedDescription,
     openGraph: {
       title: prompt.title,
-      description: prompt.description,
+      description: optimizedDescription,
       type: 'article',
-      url: `https://www.prompta.jp/prompt/${id}`,
+      url: `https://www.prompta.jp/prompt/${promptUrlPath}`,
       images: prompt.images && prompt.images.length > 0
         ? [{ url: prompt.images[0].url, alt: prompt.title }]
         : []
@@ -79,10 +91,10 @@ export async function generateMetadata(
     twitter: {
       card: 'summary_large_image',
       title: prompt.title,
-      description: prompt.description,
+      description: optimizedDescription,
     },
     alternates: {
-      canonical: `https://www.prompta.jp/prompt/${id}`,
+      canonical: `https://www.prompta.jp/prompt/${promptUrlPath}`,
     },
   }
 }
@@ -99,6 +111,15 @@ export default async function PromptPage({
     notFound()
   }
 
+  // 301 redirect: If accessed via CUID and prompt has a slug, redirect to slug URL
+  // This preserves SEO value while transitioning to new URL structure
+  if (isCuid(id) && prompt.slug) {
+    redirect(`/prompt/${prompt.slug}`)
+  }
+
+  // Use slug for URL if available, otherwise use ID
+  const promptUrlPath = prompt.slug || prompt.id
+
   // Generate schema markup for SEO
   const baseUrl = 'https://www.prompta.jp'
   const promptSchema = generatePromptSchema(prompt, { baseUrl, siteName: 'Prompta' })
@@ -106,7 +127,7 @@ export default async function PromptPage({
     [
       { name: 'ホーム', url: '/' },
       { name: prompt.category.name, url: `/category/${prompt.category.slug}` },
-      { name: prompt.title, url: `/prompt/${id}` }
+      { name: prompt.title, url: `/prompt/${promptUrlPath}` }
     ],
     baseUrl
   )
@@ -122,7 +143,7 @@ export default async function PromptPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Suspense fallback={null}>
-        <PromptPageClient prompt={prompt} promptId={id} />
+        <PromptPageClient prompt={prompt} promptId={prompt.id} />
       </Suspense>
     </>
   )
