@@ -114,7 +114,7 @@ export default async function PromptPage({
   // 301 redirect: If accessed via CUID and prompt has a slug, redirect to slug URL
   // This preserves SEO value while transitioning to new URL structure
   if (isCuid(id) && prompt.slug) {
-    permanentRedirect(`/prompt/${prompt.slug}`)
+    permanentRedirect(`/prompt/${encodeURIComponent(prompt.slug)}`)
   }
 
   // Use slug for URL if available, otherwise use ID
