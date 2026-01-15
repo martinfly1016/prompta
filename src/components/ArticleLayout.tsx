@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { ArrowLeft, Clock, Calendar } from 'lucide-react'
 import TableOfContents from './TableOfContents'
-import Footer from './Footer'
 
 interface TocItem {
   id: string
@@ -120,7 +119,6 @@ export default function ArticleLayout({
           )}
         </article>
       </main>
-      <Footer />
     </>
   )
 }

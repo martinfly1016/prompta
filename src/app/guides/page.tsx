@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Clock, ArrowRight } from 'lucide-react'
-import Footer from '@/components/Footer'
 import { guides } from '@/content/guides'
 
 export const metadata: Metadata = {
@@ -147,7 +146,6 @@ export default function GuidesPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   )
 }
