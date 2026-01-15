@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { List } from 'lucide-react'
 
 interface TocItem {
   id: string
@@ -39,14 +38,25 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
   if (items.length === 0) return null
 
   return (
-    <nav className="mb-10 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-      <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-          <List size={18} className="text-white" />
-        </div>
-        <span>目次</span>
+    <nav style={{
+      marginBottom: '40px',
+      padding: '24px',
+      backgroundColor: '#f8fafc',
+      borderRadius: '12px',
+      border: '1px solid #e2e8f0',
+    }}>
+      <h2 style={{
+        fontSize: '16px',
+        fontWeight: 700,
+        color: '#0f172a',
+        marginBottom: '16px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+      }}>
+        📋 目次
       </h2>
-      <ul className="space-y-1">
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {items.map((item, index) => (
           <li
             key={item.id}
@@ -54,11 +64,19 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
           >
             <a
               href={`#${item.id}`}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${
-                activeId === item.id
-                  ? 'bg-blue-600 text-white font-medium shadow-sm'
-                  : 'text-gray-700 hover:bg-white hover:text-blue-600'
-              }`}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                fontSize: '14px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                backgroundColor: activeId === item.id ? '#eff6ff' : 'transparent',
+                color: activeId === item.id ? '#0284c7' : '#475569',
+                fontWeight: activeId === item.id ? 600 : 400,
+              }}
               onClick={(e) => {
                 e.preventDefault()
                 const element = document.getElementById(item.id)
@@ -67,12 +85,21 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
                   setActiveId(item.id)
                 }
               }}
+              className="hover:bg-blue-50 hover:text-blue-600"
             >
-              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                activeId === item.id
-                  ? 'bg-white/20 text-white'
-                  : 'bg-blue-100 text-blue-600'
-              }`}>
+              <span style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '12px',
+                fontWeight: 600,
+                backgroundColor: activeId === item.id ? '#0284c7' : '#e2e8f0',
+                color: activeId === item.id ? '#ffffff' : '#64748b',
+                flexShrink: 0,
+              }}>
                 {index + 1}
               </span>
               {item.text}

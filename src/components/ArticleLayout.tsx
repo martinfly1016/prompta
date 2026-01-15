@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import { ArrowLeft, Clock, Calendar, BookOpen } from 'lucide-react'
+import { ArrowLeft, Clock, Calendar } from 'lucide-react'
 import TableOfContents from './TableOfContents'
-import Header from './Header'
 
 interface TocItem {
   id: string
@@ -36,75 +35,100 @@ export default function ArticleLayout({
 }: ArticleLayoutProps) {
   return (
     <>
-      {/* Header */}
-      <Header />
+      <main style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+        {/* Navigation Bar */}
+        <nav className="category-nav-bar">
+          <Link href="/" className="logo-link">
+            <img src="/logo.png" alt="Prompta Logo" className="logo-image" />
+          </Link>
+          <Link href="/" className="category-nav-item">
+            <span className="category-nav-icon">🏠</span>
+            <span>ホーム</span>
+          </Link>
+          <Link href="/guides" className="category-nav-item category-nav-item-selected">
+            <span className="category-nav-icon">📚</span>
+            <span>ガイド</span>
+          </Link>
+          <Link href="/all-prompts" className="category-nav-item">
+            <span className="category-nav-icon">📋</span>
+            <span>すべてのプロンプト</span>
+          </Link>
+        </nav>
 
-      <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section
-          className="relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          }}
-        >
-          {/* Decorative Elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div
-              className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20"
-              style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }}
-            />
-            <div
-              className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full opacity-10"
-              style={{ background: 'radial-gradient(circle, white 0%, transparent 70%)' }}
-            />
-          </div>
-
-          <div className="relative container mx-auto px-6 py-16 md:py-20" style={{ maxWidth: '900px' }}>
+        <section style={{ backgroundColor: '#f8fafc', paddingTop: '40px', paddingBottom: '40px' }}>
+          <div className="container mx-auto px-6" style={{ maxWidth: '900px' }}>
             {/* Breadcrumb */}
             <Link
               href="/guides"
-              className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-8 transition-colors text-sm font-medium"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#0284c7',
+                fontSize: '14px',
+                textDecoration: 'none',
+                marginBottom: '24px',
+              }}
+              className="hover:underline"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={16} />
               ガイド一覧に戻る
             </Link>
 
             {/* Badge */}
-            <div className="mb-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-medium">
-                <BookOpen size={16} />
-                学習ガイド
+            <div style={{ marginBottom: '16px' }}>
+              <span style={{
+                display: 'inline-block',
+                fontSize: '12px',
+                fontWeight: 600,
+                color: '#0284c7',
+                backgroundColor: '#eff6ff',
+                padding: '4px 12px',
+                borderRadius: '4px',
+              }}>
+                📚 学習ガイド
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 style={{
+              fontSize: '32px',
+              fontWeight: 700,
+              color: '#0f172a',
+              marginBottom: '16px',
+              lineHeight: 1.3,
+            }}>
               {title}
             </h1>
 
             {/* Description */}
-            <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-3xl">
+            <p style={{
+              fontSize: '16px',
+              color: '#475569',
+              marginBottom: '20px',
+              lineHeight: 1.6,
+            }}>
               {description}
             </p>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-6 text-white/80">
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '20px', fontSize: '14px', color: '#64748b' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Calendar size={16} />
-                <span className="text-sm">{publishedAt}</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
+                {publishedAt}
+              </span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Clock size={16} />
-                <span className="text-sm">{readingTime}分で読めます</span>
-              </div>
+                {readingTime}分で読めます
+              </span>
             </div>
           </div>
         </section>
 
         {/* Article Content */}
-        <article className="container mx-auto px-6 py-12" style={{ maxWidth: '900px' }}>
-          {/* Content Card */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 -mt-8 relative z-10">
+        <section style={{ backgroundColor: '#ffffff', paddingTop: '40px', paddingBottom: '60px' }}>
+          <div className="container mx-auto px-6" style={{ maxWidth: '900px' }}>
             {/* Table of Contents */}
             <TableOfContents items={tocItems} />
 
@@ -112,51 +136,76 @@ export default function ArticleLayout({
             <div className="article-content">
               {children}
             </div>
-          </div>
 
-          {/* CTA Section */}
-          <div className="mt-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 md:p-12 text-center text-white shadow-lg">
-            <div className="text-4xl mb-4">✨</div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              プロンプトを探してみませんか？
-            </h2>
-            <p className="text-blue-100 mb-8 text-lg max-w-xl mx-auto">
-              Promptaには、すぐに使える高品質なプロンプトが多数あります。
-            </p>
-            <Link
-              href="/all-prompts"
-              className="inline-block bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all hover:shadow-lg hover:-translate-y-0.5"
-            >
-              プロンプト一覧を見る
-            </Link>
-          </div>
-
-          {/* Related Guides */}
-          {relatedGuides.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                <span className="text-2xl">📚</span>
-                関連するガイド
+            {/* CTA Section */}
+            <div style={{
+              marginTop: '48px',
+              padding: '32px',
+              backgroundColor: '#eff6ff',
+              borderRadius: '12px',
+              textAlign: 'center',
+              border: '1px solid #bfdbfe',
+            }}>
+              <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', marginBottom: '12px' }}>
+                ✨ プロンプトを探してみませんか？
               </h2>
-              <div className="grid gap-4 md:grid-cols-2">
-                {relatedGuides.map((guide) => (
-                  <Link
-                    key={guide.slug}
-                    href={`/guides/${guide.slug}`}
-                    className="group block p-6 bg-white rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
-                  >
-                    <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                      {guide.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {guide.description}
-                    </p>
-                  </Link>
-                ))}
-              </div>
+              <p style={{ fontSize: '15px', color: '#475569', marginBottom: '20px' }}>
+                Promptaには、すぐに使える高品質なプロンプトが多数あります。
+              </p>
+              <Link
+                href="/all-prompts"
+                style={{
+                  display: 'inline-block',
+                  padding: '12px 28px',
+                  backgroundColor: '#0284c7',
+                  color: '#ffffff',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  fontSize: '14px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s',
+                }}
+                className="hover:bg-blue-700"
+              >
+                プロンプト一覧を見る
+              </Link>
             </div>
-          )}
-        </article>
+
+            {/* Related Guides */}
+            {relatedGuides.length > 0 && (
+              <div style={{ marginTop: '48px' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#0f172a', marginBottom: '20px' }}>
+                  📚 関連するガイド
+                </h2>
+                <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+                  {relatedGuides.map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={`/guides/${guide.slug}`}
+                      style={{
+                        display: 'block',
+                        padding: '20px',
+                        backgroundColor: '#f8fafc',
+                        borderRadius: '12px',
+                        textDecoration: 'none',
+                        border: '1px solid #e2e8f0',
+                        transition: 'all 0.2s',
+                      }}
+                      className="hover:border-blue-300 hover:shadow-sm"
+                    >
+                      <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#0f172a', marginBottom: '8px' }} className="hover:text-blue-600">
+                        {guide.title}
+                      </h3>
+                      <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.5 }}>
+                        {guide.description}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
     </>
   )
