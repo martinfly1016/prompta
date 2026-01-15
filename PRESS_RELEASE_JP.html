@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレスリリース - Prompta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #0071e3;
+        }
+
+        .label {
+            display: inline-block;
+            background-color: #0071e3;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 15px 0;
+            color: #000;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 30px 0 15px 0;
+            color: #0071e3;
+            font-weight: 700;
+            border-left: 4px solid #0071e3;
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin: 20px 0 10px 0;
+            color: #333;
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0071e3;
+            color: white;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
+        .image-section {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin: 15px 0;
+        }
+
+        .image-caption {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .contact-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid #0071e3;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .contact-box h3 {
+            color: #0071e3;
+            margin-top: 0;
+        }
+
+        .contact-item {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .contact-label {
+            font-weight: 700;
+            color: #333;
+            display: inline-block;
+            width: 120px;
+        }
+
+        .contact-value {
+            color: #0071e3;
+            text-decoration: none;
+        }
+
+        .contact-value:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .scene-title {
+            background-color: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .print-info {
+            background-color: #f0f7ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #555;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="label">プレスリリース</div>
+            <h1>日本初のAIプロンプト共有プラットフォーム「Prompta」がサービス開始</h1>
+            <p class="subtitle">ChatGPT、Claudeなど主流AIツール対応。高品質な画像生成プロンプトを無料で提供</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- News Overview -->
+        <h2>【ニュース概要】</h2>
+        <p>
+            AI画像生成や文章作成の品質を左右する「プロンプト」に特化した日本初の共有プラットフォーム「<span class="highlight">Prompta</span>」が、2024年にサービスを開始しました。ChatGPT、Claude、Gemini、Grokなど主流のAIツール全てに対応し、高品質なプロンプトを無料で提供します。ユーザーはワンクリックでプロンプトをコピーでき、AIの本来の実力を引き出すための最適化されたテンプレートが手軽に利用できます。
+        </p>
+        <p style="margin-top: 15px; text-align: center; font-weight: 600;">
+            <strong>サービスURL:</strong> <a href="https://www.prompta.jp/" target="_blank">https://www.prompta.jp/</a>
+        </p>
+
+        <div class="image-section">
+            <img src="https://www.prompta.jp/logo.png" alt="Prompta Logo" style="max-width: 200px;">
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Background -->
+        <h2>【背景】</h2>
+        <p>
+            ここ数年、ChatGPTやClaudeといった生成AI技術の進化は目覚ましく、多くのビジネスパーソンや創作者がこれらのツールを日常的に活用するようになりました。しかし、AIの性能を最大限に引き出すためには、質の高い「プロンプト」（AIへの指示文）が不可欠です。
+        </p>
+        <p>
+            同じAIツールでも、プロンプトの工夫如何で、生成される画像や文章の品質は大きく異なります。特に画像生成の場合、単なる説明文ではなく、照明条件、色彩表現、アート・スタイルなど、細かい要素を正確に指定することで、初めてプロ水準の成果物が得られます。
+        </p>
+        <p>
+            にもかかわらず、<strong>日本語で書かれた高品質なプロンプトの情報源は極めて限定的でした</strong>。多くのユーザーが試行錯誤を繰り返し、時間を浪費しているのが実状です。
+        </p>
+        <p>
+            こうした課題に対応するため、Promptaは「AIを使いこなすためのプロンプト集」として、日本の創作者、ビジネスパーソン、デザイナーに向けた高品質でテスト済みのプロンプト集を提供することに決めました。
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- Main Features -->
+        <h2>【Promptaの主な特徴】</h2>
+
+        <h3>1. 複数のAIプラットフォームに対応</h3>
+        <p>Promptaで提供するプロンプトは、以下の主流AIツールで直接利用可能です：</p>
+        <ul>
+            <li>ChatGPT / GPT-4</li>
+            <li>Claude / Claude 3</li>
+            <li>Google Gemini</li>
+            <li>Grok</li>
+            <li>その他の生成AI</li>
+        </ul>
+        <p>一つのプロンプトが複数のAIツールに対応しており、ユーザーは好みのAIツールで自由に利用できます。</p>
+
+        <h3>2. 視覚的で分かりやすいプレビュー機能</h3>
+        <p>
+            各プロンプトには、<strong>効果図（実行結果）と原始素材の対比画像</strong>が掲載されています。ユーザーは実際の変換結果を見てから利用するか判断できるため、試行錯誤が最小限で済みます。
+        </p>
+
+        <div class="image-section">
+            <img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/canvas-image-id_1763186092428_f9eq48a1r-kapQUtjmOu7CHtxcqzcSDSIR4oR5Yc.png" alt="ハイエンドな雑誌級ファッションポートレート">
+            <p class="image-caption">画像例：セルフィーをハイエンドな雑誌級ファッション写真に変換</p>
+        </div>
+
+        <h3>3. ワンクリックコピー機能</h3>
+        <p>
+            各プロンプトの下には「コピー」ボタンが配置されており、クリック一つで全文がクリップボードにコピーされます。その後、ChatGPTやClaudeのチャット欄に貼り付けるだけで利用開始できます。
+        </p>
+        <p><strong>使用ステップ：</strong></p>
+        <ol>
+            <li>Prompta上でプロンプトをコピー</li>
+            <li>AIツールのチャット欄に貼り付け</li>
+            <li>自分の画像をアップロード（必要に応じて）</li>
+            <li>実行</li>
+        </ol>
+        <p>シンプルで迷わない設計です。</p>
+
+        <h3>4. 完全無料で利用可能</h3>
+        <p>すべてのプロンプトを無料で提供しています。会員登録も不要。ユーザーは気軽に試行できます。</p>
+
+        <div class="divider"></div>
+
+        <!-- Provided Prompts -->
+        <h2>【提供されるプロンプトの種類】</h2>
+        <p>現在、Promptaでは以下のカテゴリーのプロンプトを厳選して提供しています：</p>
+
+        <h3>ライティング（✍️）</h3>
+
+        <h4 class="scene-title">9コマ・フォトブース大頭貼（3×3グリッド）</h4>
+        <p>一枚の写真から、9つの異なるポーズ・表情で撮影したミニ写真館を生成。SNS投稿やプロフィール画像作成に最適です。</p>
+        <div class="image-section">
+            <img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/canvas-image-id_1763445023230_yq0he1io0-s74TUlrdsdfv2qACrD94NIJQfsAdiH.png" alt="9コマフォトブース">
+            <p class="image-caption">9コマ・フォトブース大頭貼の効果図</p>
+        </div>
+
+        <h4 class="scene-title">ハイエンドな雑誌級ファッションポートレート</h4>
+        <p>セルフィーやカジュアルな写真を、高級ファッション誌のような撮影に変換します。暖色調のドラマティック・ライティングが特徴です。</p>
+
+        <h4 class="scene-title">セルフィーを"バズる"ファッション写真に変える</h4>
+        <p>黒白のシネマティック・ポートレートへの変換。インフルエンサーやモデル志望者向けです。</p>
+
+        <h3>クリエイティブ（🎨）</h3>
+
+        <h4 class="scene-title">ビビッドなポップアート・ポートレート</h4>
+        <p>鮮烈な色彩と太いラインで、被写体を力強く表現します。アート作品制作やデザイン素材として活用可能です。</p>
+        <div class="image-section">
+            <img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/canvas-image-id_1763442615417_bw7ho149x-gTLuuBgNTU6VgVCh7X8Ew97NvGskvM.png" alt="ポップアート">
+            <p class="image-caption">ビビッドなポップアート・ポートレートの効果図</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Business Use Cases -->
+        <h2>【ビジネス上の活用シーン】</h2>
+
+        <h3>デザイナー・クリエイターの場合</h3>
+        <p>
+            従来は、Photoshopなどの高度なスキルが必要だった画像加工が、AIプロンプトを使うことで数秒で実現可能に。制作時間を大幅に短縮でき、クリエイティブに集中できます。
+        </p>
+
+        <h3>SNS運用担当者の場合</h3>
+        <p>
+            プロフィール画像や投稿用素材を、わざわざ外注撮影することなく、手持ちの写真から生成可能。コスト削減と即時対応が実現します。
+        </p>
+
+        <h3>マーケティング・PR担当者の場合</h3>
+        <p>
+            商品紹介やキャンペーン用の高品質な画像素材を、短時間で複数パターン制作できます。A/Bテストなども効率的に実施可能です。
+        </p>
+
+        <h3>個人事業主・フリーランスの場合</h3>
+        <p>
+            カメラマンやスタイリストを雇わずに、プロ級のポートレート写真を自力で制作。ポートフォリオやSNS展開のコストを大幅削減できます。
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- Service Details -->
+        <h2>【サービス詳細】</h2>
+        <table>
+            <tr>
+                <th style="width: 30%;">項目</th>
+                <th style="width: 70%;">内容</th>
+            </tr>
+            <tr>
+                <td><strong>サービス名</strong></td>
+                <td>Prompta（プロンプタ）</td>
+            </tr>
+            <tr>
+                <td><strong>URL</strong></td>
+                <td><a href="https://www.prompta.jp/" target="_blank">https://www.prompta.jp/</a></td>
+            </tr>
+            <tr>
+                <td><strong>対応AI</strong></td>
+                <td>ChatGPT、Claude、Gemini、Grok、その他</td>
+            </tr>
+            <tr>
+                <td><strong>提供形式</strong></td>
+                <td>ウェブサイト（登録不要）</td>
+            </tr>
+            <tr>
+                <td><strong>料金</strong></td>
+                <td>完全無料</td>
+            </tr>
+            <tr>
+                <td><strong>言語</strong></td>
+                <td>日本語</td>
+            </tr>
+            <tr>
+                <td><strong>主な機能</strong></td>
+                <td>プロンプト検索・分類、ワンクリックコピー、効果図プレビュー</td>
+            </tr>
+        </table>
+
+        <div class="divider"></div>
+
+        <!-- Future Plans -->
+        <h2>【今後の展開】</h2>
+        <p>Promptaは現在、初期段階での提供を行っていますが、以下の方向で拡大を予定しています：</p>
+
+        <h3>1. プロンプト数の大幅増加</h3>
+        <p>写真編集系、文章作成系、データ分析系など、カテゴリーを拡張。ユーザーからのリクエストに応じたプロンプト開発も行います。</p>
+
+        <h3>2. コミュニティ機能の追加</h3>
+        <p>ユーザー投稿機能、プロンプトのレーティング・コメント機能、ベストプラクティスの共有を実装予定です。</p>
+
+        <h3>3. 多言語対応</h3>
+        <p>英語、中国語など、アジア圏言語への拡大を検討しています。</p>
+
+        <h3>4. 企業向けプラン</h3>
+        <p>カスタムプロンプト開発やAPI連携サービスの提供を予定しています。</p>
+
+        <div class="divider"></div>
+
+        <!-- Development Background -->
+        <h2>【開発背景】</h2>
+        <p>
+            Promptaを開発したチームは、AIの急速な普及に伴い、「質の高いプロンプトにアクセスすることの難しさ」を痛感していました。特に日本語のプロンプト情報は英語に比べて圧倒的に不足していました。
+        </p>
+        <p>
+            「AIの民主化」を掲げ、全てのユーザーがAIの真の力を引き出せる環境を作りたいという想いから、Promptaプロジェクトが立ち上がりました。
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- Contact Information -->
+        <h2>【問い合わせ先】</h2>
+        <div class="contact-box">
+            <h3>Prompta運営チーム</h3>
+            <div class="contact-item">
+                <span class="contact-label">ウェブサイト:</span>
+                <a href="https://www.prompta.jp/" target="_blank" class="contact-value">https://www.prompta.jp/</a>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">X（Twitter）:</span>
+                <a href="https://twitter.com/prompta_jp" target="_blank" class="contact-value">@prompta_jp</a>
+            </div>
+            <div class="contact-item">
+                <span class="contact-label">メール:</span>
+                <a href="mailto:prompta.jp@gmail.com" class="contact-value">prompta.jp@gmail.com</a>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Supplement -->
+        <h2>【補足：生成AIプロンプトとは】</h2>
+        <p>
+            プロンプトは、生成AIへの「指示文」や「命令文」のことです。同じAIでも、詳細で最適化されたプロンプトを使うことで、出力の品質は劇的に向上します。特に画像生成では、光の当たり方、色調、背景、被写体の服装やポーズまで、細かく指定することで初めてプロ級の結果が得られます。
+        </p>
+        <p>
+            Promptaはこうした「質の高いプロンプト」を集約し、テンプレート化したものを提供するサービスです。
+        </p>
+
+        <div class="print-info">
+            <strong>📄 メディア掲載用素材について</strong><br>
+            本プレスリリースで使用した画像は全て、Promptaのサービス内に掲載されている実績の一部です。追加の素材画像やスクリーンショットが必要な場合は、<a href="mailto:prompta.jp@gmail.com">prompta.jp@gmail.com</a>までお気軽にお問い合わせください。
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                <strong>発行日:</strong> 2024年11月<br>
+                <strong>発行者:</strong> Prompta運営チーム<br>
+                <br>
+                以上
+            </p>
+        </div>
+    </div>
+</body>
+</html>
