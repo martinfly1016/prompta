@@ -32,11 +32,12 @@ interface Prompt {
 async function getPrompts(): Promise<Prompt[]> {
   try {
     // For server-side rendering, construct the absolute URL
+    // Use admin API to get all prompts (isPublished only controls homepage display)
     const baseUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-    const res = await fetch(`${baseUrl}/api/prompts?limit=10000`)
+    const res = await fetch(`${baseUrl}/api/admin/prompts?limit=10000`)
     if (!res.ok) {
       console.error('Failed to fetch prompts:', res.status, res.statusText)
       return []

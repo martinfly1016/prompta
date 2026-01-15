@@ -21,11 +21,12 @@ interface Tag {
 async function getPrompts(): Promise<Prompt[]> {
   try {
     // Try multiple URLs in order of preference
+    // Use admin API to get all prompts (isPublished only controls homepage display)
     const urls = [
-      'https://www.prompta.jp/api/prompts?limit=10000',  // Production domain
-      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/prompts?limit=10000` : null,
-      process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/prompts?limit=10000` : null,
-      'http://localhost:3000/api/prompts?limit=10000'  // Fallback for local dev
+      'https://www.prompta.jp/api/admin/prompts?limit=10000',  // Production domain
+      process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/admin/prompts?limit=10000` : null,
+      process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/admin/prompts?limit=10000` : null,
+      'http://localhost:3000/api/admin/prompts?limit=10000'  // Fallback for local dev
     ].filter(Boolean) as string[]
 
     let data = null
