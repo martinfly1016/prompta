@@ -1,22 +1,41 @@
 import type { MetadataRoute } from 'next'
 import {
-  getToolSlugs,
-  getCategorySlugs,
+  getTools,
+  getCategories,
   getPromptSlugs,
   getGuideSlugs,
   getTagSlugs,
+  getAllPromptsPaginated,
+  getPromptsByTagPaginated,
 } from '@/lib/data'
 
 const BASE = 'https://www.prompta.jp'
+const PER_PAGE = 12
+
+function pageUrls(basePath: string, totalPages: number, now: Date, freq: 'daily' | 'weekly', priority: number): MetadataRoute.Sitemap {
+  if (totalPages <= 1) return []
+  return Array.from({ length: totalPages - 1 }, (_, i) => ({
+    url: `${basePath}?page=${i + 2}`,
+    lastModified: now,
+    changeFrequency: freq,
+    priority: Math.max(0, priority - 0.1),
+  } as MetadataRoute.Sitemap[number]))
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [toolSlugs, categorySlugs, promptSlugs, guideSlugs, tagSlugs] = await Promise.all([
-    getToolSlugs(),
-    getCategorySlugs(),
+  const [tools, categories, promptSlugs, guideSlugs, tagSlugs, allPaginated] = await Promise.all([
+    getTools(),
+    getCategories(),
     getPromptSlugs(),
     getGuideSlugs(),
     getTagSlugs(),
+    getAllPromptsPaginated(1),
   ])
+
+  // Get tag page counts in parallel
+  const tagResults = await Promise.all(
+    tagSlugs.map(tag => getPromptsByTagPaginated(tag, 1))
+  )
 
   const now = new Date()
 
@@ -27,21 +46,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/prompts`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${BASE}/guides`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
 
-    // Tool pages
-    ...toolSlugs.map(slug => ({
-      url: `${BASE}/tools/${slug}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    })),
+    // All prompts paginated pages
+    ...pageUrls(`${BASE}/prompts`, allPaginated.totalPages, now, 'daily', 0.9),
 
-    // Category pages
-    ...categorySlugs.map(slug => ({
-      url: `${BASE}/prompts/${slug}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    })),
+    // Tool pages + paginated
+    ...tools.flatMap(tool => [
+      { url: `${BASE}/tools/${tool.slug}`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
+      ...pageUrls(`${BASE}/tools/${tool.slug}`, Math.ceil(tool.promptCount / PER_PAGE), now, 'weekly', 0.8),
+    ]),
+
+    // Category pages + paginated
+    ...categories.flatMap(cat => [
+      { url: `${BASE}/prompts/${cat.slug}`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 },
+      ...pageUrls(`${BASE}/prompts/${cat.slug}`, Math.ceil(cat.promptCount / PER_PAGE), now, 'weekly', 0.8),
+    ]),
 
     // Guide pages
     ...guideSlugs.map(slug => ({
@@ -51,13 +69,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
 
-    // Tag pages
-    ...tagSlugs.map(tag => ({
-      url: `${BASE}/tag/${encodeURIComponent(tag)}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    })),
+    // Tag pages + paginated
+    ...tagSlugs.flatMap((tag, i) => [
+      { url: `${BASE}/tag/${encodeURIComponent(tag)}`, lastModified: now, changeFrequency: 'weekly' as const, priority: 0.6 },
+      ...pageUrls(`${BASE}/tag/${encodeURIComponent(tag)}`, tagResults[i].totalPages, now, 'weekly', 0.6),
+    ]),
 
     // Prompt detail pages
     ...promptSlugs.map(slug => ({
