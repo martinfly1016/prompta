@@ -2,33 +2,41 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SITE_CONFIG } from '@/lib/constants'
-import { getToolBySlug, getToolSlugs, getPromptsByTool, getTools, getCategories } from '@/lib/data'
+import { getToolBySlug, getToolSlugs, getPromptsByToolPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
+import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const revalidate = 60
 
-interface Props { params: { tool: string } }
+interface Props {
+  params: { tool: string }
+  searchParams: { page?: string }
+}
 
 export async function generateStaticParams() {
   const slugs = await getToolSlugs()
   return slugs.map(tool => ({ tool }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const tool = await getToolBySlug(params.tool)
   if (!tool) return {}
+  const page = Number(searchParams.page) || 1
+  const suffix = page > 1 ? ` — ページ${page}` : ''
   return {
-    title: `${tool.name} プロンプト集 — ${tool.nameJa}向けAIプロンプト`,
+    title: `${tool.name} プロンプト集 — ${tool.nameJa}向けAIプロンプト${suffix}`,
     description: `${tool.name}（${tool.nameJa}）で使える高品質なAIプロンプト集。${(tool.description ?? '').slice(0, 80)}`,
     alternates: { canonical: `${SITE_CONFIG.url}/tools/${tool.slug}` },
   }
 }
 
-export default async function ToolPage({ params }: Props) {
-  const [tool, prompts, allTools, categories] = await Promise.all([
+export default async function ToolPage({ params, searchParams }: Props) {
+  const page = Math.max(1, Number(searchParams.page) || 1)
+
+  const [tool, { prompts, total, totalPages }, allTools, categories] = await Promise.all([
     getToolBySlug(params.tool),
-    getPromptsByTool(params.tool),
+    getPromptsByToolPaginated(params.tool, page),
     getTools(),
     getCategories(),
   ])
@@ -51,7 +59,7 @@ export default async function ToolPage({ params }: Props) {
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{tool.name} プロンプト集</h1>
               <p className="text-sm text-gray-500 mb-3">{tool.nameJa}</p>
               <p className="text-gray-600 max-w-2xl leading-relaxed">{tool.description}</p>
-              <span className="inline-flex items-center gap-1.5 mt-4 px-3 py-1 bg-sky-50 text-sky-700 text-sm font-medium rounded-full">{prompts.length} プロンプト</span>
+              <span className="inline-flex items-center gap-1.5 mt-4 px-3 py-1 bg-sky-50 text-sky-700 text-sm font-medium rounded-full">{total} プロンプト</span>
             </div>
           </div>
         </div>
@@ -78,6 +86,7 @@ export default async function ToolPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold text-gray-900 mb-6">{tool.name} のプロンプト一覧</h2>
           <PromptGrid prompts={prompts} />
+          <Pagination currentPage={page} totalPages={totalPages} basePath={`/tools/${tool.slug}`} />
         </div>
       </section>
 

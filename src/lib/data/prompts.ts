@@ -97,6 +97,56 @@ export const getPromptsByTag = cache(async (tagSlug: string) => {
   })
 })
 
+// ---------- Paginated variants ----------
+
+export const getPromptsByCategoryPaginated = cache(
+  async (categorySlug: string, page: number = 1, perPage: number = 12) => {
+    const skip = (page - 1) * perPage
+    const where = { isPublished: true, category: { slug: categorySlug } } as const
+    const [prompts, total] = await Promise.all([
+      prisma.prompt.findMany({ where, include: promptInclude, orderBy: { createdAt: 'desc' }, skip, take: perPage }),
+      prisma.prompt.count({ where }),
+    ])
+    return { prompts, total, totalPages: Math.ceil(total / perPage) }
+  }
+)
+
+export const getPromptsByToolPaginated = cache(
+  async (toolSlug: string, page: number = 1, perPage: number = 12) => {
+    const skip = (page - 1) * perPage
+    const where = { isPublished: true, tool: { slug: toolSlug } } as const
+    const [prompts, total] = await Promise.all([
+      prisma.prompt.findMany({ where, include: promptInclude, orderBy: { createdAt: 'desc' }, skip, take: perPage }),
+      prisma.prompt.count({ where }),
+    ])
+    return { prompts, total, totalPages: Math.ceil(total / perPage) }
+  }
+)
+
+export const getAllPromptsPaginated = cache(
+  async (page: number = 1, perPage: number = 12) => {
+    const skip = (page - 1) * perPage
+    const where = { isPublished: true } as const
+    const [prompts, total] = await Promise.all([
+      prisma.prompt.findMany({ where, include: promptInclude, orderBy: { createdAt: 'desc' }, skip, take: perPage }),
+      prisma.prompt.count({ where }),
+    ])
+    return { prompts, total, totalPages: Math.ceil(total / perPage) }
+  }
+)
+
+export const getPromptsByTagPaginated = cache(
+  async (tagSlug: string, page: number = 1, perPage: number = 12) => {
+    const skip = (page - 1) * perPage
+    const where = { isPublished: true, tags: { some: { slug: tagSlug } } } as const
+    const [prompts, total] = await Promise.all([
+      prisma.prompt.findMany({ where, include: promptInclude, orderBy: { createdAt: 'desc' }, skip, take: perPage }),
+      prisma.prompt.count({ where }),
+    ])
+    return { prompts, total, totalPages: Math.ceil(total / perPage) }
+  }
+)
+
 export const getPromptSlugs = cache(async () => {
   const prompts = await prisma.prompt.findMany({
     where: { isPublished: true, slug: { not: null } },

@@ -307,6 +307,70 @@ export async function getAllPrompts(): Promise<NormalizedPrompt[]> {
   )
 }
 
+// ---------- Paginated variants ----------
+
+export interface PaginatedResult {
+  prompts: NormalizedPrompt[]
+  total: number
+  totalPages: number
+}
+
+export async function getPromptsByCategoryPaginated(catSlug: string, page = 1, perPage = 12): Promise<PaginatedResult> {
+  return tryDb(
+    async () => {
+      const r = await dbPrompts.getPromptsByCategoryPaginated(catSlug, page, perPage)
+      return { prompts: r.prompts.map(normalizeDbPrompt), total: r.total, totalPages: r.totalPages }
+    },
+    () => {
+      const all = mockGetByCategory(catSlug).map(normalizeMockPrompt)
+      const start = (page - 1) * perPage
+      return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
+    },
+  )
+}
+
+export async function getPromptsByToolPaginated(toolSlug: string, page = 1, perPage = 12): Promise<PaginatedResult> {
+  return tryDb(
+    async () => {
+      const r = await dbPrompts.getPromptsByToolPaginated(toolSlug, page, perPage)
+      return { prompts: r.prompts.map(normalizeDbPrompt), total: r.total, totalPages: r.totalPages }
+    },
+    () => {
+      const all = mockGetByTool(toolSlug).map(normalizeMockPrompt)
+      const start = (page - 1) * perPage
+      return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
+    },
+  )
+}
+
+export async function getAllPromptsPaginated(page = 1, perPage = 12): Promise<PaginatedResult> {
+  return tryDb(
+    async () => {
+      const r = await dbPrompts.getAllPromptsPaginated(page, perPage)
+      return { prompts: r.prompts.map(normalizeDbPrompt), total: r.total, totalPages: r.totalPages }
+    },
+    () => {
+      const all = MOCK_PROMPTS.map(normalizeMockPrompt)
+      const start = (page - 1) * perPage
+      return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
+    },
+  )
+}
+
+export async function getPromptsByTagPaginated(tag: string, page = 1, perPage = 12): Promise<PaginatedResult> {
+  return tryDb(
+    async () => {
+      const r = await dbPrompts.getPromptsByTagPaginated(tag, page, perPage)
+      return { prompts: r.prompts.map(normalizeDbPrompt), total: r.total, totalPages: r.totalPages }
+    },
+    () => {
+      const all = mockGetByTag(tag).map(normalizeMockPrompt)
+      const start = (page - 1) * perPage
+      return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
+    },
+  )
+}
+
 export async function getPromptSlugs(): Promise<string[]> {
   return tryDb(
     () => dbPrompts.getPromptSlugs(),

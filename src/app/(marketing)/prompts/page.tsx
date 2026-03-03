@@ -1,27 +1,38 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
-import { getTools, getCategories, getAllPrompts } from '@/lib/data'
+import { getTools, getCategories, getAllPromptsPaginated } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
+import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema } from '@/lib/schema'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: '全プロンプト一覧 — AIプロンプト集',
-  description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E向けの全プロンプト一覧。',
-  alternates: { canonical: `${SITE_CONFIG.url}/prompts` },
+interface Props {
+  searchParams: { page?: string }
 }
 
-export default async function AllPromptsPage() {
-  const [tools, categories, prompts] = await Promise.all([
+export function generateMetadata({ searchParams }: Props): Metadata {
+  const page = Number(searchParams.page) || 1
+  const suffix = page > 1 ? ` — ページ${page}` : ''
+  return {
+    title: `全プロンプト一覧 — AIプロンプト集${suffix}`,
+    description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E向けの全プロンプト一覧。',
+    alternates: { canonical: `${SITE_CONFIG.url}/prompts` },
+  }
+}
+
+export default async function AllPromptsPage({ searchParams }: Props) {
+  const page = Math.max(1, Number(searchParams.page) || 1)
+
+  const [tools, categories, { prompts, total, totalPages }] = await Promise.all([
     getTools(),
     getCategories(),
-    getAllPrompts(),
+    getAllPromptsPaginated(page),
   ])
 
-  const schema = generateCollectionPageSchema('全プロンプト一覧', 'すべてのAIプロンプトコレクション', `${SITE_CONFIG.url}/prompts`, prompts.length)
+  const schema = generateCollectionPageSchema('全プロンプト一覧', 'すべてのAIプロンプトコレクション', `${SITE_CONFIG.url}/prompts`, total)
 
   return (
     <>
@@ -33,7 +44,7 @@ export default async function AllPromptsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">全プロンプト一覧</h1>
-            <p className="text-gray-600">{prompts.length}件のプロンプトを掲載中。ツールやカテゴリで絞り込みできます。</p>
+            <p className="text-gray-600">{total}件のプロンプトを掲載中。ツールやカテゴリで絞り込みできます。</p>
           </div>
           <div className="flex flex-wrap gap-4 mb-8 pb-6 border-b border-gray-200">
             <div>
@@ -58,6 +69,7 @@ export default async function AllPromptsPage() {
             </div>
           </div>
           <PromptGrid prompts={prompts} />
+          <Pagination currentPage={page} totalPages={totalPages} basePath="/prompts" />
         </div>
       </section>
     </>

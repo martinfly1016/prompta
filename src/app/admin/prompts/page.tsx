@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Plus, Trash2, Edit2 } from 'lucide-react'
-import Pagination from '@/components/Pagination'
+import AdminPagination from './AdminPagination'
 
 interface Prompt {
   id: string
@@ -288,10 +288,10 @@ export default function PromptsPage() {
 
       {/* Pagination */}
       {pagination.pages > 1 && (
-        <Pagination
+        <AdminPagination
           currentPage={currentPage}
           totalPages={pagination.pages}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={(page: number) => setCurrentPage(page)}
         />
       )}
     </div>
