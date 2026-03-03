@@ -9,6 +9,7 @@ const TOOLS = [
   { slug: 'chatgpt', name: 'ChatGPT', nameJa: 'チャットジーピーティー', icon: '💬', color: '#10a37f', order: 2 },
   { slug: 'claude', name: 'Claude', nameJa: 'クロード', icon: '🤖', color: '#d97706', order: 3 },
   { slug: 'dall-e', name: 'DALL-E', nameJa: 'ダリ', icon: '🎯', color: '#ef4444', order: 4 },
+  { slug: 'gemini', name: 'Gemini', nameJa: 'ジェミニ', icon: '✨', color: '#4285f4', order: 5 },
 ]
 
 const CATEGORIES = [

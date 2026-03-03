@@ -47,6 +47,46 @@ export interface CivitAIResponse {
   }
 }
 
+// ==================== HuggingFace Dataset Types ====================
+
+export interface HFMidjourneyV6Row {
+  id: number
+  image: { src: string; height: number; width: number }
+  prompt: string
+  llava: string
+  llava_status: string
+}
+
+export interface HFMidjourneyDetailedRow {
+  image: { src: string; height: number; width: number }
+  short_prompt: string
+  long_prompt: string
+  image_description: string
+}
+
+export interface HFDalleRow {
+  caption: string
+  image: {
+    src: string // Signed URL (expires)
+    height: number
+    width: number
+  }
+  link: string
+  synthetic_caption: string
+}
+
+export interface HFRowsResponse {
+  features: Array<{ feature_idx: number; name: string; type: unknown }>
+  rows: Array<{
+    row_idx: number
+    row: Record<string, unknown>
+    truncated_cells: string[]
+  }>
+  num_rows_total: number
+  num_rows_per_page: number
+  partial: boolean
+}
+
 // ==================== Pipeline Data Types ====================
 
 /** Raw data extracted from CivitAI API */
@@ -72,11 +112,11 @@ export interface RawCollectedItem {
 export interface EnrichedPromptData {
   // Preserved from raw
   sourceUrl: string
-  imageUrl: string
+  imageUrl?: string // Optional for text-only prompts
   content: string // Original English prompt
   negativePrompt?: string
-  width: number
-  height: number
+  width?: number // Optional for text-only prompts
+  height?: number // Optional for text-only prompts
   author: string
 
   // AI-generated fields
@@ -102,9 +142,9 @@ export interface UploadedImage {
   height: number
 }
 
-/** Final data ready for database write (image uploaded) */
+/** Final data ready for database write (image uploaded if available) */
 export interface FinalPromptData extends Omit<EnrichedPromptData, 'imageUrl'> {
-  image: UploadedImage
+  image?: UploadedImage // Optional for text-only prompts
 }
 
 // ==================== Script Output Wrappers ====================

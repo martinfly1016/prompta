@@ -1,3 +1,10 @@
+---
+name: prompt-ad-copywriter
+description: 为 Prompta 上的 Prompt 生成 X 平台（Twitter）广告文案，含日文和中文版本
+user-invocable: true
+argument-hint: "[prompt-url]"
+---
+
 # X平台Prompt广告文案生成器
 
 ## 功能描述
@@ -35,11 +42,11 @@ https://www.prompta.jp/prompt/[PROMPT_ID]
 - Hashtags
 
 ## 文案特点
-- ✨ 使用emoji增加视觉吸引力
-- 📱 针对X平台特性优化（字数、格式、hashtags）
-- 🎯 突出Prompt的核心价值
-- 🌐 日英双语，便于不同市场推广
-- 📸 配合效果图使用效果最佳
+- 使用emoji增加视觉吸引力
+- 针对X平台特性优化（字数、格式、hashtags）
+- 突出Prompt的核心价值
+- 日中双语，便于不同市场推广
+- 配合效果图使用效果最佳
 
 ## 示例输出格式
 

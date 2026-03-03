@@ -47,3 +47,34 @@ export function getCivitaiImageDownloadUrl(imageUrl: string, width?: number): st
 export function getCivitaiSourceUrl(imageId: number | string): string {
   return `https://civitai.com/images/${imageId}`
 }
+
+// ==================== HuggingFace Datasets Server Configuration ====================
+
+export const HUGGINGFACE_CONFIG = {
+  baseUrl: 'https://datasets-server.huggingface.co',
+  maxRowsPerRequest: 100,
+  requestDelayMs: 500,
+  datasets: {
+    midjourney: {
+      dataset: 'brivangl/midjourney-v6-llava',
+      config: 'default',
+      split: 'train',
+      totalRows: 40000,
+      toolSlug: 'midjourney' as const,
+    },
+    midjourneyDetailed: {
+      dataset: 'MohamedRashad/midjourney-detailed-prompts',
+      config: 'default',
+      split: 'train',
+      totalRows: 3053,
+      toolSlug: 'midjourney' as const,
+    },
+    dalle: {
+      dataset: 'OpenDatasets/dalle-3-dataset',
+      config: 'default',
+      split: 'train',
+      totalRows: 19024,
+      toolSlug: 'dall-e' as const,
+    },
+  },
+} as const

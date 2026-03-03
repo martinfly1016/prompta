@@ -3,7 +3,7 @@ export const SITE_CONFIG = {
   name: 'プロンプタ',
   nameEn: 'Prompta',
   url: 'https://www.prompta.jp',
-  description: 'AIプロンプト集 — Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-Eなど主要AIツール対応の高品質プロンプトを無料提供。',
+  description: 'AIプロンプト集 — Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E、Geminiなど主要AIツール対応の高品質プロンプトを無料提供。',
   email: 'prompta.jp@gmail.com',
   twitter: '@prompta_jp',
 } as const
@@ -60,9 +60,17 @@ export const TOOLS: Tool[] = [
     icon: '🎯',
     color: '#ef4444',
   },
+  {
+    slug: 'gemini',
+    name: 'Gemini',
+    nameJa: 'ジェミニ',
+    description: 'Googleが開発したマルチモーダルAI。テキスト、画像、コード生成に対応し、Google検索やWorkspaceとの連携が強み。',
+    icon: '✨',
+    color: '#4285f4',
+  },
 ]
 
-// Image prompt categories (for SD, MJ, DALL-E)
+// Prompt categories (text + image)
 export interface Category {
   slug: string
   name: string
@@ -73,6 +81,43 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
+  // Text prompt categories (ChatGPT, Claude, Gemini)
+  {
+    slug: 'writing',
+    name: 'ライティング',
+    nameEn: 'Writing',
+    description: 'AIライティングプロンプト集。ブログ記事、コピーライティング、小説、メール文面など、高品質な文章を生成するためのプロンプトテクニック。ChatGPTやClaudeで活用できます。',
+    icon: '✍️',
+  },
+  {
+    slug: 'programming',
+    name: 'プログラミング',
+    nameEn: 'Programming',
+    description: 'AIプログラミングプロンプト集。コード生成、デバッグ、リファクタリング、コードレビューなど、開発効率を高めるプロンプトテクニック。ChatGPTやClaudeでの活用法を紹介。',
+    icon: '💻',
+  },
+  {
+    slug: 'business',
+    name: 'ビジネス',
+    nameEn: 'Business',
+    description: 'AIビジネスプロンプト集。企画書、プレゼン資料、マーケティング戦略、データ分析など、ビジネスシーンで役立つプロンプトテクニック。業務効率化に最適。',
+    icon: '💼',
+  },
+  {
+    slug: 'education',
+    name: '教育',
+    nameEn: 'Education',
+    description: 'AI教育プロンプト集。学習計画、教材作成、問題生成、概念説明など、教育・学習を効率化するプロンプトテクニック。教師と学習者の両方に役立ちます。',
+    icon: '📚',
+  },
+  {
+    slug: 'creative',
+    name: 'クリエイティブ',
+    nameEn: 'Creative',
+    description: 'AIクリエイティブプロンプト集。アイデア発想、ストーリーテリング、ブレインストーミング、クリエイティブライティングなど、創造力を引き出すプロンプトテクニック。',
+    icon: '🎨',
+  },
+  // Image prompt categories (SD, MJ, DALL-E)
   {
     slug: 'hairstyle',
     name: '髪型',

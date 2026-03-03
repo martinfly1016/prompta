@@ -27,7 +27,7 @@ function getMimeType(ext: string): string {
 }
 
 async function downloadAndUpload(
-  item: EnrichedPromptData,
+  item: EnrichedPromptData & { imageUrl: string },
 ): Promise<UploadedImage | null> {
   const token = process.env.BLOB_READ_WRITE_TOKEN
   if (!token) {
@@ -79,8 +79,8 @@ async function downloadAndUpload(
       fileName,
       fileSize: buffer.length,
       mimeType,
-      width: item.width,
-      height: item.height,
+      width: item.width ?? 0,
+      height: item.height ?? 0,
     }
   } catch (error) {
     log(`Error processing image for ${item.slug}:`, error)
@@ -102,14 +102,21 @@ async function main() {
     const item = items[i]
     log(`[${i + 1}/${items.length}] ${item.slug}`)
 
-    const image = await downloadAndUpload(item)
-
-    if (image) {
+    if (!item.imageUrl) {
+      // Text-only prompt — pass through without image
       const { imageUrl: _imageUrl, ...rest } = item
-      results.push({ ...rest, image })
-      log(`  OK: ${image.url}`)
+      results.push({ ...rest })
+      log(`  OK (text-only, no image)`)
     } else {
-      log(`  SKIPPED: image download/upload failed`)
+      const image = await downloadAndUpload(item as EnrichedPromptData & { imageUrl: string })
+
+      if (image) {
+        const { imageUrl: _imageUrl, ...rest } = item
+        results.push({ ...rest, image })
+        log(`  OK: ${image.url}`)
+      } else {
+        log(`  SKIPPED: image download/upload failed`)
+      }
     }
 
     // Small delay between downloads

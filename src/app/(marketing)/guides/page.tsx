@@ -4,6 +4,8 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { getGuides } from '@/lib/data'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'AIプロンプトガイド — 使い方・書き方完全ガイド',
   description: 'ChatGPT、Stable Diffusion、Midjourney、Claude、DALL-Eなど主要AIツールのプロンプトの書き方・使い方を解説。',

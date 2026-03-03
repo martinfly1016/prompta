@@ -130,22 +130,24 @@ async function writePrompt(
         tags: {
           connect: tagIds.map(id => ({ id })),
         },
-        images: {
-          create: [
-            {
-              url: item.image.url,
-              blobKey: item.image.blobKey,
-              fileName: item.image.fileName,
-              fileSize: item.image.fileSize,
-              mimeType: item.image.mimeType,
-              width: item.image.width,
-              height: item.image.height,
-              imageType: 'effect',
-              order: 0,
-              altText: item.title,
-            },
-          ],
-        },
+        ...(item.image ? {
+          images: {
+            create: [
+              {
+                url: item.image.url,
+                blobKey: item.image.blobKey,
+                fileName: item.image.fileName,
+                fileSize: item.image.fileSize,
+                mimeType: item.image.mimeType,
+                width: item.image.width,
+                height: item.image.height,
+                imageType: 'effect',
+                order: 0,
+                altText: item.title,
+              },
+            ],
+          },
+        } : {}),
       },
       select: { id: true, slug: true, title: true },
     })
