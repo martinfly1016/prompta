@@ -8,6 +8,8 @@ import { CopyButton } from '@/components/ui/CopyButton'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
 
+export const revalidate = 60
+
 interface Props { params: { slug: string } }
 
 export async function generateStaticParams() {

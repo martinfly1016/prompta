@@ -6,6 +6,8 @@ import { getToolBySlug, getToolSlugs, getPromptsByTool, getTools, getCategories 
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
+export const revalidate = 60
+
 interface Props { params: { tool: string } }
 
 export async function generateStaticParams() {

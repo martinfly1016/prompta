@@ -6,6 +6,8 @@ import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema } from '@/lib/schema'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: '全プロンプト一覧 — AIプロンプト集',
   description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E向けの全プロンプト一覧。',

@@ -4,6 +4,8 @@ import { getPromptsByTag, getTagSlugs } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
+export const revalidate = 60
+
 interface Props { params: { slug: string } }
 
 export async function generateStaticParams() {

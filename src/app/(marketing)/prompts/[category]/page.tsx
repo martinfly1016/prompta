@@ -7,6 +7,8 @@ import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema } from '@/lib/schema'
 
+export const revalidate = 60
+
 interface Props { params: { category: string } }
 
 export async function generateStaticParams() {

@@ -5,6 +5,8 @@ import { getTools, getCategories, getFeaturedPrompts, getLatestPrompts, getGuide
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { generateOrganizationSchema } from '@/lib/schema'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'AIプロンプト集 — Stable Diffusion・Midjourney・ChatGPT・Claude対応',
   description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-Eなど主要AIツール対応の高品質プロンプト集。画像生成プロンプトからビジネス活用まで、AIを最大限活用するプロンプトを無料提供。',
