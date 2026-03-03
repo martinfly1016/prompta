@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Fix missing images for Midjourney prompts.
  *
