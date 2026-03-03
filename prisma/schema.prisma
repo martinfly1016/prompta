@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ==================== Auth ====================
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -19,11 +21,35 @@ model User {
   updatedAt     DateTime  @updatedAt
 }
 
+// ==================== AI Tools ====================
+
+model Tool {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String   // e.g. "Stable Diffusion"
+  nameJa      String?  // e.g. "ステーブルディフュージョン"
+  description String?  @db.Text
+  icon        String?  // emoji or icon identifier
+  color       String?  // hex color for UI badge
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  prompts     Prompt[]
+  categories  ToolCategory[]
+
+  @@index([slug])
+}
+
+// ==================== Categories ====================
+
 model Category {
   id          String    @id @default(cuid())
   name        String
   slug        String    @unique
-  description String?
+  nameEn      String?   // English name for SEO
+  description String?   @db.Text
   icon        String?
   order       Int       @default(0)
   isActive    Boolean   @default(true)
@@ -31,68 +57,110 @@ model Category {
   updatedAt   DateTime  @updatedAt
 
   prompts     Prompt[]
+  tools       ToolCategory[]
 
   @@index([slug])
 }
 
-model Prompt {
+// Junction table: Tool <-> Category many-to-many
+model ToolCategory {
+  id         String   @id @default(cuid())
+  toolId     String
+  categoryId String
+  tool       Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([toolId, categoryId])
+  @@index([toolId])
+  @@index([categoryId])
+}
+
+// ==================== Tags ====================
+
+model Tag {
   id          String    @id @default(cuid())
-  slug        String?   @unique // SEO-friendly URL slug (e.g., "chatgpt-creative-writing")
-  title       String
-  description String
-  content     String
-  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId  String
-  author      String?
-  isPublished Boolean   @default(false)
-  tags        String?   // JSON string array of tags, e.g. "[\"tag1\",\"tag2\"]"
+  name        String    @unique
+  slug        String    @unique
+  color       String    @default("blue")
+  description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  images      PromptImage[]
-  // tags relationship temporarily disabled due to production migration pending
-  // tags        Tag[]              @relation("PromptTags")
+  prompts     Prompt[]  @relation("PromptTags")
 
-  @@index([categoryId])
-  @@index([isPublished])
   @@index([slug])
 }
 
-// Tag model temporarily disabled due to production migration pending
-// model Tag {
-//   id          String    @id @default(cuid())
-//   name        String    @unique
-//   slug        String    @unique
-//   color       String    @default("blue") // Color variant: blue, purple, pink, green, etc.
-//   description String?
-//   createdAt   DateTime  @default(now())
-//   updatedAt   DateTime  @updatedAt
+// ==================== Prompts ====================
 
-//   prompts     Prompt[]           @relation("PromptTags")
+model Prompt {
+  id              String    @id @default(cuid())
+  slug            String?   @unique
+  title           String
+  description     String
+  content         String    @db.Text
 
-//   @@index([slug])
-// }
+  // Relations
+  category        Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId      String
+  tool            Tool?     @relation(fields: [toolId], references: [id], onDelete: SetNull)
+  toolId          String?
+  tags            Tag[]     @relation("PromptTags")
+
+  // Legacy: JSON string tags for backward compat during migration
+  tagsJson        String?   @map("tags")
+
+  // SEO
+  seoTitle        String?
+  seoDescription  String?
+
+  // Metadata
+  author          String?
+  difficulty      String?   @default("beginner") // beginner, intermediate, advanced
+  isPublished     Boolean   @default(false)
+  isFeatured      Boolean   @default(false)
+
+  // Stats
+  viewCount       Int       @default(0)
+  copyCount       Int       @default(0)
+
+  // Collection source tracking
+  sourceUrl       String?   // URL where this prompt was collected from
+  isAutoCollected Boolean   @default(false) // true = auto-collected by skill, false = manual
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  images          PromptImage[]
+
+  @@index([categoryId])
+  @@index([toolId])
+  @@index([isPublished])
+  @@index([isFeatured])
+  @@index([slug])
+}
+
+// ==================== Prompt Images ====================
 
 model PromptImage {
   id        String   @id @default(cuid())
   promptId  String
   prompt    Prompt   @relation(fields: [promptId], references: [id], onDelete: Cascade)
 
-  url       String   // Vercel Blob URL
-  blobKey   String   // Blob storage key for deletion
-  fileName  String   // Original filename
-  fileSize  Int      // File size in bytes
-  mimeType  String   // image/jpeg, image/png, etc.
-  width     Int?     // Image width
-  height    Int?     // Image height
+  url       String
+  blobKey   String
+  fileName  String
+  fileSize  Int
+  mimeType  String
+  width     Int?
+  height    Int?
 
   imageType String   @default("effect") // "effect" or "original"
-  order     Int      @default(0) // Display order in gallery
-  altText   String?  // Alt text for accessibility
+  order     Int      @default(0)
+  altText   String?
 
-  // For original images: points to the effect image they are associated with
-  parentImageId String?
-  parentImage   PromptImage? @relation("OriginalToEffect", fields: [parentImageId], references: [id], onDelete: Cascade)
+  parentImageId  String?
+  parentImage    PromptImage?  @relation("OriginalToEffect", fields: [parentImageId], references: [id], onDelete: Cascade)
   originalImages PromptImage[] @relation("OriginalToEffect")
 
   createdAt DateTime @default(now())
@@ -102,4 +170,25 @@ model PromptImage {
   @@index([order])
   @@index([imageType])
   @@index([parentImageId])
+}
+
+// ==================== Guides ====================
+
+model Guide {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  description     String?   @db.Text
+  content         String    @db.Text // Markdown or structured JSON
+  targetKeyword   String?
+  seoTitle        String?
+  seoDescription  String?
+  isPublished     Boolean   @default(false)
+  order           Int       @default(0)
+  viewCount       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
 }

@@ -46,11 +46,11 @@ export async function GET(request: NextRequest) {
     const scoredPrompts = categoryPrompts.map((prompt) => {
       let score = 1 // Base score for being in same category
 
-      if (prompt.tags && tags.length > 0) {
+      if (prompt.tagsJson && tags.length > 0) {
         try {
-          const promptTags = typeof prompt.tags === 'string'
-            ? JSON.parse(prompt.tags)
-            : prompt.tags
+          const promptTags = typeof prompt.tagsJson === 'string'
+            ? JSON.parse(prompt.tagsJson)
+            : prompt.tagsJson
 
           if (Array.isArray(promptTags)) {
             const matchCount = tags.filter((t) =>

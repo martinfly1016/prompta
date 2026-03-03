@@ -1,0 +1,139 @@
+import { prisma } from '@/lib/prisma'
+import { cache } from 'react'
+
+const promptInclude = {
+  category: true,
+  tool: true,
+  tags: true,
+  images: {
+    orderBy: { order: 'asc' as const },
+  },
+}
+
+export const getPromptBySlug = cache(async (slug: string) => {
+  return prisma.prompt.findUnique({
+    where: { slug },
+    include: promptInclude,
+  })
+})
+
+export const getPromptsByTool = cache(async (toolSlug: string, limit?: number) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      tool: { slug: toolSlug },
+    },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+    ...(limit ? { take: limit } : {}),
+  })
+})
+
+export const getPromptsByCategory = cache(async (categorySlug: string, limit?: number) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      category: { slug: categorySlug },
+    },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+    ...(limit ? { take: limit } : {}),
+  })
+})
+
+export const getFeaturedPrompts = cache(async (limit: number = 12) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      isFeatured: true,
+    },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+  })
+})
+
+export const getLatestPrompts = cache(async (limit: number = 8) => {
+  return prisma.prompt.findMany({
+    where: { isPublished: true },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+  })
+})
+
+export const getAllPrompts = cache(async () => {
+  return prisma.prompt.findMany({
+    where: { isPublished: true },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+  })
+})
+
+export const getRelatedPrompts = cache(async (promptId: string, toolId: string | null, categoryId: string, limit: number = 4) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      id: { not: promptId },
+      OR: [
+        ...(toolId ? [{ toolId }] : []),
+        { categoryId },
+      ],
+    },
+    include: promptInclude,
+    orderBy: { viewCount: 'desc' },
+    take: limit,
+  })
+})
+
+export const getPromptsByTag = cache(async (tagSlug: string) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      tags: { some: { slug: tagSlug } },
+    },
+    include: promptInclude,
+    orderBy: { createdAt: 'desc' },
+  })
+})
+
+export const getPromptSlugs = cache(async () => {
+  const prompts = await prisma.prompt.findMany({
+    where: { isPublished: true, slug: { not: null } },
+    select: { slug: true },
+  })
+  return prompts.map(p => p.slug).filter(Boolean) as string[]
+})
+
+export const searchPrompts = cache(async (query: string, limit: number = 20) => {
+  return prisma.prompt.findMany({
+    where: {
+      isPublished: true,
+      OR: [
+        { title: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } },
+        { content: { contains: query, mode: 'insensitive' } },
+      ],
+    },
+    include: promptInclude,
+    orderBy: { viewCount: 'desc' },
+    take: limit,
+  })
+})
+
+// Stats update (non-cached, for API routes)
+export async function incrementViewCount(promptId: string) {
+  return prisma.prompt.update({
+    where: { id: promptId },
+    data: { viewCount: { increment: 1 } },
+    select: { viewCount: true },
+  })
+}
+
+export async function incrementCopyCount(promptId: string) {
+  return prisma.prompt.update({
+    where: { id: promptId },
+    data: { copyCount: { increment: 1 } },
+    select: { copyCount: true },
+  })
+}

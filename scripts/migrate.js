@@ -14,6 +14,14 @@ async function migrate() {
     // Migration might fail if there are no pending migrations, which is OK
     console.log('Migration attempt completed (might be no pending migrations)');
   }
+
+  try {
+    console.log('Running database seed...');
+    execSync('npx tsx prisma/seed.ts', { stdio: 'inherit' });
+    console.log('Database seed completed successfully');
+  } catch (error) {
+    console.log('Seed attempt completed (might have partial failures)');
+  }
 }
 
 migrate().catch((err) => {

@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     ])
 
     // Include tags from database
-    const promptsWithTags = prompts.map(p => ({ ...p, tags: p.tags || [] }))
+    const promptsWithTags = prompts.map(p => ({ ...p, tags: p.tagsJson || [] }))
 
     console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
     console.log('=== END: GET /api/prompts (SUCCESS) ===')
@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
         categoryId,
         author: author || (session.user?.email || 'Anonymous'),
         isPublished: isPublished || false,
-        tags: tags ? JSON.stringify(tags) : null,
+        tagsJson: tags ? JSON.stringify(tags) : null,
         images: {
           create: effectImages.map((img: any) => ({
             url: img.url,
@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Include tags from database
-    const promptWithTags = { ...completedPrompt, tags: completedPrompt?.tags || [] }
+    const promptWithTags = { ...completedPrompt, tags: completedPrompt?.tagsJson || [] }
 
     return NextResponse.json(promptWithTags, { status: 201 })
   } catch (error) {

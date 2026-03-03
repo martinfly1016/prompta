@@ -105,7 +105,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, content, categoryId, isPublished, images, tags } = body
+    const { title, description, content, categoryId, isPublished, isFeatured, images, tags } = body
 
     // Only handle image deletion and recreation if new images are actually provided
     if (images && images.length > 0) {
@@ -209,11 +209,12 @@ export async function PUT(
       description,
       content,
       isPublished,
+      ...(isFeatured !== undefined && { isFeatured }),
     }
 
     // Only include tags if they're being updated
     if (tags !== undefined) {
-      updateData.tags = tags ? JSON.stringify(tags) : null
+      updateData.tagsJson = tags ? JSON.stringify(tags) : null
     }
 
     // Only update category if categoryId is provided

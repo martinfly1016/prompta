@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
         isPublished: true,
       },
       select: {
-        tags: true,
+        tagsJson: true,
       },
     })
 
@@ -32,9 +32,9 @@ export async function GET(request: NextRequest) {
     const tagCountMap = new Map<string, number>()
 
     for (const prompt of prompts) {
-      if (prompt.tags) {
+      if (prompt.tagsJson) {
         try {
-          const parsedTags = JSON.parse(prompt.tags)
+          const parsedTags = JSON.parse(prompt.tagsJson)
           if (Array.isArray(parsedTags)) {
             for (const tag of parsedTags) {
               const tagName = typeof tag === 'string' ? tag : tag.name || ''
@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
           }
         } catch (e) {
           // Skip invalid JSON
-          console.warn('Failed to parse tags:', prompt.tags)
+          console.warn('Failed to parse tags:', prompt.tagsJson)
         }
       }
     }

@@ -39,6 +39,7 @@ export default function EditPromptPage() {
   const [categoryId, setCategoryId] = useState('')
   const [tags, setTags] = useState('')
   const [isPublished, setIsPublished] = useState(false)
+  const [isFeatured, setIsFeatured] = useState(false)
 
   // New state structure: array of image pairs instead of separate images and originalImage
   const [imagePairs, setImagePairs] = useState<EffectImageWithOriginal[]>([])
@@ -94,6 +95,7 @@ export default function EditPromptPage() {
       }
 
       setIsPublished(data.isPublished)
+      setIsFeatured(data.isFeatured ?? false)
 
       // Reconstruct image pairs from the database images
       // The API returns enriched data where originalImages are nested in effect images
@@ -261,6 +263,7 @@ export default function EditPromptPage() {
           categoryId,
           tags: tagArray,
           isPublished,
+          isFeatured,
           images: allImages,
         }),
       })
@@ -712,31 +715,58 @@ export default function EditPromptPage() {
 
           <div style={{
             display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
+            flexDirection: 'column',
+            gap: '12px',
             paddingTop: '12px',
             borderTop: '1px solid #e2e8f0'
           }}>
-            <input
-              id="published"
-              type="checkbox"
-              checked={isPublished}
-              onChange={(e) => setIsPublished(e.target.checked)}
-              style={{
-                width: '16px',
-                height: '16px',
-                cursor: 'pointer',
-                accentColor: '#0284c7'
-              }}
-            />
-            <label htmlFor="published" style={{
-              fontSize: '14px',
-              fontWeight: '500',
-              color: '#0f172a',
-              cursor: 'pointer'
-            }}>
-              推荐到首页
-            </label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <input
+                id="published"
+                type="checkbox"
+                checked={isPublished}
+                onChange={(e) => setIsPublished(e.target.checked)}
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  cursor: 'pointer',
+                  accentColor: '#16a34a'
+                }}
+              />
+              <label htmlFor="published" style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#0f172a',
+                cursor: 'pointer'
+              }}>
+                公開する
+              </label>
+              {!isPublished && (
+                <span style={{ fontSize: '12px', color: '#94a3b8' }}>（チェックしないと下書きのまま）</span>
+              )}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <input
+                id="featured"
+                type="checkbox"
+                checked={isFeatured}
+                onChange={(e) => setIsFeatured(e.target.checked)}
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  cursor: 'pointer',
+                  accentColor: '#0284c7'
+                }}
+              />
+              <label htmlFor="featured" style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#0f172a',
+                cursor: 'pointer'
+              }}>
+                トップページに推薦
+              </label>
+            </div>
           </div>
         </div>
 

@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
     ])
 
     // Include tags from database
-    const promptsWithTags = prompts.map(p => ({ ...p, tags: p.tags || [] }))
+    const promptsWithTags = prompts.map(p => ({ ...p, tags: p.tagsJson ? JSON.parse(p.tagsJson) : [] }))
 
     console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
     console.log('=== END: GET /api/admin/prompts (SUCCESS) ===')

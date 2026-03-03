@@ -5,10 +5,22 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { signOut, useSession } from 'next-auth/react'
+import { SessionProvider, signOut, useSession } from 'next-auth/react'
 import { Menu, X, LogOut, LayoutDashboard, FileText, Layers, Settings } from 'lucide-react'
 
 export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <SessionProvider>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </SessionProvider>
+  )
+}
+
+function AdminLayoutInner({
   children,
 }: {
   children: React.ReactNode

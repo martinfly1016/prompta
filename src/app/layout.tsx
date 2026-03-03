@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Providers } from './providers'
-import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'プロンプタ | AI プロンプト集 - ChatGPT・Claude対応',
-  description: 'ChatGPTやClaude、Gemini、Grok、nanobananaなど、AIツール向けの高品質なプロンプト集。仕事の効率化、創造性の向上に役立つプロンプトを無料で提供します。',
-  keywords: ['プロンプト', 'ChatGPT', 'Claude', 'Gemini', 'Grok', 'nanobanana', 'AI', '生成AI'],
+  title: {
+    default: 'プロンプタ | AIプロンプト集 — Stable Diffusion・Midjourney・ChatGPT・Claude対応',
+    template: '%s | プロンプタ',
+  },
+  description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-Eなど主要AIツール対応の高品質プロンプト集。画像生成から文章作成まで、AIを最大限活用するプロンプトを無料提供。',
+  keywords: ['プロンプト', 'AIプロンプト', 'Stable Diffusion', 'Midjourney', 'ChatGPT', 'Claude', 'DALL-E', '画像生成', 'AI', '生成AI', 'プロンプトエンジニアリング'],
   authors: [{ name: 'Prompta' }],
   creator: 'Prompta',
   publisher: 'Prompta',
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ja_JP',
     url: 'https://www.prompta.jp',
-    title: 'プロンプタ | AI プロンプト集',
-    description: 'ChatGPTやClaudeなど、AIツール向けの高品質なプロンプト集。',
+    title: 'プロンプタ | AIプロンプト集',
+    description: 'Stable Diffusion、Midjourney、ChatGPT、Claudeなど主要AIツール対応の高品質プロンプト集。',
     siteName: 'Prompta',
   },
   robots: {
@@ -52,10 +53,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <Providers>
-          {children}
-        </Providers>
-        <Footer />
+        {children}
       </body>
     </html>
   )
