@@ -436,3 +436,21 @@ export async function getTagSlugs(): Promise<string[]> {
     },
   )
 }
+
+export async function getApprovedTagSlugs(): Promise<string[]> {
+  return tryDb(
+    () => dbTags.getApprovedTagSlugs(),
+    () => {
+      const allTags = new Set<string>()
+      MOCK_PROMPTS.forEach(p => p.tags.forEach(t => allTags.add(t)))
+      return Array.from(allTags)
+    },
+  )
+}
+
+export async function getTagBySlug(slug: string) {
+  return tryDb(
+    () => dbTags.getTagBySlug(slug),
+    () => null,
+  )
+}

@@ -25,3 +25,21 @@ export const getTagSlugs = cache(async () => {
   })
   return tags.map(t => t.slug)
 })
+
+export const getApprovedTagSlugs = cache(async () => {
+  const tags = await prisma.tag.findMany({
+    where: { isApproved: true },
+    select: { slug: true },
+  })
+  return tags.map(t => t.slug)
+})
+
+export const getApprovedTags = cache(async () => {
+  return prisma.tag.findMany({
+    where: { isApproved: true },
+    include: {
+      _count: { select: { prompts: true } },
+    },
+    orderBy: { name: 'asc' },
+  })
+})

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
-import { getPromptsByTagPaginated, getTagSlugs } from '@/lib/data'
+import { getPromptsByTagPaginated, getApprovedTagSlugs, getTagBySlug } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -13,18 +13,23 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getTagSlugs()
+  const slugs = await getApprovedTagSlugs()
   return slugs.map(slug => ({ slug: encodeURIComponent(slug) }))
 }
 
-export function generateMetadata({ params, searchParams }: Props): Metadata {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const tag = decodeURIComponent(params.slug)
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
+
+  const tagData = await getTagBySlug(tag)
+  const isApproved = tagData?.isApproved ?? false
+
   return {
     title: `「${tag}」タグのプロンプト集${suffix}`,
     description: `「${tag}」に関連するAIプロンプトの一覧。Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E対応。`,
     alternates: { canonical: `${SITE_CONFIG.url}/tag/${params.slug}` },
+    ...(!isApproved && { robots: { index: false, follow: true } }),
   }
 }
 
