@@ -21,3 +21,10 @@ export const getGuideSlugs = cache(async () => {
   })
   return guides.map(g => g.slug)
 })
+
+export const getGuideSlugsWithDates = cache(async () => {
+  return prisma.guide.findMany({
+    where: { isPublished: true },
+    select: { slug: true, updatedAt: true },
+  })
+})

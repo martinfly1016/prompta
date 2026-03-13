@@ -34,6 +34,13 @@ export const getApprovedTagSlugs = cache(async () => {
   return tags.map(t => t.slug)
 })
 
+export const getApprovedTagSlugsWithDates = cache(async () => {
+  return prisma.tag.findMany({
+    where: { isApproved: true },
+    select: { slug: true, updatedAt: true },
+  })
+})
+
 export const getApprovedTags = cache(async () => {
   return prisma.tag.findMany({
     where: { isApproved: true },

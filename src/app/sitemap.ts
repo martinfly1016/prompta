@@ -1,68 +1,68 @@
 import type { MetadataRoute } from 'next'
 import {
-  getTools,
-  getCategories,
-  getPromptSlugs,
-  getGuideSlugs,
-  getApprovedTagSlugs,
+  getToolSlugsWithLatestDate,
+  getCategorySlugsWithLatestDate,
+  getPromptSlugsWithDates,
+  getGuideSlugsWithDates,
+  getApprovedTagSlugsWithDates,
+  getLatestPromptDate,
 } from '@/lib/data'
 
 const BASE = 'https://www.prompta.jp'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [tools, categories, promptSlugs, guideSlugs, tagSlugs] = await Promise.all([
-    getTools(),
-    getCategories(),
-    getPromptSlugs(),
-    getGuideSlugs(),
-    getApprovedTagSlugs(),
+  const [tools, categories, prompts, guides, tags, latestDate] = await Promise.all([
+    getToolSlugsWithLatestDate(),
+    getCategorySlugsWithLatestDate(),
+    getPromptSlugsWithDates(),
+    getGuideSlugsWithDates(),
+    getApprovedTagSlugsWithDates(),
+    getLatestPromptDate(),
   ])
 
-  const now = new Date()
-
   const routes: MetadataRoute.Sitemap = [
-    // Static pages
-    { url: BASE, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
-    { url: `${BASE}/tools`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE}/prompts`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE}/guides`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    // Hub pages — use latest prompt date as freshness signal
+    { url: BASE, lastModified: latestDate, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${BASE}/tools`, lastModified: latestDate, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE}/prompts`, lastModified: latestDate, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${BASE}/guides`, lastModified: guides[0]?.updatedAt ?? latestDate, changeFrequency: 'weekly', priority: 0.9 },
 
-    // Tool pages
-    ...tools.map(tool => ({
-      url: `${BASE}/tools/${tool.slug}`,
-      lastModified: now,
+    // Tool pages — lastModified = latest prompt in that tool
+    ...tools.map(t => ({
+      url: `${BASE}/tools/${t.slug}`,
+      lastModified: t.lastModified ?? latestDate,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
 
-    // Category pages
-    ...categories.map(cat => ({
-      url: `${BASE}/prompts/${cat.slug}`,
-      lastModified: now,
+    // Category pages — lastModified = latest prompt in that category
+    ...categories.map(c => ({
+      url: `${BASE}/prompts/${c.slug}`,
+      lastModified: c.lastModified ?? latestDate,
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
 
-    // Guide pages
-    ...guideSlugs.map(slug => ({
-      url: `${BASE}/guides/${slug}`,
-      lastModified: now,
+    // Guide pages — use their own updatedAt
+    ...guides.map(g => ({
+      url: `${BASE}/guides/${g.slug}`,
+      lastModified: g.updatedAt,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
 
-    // Tag pages (approved only)
-    ...tagSlugs.map(tag => ({
-      url: `${BASE}/tag/${encodeURIComponent(tag)}`,
-      lastModified: now,
+    // Tag pages (approved only) — use their own updatedAt
+    ...tags.map(t => ({
+      url: `${BASE}/tag/${encodeURIComponent(t.slug)}`,
+      lastModified: t.updatedAt,
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     })),
 
-    // Prompt detail pages
-    ...promptSlugs.map(slug => ({
-      url: `${BASE}/prompt/${slug}`,
-      lastModified: now,
+    // Prompt detail pages — use their own updatedAt
+    ...prompts.map(p => ({
+      url: `${BASE}/prompt/${p.slug}`,
+      lastModified: p.updatedAt,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),

@@ -155,6 +155,23 @@ export const getPromptSlugs = cache(async () => {
   return prompts.map(p => p.slug).filter(Boolean) as string[]
 })
 
+export const getPromptSlugsWithDates = cache(async () => {
+  const prompts = await prisma.prompt.findMany({
+    where: { isPublished: true, slug: { not: null } },
+    select: { slug: true, updatedAt: true },
+  })
+  return prompts.filter((p): p is { slug: string; updatedAt: Date } => p.slug !== null)
+})
+
+export const getLatestPromptDate = cache(async () => {
+  const result = await prisma.prompt.findFirst({
+    where: { isPublished: true },
+    orderBy: { updatedAt: 'desc' },
+    select: { updatedAt: true },
+  })
+  return result?.updatedAt ?? new Date()
+})
+
 export const searchPrompts = cache(async (query: string, limit: number = 20) => {
   return prisma.prompt.findMany({
     where: {

@@ -27,3 +27,22 @@ export const getCategorySlugs = cache(async () => {
   })
   return categories.map(c => c.slug)
 })
+
+export const getCategorySlugsWithLatestDate = cache(async () => {
+  const categories = await prisma.category.findMany({
+    where: { isActive: true },
+    select: {
+      slug: true,
+      prompts: {
+        where: { isPublished: true },
+        orderBy: { updatedAt: 'desc' },
+        take: 1,
+        select: { updatedAt: true },
+      },
+    },
+  })
+  return categories.map(c => ({
+    slug: c.slug,
+    lastModified: c.prompts[0]?.updatedAt ?? null,
+  }))
+})

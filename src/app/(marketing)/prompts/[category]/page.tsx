@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, getGuidesForCategory } from '@/lib/constants'
 import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
@@ -102,6 +102,23 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               </>
             )}
           </ul>
+          {(() => {
+            const categoryGuides = getGuidesForCategory(category.slug)
+            return categoryGuides.length > 0 ? (
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <p className="text-sm font-semibold text-gray-700 mb-2">さらに詳しく学ぶ</p>
+                {categoryGuides.slice(0, 2).map(guide => (
+                  <Link
+                    key={guide.slug}
+                    href={`/guides/${guide.slug}`}
+                    className="flex items-center gap-2 text-sm text-sky-600 hover:text-sky-700 mt-1.5"
+                  >
+                    <span>📖</span> {guide.title}
+                  </Link>
+                ))}
+              </div>
+            ) : null
+          })()}
         </div>
       </section>
 

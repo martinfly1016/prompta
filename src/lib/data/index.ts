@@ -454,3 +454,51 @@ export async function getTagBySlug(slug: string) {
     () => null,
   )
 }
+
+// ---------- Sitemap helpers (with timestamps) ----------
+
+export async function getPromptSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
+  return tryDb(
+    () => dbPrompts.getPromptSlugsWithDates(),
+    () => MOCK_PROMPTS.map(p => ({ slug: p.slug, updatedAt: new Date(p.updatedAt) })),
+  )
+}
+
+export async function getLatestPromptDate(): Promise<Date> {
+  return tryDb(
+    () => dbPrompts.getLatestPromptDate(),
+    () => new Date(),
+  )
+}
+
+export async function getGuideSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
+  return tryDb(
+    () => dbGuides.getGuideSlugsWithDates(),
+    () => MOCK_GUIDES.map(g => ({ slug: g.slug, updatedAt: new Date() })),
+  )
+}
+
+export async function getApprovedTagSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
+  return tryDb(
+    () => dbTags.getApprovedTagSlugsWithDates(),
+    () => {
+      const allTags = new Set<string>()
+      MOCK_PROMPTS.forEach(p => p.tags.forEach(t => allTags.add(t)))
+      return Array.from(allTags).map(t => ({ slug: t, updatedAt: new Date() }))
+    },
+  )
+}
+
+export async function getToolSlugsWithLatestDate(): Promise<{ slug: string; lastModified: Date | null }[]> {
+  return tryDb(
+    () => dbTools.getToolSlugsWithLatestDate(),
+    () => MOCK_TOOLS.map(t => ({ slug: t.slug, lastModified: new Date() })),
+  )
+}
+
+export async function getCategorySlugsWithLatestDate(): Promise<{ slug: string; lastModified: Date | null }[]> {
+  return tryDb(
+    () => dbCategories.getCategorySlugsWithLatestDate(),
+    () => MOCK_CATEGORIES.map(c => ({ slug: c.slug, lastModified: new Date() })),
+  )
+}

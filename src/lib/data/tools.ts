@@ -30,3 +30,22 @@ export const getToolSlugs = cache(async () => {
   })
   return tools.map(t => t.slug)
 })
+
+export const getToolSlugsWithLatestDate = cache(async () => {
+  const tools = await prisma.tool.findMany({
+    where: { isActive: true },
+    select: {
+      slug: true,
+      prompts: {
+        where: { isPublished: true },
+        orderBy: { updatedAt: 'desc' },
+        take: 1,
+        select: { updatedAt: true },
+      },
+    },
+  })
+  return tools.map(t => ({
+    slug: t.slug,
+    lastModified: t.prompts[0]?.updatedAt ?? null,
+  }))
+})

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG } from '@/lib/constants'
+import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
 import { getPromptBySlug, getPromptSlugs, getRelatedPrompts } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { CopyButton } from '@/components/ui/CopyButton'
@@ -36,6 +36,11 @@ export default async function PromptDetailPage({ params }: Props) {
   if (!prompt) notFound()
 
   const related = await getRelatedPrompts(prompt, 4)
+
+  // Find relevant guides based on the prompt's tool and category
+  const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
+  const categoryGuides = prompt.categorySlug ? getGuidesForCategory(prompt.categorySlug) : []
+  const relevantGuides = [...new Map([...toolGuides, ...categoryGuides].map(g => [g.slug, g])).values()].slice(0, 3)
 
   const schema = generatePromptSchema(
     { id: prompt.slug, title: prompt.title, description: prompt.description, content: prompt.content, category: prompt.categoryName ? { name: prompt.categoryName } : undefined, createdAt: prompt.createdAt, updatedAt: prompt.updatedAt },
@@ -137,6 +142,28 @@ export default async function PromptDetailPage({ params }: Props) {
                 {prompt.tags.map(tag => (
                   <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`} className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-sky-50 hover:text-sky-700 transition-colors">
                     # {tag}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Related Guides */}
+          {relevantGuides.length > 0 && (
+            <section className="mb-8 p-6 bg-amber-50 rounded-xl">
+              <h2 className="text-lg font-bold text-gray-900 mb-3">関連ガイド</h2>
+              <div className="space-y-2">
+                {relevantGuides.map(guide => (
+                  <Link
+                    key={guide.slug}
+                    href={`/guides/${guide.slug}`}
+                    className="flex items-start gap-3 p-3 bg-white rounded-lg border border-amber-100 hover:border-sky-300 hover:shadow-sm transition-all"
+                  >
+                    <span className="text-sky-500 mt-0.5 shrink-0">📖</span>
+                    <div>
+                      <h3 className="text-sm font-semibold text-gray-900">{guide.title}</h3>
+                      <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{guide.description}</p>
+                    </div>
                   </Link>
                 ))}
               </div>

@@ -223,6 +223,50 @@ export const GUIDES: Guide[] = [
   },
 ]
 
+// Guide ↔ Tool/Category mapping for internal linking
+export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: string[] }> = {
+  'what-is-prompt': {
+    tools: ['chatgpt', 'stable-diffusion', 'midjourney', 'claude', 'dall-e'],
+    categories: [],
+  },
+  'stable-diffusion-prompt-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'midjourney-prompt-guide': {
+    tools: ['midjourney'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'chatgpt-prompt-techniques': {
+    tools: ['chatgpt', 'claude'],
+    categories: ['writing', 'programming', 'business', 'education', 'creative'],
+  },
+  'negative-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+}
+
+export function getGuidesForTool(toolSlug: string): Guide[] {
+  return GUIDES.filter(g => GUIDE_RELATIONS[g.slug]?.tools.includes(toolSlug))
+}
+
+export function getGuidesForCategory(categorySlug: string): Guide[] {
+  return GUIDES.filter(g => GUIDE_RELATIONS[g.slug]?.categories.includes(categorySlug))
+}
+
+export function getRelatedGuides(currentSlug: string): Guide[] {
+  const current = GUIDE_RELATIONS[currentSlug]
+  if (!current) return []
+  return GUIDES.filter(g => {
+    if (g.slug === currentSlug) return false
+    const other = GUIDE_RELATIONS[g.slug]
+    if (!other) return false
+    return other.tools.some(t => current.tools.includes(t))
+      || other.categories.some(c => current.categories.includes(c))
+  })
+}
+
 // Tool slug to tool lookup
 export function getToolBySlug(slug: string): Tool | undefined {
   return TOOLS.find(t => t.slug === slug)
