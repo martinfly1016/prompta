@@ -282,7 +282,8 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    >   "tags": ["日文标签1", "日文标签2", "日文标签3"],
    >   "seoTitle": "SEO标题（<=60字符，包含'プロンプト'关键词）",
    >   "seoDescription": "SEO描述（<=155字符，自然融入关键词）",
-   >   "difficulty": "beginner|intermediate|advanced"
+   >   "difficulty": "beginner|intermediate|advanced",
+   >   "altText": "画像の日本語 alt テキスト（30-80文字、画像内容を具体的に説明）"
    > }
    > ```
    >
@@ -346,10 +347,19 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    > - beginner: 简单直接的 prompt，<50 words
    > - intermediate: 中等复杂度，有技巧性
    > - advanced: 复杂的多层描述，需要经验
+   >
+   > altText 規則（画像系のみ、source=text の場合は空文字列 ""）：
+   > - 日本語で画像の視覚的内容を具体的に説明（30-80文字）
+   > - 英文 prompt content に基づいて画像の見た目を描写
+   > - 工具名を含める（Stable Diffusion / Midjourney / DALL-E）
+   > - 「AI生成画像」で終わる
+   > - 例: 「水墨画風の初音ミクと梅の花びら - Stable Diffusion AI生成画像」
+   > - 例: 「赤いドレスの女性ファッション - Midjourney AI生成画像」
+   > - 例: 「サイバーパンク都市の夜景 - DALL-E 3 AI生成画像」
 
 3. 主 agent 收回富化结果后，组装 `EnrichedPromptData[]` 格式：
    - 合并原始 `RawCollectedItem` 字段（sourceUrl, imageUrl, content=prompt, negativePrompt, width, height, author）
-   - 合并 AI 生成的字段（title, description, slug, tags, seoTitle, seoDescription, difficulty）
+   - 合并 AI 生成的字段（title, description, slug, tags, seoTitle, seoDescription, difficulty, altText）
    - 添加 `categorySlug`（来自 Phase 3 分类）
    - 添加 `toolSlug`（根据 source 设置）：
      - source=civitai → `"stable-diffusion"`

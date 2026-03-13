@@ -143,7 +143,7 @@ async function writePrompt(
                 height: item.image.height,
                 imageType: 'effect',
                 order: 0,
-                altText: item.title,
+                altText: item.altText || item.title,
               },
             ],
           },

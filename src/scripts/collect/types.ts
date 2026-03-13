@@ -129,6 +129,7 @@ export interface EnrichedPromptData {
   seoTitle: string // Japanese, <=60 chars
   seoDescription: string // Japanese, <=160 chars
   difficulty: 'beginner' | 'intermediate' | 'advanced'
+  altText?: string // Japanese image alt text (30-80 chars)
 }
 
 /** Image uploaded to Vercel Blob */
