@@ -26,6 +26,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/tools`, lastModified: latestDate, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE}/prompts`, lastModified: latestDate, changeFrequency: 'daily', priority: 0.9 },
     { url: `${BASE}/guides`, lastModified: guides[0]?.updatedAt ?? latestDate, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE}/glossary`, lastModified: latestDate, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/compare`, lastModified: latestDate, changeFrequency: 'monthly', priority: 0.8 },
 
     // Tool pages — lastModified = latest prompt in that tool
     ...tools.map(t => ({

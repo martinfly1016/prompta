@@ -76,6 +76,50 @@ export function generateBreadcrumbSchema(
   }
 }
 
+export function generateSoftwareApplicationSchema(
+  tool: { name: string; nameJa: string; description: string; slug: string },
+  context: SchemaContext
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": tool.name,
+    "alternateName": tool.nameJa,
+    "description": tool.description,
+    "url": `${context.baseUrl}/tools/${tool.slug}`,
+    "applicationCategory": "Multimedia",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY",
+    },
+  }
+}
+
+export function generateHowToSchema(
+  title: string,
+  description: string,
+  steps: Array<{ name: string; text: string }>,
+  _context: SchemaContext,
+  url: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": title,
+    "description": description,
+    "url": url,
+    "inLanguage": "ja-JP",
+    "step": steps.map((step, i) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": step.name,
+      "text": step.text,
+    })),
+  }
+}
+
 export function generateCollectionPageSchema(
   title: string,
   description: string,

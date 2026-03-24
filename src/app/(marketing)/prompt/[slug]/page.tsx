@@ -7,6 +7,8 @@ import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { CopyButton } from '@/components/ui/CopyButton'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
+import { ShareButtons } from '@/components/ui/ShareButtons'
+import { EmbedButton } from '@/components/ui/EmbedButton'
 
 export const revalidate = 60
 
@@ -21,11 +23,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params
   const prompt = await getPromptBySlug(decodeURIComponent(resolvedParams.slug))
   if (!prompt) return {}
+  const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(prompt.title)}${prompt.toolSlug ? `&tool=${prompt.toolSlug}` : ''}${prompt.categoryName ? `&category=${encodeURIComponent(prompt.categoryName)}` : ''}`
   return {
     title: prompt.title,
     description: prompt.description,
     alternates: { canonical: `${SITE_CONFIG.url}/prompt/${prompt.slug}` },
-    openGraph: { title: prompt.title, description: prompt.description, type: 'article' },
+    openGraph: {
+      title: prompt.title,
+      description: prompt.description,
+      type: 'article',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: prompt.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: prompt.title,
+      description: prompt.description,
+      images: [ogImage],
+    },
   }
 }
 
@@ -87,6 +101,10 @@ export default async function PromptDetailPage({ params }: Props) {
                 {prompt.copyCount.toLocaleString()} コピー
               </span>
               <time className="text-gray-400">{new Date(prompt.updatedAt).toLocaleDateString('ja-JP')}</time>
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+              <ShareButtons url={`${SITE_CONFIG.url}/prompt/${prompt.slug}`} title={prompt.title} />
+              <EmbedButton slug={prompt.slug} baseUrl={SITE_CONFIG.url} />
             </div>
           </header>
 

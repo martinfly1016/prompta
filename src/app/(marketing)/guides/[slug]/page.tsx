@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { GUIDES, TOOLS, SITE_CONFIG, getRelatedGuides, GUIDE_RELATIONS } from '@/lib/constants'
+import { generateHowToSchema } from '@/lib/schema'
 import { getPromptsByTool } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = GUIDES.find(g => g.slug === resolvedParams.slug)
   if (!guide) return {}
 
+  const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(guide.title)}&type=guide`
   return {
     title: guide.title,
     description: guide.description,
@@ -31,6 +33,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: guide.title,
       description: guide.description,
       type: 'article',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: guide.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: guide.title,
+      description: guide.description,
+      images: [ogImage],
     },
   }
 }
@@ -220,6 +229,14 @@ export default async function GuidePage({ params }: Props) {
     ? (await getPromptsByTool(primaryTool)).slice(0, 4)
     : []
 
+  const howToSchema = generateHowToSchema(
+    guide.title,
+    guide.description,
+    guideContent.sections.map(s => ({ name: s.title, text: s.content.slice(0, 200) })),
+    { baseUrl: SITE_CONFIG.url, siteName: SITE_CONFIG.nameEn },
+    `${SITE_CONFIG.url}/guides/${guide.slug}`
+  )
+
   const faqSchema = guideContent.faq.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -235,6 +252,7 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       {faqSchema && (
         <script
           type="application/ld+json"

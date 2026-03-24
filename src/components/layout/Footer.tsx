@@ -75,6 +75,16 @@ export function Footer() {
                   ガイド一覧
                 </Link>
               </li>
+              <li>
+                <Link href="/glossary" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  AI用語集
+                </Link>
+              </li>
+              <li>
+                <Link href="/compare" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  AIツール比較
+                </Link>
+              </li>
               {GUIDES.slice(0, 4).map(guide => (
                 <li key={guide.slug}>
                   <Link

@@ -29,6 +29,18 @@ export const metadata: Metadata = {
     title: 'プロンプタ | AIプロンプト集',
     description: 'Stable Diffusion、Midjourney、ChatGPT、Claudeなど主要AIツール対応の高品質プロンプト集。',
     siteName: 'Prompta',
+    images: [{
+      url: 'https://www.prompta.jp/api/og?title=AI%E3%83%97%E3%83%AD%E3%83%B3%E3%83%97%E3%83%88%E9%9B%86&type=prompt',
+      width: 1200,
+      height: 630,
+      alt: 'プロンプタ — AIプロンプト集',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@prompta_jp',
+    title: 'プロンプタ | AIプロンプト集',
+    description: 'Stable Diffusion、Midjourney、ChatGPT、Claudeなど主要AIツール対応の高品質プロンプト集。',
   },
   robots: {
     index: true,

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SITE_CONFIG, getGuidesForTool } from '@/lib/constants'
+import { generateSoftwareApplicationSchema } from '@/lib/schema'
 import { getToolBySlug, getToolSlugs, getPromptsByToolPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
@@ -24,10 +25,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!tool) return {}
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
+  const title = `${tool.name} プロンプト集 — ${tool.nameJa}向けAIプロンプト${suffix}`
+  const description = `${tool.name}（${tool.nameJa}）で使える高品質なAIプロンプト集。${(tool.description ?? '').slice(0, 80)}`
+  const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${tool.name} プロンプト集`)}&tool=${tool.slug}&type=tool`
   return {
-    title: `${tool.name} プロンプト集 — ${tool.nameJa}向けAIプロンプト${suffix}`,
-    description: `${tool.name}（${tool.nameJa}）で使える高品質なAIプロンプト集。${(tool.description ?? '').slice(0, 80)}`,
+    title,
+    description,
     alternates: { canonical: `${SITE_CONFIG.url}/tools/${tool.slug}` },
+    openGraph: {
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImage] },
   }
 }
 
@@ -44,8 +54,15 @@ export default async function ToolPage({ params, searchParams }: Props) {
 
   const toolCategories = categories.filter(cat => prompts.some(p => p.categorySlug === cat.slug))
 
+  const appSchema = generateSoftwareApplicationSchema(
+    { name: tool.name, nameJa: tool.nameJa, description: tool.description ?? '', slug: tool.slug },
+    { baseUrl: SITE_CONFIG.url, siteName: SITE_CONFIG.nameEn }
+  )
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ name: 'AIツール', href: '/tools' }, { name: tool.name, href: `/tools/${tool.slug}` }]} />
       </div>

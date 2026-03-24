@@ -84,6 +84,14 @@ export function Header() {
             >
               ガイド
             </Link>
+
+            {/* Glossary Link */}
+            <Link
+              href="/glossary"
+              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-sky-600 rounded-lg hover:bg-sky-50 transition-colors"
+            >
+              用語集
+            </Link>
           </nav>
 
           {/* Search + Mobile Menu */}
@@ -153,6 +161,9 @@ function MobileNav() {
 
           <Link href="/guides" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-sky-50 rounded-lg">
             📚 ガイド
+          </Link>
+          <Link href="/glossary" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-sky-50 rounded-lg">
+            📖 用語集
           </Link>
         </div>
       </div>

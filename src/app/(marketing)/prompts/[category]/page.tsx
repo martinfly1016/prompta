@@ -25,10 +25,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!cat) return {}
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
+  const title = `${cat.name}プロンプト集 — ${cat.nameEn} AIプロンプト${suffix}`
+  const description = (cat.description ?? '').slice(0, 155)
+  const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${cat.name}プロンプト集`)}&category=${encodeURIComponent(cat.name)}&type=category`
   return {
-    title: `${cat.name}プロンプト集 — ${cat.nameEn} AIプロンプト${suffix}`,
-    description: (cat.description ?? '').slice(0, 155),
+    title,
+    description,
     alternates: { canonical: `${SITE_CONFIG.url}/prompts/${cat.slug}` },
+    openGraph: {
+      title,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImage] },
   }
 }
 
