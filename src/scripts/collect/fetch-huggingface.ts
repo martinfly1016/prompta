@@ -71,7 +71,7 @@ function midjourneyV6ToRaw(row: HFMidjourneyV6Row, rowIdx: number): RawCollected
 
   return {
     sourceId: `hf-mjv6-${row.id || rowIdx}`,
-    sourceUrl: `https://huggingface.co/datasets/brivangl/midjourney-v6-llava`,
+    sourceUrl: `https://huggingface.co/datasets/brivangl/midjourney-v6-llava#row=${row.id || rowIdx}`,
     imageUrl: row.image.src,
     prompt: row.prompt,
     width: row.image.width || 1024,
@@ -90,7 +90,7 @@ function midjourneyDetailedToRaw(row: HFMidjourneyDetailedRow, rowIdx: number): 
 
   return {
     sourceId: `hf-mjdet-${rowIdx}`,
-    sourceUrl: `https://huggingface.co/datasets/MohamedRashad/midjourney-detailed-prompts`,
+    sourceUrl: `https://huggingface.co/datasets/MohamedRashad/midjourney-detailed-prompts#row=${rowIdx}`,
     imageUrl: row.image.src,
     prompt,
     width: row.image.width || 1024,

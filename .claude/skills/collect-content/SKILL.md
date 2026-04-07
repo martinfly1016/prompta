@@ -1,22 +1,25 @@
 ---
 name: collect-content
-description: 多源自动采集全流程 — CivitAI/Midjourney/DALL-E 抓取 + Text prompt AI 生成、去重、AI分类、日文翻译、SEO富化、图片下载、DB写入、线上验证
+description: 多源自动采集全流程 — CivitAI/Midjourney/DALL-E/Lexica 抓取 + Text prompt AI 生成、去重、AI分类、日文翻译、SEO富化、图片下载、DB写入、线上验证
 user-invocable: true
-argument-hint: "[--source=civitai|midjourney|dalle|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini] [--category=writing|programming|business|education|creative]"
+argument-hint: "[--source=civitai|midjourney|dalle|lexica|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini] [--category=writing|programming|business|education|creative]"
 ---
 
 # /collect-content — 多源自动采集 Skill
 
-自动从 CivitAI / HuggingFace 抓取高质量 AI 图片 prompt，或用 AI 生成文字 prompt（ChatGPT/Claude/Gemini），经 AI 分类/翻译/SEO 富化后写入数据库并线上验证。
+自动从 CivitAI / HuggingFace / Lexica 抓取高质量 AI 图片 prompt，或用 AI 生成文字 prompt（ChatGPT/Claude/Gemini），经 AI 分类/翻译/SEO 富化后写入数据库并线上验证。
 
 ## 参数
 
-- `--source=SOURCE` — 数据源（默认 civitai）：
-  - `civitai` — Stable Diffusion 内容（CivitAI API）
-  - `midjourney` — Midjourney 内容（HuggingFace: brivangl/midjourney-v6-llava, 40K 条，带嵌入图片）
-  - `dalle` — DALL-E 内容（HuggingFace: OpenDatasets/dalle-3-dataset, 19K 条）
+- `--source=SOURCE` — 数据源（默认 lexica，推荐稳定可用）：
+  - `lexica` — **推荐** Stable Diffusion 内容（Lexica.art 公开 API，永久图片 URL，按关键词搜索）
+  - `civitai` — Stable Diffusion 内容（CivitAI API，**当前不稳定，可能返回 0**）
+  - `midjourney` — Midjourney 内容（HuggingFace: MohamedRashad/midjourney-detailed-prompts, 3K 条，带嵌入图片）
+  - `dalle` — DALL-E 内容（HuggingFace: OpenDatasets/dalle-3-dataset, 19K 条，签名 URL ~1h 过期）
   - `text` — AI 文本 prompt（Haiku 生成，适用于 ChatGPT/Claude/Gemini）
 - `--pages=N` — CivitAI 抓取页数（默认 3，每页 20 条）。仅 source=civitai 有效
+- `--per=N` — Lexica 每个关键词抓取数（默认 8）。仅 source=lexica 有效
+- `--keywords=a,b,c` — Lexica 自定义关键词（逗号分隔）。默认覆盖 hairstyle/cosplay/costume/cyberpunk/anime/cinematic/gothic/fashion 8 类
 - `--target=N` — 目标入库数量（默认 15）
 - `--cursor=STRING` — 上次采集的 cursor，用于续抓（仅 source=civitai）
 - `--tool=TOOL` — 指定工具（仅 source=text）：chatgpt | claude | gemini。默认均匀分配三个工具
@@ -70,15 +73,26 @@ argument-hint: "[--source=civitai|midjourney|dalle|text] [--pages=3] [--target=1
 
 根据 `--source` 参数选择对应抓取脚本或生成流程：
 
-**source=civitai（默认）：**
+**source=lexica（推荐默认）：**
+```bash
+cd src/scripts/collect && npx tsx fetch-lexica.ts --per={PER} {--keywords=K1,K2如有} > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
+```
+- 永久图片 URL（`image.lexica.art/full_jpg/{id}`），无签名过期问题
+- 默认 8 个关键词覆盖 hairstyle/cosplay/costume/cyberpunk/anime/cinematic/gothic/fashion
+- 每次稳定产出 30-45 条带图 SD prompt
+- toolSlug = `stable-diffusion`
+
+**source=civitai：**
 ```bash
 cd src/scripts/collect && npx tsx fetch-civitai.ts --pages={PAGES} {--cursor=CURSOR如有} > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
 ```
+> **注意**：CivitAI API 当前返回 0 条（period=Week + nsfw=None 过滤过严）。优先用 lexica。
 
 **source=midjourney：**
 ```bash
-cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=midjourney --count=100 --random > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
+cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=midjourneyDetailed --count=100 --random > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
 ```
+> 使用 `midjourneyDetailed`（MohamedRashad），勿用 `midjourney`（brivangl 的 LLAVA 描述质量低）。
 
 **source=dalle：**
 ```bash
@@ -316,6 +330,7 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    > - source=midjourney → 「Midjourney プロンプト」「ミッドジャーニー 画像生成」
    > - source=dalle → 「DALL-E プロンプト」「ダリ 画像生成」「DALL-E 3」
    > - source=civitai → 「Stable Diffusion プロンプト」「SD 画像生成」
+   > - source=lexica → 「Stable Diffusion プロンプト」「SD 画像生成」「Lexica」
    >
    > title 命名规则：
    > - 用日文描述 prompt 的效果和用途
@@ -363,6 +378,7 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    - 添加 `categorySlug`（来自 Phase 3 分类）
    - 添加 `toolSlug`（根据 source 设置）：
      - source=civitai → `"stable-diffusion"`
+     - source=lexica → `"stable-diffusion"`
      - source=midjourney → `"midjourney"`
      - source=dalle → `"dall-e"`
      - source=text → 从生成数据中取（`sourceId` 格式 `text-{toolSlug}-{useCase}` 中提取，或直接使用 Phase 1 中保留的 toolSlug）
