@@ -97,7 +97,7 @@ async function fetchOne(text: string, cursor: number): Promise<LexicaResponse> {
 
 // ==================== Transform ====================
 
-function lexicaToRaw(p: LexicaPrompt, keyword: string): RawCollectedItem | null {
+function lexicaToRaw(p: LexicaPrompt): RawCollectedItem | null {
   if (!p.prompt || p.prompt.length < 20) return null
   const img = p.images?.[0]
   if (!img) return null
@@ -143,7 +143,7 @@ async function main() {
         for (const p of data.prompts) {
           if (seenIds.has(p.id)) continue
           seenIds.add(p.id)
-          const item = lexicaToRaw(p, keyword)
+          const item = lexicaToRaw(p)
           if (item) {
             collected.push(item)
             gotForThis++
