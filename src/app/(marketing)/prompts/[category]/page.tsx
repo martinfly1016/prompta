@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG, getGuidesForCategory } from '@/lib/constants'
+import { SITE_CONFIG, getGuidesForCategory, CATEGORY_INTROS } from '@/lib/constants'
 import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
@@ -25,8 +25,15 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!cat) return {}
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
-  const title = `${cat.name}プロンプト集 — ${cat.nameEn} AIプロンプト${suffix}`
-  const description = (cat.description ?? '').slice(0, 155)
+  const { total } = await getPromptsByCategoryPaginated(params.category, page)
+  const countLabel = page === 1 && total > 0 ? `${total}選` : ''
+  const isImage = IMAGE_CATEGORIES.has(cat.slug)
+  const toolList = isImage ? 'Stable Diffusion・Midjourney・DALL-E' : 'ChatGPT・Claude・Gemini'
+  const nameEnPart = cat.nameEn ? `${cat.nameEn} ` : ''
+  const title = page === 1
+    ? `${cat.name}プロンプト集【無料・コピペOK】${countLabel} — ${nameEnPart}AIプロンプト`
+    : `${cat.name}プロンプト集 — ${nameEnPart}AIプロンプト${suffix}`
+  const description = `そのままコピーして使える${cat.name}プロンプト${countLabel}。${toolList}対応。${(cat.description ?? '').slice(0, 80)}`.slice(0, 158)
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${cat.name}プロンプト集`)}&category=${encodeURIComponent(cat.name)}&type=category`
   return {
     title,
@@ -90,6 +97,37 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           <Pagination currentPage={page} totalPages={totalPages} basePath={`/prompts/${category.slug}`} />
         </div>
       </section>
+
+      {CATEGORY_INTROS[category.slug] && (
+        <section className="py-12 bg-white border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{category.name}プロンプトとは？</h2>
+            <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-8">
+              {CATEGORY_INTROS[category.slug].intro}
+            </p>
+
+            <h3 className="text-lg font-bold text-gray-900 mb-3">主な使用シーン</h3>
+            <ul className="space-y-2 text-gray-700 mb-8">
+              {CATEGORY_INTROS[category.slug].useCases.map((uc, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-sky-500 mt-1">▸</span>
+                  <span>{uc}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-lg font-bold text-gray-900 mb-3">組み合わせテクニック</h3>
+            <ul className="space-y-2 text-gray-700">
+              {CATEGORY_INTROS[category.slug].tips.map((tip, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-sky-500 mt-1">▸</span>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="py-12 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">

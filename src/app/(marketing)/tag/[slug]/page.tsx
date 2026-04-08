@@ -26,8 +26,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const isApproved = tagData?.isApproved ?? false
 
   return {
-    title: `「${tag}」タグのプロンプト集${suffix}`,
-    description: `「${tag}」に関連するAIプロンプトの一覧。Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E対応。`,
+    title: `「${tag}」プロンプト一覧【無料・コピペOK】${suffix}`,
+    description: `「${tag}」関連のAIプロンプト集。Stable Diffusion・Midjourney・ChatGPT・Claude・DALL-E対応。コピペでそのまま使えるサンプルを多数掲載しています。`,
     alternates: { canonical: `${SITE_CONFIG.url}/tag/${params.slug}` },
     ...(!isApproved && { robots: { index: false, follow: true } }),
   }

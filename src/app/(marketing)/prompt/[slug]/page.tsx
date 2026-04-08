@@ -24,19 +24,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const prompt = await getPromptBySlug(decodeURIComponent(resolvedParams.slug))
   if (!prompt) return {}
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(prompt.title)}${prompt.toolSlug ? `&tool=${prompt.toolSlug}` : ''}${prompt.categoryName ? `&category=${encodeURIComponent(prompt.categoryName)}` : ''}`
+  const title = `${prompt.title}【コピペOK】`
   return {
-    title: prompt.title,
+    title,
     description: prompt.description,
     alternates: { canonical: `${SITE_CONFIG.url}/prompt/${prompt.slug}` },
     openGraph: {
-      title: prompt.title,
+      title,
       description: prompt.description,
       type: 'article',
       images: [{ url: ogImage, width: 1200, height: 630, alt: prompt.title }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: prompt.title,
+      title,
       description: prompt.description,
       images: [ogImage],
     },

@@ -25,8 +25,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!tool) return {}
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
-  const title = `${tool.name} プロンプト集 — ${tool.nameJa}向けAIプロンプト${suffix}`
-  const description = `${tool.name}（${tool.nameJa}）で使える高品質なAIプロンプト集。${(tool.description ?? '').slice(0, 80)}`
+  const title = `${tool.name}プロンプト集【無料・コピペOK】— ${tool.nameJa}向けAIプロンプト${suffix}`
+  const description = `${tool.name}（${tool.nameJa}）で使える高品質プロンプト集。コピペでそのまま使える実用例を多数掲載。${(tool.description ?? '').slice(0, 70)}`.slice(0, 158)
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${tool.name} プロンプト集`)}&tool=${tool.slug}&type=tool`
   return {
     title,
