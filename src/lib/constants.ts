@@ -454,6 +454,13 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'ネガティブプロンプト',
     monthlySearchVolume: 6600,
   },
+  {
+    slug: 'prompt-language-game',
+    title: 'プロンプトは「コード」ではない — ヴィトゲンシュタインに学ぶAI対話の本質',
+    description: 'なぜあなたのプロンプトは機能しないのか？哲学者ヴィトゲンシュタインの「言語ゲーム」理論から、ChatGPT・Claudeを真に使いこなすための本質的な思考法を解説します。',
+    targetKeyword: 'プロンプトエンジニアリング 本質',
+    monthlySearchVolume: 480,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -477,6 +484,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'negative-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'prompt-language-game': {
+    tools: ['chatgpt', 'claude', 'gemini'],
+    categories: ['writing', 'business', 'creative', 'education', 'programming'],
   },
 }
 
