@@ -146,7 +146,9 @@ export default async function PromptDetailPage({ params }: Props) {
             </div>
             {isTextPrompt && (
               <p className="mt-3 text-xs text-gray-500 text-center">
-                「ChatGPTで試す」ボタンを押すと、入力欄にプロンプトが自動入力された状態でChatGPTが開きます。
+                {prompt.content.length <= 2000
+                  ? '「ChatGPTで試す」ボタンを押すと、入力欄にプロンプトが自動入力された状態でChatGPTが開きます。'
+                  : '長いプロンプトのため、ボタンを押すとプロンプトがクリップボードにコピーされ、ChatGPTが新しいタブで開きます。入力欄に貼り付けてご利用ください。'}
               </p>
             )}
           </section>

@@ -127,6 +127,8 @@ function promptsChatToRaw(row: HFPromptsChatRow, rowIdx: number): RawCollectedIt
   if (!row.act) return null
   // Skip non-TEXT types (SKILL, WORKFLOW are multi-step, not suitable as single prompts)
   if (row.type && row.type !== 'TEXT') return null
+  // Cap at 10000 chars — some entries are full SKILL documentation files, not usable prompts
+  if (row.prompt.length > 10000) return null
 
   return {
     sourceId: `hf-promptschat-${rowIdx}`,
