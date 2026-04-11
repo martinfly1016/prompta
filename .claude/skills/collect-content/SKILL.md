@@ -1,13 +1,13 @@
 ---
 name: collect-content
-description: 多源自动采集全流程 — CivitAI/Midjourney/DALL-E/Lexica 抓取 + Text prompt AI 生成、去重、AI分类、日文翻译、SEO富化、图片下载、DB写入、线上验证
+description: 多源自动采集全流程 — CivitAI/Midjourney/DALL-E/Lexica/prompts.chat 抓取 + Text prompt AI 生成、去重、AI分类、日文翻译、SEO富化、图片下载、DB写入、线上验证
 user-invocable: true
-argument-hint: "[--source=civitai|midjourney|dalle|lexica|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini] [--category=writing|programming|business|education|creative]"
+argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini] [--category=writing|programming|business|education|creative]"
 ---
 
 # /collect-content — 多源自动采集 Skill
 
-自动从 CivitAI / HuggingFace / Lexica 抓取高质量 AI 图片 prompt，或用 AI 生成文字 prompt（ChatGPT/Claude/Gemini），经 AI 分类/翻译/SEO 富化后写入数据库并线上验证。
+自动从 CivitAI / HuggingFace / Lexica / prompts.chat 抓取高质量 AI prompt，或用 AI 生成文字 prompt（ChatGPT/Claude/Gemini），经 AI 分类/翻译/SEO 富化后写入数据库并线上验证。
 
 ## 参数
 
@@ -16,6 +16,7 @@ argument-hint: "[--source=civitai|midjourney|dalle|lexica|text] [--pages=3] [--t
   - `civitai` — Stable Diffusion 内容（CivitAI API，**当前不稳定，可能返回 0**）
   - `midjourney` — Midjourney 内容（HuggingFace: MohamedRashad/midjourney-detailed-prompts, 3K 条，带嵌入图片）
   - `dalle` — DALL-E 内容（HuggingFace: OpenDatasets/dalle-3-dataset, 19K 条，签名 URL ~1h 过期）
+  - `promptsChat` — **推荐** ChatGPT 文本 prompt（HuggingFace: fka/prompts.chat, 1637 条，CC0 许可，纯文本无图片）
   - `text` — AI 文本 prompt（Haiku 生成，适用于 ChatGPT/Claude/Gemini）
 - `--pages=N` — CivitAI 抓取页数（默认 3，每页 20 条）。仅 source=civitai 有效
 - `--per=N` — Lexica 每个关键词抓取数（默认 8）。仅 source=lexica 有效
@@ -100,6 +101,19 @@ cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=dalle --count=5
 ```
 
 > **注意（DALL-E）**：签名 URL 有过期时间，后续 Phase 应尽快执行，不要在 Phase 间暂停。
+
+**source=promptsChat：**
+```bash
+cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=promptsChat --count=100 --random > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
+```
+- CC0 许可（Public Domain），可自由商用
+- 纯文本 prompt，无图片 — download-images 走 text-only pass-through 分支
+- toolSlug = `chatgpt`
+- 适合分类：programming, business, education, writing, creative
+- 数据集共 1637 条，随机抽样 100 条后由 Phase 3 筛选 top N
+- 建议每次采集 target=15-20，避免一次导入过多
+
+> **注意（promptsChat）**：Phase 3 分类时使用非 text 的 Haiku 分类流程（内容来自外部而非 AI 生成），但分类器 prompt 应包含文本类分类（writing, programming, business, education, creative）。
 
 **source=text：**
 
@@ -381,6 +395,7 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
      - source=lexica → `"stable-diffusion"`
      - source=midjourney → `"midjourney"`
      - source=dalle → `"dall-e"`
+     - source=promptsChat → `"chatgpt"`
      - source=text → 从生成数据中取（`sourceId` 格式 `text-{toolSlug}-{useCase}` 中提取，或直接使用 Phase 1 中保留的 toolSlug）
    - **source=text 时**：`imageUrl` 不设置（undefined 或空字符串），download-images 会走 text-only 分支
 
@@ -394,10 +409,10 @@ cd src/scripts/collect && cat /tmp/prompta-enriched.json | npx tsx download-imag
 
 读取 `/tmp/prompta-final.json`，检查结果数组长度。
 
-**source 非 text 时**：如果成功数 < 输入数的 70%（失败率 >30%），中止并报告。
-**source=text 时**：所有 items 无 imageUrl，download-images.ts 全部 pass-through（0 张图片下载是正常的），跳过 70% 成功率检查。
+**source 非 text/promptsChat 时**：如果成功数 < 输入数的 70%（失败率 >30%），中止并报告。
+**source=text 或 promptsChat 时**：所有 items 无 imageUrl，download-images.ts 全部 pass-through（0 张图片下载是正常的），跳过 70% 成功率检查。
 
-报告：成功下载数、失败数（source=text 时报告 "N/A — 文本 prompt 无图片"）。
+报告：成功下载数、失败数（source=text/promptsChat 时报告 "N/A — 文本 prompt 无图片"）。
 
 ### Phase 6: 写入数据库
 

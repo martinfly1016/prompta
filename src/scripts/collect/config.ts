@@ -76,5 +76,12 @@ export const HUGGINGFACE_CONFIG = {
       totalRows: 19024,
       toolSlug: 'dall-e' as const,
     },
+    promptsChat: {
+      dataset: 'fka/prompts.chat',
+      config: 'default',
+      split: 'train',
+      totalRows: 1637,
+      toolSlug: 'chatgpt' as const,
+    },
   },
 } as const

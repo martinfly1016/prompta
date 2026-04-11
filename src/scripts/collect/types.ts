@@ -75,6 +75,14 @@ export interface HFDalleRow {
   synthetic_caption: string
 }
 
+export interface HFPromptsChatRow {
+  act: string       // Role name (e.g., "Linux Terminal", "English Translator")
+  prompt: string    // Full prompt text
+  for_devs: boolean // Whether the prompt is for developers
+  type: string      // "TEXT", "SKILL", "WORKFLOW"
+  contributor: string // Username(s)
+}
+
 export interface HFRowsResponse {
   features: Array<{ feature_idx: number; name: string; type: unknown }>
   rows: Array<{
@@ -93,11 +101,11 @@ export interface HFRowsResponse {
 export interface RawCollectedItem {
   sourceId: string
   sourceUrl: string
-  imageUrl: string
+  imageUrl?: string  // Optional for text-only prompts
   prompt: string
   negativePrompt?: string
-  width: number
-  height: number
+  width?: number     // Optional for text-only prompts
+  height?: number    // Optional for text-only prompts
   model?: string
   author: string
   stats: {

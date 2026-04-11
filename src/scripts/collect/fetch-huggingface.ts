@@ -4,6 +4,7 @@ import type {
   HFMidjourneyV6Row,
   HFMidjourneyDetailedRow,
   HFDalleRow,
+  HFPromptsChatRow,
   HFRowsResponse,
   RawCollectedItem,
   FetchResult,
@@ -23,8 +24,8 @@ function parseArgs(): { dataset: DatasetKey; count: number; offset: number; rand
   for (const arg of args) {
     if (arg.startsWith('--dataset=')) {
       const val = arg.split('=')[1]
-      if (val !== 'midjourney' && val !== 'midjourneyDetailed' && val !== 'dalle') {
-        throw new Error(`Invalid dataset: ${val}. Must be "midjourney", "midjourneyDetailed", or "dalle"`)
+      if (val !== 'midjourney' && val !== 'midjourneyDetailed' && val !== 'dalle' && val !== 'promptsChat') {
+        throw new Error(`Invalid dataset: ${val}. Must be "midjourney", "midjourneyDetailed", "dalle", or "promptsChat"`)
       }
       dataset = val
     }
@@ -121,6 +122,24 @@ function dalleToRaw(row: HFDalleRow, rowIdx: number): RawCollectedItem | null {
   }
 }
 
+function promptsChatToRaw(row: HFPromptsChatRow, rowIdx: number): RawCollectedItem | null {
+  if (!row.prompt || row.prompt.length < 20) return null
+  if (!row.act) return null
+  // Skip non-TEXT types (SKILL, WORKFLOW are multi-step, not suitable as single prompts)
+  if (row.type && row.type !== 'TEXT') return null
+
+  return {
+    sourceId: `hf-promptschat-${rowIdx}`,
+    sourceUrl: `https://prompts.chat/#act=${encodeURIComponent(row.act.toLowerCase().replace(/\s+/g, '-'))}`,
+    prompt: row.prompt,
+    // Text-only: no image fields
+    model: 'ChatGPT',
+    author: row.contributor || 'prompts.chat Community',
+    stats: { likes: 0, hearts: 0, comments: 0 },
+    collectedAt: new Date().toISOString(),
+  }
+}
+
 // ==================== Random Sampling ====================
 
 function generateRandomOffsets(total: number, count: number, batchSize: number): number[] {
@@ -171,8 +190,10 @@ async function main() {
           rawItem = midjourneyV6ToRaw(row as unknown as HFMidjourneyV6Row, row_idx)
         } else if (dataset === 'midjourneyDetailed') {
           rawItem = midjourneyDetailedToRaw(row as unknown as HFMidjourneyDetailedRow, row_idx)
-        } else {
+        } else if (dataset === 'dalle') {
           rawItem = dalleToRaw(row as unknown as HFDalleRow, row_idx)
+        } else if (dataset === 'promptsChat') {
+          rawItem = promptsChatToRaw(row as unknown as HFPromptsChatRow, row_idx)
         }
 
         if (!rawItem) {
