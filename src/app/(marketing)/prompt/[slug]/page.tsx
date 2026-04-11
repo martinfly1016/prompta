@@ -5,6 +5,7 @@ import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/const
 import { getPromptBySlug, getPromptSlugs, getRelatedPrompts } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { CopyButton } from '@/components/ui/CopyButton'
+import { TryInChatGPTButton } from '@/components/ui/TryInChatGPTButton'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
 import { ShareButtons } from '@/components/ui/ShareButtons'
@@ -51,6 +52,10 @@ export default async function PromptDetailPage({ params }: Props) {
   if (!prompt) notFound()
 
   const related = await getRelatedPrompts(prompt, 4)
+
+  // Show "Try in ChatGPT" button only for text-based AI tools (not image generators)
+  const IMAGE_TOOLS = new Set(['stable-diffusion', 'midjourney', 'dall-e'])
+  const isTextPrompt = prompt.toolSlug ? !IMAGE_TOOLS.has(prompt.toolSlug) : false
 
   // Find relevant guides based on the prompt's tool and category
   const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
@@ -135,16 +140,35 @@ export default async function PromptDetailPage({ params }: Props) {
               <CopyButton text={prompt.content} variant="compact" />
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap">{prompt.content}</div>
-            <div className="mt-4 text-center">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <CopyButton text={prompt.content} />
+              {isTextPrompt && <TryInChatGPTButton content={prompt.content} />}
             </div>
+            {isTextPrompt && (
+              <p className="mt-3 text-xs text-gray-500 text-center">
+                「ChatGPTで試す」ボタンを押すと、入力欄にプロンプトが自動入力された状態でChatGPTが開きます。
+              </p>
+            )}
           </section>
 
           {/* Usage */}
           <section className="mb-8 p-6 bg-sky-50 rounded-xl">
             <h2 className="text-lg font-bold text-gray-900 mb-4">使い方</h2>
             <ol className="space-y-3 text-sm text-gray-700">
-              {['上のプロンプトをコピーボタンでコピーします。', `${prompt.toolName ?? 'AIツール'}を開き、プロンプト入力欄に貼り付けます。`, '必要に応じて、{ }で囲まれた部分を自分の内容に置き換えてください。', '生成を実行して結果を確認します。'].map((text, i) => (
+              {(isTextPrompt
+                ? [
+                    '「ChatGPTで試す」ボタンを押すと、ChatGPTが自動で開き入力欄にプロンプトが貼り付けられます。',
+                    'または「プロンプトをコピー」ボタンで内容をコピーし、お好みのAIツールに貼り付けてください。',
+                    '必要に応じて、{ }で囲まれた部分を自分の内容に置き換えてください。',
+                    '送信して結果を確認します。',
+                  ]
+                : [
+                    '上のプロンプトをコピーボタンでコピーします。',
+                    `${prompt.toolName ?? 'AIツール'}を開き、プロンプト入力欄に貼り付けます。`,
+                    '必要に応じて、{ }で囲まれた部分を自分の内容に置き換えてください。',
+                    '生成を実行して結果を確認します。',
+                  ]
+              ).map((text, i) => (
                 <li key={i} className="flex gap-3">
                   <span className="flex items-center justify-center w-6 h-6 bg-sky-600 text-white text-xs font-bold rounded-full shrink-0">{i + 1}</span>
                   <span>{text}</span>
