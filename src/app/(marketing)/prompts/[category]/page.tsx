@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SITE_CONFIG, getGuidesForCategory, CATEGORY_INTROS, CATEGORY_SEO_OVERRIDES } from '@/lib/constants'
-import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, getTools, getCategories } from '@/lib/data'
+import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, getTools, getCategories, getPopularTagsByCategory } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -60,11 +60,12 @@ const IMAGE_CATEGORIES = new Set(['hairstyle', 'clothing', 'cosplay', 'anime', '
 export default async function CategoryPage({ params, searchParams }: Props) {
   const page = Math.max(1, Number(searchParams.page) || 1)
 
-  const [category, { prompts, total, totalPages }, tools, allCategories] = await Promise.all([
+  const [category, { prompts, total, totalPages }, tools, allCategories, popularTags] = await Promise.all([
     getCategoryBySlug(params.category),
     getPromptsByCategoryPaginated(params.category, page),
     getTools(),
     getCategories(),
+    getPopularTagsByCategory(params.category, 6),
   ])
   if (!category) notFound()
 
@@ -177,6 +178,28 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           })()}
         </div>
       </section>
+
+      {popularTags.length > 0 && (
+        <section className="py-12 bg-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">人気タグで絞り込む</h2>
+            <p className="text-sm text-gray-500 mb-6">{category.name}プロンプトの中から、よく使われるテーマ別に絞り込めます。</p>
+            <div className="flex flex-wrap gap-2">
+              {popularTags.map(tag => (
+                <Link
+                  key={tag.slug}
+                  href={`/tag/${encodeURIComponent(tag.slug)}`}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-sky-50 text-sky-700 text-sm font-medium rounded-full border border-sky-200 hover:bg-sky-100 hover:border-sky-300 transition-colors"
+                >
+                  <span>#</span>
+                  <span>{tag.name}</span>
+                  <span className="text-xs text-sky-500">{tag.promptCount}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

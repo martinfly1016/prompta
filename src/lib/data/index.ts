@@ -455,6 +455,31 @@ export async function getTagBySlug(slug: string) {
   )
 }
 
+export interface PopularTag {
+  slug: string
+  name: string
+  color: string
+  promptCount: number
+}
+
+export async function getPopularTagsByCategory(
+  categorySlug: string,
+  limit = 6,
+): Promise<PopularTag[]> {
+  return tryDb(
+    async () => {
+      const tags = await dbTags.getPopularTagsByCategory(categorySlug, limit)
+      return tags.map(t => ({
+        slug: t.slug,
+        name: t.name,
+        color: t.color,
+        promptCount: t._count.prompts,
+      }))
+    },
+    () => [],
+  )
+}
+
 // ---------- Sitemap helpers (with timestamps) ----------
 
 export async function getPromptSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
