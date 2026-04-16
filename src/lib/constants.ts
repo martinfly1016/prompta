@@ -485,6 +485,13 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'プロンプトエンジニアリング 本質',
     monthlySearchVolume: 480,
   },
+  {
+    slug: 'cosplay-prompt-guide',
+    title: 'コスプレプロンプトの書き方｜セーラー服・メイド服・ファンタジー衣装を再現する呪文',
+    description: 'AIイラストでコスプレを再現するプロンプト完全ガイド。セーラー服・メイド・ナース・巫女・ファンタジー衣装の呪文例と Stable Diffusion / NovelAI の使い分けを徹底解説。',
+    targetKeyword: 'コスプレ プロンプト 書き方',
+    monthlySearchVolume: 480,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -512,6 +519,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'prompt-language-game': {
     tools: ['chatgpt', 'claude', 'gemini'],
     categories: ['writing', 'business', 'creative', 'education', 'programming'],
+  },
+  'cosplay-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
   },
 }
 

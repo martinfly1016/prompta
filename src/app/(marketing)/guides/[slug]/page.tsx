@@ -307,6 +307,143 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
       { q: 'ネガティブプロンプトは必須ですか？', a: '必須ではありませんが、使用することで画像品質が大幅に向上します。特にStable Diffusionでは、ネガティブプロンプトなしだと品質の低い画像が生成されやすいため、常に使用することを推奨します。' },
     ],
   },
+  'cosplay-prompt-guide': {
+    sections: [
+      {
+        title: 'コスプレプロンプトの基本構造',
+        content: `コスプレプロンプトは、AIイラストで特定のアニメ・ゲームキャラクター、あるいは職業・世界観に合わせた衣装を再現するためのプロンプト技術です。
+
+書き方には大きく2つのアプローチがあります：
+
+**1. キャラ名直接指定** — 例: \`hatsune miku cosplay\`、\`rem cosplay\`。学習データに有名キャラが含まれていれば再現性は高いものの、著作権リスクが伴います。
+
+**2. 衣装要素分解** — 例: \`twin teal hair, school uniform, black tie, detached sleeves\`。キャラ名を出さずに構成要素で描写する方式です。公開・販売する作品には圧倒的にこちらを推奨します。
+
+どちらの方式でも、**構成要素を分解して並べる**スキルは欠かせません。髪色・髪型・衣装のパーツ・小物・背景を「上から下へ」順に記述すると、AI が各要素を正確に組み立てやすくなります。`,
+      },
+      {
+        title: '定番コスチューム別の呪文テンプレート',
+        content: `AIモデルが学習データで頻繁に見ているため再現性が高い10種類の定番コスチュームと、それぞれのコピペ可能な呪文例です：
+
+**1. セーラー服（学校制服）**
+\`sailor uniform, sailor collar, pleated skirt, red ribbon, knee-high socks, loafers\`
+
+**2. メイド服**
+\`maid uniform, white apron, black dress, frilled headband, white stockings, mary janes\`
+
+**3. 巫女装束**
+\`miko costume, white haori, red hakama, shrine maiden, traditional japanese clothing\`
+
+**4. ナース服**
+\`nurse uniform, white cap, white apron, pastel blue scrubs, stethoscope\`
+
+**5. チアリーダー**
+\`cheerleader uniform, pleated cheer skirt, pom-poms, sneakers, ribbon ponytail\`
+
+**6. 着物**
+\`kimono, obi, traditional japanese dress, wooden sandals, floral pattern\`
+
+**7. 魔女**
+\`witch costume, pointy hat, black cloak, broomstick, fantasy\`
+
+**8. バニーガール**
+\`bunny girl, bunny ears, black leotard, fishnet stockings, high heels\`
+
+**9. ファンタジー甲冑**
+\`fantasy armor, knight plate, cape, sword, metal gauntlets, fantasy\`
+
+**10. ゴシックロリータ**
+\`gothic lolita, black dress, lace trim, frilled skirt, ribbon choker\``,
+      },
+      {
+        title: '衣装ディテールの書き分け方',
+        content: `単に「sailor uniform」と指定しただけでは、AI は無難な標準形を出すだけです。**素材・色・装飾・小物**を積み重ねることで、あなただけのオリジナリティが出ます。
+
+記述順のセオリーは **「上→下→足元→アクセサリー」**:
+\`white blouse, navy pleated skirt, knee-high white socks, brown loafers, red ribbon on chest\`
+
+**素材指定**で質感が劇的に変わります：
+- \`silk\` — 光沢ある滑らかな質感
+- \`cotton\` — マットで柔らかい
+- \`leather\` — 硬質で重厚
+- \`lace\` — 透け感のある装飾
+
+**色の色滲み（color bleed）対策**には BREAK 構文：
+\`white blouse BREAK navy pleated skirt BREAK red ribbon\`
+
+要素ごとにプロンプトを区切ることで、色が隣の要素へ滲む現象を防げます。`,
+      },
+      {
+        title: '撮影・ポーズの指定で品質を上げる',
+        content: `衣装を指定しただけでは「ただの絵」です。プロのコスプレ写真の雰囲気に寄せるには、撮影系キーワードを併記します。
+
+**基本の撮影セット**:
+\`professional cosplay photo, studio lighting, high quality photography, sharp focus\`
+
+**アングル指定**:
+- \`close-up\` — 表情・胸元重視
+- \`medium shot\` — 上半身まで
+- \`full body shot\` — 全身（衣装の見せ場）
+- \`dynamic pose\` — 動きのあるポーズ
+
+**ライティング**:
+- \`soft lighting\` — 柔らかく自然
+- \`dramatic lighting\` — 陰影強め
+- \`ring light\` — コスプレ撮影の定番
+
+**定番ネガティブプロンプト**:
+\`low quality, bad anatomy, bad hands, fake wig, cheap cosplay, wrinkled clothes, mismatched uniform\`
+
+これらを組み合わせた完成形のサンプル：
+\`1girl, sailor uniform, sailor collar, pleated skirt, knee-high socks, twin tails black hair, red ribbon, professional cosplay photo, studio lighting, medium shot, soft lighting, (masterpiece:1.2), best quality\``,
+      },
+      {
+        title: 'Stable Diffusion と NovelAI の使い分け',
+        content: `同じコスプレプロンプトでも、モデルによって仕上がりがまったく違います。
+
+**Stable Diffusion（実写風）**:
+おすすめモデル — ChilloutMix、AsianRealistic、BeautifulRealistic
+- 実写のコスプレ写真に近い仕上がり
+- 品質タグ: \`masterpiece, best quality, ultra detailed\`
+- ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, bad hands\`
+
+**Stable Diffusion（アニメ調）**:
+おすすめモデル — Anything V5、Counterfeit、MeinaMix
+- アニメ調イラスト寄り
+- 品質タグ: \`masterpiece, best quality, highres\`
+- ネガ: \`(worst quality, low quality:1.4), bad anatomy, extra fingers\`
+
+**NovelAI**:
+- Artist タグを使って特定作家風の絵柄に誘導できる（例: \`artist:wlop, artist:kawacy\`）
+- 品質タグ: \`best quality, amazing quality, very aesthetic\`
+- 重み付けの書き方が SD とわずかに異なる（\`{{sailor uniform}}\` で強調可能）
+
+**Midjourney**:
+- コスプレ写真は \`--style raw --ar 2:3\` が最適
+- 衣装描写より雰囲気が強く、細部精度は SD に劣る
+
+自分の目的が「写真風コスプレ」なら SD の実写系、「イラスト調キャラ」なら NovelAI、「雰囲気重視のアート」なら Midjourney、と使い分けるのが基本戦略です。`,
+      },
+    ],
+    faq: [
+      {
+        q: 'キャラ名を直接プロンプトに書いても問題ないですか？',
+        a: '個人利用（学習・研究・私的鑑賞）では問題ありませんが、公開・販売・商用利用する場合は著作権・パブリシティ権のリスクがあります。衣装要素を分解して描写する方法（例: セーラー服＋ツインテール＋水色髪）で、キャラの特徴を暗示する程度に留めるのが安全です。',
+      },
+      {
+        q: 'セーラー服が長袖で出てしまいます。夏服にするには？',
+        a: '「short sleeves」「summer uniform」「white sailor uniform」を明示的に追加してください。さらにネガティブプロンプトに「long sleeves, winter uniform, navy」を入れると確実です。逆に冬服（長袖紺色）にしたい場合は「long sleeves, navy sailor uniform, winter uniform」を指定します。',
+      },
+      {
+        q: 'コスプレ写真をリアル写真風にするには？',
+        a: 'モデル選択が最重要です。ChilloutMix、BeautifulRealistic、Realistic Vision などの実写系 Stable Diffusion モデルを使い、プロンプトに「professional photography, 8K, photorealistic, skin detail, studio lighting」を追加します。Anime 系モデルでは原理的にリアル写真調は出ません。',
+      },
+      {
+        q: '小物（刀・帽子・翼など）が消えてしまいます',
+        a: '重み付けで強制的に主張を強めます。例: 「(holding katana:1.3), (wings:1.3)」。それでも消える場合は小物単体の文を別の BREAK セクションに入れる（例: 「sailor uniform BREAK holding a red ribbon bag」）、または参照画像を ControlNet に入れるのが確実です。',
+      },
+    ],
+  },
 }
 
 export default async function GuidePage({ params }: Props) {
