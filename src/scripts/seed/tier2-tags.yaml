@@ -8,18 +8,90 @@
 #   - If seoIntro is shorter, the entry is skipped with a warning so tag stays
 #     noindex and is NOT pushed into the sitemap.
 #
-# Example entry (commented out — uncomment and fill when ready):
-#
-#   - slug: sailor-uniform
-#     name: セーラー服
-#     color: pink
-#     isApproved: true
-#     seoTitle: "「セーラー服」プロンプト集｜Stable Diffusion 呪文・コピペOK"
-#     seoDescription: "セーラー服プロンプトのコピペ集。Stable Diffusion・NovelAI 対応の呪文例と重み付けのコツを多数紹介。"
-#     seoIntro: |
-#       (TODO: 400-600字の日本語本文を記入。見出し:
-#         「セーラー服プロンプトとは？」
-#         「使い方のコツ」
-#         「組み合わせ例 3つ」)
+# Slug strategy: existing tags in prod use the Japanese name as the slug itself
+# (e.g. `セーラー服`). We preserve that to avoid creating duplicate records; URLs
+# are URL-encoded at the edge (Next.js encodeURIComponent in generateStaticParams).
 
-tags: []
+tags:
+  # ========== 1. セーラー服（既存・approved=true、7 prompts）==========
+  # 目標キーワード: 「セーラー服 プロンプト」(108 imp, rank 7.99)
+  - slug: セーラー服
+    name: セーラー服
+    color: pink
+    isApproved: true
+    seoTitle: "「セーラー服」プロンプト集｜Stable Diffusion 呪文・コピペOK"
+    seoDescription: "セーラー服プロンプトのコピペ集。夏服・冬服・リボン色・プリーツスカートの指定方法まで、Stable Diffusion・NovelAI・Midjourney で使える呪文を画像付きで紹介。"
+    seoIntro: |
+      セーラー服プロンプトは、AIイラスト生成で女子高生や学園キャラクターを描く際の基本的な衣装指定です。「sailor uniform」「sailor school uniform」を基本に、リボンの色（red ribbon, blue ribbon）、襟（sailor collar）、袖の長さ（short sleeves, long sleeves）、スカートのプリーツ（pleated skirt）を組み合わせることで、理想のセーラー服デザインを再現できます。
+
+      Stable Diffusion や NovelAI では、プロンプトの先頭側に「sailor uniform, pleated skirt」を置くと衣装の優先度が上がります。夏服なら「white sailor uniform, short sleeves, summer uniform」、冬服なら「navy sailor uniform, long sleeves, winter uniform」のように季節も明示すると精度が高まります。
+
+      組み合わせ例：
+      - 夏のシンプルな白セーラー：「white sailor uniform, red ribbon, pleated skirt, summer」
+      - 冬の定番紺セーラー：「navy sailor uniform, white scarf, long sleeves, pleated skirt」
+      - アニメ風アクセント：「(sailor uniform:1.2), hair ribbon, knee-high socks, loafers」
+
+      色滲み（color bleed）が出る場合は、BREAK コマンドや重み付け（:1.2 など）で各要素の独立性を高めてください。ネガティブプロンプトに「casual clothes, t-shirt」を入れると制服指定がより安定します。
+
+  # ========== 2. スレンダー（既存・approved=false、1 prompt）==========
+  # 目標キーワード: 「スレンダー プロンプト」(71 imp, rank 6.87)
+  # isApproved=false を維持: 関連 prompt < 5 のため、noindex 継続
+  - slug: スレンダー
+    name: スレンダー
+    color: blue
+    isApproved: false
+    seoTitle: "「スレンダー」プロンプト集｜痩せ型・細身キャラの呪文"
+    seoDescription: "AIイラストで痩せ型・細身キャラを描くスレンダー体型プロンプト集。Stable Diffusion・NovelAI 対応。身長指定やネガティブプロンプトとの組み合わせパターンも紹介。"
+    seoIntro: |
+      スレンダープロンプトは、AIイラスト生成でスリムで細身なキャラクターを表現するための体型指定です。「slender」「slim」「thin」を基本に、身長（tall, average height）、脚の長さ（long legs, leggy）、体つき（delicate frame, narrow waist）を組み合わせて、理想のスレンダーシルエットを作り出せます。
+
+      Stable Diffusion では「slender, slim waist」を高めの重み（例：(slender:1.2)）で置くと細身が強調されますが、1.4 を超えると体が崩れやすいので注意してください。「skinny」は骨ばった印象が強く、カジュアルなスレンダー表現には「slim」「slender」の方が自然です。年齢表現も「young adult」「teenager」などを併記すると体型との整合性が取れます。
+
+      組み合わせ例：
+      - モデル風：「slender, tall, long legs, narrow waist, elegant pose」
+      - アイドル風：「slim, petite frame, slender figure, cute outfit」
+      - リアル系：「slender body, athletic build, natural posture, photo realistic」
+
+      ネガティブプロンプトに「chubby, overweight, thick body, muscular」を入れると、スレンダー指定がより安定します。体型プロンプトは服装との相性で見え方が変わるため、「form-fitting dress」「slim jeans」など体のラインが出る衣装と組み合わせると意図が伝わりやすくなります。
+
+  # ========== 3. 体格差（新規・0 prompts）==========
+  # 目標キーワード: 「体格差 プロンプト」(72 imp, rank 7.74)
+  # isApproved=false を維持: 新規 tag、関連 prompt 採集後に approve
+  - slug: 体格差
+    name: 体格差
+    color: purple
+    isApproved: false
+    seoTitle: "「体格差」プロンプト集｜身長差・カップリング構図の呪文"
+    seoDescription: "AIイラストで身長差・体格差のあるキャラクター2人を描くプロンプト集。Stable Diffusion・NovelAI 対応。男女ペア・BL 構図・親子構図などの指定例を紹介。"
+    seoIntro: |
+      体格差プロンプトは、AIイラストで身長や体つきの異なる 2 人以上のキャラクターを同じ画面に描くための構図指定です。「height difference」「size difference」「tall and short」を基本に、体格（muscular man, petite woman）、立ち位置（standing next to, looking up, looking down）を組み合わせて、ペアの関係性を視覚化できます。
+
+      Stable Diffusion では複数キャラ構図は崩れやすいため、「2people」「two characters」など人数指定に加え、「height difference」を明示すると安定します。男女差・兄妹差・カップリング構図など、用途に応じて形容詞を切り替えましょう。NovelAI なら Artist タグと組み合わせると体格差表現がさらに安定します。
+
+      組み合わせ例：
+      - 男女の身長差：「tall man and petite woman, height difference, looking up, couple」
+      - BL 構図：「tall muscular man, shorter slender man, height difference, standing together」
+      - 親子構図：「adult and child, size difference, hand holding, warm lighting」
+
+      ネガティブプロンプトには「same height, same size」を入れると体格差が保たれやすくなります。また、「full body」で全身を描くことで差が視覚的に伝わりやすくなります。
+
+  # ========== 4. ファンタジー衣装（既存・approved=false、2 prompts）==========
+  # 目標キーワード: 「ファンタジー 衣装 プロンプト」(57) + 「プロンプト 服装 ファンタジー」(76) = 合計 133 imp
+  # isApproved=false を維持: 関連 prompt < 5 のため、noindex 継続
+  - slug: ファンタジー衣装
+    name: ファンタジー衣装
+    color: green
+    isApproved: false
+    seoTitle: "「ファンタジー衣装」プロンプト集｜RPG・中世・魔法使い呪文"
+    seoDescription: "剣士・魔法使い・騎士など RPG 風ファンタジー衣装のプロンプト集。Stable Diffusion・Midjourney 対応。職業別・素材別の呪文例と装飾の指定方法を紹介。"
+    seoIntro: |
+      ファンタジー衣装プロンプトは、AIイラストで RPG・中世・魔法世界の住人を描くための衣装指定です。「fantasy outfit」「medieval armor」「mage robe」を基本に、職業（knight, wizard, elf, warrior, archer）、素材（leather, silk, metal plate, chainmail）、装飾（embroidery, runes, glowing gem）を組み合わせることで、物語性のあるキャラクター衣装を表現できます。
+
+      Stable Diffusion では「fantasy」単体では抽象的すぎるため、「dark fantasy」「high fantasy」「RPG style」などジャンルを明示し、「detailed armor, intricate embroidery」で細部を強化するのがコツです。Midjourney なら --stylize 300 以上で装飾表現が際立ちます。性別・年齢を明示するとキャラ像が安定します。
+
+      組み合わせ例：
+      - 女戦士：「female warrior, leather armor, sword, long cape, fantasy world」
+      - 魔法使い：「young mage, blue robe, star embroidery, glowing staff, floating runes」
+      - エルフ弓使い：「elf archer, green tunic, leaf ornament, forest background, fantasy」
+
+      ネガティブプロンプトに「modern clothes, t-shirt, jeans, casual wear」を入れると現代服が混入しにくくなります。世界観を強化したいときは「epic scene, dramatic lighting」を追加すると画像全体の完成度が上がります。
