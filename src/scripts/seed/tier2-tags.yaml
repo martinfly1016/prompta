@@ -73,7 +73,7 @@ tags:
 
       ネガティブプロンプトには「same height, same size」を入れると体格差が保たれやすくなります。また、「full body」で全身を描くことで差が視覚的に伝わりやすくなります。
 
-  # ========== 4. ファンタジー衣装（関連 prompt 6 条達成）==========
+  # ========== 4. ファンタジー衣装（Phase 1B 後: 17 関連 prompt）==========
   # 目標キーワード: 「ファンタジー 衣装 プロンプト」(57) + 「プロンプト 服装 ファンタジー」(76) = 合計 133 imp
   - slug: ファンタジー衣装
     name: ファンタジー衣装
@@ -92,3 +92,64 @@ tags:
       - エルフ弓使い：「elf archer, green tunic, leaf ornament, forest background, fantasy」
 
       ネガティブプロンプトに「modern clothes, t-shirt, jeans, casual wear」を入れると現代服が混入しにくくなります。世界観を強化したいときは「epic scene, dramatic lighting」を追加すると画像全体の完成度が上がります。
+
+  # ========== 5. 制服（Phase 1B 追加、関連 prompt 8 条達成）==========
+  # 目標キーワード: 学生服・セーラー服系のクラスター（コスプレ簇の補完）
+  - slug: 制服
+    name: 制服
+    color: blue
+    isApproved: true
+    seoTitle: "「制服」プロンプト集｜セーラー服・学生服・スーツの呪文・コピペOK"
+    seoDescription: "制服プロンプトのコピペ集。学生服・セーラー服・ビジネススーツなど、Stable Diffusion で使える呪文を画像付きで紹介。色・素材・シーン別の使い分けも解説。"
+    seoIntro: |
+      制服プロンプトは、AIイラスト生成で学校の学生服・職業ユニフォーム・コスチュームを正確に表現するための基本呪文です。「school uniform」「sailor uniform」「business suit」「nurse uniform」「military uniform」など、シーンに応じた英単語を選ぶことで、統一感のあるキャラクターイメージを安定して生成できます。
+
+      Stable Diffusion では「school uniform」単体では解釈が広すぎるため、「Japanese school uniform, sailor collar, pleated skirt」のようにディテールを並列すると再現精度が大きく上がります。NovelAI では「(school uniform:1.2)」のように重み付けをかけるのがコツ。色指定は「white shirt, navy skirt, red ribbon」と分解して書くと BREAK コマンド無しでも色滲みを抑えられます。
+
+      組み合わせ例：
+      - 日本の学生服：「Japanese school uniform, white shirt, navy blazer, red tie, plaid pleated skirt, knee-high socks, loafers」
+      - ビジネス系：「business suit, white blouse, black pencil skirt, black pumps, hair tied up」
+      - 職業制服：「nurse uniform, white cap, scrubs, stethoscope」
+
+      ネガティブプロンプトに「casual, t-shirt, torn clothes, mismatched uniform」を入れると制服感が保たれやすくなります。
+
+  # ========== 6. プリーツスカート（Phase 1B 追加、関連 prompt 7 条達成）==========
+  # 目標キーワード: 「プリーツスカート プロンプト」(43 imp)
+  - slug: プリーツスカート
+    name: プリーツスカート
+    color: pink
+    isApproved: true
+    seoTitle: "「プリーツスカート」プロンプト集｜学生服・カジュアルの呪文"
+    seoDescription: "プリーツスカートプロンプトのコピペ集。学生服・ミニ丈・ロング丈・カラー指定まで、Stable Diffusion で再現する呪文を画像付きで紹介。"
+    seoIntro: |
+      プリーツスカートプロンプトは、AIイラスト生成で学生服やカジュアルファッションに欠かせない日本的なアイテム表現です。「pleated skirt」を基本に、色（navy pleated skirt, plaid pleated skirt）、丈（mini pleated skirt, knee-length pleated skirt）、素材（wool pleated skirt, chiffon pleated skirt）を指定することで、理想のスカートを再現できます。
+
+      Stable Diffusion では「pleated skirt」だけだと長さが不安定になるため、「knee-high pleated skirt」や「micro pleated skirt」のように丈を明示するのがコツです。色指定は BREAK コマンドと組み合わせて「white blouse BREAK navy pleated skirt」と書くと上下の色混じりが起きにくくなります。重み付けは「(pleated skirt:1.2)」程度が安定圏。
+
+      組み合わせ例：
+      - 定番学生服：「school uniform, white blouse, navy pleated skirt, knee-high socks, loafers」
+      - カジュアル：「casual outfit, white t-shirt, pink pleated mini skirt, sneakers, denim jacket」
+      - ゴシック系：「gothic lolita, black pleated skirt, lace trim, platform boots」
+
+      ネガティブに「straight skirt, tight skirt, wrinkled skirt」を入れるとプリーツが消えるのを防げます。プリーツの本数を強調したいときは「many pleats」や「accordion pleats」も効果的です。
+
+  # ========== 7. ドレス（Tier-1 アップグレード、既に 33 関連 prompt、approved=true）==========
+  # 既存の Tier-1 tag に SEO intro を後付けする用途。seed スクリプトは tier を区別せず upsert する。
+  - slug: ドレス
+    name: ドレス
+    color: pink
+    isApproved: true
+    seoTitle: "「ドレス」プロンプト集｜イブニング・カクテル・ウェディングの呪文"
+    seoDescription: "ドレスプロンプトのコピペ集。イブニングドレス・カクテルドレス・ウェディングドレス・ファンタジードレスまで、Stable Diffusion で再現する呪文を画像付きで紹介。"
+    seoIntro: |
+      ドレスプロンプトは、AIイラスト生成でエレガントな女性キャラクターを表現するための基本呪文です。「dress」「evening gown」「cocktail dress」「wedding dress」「fantasy dress」など、シーン別の英単語を選び、色・素材・ディテールを積み重ねて理想のドレスを作ります。
+
+      Stable Diffusion では「red dress」だけだと質感が曖昧になるため、「red silk evening dress, floor-length, backless」のように素材・丈・ディテールを追加するのがコツです。Midjourney なら「--style raw --ar 2:3」で実写風のドレスポートレートに近づきます。NovelAI では Artist タグと組み合わせるとイラスト調の華やかなドレスが安定します。
+
+      組み合わせ例：
+      - フォーマル：「elegant evening gown, red silk, floor-length, backless, diamond necklace, high heels」
+      - カクテル：「black cocktail dress, knee-length, lace detail, pearl earrings, clutch bag」
+      - ウェディング：「white wedding dress, long train, veil, bouquet, soft lighting」
+      - ファンタジー：「ethereal fantasy dress, flowing sleeves, floral embroidery, crown, magical aura」
+
+      ネガティブプロンプトに「casual, jeans, t-shirt, torn, simple」を入れるとドレスの華やかさが保たれやすくなります。シルエットを美しく出したいときは「hourglass figure, elegant pose」を併記するのが定番です。

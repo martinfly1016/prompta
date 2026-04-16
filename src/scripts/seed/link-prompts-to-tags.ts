@@ -46,6 +46,28 @@ const RULES: TagRule[] = [
       'warhammer-40k-chaos-witch-cosplay',
     ],
   },
+  {
+    slug: '制服',
+    includeSlugs: [
+      'cinematic-portrait-student-uniform',
+      'school-uniform-freckles-joy',
+      'green-suit-gentleman-fashion',
+      'sailor-uniform-school-cosplay',
+      'school-uniform-pleated-skirt',
+      'pleated-miniskirt-cosplay-girl',
+      'dark-academia-school-uniform',
+    ],
+  },
+  {
+    slug: 'プリーツスカート',
+    includeSlugs: [
+      'white-down-jacket-serafuku-winter',
+      'pleated-miniskirt-cosplay-girl',
+      'straight-long-black-hair-glossy',
+      'asymmetrical-bangs-black-hair',
+      'school-uniform-pleated-skirt',
+    ],
+  },
 ]
 
 async function main() {
