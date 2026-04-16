@@ -33,13 +33,12 @@ tags:
 
       色滲み（color bleed）が出る場合は、BREAK コマンドや重み付け（:1.2 など）で各要素の独立性を高めてください。ネガティブプロンプトに「casual clothes, t-shirt」を入れると制服指定がより安定します。
 
-  # ========== 2. スレンダー（既存・approved=false、1 prompt）==========
+  # ========== 2. スレンダー（関連 prompt 5 条達成）==========
   # 目標キーワード: 「スレンダー プロンプト」(71 imp, rank 6.87)
-  # isApproved=false を維持: 関連 prompt < 5 のため、noindex 継続
   - slug: スレンダー
     name: スレンダー
     color: blue
-    isApproved: false
+    isApproved: true
     seoTitle: "「スレンダー」プロンプト集｜痩せ型・細身キャラの呪文"
     seoDescription: "AIイラストで痩せ型・細身キャラを描くスレンダー体型プロンプト集。Stable Diffusion・NovelAI 対応。身長指定やネガティブプロンプトとの組み合わせパターンも紹介。"
     seoIntro: |
@@ -75,13 +74,12 @@ tags:
 
       ネガティブプロンプトには「same height, same size」を入れると体格差が保たれやすくなります。また、「full body」で全身を描くことで差が視覚的に伝わりやすくなります。
 
-  # ========== 4. ファンタジー衣装（既存・approved=false、2 prompts）==========
+  # ========== 4. ファンタジー衣装（関連 prompt 6 条達成）==========
   # 目標キーワード: 「ファンタジー 衣装 プロンプト」(57) + 「プロンプト 服装 ファンタジー」(76) = 合計 133 imp
-  # isApproved=false を維持: 関連 prompt < 5 のため、noindex 継続
   - slug: ファンタジー衣装
     name: ファンタジー衣装
     color: green
-    isApproved: false
+    isApproved: true
     seoTitle: "「ファンタジー衣装」プロンプト集｜RPG・中世・魔法使い呪文"
     seoDescription: "剣士・魔法使い・騎士など RPG 風ファンタジー衣装のプロンプト集。Stable Diffusion・Midjourney 対応。職業別・素材別の呪文例と装飾の指定方法を紹介。"
     seoIntro: |
