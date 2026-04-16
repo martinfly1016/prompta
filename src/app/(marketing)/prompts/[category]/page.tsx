@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG, getGuidesForCategory, CATEGORY_INTROS } from '@/lib/constants'
+import { SITE_CONFIG, getGuidesForCategory, CATEGORY_INTROS, CATEGORY_SEO_OVERRIDES } from '@/lib/constants'
 import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
@@ -30,10 +30,17 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const isImage = IMAGE_CATEGORIES.has(cat.slug)
   const toolList = isImage ? 'Stable Diffusion・Midjourney・DALL-E' : 'ChatGPT・Claude・Gemini'
   const nameEnPart = cat.nameEn ? `${cat.nameEn} ` : ''
-  const title = page === 1
+  const override = CATEGORY_SEO_OVERRIDES[cat.slug]
+  const defaultTitle = page === 1
     ? `${cat.name}プロンプト集【無料・コピペOK】${countLabel} — ${nameEnPart}AIプロンプト`
     : `${cat.name}プロンプト集 — ${nameEnPart}AIプロンプト${suffix}`
-  const description = `そのままコピーして使える${cat.name}プロンプト${countLabel}。${toolList}対応。${(cat.description ?? '').slice(0, 80)}`.slice(0, 158)
+  const title = override?.seoTitle
+    ? `${override.seoTitle}${suffix}`
+    : defaultTitle
+  const defaultDescription = `そのままコピーして使える${cat.name}プロンプト${countLabel}。${toolList}対応。${(cat.description ?? '').slice(0, 80)}`.slice(0, 158)
+  const description = page === 1 && override?.seoDescription
+    ? override.seoDescription
+    : defaultDescription
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${cat.name}プロンプト集`)}&category=${encodeURIComponent(cat.name)}&type=category`
   return {
     title,
@@ -62,6 +69,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   if (!category) notFound()
 
   const categoryTools = tools.filter(tool => prompts.some(p => p.toolSlug === tool.slug))
+  const seoOverride = CATEGORY_SEO_OVERRIDES[category.slug]
+  const h1Text = seoOverride?.seoH1 ?? `${category.name}プロンプト集`
   const schema = generateCollectionPageSchema(`${category.name}プロンプト集`, category.description, `${SITE_CONFIG.url}/prompts/${category.slug}`, total)
 
   return (
@@ -76,7 +85,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-4xl">{category.icon}</span>
-              <h1 className="text-3xl font-bold text-gray-900">{category.name}プロンプト集</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{h1Text}</h1>
             </div>
             <p className="text-gray-600 leading-relaxed mb-4">{category.description}</p>
             <div className="flex items-center gap-3">

@@ -176,6 +176,21 @@ export const CATEGORIES: Category[] = [
   },
 ]
 
+// Per-category SEO overrides. Leave a field unset to fall back to the default
+// template in src/app/(marketing)/prompts/[category]/page.tsx.
+// - seoTitle is the <title> *base* (the template appends " — ページN" when paginated).
+// - seoDescription overrides the meta description (≤158 chars recommended).
+// - seoH1 overrides the on-page H1.
+export interface CategorySeoOverride {
+  seoTitle?: string
+  seoH1?: string
+  seoDescription?: string
+}
+
+export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
+  // Populated by follow-up PRs per the SEO execution plan. Empty = all categories use defaults.
+}
+
 // Long-form category intros (~600-800 chars each) for SEO content depth.
 // Rendered on /prompts/[category] pages above the existing "コツ" section.
 export interface CategoryIntro {

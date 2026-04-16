@@ -1,0 +1,25 @@
+# Tier 2 tags for SEO long-tail landing pages.
+#
+# Each entry is upserted into the `Tag` table by src/scripts/seed/tier2-tags.ts.
+# Run: npx tsx src/scripts/seed/tier2-tags.ts
+#
+# Enrichment gate (enforced by the seed script):
+#   - isApproved=true requires seoIntro ≥ 400 characters (trimmed).
+#   - If seoIntro is shorter, the entry is skipped with a warning so tag stays
+#     noindex and is NOT pushed into the sitemap.
+#
+# Example entry (commented out — uncomment and fill when ready):
+#
+#   - slug: sailor-uniform
+#     name: セーラー服
+#     color: pink
+#     isApproved: true
+#     seoTitle: "「セーラー服」プロンプト集｜Stable Diffusion 呪文・コピペOK"
+#     seoDescription: "セーラー服プロンプトのコピペ集。Stable Diffusion・NovelAI 対応の呪文例と重み付けのコツを多数紹介。"
+#     seoIntro: |
+#       (TODO: 400-600字の日本語本文を記入。見出し:
+#         「セーラー服プロンプトとは？」
+#         「使い方のコツ」
+#         「組み合わせ例 3つ」)
+
+tags: []

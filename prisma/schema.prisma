@@ -78,16 +78,22 @@ model ToolCategory {
 // ==================== Tags ====================
 
 model Tag {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  slug        String    @unique
-  color       String    @default("blue")
-  description String?
-  isApproved  Boolean   @default(false) // true = curated tag shown in sitemap/tag pages
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  name           String    @unique
+  slug           String    @unique
+  color          String    @default("blue")
+  description    String?
+  isApproved     Boolean   @default(false) // true = curated tag shown in sitemap/tag pages
 
-  prompts     Prompt[]  @relation("PromptTags")
+  // SEO (per-tag landing page overrides; null = fall back to default template)
+  seoTitle       String?
+  seoDescription String?
+  seoIntro       String?   @db.Text // 400-600 char JP intro rendered above the prompt grid
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  prompts        Prompt[]  @relation("PromptTags")
 
   @@index([slug])
   @@index([isApproved])
