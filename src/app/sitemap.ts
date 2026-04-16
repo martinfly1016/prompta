@@ -8,6 +8,10 @@ import {
   getLatestPromptDate,
 } from '@/lib/data'
 
+// Revalidate hourly so DB-driven URL additions (new Guide/Tag/Prompt rows)
+// surface in sitemap.xml without waiting for the next Vercel deploy.
+export const revalidate = 3600
+
 const BASE = 'https://www.prompta.jp'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
