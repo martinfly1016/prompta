@@ -188,7 +188,16 @@ export interface CategorySeoOverride {
 }
 
 export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
-  // Populated by follow-up PRs per the SEO execution plan. Empty = all categories use defaults.
+  'cosplay': {
+    seoTitle: 'コスプレプロンプト集【呪文・コピペOK】｜セーラー服・メイド服・ファンタジー衣装',
+    seoH1: 'コスプレプロンプト集｜セーラー服・メイド服・制服・ファンタジー衣装',
+    seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・制服・和風・ファンタジー衣装まで、Stable Diffusion と NovelAI で使える呪文を画像付きで多数紹介。',
+  },
+  'clothing': {
+    seoTitle: '女性向け服装プロンプト集【無料・コピペOK】｜ファンタジー衣装・制服・ドレス',
+    seoH1: '女性向け服装プロンプト集｜ファンタジー・制服・ドレス・カジュアル',
+    seoDescription: '女性キャラ向け服装プロンプトのコピペ集。トップス・スカート・ドレス・ファンタジー衣装まで、Stable Diffusion で使える呪文と BREAK コマンドによる色滲み対策を紹介。',
+  },
 }
 
 // Long-form category intros (~600-800 chars each) for SEO content depth.
@@ -220,7 +229,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'clothing': {
     intro:
-      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「school uniform」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy pleated skirt, knee-high socks, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。',
+      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「school uniform」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy pleated skirt, knee-high socks, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。\n\n【カジュアル・フォーマル・ファンタジー・コスチュームの4軸で整理する】服装プロンプトを体系的に覚えるには、日常系（casual：T-shirt, jeans, hoodie, sneakers）、フォーマル系（formal：suit, evening dress, tuxedo, high heels）、ファンタジー系（fantasy：medieval armor, mage robe, elf tunic, knight plate）、コスチューム系（costume：sailor uniform, maid outfit, kimono, cheerleader）の4軸で引き出しを作るのが効率的です。各軸ごとに10〜20個の英単語を覚えておけば、組み合わせで数百種類の衣装表現が可能になります。\n\n【BREAKコマンドで色滲み（color bleeding）を防ぐ】複数の服装要素に別々の色を指定すると、Stable Diffusionでは色が混ざってしまう「color bleeding」が起きやすく、例えば「red dress, blue jacket」が紫系に変色することがあります。これを防ぐには「red dress BREAK blue jacket」とプロンプトを分割するか、CutOff 拡張機能で「red:dress || blue:jacket」のように領域ごとに色を固定する方法が有効です。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」と書くとさらに安定します。\n\n【女性キャラ向けの定番パターン】女性キャラクター向けの服装では、トップス（blouse, cardigan, sweater, crop top）とボトムス（pleated skirt, tight skirt, jeans, hot pants）のバランス、足元（knee-high socks, thigh-high stockings, pumps, sneakers）の選択、アクセサリー（ribbon, choker, earrings, hair ornament）の有無が印象を大きく左右します。「1girl, white blouse, navy pleated skirt, knee-high socks, brown loafers, school uniform」のように「人数→上→下→足元→シーン」の順で書くと AI が解釈しやすくなります。',
     useCases: [
       'ファッションデザインのインスピレーション',
       'キャラクター設定資料の作成',
@@ -237,7 +246,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'cosplay': {
     intro:
-      'コスプレプロンプトは、特定のアニメ・ゲーム・歴史上のキャラクターの衣装やルックを再現するための専門的なプロンプト技術です。Stable Diffusionでは作品名や役名を直接入れる方法（例: 「miku hatsune cosplay」）と、衣装の構成要素を分解して記述する方法（例: 「twin teal hair, school uniform, tie」）の2通りがあり、後者の方が著作権リスクを避けつつ「それっぽい」画像を生成できます。\nコスプレ特有の課題として、衣装のディテール再現と人物の自然さの両立があります。「cosplay photo, professional photography, studio lighting」といった撮影系キーワードを併用することで、実際のコスプレ写真に近いリアリティが得られます。Midjourneyでは「--ar 2:3 --style raw」が人物コスプレ写真に最適です。',
+      'コスプレプロンプトは、特定のアニメ・ゲーム・歴史上のキャラクターの衣装やルックを再現するための専門的なプロンプト技術です。Stable Diffusionでは作品名や役名を直接入れる方法（例: 「miku hatsune cosplay」）と、衣装の構成要素を分解して記述する方法（例: 「twin teal hair, school uniform, tie」）の2通りがあり、後者の方が著作権リスクを避けつつ「それっぽい」画像を生成できます。\nコスプレ特有の課題として、衣装のディテール再現と人物の自然さの両立があります。「cosplay photo, professional photography, studio lighting」といった撮影系キーワードを併用することで、実際のコスプレ写真に近いリアリティが得られます。Midjourneyでは「--ar 2:3 --style raw」が人物コスプレ写真に最適です。\n\n【定番コスプレ10選の呪文例】AIモデルが学習データで頻繁に見ているため再現性が高い定番コスチュームは、「sailor uniform（セーラー服）」「maid uniform（メイド服）」「school uniform（制服）」「miko costume（巫女装束）」「nurse outfit（ナース服）」「kimono（着物）」「cheerleader uniform（チアリーダー）」「witch costume（魔女コスチューム）」「bunny girl（バニーガール）」「fantasy armor（ファンタジー甲冑）」の10種類。これらをベースに色・素材・小物を追加するだけで、少ない指示でも安定した結果が得られます。\n\n【Stable Diffusion と NovelAI の使い分け】Stable Diffusionはリアル寄りの実写コスプレ写真が得意で、ChilloutMix や AsianRealistic 系モデルは実写風コスプレ、Anything V5 や Counterfeit 系はアニメ調に最適です。一方 NovelAI は Artist タグを積極活用することで、特定作家の絵柄でコスプレキャラを描けるのが特徴。どちらもベースプロンプトは共通ですが、品質タグ（SD: masterpiece, best quality / NovelAI: best quality, amazing quality）とネガティブプロンプトの書式がモデルごとに微妙に異なる点に注意してください。\n\n【呪文の重み付けテクニック】コスプレの衣装要素は複数併記すると AI が省略する傾向があるため、重要パーツに「(sailor collar:1.2), (pleated skirt:1.3), (knee-high socks:1.1)」のように重みを散らすのがコツです。1.4 を超えると画像全体が崩壊しやすいので、1.1〜1.3 の範囲に収めるのが安全圏。さらに BREAK 構文を使うと「[上着]BREAK[下]BREAK[足元]」と要素を分離でき、色の干渉（color bleeding）も防げます。',
     useCases: [
       'コスプレ衣装のデザイン案出し',
       'イベントポスター・告知画像の作成',
