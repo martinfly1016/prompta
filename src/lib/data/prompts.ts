@@ -11,8 +11,10 @@ const promptInclude = {
 }
 
 export const getPromptBySlug = cache(async (slug: string) => {
-  return prisma.prompt.findUnique({
-    where: { slug },
+  // findFirst (not findUnique) so we can filter isPublished — unpublished drafts
+  // should 404 for the public site; admins edit via the admin dashboard instead.
+  return prisma.prompt.findFirst({
+    where: { slug, isPublished: true },
     include: promptInclude,
   })
 })
