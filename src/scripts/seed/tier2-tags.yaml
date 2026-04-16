@@ -53,13 +53,12 @@ tags:
 
       ネガティブプロンプトに「chubby, overweight, thick body, muscular」を入れると、スレンダー指定がより安定します。体型プロンプトは服装との相性で見え方が変わるため、「form-fitting dress」「slim jeans」など体のラインが出る衣装と組み合わせると意図が伝わりやすくなります。
 
-  # ========== 3. 体格差（新規・0 prompts）==========
+  # ========== 3. 体格差（関連 prompt 5 条達成、Lexica 採集）==========
   # 目標キーワード: 「体格差 プロンプト」(72 imp, rank 7.74)
-  # isApproved=false を維持: 新規 tag、関連 prompt 採集後に approve
   - slug: 体格差
     name: 体格差
     color: purple
-    isApproved: false
+    isApproved: true
     seoTitle: "「体格差」プロンプト集｜身長差・カップリング構図の呪文"
     seoDescription: "AIイラストで身長差・体格差のあるキャラクター2人を描くプロンプト集。Stable Diffusion・NovelAI 対応。男女ペア・BL 構図・親子構図などの指定例を紹介。"
     seoIntro: |
