@@ -444,6 +444,239 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
       },
     ],
   },
+  'body-type-prompt-guide': {
+    sections: [
+      {
+        title: '体型プロンプトの基本 — 5つの軸で理解する',
+        content: `AI画像生成で体型を指定するには、以下の5軸を意識します：
+
+**1. 体格**: slim, slender, athletic, muscular, chubby, curvy, plump, plus-size
+**2. 身長**: tall, short, petite, towering, average height
+**3. 体の特徴**: narrow waist, wide hips, broad shoulders, long legs, thick thighs
+**4. 年齢感**: youthful, mature, elderly（数値指定は不安定）
+**5. ポーズ**: standing, sitting, dynamic pose, contrapposto, power stance
+
+これらをカンマ区切りで組み合わせるのが基本です：
+\`slender, tall, narrow waist, long legs, elegant standing pose\`
+
+単語選びのコツとして、「skinny」は骨ばった印象が強く、自然な細身には「slim」「slender」を推奨します。「chubby」は可愛い丸み、「plump」はより豊かな体つきを暗示します。`,
+      },
+      {
+        title: 'スレンダー・細身体型の呪文テクニック',
+        content: `痩せ型〜細身の体型は最も使用頻度が高いカテゴリです。
+
+**基本セット**:
+\`slender body, slim waist, delicate frame, (slender:1.2)\`
+
+**身長を加える**:
+\`slender, tall, long legs, leggy, model proportions\`
+
+**アイドル系の細身**:
+\`slim, petite, cute face, slender figure, small frame\`
+
+**注意点**:
+- 重み付けは \`(slender:1.2)\` 程度が安全圏。1.4超は体が崩壊します
+- アニメ系モデル（Anything V5等）はデフォルトが極端に細いため、slender指定の効果が薄い場合があります
+- リアル系モデル（ChilloutMix等）は体型指定への反応が素直です
+
+**ネガティブプロンプト**:
+\`chubby, overweight, thick body, muscular, fat\``,
+      },
+      {
+        title: '筋肉質・アスレチック体型の呪文',
+        content: `筋肉質な体型は、ファンタジーの戦士やスポーツキャラクターに欠かせません。
+
+**男性キャラ**:
+\`muscular man, broad shoulders, six-pack abs, (muscular:1.3), strong build\`
+
+**女性キャラ（引き締まった体型）**:
+\`athletic build, toned body, visible abs, muscular arms, fit, strong woman\`
+
+**ファンタジー戦士**:
+\`muscular warrior, battle-scarred, heavy armor, powerful stance, (muscular:1.3)\`
+
+**コツ**:
+- 女性キャラの筋肉は \`(muscular:1.2)\` 程度に抑えないと男性的になりすぎます
+- 「athletic」は引き締まった程度、「muscular」は明確に筋肉質、「bodybuilder」は極端な筋肉表現です
+- ControlNet の OpenPose を使うと、参照画像からポーズと体型を同時に再現できます`,
+      },
+      {
+        title: 'ぽっちゃり・プラスサイズ体型の表現',
+        content: `ぽっちゃり〜プラスサイズの体型は、AI画像生成ではまだ表現が難しいカテゴリですが、正しい指定で改善できます。
+
+**かわいい丸み（chubby系）**:
+\`chubby, round face, soft body, cute, (chubby:1.2), baby face\`
+
+**プラスサイズモデル（plus-size系）**:
+\`plus-size, curvy, thick thighs, wide hips, confident pose, fashion model\`
+
+**重要ポイント**:
+- \`chubby\` は小太りの可愛さ、\`plus-size\` はファッション的な大きめ体型
+- リアル系モデルの方がぽっちゃり表現に対応しやすい（アニメ系は痩せバイアスが強い）
+- 「fat」は品質が下がりやすいため、「curvy」「plump」「plus-size」を推奨
+- \`(chubby:1.3)\` 以上が必要な場合が多い（AIの痩せデフォルトに対抗）
+
+**ネガティブプロンプト**:
+\`skinny, slim, underweight, anorexic\``,
+      },
+      {
+        title: '体型×服装×ポーズの組み合わせで説得力を出す',
+        content: `体型単体で指定するだけでは不十分です。体型の特性を活かす**服装とポーズ**をセットで指定することで、画像に説得力が生まれます。
+
+**スレンダー×エレガント**:
+\`slender woman, long evening dress, elegant pose, hand on hip, side profile, soft lighting\`
+
+**筋肉質×パワフル**:
+\`muscular warrior woman, leather armor, power stance, arms crossed, dramatic lighting, battle scene\`
+
+**小柄×キュート**:
+\`petite girl, oversized sweater, sitting on stairs, legs dangling, looking up, warm light\`
+
+**プラスサイズ×自信**:
+\`plus-size woman, stylish business suit, confident stride, urban street, professional photography\`
+
+**身長差カップル**:
+\`tall man and petite woman, height difference, standing together, romantic, soft lighting, couple portrait\`
+
+体型の特性を**服装のシルエット**で強調するのがプロのテクニックです。細身なら体のラインが出る \`form-fitting dress\`、筋肉質なら \`tank top\` や \`armor\`、ぽっちゃりなら \`flowing dress\` や \`oversized clothing\` が相性が良いです。`,
+      },
+    ],
+    faq: [
+      {
+        q: '体型を数値（170cm、50kgなど）で指定できますか？',
+        a: 'Stable Diffusion は数値をテキストとして認識するだけで、実際の身長・体重として解釈しません。「tall, long legs, towering over」のような形容詞の組み合わせで相対的に表現するのが確実です。2人構図で身長差を出したい場合は「height difference, tall and short」を明示します。',
+      },
+      {
+        q: '体型指定したのに反映されません',
+        a: 'まずモデルを確認してください。アニメ系モデルは痩せバイアスが強く、「curvy」「muscular」の効果が弱いです。(keyword:1.3) で重み付けを上げるか、リアル系モデル（ChilloutMix等）に切り替えてください。それでもダメな場合はControlNetで参照画像を使うのが確実です。',
+      },
+      {
+        q: '手や指が崩れてしまいます',
+        a: 'ネガティブプロンプトに「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を必ず入れてください。品質タグとして「detailed hands, perfect anatomy, correct proportions, five fingers」を追加するとさらに安定します。ADetailerという拡張機能で手だけを自動修復する方法もあります。',
+      },
+    ],
+  },
+  'color-prompt-guide': {
+    sections: [
+      {
+        title: '色指定の基本 — 全体トーンと個別色の使い分け',
+        content: `AI画像生成での色指定は、大きく2つのレベルに分かれます：
+
+**1. 全体トーン（画像全体の雰囲気）**:
+- \`pastel colors\` — 淡くて柔らかい色使い
+- \`vivid colors\` — 鮮やかで力強い
+- \`monochrome\` — 白黒
+- \`sepia tone\` — 古写真風の暖色
+- \`warm colors\` / \`cool colors\` — 暖色系 / 寒色系
+- \`cinematic color grading\` — 映画的な色補正
+
+**2. 個別色（特定パーツの色指定）**:
+- \`red dress, blue ribbon, green eyes, silver hair\`
+
+個別色を指定すると「色滲み（color bleeding）」が起きやすいのが最大の課題です。例えば「red dress, blue jacket」と書くと、赤と青が混ざって紫っぽくなることがあります。この対処法がこのガイドの本題です。`,
+      },
+      {
+        title: '色名プロンプト — 基本色から微妙なニュアンスまで',
+        content: `基本10色（red, blue, green, yellow, pink, purple, white, black, orange, brown）はどのモデルでも安定して認識されます。
+
+**より精度の高い色名**:
+- 赤系: crimson（深紅）, scarlet（緋色）, coral（サンゴ色）, ruby（ルビー色）
+- 青系: navy（紺）, cerulean（空色）, azure（蒼）, teal（青緑）, cobalt（コバルト）
+- 緑系: emerald（エメラルド）, mint（ミント）, sage（セージ）, olive（オリーブ）
+- 紫系: lavender（ラベンダー）, violet（スミレ）, magenta（マゼンタ）
+- 暖色系: amber（琥珀）, gold（金）, peach（桃色）, cream（クリーム）
+
+**和風の色名**も意外と認識します:
+- 桜色 → \`sakura pink\` で柔らかいピンク
+- 藍色 → \`indigo blue\` で深い青
+- 朱色 → \`vermillion\` で朱赤
+- 鶯色 → \`olive green, warm\` で暖かい緑
+
+色の精度を上げるには「color」を挟むのがコツ: \`azalea color hair\` のように書くと AI が色として認識しやすくなります。`,
+      },
+      {
+        title: 'CutOff 拡張機能で部分色指定をマスターする',
+        content: `CutOff は Stable Diffusion WebUI の拡張機能で、プロンプト中の色指定を特定の対象に「固定」する機能です。
+
+**インストール**: Extensions タブ → Install from URL → CutOff のリポジトリ URL を貼って Install
+
+**基本的な使い方**:
+プロンプト: \`1girl, red dress, blue ribbon, green eyes\`
+CutOff Target tokens: \`red, blue, green\`
+CutOff Weight: 1.0（デフォルト）
+
+これにより「red」はドレスだけ、「blue」はリボンだけ、「green」は目だけに固定されます。
+
+**実践例**:
+\`1girl, white blouse, navy pleated skirt, red ribbon, brown loafers\`
+→ CutOff targets: \`white, navy, red, brown\`
+→ 各色が各パーツにのみ適用され、混色を防止
+
+**注意点**:
+- CutOff Weight を 1.5 以上にすると画像が崩れやすい
+- 色数が多すぎると（5色以上）効果が弱くなる
+- Regional Prompter と併用するとさらに精度が上がる`,
+      },
+      {
+        title: 'BREAK コマンドで色の干渉を分離する',
+        content: `BREAK はプロンプトを独立したセグメントに区切る構文です。CutOff をインストールしたくない場合の代替手段として有効です。
+
+**基本構文**:
+\`red dress BREAK blue sky BREAK green trees\`
+
+各セグメントが独立して解釈されるため、色の干渉が大幅に減ります。
+
+**衣装の上下で色分け**:
+\`1girl, (red jacket:1.2) BREAK (blue pleated skirt:1.2) BREAK (white shoes:1.1)\`
+
+**キャラクター + 背景で色分離**:
+\`beautiful girl in yellow dress BREAK purple and pink sunset sky, city skyline\`
+
+**BREAK の注意点**:
+- 各セグメントに重み付け \`(keyword:1.2)\` を加えると効果が安定
+- BREAK を使いすぎる（4つ以上）と構図が崩れることがある
+- 「AND」構文（A AND B）とは異なる動作。BREAK は解釈を分離、AND はブレンドです`,
+      },
+      {
+        title: 'シネマティック・カラーグレーディングで映画的な色彩を出す',
+        content: `映画やドラマの色合いを再現するカラーグレーディング技法は、作品全体の質感を劇的に変えます。
+
+**ハリウッド定番 — Orange & Teal**:
+\`cinematic color grading, orange and teal, warm skin tones, cool shadows, film grain\`
+→ 人物を暖色（オレンジの肌色）、背景を寒色（ティールの影）に分離する技法
+
+**レトロ・フィルム風**:
+\`film photography, kodak portra 400, soft grain, slightly desaturated, warm highlights\`
+
+**ダーク・ムーディ**:
+\`dark moody, low key lighting, deep shadows, (dark:1.2), muted colors, noir style\`
+
+**パステル・ドリーミー**:
+\`pastel colors, soft lighting, dreamy atmosphere, (pastel:1.2), kawaii aesthetic\`
+
+**CFG スケールと色の関係**:
+CFGスケール 7-8: 色が柔らかく自然 → パステルや写真的な表現向き
+CFGスケール 10-12: 色が鮮明でプロンプトに忠実 → 強い色指定向き
+CFGスケール 15+: 色が過飽和になりやすい → 不自然になることが多い
+
+ステップ数も色に影響します。20-30ステップが安定圏、50+は色がくすむことがあります。`,
+      },
+    ],
+    faq: [
+      {
+        q: 'CutOff と BREAK はどちらを使うべきですか？',
+        a: '両方使えるなら CutOff の方が精度が高いです。CutOff はトークン単位で色を固定するため、BREAK より細かい制御が可能です。ただし CutOff は拡張機能のインストールが必要で、一部のモデル（SDXL等）では未対応の場合もあります。BREAK はインストール不要で汎用的に使えるため、まず BREAK で試してダメなら CutOff を導入する、という順序がおすすめです。',
+      },
+      {
+        q: '髪の色が服に染み出します。対処法は？',
+        a: '「red hair, white dress」のように対照的な色を使うと染み出しが起きやすいです。対処: (1) BREAK で分離「(red hair:1.2) BREAK (white dress:1.2)」、(2) CutOff で Target tokens に「red, white」を指定、(3) ネガティブに「color bleeding, miscolored」を入れる、(4) Regional Prompter で髪と服の領域を分離、の4つの手段があります。',
+      },
+      {
+        q: 'モノクロ画像の一部だけカラーにできますか？',
+        a: 'img2img の Inpaint 機能を使います。まず「monochrome, grayscale」で全体をモノクロ生成し、次に Inpaint でカラーにしたい部分をマスクして「red lips, color」などで部分着色します。Stable Diffusion WebUI の Inpaint 機能が最も手軽です。',
+      },
+    ],
+  },
 }
 
 export default async function GuidePage({ params }: Props) {

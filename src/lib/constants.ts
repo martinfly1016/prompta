@@ -506,6 +506,20 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'コスプレ プロンプト 書き方',
     monthlySearchVolume: 480,
   },
+  {
+    slug: 'body-type-prompt-guide',
+    title: '体型プロンプトの書き方｜スレンダー・筋肉質・ぽっちゃりを Stable Diffusion で再現',
+    description: 'AI画像生成で体型を自在にコントロールするプロンプト完全ガイド。スレンダー・アスレチック・ぽっちゃり・小柄・高身長の指定方法と重み付けテクニックを解説。',
+    targetKeyword: '体型 プロンプト 書き方',
+    monthlySearchVolume: 390,
+  },
+  {
+    slug: 'color-prompt-guide',
+    title: '色プロンプト完全ガイド｜CutOff・BREAK で色滲みを防ぐ Stable Diffusion テクニック',
+    description: 'AI画像生成での色指定を完全マスター。118色の色名、CutOff拡張、BREAKコマンド、cinematic color grading まで、色滲み防止テクニックを徹底解説。',
+    targetKeyword: '色 プロンプト 色指定',
+    monthlySearchVolume: 320,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -537,6 +551,14 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'cosplay-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'body-type-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type', 'camera', 'clothing'],
+  },
+  'color-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['color', 'anime', 'camera', 'hairstyle'],
   },
 }
 
