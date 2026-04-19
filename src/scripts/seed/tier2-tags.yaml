@@ -1,155 +1,916 @@
-# Tier 2 tags for SEO long-tail landing pages.
-#
-# Each entry is upserted into the `Tag` table by src/scripts/seed/tier2-tags.ts.
-# Run: npx tsx src/scripts/seed/tier2-tags.ts
-#
-# Enrichment gate (enforced by the seed script):
-#   - isApproved=true requires seoIntro ≥ 400 characters (trimmed).
-#   - If seoIntro is shorter, the entry is skipped with a warning so tag stays
-#     noindex and is NOT pushed into the sitemap.
-#
-# Slug strategy: existing tags in prod use the Japanese name as the slug itself
-# (e.g. `セーラー服`). We preserve that to avoid creating duplicate records; URLs
-# are URL-encoded at the edge (Next.js encodeURIComponent in generateStaticParams).
-
 tags:
-  # ========== 1. セーラー服（既存・approved=true、7 prompts）==========
-  # 目標キーワード: 「セーラー服 プロンプト」(108 imp, rank 7.99)
   - slug: セーラー服
     name: セーラー服
     color: pink
     isApproved: true
-    seoTitle: "「セーラー服」プロンプト集｜Stable Diffusion 呪文・コピペOK"
-    seoDescription: "セーラー服プロンプトのコピペ集。夏服・冬服・リボン色・プリーツスカートの指定方法まで、Stable Diffusion・NovelAI・Midjourney で使える呪文を画像付きで紹介。"
-    seoIntro: |
-      セーラー服プロンプトは、AIイラスト生成で女子高生や学園キャラクターを描く際の基本的な衣装指定です。「sailor uniform」「sailor school uniform」を基本に、リボンの色（red ribbon, blue ribbon）、襟（sailor collar）、袖の長さ（short sleeves, long sleeves）、スカートのプリーツ（pleated skirt）を組み合わせることで、理想のセーラー服デザインを再現できます。
+    seoTitle: 「セーラー服」プロンプト集｜Stable Diffusion 呪文・コピペOK
+    seoDescription: セーラー服プロンプトのコピペ集。夏服・冬服・リボン色・プリーツスカートの指定方法まで、Stable Diffusion・NovelAI・Midjourney で使える呪文を画像付きで紹介。
+    seoIntro: >
+      セーラー服プロンプトは、AIイラスト生成で女子高生や学園キャラクターを描く際の基本的な衣装指定です。「sailor uniform」「sailor school uniform」を基本に、リボンの色（red ribbon,
+      blue ribbon）、襟（sailor collar）、袖の長さ（short sleeves, long sleeves）、スカートのプリーツ（pleated
+      skirt）を組み合わせることで、理想のセーラー服デザインを再現できます。
 
-      Stable Diffusion や NovelAI では、プロンプトの先頭側に「sailor uniform, pleated skirt」を置くと衣装の優先度が上がります。夏服なら「white sailor uniform, short sleeves, summer uniform」、冬服なら「navy sailor uniform, long sleeves, winter uniform」のように季節も明示すると精度が高まります。
+
+      Stable Diffusion や NovelAI では、プロンプトの先頭側に「sailor uniform, pleated skirt」を置くと衣装の優先度が上がります。夏服なら「white sailor uniform,
+      short sleeves, summer uniform」、冬服なら「navy sailor uniform, long sleeves, winter uniform」のように季節も明示すると精度が高まります。
+
 
       組み合わせ例：
+
       - 夏のシンプルな白セーラー：「white sailor uniform, red ribbon, pleated skirt, summer」
+
       - 冬の定番紺セーラー：「navy sailor uniform, white scarf, long sleeves, pleated skirt」
+
       - アニメ風アクセント：「(sailor uniform:1.2), hair ribbon, knee-high socks, loafers」
 
-      色滲み（color bleed）が出る場合は、BREAK コマンドや重み付け（:1.2 など）で各要素の独立性を高めてください。ネガティブプロンプトに「casual clothes, t-shirt」を入れると制服指定がより安定します。
 
-  # ========== 2. スレンダー（関連 prompt 5 条達成）==========
-  # 目標キーワード: 「スレンダー プロンプト」(71 imp, rank 6.87)
+      色滲み（color bleed）が出る場合は、BREAK コマンドや重み付け（:1.2 など）で各要素の独立性を高めてください。ネガティブプロンプトに「casual clothes,
+      t-shirt」を入れると制服指定がより安定します。
   - slug: スレンダー
     name: スレンダー
     color: blue
     isApproved: true
-    seoTitle: "「スレンダー」プロンプト集｜痩せ型・細身キャラの呪文"
-    seoDescription: "AIイラストで痩せ型・細身キャラを描くスレンダー体型プロンプト集。Stable Diffusion・NovelAI 対応。身長指定やネガティブプロンプトとの組み合わせパターンも紹介。"
-    seoIntro: |
-      スレンダープロンプトは、AIイラスト生成でスリムで細身なキャラクターを表現するための体型指定です。「slender」「slim」「thin」を基本に、身長（tall, average height）、脚の長さ（long legs, leggy）、体つき（delicate frame, narrow waist）を組み合わせて、理想のスレンダーシルエットを作り出せます。
+    seoTitle: 「スレンダー」プロンプト集｜痩せ型・細身キャラの呪文
+    seoDescription: AIイラストで痩せ型・細身キャラを描くスレンダー体型プロンプト集。Stable Diffusion・NovelAI 対応。身長指定やネガティブプロンプトとの組み合わせパターンも紹介。
+    seoIntro: >
+      スレンダープロンプトは、AIイラスト生成でスリムで細身なキャラクターを表現するための体型指定です。「slender」「slim」「thin」を基本に、身長（tall, average height）、脚の長さ（long
+      legs, leggy）、体つき（delicate frame, narrow waist）を組み合わせて、理想のスレンダーシルエットを作り出せます。
 
-      Stable Diffusion では「slender, slim waist」を高めの重み（例：(slender:1.2)）で置くと細身が強調されますが、1.4 を超えると体が崩れやすいので注意してください。「skinny」は骨ばった印象が強く、カジュアルなスレンダー表現には「slim」「slender」の方が自然です。年齢表現も「young adult」「teenager」などを併記すると体型との整合性が取れます。
+
+      Stable Diffusion では「slender, slim waist」を高めの重み（例：(slender:1.2)）で置くと細身が強調されますが、1.4
+      を超えると体が崩れやすいので注意してください。「skinny」は骨ばった印象が強く、カジュアルなスレンダー表現には「slim」「slender」の方が自然です。年齢表現も「young
+      adult」「teenager」などを併記すると体型との整合性が取れます。
+
 
       組み合わせ例：
+
       - モデル風：「slender, tall, long legs, narrow waist, elegant pose」
+
       - アイドル風：「slim, petite frame, slender figure, cute outfit」
+
       - リアル系：「slender body, athletic build, natural posture, photo realistic」
 
-      ネガティブプロンプトに「chubby, overweight, thick body, muscular」を入れると、スレンダー指定がより安定します。体型プロンプトは服装との相性で見え方が変わるため、「form-fitting dress」「slim jeans」など体のラインが出る衣装と組み合わせると意図が伝わりやすくなります。
 
-  # ========== 3. 体格差（関連 prompt 5 条達成、Lexica 採集）==========
-  # 目標キーワード: 「体格差 プロンプト」(72 imp, rank 7.74)
+      ネガティブプロンプトに「chubby, overweight, thick body, muscular」を入れると、スレンダー指定がより安定します。体型プロンプトは服装との相性で見え方が変わるため、「form-fitting
+      dress」「slim jeans」など体のラインが出る衣装と組み合わせると意図が伝わりやすくなります。
   - slug: 体格差
     name: 体格差
     color: purple
     isApproved: true
-    seoTitle: "「体格差」プロンプト集｜身長差・カップリング構図の呪文"
-    seoDescription: "AIイラストで身長差・体格差のあるキャラクター2人を描くプロンプト集。Stable Diffusion・NovelAI 対応。男女ペア・BL 構図・親子構図などの指定例を紹介。"
-    seoIntro: |
-      体格差プロンプトは、AIイラストで身長や体つきの異なる 2 人以上のキャラクターを同じ画面に描くための構図指定です。「height difference」「size difference」「tall and short」を基本に、体格（muscular man, petite woman）、立ち位置（standing next to, looking up, looking down）を組み合わせて、ペアの関係性を視覚化できます。
+    seoTitle: 「体格差」プロンプト集｜身長差・カップリング構図の呪文
+    seoDescription: AIイラストで身長差・体格差のあるキャラクター2人を描くプロンプト集。Stable Diffusion・NovelAI 対応。男女ペア・BL 構図・親子構図などの指定例を紹介。
+    seoIntro: >
+      体格差プロンプトは、AIイラストで身長や体つきの異なる 2 人以上のキャラクターを同じ画面に描くための構図指定です。「height difference」「size difference」「tall and
+      short」を基本に、体格（muscular man, petite woman）、立ち位置（standing next to, looking up, looking down）を組み合わせて、ペアの関係性を視覚化できます。
 
-      Stable Diffusion では複数キャラ構図は崩れやすいため、「2people」「two characters」など人数指定に加え、「height difference」を明示すると安定します。男女差・兄妹差・カップリング構図など、用途に応じて形容詞を切り替えましょう。NovelAI なら Artist タグと組み合わせると体格差表現がさらに安定します。
+
+      Stable Diffusion では複数キャラ構図は崩れやすいため、「2people」「two characters」など人数指定に加え、「height
+      difference」を明示すると安定します。男女差・兄妹差・カップリング構図など、用途に応じて形容詞を切り替えましょう。NovelAI なら Artist タグと組み合わせると体格差表現がさらに安定します。
+
 
       組み合わせ例：
+
       - 男女の身長差：「tall man and petite woman, height difference, looking up, couple」
+
       - BL 構図：「tall muscular man, shorter slender man, height difference, standing together」
+
       - 親子構図：「adult and child, size difference, hand holding, warm lighting」
 
-      ネガティブプロンプトには「same height, same size」を入れると体格差が保たれやすくなります。また、「full body」で全身を描くことで差が視覚的に伝わりやすくなります。
 
-  # ========== 4. ファンタジー衣装（Phase 1B 後: 17 関連 prompt）==========
-  # 目標キーワード: 「ファンタジー 衣装 プロンプト」(57) + 「プロンプト 服装 ファンタジー」(76) = 合計 133 imp
+      ネガティブプロンプトには「same height, same size」を入れると体格差が保たれやすくなります。また、「full body」で全身を描くことで差が視覚的に伝わりやすくなります。
   - slug: ファンタジー衣装
     name: ファンタジー衣装
     color: green
     isApproved: true
-    seoTitle: "「ファンタジー衣装」プロンプト集｜RPG・中世・魔法使い呪文"
-    seoDescription: "剣士・魔法使い・騎士など RPG 風ファンタジー衣装のプロンプト集。Stable Diffusion・Midjourney 対応。職業別・素材別の呪文例と装飾の指定方法を紹介。"
-    seoIntro: |
-      ファンタジー衣装プロンプトは、AIイラストで RPG・中世・魔法世界の住人を描くための衣装指定です。「fantasy outfit」「medieval armor」「mage robe」を基本に、職業（knight, wizard, elf, warrior, archer）、素材（leather, silk, metal plate, chainmail）、装飾（embroidery, runes, glowing gem）を組み合わせることで、物語性のあるキャラクター衣装を表現できます。
+    seoTitle: 「ファンタジー衣装」プロンプト集｜RPG・中世・魔法使い呪文
+    seoDescription: 剣士・魔法使い・騎士など RPG 風ファンタジー衣装のプロンプト集。Stable Diffusion・Midjourney 対応。職業別・素材別の呪文例と装飾の指定方法を紹介。
+    seoIntro: >
+      ファンタジー衣装プロンプトは、AIイラストで RPG・中世・魔法世界の住人を描くための衣装指定です。「fantasy outfit」「medieval armor」「mage robe」を基本に、職業（knight,
+      wizard, elf, warrior, archer）、素材（leather, silk, metal plate, chainmail）、装飾（embroidery, runes, glowing
+      gem）を組み合わせることで、物語性のあるキャラクター衣装を表現できます。
 
-      Stable Diffusion では「fantasy」単体では抽象的すぎるため、「dark fantasy」「high fantasy」「RPG style」などジャンルを明示し、「detailed armor, intricate embroidery」で細部を強化するのがコツです。Midjourney なら --stylize 300 以上で装飾表現が際立ちます。性別・年齢を明示するとキャラ像が安定します。
+
+      Stable Diffusion では「fantasy」単体では抽象的すぎるため、「dark fantasy」「high fantasy」「RPG style」などジャンルを明示し、「detailed armor,
+      intricate embroidery」で細部を強化するのがコツです。Midjourney なら --stylize 300 以上で装飾表現が際立ちます。性別・年齢を明示するとキャラ像が安定します。
+
 
       組み合わせ例：
+
       - 女戦士：「female warrior, leather armor, sword, long cape, fantasy world」
+
       - 魔法使い：「young mage, blue robe, star embroidery, glowing staff, floating runes」
+
       - エルフ弓使い：「elf archer, green tunic, leaf ornament, forest background, fantasy」
 
-      ネガティブプロンプトに「modern clothes, t-shirt, jeans, casual wear」を入れると現代服が混入しにくくなります。世界観を強化したいときは「epic scene, dramatic lighting」を追加すると画像全体の完成度が上がります。
 
-  # ========== 5. 制服（Phase 1B 追加、関連 prompt 8 条達成）==========
-  # 目標キーワード: 学生服・セーラー服系のクラスター（コスプレ簇の補完）
+      ネガティブプロンプトに「modern clothes, t-shirt, jeans, casual wear」を入れると現代服が混入しにくくなります。世界観を強化したいときは「epic scene, dramatic
+      lighting」を追加すると画像全体の完成度が上がります。
   - slug: 制服
     name: 制服
     color: blue
     isApproved: true
-    seoTitle: "「制服」プロンプト集｜セーラー服・学生服・スーツの呪文・コピペOK"
-    seoDescription: "制服プロンプトのコピペ集。学生服・セーラー服・ビジネススーツなど、Stable Diffusion で使える呪文を画像付きで紹介。色・素材・シーン別の使い分けも解説。"
-    seoIntro: |
-      制服プロンプトは、AIイラスト生成で学校の学生服・職業ユニフォーム・コスチュームを正確に表現するための基本呪文です。「school uniform」「sailor uniform」「business suit」「nurse uniform」「military uniform」など、シーンに応じた英単語を選ぶことで、統一感のあるキャラクターイメージを安定して生成できます。
+    seoTitle: 「制服」プロンプト集｜セーラー服・学生服・スーツの呪文・コピペOK
+    seoDescription: 制服プロンプトのコピペ集。学生服・セーラー服・ビジネススーツなど、Stable Diffusion で使える呪文を画像付きで紹介。色・素材・シーン別の使い分けも解説。
+    seoIntro: >
+      制服プロンプトは、AIイラスト生成で学校の学生服・職業ユニフォーム・コスチュームを正確に表現するための基本呪文です。「school uniform」「sailor uniform」「business suit」「nurse
+      uniform」「military uniform」など、シーンに応じた英単語を選ぶことで、統一感のあるキャラクターイメージを安定して生成できます。
 
-      Stable Diffusion では「school uniform」単体では解釈が広すぎるため、「Japanese school uniform, sailor collar, pleated skirt」のようにディテールを並列すると再現精度が大きく上がります。NovelAI では「(school uniform:1.2)」のように重み付けをかけるのがコツ。色指定は「white shirt, navy skirt, red ribbon」と分解して書くと BREAK コマンド無しでも色滲みを抑えられます。
+
+      Stable Diffusion では「school uniform」単体では解釈が広すぎるため、「Japanese school uniform, sailor collar, pleated
+      skirt」のようにディテールを並列すると再現精度が大きく上がります。NovelAI では「(school uniform:1.2)」のように重み付けをかけるのがコツ。色指定は「white shirt, navy skirt,
+      red ribbon」と分解して書くと BREAK コマンド無しでも色滲みを抑えられます。
+
 
       組み合わせ例：
-      - 日本の学生服：「Japanese school uniform, white shirt, navy blazer, red tie, plaid pleated skirt, knee-high socks, loafers」
+
+      - 日本の学生服：「Japanese school uniform, white shirt, navy blazer, red tie, plaid pleated skirt, knee-high socks,
+      loafers」
+
       - ビジネス系：「business suit, white blouse, black pencil skirt, black pumps, hair tied up」
+
       - 職業制服：「nurse uniform, white cap, scrubs, stethoscope」
 
-      ネガティブプロンプトに「casual, t-shirt, torn clothes, mismatched uniform」を入れると制服感が保たれやすくなります。
 
-  # ========== 6. プリーツスカート（Phase 1B 追加、関連 prompt 7 条達成）==========
-  # 目標キーワード: 「プリーツスカート プロンプト」(43 imp)
+      ネガティブプロンプトに「casual, t-shirt, torn clothes, mismatched uniform」を入れると制服感が保たれやすくなります。
   - slug: プリーツスカート
     name: プリーツスカート
     color: pink
     isApproved: true
-    seoTitle: "「プリーツスカート」プロンプト集｜学生服・カジュアルの呪文"
-    seoDescription: "プリーツスカートプロンプトのコピペ集。学生服・ミニ丈・ロング丈・カラー指定まで、Stable Diffusion で再現する呪文を画像付きで紹介。"
-    seoIntro: |
-      プリーツスカートプロンプトは、AIイラスト生成で学生服やカジュアルファッションに欠かせない日本的なアイテム表現です。「pleated skirt」を基本に、色（navy pleated skirt, plaid pleated skirt）、丈（mini pleated skirt, knee-length pleated skirt）、素材（wool pleated skirt, chiffon pleated skirt）を指定することで、理想のスカートを再現できます。
+    seoTitle: 「プリーツスカート」プロンプト集｜学生服・カジュアルの呪文
+    seoDescription: プリーツスカートプロンプトのコピペ集。学生服・ミニ丈・ロング丈・カラー指定まで、Stable Diffusion で再現する呪文を画像付きで紹介。
+    seoIntro: >
+      プリーツスカートプロンプトは、AIイラスト生成で学生服やカジュアルファッションに欠かせない日本的なアイテム表現です。「pleated skirt」を基本に、色（navy pleated skirt, plaid pleated
+      skirt）、丈（mini pleated skirt, knee-length pleated skirt）、素材（wool pleated skirt, chiffon pleated
+      skirt）を指定することで、理想のスカートを再現できます。
 
-      Stable Diffusion では「pleated skirt」だけだと長さが不安定になるため、「knee-high pleated skirt」や「micro pleated skirt」のように丈を明示するのがコツです。色指定は BREAK コマンドと組み合わせて「white blouse BREAK navy pleated skirt」と書くと上下の色混じりが起きにくくなります。重み付けは「(pleated skirt:1.2)」程度が安定圏。
+
+      Stable Diffusion では「pleated skirt」だけだと長さが不安定になるため、「knee-high pleated skirt」や「micro pleated
+      skirt」のように丈を明示するのがコツです。色指定は BREAK コマンドと組み合わせて「white blouse BREAK navy pleated
+      skirt」と書くと上下の色混じりが起きにくくなります。重み付けは「(pleated skirt:1.2)」程度が安定圏。
+
 
       組み合わせ例：
+
       - 定番学生服：「school uniform, white blouse, navy pleated skirt, knee-high socks, loafers」
+
       - カジュアル：「casual outfit, white t-shirt, pink pleated mini skirt, sneakers, denim jacket」
+
       - ゴシック系：「gothic lolita, black pleated skirt, lace trim, platform boots」
 
-      ネガティブに「straight skirt, tight skirt, wrinkled skirt」を入れるとプリーツが消えるのを防げます。プリーツの本数を強調したいときは「many pleats」や「accordion pleats」も効果的です。
 
-  # ========== 7. ドレス（Tier-1 アップグレード、既に 33 関連 prompt、approved=true）==========
-  # 既存の Tier-1 tag に SEO intro を後付けする用途。seed スクリプトは tier を区別せず upsert する。
+      ネガティブに「straight skirt, tight skirt, wrinkled skirt」を入れるとプリーツが消えるのを防げます。プリーツの本数を強調したいときは「many pleats」や「accordion
+      pleats」も効果的です。
   - slug: ドレス
     name: ドレス
     color: pink
     isApproved: true
-    seoTitle: "「ドレス」プロンプト集｜イブニング・カクテル・ウェディングの呪文"
-    seoDescription: "ドレスプロンプトのコピペ集。イブニングドレス・カクテルドレス・ウェディングドレス・ファンタジードレスまで、Stable Diffusion で再現する呪文を画像付きで紹介。"
-    seoIntro: |
-      ドレスプロンプトは、AIイラスト生成でエレガントな女性キャラクターを表現するための基本呪文です。「dress」「evening gown」「cocktail dress」「wedding dress」「fantasy dress」など、シーン別の英単語を選び、色・素材・ディテールを積み重ねて理想のドレスを作ります。
+    seoTitle: 「ドレス」プロンプト集｜イブニング・カクテル・ウェディングの呪文
+    seoDescription: ドレスプロンプトのコピペ集。イブニングドレス・カクテルドレス・ウェディングドレス・ファンタジードレスまで、Stable Diffusion で再現する呪文を画像付きで紹介。
+    seoIntro: >
+      ドレスプロンプトは、AIイラスト生成でエレガントな女性キャラクターを表現するための基本呪文です。「dress」「evening gown」「cocktail dress」「wedding dress」「fantasy
+      dress」など、シーン別の英単語を選び、色・素材・ディテールを積み重ねて理想のドレスを作ります。
 
-      Stable Diffusion では「red dress」だけだと質感が曖昧になるため、「red silk evening dress, floor-length, backless」のように素材・丈・ディテールを追加するのがコツです。Midjourney なら「--style raw --ar 2:3」で実写風のドレスポートレートに近づきます。NovelAI では Artist タグと組み合わせるとイラスト調の華やかなドレスが安定します。
+
+      Stable Diffusion では「red dress」だけだと質感が曖昧になるため、「red silk evening dress, floor-length,
+      backless」のように素材・丈・ディテールを追加するのがコツです。Midjourney なら「--style raw --ar 2:3」で実写風のドレスポートレートに近づきます。NovelAI では Artist
+      タグと組み合わせるとイラスト調の華やかなドレスが安定します。
+
 
       組み合わせ例：
+
       - フォーマル：「elegant evening gown, red silk, floor-length, backless, diamond necklace, high heels」
+
       - カクテル：「black cocktail dress, knee-length, lace detail, pearl earrings, clutch bag」
+
       - ウェディング：「white wedding dress, long train, veil, bouquet, soft lighting」
+
       - ファンタジー：「ethereal fantasy dress, flowing sleeves, floral embroidery, crown, magical aura」
 
-      ネガティブプロンプトに「casual, jeans, t-shirt, torn, simple」を入れるとドレスの華やかさが保たれやすくなります。シルエットを美しく出したいときは「hourglass figure, elegant pose」を併記するのが定番です。
+
+      ネガティブプロンプトに「casual, jeans, t-shirt, torn, simple」を入れるとドレスの華やかさが保たれやすくなります。シルエットを美しく出したいときは「hourglass figure,
+      elegant pose」を併記するのが定番です。
+  - slug: ポートレート
+    name: ポートレート
+    color: blue
+    isApproved: true
+    seoTitle: 「ポートレート」プロンプト集｜高品質・光・背景
+    seoDescription: ポートレート撮影プロンプト55個。顔立ち、ライティング、背景を指定して、美しい人物画像を生成。Stable Diffusion・Midjourney対応。
+    seoIntro: >-
+      「ポートレートプロンプトは、顔や半身を美しく引き出すAI画像生成の定番スタイルです。照明、肌質、背景などの要素を細かく指定することで、プロフェッショナルな写真品質の結果が得られます。
+
+
+      ポートレート生成のコツは、照明条件（soft light, golden hour, studio lighting）と顔の向き（looking at camera, three-quarter
+      view）、背景の簡潔さ（blurred background, neutral background）を組み合わせることです。肌質やメイクの詳細度を調整することで、完成度が大きく変わります。
+
+
+      組み合わせ例：
+
+      ・「beautiful woman, soft studio lighting, sharp focus on face, detailed skin」
+
+      ・「male portrait, golden hour light, cinematic color grading, blurred background」
+
+      ・「asian girl, professional photography, shallow depth of field, warm skin tone」
+
+
+      ネガティブプロンプトで「blurry, low quality, deformed face」を除外することが重要です。
+  - slug: クリエイティブ
+    name: クリエイティブ
+    color: blue
+    isApproved: true
+    seoTitle: 「クリエイティブ」プロンプト集｜アート・表現
+    seoDescription: クリエイティブなAI画像生成プロンプト50個。アート、デザイン、イラスト表現。Stable Diffusion・Midjourney向け実例集。
+    seoIntro: >-
+      「クリエイティブプロンプトは、既存のスタイルに縛られない、ユニークで個性的なビジュアル表現を生み出すAI画像生成の手法です。アーティストの名前、美術運動、実験的なスタイル記述を組み合わせることで、他にない創造的な結果を得られます。
+
+
+      クリエイティブ生成を成功させるには、複数のスタイル要素を組み合わせ（surrealism + watercolor + geometric）、芸術家の参考指定（style of Hokusai, inspired by
+      Beeple）、感情的なムード（dreamlike, ethereal, chaotic）を混ぜることが効果的です。
+
+
+      組み合わせ例：
+
+      ・「surreal digital art, vibrant colors, abstract geometric shapes, dreamy atmosphere」
+
+      ・「illustration by Studio Ghibli, watercolor blending, soft focus, magical light」
+
+      ・「contemporary art, mixed media, bold brushstrokes, experimental composition」
+
+
+      アートの方向性が曖昧すぎると、不安定な結果になるため、具体的な美術用語を3～4個組み合わせることをお勧めします。
+  - slug: 衣装
+    name: 衣装
+    color: blue
+    isApproved: true
+    seoTitle: 「衣装」プロンプト集｜デザイン・コスチューム
+    seoDescription: 衣装デザインプロンプト46個。ドレス、ジャケット、特殊衣装。Stable Diffusion・Midjourney対応の画像生成例。
+    seoIntro: >-
+      「衣装プロンプトは、キャラクターやモデルが着る衣服のディテールを細かく指定して、AI画像生成するスタイルです。布地感、装飾、シルエット、色合いを組み合わせることで、イメージ通りのコスチュームが完成します。
+
+
+      衣装デザイン生成のコツは、衣装の種類（dress, suit, gown）、素材（silk, leather, velvet）、装飾要素（embroidered, sequined,
+      ruffled）を明確に指定し、全体のシルエット（flowing, fitted, layered）を描写することです。照明で生地の質感がより際立ちます。
+
+
+      組み合わせ例：
+
+      ・「elegant black dress, flowing silk fabric, embroidered details, off-shoulder」
+
+      ・「steampunk costume, leather jacket, brass buckles, Victorian style」
+
+      ・「ethereal gown, translucent layers, pearl beading, iridescent fabric」
+
+
+      ネガティブプロンプトに「wrinkled, dirty, torn」を含めることで、衣装の完成度を保つことができます。
+  - slug: シネマティック
+    name: シネマティック
+    color: blue
+    isApproved: true
+    seoTitle: 「シネマティック」プロンプト集｜映画・光
+    seoDescription: シネマティック映像プロンプト42個。映画のような構図、ライティング、カラーグレーディング。Midjourney・SD対応。
+    seoIntro: >-
+      「シネマティックプロンプトは、映画やハリウッド製作のような高い完成度と映像美を再現するAI画像生成スタイルです。撮影技法、照明、色彩設定、構図を映画的に組み立てることで、スクリーンから飛び出すような迫力ある画像が生成されます。
+
+
+      シネマティック映像を生み出すコツは、カメラアングル（wide shot, close-up, Dutch angle）、ライティング手法（volumetric lighting, lens flare, rim
+      lighting）、色彩グレード（warm color grade, desaturated, cinematic color）を同時に指定することです。フレーム構成も意識します。
+
+
+      組み合わせ例：
+
+      ・「cinematic wide shot, volumetric lighting, golden hour, shallow depth of field, movie still」
+
+      ・「dramatic lighting, deep shadows, cool color grading, professional cinematography」
+
+      ・「epic scene, high-angle shot, lens flare, atmospheric haze, blockbuster aesthetic」
+
+
+      「film grain, 35mm」などのカメラ記述を加えると、より映像的な仕上がりになります。
+  - slug: chatgpt
+    name: ChatGPT
+    color: blue
+    isApproved: true
+    seoTitle: 「ChatGPT」プロンプト集｜質問・回答・文章
+    seoDescription: ChatGPT用プロンプト40個。質問、回答、文章作成などテキスト生成のコツ。実務的なプロンプト例を紹介。
+    seoIntro: >-
+      「ChatGPTプロンプトは、OpenAIのChatGPTから高品質な回答や文章を引き出すための質問・指示文です。具体的なタスク設定、出力形式の指定、コンテキスト情報を含めることで、期待通りの結果を得られます。
+
+
+      ChatGPT
+      の効果を最大化するコツは、役割指定（「あなたはプロの編集者です」）、タスクの明確化（「300字の記事を書いてください」）、出力フォーマット指定（「箇条書き、JSON形式」）、そして具体例の提示です。制約条件を明確にするほど、精度が高まります。
+
+
+      組み合わせ例：
+
+      ・「あなたはプロのライターです。以下のトピックで500字の記事を書いてください：[トピック]」
+
+      ・「JSON形式で、商品のメリット3点とデメリット2点を構造化してください」
+
+      ・「初心者向けに、[概念]を100字以内で分かりやすく説明してください」
+
+
+      出力後に「これをもっと短くしてください」といった追加指示で、結果を微調整できます。
+  - slug: ファンタジー
+    name: ファンタジー
+    color: blue
+    isApproved: true
+    seoTitle: 「ファンタジー」プロンプト集｜魔法・冒険・世界観
+    seoDescription: ファンタジー画像生成プロンプト34個。魔法、ドラゴン、異世界。Stable Diffusion・Midjourney対応の幻想的な表現。
+    seoIntro: >-
+      「ファンタジープロンプトは、魔法、冒険、異世界といった幻想的な世界観をAI画像生成で表現するスタイルです。架空の生き物、魔法効果、異世界の環境描写を組み合わせることで、ゲームやファンタジー小説から出てきたようなビジュアルが実現します。
+
+
+      ファンタジー世界観を豊かに描くコツは、舞台設定（ancient ruins, enchanted forest, magical realm）、キャラクター属性（elf, wizard,
+      dragon）、ビジュアルエフェクト（magical aura, glowing runes, spell effects）を具体的に指定することです。光の魔法的な表現が雰囲気を左右します。
+
+
+      組み合わせ例：
+
+      ・「elf warrior, enchanted forest, magical aura, glowing staff, fantasy armor」
+
+      ・「dragon perched on mountain, golden light, ancient ruins, mystical atmosphere」
+
+      ・「wizard casting spell, swirling magical energy, moonlit night, ethereal glow」
+
+
+      ネガティブプロンプトで「modern elements, technology」を除外すると、ファンタジー世界の一貫性が保たれます。
+  - slug: ビジネス
+    name: ビジネス
+    color: blue
+    isApproved: true
+    seoTitle: 「ビジネス」プロンプト集｜企画・報告・営業
+    seoDescription: ビジネス・企画向けプロンプト33個。企画書作成、提案資料、営業トーク。ChatGPT・Claude対応の実務例。
+    seoIntro: >-
+      「ビジネスプロンプトは、企画、提案、報告書作成といったビジネス業務を効率化するChatGPT・Claude向けの指示文です。提案の背景、目的、出力形式を明確に指示することで、即座に使える業務文書や戦略案が生成されます。
+
+
+      ビジネスプロンプトを活用するコツは、対象者の明確化（「経営層向けに」「営業担当者向けに」）、成果物の具体指定（「3ページの企画書」「5つの提案案」）、トーン設定（「フォーマルに」「カジュアルに」）です。背景情報も含めると、より的確な回答が得られます。
+
+
+      組み合わせ例：
+
+      ・「新規サービスの企画書を3項目（背景・提案・予算）で作成してください」
+
+      ・「以下の製品のセールスピッチを営業向けに200字でまとめてください」
+
+      ・「プロジェクト報告書を経営層向けにMarkdown形式で構成してください」
+
+
+      プロンプト内で「SMART目標」など具体的なフレームワークを指定すると、より実用的な結果になります。
+  - slug: 服装
+    name: 服装
+    color: blue
+    isApproved: true
+    seoTitle: 「服装」プロンプト集｜ファッション・スタイル
+    seoDescription: 服装・ファッションプロンプト30個。トップス、パンツ、アクセサリー。Stable Diffusion・Midjourney対応の着装例。
+    seoIntro: >-
+      「服装プロンプトは、ファッションアイテムやスタイリング要素をAI画像生成で表現するためのプロンプトです。色合い、素材感、シルエット、スタイルカテゴリを組み合わせることで、理想的なコーディネートや衣服デザインが完成します。
+
+
+      服装生成を成功させるコツは、衣服の種類を具体化（「white T-shirt」「high-waisted jeans」）し、ディテール（pocket detail, ribbed
+      collar）を指定し、全体の印象（casual, elegant, streetwear）を伝えることです。色指定も重要な要素になります。
+
+
+      組み合わせ例：
+
+      ・「girl wearing oversized sweater, tucked into high-waisted jeans, minimalist style」
+
+      ・「man in tailored blazer, white dress shirt, crisp professional look」
+
+      ・「colorful streetwear outfit, graphic hoodie, cargo pants, athletic vibe」
+
+
+      ネガティブプロンプトで「poorly fitted, mismatched」を除外することで、ファッションの質感と完成度が向上します。
+  - slug: ダークファンタジー
+    name: ダークファンタジー
+    color: blue
+    isApproved: true
+    seoTitle: 「ダークファンタジー」プロンプト集｜不気味・闇
+    seoDescription: ダークファンタジープロンプト29個。不気味、陰鬱、邪悪な雰囲気。Stable Diffusion・Midjourney対応の暗黒幻想。
+    seoIntro: >-
+      「ダークファンタジープロンプトは、不気味で陰鬱な世界観を表現するAI画像生成スタイルです。暗い色彩、邪悪な生き物、荒廃した環境、怖ろしい雰囲気を組み合わせることで、ゲームやホラーファンタジーのような不穏で迫力のあるビジュアルが生み出されます。
+
+
+      ダークファンタジー表現のコツは、カラーパレット（dark tones, desaturated colors, eerie glow）、環境描写（ruins, graveyard, haunted
+      castle）、クリーチャー指定（demon, undead, cursed being）、ムード設定（ominous, sinister, foreboding）を組み合わせることです。照明は重要な演出要素です。
+
+
+      組み合わせ例：
+
+      ・「dark sorcerer, cursed aura, abandoned temple, eerie purple glow, corrupted magic」
+
+      ・「haunted castle, gothic architecture, twisted trees, sinister atmosphere」
+
+      ・「undead warrior, tattered armor, graveyard, moonlight, ominous energy」
+
+
+      ネガティブプロンプトで「bright colors, cheerful, innocent」を除外することで、暗黒の世界観を強化できます。
+  - slug: コスプレ
+    name: コスプレ
+    color: blue
+    isApproved: true
+    seoTitle: 「コスプレ」プロンプト集｜キャラクター・コスチューム
+    seoDescription: コスプレプロンプト27個。アニメ・ゲームキャラ、コスチューム。Stable Diffusion・Midjourney対応の衣装再現。
+    seoIntro: >-
+      「コスプレプロンプトは、アニメ、ゲーム、映画のキャラクターのコスチュームをAI画像生成で正確に再現するためのプロンプトです。キャラクター名、作品、コスチュームディテール、ポーズを指定することで、高精度のコスプレ画像が得られます。
+
+
+      コスプレ生成を成功させるコツは、キャラクター属性の明示（「from [作品名]」）、コスチューム詳細（配色、装飾品、武器）、ポーズ指定（standing, action pose, looking at
+      camera）、背景の簡潔さです。アニメ風かリアル調かも指定すると精度が上がります。
+
+
+      組み合わせ例：
+
+      ・「anime character cosplay, detailed costume with color accuracy, professional photo quality」
+
+      ・「video game character, full body shot, combat pose, detailed armor and weapon」
+
+      ・「fantasy cosplay, intricate headdress, flowing cape, dramatic lighting, convention photo」
+
+
+      ネガティブプロンプトで「out of character, wrong costume」を除外し、キャラクターの正確性を維持することが重要です。
+  - slug: ライティング
+    name: ライティング
+    color: blue
+    isApproved: true
+    seoTitle: 「ライティング」プロンプト集｜文章・編集・創作
+    seoDescription: ライティング・編集向けプロンプト26個。ブログ、小説、記事執筆。ChatGPT・Claude対応の文章作成ガイド。
+    seoIntro: >-
+      「ライティングプロンプトは、ブログ記事、小説、コピーライティングといった文章作成をChatGPT・Claude
+      で効率化するためのプロンプトです。執筆のテーマ、トーン、目標読者、出力形式を明確に指示することで、高品質な文章が短時間で生成されます。
+
+
+      ライティング精度を高めるコツは、文体指定（「プロフェッショナルで説得力のあるトーン」「親しみやすく」）、読者層の明確化（「初心者向けに」「マーケティング担当者向けに」）、構成の指定（「序論→本論→結論」）、字数制限です。参考例を示すとより正確な結果が得られます。
+
+
+      組み合わせ例：
+
+      ・「ブログ記事：[トピック]について、初心者向けに800字で分かりやすく解説してください」
+
+      ・「小説の冒頭500字を、[ジャンル]らしい世界観で執筆してください」
+
+      ・「製品説明文をコピーライティング手法で200字にまとめてください」
+
+
+      生成後に「もっとカジュアルにしてください」などの調整指示で、文章を磨き上げることができます。
+  - slug: キャラクター
+    name: キャラクター
+    color: blue
+    isApproved: true
+    seoTitle: 「キャラクター」プロンプト集｜デザイン・キャラ立ち
+    seoDescription: キャラクターデザインプロンプト23個。個性的なキャラクター、顔、表情。Stable Diffusion・Midjourney対応。
+    seoIntro: >-
+      「キャラクタープロンプトは、ゲーム、アニメ、イラスト向けの個性的なキャラクターをAI画像生成で創作するためのプロンプトです。容姿、性格を反映した見た目、特徴的なアイテム、表情を組み合わせることで、記憶に残るキャラクターが誕生します。
+
+
+      キャラクター生成を効果的にするコツは、基本設定の明確化（年齢、性別、職業、種族）、ビジュアルアイデンティティ（髪型、目の色、特徴的なアイテム）、表情・ポーズ（confident smile, serious
+      expression, action pose）、服装スタイルの一貫性です。
+
+
+      組み合わせ例：
+
+      ・「fantasy elf girl, silver hair, pointed ears, elegant blue dress, gentle expression」
+
+      ・「tough warrior, scarred face, battle-worn armor, intense gaze, holding greatsword」
+
+      ・「cheerful girl next door, wavy brown hair, casual outfit, bright smile, natural light」
+
+
+      キャラクターの「ユニークな識別特徴」（特徴的な髪飾りなど）を指定することで、一貫性のあるキャラクターイメージを保つことができます。
+  - slug: プログラミング
+    name: プログラミング
+    color: blue
+    isApproved: true
+    seoTitle: 「プログラミング」プロンプト集｜コード・開発
+    seoDescription: プログラミング向けプロンプト22個。コード生成、デバッグ、アルゴリズム。ChatGPT・Claude対応の開発効率化。
+    seoIntro: >-
+      「プログラミングプロンプトは、コード生成、デバッグ、アルゴリズム設計をChatGPT・Claude
+      で加速させるための指示文です。プログラミング言語、要件、制約、出力形式を具体的に指定することで、すぐに使える機能実装やバグ修正方法が得られます。
+
+
+      プログラミングプロンプト活用のコツは、言語・フレームワーク明示（「Python
+      3.9、Flask」）、機能要件の詳細化（「ユーザー認証機能」「JSON解析」）、コード品質指定（「最適化」「エラーハンドリング」）、例示です。既存コードを貼り付けると、より的確なアドバイスが得られます。
+
+
+      組み合わせ例：
+
+      ・「Python で [機能]を実装してください。ベストプラクティスに従ってください」
+
+      ・「以下のコードのバグを特定して修正案を提示してください」
+
+      ・「JavaScript で [アルゴリズム]を実装した効率的なコードを書いてください」
+
+
+      「パフォーマンス最適化」「テストコード付き」といった指定で、プロダクション品質のコードが得られます。
+  - slug: 開発効率化
+    name: 開発効率化
+    color: blue
+    isApproved: true
+    seoTitle: 「開発効率化」プロンプト集｜ワークフロー・自動化
+    seoDescription: 開発効率化プロンプト22個。ワークフロー、自動化、チーム協業。ChatGPT・Claude対応の生産性向上例。
+    seoIntro: >-
+      「開発効率化プロンプトは、ソフトウェア開発のワークフロー、自動化、チーム協業を効率化するChatGPT・Claude向けプロンプトです。開発プロセスの課題、目標、チーム規模を指定することで、実践的な改善案やツール導入戦略が提案されます。
+
+
+      開発効率化を実現するコツは、現在の課題の具体化（「ビルド時間が長い」「テストが属人的」）、目標の明確化（「デプロイ時間を50%短縮」）、制約条件（「既存ツール活用」「学習コスト低め」）の指定です。チーム規模や技術スタックも効果的なアドバイスに不可欠です。
+
+
+      組み合わせ例：
+
+      ・「[課題]を解決するCI/CDパイプライン設計を提案してください」
+
+      ・「テスト自動化戦略を、予算[範囲]で[チームサイズ]向けに構案してください」
+
+      ・「開発環境のセットアップ時間を短縮するための施策案をください」
+
+
+      「段階的実装」「ROI分析」といった観点を含めると、経営層にも説得力のある改善案が得られます。
+  - slug: 衣装プロンプト
+    name: 衣装プロンプト
+    color: blue
+    isApproved: true
+    seoTitle: 「衣装プロンプト」集｜特殊衣装・描写
+    seoDescription: 衣装プロンプト特化版21個。特殊コスチューム、描写テクニック。Stable Diffusion・Midjourney対応。
+    seoIntro: >-
+      「衣装プロンプト」は、特殊なコスチュームや複雑な衣装描写をAI画像生成で精密に実現するための高度なプロンプト集です。装飾の細部、素材の質感、コスチューム全体の統一感を表現する技法を学ぶことで、プロフェッショナルな衣装画像が生成できます。
+
+
+      複雑な衣装を描くコツは、パーツごとの詳細指定（「上衣：サテン素材、ビーズ刺繍」「下衣：プリーツスカート、ウエストベルト」）、素材の質感表現（metallic, iridescent,
+      matte）、装飾品の配置を層状に記述することです。全体の統一感も重要です。
+
+
+      組み合わせ例：
+
+      ・「elaborate ball gown, layered tulle, beaded bodice, dramatic train, luxury fabrics」
+
+      ・「steampunk military uniform, brass buttons, leather accents, ornate details」
+
+      ・「ethereal celestial costume, constellation embroidery, flowing chiffon, luminescent trim」
+
+
+      ネガティブプロンプトで「cheap-looking, mismatched, unfinished」を除外することで、衣装の高級感と完成度を引き出せます。
+  - slug: アニメ
+    name: アニメ
+    color: blue
+    isApproved: true
+    seoTitle: 「アニメ」プロンプト集｜AI画像生成で漫画・キャラを描く
+    seoDescription: アニメ風のキャラクターやイラストを生成するプロンプト集。Stable DiffusionやMidjourneyで高品質なアニメ画像を作成するコツを解説。
+    seoIntro: >-
+      「アニメプロンプトは、Stable DiffusionやMidjourneyでアニメ風キャラクター・イラストを生成するためのテキスト指示です。」anime style、illustration、character
+      designなどのキーワードを組み合わせることで、独特の作風を引き出せます。効果的なテクニックは、アニメのジャンル（制度画、魔法少女など）と画風（cel-shading、lineart）を明示すること。「組み合わせ例：」・kawaii
+      anime girl, big eyes, long hair, cel-shading・anime boy, action pose, detailed clothing, illustration・cute chibi
+      character, pastel colors, manga style。背景や他キャラとの相互作用を避けたい場合は「solo, simple background」を指定するとキャラに集中できます。
+  - slug: 色
+    name: 色
+    color: blue
+    isApproved: true
+    seoTitle: 「色」プロンプト集｜AI画像生成で配色・カラーパレットを指定
+    seoDescription: AI画像生成で特定の色・配色を指定するプロンプト集。Stable Diffusion・Midjourneyで色彩コントロールのテクニックを紹介。
+    seoIntro: >-
+      「色プロンプトは、AI画像生成で特定の色彩やカラーパレットを指定し、イラストの雰囲気を統一するためのテキスト指示です。」vibrant colors、monochrome、pastel、warm tones、cool
+      tonesなどの色温・明度キーワードを活用します。効果的なテクニックは、色名を直接指定（crimson red、navy
+      blue）と色の心理的効果（serene、energetic）を組み合わせること。「組み合わせ例：」・pastel pink and white, dreamy atmosphere, soft lighting・rich
+      golden tones, luxury aesthetic, dark background・vibrant rainbow colors, playful mood, bright
+      saturation。単色調や特定の色を避けたい場合は「avoid [color]」で除外できます。
+  - slug: ロングヘア
+    name: ロングヘア
+    color: blue
+    isApproved: true
+    seoTitle: 「ロングヘア」プロンプト集｜AI画像生成で長髪キャラを作成
+    seoDescription: ロングヘアのキャラクターを生成するプロンプト集。Stable Diffusion・Midjourneyで長髪の描き分けやテクスチャ指定のコツ。
+    seoIntro: >-
+      「ロングヘアプロンプトは、Stable DiffusionやMidjourneyで長髪キャラクターを生成するときの毛質・流れ・装飾を指定するテキスト指示です。」long hair, flowing, wavy,
+      straight, curlyなどの毛質キーワードと、hair
+      length指定（waist-length、ankle-length）を組み合わせます。効果的なテクニックは、髪の光沢感（silky、shiny）と動き（windblown、cascading）を同時に指定すること。「組み合わせ例：」・long
+      wavy hair, silky texture, breeze effect, romantic・straight long black hair, detailed strands, fantasy
+      style・flowing golden hair, magical glow, ethereal atmosphere。髪が顔を隠さないようにしたい場合は「hair out of face」と指定します。
+  - slug: アニメ-プロンプト
+    name: アニメ プロンプト
+    color: blue
+    isApproved: true
+    seoTitle: 「アニメプロンプト」テクニック集｜効果的な指示文の書き方
+    seoDescription: アニメ風イラストを生成する際のプロンプトテクニック。キーワード組み合わせ・スタイル指定・品質調整の実践的なコツを解説。
+    seoIntro: >-
+      「アニメプロンプトテクニックは、Stable
+      DiffusionやMidjourneyでアニメ特有の表現（瞳、輪郭線、背景効果）を効果的に引き出すための指示作成方法です。」キーワード順序（描きたい要素を前に配置）と重み付け（重要なキーワードに:1.5などの係数を付与）が重要です。効果的なテクニックは、アニメーター・制度画スタイル・狙った放映期を明示し、不要な要素は括弧で除外すること。「組み合わせ例：」・(anime:1.3),
+      beautiful girl, detailed eyes, key visual, high quality・illustration, manga panel, action scene, explosion, motion
+      lines・character design sheet, multiple poses, clean lines, professional art。生成後、スケール値（CFG
+      scale）を調整（7.0～15.0）すればプロンプトへの忠実度が向上します。
+  - slug: カメラ
+    name: カメラ
+    color: blue
+    isApproved: true
+    seoTitle: 「カメラ」プロンプト集｜AI画像生成の構図・視点指定
+    seoDescription: AI画像生成でカメラアングル・構図・レンズ設定を指定するプロンプト集。Stable Diffusion・Midjourneyで動的な写真表現を実現。
+    seoIntro: >-
+      「カメラプロンプトは、AI画像生成でアングル・フレーミング・レンズ性質を指定し、映画的・写真的な構図を実現するテキスト指示です。」close-up、wide-angle、bird's-eye view、low
+      angleなどの視点キーワードと、35mm、50mm、85mmなどのレンズ焦点距離を組み合わせます。効果的なテクニックは、depth of fieldを明示（shallow depth of
+      field、bokeh）し、光の方向性（backlighting、rim light）を同時に指定すること。「組み合わせ例：」・close-up portrait, 85mm lens, shallow DOF,
+      professional photography・wide-angle landscape, bird's-eye view, cinematic composition・low angle shot, dramatic
+      lighting, moody atmosphere。フレーミングを特定したい場合は「rule of thirds」や「centered composition」と指定します。
+  - slug: 髪型
+    name: 髪型
+    color: blue
+    isApproved: true
+    seoTitle: 「髪型」プロンプト集｜AI画像生成で様々な髪型を指定
+    seoDescription: 多様な髪型をAI画像生成で表現するプロンプト集。ショート・ロング・アップスタイルなど髪型指定のテクニック。
+    seoIntro: >-
+      「髪型プロンプトは、Stable DiffusionやMidjourneyで多様なヘアスタイルを生成するときの形状・質感・装飾を指定するテキスト指示です。」bob cut、pixie
+      cut、ponytail、braid、twin-tails、side-tailなどのスタイル名と、curly、straight、wavy、fuzzyなどの毛質を組み合わせます。効果的なテクニックは、髪の長さ（shoulder-length、waist-length）と部位別の詳細（bangs、layers、undercut）を同時に指定すること。「組み合わせ例：」・short
+      black bob cut with blunt bangs, sleek hair・long wavy hair with flowers, romantic updo, detailed braids・twin-tails
+      with ribbons, cute hairstyle, well-groomed。特定の髪型が成功しない場合は、別名称（例：ツインテール→twin-tails / pigtails）を試すと効果的です。
+  - slug: マルチカラー
+    name: マルチカラー
+    color: blue
+    isApproved: true
+    seoTitle: 「マルチカラー」プロンプト集｜AI画像生成で虹・グラデーション配色
+    seoDescription: 複数色を使った華やかな配色をAI画像生成で表現するプロンプト集。グラデーション・虹色・配色テクニックを紹介。
+    seoIntro: >-
+      「マルチカラープロンプトは、Stable
+      DiffusionやMidjourneyで複数の色を調和させた華やかな配色イラストを生成するテキスト指示です。」rainbow、gradient、multicolor、iridescent、holographicなどのキーワードと、複数色名（red,
+      orange, yellow, blue）を組み合わせます。効果的なテクニックは、色の分布位置（hair: blue to purple ombre、clothes: rainbow
+      pattern）と光との相互作用（metallic sheen、translucent）を明示すること。「組み合わせ例：」・rainbow gradient hair, iridescent skin, holographic
+      outfit・multicolor mermaid scales, iridescent fin, magical glow・tie-dye pattern, vibrant neon colors, gradient
+      background。虹色の淡さを調整したい場合は「pastel rainbow」「saturated colors」など色の濃淡キーワードを追加します。
+  - slug: 黒髪
+    name: 黒髪
+    color: blue
+    isApproved: true
+    seoTitle: 「黒髪」プロンプト集｜AI画像生成で深い漆黒髪を表現
+    seoDescription: 黒髪キャラクターを生成するプロンプト集。Stable Diffusion・Midjourneyで黒髪の質感・光沢・深さを引き出すコツ。
+    seoIntro: >-
+      「黒髪プロンプトは、Stable DiffusionやMidjourneyで漆黒、深い黒髪の質感と光沢感を生成するテキスト指示です。」black hair、jet black、raven black、dark
+      hairなどの色濃度キーワードと、shine、silky、glossy、deepなどの質感を組み合わせます。効果的なテクニックは、黒髪に潜む色味（紫、紺、濃茶）をハイライトで表現し、光の当たり方（rim light、soft
+      glow）を同時に指定すること。「組み合わせ例：」・jet black hair, silky texture, subtle purple highlights, shiny・raven black long hair,
+      glossy finish, depth and volume・dark hair with blue undertones, realistic lighting, detailed
+      strands。黒すぎて識別不能になる場合は「shiny black hair」または「glossy finish」を追加して光の反射を強調します。
+  - slug: ゴシック
+    name: ゴシック
+    color: blue
+    isApproved: true
+    seoTitle: 「ゴシック」プロンプト集｜AI画像生成で暗黒優雅な世界を表現
+    seoDescription: ゴシック美学をAI画像生成で表現するプロンプト集。ゴス服・暗い背景・Victorian要素を組み合わせたテクニック。
+    seoIntro: >-
+      「ゴシックプロンプトは、Stable DiffusionやMidjourneyで暗黒優雅なゴシック美学を表現するテキスト指示です。」gothic、goth、dark
+      aesthetic、Victorian、steampunkなどのスタイルキーワードと、black、deep purple、burgundy
+      などの色を組み合わせます。効果的なテクニックは、服飾要素（lace、corset、chains）と背景雰囲気（dark
+      castle、candlelight、moonlight）を同時に指定すること。「組み合わせ例：」・gothic lolita dress, black lace, dark atmosphere, delicate
+      features・dark Victorian aesthetic, ornate jewels, candlelit room, mysterious mood・goth girl, chains, pale skin,
+      dramatic makeup, moody lighting。背景の暗さで顔が見えない場合は「face clearly visible」と追加指定します。
+  - slug: 体型
+    name: 体型
+    color: blue
+    isApproved: true
+    seoTitle: 「体型」プロンプト集｜AI画像生成で理想的な体つきを表現
+    seoDescription: 様々な体型をAI画像生成で表現するプロンプト集。スリム・筋肉質・曲線的など体型指定のテクニック。
+    seoIntro: >-
+      「体型プロンプトは、Stable
+      DiffusionやMidjourneyでキャラクターの体つき・体格・筋肉量を指定するテキスト指示です。」slim、athletic、muscular、curvy、chubby、petiteなどの体型キーワードと、body
+      shape（hourglass、pear、rectangle）を組み合わせます。効果的なテクニックは、特定部位の強調（toned abs、curvy hips、broad shoulders）と全体比率（tall and
+      lean、compact and robust）を同時に指定すること。「組み合わせ例：」・slim athletic girl, toned figure, elegant posture・muscular warrior,
+      defined abs, powerful stance, fantasy outfit・curvy woman, feminine curves, confident
+      expression。不自然な体型になる場合は「anatomically correct」と指定して解剖学的正確性を求めます。
+  - slug: 金髪
+    name: 金髪
+    color: blue
+    isApproved: true
+    seoTitle: 「金髪」プロンプト集｜AI画像生成で輝く金色髪を表現
+    seoDescription: 金髪キャラクターを生成するプロンプト集。Stable Diffusion・Midjourneyで金髪の輝き・質感・色合いを引き出すコツ。
+    seoIntro: >-
+      「金髪プロンプトは、Stable DiffusionやMidjourneyで輝く金色髪の質感・色合い・光沢感を生成するテキスト指示です。」blonde hair、golden hair、yellow hair、platinum
+      blonde、honey blondeなどの色合いキーワードと、shiny、glossy、silky、luminousなどの質感を組み合わせます。効果的なテクニックは、金髪の色温（warm golden、cool
+      platinum、honey tone）と光の反射方向（backlit glow、rim light）を明示すること。「組み合わせ例：」・golden blonde hair, silky texture, warm
+      lighting, ethereal glow・platinum blonde, long waves, shiny finish, luxury aesthetic・honey blonde, wavy hair,
+      sun-kissed highlights, luminous appearance。背景暗い場合は「golden highlights」で光を調整します。
+  - slug: 服装プロンプト
+    name: 服装プロンプト
+    color: blue
+    isApproved: true
+    seoTitle: 「服装プロンプト」テクニック集｜AI画像生成での衣装指定法
+    seoDescription: 服装・衣装をAI画像生成で正確に表現するプロンプトテクニック集。素材・質感・装飾の指定方法を実践的に解説。
+    seoIntro: >-
+      「服装プロンプトテクニックは、Stable
+      DiffusionやMidjourneyで特定の衣装・素材・装飾を正確に生成するテキスト指示の作成方法です。」dress、shirt、jacket、coat、gownなどの衣類名と、silk、leather、lace、woolなどの素材キーワードを組み合わせます。効果的なテクニックは、シルエット形状（fitted、loose、billowing）と色・装飾（embroidered、studded、fringed）を同時に明示すること。「組み合わせ例：」・red
+      silk dress, elegant drape, detailed embroidery, high quality・leather jacket, studded details, dark aesthetic, worn
+      texture・white lace gown, flowing fabric, delicate embellishments, formal wear。複雑な衣装が不得意な場合は「simple
+      outfit」から始めて徐々に装飾を追加します。
+  - slug: 猫
+    name: 猫
+    color: blue
+    isApproved: true
+    seoTitle: 「猫」プロンプト集｜AI画像生成で可愛い猫を描く
+    seoDescription: 猫をモチーフにしたAI画像生成プロンプト集。猫キャラ・猫耳キャラ・リアル猫など様々な表現方法。
+    seoIntro: >-
+      「猫プロンプトは、Stable DiffusionやMidjourneyで猫キャラクター・猫耳・猫モチーフを生成するテキスト指示です。」cat、feline、cat ears、cat girl、fluffy
+      cat、realistic
+      catなどのキーワードと、色（orange、black、white、tabby）を組み合わせます。効果的なテクニックは、猫の特徴（whiskers、paws、tail）と表情・性格（cute、majestic、mischievous）を同時に指定し、背景に猫本来の生息環境を含めること。「組み合わせ例：」・fluffy
+      orange cat, cute face, detailed whiskers, cozy home・black cat girl, cat ears, feline eyes, elegant outfit・tabby
+      kitten, playful pose, soft fur, warm lighting。人間のキャラに猫耳をつけたい場合は「cat ears」ではなく「animal ears, feline」と指定します。
+  - slug: 和風
+    name: 和風
+    color: blue
+    isApproved: true
+    seoTitle: 「和風」プロンプト集｜AI画像生成で日本伝統美を表現
+    seoDescription: 日本伝統・和風美学をAI画像生成で表現するプロンプト集。着物・日本庭園・和風イラストのテクニック。
+    seoIntro: >-
+      「和風プロンプトは、Stable
+      DiffusionやMidjourneyで日本伝統文化・美学を表現するテキスト指示です。」Japanese、kimono、geisha、samurai、traditional、japonisme、ukiyo-eなどのキーワードと、cherry
+      blossom、lantern、temple、garden
+      などの要素を組み合わせます。効果的なテクニックは、服飾（着物の帯、紋様）と背景（日本庭園、神社）を同時に指定し、古典美術の手法（浮世絵の構図、墨画の淡さ）を明示すること。「組み合わせ例：」・geisha in elegant
+      kimono, cherry blossoms, traditional makeup, night scene・samurai warrior, armor detail, misty mountain background,
+      dramatic lighting・traditional Japanese garden, stone lantern, peaceful atmosphere, ukiyo-e
+      style。和風衣装の細部が曖昧な場合は「detailed kimono patterns」と追加指定します。
+  - slug: 兜
+    name: 兜
+    color: blue
+    isApproved: true
+    seoTitle: 「兜」プロンプト集｜AI画像生成で侍の甲冑・兜を表現
+    seoDescription: 日本の甲冑・兜をAI画像生成で表現するプロンプト集。侍・武士・鎧の描き方を実践的に解説。
+    seoIntro: >-
+      「兜プロンプトは、Stable DiffusionやMidjourneyで日本の甲冑・兜・鎧を生成するテキスト指示です。」kabuto、samurai armor、helmet、yoroi、menpo、fukikaeshi
+      などの鎧部品名キーワードと、metallic、ornate、elegant などの質感を組み合わせます。効果的なテクニックは、兜の種類（no-mask kabuto、menpo付き）と装飾（gold trim、intricate
+      pattern）を明示し、鎧全体の光沢（polished metal、battle-worn）を同時に指定すること。「組み合わせ例：」・samurai kabuto helmet, ornate gold details,
+      menpo face guard, detailed metal work・samurai in full armor, yoroi, kabuto, traditional design, warrior
+      stance・elegant kabuto, intricate family crest, polished iron, formal pose。複雑な兜構造が困難な場合は「simple kabuto
+      design」から始めます。
+  - slug: gemini
+    name: Gemini
+    color: blue
+    isApproved: true
+    seoTitle: 「Gemini」プロンプト集｜Google Geminiの効果的な使い方
+    seoDescription: Google Geminiで高品質な回答を引き出すプロンプト集。思考支援・文章作成・分析タスクの実践テクニック。
+    seoIntro: >-
+      「Geminiプロンプトは、Google Geminiで効果的な回答・創造的な出力を引き出すための指示文の書き方です。」context setting（背景情報の明示）、task
+      definition（具体的なゴール設定）、example
+      provision（出力例の提示）などのテクニックを組み合わせます。効果的なテクニックは、Geminiの強み（多言語対応・リアルタイム情報・マルチモーダル）を活かし、出力形式（bullet
+      points、JSON、table）を明示すること。「組み合わせ例：」・Analyze this text and identify key themes, then suggest 3 improvement
+      points・Create a marketing copy for [product], target audience is [group], tone should be [style]・Explain [complex
+      concept] in simple terms for [audience], include 2-3 real-world examples。回答が短すぎる場合は「provide detailed
+      explanation」と追加指定します。
+  - slug: クリエイティブ-プロンプト
+    name: クリエイティブ プロンプト
+    color: blue
+    isApproved: true
+    seoTitle: 「クリエイティブプロンプト」テクニック集｜独創的な出力を引き出す
+    seoDescription: AI（ChatGPT・Claude・Gemini）で創造的・独創的な出力を引き出すプロンプトテクニック集。アイデア帳・企画・執筆の工夫。
+    seoIntro: >-
+      「クリエイティブプロンプトテクニックは、ChatGPT・Claude・Geminiで創造的で独創的な出力を引き出すための指示作成方法です。」role-playing（キャラクター設定）、constraint
+      setting（制約条件の明示）、unexpected
+      combination（要素の組み合わせ）などを活用します。効果的なテクニックは、AIに「創造性を求める」ことを明示し、出力例を2-3個提示して想定品質を伝えること。「組み合わせ例：」・Act as a sci-fi
+      screenwriter, create a dialogue between [character A] and [B] about [topic]・Generate 5 unique business ideas
+      combining [industry A] and [technology B]・Write a short story starting with "What if [unusual premise]?", 300-500
+      words。出力の単調さは「add unexpected twist」「make it more absurd」で改善できます。
+  - slug: claude
+    name: Claude
+    color: blue
+    isApproved: true
+    seoTitle: 「Claude」プロンプト集｜Anthropic Claude使いこなしガイド
+    seoDescription: Anthropic Claudeで高度な思考・分析を引き出すプロンプト集。論理的推論・コーディング・執筆タスクの実践テクニック。
+    seoIntro: >-
+      「Claudeプロンプトは、Anthropic Claudeで高度な分析・論理的推論・複雑なタスクを効果的に実行するための指示文の書き方です。」system
+      prompt活用（AIの役割設定）、chain-of-thought（思考プロセスの明示）、example
+      provision（複数の出力例）などを組み合わせます。効果的なテクニックは、Claudeの強み（長文処理・コード生成・哲学的議論）を活かし、複雑な条件や制約を明確に指定すること。「組み合わせ例：」・Analyze this
+      codebase and suggest refactoring points with explanations・Debate both sides of [controversial topic], then provide
+      your reasoned opinion・Review this document and provide detailed feedback on clarity, tone, and
+      structure。エラーが出た場合は「explain your reasoning」で思考プロセスを可視化します。
+  - slug: コード品質
+    name: コード品質
+    color: blue
+    isApproved: true
+    seoTitle: 「コード品質」プロンプト集｜AI支援のコードレビュー・改善
+    seoDescription: コード品質向上のためのAIプロンプト集。ChatGPT・Claudeでコードレビュー・リファクタリング・最適化を実現するテクニック。
+    seoIntro: >-
+      「コード品質プロンプトは、ChatGPT・Claudeでコードレビュー・リファクタリング・最適化を効率的に実行するための指示文です。」issue identification（問題点の抽出）、best practice
+      application（ベストプラクティス適用）、performance
+      optimization（パフォーマンス最適化）などを組み合わせます。効果的なテクニックは、レビュー対象言語・フレームワーク・要件を明示し、改善案を「理由付き」で提示させること。「組み合わせ例：」・Review this
+      JavaScript function for readability, performance, and security issues・Refactor this Python code to follow PEP8 and
+      improve maintainability・Optimize this SQL query for faster execution, explain the
+      changes。エッジケースの処理漏れを指摘させたい場合は「consider edge cases」と追加指定します。
+  - slug: 教育
+    name: 教育
+    color: blue
+    isApproved: true
+    seoTitle: 「教育」プロンプト集｜AI学習支援・解説・教材作成
+    seoDescription: 学習・教育分野でのAIプロンプト集。ChatGPT・Claudeで解説・教材・学習計画を効果的に作成するテクニック。
+    seoIntro: >-
+      「教育プロンプトは、ChatGPT・Claudeで学習内容の解説・教材作成・学習計画設計を効率的に実行するための指示文です。」learner profile（対象学習者の設定）、pedagogical
+      approach（教育手法の選択）、assessment
+      design（評価方法の設計）などを組み合わせます。効果的なテクニックは、学習者の知識レベル・学習スタイル・ゴールを明示し、解説例を提供させること。「組み合わせ例：」・Explain [complex concept] for
+      a 10-year-old, use analogies and real-world examples・Create a 4-week study plan for learning [skill], include
+      daily tasks and milestones・Write a quiz with 5 questions about [topic], each with explanation for correct
+      answer。難しい概念理解は「start with the basics」で段階的説明を促します。
+  - slug: 業務効率化
+    name: 業務効率化
+    color: blue
+    isApproved: true
+    seoTitle: 「業務効率化」プロンプト集｜AI活用で仕事の生産性向上
+    seoDescription: 業務効率化のためのAIプロンプト集。ChatGPT・Claudeで時間短縮・プロセス改善・自動化を実現するテクニック。
+    seoIntro: >-
+      「業務効率化プロンプトは、ChatGPT・Claudeで仕事プロセスの時間短縮・自動化・最適化を実行するための指示文です。」workflow analysis（現状分析）、bottleneck
+      identification（課題抽出）、solution
+      design（改善案設計）などを組み合わせます。効果的なテクニックは、現在の業務フロー・制約条件・期待効果を具体的に述べ、改善案の優先順位付けを求めること。「組み合わせ例：」・Analyze our email
+      management workflow and suggest automation opportunities・Create a template for [recurring task], include checklist
+      and decision points・Design a process to reduce [time-consuming activity] from 2 hours to 30
+      minutes。具体的ツール名（Zapier、Slack）の連携方法も提示させたい場合は「suggest tools to automate」と指定します。
+  - slug: 意思決定
+    name: 意思決定
+    color: blue
+    isApproved: true
+    seoTitle: 「意思決定」プロンプト集｜AI活用で賢い判断をサポート
+    seoDescription: 重要な意思決定をAIサポートで実現するプロンプト集。メリット・デメリット分析・リスク評価・選択肢比較テクニック。
+    seoIntro: >-
+      「意思決定プロンプトは、ChatGPT・Claudeで重要な判断・選択肢の比較・リスク評価を効率的に実行するための指示文です。」option analysis（複数選択肢の検討）、pros-cons
+      listing（利害得失の列挙）、risk
+      assessment（リスク評価）などを組み合わせます。効果的なテクニックは、決定に影響する条件・制約・価値観を明示し、評価基準（予算・時間・リスク許容度）を具体的に述べること。「組み合わせ例：」・Compare options
+      A, B, C for [decision] considering factors: [factor1], [factor2], [factor3]・Analyze risks and benefits of
+      [choice], assume [context], what would you recommend?・Create a decision tree for [scenario], include best and
+      worst case outcomes。長期的影響を検討させたい場合は「consider 5-year impact」と指定します。
+  - slug: 教育サポート
+    name: 教育サポート
+    color: blue
+    isApproved: true
+    seoTitle: 「教育サポート」プロンプト集｜AI家庭教師・学習相談
+    seoDescription: 個別学習サポートのためのAIプロンプト集。ChatGPT・Claudeで家庭教師・チューター・学習相談を実現するテクニック。
+    seoIntro: >-
+      「教育サポートプロンプトは、ChatGPT・Claudeで個別学習支援・家庭教師機能・学習相談を効果的に実行するための指示文です。」personalized explanation（個別対応）、adaptive
+      questioning（段階的質問）、motivation
+      support（学習動機付け）などを組み合わせます。効果的なテクニックは、学習者の学習スタイル・現在の理解レベル・目標を明示し、つまずきポイントを丁寧に掘り下げさせること。「組み合わせ例：」・I don't understand
+      [concept], explain it step-by-step as my tutor, use examples・Help me solve this problem: [problem], guide me
+      through each step without giving the answer・I struggle with [skill], create a practice routine and explain common
+      mistakes。解説が難しすぎる場合は「explain simpler」「use analogies」で表現レベル調整できます。
+  - slug: 文章品質
+    name: 文章品質
+    color: blue
+    isApproved: true
+    seoTitle: 「文章品質」プロンプト集｜AI支援で文章を磨く・改善する
+    seoDescription: 文章の質向上のためのAIプロンプト集。ChatGPT・Claudeでプルーフリード・トーン調整・表現改善を実現するテクニック。
+    seoIntro: >-
+      「文章品質プロンプトは、ChatGPT・Claudeで執筆文章のプルーフリード・トーン改善・表現最適化を効率的に実行するための指示文です。」clarity enhancement（明確性向上）、tone
+      adjustment（トーン調整）、readability
+      improvement（読みやすさ向上）などを組み合わせます。効果的なテクニックは、対象読者・用途（ブログ、ビジネス文章、小説）・希望トーンを明示し、改善理由を説明させること。「組み合わせ例：」・Proofread this
+      text: [text], fix grammar and improve clarity for a general audience・Adjust the tone of this paragraph to be more
+      professional and persuasive・Rewrite this sentence to be more concise, but keep the original
+      meaning。複数案が欲しい場合は「provide 3 alternative versions」と指定します。
+  - slug: 執筆効率化
+    name: 執筆効率化
+    color: blue
+    isApproved: true
+    seoTitle: 「執筆効率化」プロンプト集｜AI活用で執筆を高速化
+    seoDescription: ブログ・記事・コンテンツ執筆の効率化プロンプト集。ChatGPT・Claudeで執筆時間短縮・構成支援・ドラフト作成テクニック。
+    seoIntro: >-
+      「執筆効率化プロンプトは、ChatGPT・Claudeでブログ記事・コンテンツ・文書の執筆時間を短縮するための指示文です。」outline generation（構成案作成）、draft
+      completion（初稿作成）、content
+      expansion（内容拡張）などを組み合わせます。効果的なテクニックは、執筆ジャンル・読者層・執筆要件（文字数、SEOキーワード、トーン）を明示し、段階的に作成させること。「組み合わせ例：」・Create an outline
+      for a blog post about [topic], target: [audience], 2000 words, include SEO keywords・Draft 5 opening paragraphs for
+      [article idea], make them attention-grabbing・Expand this outline into full article, each section 200-300
+      words。執筆トーンの統一は「maintain a consistent tone throughout」で指示します。
+  - slug: 学習効率化
+    name: 学習効率化
+    color: blue
+    isApproved: true
+    seoTitle: 「学習効率化」プロンプト集｜AI活用で効率的に学ぶ
+    seoDescription: 効率的な学習のためのAIプロンプト集。ChatGPT・Claudeで学習計画・復習・知識定着を加速するテクニック。
+    seoIntro: >-
+      「学習効率化プロンプトは、ChatGPT・Claudeで学習時間の短縮・知識定着の加速・効果的な学習手法設計を実行するための指示文です。」spaced repetition（間隔反復）、active
+      recall（積極的想起）、mind
+      mapping（マインドマップ）などの学習技法を組み合わせます。効果的なテクニックは、学習目標・現在の知識レベル・利用可能な時間・学習スタイル選好を明示し、カスタマイズされた学習計画を求めること。「組み合わせ例：」・Design
+      a 2-week learning plan for [skill], I have 1 hour daily, prefer hands-on learning・Create flashcard questions about
+      [topic], use Feynman Technique for recall・Suggest the best study method for [subject], I learn well through
+      [learning style》。学習進捗に合わせては「adjust plan based on my progress」で動的計画修正を求めます。
+  - slug: アイデア生成
+    name: アイデア生成
+    color: blue
+    isApproved: true
+    seoTitle: 「アイデア生成」プロンプト集｜AIブレインストーミング・発想
+    seoDescription: ブレインストーミング・企画立案のためのAIプロンプト集。ChatGPT・Claudeで新しいアイデアを大量生成するテクニック。
+    seoIntro: >-
+      「アイデア生成プロンプトは、ChatGPT・Claudeでブレインストーミング・企画立案・新しい発想を効率的に引き出すための指示文です。」divergent thinking（拡散的思考）、association
+      technique（連想技法）、constraint-based
+      ideation（制約に基づく発想）などを組み合わせます。効果的なテクニックは、テーマ・制約条件・評価基準を明示し、「常識にとらわれない」「実現不可能な案でもOK」という心理的安全性を伝えること。「組み合わせ例：」・Brainstorm
+      20 ideas for [problem], include wild and unconventional suggestions・Generate product ideas combining [category A]
+      and [category B]・Create 10 content ideas for [platform/audience], prioritize by impact。候補絞り込みは「narrow down to 5
+      best ideas and explain why」で実行できます。
+  - slug: 創造性
+    name: 創造性
+    color: blue
+    isApproved: true
+    seoTitle: 「創造性」プロンプト集｜AI支援で創造的思考を引き出す
+    seoDescription: 創造的思考を引き出すためのAIプロンプト集。ChatGPT・Claudeで創造性・想像力・新しい視点を開発するテクニック。
+    seoIntro: >-
+      「創造性プロンプトは、ChatGPT・Claudeで創造的思考・想像力・新しい視点開発を効果的に引き出すための指示文です。」perspective shifting（視点転換）、analogy-based
+      thinking（類推的思考）、constraint
+      removal（制約除去）などを組み合わせます。効果的なテクニックは、通常と異なる思考枠組みを提示し、「創造性の敵は批判」という心理的安全性を確保し、斬新な案を褒めること。「組み合わせ例：」・Imagine you're a
+      [unexpected role], how would you approach [problem]?・Connect [unrelated topic A] and [topic B] to generate a novel
+      idea・Remove all constraints: if [limitation] didn't exist, what would you do?。複数案比較は「which idea is most creative
+      and why」で評価基準を統一します。
+  - slug: ユーモア
+    name: ユーモア
+    color: blue
+    isApproved: true
+    seoTitle: 「ユーモア」プロンプト集｜AI活用で笑える文章・ジョーク
+    seoDescription: ユーモア・ジョーク生成のためのAIプロンプト集。ChatGPT・Claudeで楽しい・笑える文章を作成するテクニック。
+    seoIntro: >-
+      「ユーモアプロンプトは、ChatGPT・Claudeでジョーク・笑える文章・ユーモア要素を効率的に創造するための指示文です。」pun（言葉遊び）、situational
+      humor（状況ユーモア）、absurdism（不条理ユーモア）などを組み合わせます。効果的なテクニックは、ユーモアの種類・ターゲット層・適切なトーン（上品、下品、シニカル）を明示し、複数案を作成させること。「組み合わせ例：」・Write
+      a funny product description for [item], use puns and absurdist humor・Create 5 jokes about [topic] suitable for
+      [audience], explain the humor・Draft a humorous take on [serious situation], keep it clever and not
+      mean-spirited。ユーモアが難しい場合は「keep it simple」「focus on observational humor」で簡素化できます。
