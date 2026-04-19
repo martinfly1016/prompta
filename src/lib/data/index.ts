@@ -462,6 +462,31 @@ export interface PopularTag {
   promptCount: number
 }
 
+export interface PrimaryCategory {
+  slug: string
+  name: string
+  icon: string | null
+  promptCount: number
+}
+
+export async function getPrimaryCategoryForTag(
+  tagSlug: string,
+): Promise<PrimaryCategory | null> {
+  return tryDb(
+    async () => {
+      const cat = await dbTags.getPrimaryCategoryForTag(tagSlug)
+      if (!cat) return null
+      return {
+        slug: cat.slug,
+        name: cat.name,
+        icon: cat.icon,
+        promptCount: cat._count.prompts,
+      }
+    },
+    () => null,
+  )
+}
+
 export async function getPopularTagsByCategory(
   categorySlug: string,
   limit = 6,

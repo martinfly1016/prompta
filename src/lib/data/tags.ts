@@ -56,6 +56,34 @@ export const getApprovedTags = cache(async () => {
  * prompts in that category carry the tag. Used in the category page's
  * "人気 Tag" section to surface long-tail landing pages.
  */
+/**
+ * Derive the "primary" category for a tag by finding which category has the
+ * most published prompts that also carry this tag. Returns null when the tag
+ * has no published prompts at all.
+ */
+export const getPrimaryCategoryForTag = cache(async (tagSlug: string) => {
+  const categories = await prisma.category.findMany({
+    where: {
+      prompts: {
+        some: { tags: { some: { slug: tagSlug } }, isPublished: true },
+      },
+    },
+    select: {
+      slug: true,
+      name: true,
+      icon: true,
+      _count: {
+        select: {
+          prompts: {
+            where: { tags: { some: { slug: tagSlug } }, isPublished: true },
+          },
+        },
+      },
+    },
+  })
+  return categories.sort((a, b) => b._count.prompts - a._count.prompts)[0] ?? null
+})
+
 export const getPopularTagsByCategory = cache(
   async (categorySlug: string, limit = 6) => {
     const tags = await prisma.tag.findMany({
