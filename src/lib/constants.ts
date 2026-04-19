@@ -198,6 +198,16 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoH1: '女性向け服装プロンプト集｜ファンタジー・制服・ドレス・カジュアル',
     seoDescription: '女性キャラ向け服装プロンプトのコピペ集。トップス・スカート・ドレス・ファンタジー衣装まで、Stable Diffusion で使える呪文と BREAK コマンドによる色滲み対策を紹介。',
   },
+  'body-type': {
+    seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
+    seoH1: '体型プロンプト集｜スレンダー・筋肉質・小柄・高身長を画像付きで比較',
+    seoDescription: 'スレンダー・アスレチック・ぽっちゃり・小柄・高身長など体型プロンプトを多数紹介。Stable Diffusion・NovelAI 対応の呪文とネガティブプロンプト、ControlNet 連携まで徹底解説。',
+  },
+  'color': {
+    seoTitle: '色プロンプト集【Stable Diffusion 色指定の呪文】｜CutOff・BREAK・カラーパレット',
+    seoH1: '色プロンプト集｜色指定・CutOff・BREAK で色滲みを防ぐテクニック',
+    seoDescription: '色・カラー指定プロンプトのコピペ集。118色以上の色名、CutOff 拡張機能、BREAK コマンドによる色滲み防止テクニックを画像付きで解説。Stable Diffusion 対応。',
+  },
 }
 
 // Long-form category intros (~600-800 chars each) for SEO content depth.
@@ -280,18 +290,20 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'color': {
     intro:
-      '色・カラープロンプトは、画像全体の雰囲気と感情表現をコントロールする最も基本的かつ強力な要素です。AI画像生成では「pastel colors」「vivid colors」「monochrome」「sepia tone」のような全体トーンの指定から、「pink and blue gradient」「warm color palette」「cinematic color grading」といった具体的な配色まで、多様な指示が可能です。\nStable Diffusionでは色指定が他の要素に「染み出す」（color bleeding）現象が起きやすいため、BREAK構文や領域指定（regional prompter）で対処するのがプロの手法です。Midjourneyでは「--style raw」を使うと色の解釈が忠実になり、「dominant color: teal」のような自然言語表記も認識します。配色は画像の感情的インパクトを決めるため、参考にしたい配色を持つアーティスト名を併記するのも効果的です。',
+      '色・カラープロンプトは、画像全体の雰囲気と感情表現をコントロールする最も基本的かつ強力な要素です。AI画像生成では「pastel colors」「vivid colors」「monochrome」「sepia tone」のような全体トーンの指定から、「pink and blue gradient」「warm color palette」「cinematic color grading」といった具体的な配色まで、多様な指示が可能です。\nStable Diffusionでは色指定が他の要素に「染み出す」（color bleeding）現象が起きやすいため、BREAK構文や領域指定（regional prompter）で対処するのがプロの手法です。Midjourneyでは「--style raw」を使うと色の解釈が忠実になり、「dominant color: teal」のような自然言語表記も認識します。配色は画像の感情的インパクトを決めるため、参考にしたい配色を持つアーティスト名を併記するのも効果的です。\n\n【色名プロンプト — 基本 20 色と応用】基本色（red, blue, green, yellow, pink, purple, white, black, orange, brown）はどのモデルでも安定して認識されますが、微妙なニュアンスを出すには「crimson, scarlet, coral」（赤系）、「navy, cerulean, azure, teal」（青系）、「emerald, mint, sage」（緑系）のような具体名が有効です。和風の色名（「桜色 sakura pink」「藍色 indigo blue」「朱色 vermillion」）も Stable Diffusion では意外と認識精度が高く、日本的な雰囲気を出すのに効果的です。\n\n【CutOff 拡張機能で部分色指定をマスターする】CutOff は Stable Diffusion WebUI の拡張機能で、プロンプト中の色指定を特定の対象に「固定」する機能です。例えば「red dress, blue ribbon」と指定したとき、ドレスが青っぽくなる色滲みを CutOff の「Target tokens: red-dress, blue-ribbon」で防止できます。Regional Prompter と併用すれば、画面の左右で完全に別の色使いを指定することも可能です。\n\n【BREAK コマンドによるセグメント分離】BREAK はプロンプトをセグメントに区切る構文で、「red dress BREAK blue sky BREAK green trees」のように書くと、AI が各セグメントを独立して解釈するため色干渉を大幅に抑えられます。特にマルチカラーの衣装（例：赤い上着＋青いスカート＋白い靴）を描くときに威力を発揮します。重み付けと組み合わせて「(red jacket:1.2) BREAK (blue skirt:1.2)」とすると最も安定します。\n\n【モノクロ・セピア・カラーグレーディング】「monochrome」「sepia」「desaturated」などのトーン指定は、写真的・映画的な仕上がりを目指すときに効果的です。「cinematic color grading, orange and teal, film grain」はハリウッド映画風の配色で、キャラクターを暖色（orange skin tone）、背景を寒色（teal shadows）に分離するテクニックです。CFG スケールを 8-12 に設定すると色指定が安定しやすくなります。',
     useCases: [
       '雰囲気重視のイメージビジュアル制作',
       'ブランドカラーに合わせた素材作成',
       '季節感のある背景・壁紙作成',
       '映画・ゲームのコンセプトアート',
+      'マルチカラー衣装のカラーリング指定',
     ],
     tips: [
       '全体トーン → 具体的な色 → グラデーションの順で記述する',
       '「cinematic color grading」「film grain」で映画的な色合いに',
-      '色の染み出しを防ぐにはBREAK構文や領域指定を活用',
+      '色の染み出しを防ぐにはBREAK構文やCutOff拡張を活用',
       'ネガティブに「oversaturated, washed out colors」を入れる',
+      'CFGスケール 8-12 で色指定が安定しやすい',
     ],
   },
 
@@ -314,18 +326,20 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'body-type': {
     intro:
-      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。',
+      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。\n\n【身長系の呪文テクニック】身長は「tall」「short」だけでは AI に伝わりにくいため、「tall woman, long legs, towering over」や「petite, short stature, looking up」のように身体的特徴を複合で記述するのがコツです。2 人構図で身長差を出したいときは「height difference, tall man and short woman, looking down at her」のように関係性をセットで書くと安定します。数値指定（170cm など）は Stable Diffusion では機能しないため、相対的な形容詞で表現してください。\n\n【体格系（スレンダー/アスリート/ぽっちゃり）の使い分け】痩せ型は「slim, slender, thin」のうち「slender」が最もバランスの取れた細身表現で、「skinny」は骨ばった印象が強くなります。アスリート体型は「athletic build, toned body, muscular arms」、ぽっちゃり系は「chubby, plump, curvy, thick thighs」が定番。重み付けは (slender:1.2) 程度で十分で、1.4 を超えると体が崩壊しやすいので注意してください。\n\n【年齢感を体型で表現する】年齢そのものを指定するより、体型で暗示する方が自然な仕上がりになります。10 代→「youthful, slender, petite frame」、20 代→「young adult, slim waist, athletic」、30 代以上→「mature, curvy, slightly wider hips」。「child」「teenager」「elderly」などの年齢語と組み合わせると年齢感がより明確に伝わります。\n\n【ポーズ連携テクニック】体型とポーズはセットで指定すると説得力が増します。スレンダー体型×「elegant pose, hand on hip, walking」、筋肉質×「power stance, arms crossed, flexing」、小柄×「sitting, legs dangling, looking up」のように、体型の特性を活かすポーズを選ぶのがプロのテクニックです。\n\n【モデル別の体型挙動】リアル系モデル（ChilloutMix, BeautifulRealistic）はデフォルトが標準〜やや細身で、体型指定への反応が素直です。アニメ系モデル（Anything V5, Counterfeit）はデフォルトが極端に細身のため、「curvy」「muscular」の効きが弱く、重み付けを 1.3 以上に上げる必要があります。NovelAI では Artist タグとの相性もあるため、体型が安定しないときはモデルやArtistを変えてみるのも有効な手段です。',
     useCases: [
       'キャラクターの基本デザイン設計',
       'ファッション撮影・ポートレート風の生成',
       'アクションシーン・戦闘ポーズの作成',
       'スポーツ・フィットネス系の素材',
+      '身長差カップル・体格差構図の作成',
     ],
     tips: [
       '体型 → 身長 → 姿勢の3要素で記述する',
       '「perfect anatomy, correct proportions」を必ず入れる',
       '手の崩れ対策に「detailed hands, five fingers」を併用',
       '正確なポーズが必要ならControlNetで参照画像を使う',
+      '重み付けは1.2程度が安全圏、1.4超は体の崩壊に注意',
     ],
   },
 
