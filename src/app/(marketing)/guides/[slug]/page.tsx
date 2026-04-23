@@ -307,6 +307,128 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
       { q: 'ネガティブプロンプトは必須ですか？', a: '必須ではありませんが、使用することで画像品質が大幅に向上します。特にStable Diffusionでは、ネガティブプロンプトなしだと品質の低い画像が生成されやすいため、常に使用することを推奨します。' },
     ],
   },
+  'anime-prompt-guide': {
+    sections: [
+      {
+        title: 'アニメプロンプトの基本 — キャラクター設計の 4 要素',
+        content: `アニメ風 AI イラストを生成するプロンプトは、以下の 4 要素を順番に記述するのが基本です：
+
+**1. 人物指定**: \`1girl\` / \`1boy\` / \`2girls\`（人数と性別）
+**2. 外見特徴**: 髪色・髪型・目の色・体型（例: \`long silver hair, blue eyes, slender\`）
+**3. 服装・装備**: 制服・ファンタジー・カジュアルなど（例: \`school uniform, pleated skirt\`）
+**4. ポーズ・背景**: 構図と場面（例: \`sitting on window sill, sunset background\`）
+
+この 4 要素を組み合わせた基本テンプレート：
+\`1girl, long silver hair, blue eyes, school uniform, sitting on window sill, sunset background, anime style, masterpiece, best quality\`
+
+最後に品質タグ（\`masterpiece, best quality, ultra detailed\`）を追加し、ネガティブに \`(worst quality, low quality:1.4), bad anatomy, bad hands\` を入れるのが定石です。`,
+      },
+      {
+        title: '画風・年代指定 — レトロからモダンまで',
+        content: `プロンプトに画風キーワードを加えると、年代や作画スタイルを狙い撃ちできます：
+
+**90s アニメ風**（エヴァ・セーラームーン調）:
+\`90s anime, retro anime, cel animation, thick outlines, saturated colors\`
+
+**モダンアニメ風**（深夜アニメ調）:
+\`modern anime, clean lineart, vibrant colors, detailed shading\`
+
+**ジブリ風**（水彩・自然調）:
+\`ghibli style, studio ghibli, watercolor, soft lighting, pastoral scene\`
+
+**新海誠風**（光と空の美しさ）:
+\`makoto shinkai style, beautiful sky, lens flare, detailed clouds, golden hour\`
+
+**セル画風**（フラットで古典的）:
+\`cel shading, flat color, bold outlines, limited palette\`
+
+**水墨画風**:
+\`sumi-e, ink wash painting, traditional japanese art, minimalist\`
+
+画風キーワードは品質タグの**前**に書くと優先度が上がります。「anime style」とリアル系キーワード（photorealistic）は相性が悪いため混ぜないでください。`,
+      },
+      {
+        title: '表情・感情描写でキャラクターに命を吹き込む',
+        content: `表情指定は画像の物語性を決める重要な要素です。単純な指定から複合表現まで：
+
+**基本の表情**:
+- 笑顔: \`smile, gentle smile, grin, smirk, laughing\`
+- 悲しみ: \`crying, tears, sad expression, melancholic\`
+- 怒り: \`angry, frown, fierce eyes, clenched teeth\`
+- 驚き: \`surprised, wide eyes, open mouth, shocked\`
+
+**複合表現（物語性を出す）**:
+\`gentle smile, looking at viewer, slight blush, wind in hair\`（穏やかで親しみやすい）
+\`tears in eyes, forced smile, rain background\`（切なさ）
+\`confident smirk, arms crossed, dramatic lighting\`（強さ）
+
+**視線指定**:
+- \`looking at viewer\` — カメラ目線（最も人気）
+- \`looking away\` — 視線を外す
+- \`looking up\` — 上目遣い
+- \`closed eyes\` — 瞑想的・安らか
+
+NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のように重み付けすると微妙なニュアンスが出ます。`,
+      },
+      {
+        title: 'アニメ系モデル選び — 目的別おすすめ',
+        content: `Stable Diffusion のアニメ系モデルは非常に多く、目的に合った選択が重要です：
+
+**初心者向け（汎用）**:
+- **Anything V5** — 安定感のある汎用アニメモデル。迷ったらこれ
+- **Counterfeit V3** — 美麗な色彩表現。背景も綺麗
+
+**高品質イラスト**:
+- **MeinaMix** — リアル寄りのアニメ調。大人っぽいキャラに最適
+- **AnimagineXL** — SDXL ベースの最新鋭。高解像度・高ディテール
+
+**特定用途**:
+- **Cetus-Mix** — ファンタジー系に強い
+- **AbyssOrangeMix** — ダーク系・スタイリッシュ
+
+**Midjourney**:
+- **niji 5** — アニメ特化モード。\`--niji 5 --style expressive\` で鮮やかなアニメ風
+- niji 以外でも \`anime style\` キーワードで対応可能
+
+**モデル比較のコツ**: 同じプロンプトで 3-4 モデルを試して好みの絵柄を見つけるのが最速です。Civitai や Hugging Face でモデルの比較画像を事前確認するのも有効。`,
+      },
+      {
+        title: 'アニメキャラ設計の実践テンプレート 5 選',
+        content: `すぐに使える実践的なアニメキャラクタープロンプトです：
+
+**1. 学園もの主人公（女子）**:
+\`1girl, brown hair, ponytail, brown eyes, school uniform, white blouse, navy pleated skirt, standing in classroom, cherry blossoms outside window, anime style, masterpiece, best quality\`
+
+**2. ファンタジー魔法使い**:
+\`1girl, long silver hair, purple eyes, mage robe, glowing staff, floating runes, magical aura, dark fantasy, castle background, detailed, anime style\`
+
+**3. サイバーパンクキャラ**:
+\`1boy, short white hair, cyberpunk, neon jacket, futuristic city, rain, reflections, dark atmosphere, detailed lighting, anime style\`
+
+**4. 日常系キャラ（カフェ）**:
+\`1girl, short bob, blonde hair, casual outfit, hoodie, sitting at cafe, coffee cup, warm lighting, cozy atmosphere, slice of life, anime style\`
+
+**5. バトルシーン**:
+\`1girl, red hair, twin tails, dynamic pose, sword slash, action lines, dramatic angle, battle scene, fire effects, (anime style:1.2), masterpiece\`
+
+各テンプレートの構成は「人物 → 外見 → 服装 → ポーズ → 背景 → スタイル → 品質」の順です。要素を差し替えるだけで無限のバリエーションが作れます。`,
+      },
+    ],
+    faq: [
+      {
+        q: 'アニメ風とリアル風を混ぜたい場合は？',
+        a: 'MeinaMix のようなリアル寄りアニメモデルを使い、「semi-realistic, anime-inspired」をキーワードに追加します。Midjourney なら niji モードを OFF にして「anime-inspired, detailed」と記述するとリアルに寄せたアニメ風が得られます。ただし「anime style」と「photorealistic」は相性が悪いため、同時に入れると品質が不安定になります。',
+      },
+      {
+        q: '特定のアニメキャラクターに似せるには？',
+        a: 'キャラ名を直接入れるとある程度似ますが、著作権リスクがあります。安全な方法は、キャラの外見特徴を分解して記述すること。例えば初音ミクなら「twin teal tails, black detached sleeves, gray pleated skirt, tie」のように衣装構成で暗示します。LoRA を使えば特定キャラの特徴を学習したモデルで高精度に再現できます。',
+      },
+      {
+        q: 'アニメモデルで品質が安定しません',
+        a: 'まず品質タグ「masterpiece, best quality, ultra detailed」とネガティブ「(worst quality, low quality:1.4), bad anatomy, bad hands, extra fingers」をテンプレ化してください。CFG スケールは 7-9 が安定圏。Sampler は DPM++ 2M Karras が定番。Step 数は 20-30 で十分です。それでも崩れる場合は、モデルのバージョンを変えるか、VAE を追加すると改善することがあります。',
+      },
+    ],
+  },
   'cosplay-prompt-guide': {
     sections: [
       {

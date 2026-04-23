@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 /**
  * Shared config for data-analys scripts.
  *

@@ -528,6 +528,13 @@ export const GUIDES: Guide[] = [
     monthlySearchVolume: 480,
   },
   {
+    slug: 'anime-prompt-guide',
+    title: 'アニメプロンプトの書き方｜キャラクター設計・画風・表情指定の完全ガイド',
+    description: 'AIでアニメ風イラストを生成するプロンプト完全ガイド。キャラクター設計、90s/modern/ジブリ風の画風指定、表情描写、Anything V5/Counterfeit/niji 5 モデルの使い分けを徹底解説。',
+    targetKeyword: 'アニメ プロンプト 書き方',
+    monthlySearchVolume: 260,
+  },
+  {
     slug: 'body-type-prompt-guide',
     title: '体型プロンプトの書き方｜スレンダー・筋肉質・ぽっちゃりを Stable Diffusion で再現',
     description: 'AI画像生成で体型を自在にコントロールするプロンプト完全ガイド。スレンダー・アスレチック・ぽっちゃり・小柄・高身長の指定方法と重み付けテクニックを解説。',
@@ -572,6 +579,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'cosplay-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'anime-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'hairstyle', 'cosplay'],
   },
   'body-type-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
