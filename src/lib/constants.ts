@@ -208,6 +208,21 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoH1: '色プロンプト集｜色指定・CutOff・BREAK で色滲みを防ぐテクニック',
     seoDescription: '色・カラー指定プロンプトのコピペ集。118色以上の色名、CutOff 拡張機能、BREAK コマンドによる色滲み防止テクニックを画像付きで解説。Stable Diffusion 対応。',
   },
+  'anime': {
+    seoTitle: 'アニメプロンプト集【呪文・コピペOK】｜キャラクターデザイン・画風・表情指定',
+    seoH1: 'アニメプロンプト集｜キャラクター設計・画風・表情・アニメモデル活用',
+    seoDescription: 'アニメスタイルのAI画像生成プロンプト集。アニメキャラクター設計・画風指定・表情描写のコツと、niji mode・Anything V5 など人気モデルの使い分けを画像付きで紹介。',
+  },
+  'hairstyle': {
+    seoTitle: '髪型プロンプト集【呪文・コピペOK】｜ロング・ショート・ツインテール・髪色指定',
+    seoH1: '髪型プロンプト集｜女性キャラの髪型・髪色・髪質を自在にコントロール',
+    seoDescription: '髪型プロンプトのコピペ集。ロングヘア・ショートカット・ポニーテール・ツインテール・髪色グラデーションまで、Stable Diffusion・NovelAI で使える呪文を画像付きで紹介。',
+  },
+  'camera': {
+    seoTitle: 'カメラアングルプロンプト集【構図・ライティングの呪文】｜クローズアップ・俯瞰・シネマティック',
+    seoH1: 'カメラアングル・構図プロンプト集｜クローズアップ・俯瞰・シネマティック撮影',
+    seoDescription: 'カメラアングル・構図・ライティングのAIプロンプト集。クローズアップ・俯瞰・ローアングル・シネマティック撮影まで、Stable Diffusion・Midjourney で使える呪文を紹介。',
+  },
 }
 
 // Long-form category intros (~600-800 chars each) for SEO content depth.
@@ -222,18 +237,20 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
   // ========== 画像系カテゴリ (8) ==========
   'hairstyle': {
     intro:
-      '髪型プロンプトは、AI画像生成においてキャラクターの印象を決定づける最も重要な要素のひとつです。Stable DiffusionやMidjourneyでは「long hair」「short bob」「ponytail」「twin tails」といった英語キーワードで指定するのが基本ですが、単に長さを指定するだけでなく、髪の色（blonde, silver, black hair）、質感（silky, wavy, curly）、前髪のスタイル（blunt bangs, side-swept bangs）まで細かく組み合わせることで、より理想に近いビジュアルが得られます。\n日本のアニメ風イラストで人気の高いツインテールやポニーテールは、(twin tails:1.2)のように重み付け（emphasis）を加えることで、AIが髪型を確実に認識しやすくなります。逆に、髪が顔にかかってしまう問題を防ぐため、ネガティブプロンプトに「hair over eyes」「messy hair」を入れるのも定番テクニックです。',
+      '髪型プロンプトは、AI画像生成においてキャラクターの印象を決定づける最も重要な要素のひとつです。Stable DiffusionやMidjourneyでは「long hair」「short bob」「ponytail」「twin tails」といった英語キーワードで指定するのが基本ですが、単に長さを指定するだけでなく、髪の色（blonde, silver, black hair）、質感（silky, wavy, curly）、前髪のスタイル（blunt bangs, side-swept bangs）まで細かく組み合わせることで、より理想に近いビジュアルが得られます。\n日本のアニメ風イラストで人気の高いツインテールやポニーテールは、(twin tails:1.2)のように重み付け（emphasis）を加えることで、AIが髪型を確実に認識しやすくなります。逆に、髪が顔にかかってしまう問題を防ぐため、ネガティブプロンプトに「hair over eyes」「messy hair」を入れるのも定番テクニックです。\n\n【女性キャラ定番髪型 20 選】ロング系: long hair, very long hair, waist-length hair、ミディアム: medium hair, shoulder-length hair、ショート: short hair, short bob, pixie cut、アップスタイル: ponytail, high ponytail, side ponytail, bun, double bun、ツインテール系: twin tails, twintails, low twin tails、その他人気: braid, french braid, drill hair, hime cut, ahoge。これらに「前髪＋色＋質感」を足すのが基本パターンです。\n\n【髪色のプロ指定 — 単色からグラデーションまで】基本色は blonde, brunette, black hair, red hair, silver hair, blue hair, pink hair。グラデーション指定は「gradient hair, pink to blue」「ombre hair, dark roots to light tips」のように始点→終点で書きます。メッシュは「streaked hair, blonde with pink highlights」、インナーカラーは「inner color hair, black with hidden red」。髪色は他パーツへの色滲みが起きやすいため、BREAK や CutOff で分離するのが安全です。\n\n【髪質・動きの表現で差をつける】「silky, straight」で光沢のあるストレート、「wavy, flowing」で風になびく動き、「curly, voluminous」でボリュームのあるカール。「wet hair」で濡れた質感、「messy hair, bedhead」で寝起き感、「windswept hair」で風に吹かれた躍動感。動きの表現は品質を大きく左右するので、重み付け (flowing hair:1.2) を加えることを推奨します。\n\n【髪飾り・アクセサリーで個性を出す】「hair ribbon, red」「flower in hair」「hairpin, star-shaped」「tiara」「hair ornament, butterfly」など、髪飾りはキャラの個性を決定づける重要アクセント。和風なら「kanzashi, japanese hair ornament」、ゴシックなら「black lace headband, dark rose」。髪飾りは (hair ribbon:1.3) のように強めの重み付けをしないと AI が省略しがちです。',
     useCases: [
       'オリジナルキャラクターのビジュアル設計',
       'VTuberやアバターのデザイン案出し',
       'ポートレート・人物写真風の画像生成',
       'コミック・ライトノベルの挿絵作成',
+      '髪色グラデーション・インナーカラーの表現',
     ],
     tips: [
-      '長さ＋スタイル＋色の3要素を組み合わせる（例: long wavy blonde hair）',
+      '長さ＋スタイル＋色＋質感の4要素を組み合わせる',
       '重要な髪型は (keyword:1.2〜1.4) で強調する',
       'ネガティブプロンプトに「bad hair, messy hair」を入れて品質を安定させる',
       'アニメ調なら「anime style」、リアル調なら「photorealistic」を併用',
+      '髪色の色滲みにはBREAK構文やCutOffで対策',
     ],
   },
 
@@ -273,18 +290,20 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'anime': {
     intro:
-      'アニメスタイルプロンプトは、日本のアニメ・マンガ調イラストをAIで生成するための核となるテクニックです。Stable Diffusionでは「anime style」「anime coloring」「manga style」「cel shading」といったベースキーワードに加え、特定の作画スタイル（90s anime, modern anime, ghibli style）を指定することで方向性を細かくコントロールできます。\nアニメ系モデル（Anything V5, Counterfeit, MeinaMix など）を使う場合、品質タグ「masterpiece, best quality, ultra detailed」とネガティブタグ「(worst quality, low quality:1.4), bad anatomy, bad hands」をテンプレ化しておくのが定番です。Midjourneyでは「niji 5」モードがアニメ表現に特化しており、「--niji 5 --style expressive」で鮮やかなアニメ風画像が得られます。',
+      'アニメスタイルプロンプトは、日本のアニメ・マンガ調イラストをAIで生成するための核となるテクニックです。Stable Diffusionでは「anime style」「anime coloring」「manga style」「cel shading」といったベースキーワードに加え、特定の作画スタイル（90s anime, modern anime, ghibli style）を指定することで方向性を細かくコントロールできます。\nアニメ系モデル（Anything V5, Counterfeit, MeinaMix など）を使う場合、品質タグ「masterpiece, best quality, ultra detailed」とネガティブタグ「(worst quality, low quality:1.4), bad anatomy, bad hands」をテンプレ化しておくのが定番です。Midjourneyでは「niji 5」モードがアニメ表現に特化しており、「--niji 5 --style expressive」で鮮やかなアニメ風画像が得られます。\n\n【アニメキャラクター設計の呪文パターン】オリジナルキャラクターを描くには「1girl/1boy」＋ 外見特徴（髪色・髪型・目の色・服装）＋ ポーズ ＋ 背景 の 4 要素を順番に記述します。例: 「1girl, long silver hair, blue eyes, school uniform, sitting on window sill, sunset background, anime style」。人気の高いキャラ設定として、ツインテール×制服、銀髪×ファンタジー装備、ネコミミ×メイド服 は AI の再現性が特に高いです。\n\n【画風・年代指定のテクニック】「90s anime」で『エヴァンゲリオン』風のレトロ感、「modern anime」で最近の深夜アニメ風、「ghibli style」でジブリの水彩調、「makoto shinkai style」で新海誠風の光の表現が得られます。セル画風なら「cel shading, flat color, bold outlines」、水墨画風なら「sumi-e, ink wash, traditional japanese art」と組み合わせます。画風は品質タグの前に書くと優先度が上がります。\n\n【表情・感情描写で物語性を加える】キャラの表情は「smile, happy」のような単純な指定から、「gentle smile, looking at viewer, tears in eyes, blushing」のような複合表現まで幅広く対応しています。感情と状況を組み合わせると物語性が出ます: 「crying, rain, holding umbrella, melancholic expression」。NovelAI では emotion タグがかなり精密で、「(gentle smile:1.2), soft eyes, slight blush」のように重み付けすると表情の繊細さが増します。\n\n【モデル選びの決定版ガイド】Stable Diffusion のアニメ系モデルは進化が速く、用途に合った選択が重要です。Anything V5 は汎用的で初心者向け、Counterfeit は美麗な色彩表現、MeinaMix はリアル寄りのアニメ調、AnimagineXL は SDXL ベースの最新鋭。Midjourney なら niji 5（アニメ特化）、DALL-E 3 はアニメ風指定が可能ですがスタイルの制御は弱め。モデル比較は同じプロンプトで 3-4 モデル試して好みの絵柄を見つけるのが最速です。',
     useCases: [
       'オリジナルキャラクターの設定画作成',
       '同人誌・Web漫画の参考素材',
       'SNSアイコン・ヘッダー画像の作成',
       'ライトノベルやゲームのコンセプトアート',
+      'アニメキャラクターの表情・感情バリエーション',
     ],
     tips: [
       '品質タグ「masterpiece, best quality, ultra detailed」をテンプレ化',
       'アニメ系モデルやMidjourneyのniji 5モードを使う',
       '「(anime style:1.2)」で重み付けしてリアル化を防ぐ',
       'ネガティブに「3d, realistic, photo, bad anatomy」を入れる',
+      '画風は品質タグの前に書くと優先度が上がる',
     ],
   },
 
@@ -345,18 +364,20 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'camera': {
     intro:
-      'カメラ・アングルプロンプトは、画像の構図と視点を決定づける、いわば「映像監督」的な役割を果たす要素です。「close-up」「medium shot」「full body shot」「wide shot」のような基本構図から、「low angle」「high angle」「dutch angle」「bird\'s eye view」といった視点指定、さらに「shallow depth of field」「bokeh」「cinematic composition」のような撮影技法まで、幅広く指示できます。\nMidjourneyは特にカメラ系プロンプトに強く、「shot on Sony A7IV, 85mm lens, f/1.4」のような実機材スペック指定にも反応します。Stable Diffusionでは「professional photography, dramatic lighting, rule of thirds」を併用すると、構図の安定性が大きく向上します。映画的な雰囲気を出したい場合は「cinematic still, anamorphic lens, film grain」が定番の組み合わせです。',
+      'カメラ・アングルプロンプトは、画像の構図と視点を決定づける、いわば「映像監督」的な役割を果たす要素です。「close-up」「medium shot」「full body shot」「wide shot」のような基本構図から、「low angle」「high angle」「dutch angle」「bird\'s eye view」といった視点指定、さらに「shallow depth of field」「bokeh」「cinematic composition」のような撮影技法まで、幅広く指示できます。\nMidjourneyは特にカメラ系プロンプトに強く、「shot on Sony A7IV, 85mm lens, f/1.4」のような実機材スペック指定にも反応します。Stable Diffusionでは「professional photography, dramatic lighting, rule of thirds」を併用すると、構図の安定性が大きく向上します。映画的な雰囲気を出したい場合は「cinematic still, anamorphic lens, film grain」が定番の組み合わせです。\n\n【コピペで使える構図テンプレート 10 選】すぐに使える実践的な呪文テンプレートです:\n1. ポートレート基本: 「close-up portrait, soft lighting, shallow depth of field, 85mm lens」\n2. 全身ショット: 「full body shot, standing pose, studio lighting, white background」\n3. シネマティック: 「cinematic still, anamorphic lens, dramatic lighting, film grain, 2.39:1 aspect ratio」\n4. 俯瞰: 「bird\'s eye view, top-down shot, aerial perspective, city below」\n5. ローアングル迫力: 「low angle shot, looking up, dramatic perspective, heroic pose」\n6. 横顔: 「side profile, rim lighting, dark background, dramatic shadows」\n7. 背面ショット: 「from behind, over the shoulder, looking at scenery, depth」\n8. 超接写: 「extreme close-up, macro shot, eyes detail, skin texture, 100mm macro lens」\n9. 群像構図: 「group shot, multiple characters, symmetrical composition, wide angle」\n10. ダッチアングル: 「dutch angle, tilted frame, dynamic composition, action scene」\n\n【ライティング 8 パターン — 雰囲気を劇的に変える】ライティングだけで画像の印象は 180 度変わります:\n- 「soft lighting」— 柔らかく自然、ポートレート向き\n- 「dramatic lighting」— 強い陰影、ドラマチック\n- 「rim lighting / backlight」— 被写体の輪郭が光る逆光\n- 「golden hour」— 夕暮れの暖かい自然光\n- 「studio lighting, three-point lighting」— プロの撮影スタジオ\n- 「neon lighting」— サイバーパンク・夜の繁華街\n- 「candle light, warm」— 暖かい室内の雰囲気\n- 「moonlight, cool blue」— 月明かりの冷たい光\n\n【レンズ・機材指定で差をつける（Midjourney 特に有効）】Midjourney はカメラ機材名に強く反応します。「shot on Canon 5D Mark IV, 50mm f/1.4」でリアルなボケ味、「shot on Fujifilm X-T4, 23mm f/1.4」でフィルム調の色味、「Leica M10, 35mm Summilux」で上品なドキュメンタリー風。Stable Diffusion ではレンズ効果は「depth of field, bokeh, f/1.4」のような一般的記述の方が安定します。',
     useCases: [
       '映画的・ドラマチックな構図のシーン作成',
       'ポートレート撮影風の人物画像',
       '広告・ポスター用のビジュアル',
       'ゲームのキービジュアル・コンセプトアート',
+      'サイバーパンク・ネオンライティング系の作品',
     ],
     tips: [
       '構図 → 視点 → 撮影機材 → ライティングの順で記述',
       '「cinematic, dramatic lighting, depth of field」を組み合わせる',
       '実機材名（Sony A7, 35mm lens）はMidjourneyで特に有効',
-      'ネガティブに「flat composition, boring angle」を入れる',
+      'ネガティブに「flat composition, boring angle, bad lighting」を入れる',
+      'コピペ可能なテンプレートから始めて、要素を差し替えるのが最速',
     ],
   },
 
