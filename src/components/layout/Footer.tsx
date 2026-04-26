@@ -123,8 +123,39 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Recommended Services */}
+        <div className="mt-10 pt-8 border-t border-gray-800">
+          <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">おすすめサービス</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a
+              href="https://kidsai.art"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors group"
+            >
+              <span className="text-2xl shrink-0">🎨</span>
+              <div>
+                <span className="text-sm font-medium text-white group-hover:text-sky-400 transition-colors">KidsAI Art Studio</span>
+                <p className="text-xs text-gray-500 mt-0.5">子どもの絵や写真を AI で水彩・クレヨン・3D アニメ風に変身させる無料アプリ。3〜12歳のお子さまと一緒に楽しめます。</p>
+              </div>
+            </a>
+            <a
+              href="https://ocrjp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors group"
+            >
+              <span className="text-2xl shrink-0">📝</span>
+              <div>
+                <span className="text-sm font-medium text-white group-hover:text-sky-400 transition-colors">AI OCR — 日本語テキスト化</span>
+                <p className="text-xs text-gray-500 mt-0.5">写真や画像から日本語テキストを瞬時に抽出。手書き・縦書きにも対応した無料 OCR ツール。登録不要ですぐに使えます。</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} {SITE_CONFIG.nameEn}. All rights reserved.
           </p>
