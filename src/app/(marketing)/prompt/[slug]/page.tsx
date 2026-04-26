@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
-import { getPromptBySlug, getPromptSlugs, getRelatedPrompts } from '@/lib/data'
+import { getPromptBySlug, getPromptSlugs, getRelatedPrompts, getApprovedTagSlugs } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { CopyButton } from '@/components/ui/CopyButton'
 import { TryInChatGPTButton } from '@/components/ui/TryInChatGPTButton'
@@ -51,7 +51,11 @@ export default async function PromptDetailPage({ params }: Props) {
   const prompt = await getPromptBySlug(slug)
   if (!prompt) notFound()
 
-  const related = await getRelatedPrompts(prompt, 4)
+  const [related, approvedTagSlugs] = await Promise.all([
+    getRelatedPrompts(prompt, 4),
+    getApprovedTagSlugs(),
+  ])
+  const approvedSet = new Set(approvedTagSlugs)
 
   // Show "Try in ChatGPT" button only for text-based AI tools (not image generators)
   const IMAGE_TOOLS = new Set(['stable-diffusion', 'midjourney', 'dall-e'])
@@ -184,11 +188,17 @@ export default async function PromptDetailPage({ params }: Props) {
             <section className="mb-8">
               <h2 className="text-lg font-bold text-gray-900 mb-3">タグ</h2>
               <div className="flex flex-wrap gap-2">
-                {prompt.tags.map(tag => (
-                  <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`} className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-sky-50 hover:text-sky-700 transition-colors">
-                    # {tag}
-                  </Link>
-                ))}
+                {prompt.tags.map(tag =>
+                  approvedSet.has(tag) ? (
+                    <Link key={tag} href={`/tag/${encodeURIComponent(tag)}`} className="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-sky-50 hover:text-sky-700 transition-colors">
+                      # {tag}
+                    </Link>
+                  ) : (
+                    <span key={tag} className="px-3 py-1.5 text-sm bg-gray-50 text-gray-400 rounded-lg">
+                      # {tag}
+                    </span>
+                  )
+                )}
               </div>
             </section>
           )}
