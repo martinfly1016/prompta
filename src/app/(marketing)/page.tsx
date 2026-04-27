@@ -17,8 +17,8 @@ export default async function HomePage() {
   const [tools, categories, featured, latest, guides] = await Promise.all([
     getTools(),
     getCategories(),
-    getFeaturedPrompts(12),
-    getLatestPrompts(8),
+    getFeaturedPrompts(24),
+    getLatestPrompts(24),
     getGuides(),
   ])
 
