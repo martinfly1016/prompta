@@ -307,6 +307,149 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
       { q: 'ネガティブプロンプトは必須ですか？', a: '必須ではありませんが、使用することで画像品質が大幅に向上します。特にStable Diffusionでは、ネガティブプロンプトなしだと品質の低い画像が生成されやすいため、常に使用することを推奨します。' },
     ],
   },
+  'hairstyle-prompt-guide': {
+    sections: [
+      {
+        title: '髪型プロンプトの基本 — 長さ×スタイル×色の 3 軸',
+        content: `AI画像生成で髪型を指定するプロンプトは、以下の 3 軸の組み合わせで構成します：
+
+**1. 長さ**: \`very long hair\` / \`long hair\` / \`medium hair\` / \`short hair\` / \`very short hair\`
+**2. スタイル**: \`straight\` / \`wavy\` / \`curly\` / \`ponytail\` / \`twin tails\` / \`braid\` / \`bun\` / \`bob\`
+**3. 色**: \`blonde\` / \`black hair\` / \`silver hair\` / \`pink hair\` / \`blue hair\`
+
+基本テンプレート：
+\`1girl, long wavy blonde hair, blue eyes, blunt bangs, hair ribbon\`
+
+さらに前髪（\`blunt bangs\` / \`side-swept bangs\` / \`parted bangs\`）と質感（\`silky\` / \`fluffy\` / \`glossy\`）を加えると精度が上がります。
+
+**重要ポイント**: 髪型は他の要素（服装・ポーズ）より**プロンプトの前方に書く**と優先されます。また \`(twin tails:1.2)\` のように重み付けを加えると AI が確実に認識しやすくなります。`,
+      },
+      {
+        title: '女性キャラ定番ヘアスタイル 20 選とコピペ呪文',
+        content: `すぐに使える 20 種類の髪型プロンプトです：
+
+**ロング系**:
+1. \`long straight hair\` — ストレートロング
+2. \`very long hair, waist-length\` — 超ロング
+3. \`long wavy hair\` — ウェーブロング
+4. \`long curly hair\` — カーリーロング
+
+**ミディアム系**:
+5. \`medium hair, shoulder-length\` — 肩丈
+6. \`bob cut\` — ボブ
+7. \`long bob, lob\` — ロングボブ
+
+**ショート系**:
+8. \`short hair\` — ショート
+9. \`short bob\` — ショートボブ
+10. \`pixie cut\` — ピクシーカット
+11. \`very short hair, buzz cut\` — ベリーショート
+
+**アップスタイル系**:
+12. \`ponytail\` — ポニーテール
+13. \`high ponytail\` — 高めポニテ
+14. \`side ponytail\` — サイドポニテ
+15. \`bun, hair bun\` — お団子
+16. \`double bun\` — ダブルお団子
+
+**ツインテール系**:
+17. \`twin tails, twintails\` — ツインテール
+18. \`low twin tails\` — 低めツインテ
+
+**その他人気**:
+19. \`braid, french braid\` — 三つ編み
+20. \`hime cut\` — 姫カット（前髪ぱっつん＋サイド長め）`,
+      },
+      {
+        title: '髪色指定 — 単色からグラデーション・インナーカラーまで',
+        content: `**基本色**: blonde, brunette, black hair, red hair, silver hair, blue hair, pink hair, purple hair, green hair, white hair
+
+**具体的な色名で精度を上げる**:
+- 赤系: crimson, scarlet, auburn, ginger, copper
+- 青系: navy blue, cerulean, azure, teal
+- ピンク系: light pink, hot pink, salmon pink, rose gold
+- 銀系: platinum blonde, silver white, ash gray
+
+**グラデーション（2色の移行）**:
+\`gradient hair, pink to blue\` — ピンク→青のグラデ
+\`ombre hair, dark roots to blonde tips\` — 根元暗→毛先明
+\`split color hair, half black half white\` — 左右半分ずつ
+
+**インナーカラー（隠れた色）**:
+\`inner color hair, black hair with hidden red underneath\`
+\`peek-a-boo highlights, blonde with purple under layer\`
+
+**メッシュ・ハイライト**:
+\`streaked hair, black with pink highlights\`
+\`highlighted hair, blonde with caramel streaks\`
+
+**色滲み防止**: 髪色が服に移る場合は BREAK 構文で分離: \`(pink gradient hair:1.2) BREAK (white dress:1.2)\`。CutOff 拡張で「pink:hair」と固定するのも有効です。`,
+      },
+      {
+        title: '髪の動き・質感表現で画像のクオリティを上げる',
+        content: `髪型の「名前」だけでなく「動き」と「質感」を加えると、画像のクオリティが劇的に向上します。
+
+**質感キーワード**:
+- \`silky, smooth\` — 絹のような滑らかさ（ストレート向き）
+- \`glossy, shiny\` — 光沢のあるツヤ髪
+- \`fluffy, voluminous\` — ふわふわのボリューム感
+- \`wet hair\` — 濡れた質感（雨・シャワーシーン）
+- \`messy hair, tousled\` — 無造作ヘア
+- \`bedhead\` — 寝起きの乱れ髪
+
+**動きキーワード**:
+- \`flowing hair\` — 流れるような髪（最も汎用的）
+- \`windswept hair, hair blowing in wind\` — 風になびく
+- \`floating hair\` — 無重力で浮遊する髪（ファンタジー向き）
+- \`hair over one eye\` — 片目に髪がかかる（ミステリアス）
+
+**おすすめ組み合わせ**:
+\`1girl, long silver hair, silky, flowing hair, wind, soft lighting\` — 風にたなびく銀髪美人
+\`1girl, short messy hair, bedhead, morning light, pajamas\` — 寝起きの自然な可愛さ
+
+**品質安定のネガティブ**: \`bad hair, ugly hair, bald spot, hair clipping through body\``,
+      },
+      {
+        title: '髪飾り・ヘアアクセサリーでキャラの個性を際立たせる',
+        content: `髪飾りはキャラクターの個性を一瞬で伝えるアクセント。ジャンル別に定番をまとめます：
+
+**日常系**:
+\`hair ribbon, red\` / \`hair clip, star-shaped\` / \`scrunchie\` / \`headband\`
+
+**和風**:
+\`kanzashi, japanese hair ornament\` / \`flower in hair, cherry blossom\` / \`tsumami kanzashi\`
+
+**ゴシック・ダーク**:
+\`black lace headband\` / \`dark rose hair ornament\` / \`skull hairpin\` / \`thorny crown\`
+
+**ファンタジー**:
+\`tiara\` / \`magical hairpin, glowing\` / \`crystal hair ornament\` / \`feathered headpiece\`
+
+**アイドル・華やか**:
+\`hair bow, large\` / \`glitter hair accessories\` / \`flower crown\` / \`butterfly hair clip\`
+
+**重要テクニック**:
+髪飾りは AI が省略しがちなため、**(hair ribbon:1.3)** のように重み付け 1.3 以上を推奨します。複数の髪飾りを同時に指定すると競合しやすいので、1-2 個に絞るのがコツ。
+
+実践テンプレート：
+\`1girl, long black hair, hime cut, (red hair ribbon:1.3), blunt bangs, school uniform, gentle smile, cherry blossom background, anime style, masterpiece\``,
+      },
+    ],
+    faq: [
+      {
+        q: '髪型が指定と違うものが出てきます',
+        a: '髪型キーワードの位置をプロンプトの前方に移動し、(keyword:1.2-1.3) で重み付けしてください。それでも安定しない場合は、ネガティブに意図しない髪型を明示します（例: ロングが欲しいのにショートが出る場合は「short hair」をネガティブに追加）。モデルによっても得意な髪型が異なるため、2-3 モデルで試すのも有効です。',
+      },
+      {
+        q: '髪色が服や背景に滲みます（color bleeding）',
+        a: 'BREAK 構文で髪と服を分離するのが最も手軽です: 「(red hair:1.2) BREAK (white dress:1.2)」。CutOff 拡張機能で「red:hair」とトークンを固定する方法もあります。ネガティブに「color bleeding, miscolored」を入れるのも効果的。特にピンク×白、赤×青の組み合わせで起きやすいので注意してください。',
+      },
+      {
+        q: 'グラデーションヘアが上手く出ません',
+        a: '「gradient hair, [color1] to [color2]」の形式で書き、重み付け (gradient hair:1.3) を加えてください。Stable Diffusion では CFG スケールを 9-11 に設定すると色の分離が安定します。うまくいかない場合は img2img の Inpaint で髪だけ塗り直す方法もあります。',
+      },
+    ],
+  },
   'anime-prompt-guide': {
     sections: [
       {

@@ -218,6 +218,11 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoH1: '髪型プロンプト集｜女性キャラの髪型・髪色・髪質を自在にコントロール',
     seoDescription: '髪型プロンプトのコピペ集。ロングヘア・ショートカット・ポニーテール・ツインテール・髪色グラデーションまで、Stable Diffusion・NovelAI で使える呪文を画像付きで紹介。',
   },
+  'costume': {
+    seoTitle: 'コスチュームプロンプト集【呪文・コピペOK】｜和服・甲冑・アクセサリー・装飾品',
+    seoH1: 'コスチューム・衣装プロンプト集｜和服・甲冑・ジュエリー・装飾品の呪文',
+    seoDescription: 'コスチューム・衣装・装飾品プロンプトのコピペ集。和服・甲冑・ティアラ・チョーカーなど、Stable Diffusion で使えるキャラクター装飾の呪文を画像付きで多数紹介。',
+  },
   'camera': {
     seoTitle: 'カメラアングルプロンプト集【構図・ライティングの呪文】｜クローズアップ・俯瞰・シネマティック',
     seoH1: 'カメラアングル・構図プロンプト集｜クローズアップ・俯瞰・シネマティック撮影',
@@ -328,12 +333,13 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'costume': {
     intro:
-      '衣装・装飾品プロンプトは、キャラクターの個性を完成させるアクセサリーや小物類を表現するためのテクニックです。「necklace」「earrings」「crown」「glasses」「choker」「ribbon」など、英語の基本ワードを覚えておくとAIが認識しやすく、複数併用することで装飾性の高いキャラクターが作れます。\n装飾系プロンプトの難しさは、AIが小物を「忘れる」または「過剰に増やす」点です。「(intricate gold necklace:1.3)」のように重み付けを強めにかけ、ネガティブに「too many accessories, deformed jewelry」を入れて制御するのが基本戦略です。和風キャラには「kanzashi（簪）」「obi（帯）」、ファンタジー系には「tiara, gem, magical pendant」など、ジャンル特有の語彙を覚えておくと表現の幅が広がります。',
+      '衣装・装飾品プロンプトは、キャラクターの個性を完成させるアクセサリーや小物類を表現するためのテクニックです。「necklace」「earrings」「crown」「glasses」「choker」「ribbon」など、英語の基本ワードを覚えておくとAIが認識しやすく、複数併用することで装飾性の高いキャラクターが作れます。\n装飾系プロンプトの難しさは、AIが小物を「忘れる」または「過剰に増やす」点です。「(intricate gold necklace:1.3)」のように重み付けを強めにかけ、ネガティブに「too many accessories, deformed jewelry」を入れて制御するのが基本戦略です。和風キャラには「kanzashi（簪）」「obi（帯）」、ファンタジー系には「tiara, gem, magical pendant」など、ジャンル特有の語彙を覚えておくと表現の幅が広がります。\n\n【コスチューム 5 大カテゴリと定番呪文】衣装・装飾品は 5 つのカテゴリに大別できます。\n1. **和風**: kimono, hakama, yukata, obi, kanzashi, geta, furisode — 季節を添えると雰囲気が出ます（cherry blossoms, autumn leaves）\n2. **甲冑・アーマー**: plate armor, chainmail, leather armor, gauntlets, helmet, shield — ファンタジー系は「ornate, glowing runes, magical」を追加\n3. **ジュエリー**: necklace, pendant, earrings, bracelet, ring, tiara, crown — 素材名（gold, silver, diamond, ruby）を必ず併記\n4. **ゴシック・ダーク**: choker, lace gloves, corset, black veil, cross pendant — 「dark, gothic, elegant」で雰囲気統一\n5. **SF・メカ**: visor, cybernetic eye, mech suit, LED strip, holographic display — ネオンカラーとの組み合わせが定番\n\n【装飾品が消える問題の対処法】AIが装飾品を「忘れる」のは最も多いトラブルです。対策は 3 段階:\n1. **(keyword:1.3)** で重み付け — 最初の防壁\n2. **BREAK 構文**で分離 — 「character description BREAK (golden crown:1.3), (diamond earrings:1.2)」と装飾品を独立セグメントに\n3. **ControlNet の参照画像** — 装飾品の位置を物理的に固定。Canny や Depth モードが有効\n\n逆に装飾品が**増殖する**場合は、ネガティブに「too many accessories, duplicate jewelry, extra rings」を入れてください。',
     useCases: [
       'キャラクターデザインの細部仕上げ',
       'ジュエリー・アクセサリーのデザイン案出し',
       'ファンタジー・歴史物のコスチューム設計',
       'ゲームアバターのカスタマイズ案',
+      '和風キャラクターの装飾品指定',
     ],
     tips: [
       'アクセサリーは (keyword:1.3) でしっかり重み付けする',
@@ -528,6 +534,13 @@ export const GUIDES: Guide[] = [
     monthlySearchVolume: 480,
   },
   {
+    slug: 'hairstyle-prompt-guide',
+    title: '髪型プロンプトの書き方｜ロング・ショート・ツインテール・髪色グラデーションの完全ガイド',
+    description: 'AI画像生成で髪型を自在にコントロールするプロンプト完全ガイド。20種類の定番ヘアスタイル、髪色指定、グラデーション・インナーカラー、髪飾りの呪文例を徹底解説。',
+    targetKeyword: '髪型 プロンプト 書き方',
+    monthlySearchVolume: 2400,
+  },
+  {
     slug: 'anime-prompt-guide',
     title: 'アニメプロンプトの書き方｜キャラクター設計・画風・表情指定の完全ガイド',
     description: 'AIでアニメ風イラストを生成するプロンプト完全ガイド。キャラクター設計、90s/modern/ジブリ風の画風指定、表情描写、Anything V5/Counterfeit/niji 5 モデルの使い分けを徹底解説。',
@@ -579,6 +592,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'cosplay-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'hairstyle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
   },
   'anime-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],

@@ -914,3 +914,29 @@ tags:
       a funny product description for [item], use puns and absurdist humor・Create 5 jokes about [topic] suitable for
       [audience], explain the humor・Draft a humorous take on [serious situation], keep it clever and not
       mean-spirited。ユーモアが難しい場合は「keep it simple」「focus on observational humor」で簡素化できます。
+  - slug: 身長差
+    name: 身長差
+    color: purple
+    isApproved: true
+    seoTitle: 「身長差」プロンプト集｜カップル・2人構図の呪文・コピペOK
+    seoDescription: 身長差・サイズ差のあるキャラクター2人を描くプロンプト集。男女ペア・親子・体格差構図の指定方法をStable Diffusion対応の呪文で紹介。
+    seoIntro: >
+      身長差プロンプトは、AIイラスト生成で身長や体格の異なる2人のキャラクターを同じ構図に描くための呪文です。「height
+      difference」「tall and short」「looking up at」を基本に、関係性（couple, parent and child, siblings）や視点（side by side,
+      from behind）を組み合わせて、ペアの物語性を表現します。
+
+
+      Stable Diffusion では2人構図が崩れやすいため、「2people」「two characters」と人数を明示し、「height
+      difference」を重み付け (height difference:1.3) で強調するのがコツです。ControlNet の OpenPose で2人分の骨格を参照すると、体格差が正確に反映されます。
+
+
+      組み合わせ例：
+
+      - 恋人の身長差：「tall man and petite woman, height difference, couple, holding hands, looking at each other」
+
+      - 兄妹：「tall older brother, short younger sister, height difference, walking together, school uniforms」
+
+      - ファンタジー：「giant knight and small mage, size difference, adventure party, fantasy landscape」
+
+
+      ネガティブに「same height, same size」を入れると身長差が崩れるのを防げます。「full body shot」で全身を描くと体格差が視覚的に伝わりやすくなります。体格差プロンプトと組み合わせると、さらに多彩な2人構図を作れます。
