@@ -19,7 +19,7 @@ export function generateMetadata({ searchParams }: Props): Metadata {
   return {
     title: `全プロンプト一覧 — AIプロンプト集${suffix}`,
     description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E向けの全プロンプト一覧。',
-    alternates: { canonical: `${SITE_CONFIG.url}/prompts` },
+    alternates: { canonical: `${SITE_CONFIG.url}/prompts${page > 1 ? `?page=${page}` : ''}` },
   }
 }
 

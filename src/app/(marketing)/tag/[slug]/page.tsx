@@ -40,7 +40,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_CONFIG.url}/tag/${params.slug}` },
+    alternates: { canonical: `${SITE_CONFIG.url}/tag/${params.slug}${page > 1 ? `?page=${page}` : ''}` },
     ...(!isApproved && { robots: { index: false, follow: true } }),
   }
 }
