@@ -17,8 +17,8 @@ export default async function HomePage() {
   const [tools, categories, featured, latest, guides] = await Promise.all([
     getTools(),
     getCategories(),
-    getFeaturedPrompts(24),
-    getLatestPrompts(24),
+    getFeaturedPrompts(12),
+    getLatestPrompts(12),
     getGuides(),
   ])
 
@@ -91,7 +91,7 @@ export default async function HomePage() {
               すべて見る →
             </Link>
           </div>
-          <PromptGrid prompts={latest} />
+          <PromptGrid prompts={latest} priorityCount={4} />
         </div>
       </section>
 

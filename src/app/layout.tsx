@@ -1,6 +1,15 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
+
+const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-noto-sans-jp',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -64,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={notoSansJP.variable}>
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-76RGV3H6S2"

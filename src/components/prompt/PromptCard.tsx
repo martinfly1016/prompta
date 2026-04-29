@@ -1,11 +1,13 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { NormalizedPrompt } from '@/lib/data'
 
 interface PromptCardProps {
   prompt: NormalizedPrompt
+  priority?: boolean // true for above-fold images (first 4-8 cards)
 }
 
-export function PromptCard({ prompt }: PromptCardProps) {
+export function PromptCard({ prompt, priority = false }: PromptCardProps) {
   const hasImage = prompt.images.length > 0
 
   return (
@@ -13,15 +15,16 @@ export function PromptCard({ prompt }: PromptCardProps) {
       href={`/prompt/${prompt.slug}`}
       className="group flex flex-col bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-sky-300 hover:shadow-lg transition-all duration-200"
     >
-      {/* Thumbnail — fixed height for consistent grid layout */}
-      <div className="relative h-48 bg-gray-100 overflow-hidden">
+      {/* Thumbnail — fixed aspect ratio for consistent grid + CLS prevention */}
+      <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
         {hasImage ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
+          <Image
             src={prompt.images[0].url}
             alt={prompt.images[0].alt || prompt.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            priority={priority}
           />
         ) : (
           <div className="w-full h-full p-4 bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col justify-center">

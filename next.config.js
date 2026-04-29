@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  productionBrowserSourceMaps: true,
   swcMinify: true,
   output: 'standalone',
   skipMiddlewareUrlNormalize: true,
@@ -13,11 +12,13 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
+      { protocol: 'https', hostname: 'rpvq9pdoasbva5wm.public.blob.vercel-storage.com' },
+      { protocol: 'https', hostname: 'image.lexica.art' },
+      { protocol: 'https', hostname: '*.mypinata.cloud' },
     ],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [128, 256, 384],
   },
   typescript: {
     ignoreBuildErrors: false,
