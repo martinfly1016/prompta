@@ -64,6 +64,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://www.prompta.jp/',
+    types: {
+      'application/rss+xml': 'https://www.prompta.jp/feed.xml',
+    },
   },
 }
 

@@ -120,6 +120,23 @@ export function generateHowToSchema(
   }
 }
 
+export function generateFaqSchema(
+  items: Array<{ question: string; answer: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": items.map(item => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer,
+      },
+    })),
+  }
+}
+
 export function generateCollectionPageSchema(
   title: string,
   description: string,
