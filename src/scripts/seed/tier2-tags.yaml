@@ -940,3 +940,54 @@ tags:
 
 
       ネガティブに「same height, same size」を入れると身長差が崩れるのを防げます。「full body shot」で全身を描くと体格差が視覚的に伝わりやすくなります。体格差プロンプトと組み合わせると、さらに多彩な2人構図を作れます。
+  - slug: サイバーパンク
+    name: サイバーパンク
+    color: blue
+    isApproved: true
+    seoTitle: 「サイバーパンク」プロンプト集｜ネオン・メカ・近未来都市の呪文
+    seoDescription: サイバーパンク風AIイラストのプロンプト集。ネオンライティング・メカスーツ・近未来都市などStable Diffusionで使える呪文を画像付きで紹介。
+    seoIntro: >
+      サイバーパンクプロンプトは、ネオンに彩られた近未来都市やサイバネティック・メカスーツを描くためのAI画像生成呪文です。「cyberpunk」「neon
+      lights」「futuristic city」「rain reflections」を基本に、サイバーパンク特有の色使い（ネオンピンク × 深い青紫）、技術要素（holographic display,
+      cybernetic eye, mech suit）、環境要素（rain, wet street, neon signs）を組み合わせると世界観が安定します。
+
+
+      Stable Diffusion では「cyberpunk, neon, dark city」だけだと汎用的になるため、「detailed cyberpunk cityscape, neon pink and blue, rain
+      reflections, dark alley」のように場面を具体的に描写するのがコツです。Midjourney なら「--style raw --ar 16:9」でシネマティックな横長構図に。
+
+
+      組み合わせ例：
+
+      - 都市夜景：「cyberpunk city, neon signs, wet street, rain, reflections, purple and cyan, cinematic」
+
+      - キャラクター：「cyberpunk girl, neon jacket, LED visor, short hair, dark background, futuristic」
+
+      - メカスーツ：「mech suit, cybernetic armor, glowing circuits, cyberpunk, detailed, dark」
+
+
+      ネガティブに「bright daylight, natural scenery, pastoral」を入れるとサイバーパンクの暗い雰囲気が保たれます。ライティングは「neon
+      lighting, rim light, volumetric fog」が定番の組み合わせです。
+  - slug: ぽっちゃり
+    name: ぽっちゃり
+    color: orange
+    isApproved: true
+    seoTitle: 「ぽっちゃり」プロンプト集｜プラスサイズ・カーヴィ体型の呪文
+    seoDescription: ぽっちゃり・プラスサイズ体型のAIプロンプト集。chubby・curvy・plumpの使い分けとStable Diffusionでの重み付けテクニックを紹介。
+    seoIntro: >
+      ぽっちゃりプロンプトは、AI画像生成でふくよかな体型やプラスサイズのキャラクターを表現するための体型指定呪文です。「chubby」は可愛らしい丸みを、「curvy」はメリハリのある曲線を、「plump」は全体的にふっくらした体つきを、「plus-size」はファッションモデル的な大きめ体型を表します。
+
+
+      Stable Diffusion ではアニメ系モデルに痩せバイアスが強いため、(chubby:1.3) 以上の重み付けが必要なことが多いです。リアル系モデル（ChilloutMix
+      等）の方がぽっちゃり表現に素直に反応します。「fat」は品質が低下しやすいため避け、「chubby」「curvy」「plump」を推奨します。
+
+
+      組み合わせ例：
+
+      - 可愛い系：「chubby girl, round face, soft body, cute smile, pastel outfit, warm lighting」
+
+      - ファッション：「plus-size model, confident pose, stylish dress, urban street, professional photography」
+
+      - ファンタジー：「curvy elf, thick thighs, fantasy armor, magical forest, detailed」
+
+
+      ネガティブに「skinny, slim, underweight, anorexic」を入れると痩せ方向への崩れを防げます。体型プロンプトと組み合わせて使うとさらに効果的です。

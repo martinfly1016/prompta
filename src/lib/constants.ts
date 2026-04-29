@@ -194,9 +194,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・制服・和風・ファンタジー衣装まで、Stable Diffusion と NovelAI で使える呪文を画像付きで多数紹介。',
   },
   'clothing': {
-    seoTitle: '女性向け服装プロンプト集【無料・コピペOK】｜ファンタジー衣装・制服・ドレス',
-    seoH1: '女性向け服装プロンプト集｜ファンタジー・制服・ドレス・カジュアル',
-    seoDescription: '女性キャラ向け服装プロンプトのコピペ集。トップス・スカート・ドレス・ファンタジー衣装まで、Stable Diffusion で使える呪文と BREAK コマンドによる色滲み対策を紹介。',
+    seoTitle: '服装プロンプト集【呪文・コピペOK】｜ドレス・制服・ファンタジー衣装・カジュアル',
+    seoH1: '服装プロンプト集｜ドレス・制服・ファンタジー・カジュアルの呪文',
+    seoDescription: '服装プロンプトのコピペ集。ドレス・制服・ファンタジー衣装・カジュアルなど、AI画像生成で使える服装呪文を多数紹介。BREAKコマンドによる色滲み対策も解説。',
   },
   'body-type': {
     seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
@@ -204,9 +204,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'スレンダー・アスレチック・ぽっちゃり・小柄・高身長など体型プロンプトを多数紹介。Stable Diffusion・NovelAI 対応の呪文とネガティブプロンプト、ControlNet 連携まで徹底解説。',
   },
   'color': {
-    seoTitle: '色プロンプト集【Stable Diffusion 色指定の呪文】｜CutOff・BREAK・カラーパレット',
-    seoH1: '色プロンプト集｜色指定・CutOff・BREAK で色滲みを防ぐテクニック',
-    seoDescription: '色・カラー指定プロンプトのコピペ集。118色以上の色名、CutOff 拡張機能、BREAK コマンドによる色滲み防止テクニックを画像付きで解説。Stable Diffusion 対応。',
+    seoTitle: '色プロンプト集【コピペOK】｜118色の色名・色指定・色滲み対策の呪文',
+    seoH1: '色プロンプト集｜118色の色名・CutOff・BREAK で色滲みを防ぐ',
+    seoDescription: 'そのままコピペで使える色プロンプト集。赤・青・パステル・ネオンなど118色以上の色名呪文と、CutOff・BREAK による色滲み防止テクニックを画像付きで紹介。すぐ試せます。',
   },
   'anime': {
     seoTitle: 'アニメプロンプト集【呪文・コピペOK】｜キャラクターデザイン・画風・表情指定',
