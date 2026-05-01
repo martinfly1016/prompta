@@ -187,6 +187,20 @@ cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=promptsChat --c
    >   3. 换工具（GPT-4o image edit 对副词更敏感）
    >   4. 后处理调
    >
+   > - **R9 样片素材选材原则（生成 Before/After 効果サンプル时必须遵守）**：源照片必须有「目标编辑空间足够大」，否则即使 prompt 完美 + 模型生效，Before/After 视觉差也极弱，无法说服用户。**Why**：实测 20 岁完美皮肤的源照走 skin-retouch，After 几乎看不出差距，必须换 50+ 岁有斑点皱纹的源才能展示效果。
+   >
+   > **R9 useCase 专属源照片选材表（生成 _generate-sources.ts 时按此挑材）：**
+   > - 美肌レタッチ类（face-retouch / skin-*） → **50+ 岁，有年龄斑、皱纹、肤色不均、轻度松弛**。**不要** 20 岁完美皮肤。
+   > - 着せ替え类（outfit-swap） → **便装 / T 恤 / 休闲服**。不要已经穿正装/西装。
+   > - 髪型変更类（hairstyle-*） → **长发 / 单一直发**。不要本身就是 bob 或目标发型。
+   > - 背景置換类（bg-replace） → **背景杂乱**（家居 / 街道 / 室内堆物）。不要纯白底或已经是工作室背景。
+   > - 背景透過类（bg-removal） → 同上，杂乱背景才能体现抠图价值。
+   > - colorize 类 → **真正的黑白旧照**（grain + 灰度 + 时代特征）。不要现代灰阶照。
+   > - 表情変更类（expression） → **完全无表情 / 严肃**。不要已经在微笑。
+   > - 不要物除去类（remove-bystanders） → **背景明显有路人 / 干扰物**。
+   > - 证件照类（passport / id-photo） → **便装休闲照**（角度斜、背景非白、表情非中性）。不要已经是规格证件照。
+   > - LinkedIn 类 → **休闲场景肖像**（自拍风 / 室内）。不要已经是商务环境。
+   >
    > **R6 触发条件清单（生成时按 useCase 自动追加）：**
    > - colorize-* / restore-* — 必加 R6
    > - remove-bystanders / outfit-swap-* — 必加 R6
