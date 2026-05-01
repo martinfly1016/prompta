@@ -600,6 +600,73 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 
 ---
 
+## photo-edit 内容补充路线图（人工 + 半自动）
+
+当前 photo-edit 类全部 10 条都是 AI 自生成的（source=text）。**下一步要从外部高人气来源补充实战 prompt**，先小批量人工挑选 → 入库 → 用 style-test-live 做效果验证 → 通过的转 PASS 样片。
+
+### 推荐数据源（优先级排序）
+
+1. **OpenArt.ai** — https://openart.ai/discovery
+   - 有 Nano Banana / Gemini / DALL-E 专门标签
+   - 每个 prompt 带 like / view 数（人气信号）
+   - 免费 + 半结构化页面（可写 cheerio 抓取脚本）
+   - **优点**：体量大、人气信号清晰、含图片
+   - **缺点**：需登录才能拿全部、TOS 限制商用需注意
+
+2. **Twitter/X #NanoBanana / #GeminiImage** — 实时趋势
+   - 高人气 viral prompt 通常先出现在这里，附 Before/After
+   - 需手动浏览（API 受限）
+   - **优点**：信号最新最热、有真实 Before/After 验证
+   - **缺点**：纯人工、版权需逐个确认
+
+3. **Higgsfield AI** — https://higgsfield.ai/effects
+   - 写真加工 effect 模板库，按用途分类
+   - 每个 effect 有播放次数（人气信号）
+   - **优点**：分类清晰、能直接看到效果视频
+   - **缺点**：prompt 文本不一定全公开
+
+4. **PromptHero** — https://prompthero.com/midjourney-prompts
+   - SD / MJ 主流 + 按 likes 排序
+   - 写真加工内容较少，主要是图像生成 prompt
+   - 可作为补充而非主源
+
+### 半自动入库工作流（每月 1 次）
+
+> 目标：每次新增 5-10 条经过验证的实战 photo-edit prompt
+
+1. **来源筛选**（人工 30 分钟）
+   - 在 OpenArt.ai / X / Higgsfield 浏览 photo-edit 类
+   - 按 like / view 排序，挑 top 10-15 候选
+   - 过滤条件：必须是「指令式祈使文 + 写真编辑用途」、长度 15-120 词、内容清晰
+   - 输出：候选 prompt 列表（slug 想好 + 原文 + 来源 URL）
+
+2. **R1-R9 静态规则审计**（自动）
+   - 把候选丢给 `style-test` agent，按 SKILL.md 写真加工 9 项规则审计
+   - 不合规的标 ❌，按改写建议人工修订
+
+3. **入库**（半自动）
+   - 通过 `_apply-photo-edit-audit-fixes.ts` 模式的脚本写入 DB
+   - source=external，author=原作者归属，sourceUrl=原 URL（守版权）
+   - tool 按 prompt 实际目标模型设定（gemini / chatgpt / dall-e）
+
+4. **R9 选材 + 真实渲染验证**（自动）
+   - 按 R9 useCase 选材表选源照片（必要时用 `_generate-sources.ts` 模式新增源）
+   - 跑 `style-test-live` 做 Gemini API 渲染
+   - 视觉评估：意图达成 / R2 保持 / R5 防呆 三轴
+
+5. **样片上线**（自动）
+   - 通过的：跑 `_upload-samples.ts` 模式上传 Vercel Blob + DB 写 sampleBeforeUrl/AfterUrl
+   - PARTIAL 但视觉好的：上「概念演示」样片 + 详情页加注限制说明
+   - FAIL 的：不上样片、给 description 加工具替代建议
+
+### 频率建议
+
+- **首批补充**：从 OpenArt.ai 挑 10-15 条 → 入库 5-8 条（首次内容补强）
+- **后续**：每月 1 次，每次 5-10 条新条目
+- 触发时机：分类计数 < TARGET、GSC 看到 photo-edit 关键词需要更多覆盖、新模型（Gemini 3.0 / Nano Banana Pro）发布后
+
+---
+
 ## SEO 优先级算法
 
 在 Phase 0 和 Phase 3 中使用，由主 agent 内联计算：
