@@ -8,7 +8,13 @@ interface PromptCardProps {
 }
 
 export function PromptCard({ prompt, priority = false }: PromptCardProps) {
-  const hasImage = prompt.images.length > 0
+  // photo-edit prompts have no `images[]` rows — use the After sample as the
+  // listing thumbnail when available. Falls back to images[0], then text-only card.
+  const thumbUrl = prompt.sampleAfterUrl || prompt.images[0]?.url || null
+  const thumbAlt = prompt.sampleAfterUrl
+    ? `${prompt.title} — Before/After サンプル`
+    : prompt.images[0]?.alt || prompt.title
+  const hasImage = !!thumbUrl
 
   return (
     <Link
@@ -19,8 +25,8 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
       <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
         {hasImage ? (
           <Image
-            src={prompt.images[0].url}
-            alt={prompt.images[0].alt || prompt.title}
+            src={thumbUrl!}
+            alt={thumbAlt}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
             className="object-cover group-hover:scale-105 transition-transform duration-300"
