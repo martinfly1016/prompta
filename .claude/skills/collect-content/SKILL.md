@@ -2,7 +2,7 @@
 name: collect-content
 description: 多源自动采集全流程 — CivitAI/Midjourney/DALL-E/Lexica/prompts.chat 抓取 + Text prompt AI 生成、去重、AI分类、日文翻译、SEO富化、图片下载、DB写入、线上验证
 user-invocable: true
-argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini] [--category=writing|programming|business|education|creative]"
+argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--pages=3] [--target=15] [--cursor=STRING] [--tool=chatgpt|claude|gemini|dall-e] [--category=writing|programming|business|education|creative|photo-edit] [--quality=standard|high]"
 ---
 
 # /collect-content — 多源自动采集 Skill
@@ -23,8 +23,9 @@ argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--p
 - `--keywords=a,b,c` — Lexica 自定义关键词（逗号分隔）。默认覆盖 hairstyle/cosplay/costume/cyberpunk/anime/cinematic/gothic/fashion 8 类
 - `--target=N` — 目标入库数量（默认 15）
 - `--cursor=STRING` — 上次采集的 cursor，用于续抓（仅 source=civitai）
-- `--tool=TOOL` — 指定工具（仅 source=text）：chatgpt | claude | gemini。默认均匀分配三个工具
-- `--category=CATEGORY` — 指定分类（仅 source=text）：writing | programming | business | education | creative。默认按 SEO 优先级自动选择
+- `--tool=TOOL` — 指定工具（仅 source=text）：chatgpt | claude | gemini | dall-e。默认均匀分配 chatgpt/claude/gemini（photo-edit 类默认 gemini，可显式指定 chatgpt/dall-e）
+- `--category=CATEGORY` — 指定分类（仅 source=text）：writing | programming | business | education | creative | photo-edit。默认按 SEO 优先级自动选择。**photo-edit 是 AI 写真加工类，prompt 是对已有照片的指令文，目标工具为 Gemini 2.5 Flash Image / ChatGPT 画像編集 / DALL-E 3 inpainting**
+- `--quality=standard|high` — 生成模型档位（仅 source=text 影响 Phase 1 生成；其他 Phase 永远用 Haiku）。默认 `standard` 用 Haiku 4.5（成本约 $0.01-0.02/条，适合批量扩展）。`high` 用 Opus 4.7（成本约 $0.15-0.30/条，差异化更强、SKILL 规则遵守更严，适合**新分类的奠基首批**或质量敏感场景）。Phase 3 分类、Phase 4 富化即使 quality=high 也仍用 Haiku
 
 ## 工作流
 
@@ -120,16 +121,23 @@ cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=promptsChat --c
 不从外部 API 抓取，而是用 Haiku 子 agent 生成文字 prompt 内容。
 
 1. **计算生成计划**：
-   - 确定工具列表：如指定 `--tool`，只用该工具；否则均匀分配 chatgpt / claude / gemini
-   - 确定分类列表：如指定 `--category`，只用该分类；否则按 SEO 优先级从文字分类中选择（writing, programming, business, education, creative）
+   - 确定工具列表：如指定 `--tool`，只用该工具；否则均匀分配 chatgpt / claude / gemini（**例外**：category=photo-edit 时默认 tool=gemini，因为 Gemini 2.5 Flash Image 是该场景第一推荐，可显式 --tool=chatgpt 或 dall-e 切换）
+   - 确定分类列表：如指定 `--category`，只用该分类；否则按 SEO 优先级从文字分类中选择（writing, programming, business, education, creative, photo-edit）
    - 生成数量 = `target * 1.5`（向上取整），多生成 50% 应对后续去重过滤
    - 按工具×分类组合分配数量，优先填充高优先级分类
 
-2. **启动 Haiku 子 agent 生成 prompt 内容**：
+2. **启动子 agent 生成 prompt 内容**（模型按 `--quality` 切换）：
 
-   ```
-   Agent(model: "haiku", subagent_type: "general-purpose")
-   ```
+   - `--quality=standard`（默认）→ Haiku 4.5 子 agent：
+     ```
+     Agent(model: "haiku", subagent_type: "general-purpose")
+     ```
+   - `--quality=high` → Opus 4.7 子 agent（适合新分类首批 / 质量敏感场景）：
+     ```
+     Agent(model: "opus", subagent_type: "general-purpose")
+     ```
+
+   主 agent 应根据 `--quality` 参数选择正确的 model 字段。其余指令内容相同：
 
    子 agent 指令：
    > 你是一个高质量 AI prompt 模板生成器。请生成 {N} 个完整的、可直接使用的 prompt 模板。
@@ -150,6 +158,61 @@ cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=promptsChat --c
    > - chatgpt: System message 风格，使用 "You are..." 开头，结构化指令
    > - claude: 使用 XML tags（如 `<context>`, `<instructions>`, `<output_format>`）组织结构
    > - gemini: 支持多模态描述，可包含图片/文档分析指令
+   >
+   > **photo-edit 类专用规则（category=photo-edit 时必须遵守，覆盖上面通用规则）：**
+   > - prompt 是对**ユーザーがアップロードした既存写真**を AI に編集させる**自然語の祈使文**（不是从零生成的标签袋）
+   > - 长度：15–80 词为主（intermediate），最多 120 词。背景・证明写真等单步编辑应短，多步组合（先去背景再换衣服）才用长格式
+   >
+   > **6 项强制规则（每条 prompt 必须 6 项全过；style-test agent 会按这些规则审计）：**
+   > - **R1 对象引用**：必须使用白名单短语 `the uploaded photo` / `the person in the image` / `this image` / `this photo` / `the uploaded vintage ... photo`。**禁止用 `photograph`**（不在白名单）
+   > - **R2 保持声明**：必须含 `Preserve` / `Keep` / `Maintain` / `Lock` 之一 + `unchanged` / `exactly` / `completely` / `intact` 之一。**多样性要求**：批量生成时四种引导词（Preserve/Keep/Maintain/Lock）尽量均匀，单一引导词占比 ≤ 50%
+   > - **R3 输出指定**：必须含至少一个输出规格关键词：`aspect ratio` / `resolution` / `transparent PNG` / `35×45mm` / `passport size` / `at the original resolution` / `1024×1024` / `DPI`。**主体修改类（hairstyle/expression/face）默认结尾兜底 `Output at the original resolution.`**
+   > - **R4 质感词**：必须含至少一个白名单质感锚词：`photorealistic` / `natural-looking` / `sharp focus` / `natural skin texture` / `studio lighting` / `subtle`。**结尾兜底推荐 `Photorealistic and natural-looking.`**
+   > - **R5 反向防呆**：必须含至少一个 `do not` / `avoid` / `no [bad thing]` 短语
+   > - **R6 防止整图重生（仅 colorize / restore / bystander-removal / outfit-swap 等大改类必须）**：必须显式锁定「不要重新生成」。建议短语 `Do not regenerate the photo from scratch — only operate on the existing pixels and preserve every face, pose, and texture exactly as the source.` **背景**：阶段 2 真实渲染发现 Gemini 2.5 Flash Image 在大范围编辑时倾向整图重画，R2 单独不足以阻止
+   > - **R7 保留清单必须穷举（所有 photo-edit prompt 必须）**：R2 的保留对象**不能用泛词覆盖**。写 `Preserve hair, clothing, identity` 在 Gemini 上无效 — 模型只锁住明示属性，留白处自由发挥（实测：写 "Preserve outfit" → 衣服颜色被改、写 "Preserve hair flyaways" → 发型被剪、写 "without beautification" → 仍加口红 / 修眉）。**正确写法**：列具体可枚举的属性，如 `Preserve the person's identity, eye shape, nose, jawline, hair length, hair color, bangs, eyebrow shape, lip color, clothing color, clothing fit, and pose exactly as the source.`
+   >
+   > **R7 分类专属保留清单模板（生成时按 useCase 选用，必须覆盖该场景"可能被自由发挥"的属性）：**
+   > - 着せ替え类（仅换衣服）：保留 identity / eye shape / nose / hair length / hair color / hairstyle / makeup state / accessories / pose / background
+   > - 背景类（仅换背景）：保留 identity / hairstyle / hair length / hair color / bangs / clothing color / clothing fit / pose / facial expression
+   > - 表情类（仅改表情）：保留 identity / hair / clothing / makeup state / background / head angle
+   > - 髪型类（仅改发型）：保留 identity / eye shape / nose / face proportions / clothing / makeup state / background / pose
+   > - 美肌类（仅磨皮）：保留 identity / facial structure / freckles / moles / fine lines / **eyebrow shape** / **lip color (do not add lipstick)** / makeup state / hair / clothing / background
+   > - 证件照类：保留 identity / hair / **clothing (shoulders and collar visible, do not remove or alter)** / skin tone（其它换成规格）
+   > - colorize 类：保留 identity / pose / face / clothing shape / hair shape / grain / film texture（其它"加色"）
+   >
+   > - **R8 强度副词在 Gemini 上效果微弱**：写 "subtle smile" 和 "noticeably warm clearly visible smile" 模型输出几乎一致。**不要靠 prompt 副词调视觉强度**。要更明显的效果只能靠：
+   >   1. 描述具体几何（"corners of the lips raised by ~5mm"）
+   >   2. 引用参考图（"like the smile in the second uploaded reference image"）
+   >   3. 换工具（GPT-4o image edit 对副词更敏感）
+   >   4. 后处理调
+   >
+   > **R6 触发条件清单（生成时按 useCase 自动追加）：**
+   > - colorize-* / restore-* — 必加 R6
+   > - remove-bystanders / outfit-swap-* — 必加 R6
+   > - bg-replace-* — 视情况加（小改不强制）
+   > - hairstyle-* / expression-* / face-retouch / id-photo / linkedin — **不需要加**（Gemini 在这些任务上身份保持已经稳定）
+   >
+   > **Gemini 模型局限性提示（生成 prompt 时同步提示用户）：**
+   > - **透明 PNG 输出**：Gemini 2.5 Flash Image 不支持 alpha 通道。`bg-remove-transparent` 类 prompt 应在详情页加标注「Photoroom / remove.bg / rembg 推奨」或将 toolSlug 切到 chatgpt
+   > - **大范围编辑（colorize / outfit-swap）容易整图重画**：必须配 R6 才能稳定保持身份
+   > - **强度副词无效**（R8）：subtle / dramatic / bold 等副词被模型忽略，要明显效果必须用具体几何或参考图
+   >
+   > **R5 分类专属反向防呆模板（生成时按 useCase 选用，避免遗漏）：**
+   > - 着せ替え类（outfit-swap）：`Do not alter the facial features or invent accessories that are not requested.`
+   > - 背景置換类（bg-replace）：`No white halo around the subject and no color cast on the skin from the new background.`
+   > - 背景透過类（bg-remove）：`No white halo around the subject and no fringing along the hair edges.`
+   > - 美肌类（face-retouch）：`Do not over-smooth the skin and no plastic-looking face.`
+   > - 表情/髪型类（expression / hairstyle）：`Do not modify the facial structure or invent details around the mouth/hair.`
+   > - 不要物除去类（remove-bystanders）：`Do not invent details that conflict with the existing scene.`
+   > - 写真修復・カラー化类（colorize / restore）：`Do not sharpen aggressively or invent details that are not visible in the source.`
+   > - 证明写真类（id-photo）：`Without beautification and no shadows on the face or background.`
+   >
+   > **工具风格：**
+   >   - gemini → 一文完结的指令式英文（"Replace the background ... while keeping ..."）
+   >   - chatgpt → 多轮対話前提のターン1指令（"I uploaded a photo. Please ..." と始め、後続の微調整を想定）
+   >   - dall-e → inpaint/局部编辑指令式（"Edit only the background area to ..."）
+   > - useCase 命名建议（写真加工系）：bg-remove-transparent / bg-replace-studio / id-photo-passport / linkedin-profile-photo / hairstyle-change-bob / outfit-swap-suit / face-retouch-natural / colorize-old-photo / remove-bystanders / restore-damaged-photo
    >
    > **分配计划：**
    > {按工具×分类的分配表，含每组合的数量}
@@ -251,6 +314,15 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    > - business — 商业用途
    > - education — 教育用途
    > - programming — 编程相关
+   > - **photo-edit — 写真加工（对ユーザーアップロード写真の編集指令文）**
+   >
+   > **photo-edit vs 既存生成カテゴリの曖昧解消ルール（重要）：**
+   > 以下のいずれかに該当 → photo-edit に分類：
+   > 1. prompt が `the uploaded photo` / `this image` / `this person` / `my photo` などユーザーの既存画像を参照
+   > 2. 動詞が `replace` / `remove` / `change` / `restore` / `colorize` / `retouch` / `swap` / `edit` / `make ... transparent` のような既存写真への操作
+   > 3. 出力指定が `transparent PNG` / `passport size` / `cropped from group photo` のような後加工出力フォーマット
+   >
+   > 上記いずれにも該当せず「ゼロから新しい人物・シーンを生成」する場合 → 従来の hairstyle / clothing / cosplay / camera 等に分類（例：`1girl, long hair, school uniform` は clothing、`a woman with long blonde hair in a studio` は hairstyle）
    >
    > 对每个 item 输出 JSON：
    > ```json
@@ -327,6 +399,7 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    > - creative → 「クリエイティブ プロンプト」「アート AI」
    > - background → 「背景 プロンプト」「風景 AI」
    > - expression → 「表情 プロンプト」「感情表現 AI」
+   > - **photo-edit → 「AI 写真加工」「写真 AI 加工」「背景 削除 AI」「証明写真 AI」「プロフィール写真 AI」「Nano Banana プロンプト」（サブテーマで使い分け）**
    >
    > **テキスト系 SEO 関連キーワード（工具別）：**
    > - chatgpt → 「ChatGPT プロンプト」「ChatGPT 活用法」
@@ -368,7 +441,9 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    >   髪型, ロングヘア, 金髪, 黒髪, ポートレート,
    >   カメラ, シネマティック, ライティング, 色, マルチカラー,
    >   体型, 猫, ドレス, 和風, ゴシック, 兜, セーラー服, キャラクター,
-   >   クリエイティブ プロンプト, 文章品質, 執筆効率化, アイデア生成, 創造性, ユーモア
+   >   クリエイティブ プロンプト, 文章品質, 執筆効率化, アイデア生成, 創造性, ユーモア,
+   >   写真加工, 背景透過, 背景削除, 背景置換, 証明写真, プロフィール写真,
+   >   美肌加工, 顔加工, 着せ替え, 髪型変更, 写真修復, カラー化, 不要物除去, 表情変更, Nano Banana
    > - 第一个标签是分类关键词（如「髪型」或「プログラミング」）
    > - 只有在词表中确实没有合适标签时，才可新增1个新标签（会自动标记为未审核）
    >
@@ -535,6 +610,9 @@ SEO_BASE_PRIORITY = {
   business:     60,   // 「ChatGPT ビジネス」月搜索 1000+
   education:    50,   // 「AI 学習」月搜索 800+
   creative:     40,   // 「AI クリエイティブ」月搜索 500+（テキスト系として）
+
+  // 写真加工系（指令式 prompt、対象は Gemini 2.5 Flash Image / ChatGPT 画像編集 / DALL-E inpainting）
+  'photo-edit': 160,  // 「AI 写真加工」2900/月 + 「写真 AI 加工」2400/月 + 「背景 削除 AI」480/月、合計 KD 約 38
 }
 
 TARGET_PER_CATEGORY = 10

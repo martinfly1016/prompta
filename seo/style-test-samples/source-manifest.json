@@ -1,0 +1,17 @@
+{
+  "_comment": "源照片映射。resolve 顺序：bySlug → byUseCase（keyword in slug）→ default。所有路径相对于项目根。把照片放到 seo/style-test-samples/source/ 下，再编辑此文件。",
+  "default": "seo/style-test-samples/source/portrait-default.jpg",
+  "byUseCase": {
+    "colorize": "seo/style-test-samples/source/vintage-bw.jpg",
+    "bystanders": "seo/style-test-samples/source/group-photo.jpg",
+    "passport": "seo/style-test-samples/source/casual-portrait.jpg",
+    "linkedin": "seo/style-test-samples/source/casual-portrait.jpg",
+    "background-removal": "seo/style-test-samples/source/portrait-cluttered-bg.jpg",
+    "background-replace": "seo/style-test-samples/source/portrait-cluttered-bg.jpg",
+    "outfit-swap": "seo/style-test-samples/source/portrait-casual-outfit.jpg",
+    "hairstyle": "seo/style-test-samples/source/portrait-long-hair.jpg",
+    "expression": "seo/style-test-samples/source/portrait-neutral-face.jpg",
+    "skin-retouching": "seo/style-test-samples/source/portrait-skin-detail.jpg"
+  },
+  "bySlug": {}
+}

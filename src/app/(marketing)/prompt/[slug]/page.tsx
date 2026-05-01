@@ -118,6 +118,26 @@ export default async function PromptDetailPage({ params }: Props) {
             </div>
           </header>
 
+          {/* Before / After 効果サンプル */}
+          {prompt.sampleBeforeUrl && prompt.sampleAfterUrl && (
+            <section className="mb-8">
+              <h2 className="text-lg font-bold text-gray-900 mb-3">効果サンプル（Before / After）</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <figure className="relative overflow-hidden rounded-xl bg-gray-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={prompt.sampleBeforeUrl} alt={`${prompt.title} — Before`} className="w-full h-auto object-cover" loading="lazy" />
+                  <figcaption className="absolute top-2 left-2 px-2 py-1 text-xs font-medium bg-white/90 text-gray-900 rounded">Before</figcaption>
+                </figure>
+                <figure className="relative overflow-hidden rounded-xl bg-gray-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={prompt.sampleAfterUrl} alt={`${prompt.title} — After`} className="w-full h-auto object-cover" loading="lazy" />
+                  <figcaption className="absolute top-2 left-2 px-2 py-1 text-xs font-medium bg-sky-500 text-white rounded">After</figcaption>
+                </figure>
+              </div>
+              <p className="mt-2 text-xs text-gray-500">Gemini 2.5 Flash Image で生成したサンプル。実際の出力はソース写真と指示文の組み合わせで変わります。</p>
+            </section>
+          )}
+
           {/* Images */}
           {prompt.images.length > 0 && (
             <section className="mb-8">

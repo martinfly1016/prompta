@@ -70,6 +70,8 @@ export interface NormalizedPrompt {
   categoryIcon: string | null
   tags: string[]
   images: { url: string; alt: string | null }[]
+  sampleBeforeUrl: string | null
+  sampleAfterUrl: string | null
   isFeatured: boolean
   viewCount: number
   copyCount: number
@@ -103,6 +105,8 @@ function normalizeMockPrompt(p: MockPrompt): NormalizedPrompt {
     categoryIcon: cat?.icon ?? null,
     tags: p.tags,
     images: p.images.map(url => ({ url, alt: null })),
+    sampleBeforeUrl: null,
+    sampleAfterUrl: null,
     isFeatured: p.isFeatured,
     viewCount: p.viewCount,
     copyCount: p.copyCount,
@@ -128,6 +132,8 @@ function normalizeDbPrompt(p: any): NormalizedPrompt {
     categoryIcon: p.category?.icon ?? null,
     tags: p.tags?.map((t: { name: string }) => t.name) ?? [],
     images: p.images?.map((i: { url: string; altText: string | null }) => ({ url: i.url, alt: i.altText })) ?? [],
+    sampleBeforeUrl: p.sampleBeforeUrl ?? null,
+    sampleAfterUrl: p.sampleAfterUrl ?? null,
     isFeatured: p.isFeatured ?? false,
     viewCount: p.viewCount ?? 0,
     copyCount: p.copyCount ?? 0,

@@ -136,6 +136,10 @@ model Prompt {
   sourceUrl       String?   // URL where this prompt was collected from
   isAutoCollected Boolean   @default(false) // true = auto-collected by skill, false = manual
 
+  // photo-edit Before/After 効果サンプル (Vercel Blob URLs)
+  sampleBeforeUrl String?
+  sampleAfterUrl  String?
+
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
