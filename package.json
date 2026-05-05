@@ -14,6 +14,7 @@
     "db:seed": "node -r ts-node/register prisma/seed.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.2",
     "@prisma/client": "^5.22.0",
     "@tailwindcss/postcss": "^4.1.16",
     "@vercel/blob": "^2.0.0",
@@ -24,6 +25,7 @@
     "next": "^14.2.33",
     "next-auth": "^4.24.11",
     "next-seo": "^6.8.0",
+    "nodemailer": "^6.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
@@ -38,6 +40,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.9.1",
+    "@types/nodemailer": "^8.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

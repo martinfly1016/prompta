@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TOOLS, CATEGORIES, SITE_CONFIG } from '@/lib/constants'
 import { SearchBar } from './SearchBar'
+import { HeaderAuthMenu } from './HeaderAuthMenu'
 
 export function Header() {
   return (
@@ -94,9 +95,10 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Search + Mobile Menu */}
-          <div className="flex items-center gap-3">
+          {/* Search + Auth + Mobile Menu */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <SearchBar />
+            <HeaderAuthMenu />
             {/* Mobile menu button */}
             <MobileMenuButton />
           </div>
