@@ -47,6 +47,16 @@ const ROLE_LABEL = {
   accessory: { icon: '💍', title: 'アクセサリー' },
 } as const
 
+// Each step is shown for ~4 seconds. Total covers 0-20s; analysis usually
+// completes in 15-25s so the last step holds until the result lands.
+const ANALYZE_STEPS = [
+  { icon: '📸', text: '写真を解析しています…', detail: '画像の品質と顔の位置を確認' },
+  { icon: '🎨', text: '肌のアンダートーンを判定中…', detail: '黄み／青み／中性の傾向を抽出' },
+  { icon: '👁️', text: '瞳と髪のトーンを分析中…', detail: 'コントラストの強さを推定' },
+  { icon: '✨', text: '似合う 12 色を選定中…', detail: '4 シーズン体系に基づいてマッチング' },
+  { icon: '🪄', text: 'もうすぐ完了します…', detail: '結果を整形しています' },
+] as const
+
 export function PersonalColorQuotaGate() {
   const [state, setState] = useState<QuotaState | null>(null)
   const [showModal, setShowModal] = useState(false)
@@ -55,6 +65,8 @@ export function PersonalColorQuotaGate() {
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [elapsedSec, setElapsedSec] = useState(0)
+  const [stepIndex, setStepIndex] = useState(0)
   const [purchaseBanner, setPurchaseBanner] = useState<string | null>(null)
   const [showRecover, setShowRecover] = useState(false)
   const [recoverEmail, setRecoverEmail] = useState('')
@@ -69,6 +81,22 @@ export function PersonalColorQuotaGate() {
   useEffect(() => {
     setPortalTarget(document.getElementById('personal-color-result-portal'))
   }, [])
+
+  // Tick elapsed seconds + cycle the step message during analyze
+  useEffect(() => {
+    if (phase !== 'analyzing') {
+      setElapsedSec(0)
+      setStepIndex(0)
+      return
+    }
+    const t0 = Date.now()
+    const tick = setInterval(() => {
+      const sec = Math.floor((Date.now() - t0) / 1000)
+      setElapsedSec(sec)
+      setStepIndex(Math.min(Math.floor(sec / 4), ANALYZE_STEPS.length - 1))
+    }, 500)
+    return () => clearInterval(tick)
+  }, [phase])
 
   useEffect(() => {
     refresh()
@@ -312,21 +340,28 @@ export function PersonalColorQuotaGate() {
         onChange={handleFileChange}
       />
 
-      <button
-        type="button"
-        onClick={handlePickFile}
-        disabled={!state || pending}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {pending
-          ? phase === 'analyzing'
-            ? '🤖 AI が解析中…（15-25秒）'
-            : '📤 アップロード中…'
-          : '📁 写真を選択して診断'}
-      </button>
-      <p className="mt-2 text-[11px] text-gray-400">
-        JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。
-      </p>
+      {phase === 'analyzing' || phase === 'uploading' ? (
+        <AnalyzingOverlay
+          phase={phase}
+          previewUrl={previewUrl}
+          elapsedSec={elapsedSec}
+          stepIndex={stepIndex}
+        />
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={handlePickFile}
+            disabled={!state || pending}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            📁 写真を選択して診断
+          </button>
+          <p className="mt-2 text-[11px] text-gray-400">
+            JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。
+          </p>
+        </>
+      )}
 
       {error && (
         <div className="mt-3 mx-auto max-w-md px-4 py-2 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-sm">
@@ -631,5 +666,122 @@ function PersonalColorResult({
         </div>
       </div>
     </section>
+  )
+}
+
+function AnalyzingOverlay({
+  phase,
+  previewUrl,
+  elapsedSec,
+  stepIndex,
+}: {
+  phase: 'uploading' | 'analyzing'
+  previewUrl: string | null
+  elapsedSec: number
+  stepIndex: number
+}) {
+  const step = ANALYZE_STEPS[stepIndex] ?? ANALYZE_STEPS[0]
+  // Estimate progress as a function of elapsed time, capped at 95%
+  // (the last 5% is reserved for "result is being rendered")
+  const ESTIMATED_TOTAL = 22
+  const progressPct =
+    phase === 'uploading' ? 8 : Math.min(95, 10 + (elapsedSec / ESTIMATED_TOTAL) * 85)
+
+  return (
+    <div className="mt-2 mx-auto max-w-sm">
+      <div className="rounded-2xl border border-sky-200 bg-gradient-to-br from-white via-sky-50 to-blue-50 p-6 shadow-sm">
+        <div className="flex flex-col items-center">
+          {previewUrl && (
+            <div className="relative w-32 h-32 rounded-xl overflow-hidden border-2 border-sky-200 shadow-sm">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={previewUrl} alt="" className="w-full h-full object-cover" />
+              {/* Animated gradient sweep */}
+              <div className="absolute inset-0 pointer-events-none pc-scan-overlay" />
+              {/* Translucent dim with cycling glow */}
+              <div className="absolute inset-0 ring-2 ring-sky-400/0 pc-pulse-ring rounded-xl" />
+            </div>
+          )}
+
+          <div className="mt-5 text-3xl pc-bounce" aria-hidden="true">
+            {step.icon}
+          </div>
+          <p className="mt-2 text-sm font-semibold text-gray-900 text-center">
+            {phase === 'uploading' ? '📤 アップロード中…' : step.text}
+          </p>
+          <p className="mt-1 text-xs text-gray-500 text-center">
+            {phase === 'uploading'
+              ? '画像をサーバーに送信しています'
+              : step.detail}
+          </p>
+
+          {/* Progress bar */}
+          <div className="mt-4 w-full">
+            <div className="h-1.5 w-full bg-sky-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-sky-400 via-blue-500 to-indigo-500 transition-all duration-500 ease-out"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+            <div className="mt-1.5 flex items-center justify-between text-[10px] text-gray-500">
+              <span>{Math.round(progressPct)}%</span>
+              <span>
+                {phase === 'analyzing' ? `${elapsedSec}秒経過 / 約 15-25秒` : '送信中'}
+              </span>
+            </div>
+          </div>
+
+          {/* Animated bouncing dots */}
+          <div className="mt-4 flex gap-1.5" aria-hidden="true">
+            <span className="w-2 h-2 rounded-full bg-sky-500 pc-dot pc-dot-1" />
+            <span className="w-2 h-2 rounded-full bg-sky-500 pc-dot pc-dot-2" />
+            <span className="w-2 h-2 rounded-full bg-sky-500 pc-dot pc-dot-3" />
+          </div>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes pc-scan {
+          0%   { transform: translateY(-100%); opacity: 0; }
+          15%  { opacity: 1; }
+          85%  { opacity: 1; }
+          100% { transform: translateY(100%); opacity: 0; }
+        }
+        .pc-scan-overlay {
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(56, 189, 248, 0.0) 35%,
+            rgba(56, 189, 248, 0.55) 50%,
+            rgba(56, 189, 248, 0.0) 65%,
+            transparent 100%
+          );
+          animation: pc-scan 2.2s ease-in-out infinite;
+        }
+        @keyframes pc-pulse-ring {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.0) inset; }
+          50%      { box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.35) inset; }
+        }
+        .pc-pulse-ring {
+          animation: pc-pulse-ring 2.2s ease-in-out infinite;
+        }
+        @keyframes pc-bounce {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-6px); }
+        }
+        .pc-bounce {
+          animation: pc-bounce 1.4s ease-in-out infinite;
+        }
+        @keyframes pc-dot-bounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+          40%           { transform: translateY(-6px); opacity: 1; }
+        }
+        .pc-dot {
+          animation: pc-dot-bounce 1.2s ease-in-out infinite;
+        }
+        .pc-dot-1 { animation-delay: 0s; }
+        .pc-dot-2 { animation-delay: 0.2s; }
+        .pc-dot-3 { animation-delay: 0.4s; }
+      `}</style>
+    </div>
   )
 }
