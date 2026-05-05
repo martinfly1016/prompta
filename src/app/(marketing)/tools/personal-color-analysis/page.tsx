@@ -92,15 +92,20 @@ const FAQ = [
 
 function ColorSwatch({ hex, name }: { hex: string; name: string }) {
   return (
-    <div className="flex items-center gap-2 px-2 py-1.5 bg-white rounded-lg border border-gray-100">
+    <div
+      className="bg-white rounded-lg border border-gray-100 overflow-hidden"
+      title={`${name} ${hex.toUpperCase()}`}
+    >
       <div
-        className="w-8 h-8 rounded-md border border-gray-200 shrink-0"
+        className="h-12 w-full"
         style={{ backgroundColor: hex }}
         aria-label={`${name} ${hex}`}
       />
-      <div className="min-w-0 flex-1">
-        <div className="text-xs font-medium text-gray-900 truncate">{name}</div>
-        <div className="text-[10px] text-gray-500 font-mono">{hex.toUpperCase()}</div>
+      <div className="px-2 py-1.5">
+        <div className="text-xs font-medium text-gray-900 leading-tight truncate">{name}</div>
+        <div className="text-[10px] text-gray-500 font-mono leading-tight mt-0.5">
+          {hex.toUpperCase()}
+        </div>
       </div>
     </div>
   )

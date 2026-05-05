@@ -559,22 +559,23 @@ function PersonalColorResult({
                       {ROLE_LABEL[role].title}
                     </h4>
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {groups[role].map((c, i) => (
                       <div
                         key={c.hex + i}
-                        className="flex items-center gap-2 px-2 py-1.5 bg-white rounded-lg border border-gray-100"
+                        title={`${c.nameJa} ${c.hex.toUpperCase()}`}
+                        className="bg-white rounded-lg border border-gray-100 overflow-hidden"
                       >
                         <div
-                          className="w-8 h-8 rounded-md border border-gray-200 shrink-0"
+                          className="h-12 w-full"
                           style={{ backgroundColor: c.hex }}
                           aria-label={`${c.nameJa} ${c.hex}`}
                         />
-                        <div className="min-w-0 flex-1">
-                          <div className="text-xs font-medium text-gray-900 truncate">
+                        <div className="px-2 py-1.5">
+                          <div className="text-xs font-medium text-gray-900 leading-tight truncate">
                             {c.nameJa}
                           </div>
-                          <div className="text-[10px] text-gray-500 font-mono">
+                          <div className="text-[10px] text-gray-500 font-mono leading-tight mt-0.5">
                             {c.hex.toUpperCase()}
                           </div>
                         </div>
