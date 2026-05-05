@@ -188,6 +188,13 @@ export default function PersonalColorAnalysisPage() {
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ Gemini 2.5 Flash 搭載
             </span>
+            <Link
+              href="/en/tools/personal-color-analysis"
+              className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-500 hover:text-sky-600 hover:border-sky-300"
+              hrefLang="en"
+            >
+              🇺🇸 English version
+            </Link>
           </div>
         </div>
       </section>
