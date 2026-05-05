@@ -208,13 +208,44 @@ model Guide {
 // ==================== Tool Usage Quota ====================
 
 model ToolUsage {
-  id        String   @id @default(cuid())
-  anonId    String
-  ipHash    String
-  tool      String
-  type      String   @default("free")
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  anonId      String
+  ipHash      String
+  tool        String
+  type        String   @default("free")
+  emailHash   String?  // set when type="paid"
+  createdAt   DateTime @default(now())
 
   @@index([anonId, tool, createdAt])
   @@index([ipHash, tool, createdAt])
+  @@index([emailHash, tool, createdAt])
+}
+
+model PaidCredits {
+  id           String   @id @default(cuid())
+  emailHash    String   @unique
+  email        String
+  balance      Int      @default(0)
+  totalEarned  Int      @default(0)
+  totalUsed    Int      @default(0)
+  lastPurchase DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model StripePayment {
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  paymentIntent  String?
+  emailHash      String
+  email          String
+  amountJpy      Int
+  creditsGranted Int
+  status         String   // "pending" | "paid" | "refunded"
+  rawEventType   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([emailHash])
+  @@index([status])
 }
