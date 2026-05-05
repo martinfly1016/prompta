@@ -6,6 +6,8 @@ import { getPromptBySlug, getPromptSlugs, getRelatedPrompts, getApprovedTagSlugs
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { CopyButton } from '@/components/ui/CopyButton'
 import { TryInChatGPTButton } from '@/components/ui/TryInChatGPTButton'
+import { TryInGeminiButton } from '@/components/ui/TryInGeminiButton'
+import { PromptViewTracker } from '@/components/prompt/PromptViewTracker'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
 import { ShareButtons } from '@/components/ui/ShareButtons'
@@ -60,6 +62,8 @@ export default async function PromptDetailPage({ params }: Props) {
   // Show "Try in ChatGPT" button only for text-based AI tools (not image generators)
   const IMAGE_TOOLS = new Set(['stable-diffusion', 'midjourney', 'dall-e'])
   const isTextPrompt = prompt.toolSlug ? !IMAGE_TOOLS.has(prompt.toolSlug) : false
+  // photo-edit prompts (Gemini-based image editing) get a "Try in Gemini" button
+  const isPhotoEdit = prompt.categorySlug === 'photo-edit' && prompt.toolSlug === 'gemini'
 
   // Find relevant guides based on the prompt's tool and category
   const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
@@ -74,6 +78,12 @@ export default async function PromptDetailPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <PromptViewTracker
+        promptId={prompt.id}
+        slug={prompt.slug}
+        category={prompt.categorySlug}
+        tool={prompt.toolSlug}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[
@@ -161,18 +171,53 @@ export default async function PromptDetailPage({ params }: Props) {
           <section className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-lg font-bold text-gray-900">プロンプト</h2>
-              <CopyButton text={prompt.content} variant="compact" />
+              <CopyButton
+                text={prompt.content}
+                variant="compact"
+                promptId={prompt.id}
+                slug={prompt.slug}
+                category={prompt.categorySlug}
+                tool={prompt.toolSlug}
+              />
             </div>
             <div className="bg-gray-900 text-gray-100 rounded-xl p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap">{prompt.content}</div>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <CopyButton text={prompt.content} />
-              {isTextPrompt && <TryInChatGPTButton content={prompt.content} />}
+              <CopyButton
+                text={prompt.content}
+                promptId={prompt.id}
+                slug={prompt.slug}
+                category={prompt.categorySlug}
+                tool={prompt.toolSlug}
+              />
+              {isTextPrompt && (
+                <TryInChatGPTButton
+                  content={prompt.content}
+                  promptId={prompt.id}
+                  slug={prompt.slug}
+                  category={prompt.categorySlug}
+                  tool={prompt.toolSlug}
+                />
+              )}
+              {isPhotoEdit && (
+                <TryInGeminiButton
+                  content={prompt.content}
+                  promptId={prompt.id}
+                  slug={prompt.slug}
+                  category={prompt.categorySlug}
+                  tool={prompt.toolSlug}
+                />
+              )}
             </div>
             {isTextPrompt && (
               <p className="mt-3 text-xs text-gray-500 text-center">
                 {prompt.content.length <= 2000
                   ? '「ChatGPTで試す」ボタンを押すと、入力欄にプロンプトが自動入力された状態でChatGPTが開きます。'
                   : '長いプロンプトのため、ボタンを押すとプロンプトがクリップボードにコピーされ、ChatGPTが新しいタブで開きます。入力欄に貼り付けてご利用ください。'}
+              </p>
+            )}
+            {isPhotoEdit && (
+              <p className="mt-3 text-xs text-gray-500 text-center">
+                「Geminiで試す」ボタンを押すとプロンプトがコピーされ、Gemini が新しいタブで開きます。編集したい写真をアップロードしてプロンプトを貼り付けてください。
               </p>
             )}
           </section>

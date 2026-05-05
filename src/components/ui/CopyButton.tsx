@@ -1,17 +1,31 @@
 'use client'
 
 import { useState } from 'react'
+import { trackPromptCopy } from '@/lib/track'
 
 interface CopyButtonProps {
   text: string
   className?: string
   variant?: 'default' | 'compact'
+  promptId?: string
+  slug?: string
+  category?: string | null
+  tool?: string | null
 }
 
-export function CopyButton({ text, className = '', variant = 'default' }: CopyButtonProps) {
+export function CopyButton({
+  text,
+  className = '',
+  variant = 'default',
+  promptId,
+  slug,
+  category,
+  tool,
+}: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
   async function handleCopy() {
+    trackPromptCopy(promptId, { slug, category, tool })
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)

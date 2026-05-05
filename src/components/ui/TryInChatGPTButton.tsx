@@ -1,10 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import { trackPromptTry } from '@/lib/track'
 
 interface TryInChatGPTButtonProps {
   content: string
   className?: string
+  promptId?: string
+  slug?: string
+  category?: string | null
+  tool?: string | null
 }
 
 // ChatGPT's anonymous mode struggles with long prompts (observed stuck at ~3500 chars).
@@ -12,9 +17,17 @@ interface TryInChatGPTButtonProps {
 // Above it we fall back to copy-to-clipboard + open a fresh ChatGPT tab.
 const DIRECT_URL_MAX_CHARS = 2000
 
-export function TryInChatGPTButton({ content, className = '' }: TryInChatGPTButtonProps) {
+export function TryInChatGPTButton({
+  content,
+  className = '',
+  promptId,
+  slug,
+  category,
+  tool,
+}: TryInChatGPTButtonProps) {
   const [copied, setCopied] = useState(false)
   const isShort = content.length <= DIRECT_URL_MAX_CHARS
+  const trackMeta = { slug, category, tool }
 
   const baseClass = `inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-xl transition-all shadow-sm hover:shadow-md ${className}`
   const greenClass = 'bg-emerald-600 text-white hover:bg-emerald-700'
@@ -33,6 +46,7 @@ export function TryInChatGPTButton({ content, className = '' }: TryInChatGPTButt
         href={url}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackPromptTry(promptId, 'chatgpt', trackMeta)}
         className={`${baseClass} ${greenClass}`}
         title="ChatGPTで開いて試す（プロンプトが入力欄に自動入力されます）"
       >
@@ -44,6 +58,7 @@ export function TryInChatGPTButton({ content, className = '' }: TryInChatGPTButt
 
   // Long prompt: copy to clipboard + open fresh ChatGPT tab
   async function handleClick() {
+    trackPromptTry(promptId, 'chatgpt', trackMeta)
     try {
       await navigator.clipboard.writeText(content)
     } catch {
