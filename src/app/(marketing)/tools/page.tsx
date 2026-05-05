@@ -21,10 +21,45 @@ export default async function ToolsPage() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mb-10">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">対応AIツール一覧</h1>
-            <p className="text-gray-600 leading-relaxed">画像生成からテキスト生成まで、主要なAIツール向けの高品質プロンプトを網羅しています。</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">AI ツール一覧</h1>
+            <p className="text-gray-600 leading-relaxed">写真アップロードで使える AI 診断ツールから、各 AI モデル向けプロンプト集まで網羅しています。</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          {/* Featured interactive tool */}
+          <div className="mb-12">
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">インタラクティブ AI ツール</h2>
+            <Link
+              href="/tools/personal-color-analysis"
+              className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-2xl border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
+            >
+              <div className="flex items-start gap-5">
+                <div className="text-5xl shrink-0">🎨</div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
+                      パーソナルカラー診断 AI
+                    </h3>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                    写真をアップロードするだけで、AI が 4 シーズン判定 + 似合う 16 色 + 避けたい色を診断。Gemini 2.5 Flash 搭載、無料 3 回/日。
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
+                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">登録不要</span>
+                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">写真を保存しません</span>
+                    <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">
+                      診断する →
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <div>
+            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">AI モデル別プロンプト集</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {tools.map(tool => (
               <Link key={tool.slug} href={`/tools/${tool.slug}`} className="group p-6 bg-white rounded-xl border border-gray-200 hover:border-sky-300 hover:shadow-lg transition-all duration-200">
                 <div className="flex items-start gap-4">
@@ -39,6 +74,7 @@ export default async function ToolsPage() {
                 <span className="inline-flex items-center gap-1 mt-4 text-sm font-medium text-sky-600">プロンプトを見る →</span>
               </Link>
             ))}
+            </div>
           </div>
         </div>
       </section>

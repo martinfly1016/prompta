@@ -33,6 +33,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/glossary`, lastModified: latestDate, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/compare`, lastModified: latestDate, changeFrequency: 'monthly', priority: 0.8 },
 
+    // Interactive AI tools (not the brand-tool catalog) — high priority for SEO
+    { url: `${BASE}/tools/personal-color-analysis`, lastModified: latestDate, changeFrequency: 'weekly', priority: 0.95 },
+
+    // Legal pages
+    { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/legal/terms`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
+
     // Tool pages — lastModified = latest prompt in that tool
     ...tools.map(t => ({
       url: `${BASE}/tools/${t.slug}`,

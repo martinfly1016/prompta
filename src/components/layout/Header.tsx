@@ -24,13 +24,29 @@ export function Header() {
                 </svg>
               </button>
               <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 py-2 min-w-[240px]">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 py-2 min-w-[260px]">
                   <Link
                     href="/tools"
                     className="block px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 border-b border-gray-100 mb-1"
                   >
                     すべてのツール →
                   </Link>
+                  {/* Featured interactive tool */}
+                  <Link
+                    href="/tools/personal-color-analysis"
+                    className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 hover:border-sky-300 transition-all"
+                  >
+                    <span className="text-lg">🎨</span>
+                    <div>
+                      <div className="font-semibold text-sky-700">パーソナルカラー診断</div>
+                      <div className="text-xs text-gray-500">写真アップロードで AI 診断</div>
+                    </div>
+                    <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
+                  </Link>
+                  <div className="border-t border-gray-100 my-1" />
+                  <p className="px-4 pt-1 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                    AI モデル別
+                  </p>
                   {TOOLS.map(tool => (
                     <Link
                       key={tool.slug}
@@ -130,6 +146,14 @@ function MobileNav() {
           <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">AIツール</p>
           <Link href="/tools" className="block px-3 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
             すべてのツール
+          </Link>
+          <Link
+            href="/tools/personal-color-analysis"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-100"
+          >
+            <span>🎨</span>
+            <span>パーソナルカラー診断</span>
+            <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
           </Link>
           {TOOLS.map(tool => (
             <Link
