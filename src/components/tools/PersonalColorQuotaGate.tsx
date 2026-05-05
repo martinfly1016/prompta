@@ -55,6 +55,10 @@ export function PersonalColorQuotaGate() {
   const [error, setError] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [purchaseBanner, setPurchaseBanner] = useState<string | null>(null)
+  const [showRecover, setShowRecover] = useState(false)
+  const [recoverEmail, setRecoverEmail] = useState('')
+  const [recoverPending, setRecoverPending] = useState(false)
+  const [recoverMessage, setRecoverMessage] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
@@ -63,14 +67,52 @@ export function PersonalColorQuotaGate() {
       const params = new URLSearchParams(window.location.search)
       const purchase = params.get('purchase')
       const sessionId = params.get('session_id')
+      const recovered = params.get('recovered')
       if (purchase === 'success' && sessionId) {
         claimPurchase(sessionId)
       } else if (purchase === 'cancelled') {
         setPurchaseBanner('購入がキャンセルされました')
         cleanUrl()
+      } else if (recovered === 'true') {
+        const balance = params.get('balance')
+        setPurchaseBanner(`🎉 クレジットを復元しました${balance ? `（残り ${balance} 回）` : ''}`)
+        cleanUrl()
+        refresh()
+      } else if (recovered === 'false') {
+        const reason = params.get('reason')
+        setPurchaseBanner(
+          reason === 'expired'
+            ? '復元リンクの有効期限が切れています。フォームから再送信してください。'
+            : '復元リンクが無効です。再度メールをご確認ください。',
+        )
+        cleanUrl()
       }
     }
   }, [])
+
+  async function submitRecover(e: React.FormEvent) {
+    e.preventDefault()
+    if (!recoverEmail.trim()) return
+    setRecoverPending(true)
+    setRecoverMessage(null)
+    try {
+      const r = await fetch('/api/tools/personal-color/recover/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: recoverEmail.trim() }),
+      })
+      const data = await r.json()
+      setRecoverMessage(
+        r.ok
+          ? data.message ?? '指定のメールアドレスにクレジットが紐づいている場合、復元リンクを送信しました。'
+          : `エラー: ${data.error ?? 'unknown'}`,
+      )
+    } catch (e: any) {
+      setRecoverMessage(`通信エラー: ${e?.message ?? ''}`)
+    } finally {
+      setRecoverPending(false)
+    }
+  }
 
   function refresh() {
     fetch('/api/tools/personal-color/check')
@@ -83,6 +125,9 @@ export function PersonalColorQuotaGate() {
     const u = new URL(window.location.href)
     u.searchParams.delete('purchase')
     u.searchParams.delete('session_id')
+    u.searchParams.delete('recovered')
+    u.searchParams.delete('balance')
+    u.searchParams.delete('reason')
     window.history.replaceState({}, '', u.toString())
   }
 
@@ -341,6 +386,48 @@ export function PersonalColorQuotaGate() {
                 </p>
               </>
             )}
+
+            {/* Recovery flow */}
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              {!showRecover ? (
+                <button
+                  type="button"
+                  onClick={() => setShowRecover(true)}
+                  className="w-full text-xs text-sky-600 hover:text-sky-700 underline transition-colors"
+                >
+                  以前購入したクレジットがある場合 →
+                </button>
+              ) : (
+                <form onSubmit={submitRecover} className="space-y-2">
+                  <p className="text-xs text-gray-600">
+                    購入時のメールアドレスに復元リンクをお送りします。
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="email"
+                      required
+                      placeholder="example@gmail.com"
+                      value={recoverEmail}
+                      onChange={(e) => setRecoverEmail(e.target.value)}
+                      className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none"
+                      disabled={recoverPending}
+                    />
+                    <button
+                      type="submit"
+                      disabled={recoverPending || !recoverEmail.trim()}
+                      className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {recoverPending ? '送信中…' : '送信'}
+                    </button>
+                  </div>
+                  {recoverMessage && (
+                    <p className="text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded">
+                      {recoverMessage}
+                    </p>
+                  )}
+                </form>
+              )}
+            </div>
 
             <button
               type="button"
