@@ -193,6 +193,10 @@ export function PersonalColorQuotaGate() {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
           setShowModal(true)
+        } else if (r.status === 413 || r.status === 415 || r.status === 422) {
+          // Validation error — quota was NOT consumed, user can retry with another image
+          setError(data.message ?? '画像を確認してください。')
+          setPreviewUrl(null)
         } else {
           setError(`診断エラー: ${data.message ?? data.error ?? 'unknown'}`)
         }

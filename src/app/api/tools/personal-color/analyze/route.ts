@@ -14,6 +14,7 @@ import {
 import { prisma } from '@/lib/prisma'
 import { analyzePersonalColor } from '@/lib/personal-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
+import { validateImageBuffer } from '@/lib/image-validation'
 
 const TOOL = 'personal-color'
 const MAX_BYTES = 8 * 1024 * 1024 // 8MB before base64
@@ -49,6 +50,18 @@ export async function POST(req: NextRequest) {
       { error: 'unsupported_type', allowed: Array.from(ALLOWED_MIMES) },
       { status: 415 },
     )
+
+  // 1b. Deep validation BEFORE quota — magic bytes + actual decode + dim
+  // bounds. An invalid upload must never cost the user a free use or a
+  // paid credit.
+  const buf = Buffer.from(await file.arrayBuffer())
+  const validation = await validateImageBuffer(buf, file.type)
+  if (!validation.ok) {
+    return NextResponse.json(
+      { error: validation.code, message: validation.messageJa },
+      { status: 422 },
+    )
+  }
 
   // 2. Reserve quota
   const anonId = await ensureAnonId()
@@ -103,9 +116,8 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // 3. Run Gemini
+  // 3. Run Gemini (buf already read during validation step 1b)
   try {
-    const buf = Buffer.from(await file.arrayBuffer())
     const result = await analyzePersonalColor(buf, file.type)
 
     // 5. Success — return result + fresh state
