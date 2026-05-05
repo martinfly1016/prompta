@@ -8,12 +8,21 @@ export const metadata: Metadata = {
   title: 'パーソナルカラー診断 写真 AI — 無料・登録不要',
   description:
     '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット + 似合う髪色・口紅・服装の提案。Gemini 2.5 Flash 搭載、無料・登録不要。',
-  alternates: { canonical: `${SITE_CONFIG.url}/tools/personal-color-analysis` },
+  alternates: {
+    canonical: `${SITE_CONFIG.url}/tools/personal-color-analysis`,
+    languages: {
+      ja: `${SITE_CONFIG.url}/tools/personal-color-analysis`,
+      en: `${SITE_CONFIG.url}/en/tools/personal-color-analysis`,
+      'x-default': `${SITE_CONFIG.url}/tools/personal-color-analysis`,
+    },
+  },
   openGraph: {
     title: 'パーソナルカラー診断 写真 AI — 無料・登録不要',
     description:
       '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット。',
     type: 'website',
+    locale: 'ja_JP',
+    alternateLocale: ['en_US'],
   },
 }
 

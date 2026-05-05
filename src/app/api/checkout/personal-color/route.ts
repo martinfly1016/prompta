@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import {
   stripe,
@@ -17,7 +17,7 @@ import { authOptions } from '@/lib/auth'
 // saved wallet (observed in production: a user paid while logged in as
 // gmail.com but Link used a previously-saved byte-ad.com email, so credits
 // landed on the wrong account).
-export async function POST() {
+export async function POST(req: NextRequest) {
   if (!stripeEnabled || !stripe || !STRIPE_PRICE_ID) {
     return NextResponse.json(
       { error: 'Stripe is not configured', configured: false },
@@ -28,20 +28,28 @@ export async function POST() {
   const session = await getServerSession(authOptions).catch(() => null)
   const sessionEmail = session?.user?.email
 
+  // Locale routing — anonymous EN visitors should land back on /en/... and
+  // see Stripe's English Checkout. Default to Japanese for backward compat.
+  const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
+  const returnPath =
+    locale === 'en'
+      ? '/en/tools/personal-color-analysis'
+      : '/tools/personal-color-analysis'
+
   try {
     const checkout = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [{ price: STRIPE_PRICE_ID, quantity: 1 }],
       payment_method_types: ['card'],
       currency: 'jpy',
-      locale: 'ja',
+      locale,
       // When signed in: pin the email so Link/saved-wallet cannot override it.
       // When anonymous: let Stripe collect (and create) the email at checkout.
       ...(sessionEmail
         ? { customer_email: sessionEmail }
         : { customer_creation: 'always' as const }),
-      success_url: `${SITE_CONFIG.url}/tools/personal-color-analysis?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_CONFIG.url}/tools/personal-color-analysis?purchase=cancelled`,
+      success_url: `${SITE_CONFIG.url}${returnPath}?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${SITE_CONFIG.url}${returnPath}?purchase=cancelled`,
       // Stripe-built-in automatic receipt with PDF invoice link.
       // For signed-in users, force Stripe to send to the locked email; for
       // anonymous users we pass the same email at webhook time once Stripe

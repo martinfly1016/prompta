@@ -34,7 +34,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/compare`, lastModified: latestDate, changeFrequency: 'monthly', priority: 0.8 },
 
     // Interactive AI tools (not the brand-tool catalog) — high priority for SEO
-    { url: `${BASE}/tools/personal-color-analysis`, lastModified: latestDate, changeFrequency: 'weekly', priority: 0.95 },
+    {
+      url: `${BASE}/tools/personal-color-analysis`,
+      lastModified: latestDate,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+      alternates: {
+        languages: {
+          ja: `${BASE}/tools/personal-color-analysis`,
+          en: `${BASE}/en/tools/personal-color-analysis`,
+        },
+      },
+    },
+    {
+      url: `${BASE}/en/tools/personal-color-analysis`,
+      lastModified: latestDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+      alternates: {
+        languages: {
+          ja: `${BASE}/tools/personal-color-analysis`,
+          en: `${BASE}/en/tools/personal-color-analysis`,
+        },
+      },
+    },
 
     // Legal pages
     { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },

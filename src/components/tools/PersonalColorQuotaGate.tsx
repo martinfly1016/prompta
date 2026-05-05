@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
+export type Locale = 'ja' | 'en'
+
 interface QuotaState {
   remainingFree: number
   freeUsedToday: number
@@ -35,29 +37,160 @@ interface AnalysisResult {
 
 const FREE_LIMIT = 3
 const PRICE_LABEL = '¥300 / 10回パック'
+const PRICE_LABEL_EN = '¥300 / 10-pack'
 const MAX_BYTES = 8 * 1024 * 1024
 const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' } as const
-const SEASON_JA = { spring: 'スプリング（春）', summer: 'サマー（夏）', autumn: 'オータム（秋）', winter: 'ウィンター（冬）' } as const
-const UNDERTONE_JA = { warm: 'ウォーム（暖み）', cool: 'クール（青み）', neutral: 'ニュートラル' } as const
-const CONTRAST_JA = { high: '高（メリハリ）', medium: '中', low: '低（ソフト）' } as const
-const ROLE_LABEL = {
-  clothing: { icon: '👗', title: '服装' },
-  lipstick: { icon: '💄', title: '口紅・チーク' },
-  hair: { icon: '💇', title: '髪色（推奨）' },
-  accessory: { icon: '💍', title: 'アクセサリー' },
+
+// Locale-aware string table. Result-card terms (skin description, color
+// names) come from Gemini in Japanese for now — EN locale renders the
+// scaffolding in English plus a small "JA result text" note.
+const STRINGS = {
+  ja: {
+    season: { spring: 'スプリング（春）', summer: 'サマー（夏）', autumn: 'オータム（秋）', winter: 'ウィンター（冬）' },
+    undertone: { warm: 'ウォーム（暖み）', cool: 'クール（青み）', neutral: 'ニュートラル' },
+    contrast: { high: '高（メリハリ）', medium: '中', low: '低（ソフト）' },
+    role: {
+      clothing: { icon: '👗', title: '服装' },
+      lipstick: { icon: '💄', title: '口紅・チーク' },
+      hair: { icon: '💇', title: '髪色（推奨）' },
+      accessory: { icon: '💍', title: 'アクセサリー' },
+    },
+    statusChecking: '利用状況を確認中…',
+    statusFree: (n: number) => `本日の残り：${n} / ${FREE_LIMIT} 回`,
+    statusExhausted: '本日の無料利用は使い切りました',
+    statusPaidPrefix: '保有クレジット：',
+    statusPaidSuffix: ' 回',
+    statusPaidNoteFreeUsed: '（無料枠は使用済）',
+    pickButton: '📁 写真を選択して診断',
+    pickCaption: 'JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。',
+    errImageTooLarge: '画像サイズが大きすぎます（最大 8MB）',
+    errUnsupportedType: 'JPG / PNG / WebP のみ対応しています',
+    errCheckImage: '画像を確認してください。',
+    errNetwork: (m: string) => `通信エラー: ${m}`,
+    errAnalyze: (m: string) => `診断エラー: ${m}`,
+    modalTitleFree: '本日の無料 3 回を使い切りました',
+    modalTitleIp: 'このネットワークの本日上限に達しました',
+    modalDescFree: '無料枠は毎日 9:00 (UTC基準) にリセットされます。今すぐ続けたい場合は 10 回パックをご購入ください。',
+    modalDescIp: '同じネットワークで本日 5 回以上利用されています。明日 9:00 (UTC基準) にリセットされます。',
+    pricePackTitle: '10 回パック',
+    priceFeatures: ['即時利用、有効期限なし', 'Stripe 決済（VISA/Master/AMEX/JCB）', 'メール 1 つで管理、登録不要'],
+    purchasing: '処理中…',
+    purchaseButton: (price: string) => `💳 10 回パックを購入（${price}）`,
+    stripeComingTitle: 'Stripe 決済は近日公開',
+    stripeNote: '※ 決済機能は Stripe 接入中。明日 9:00 (UTC) に無料枠が自動リセットされます。',
+    recoverPrompt: '以前購入したクレジットがある場合 →',
+    recoverDesc: '購入時のメールアドレスに復元リンクをお送りします。',
+    recoverSend: '送信',
+    recoverSending: '送信中…',
+    recoverDefaultMessage: '指定のメールアドレスにクレジットが紐づいている場合、復元リンクを送信しました。',
+    recoverError: (m: string) => `エラー: ${m}`,
+    closeButton: '閉じる',
+    purchaseCancelled: '購入がキャンセルされました',
+    purchaseSuccess: '🎉 10 クレジットが追加されました！',
+    recoveredSuccess: (balance: string | null) => `🎉 クレジットを復元しました${balance ? `（残り ${balance} 回）` : ''}`,
+    recoverExpired: '復元リンクの有効期限が切れています。フォームから再送信してください。',
+    recoverInvalid: '復元リンクが無効です。再度メールをご確認ください。',
+    purchaseError: (err: string) => `購入処理エラー: ${err}`,
+    stripeError: (err: string) => `Stripe 接続エラー: ${err}`,
+    uploadingHeading: '📤 アップロード中…',
+    uploadingDetail: '画像をサーバーに送信しています',
+    elapsedFmt: (sec: number) => `${sec}秒経過 / 約 15-25秒`,
+    uploadingShort: '送信中',
+    analyzeSteps: [
+      { icon: '📸', text: '写真を解析しています…', detail: '画像の品質と顔の位置を確認' },
+      { icon: '🎨', text: '肌のアンダートーンを判定中…', detail: '黄み／青み／中性の傾向を抽出' },
+      { icon: '👁️', text: '瞳と髪のトーンを分析中…', detail: 'コントラストの強さを推定' },
+      { icon: '✨', text: '似合う 12 色を選定中…', detail: '4 シーズン体系に基づいてマッチング' },
+      { icon: '🪄', text: 'もうすぐ完了します…', detail: '結果を整形しています' },
+    ],
+    resultBadge: '✨ あなたの診断結果',
+    resultLabel: 'あなたのパーソナルカラー',
+    yourColors: 'あなたに似合う色',
+    byRole: '役割別',
+    confidenceLabel: '信頼度',
+    lowConfidenceWarn: '⚠️ 信頼度が低めです。自然光・正面・素顔の写真で再診断すると精度が上がります。',
+    avoidColors: '避けたい色',
+    uploadedAlt: 'アップロード写真',
+    enResultNote: '',
+  },
+  en: {
+    season: { spring: 'Spring (Warm)', summer: 'Summer (Cool)', autumn: 'Autumn (Warm)', winter: 'Winter (Cool)' },
+    undertone: { warm: 'Warm', cool: 'Cool', neutral: 'Neutral' },
+    contrast: { high: 'High (sharp)', medium: 'Medium', low: 'Low (soft)' },
+    role: {
+      clothing: { icon: '👗', title: 'Clothing' },
+      lipstick: { icon: '💄', title: 'Lipstick / blush' },
+      hair: { icon: '💇', title: 'Hair color' },
+      accessory: { icon: '💍', title: 'Accessory metals' },
+    },
+    statusChecking: 'Checking usage…',
+    statusFree: (n: number) => `Free today: ${n} / ${FREE_LIMIT} left`,
+    statusExhausted: 'Free quota used for today',
+    statusPaidPrefix: 'Credits: ',
+    statusPaidSuffix: ' left',
+    statusPaidNoteFreeUsed: '(free quota spent)',
+    pickButton: '📁 Pick a photo to analyze',
+    pickCaption: 'JPG / PNG / WebP (max 8MB). Photos are deleted from our server after analysis.',
+    errImageTooLarge: 'Image is too large (max 8MB)',
+    errUnsupportedType: 'Only JPG / PNG / WebP are supported',
+    errCheckImage: 'Please check your image.',
+    errNetwork: (m: string) => `Network error: ${m}`,
+    errAnalyze: (m: string) => `Analysis error: ${m}`,
+    modalTitleFree: "You've used all 3 free analyses for today",
+    modalTitleIp: 'This network has reached its daily limit',
+    modalDescFree: 'The free quota resets daily at 09:00 UTC. To keep going right now, grab a 10-analysis pack.',
+    modalDescIp: 'This network has been used 5+ times today. It resets tomorrow at 09:00 UTC.',
+    pricePackTitle: '10-analysis pack',
+    priceFeatures: ['Instant access, never expires', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Tied to one email — no account needed'],
+    purchasing: 'Processing…',
+    purchaseButton: (price: string) => `💳 Buy 10-pack (${price})`,
+    stripeComingTitle: 'Stripe checkout coming soon',
+    stripeNote: '※ Stripe integration in progress. Free quota auto-resets at 09:00 UTC tomorrow.',
+    recoverPrompt: 'Already bought a pack? Recover credits →',
+    recoverDesc: "We'll email a recovery link to the address used at checkout.",
+    recoverSend: 'Send',
+    recoverSending: 'Sending…',
+    recoverDefaultMessage: 'If credits exist for that email, a recovery link has been sent.',
+    recoverError: (m: string) => `Error: ${m}`,
+    closeButton: 'Close',
+    purchaseCancelled: 'Purchase was cancelled',
+    purchaseSuccess: '🎉 10 credits added!',
+    recoveredSuccess: (balance: string | null) => `🎉 Credits restored${balance ? ` (${balance} left)` : ''}`,
+    recoverExpired: 'Recovery link expired. Please request a new one from the form.',
+    recoverInvalid: 'Recovery link invalid. Please check your email again.',
+    purchaseError: (err: string) => `Purchase error: ${err}`,
+    stripeError: (err: string) => `Stripe error: ${err}`,
+    uploadingHeading: '📤 Uploading…',
+    uploadingDetail: 'Sending the image to our server',
+    elapsedFmt: (sec: number) => `${sec}s elapsed / ~15-25s total`,
+    uploadingShort: 'Uploading',
+    analyzeSteps: [
+      { icon: '📸', text: 'Reading your photo…', detail: 'Checking image quality and face position' },
+      { icon: '🎨', text: 'Detecting skin undertone…', detail: 'Warm / cool / neutral lean' },
+      { icon: '👁️', text: 'Reading eye and hair tones…', detail: 'Estimating overall contrast' },
+      { icon: '✨', text: 'Selecting your 12 best colors…', detail: 'Matching against the 4-season system' },
+      { icon: '🪄', text: 'Almost done…', detail: 'Formatting your result' },
+    ],
+    resultBadge: '✨ Your result',
+    resultLabel: 'Your personal color',
+    yourColors: 'Colors that suit you',
+    byRole: 'Grouped by role',
+    confidenceLabel: 'Confidence',
+    lowConfidenceWarn: '⚠️ Low confidence. Try a fresh photo: natural light, facing the camera, no filters or heavy makeup.',
+    avoidColors: 'Colors to avoid',
+    uploadedAlt: 'Your uploaded photo',
+    enResultNote:
+      '🌐 Note: AI-generated descriptions and color names are currently in Japanese. Full English output rolls out in the next update — the seasonal label, palette HEX codes, and badges are universal.',
+  },
 } as const
 
-// Each step is shown for ~4 seconds. Total covers 0-20s; analysis usually
-// completes in 15-25s so the last step holds until the result lands.
-const ANALYZE_STEPS = [
-  { icon: '📸', text: '写真を解析しています…', detail: '画像の品質と顔の位置を確認' },
-  { icon: '🎨', text: '肌のアンダートーンを判定中…', detail: '黄み／青み／中性の傾向を抽出' },
-  { icon: '👁️', text: '瞳と髪のトーンを分析中…', detail: 'コントラストの強さを推定' },
-  { icon: '✨', text: '似合う 12 色を選定中…', detail: '4 シーズン体系に基づいてマッチング' },
-  { icon: '🪄', text: 'もうすぐ完了します…', detail: '結果を整形しています' },
-] as const
+export interface PersonalColorQuotaGateProps {
+  locale?: Locale
+}
 
-export function PersonalColorQuotaGate() {
+export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGateProps = {}) {
+  const t = STRINGS[locale]
+  const ANALYZE_STEPS = t.analyzeSteps
   const [state, setState] = useState<QuotaState | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [pending, setPending] = useState(false)
@@ -108,20 +241,16 @@ export function PersonalColorQuotaGate() {
       if (purchase === 'success' && sessionId) {
         claimPurchase(sessionId)
       } else if (purchase === 'cancelled') {
-        setPurchaseBanner('購入がキャンセルされました')
+        setPurchaseBanner(t.purchaseCancelled)
         cleanUrl()
       } else if (recovered === 'true') {
         const balance = params.get('balance')
-        setPurchaseBanner(`🎉 クレジットを復元しました${balance ? `（残り ${balance} 回）` : ''}`)
+        setPurchaseBanner(t.recoveredSuccess(balance))
         cleanUrl()
         refresh()
       } else if (recovered === 'false') {
         const reason = params.get('reason')
-        setPurchaseBanner(
-          reason === 'expired'
-            ? '復元リンクの有効期限が切れています。フォームから再送信してください。'
-            : '復元リンクが無効です。再度メールをご確認ください。',
-        )
+        setPurchaseBanner(reason === 'expired' ? t.recoverExpired : t.recoverInvalid)
         cleanUrl()
       }
     }
@@ -141,11 +270,11 @@ export function PersonalColorQuotaGate() {
       const data = await r.json()
       setRecoverMessage(
         r.ok
-          ? data.message ?? '指定のメールアドレスにクレジットが紐づいている場合、復元リンクを送信しました。'
-          : `エラー: ${data.error ?? 'unknown'}`,
+          ? data.message ?? t.recoverDefaultMessage
+          : t.recoverError(data.error ?? 'unknown'),
       )
     } catch (e: any) {
-      setRecoverMessage(`通信エラー: ${e?.message ?? ''}`)
+      setRecoverMessage(t.errNetwork(e?.message ?? ''))
     } finally {
       setRecoverPending(false)
     }
@@ -176,11 +305,11 @@ export function PersonalColorQuotaGate() {
         body: JSON.stringify({ sessionId }),
       })
       if (r.ok) {
-        setPurchaseBanner('🎉 10 クレジットが追加されました！')
+        setPurchaseBanner(t.purchaseSuccess)
         refresh()
       } else {
         const err = await r.json().catch(() => ({}))
-        setPurchaseBanner(`購入処理エラー: ${err.error ?? 'unknown'}`)
+        setPurchaseBanner(t.purchaseError(err.error ?? 'unknown'))
       }
     } finally {
       cleanUrl()
@@ -201,11 +330,11 @@ export function PersonalColorQuotaGate() {
     e.target.value = '' // allow re-picking same file
     if (!f) return
     if (f.size > MAX_BYTES) {
-      setError('画像サイズが大きすぎます（最大 8MB）')
+      setError(t.errImageTooLarge)
       return
     }
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(f.type)) {
-      setError('JPG / PNG / WebP のみ対応しています')
+      setError(t.errUnsupportedType)
       return
     }
     setError(null)
@@ -232,10 +361,10 @@ export function PersonalColorQuotaGate() {
           setShowModal(true)
         } else if (r.status === 413 || r.status === 415 || r.status === 422) {
           // Validation error — quota was NOT consumed, user can retry with another image
-          setError(data.message ?? '画像を確認してください。')
+          setError(data.message ?? t.errCheckImage)
           setPreviewUrl(null)
         } else {
-          setError(`診断エラー: ${data.message ?? data.error ?? 'unknown'}`)
+          setError(t.errAnalyze(data.message ?? data.error ?? 'unknown'))
         }
         return
       }
@@ -249,7 +378,7 @@ export function PersonalColorQuotaGate() {
         })
       }, 100)
     } catch (e: any) {
-      setError(`通信エラー: ${e?.message ?? ''}`)
+      setError(t.errNetwork(e?.message ?? ''))
     } finally {
       setPending(false)
       setPhase('idle')
@@ -259,17 +388,17 @@ export function PersonalColorQuotaGate() {
   async function handlePurchase() {
     setPending(true)
     try {
-      const r = await fetch('/api/checkout/personal-color', { method: 'POST' })
+      const r = await fetch(`/api/checkout/personal-color?locale=${locale}`, { method: 'POST' })
       if (!r.ok) {
         const err = await r.json().catch(() => ({}))
-        setPurchaseBanner(`Stripe 接続エラー: ${err.error ?? '設定未完了'}`)
+        setPurchaseBanner(t.stripeError(err.error ?? 'config'))
         setPending(false)
         return
       }
       const { url } = await r.json()
       if (url) window.location.href = url
     } catch (e: any) {
-      setPurchaseBanner(`通信エラー: ${e?.message ?? ''}`)
+      setPurchaseBanner(t.errNetwork(e?.message ?? ''))
       setPending(false)
     }
   }
@@ -316,18 +445,18 @@ export function PersonalColorQuotaGate() {
           {state ? (
             paidCredits > 0 ? (
               <span>
-                保有クレジット：<strong className="font-bold">{paidCredits}</strong> 回
-                {exhausted && <span className="text-gray-500 ml-2">（無料枠は使用済）</span>}
+                {t.statusPaidPrefix}
+                <strong className="font-bold">{paidCredits}</strong>
+                {t.statusPaidSuffix}
+                {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
               </span>
             ) : exhausted ? (
-              <span>本日の無料利用は使い切りました</span>
+              <span>{t.statusExhausted}</span>
             ) : (
-              <span>
-                本日の残り：<strong className="font-bold">{remaining}</strong> / {FREE_LIMIT} 回
-              </span>
+              <span>{t.statusFree(remaining)}</span>
             )
           ) : (
-            <span>利用状況を確認中…</span>
+            <span>{t.statusChecking}</span>
           )}
         </div>
       </div>
@@ -346,6 +475,7 @@ export function PersonalColorQuotaGate() {
           previewUrl={previewUrl}
           elapsedSec={elapsedSec}
           stepIndex={stepIndex}
+          t={t}
         />
       ) : (
         <>
@@ -355,11 +485,9 @@ export function PersonalColorQuotaGate() {
             disabled={!state || pending}
             className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            📁 写真を選択して診断
+            {t.pickButton}
           </button>
-          <p className="mt-2 text-[11px] text-gray-400">
-            JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。
-          </p>
+          <p className="mt-2 text-[11px] text-gray-400">{t.pickCaption}</p>
         </>
       )}
 
@@ -374,7 +502,7 @@ export function PersonalColorQuotaGate() {
       {result &&
         (portalTarget
           ? createPortal(
-              <PersonalColorResult result={result} previewUrl={previewUrl} />,
+              <PersonalColorResult result={result} previewUrl={previewUrl} t={t} />,
               portalTarget,
             )
           : null)}
@@ -392,26 +520,22 @@ export function PersonalColorQuotaGate() {
             <div className="text-center mb-5">
               <div className="text-5xl mb-3">🎨</div>
               <h3 className="text-lg font-bold text-gray-900 mb-1">
-                {state.blockReason === 'ip_exhausted'
-                  ? 'このネットワークの本日上限に達しました'
-                  : '本日の無料 3 回を使い切りました'}
+                {state.blockReason === 'ip_exhausted' ? t.modalTitleIp : t.modalTitleFree}
               </h3>
               <p className="text-sm text-gray-600">
-                {state.blockReason === 'ip_exhausted'
-                  ? '同じネットワークで本日 5 回以上利用されています。明日 9:00 (UTC基準) にリセットされます。'
-                  : '無料枠は毎日 9:00 (UTC基準) にリセットされます。今すぐ続けたい場合は 10 回パックをご購入ください。'}
+                {state.blockReason === 'ip_exhausted' ? t.modalDescIp : t.modalDescFree}
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl p-5 border border-sky-100 mb-4">
               <div className="flex items-baseline justify-between mb-2">
-                <span className="text-sm font-semibold text-gray-900">10 回パック</span>
-                <span className="text-xl font-bold text-sky-700">{PRICE_LABEL}</span>
+                <span className="text-sm font-semibold text-gray-900">{t.pricePackTitle}</span>
+                <span className="text-xl font-bold text-sky-700">{locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL}</span>
               </div>
               <ul className="text-xs text-gray-600 space-y-1">
-                <li>✓ 即時利用、有効期限なし</li>
-                <li>✓ Stripe 決済（VISA/Master/AMEX/JCB）</li>
-                <li>✓ メール 1 つで管理、登録不要</li>
+                {t.priceFeatures.map((f, i) => (
+                  <li key={i}>✓ {f}</li>
+                ))}
               </ul>
             </div>
 
@@ -422,21 +546,19 @@ export function PersonalColorQuotaGate() {
                 disabled={pending}
                 className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {pending ? '処理中…' : `💳 10 回パックを購入（${PRICE_LABEL}）`}
+                {pending ? t.purchasing : t.purchaseButton(locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL)}
               </button>
             ) : (
               <>
                 <button
                   type="button"
                   disabled
-                  title="Stripe 決済は近日公開"
+                  title={t.stripeComingTitle}
                   className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  💳 10 回パックを購入（{PRICE_LABEL}）
+                  {t.purchaseButton(locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL)}
                 </button>
-                <p className="mt-2 text-[11px] text-gray-400 text-center">
-                  ※ 決済機能は Stripe 接入中。明日 9:00 (UTC) に無料枠が自動リセットされます。
-                </p>
+                <p className="mt-2 text-[11px] text-gray-400 text-center">{t.stripeNote}</p>
               </>
             )}
 
@@ -448,13 +570,11 @@ export function PersonalColorQuotaGate() {
                   onClick={() => setShowRecover(true)}
                   className="w-full text-xs text-sky-600 hover:text-sky-700 underline transition-colors"
                 >
-                  以前購入したクレジットがある場合 →
+                  {t.recoverPrompt}
                 </button>
               ) : (
                 <form onSubmit={submitRecover} className="space-y-2">
-                  <p className="text-xs text-gray-600">
-                    購入時のメールアドレスに復元リンクをお送りします。
-                  </p>
+                  <p className="text-xs text-gray-600">{t.recoverDesc}</p>
                   <div className="flex gap-2">
                     <input
                       type="email"
@@ -470,7 +590,7 @@ export function PersonalColorQuotaGate() {
                       disabled={recoverPending || !recoverEmail.trim()}
                       className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {recoverPending ? '送信中…' : '送信'}
+                      {recoverPending ? t.recoverSending : t.recoverSend}
                     </button>
                   </div>
                   {recoverMessage && (
@@ -487,7 +607,7 @@ export function PersonalColorQuotaGate() {
               onClick={() => setShowModal(false)}
               className="mt-3 w-full px-5 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
             >
-              閉じる
+              {t.closeButton}
             </button>
           </div>
         </div>
@@ -512,12 +632,16 @@ export function PersonalColorQuotaGate() {
   )
 }
 
+type Strings = (typeof STRINGS)[Locale]
+
 function PersonalColorResult({
   result,
   previewUrl,
+  t,
 }: {
   result: AnalysisResult
   previewUrl: string | null
+  t: Strings
 }) {
   const groups: Record<RecommendedColor['role'], RecommendedColor[]> = {
     clothing: [],
@@ -534,7 +658,7 @@ function PersonalColorResult({
     >
       <div className="text-center mb-6">
         <span className="inline-block px-3 py-1 text-xs font-medium bg-sky-50 text-sky-700 rounded-full border border-sky-200 mb-2">
-          ✨ あなたの診断結果
+          {t.resultBadge}
         </span>
       </div>
 
@@ -545,7 +669,7 @@ function PersonalColorResult({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewUrl}
-                alt="アップロード写真"
+                alt={t.uploadedAlt}
                 className="w-24 h-24 rounded-xl object-cover border-2 border-white shadow shrink-0"
               />
             ) : (
@@ -553,10 +677,10 @@ function PersonalColorResult({
             )}
             <div className="flex-1 text-center sm:text-left">
               <p className="text-xs font-semibold text-sky-600 uppercase tracking-wider mb-1">
-                あなたのパーソナルカラー
+                {t.resultLabel}
               </p>
               <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">
-                {SEASON_EMOJI[result.season4]} {SEASON_JA[result.season4]}
+                {SEASON_EMOJI[result.season4]} {t.season[result.season4]}
               </h3>
               <p className="text-sm text-gray-700 font-medium mb-3">
                 {result.season12}
@@ -564,14 +688,14 @@ function PersonalColorResult({
               <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
                   Undertone:{' '}
-                  <span className="text-blue-600">{UNDERTONE_JA[result.undertone]}</span>
+                  <span className="text-blue-600">{t.undertone[result.undertone]}</span>
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
                   Contrast:{' '}
-                  <span className="text-gray-700">{CONTRAST_JA[result.contrast]}</span>
+                  <span className="text-gray-700">{t.contrast[result.contrast]}</span>
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
-                  信頼度:{' '}
+                  {t.confidenceLabel}:{' '}
                   <span
                     className={
                       result.confidence >= 0.8
@@ -590,26 +714,31 @@ function PersonalColorResult({
           <p className="mt-5 text-sm text-gray-600 leading-relaxed bg-white/60 rounded-lg p-3 border border-white">
             💡 {result.skinFeaturesJa}
           </p>
+          {t.enResultNote && (
+            <p className="mt-2 text-[11px] text-sky-700 bg-sky-50 rounded-lg p-2 border border-sky-100 leading-relaxed">
+              {t.enResultNote}
+            </p>
+          )}
           {result.confidence < 0.6 && (
             <p className="mt-2 text-xs text-amber-700 bg-amber-50 rounded-lg p-2 border border-amber-100">
-              ⚠️ 信頼度が低めです。自然光・正面・素顔の写真で再診断すると精度が上がります。
+              {t.lowConfidenceWarn}
             </p>
           )}
         </div>
 
         <div className="p-6 sm:p-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-bold text-gray-900">あなたに似合う色</h3>
-            <span className="text-xs text-gray-500">役割別</span>
+            <h3 className="text-base font-bold text-gray-900">{t.yourColors}</h3>
+            <span className="text-xs text-gray-500">{t.byRole}</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {(['clothing', 'lipstick', 'hair', 'accessory'] as const).map((role) =>
               groups[role].length === 0 ? null : (
                 <div key={role}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">{ROLE_LABEL[role].icon}</span>
+                    <span className="text-xl">{t.role[role].icon}</span>
                     <h4 className="text-sm font-semibold text-gray-900">
-                      {ROLE_LABEL[role].title}
+                      {t.role[role].title}
                     </h4>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -642,7 +771,7 @@ function PersonalColorResult({
 
           {result.avoidColors.length > 0 && (
             <div className="mt-8">
-              <h3 className="text-base font-bold text-gray-900 mb-3">避けたい色</h3>
+              <h3 className="text-base font-bold text-gray-900 mb-3">{t.avoidColors}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {result.avoidColors.map((c, i) => (
                   <div
@@ -674,13 +803,15 @@ function AnalyzingOverlay({
   previewUrl,
   elapsedSec,
   stepIndex,
+  t,
 }: {
   phase: 'uploading' | 'analyzing'
   previewUrl: string | null
   elapsedSec: number
   stepIndex: number
+  t: Strings
 }) {
-  const step = ANALYZE_STEPS[stepIndex] ?? ANALYZE_STEPS[0]
+  const step = t.analyzeSteps[stepIndex] ?? t.analyzeSteps[0]
   // Estimate progress as a function of elapsed time, capped at 95%
   // (the last 5% is reserved for "result is being rendered")
   const ESTIMATED_TOTAL = 22
@@ -706,12 +837,10 @@ function AnalyzingOverlay({
             {step.icon}
           </div>
           <p className="mt-2 text-sm font-semibold text-gray-900 text-center">
-            {phase === 'uploading' ? '📤 アップロード中…' : step.text}
+            {phase === 'uploading' ? t.uploadingHeading : step.text}
           </p>
           <p className="mt-1 text-xs text-gray-500 text-center">
-            {phase === 'uploading'
-              ? '画像をサーバーに送信しています'
-              : step.detail}
+            {phase === 'uploading' ? t.uploadingDetail : step.detail}
           </p>
 
           {/* Progress bar */}
@@ -724,9 +853,7 @@ function AnalyzingOverlay({
             </div>
             <div className="mt-1.5 flex items-center justify-between text-[10px] text-gray-500">
               <span>{Math.round(progressPct)}%</span>
-              <span>
-                {phase === 'analyzing' ? `${elapsedSec}秒経過 / 約 15-25秒` : '送信中'}
-              </span>
+              <span>{phase === 'analyzing' ? t.elapsedFmt(elapsedSec) : t.uploadingShort}</span>
             </div>
           </div>
 
