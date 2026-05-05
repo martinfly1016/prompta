@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface QuotaState {
   remainingFree: number
@@ -12,19 +12,53 @@ interface QuotaState {
   stripeEnabled?: boolean
 }
 
+interface RecommendedColor {
+  hex: string
+  nameJa: string
+  role: 'clothing' | 'lipstick' | 'hair' | 'accessory'
+}
+interface AvoidColor {
+  hex: string
+  reasonJa: string
+}
+interface AnalysisResult {
+  season12: string
+  season4: 'spring' | 'summer' | 'autumn' | 'winter'
+  undertone: 'warm' | 'cool' | 'neutral'
+  contrast: 'high' | 'medium' | 'low'
+  skinFeaturesJa: string
+  recommendedColors: RecommendedColor[]
+  avoidColors: AvoidColor[]
+  confidence: number
+}
+
 const FREE_LIMIT = 3
 const PRICE_LABEL = '¥300 / 10回パック'
+const MAX_BYTES = 8 * 1024 * 1024
+const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' } as const
+const SEASON_JA = { spring: 'スプリング（春）', summer: 'サマー（夏）', autumn: 'オータム（秋）', winter: 'ウィンター（冬）' } as const
+const UNDERTONE_JA = { warm: 'ウォーム（暖み）', cool: 'クール（青み）', neutral: 'ニュートラル' } as const
+const CONTRAST_JA = { high: '高（メリハリ）', medium: '中', low: '低（ソフト）' } as const
+const ROLE_LABEL = {
+  clothing: { icon: '👗', title: '服装' },
+  lipstick: { icon: '💄', title: '口紅・チーク' },
+  hair: { icon: '💇', title: '髪色（推奨）' },
+  accessory: { icon: '💍', title: 'アクセサリー' },
+} as const
 
 export function PersonalColorQuotaGate() {
   const [state, setState] = useState<QuotaState | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [pending, setPending] = useState(false)
+  const [phase, setPhase] = useState<'idle' | 'uploading' | 'analyzing'>('idle')
+  const [result, setResult] = useState<AnalysisResult | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [purchaseBanner, setPurchaseBanner] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  // initial fetch
   useEffect(() => {
     refresh()
-    // Handle Stripe success redirect
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search)
       const purchase = params.get('purchase')
@@ -71,26 +105,68 @@ export function PersonalColorQuotaGate() {
     }
   }
 
-  async function handleTryClick() {
+  async function handlePickFile() {
     if (!state) return
     if (!state.canUse) {
       setShowModal(true)
       return
     }
+    fileInputRef.current?.click()
+  }
+
+  async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0]
+    e.target.value = '' // allow re-picking same file
+    if (!f) return
+    if (f.size > MAX_BYTES) {
+      setError('画像サイズが大きすぎます（最大 8MB）')
+      return
+    }
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(f.type)) {
+      setError('JPG / PNG / WebP のみ対応しています')
+      return
+    }
+    setError(null)
+    setResult(null)
+    setPreviewUrl(URL.createObjectURL(f))
+    await runAnalyze(f)
+  }
+
+  async function runAnalyze(file: File) {
     setPending(true)
+    setPhase('uploading')
     try {
-      const r = await fetch('/api/tools/personal-color/consume', { method: 'POST' })
-      const s: QuotaState = await r.json()
-      setState(s)
-      if (!s.canUse) {
-        setShowModal(true)
-      } else {
-        document
-          .getElementById('result-preview')
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const form = new FormData()
+      form.append('image', file)
+      setPhase('analyzing')
+      const r = await fetch('/api/tools/personal-color/analyze', {
+        method: 'POST',
+        body: form,
+      })
+      const data = await r.json()
+      if (!r.ok) {
+        if (r.status === 429) {
+          setState((s) => (s ? { ...s, ...data, canUse: false } : data))
+          setShowModal(true)
+        } else {
+          setError(`診断エラー: ${data.message ?? data.error ?? 'unknown'}`)
+        }
+        return
       }
+      setResult(data.result)
+      if (data.quota) setState(data.quota)
+      // Scroll to result
+      setTimeout(() => {
+        document.getElementById('your-result')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }, 100)
+    } catch (e: any) {
+      setError(`通信エラー: ${e?.message ?? ''}`)
     } finally {
       setPending(false)
+      setPhase('idle')
     }
   }
 
@@ -170,17 +246,40 @@ export function PersonalColorQuotaGate() {
         </div>
       </div>
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
       <button
         type="button"
-        onClick={handleTryClick}
+        onClick={handlePickFile}
         disabled={!state || pending}
         className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {pending ? '処理中…' : '📁 写真を選択して診断（プレビュー）'}
+        {pending
+          ? phase === 'analyzing'
+            ? '🤖 AI が解析中…（15-25秒）'
+            : '📤 アップロード中…'
+          : '📁 写真を選択して診断'}
       </button>
       <p className="mt-2 text-[11px] text-gray-400">
-        ※ 現在プレビュー版のため、実際の写真解析は近日公開。今はサンプル結果が表示されます。
+        JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。
       </p>
+
+      {error && (
+        <div className="mt-3 mx-auto max-w-md px-4 py-2 bg-rose-50 text-rose-700 border border-rose-200 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
+      {/* Result */}
+      {result && (
+        <PersonalColorResult result={result} previewUrl={previewUrl} />
+      )}
 
       {/* Modal */}
       {showModal && state && (
@@ -270,5 +369,161 @@ export function PersonalColorQuotaGate() {
         }
       `}</style>
     </>
+  )
+}
+
+function PersonalColorResult({
+  result,
+  previewUrl,
+}: {
+  result: AnalysisResult
+  previewUrl: string | null
+}) {
+  const groups: Record<RecommendedColor['role'], RecommendedColor[]> = {
+    clothing: [],
+    lipstick: [],
+    hair: [],
+    accessory: [],
+  }
+  for (const c of result.recommendedColors) groups[c.role].push(c)
+
+  return (
+    <section
+      id="your-result"
+      className="mt-12 max-w-5xl mx-auto scroll-mt-16 text-left"
+    >
+      <div className="text-center mb-6">
+        <span className="inline-block px-3 py-1 text-xs font-medium bg-sky-50 text-sky-700 rounded-full border border-sky-200 mb-2">
+          ✨ あなたの診断結果
+        </span>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 p-6 sm:p-8 border-b border-gray-100">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            {previewUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={previewUrl}
+                alt="アップロード写真"
+                className="w-24 h-24 rounded-xl object-cover border-2 border-white shadow shrink-0"
+              />
+            ) : (
+              <div className="text-7xl shrink-0">{SEASON_EMOJI[result.season4]}</div>
+            )}
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-xs font-semibold text-sky-600 uppercase tracking-wider mb-1">
+                あなたのパーソナルカラー
+              </p>
+              <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">
+                {SEASON_EMOJI[result.season4]} {SEASON_JA[result.season4]}
+              </h3>
+              <p className="text-sm text-gray-700 font-medium mb-3">
+                {result.season12}
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
+                  Undertone:{' '}
+                  <span className="text-blue-600">{UNDERTONE_JA[result.undertone]}</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
+                  Contrast:{' '}
+                  <span className="text-gray-700">{CONTRAST_JA[result.contrast]}</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white rounded-md border border-gray-200">
+                  信頼度:{' '}
+                  <span
+                    className={
+                      result.confidence >= 0.8
+                        ? 'text-emerald-600 font-semibold'
+                        : result.confidence >= 0.5
+                          ? 'text-amber-600 font-semibold'
+                          : 'text-rose-600 font-semibold'
+                    }
+                  >
+                    {Math.round(result.confidence * 100)}%
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <p className="mt-5 text-sm text-gray-600 leading-relaxed bg-white/60 rounded-lg p-3 border border-white">
+            💡 {result.skinFeaturesJa}
+          </p>
+          {result.confidence < 0.6 && (
+            <p className="mt-2 text-xs text-amber-700 bg-amber-50 rounded-lg p-2 border border-amber-100">
+              ⚠️ 信頼度が低めです。自然光・正面・素顔の写真で再診断すると精度が上がります。
+            </p>
+          )}
+        </div>
+
+        <div className="p-6 sm:p-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base font-bold text-gray-900">あなたに似合う色</h3>
+            <span className="text-xs text-gray-500">役割別</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {(['clothing', 'lipstick', 'hair', 'accessory'] as const).map((role) =>
+              groups[role].length === 0 ? null : (
+                <div key={role}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">{ROLE_LABEL[role].icon}</span>
+                    <h4 className="text-sm font-semibold text-gray-900">
+                      {ROLE_LABEL[role].title}
+                    </h4>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {groups[role].map((c, i) => (
+                      <div
+                        key={c.hex + i}
+                        className="flex items-center gap-2 px-2 py-1.5 bg-white rounded-lg border border-gray-100"
+                      >
+                        <div
+                          className="w-8 h-8 rounded-md border border-gray-200 shrink-0"
+                          style={{ backgroundColor: c.hex }}
+                          aria-label={`${c.nameJa} ${c.hex}`}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium text-gray-900 truncate">
+                            {c.nameJa}
+                          </div>
+                          <div className="text-[10px] text-gray-500 font-mono">
+                            {c.hex.toUpperCase()}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ),
+            )}
+          </div>
+
+          {result.avoidColors.length > 0 && (
+            <div className="mt-8">
+              <h3 className="text-base font-bold text-gray-900 mb-3">避けたい色</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {result.avoidColors.map((c, i) => (
+                  <div
+                    key={c.hex + i}
+                    className="flex items-start gap-3 p-3 bg-rose-50 rounded-lg border border-rose-100"
+                  >
+                    <div
+                      className="w-10 h-10 rounded-md border border-gray-200 shrink-0 relative overflow-hidden"
+                      style={{ backgroundColor: c.hex }}
+                    >
+                      <div className="absolute inset-0 flex items-center justify-center text-white text-xl font-bold drop-shadow">
+                        ✕
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-700 leading-relaxed">{c.reasonJa}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   )
 }
