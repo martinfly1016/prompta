@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { PersonalColorQuotaGate } from '@/components/tools/PersonalColorQuotaGate'
 
 export const metadata: Metadata = {
   title: 'パーソナルカラー診断 写真 AI — 無料・登録不要',
@@ -188,14 +189,7 @@ export default function PersonalColorAnalysisPage() {
             <p className="text-sm text-gray-500 mb-6">
               JPG / PNG（最大 10MB）／ 顔がはっきり写った正面写真を推奨
             </p>
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all"
-              disabled
-              title="プロトタイプ：実機能は近日公開"
-            >
-              📁 写真を選択
-            </button>
+            <PersonalColorQuotaGate />
           </div>
 
           {/* Sample photos */}
@@ -246,7 +240,7 @@ export default function PersonalColorAnalysisPage() {
       </section>
 
       {/* Mock result preview */}
-      <section className="py-12">
+      <section id="result-preview" className="py-12 scroll-mt-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
             <span className="inline-block px-3 py-1 text-xs font-medium bg-amber-50 text-amber-700 rounded-full border border-amber-200 mb-2">

@@ -204,3 +204,17 @@ model Guide {
   @@index([slug])
   @@index([isPublished])
 }
+
+// ==================== Tool Usage Quota ====================
+
+model ToolUsage {
+  id        String   @id @default(cuid())
+  anonId    String
+  ipHash    String
+  tool      String
+  type      String   @default("free")
+  createdAt DateTime @default(now())
+
+  @@index([anonId, tool, createdAt])
+  @@index([ipHash, tool, createdAt])
+}
