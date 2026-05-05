@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
@@ -133,14 +134,25 @@ export default async function PromptDetailPage({ params }: Props) {
             <section className="mb-8">
               <h2 className="text-lg font-bold text-gray-900 mb-3">効果サンプル（Before / After）</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <figure className="relative overflow-hidden rounded-xl bg-gray-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={prompt.sampleBeforeUrl} alt={`${prompt.title} — Before`} className="w-full h-auto object-cover" loading="lazy" />
+                <figure className="relative aspect-square overflow-hidden rounded-xl bg-gray-100">
+                  <Image
+                    src={prompt.sampleBeforeUrl}
+                    alt={`${prompt.title} — Before`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
                   <figcaption className="absolute top-2 left-2 px-2 py-1 text-xs font-medium bg-white/90 text-gray-900 rounded">Before</figcaption>
                 </figure>
-                <figure className="relative overflow-hidden rounded-xl bg-gray-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={prompt.sampleAfterUrl} alt={`${prompt.title} — After`} className="w-full h-auto object-cover" loading="lazy" />
+                <figure className="relative aspect-square overflow-hidden rounded-xl bg-gray-100">
+                  <Image
+                    src={prompt.sampleAfterUrl}
+                    alt={`${prompt.title} — After`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                   <figcaption className="absolute top-2 left-2 px-2 py-1 text-xs font-medium bg-sky-500 text-white rounded">After</figcaption>
                 </figure>
               </div>
@@ -154,12 +166,15 @@ export default async function PromptDetailPage({ params }: Props) {
               <div className={`grid gap-4 ${prompt.images.length === 1 ? 'grid-cols-1 max-w-lg' : 'grid-cols-1 sm:grid-cols-2'}`}>
                 {prompt.images.map((img, i) => (
                   <div key={i} className="relative overflow-hidden rounded-xl bg-gray-100">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={img.url}
                       alt={img.alt || prompt.title}
+                      width={img.width ?? 1024}
+                      height={img.height ?? 1024}
+                      sizes={prompt.images.length === 1 ? '(max-width: 640px) 100vw, 512px' : '(max-width: 640px) 100vw, 50vw'}
                       className="w-full h-auto object-cover"
-                      loading={i === 0 ? 'eager' : 'lazy'}
+                      priority={i === 0 && !prompt.sampleBeforeUrl}
+                      loading={i === 0 ? undefined : 'lazy'}
                     />
                   </div>
                 ))}

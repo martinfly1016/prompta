@@ -7,7 +7,7 @@ const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   display: 'swap',
-  preload: true,
+  preload: false,
   variable: '--font-noto-sans-jp',
 })
 

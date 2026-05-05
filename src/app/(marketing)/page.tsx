@@ -91,7 +91,7 @@ export default async function HomePage() {
               すべて見る →
             </Link>
           </div>
-          <PromptGrid prompts={latest} priorityCount={4} />
+          <PromptGrid prompts={latest} priorityCount={1} />
         </div>
       </section>
 
