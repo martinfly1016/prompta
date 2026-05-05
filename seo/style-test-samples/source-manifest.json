@@ -13,5 +13,11 @@
     "expression": "seo/style-test-samples/source/portrait-neutral-face.jpg",
     "skin-retouching": "seo/style-test-samples/source/portrait-skin-detail.jpg"
   },
-  "bySlug": {}
+  "bySlug": {
+    "photo-auto-enhance-vivid": "seo/style-test-samples/source/portrait-default.jpg",
+    "hairstyle-grid-9-variations": "seo/style-test-samples/source/portrait-long-hair.jpg",
+    "pose-correct-face-forward": "seo/style-test-samples/source/portrait-casual-outfit.jpg",
+    "id-photo-asia-2-inch-blue": "seo/style-test-samples/source/casual-portrait.jpg",
+    "era-transform-1970s-classic": "seo/style-test-samples/source/portrait-default.jpg"
+  }
 }
