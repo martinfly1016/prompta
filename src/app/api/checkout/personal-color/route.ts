@@ -42,6 +42,11 @@ export async function POST() {
         : { customer_creation: 'always' as const }),
       success_url: `${SITE_CONFIG.url}/tools/personal-color-analysis?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_CONFIG.url}/tools/personal-color-analysis?purchase=cancelled`,
+      // Stripe-built-in automatic receipt with PDF invoice link.
+      // For signed-in users, force Stripe to send to the locked email; for
+      // anonymous users we pass the same email at webhook time once Stripe
+      // collects it.
+      ...(sessionEmail ? { payment_intent_data: { receipt_email: sessionEmail } } : {}),
       metadata: {
         product: 'personal-color-pack',
         credits: String(CREDITS_PER_PACK),
