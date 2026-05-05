@@ -219,6 +219,12 @@ export default function PersonalColorAnalysisPage() {
         </div>
       </section>
 
+      {/* Render target for the live diagnosis result — sits outside the
+          max-w-3xl upload card so the result card can render at the same
+          full width as the mock preview below. PersonalColorQuotaGate
+          portals into this node when an analysis succeeds. */}
+      <div id="personal-color-result-portal" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" />
+
       {/* How it works */}
       <section className="py-8 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

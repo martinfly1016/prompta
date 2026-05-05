@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 interface QuotaState {
   remainingFree: number
@@ -59,7 +60,15 @@ export function PersonalColorQuotaGate() {
   const [recoverEmail, setRecoverEmail] = useState('')
   const [recoverPending, setRecoverPending] = useState(false)
   const [recoverMessage, setRecoverMessage] = useState<string | null>(null)
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  // Result is rendered via portal into a sibling node OUTSIDE the upload
+  // card's max-w-3xl wrapper, so the result card can use full max-w-5xl
+  // width like the mock preview below it.
+  useEffect(() => {
+    setPortalTarget(document.getElementById('personal-color-result-portal'))
+  }, [])
 
   useEffect(() => {
     refresh()
@@ -325,10 +334,15 @@ export function PersonalColorQuotaGate() {
         </div>
       )}
 
-      {/* Result */}
-      {result && (
-        <PersonalColorResult result={result} previewUrl={previewUrl} />
-      )}
+      {/* Result — portaled into #personal-color-result-portal so it can
+          escape the upload card's narrower max-w-3xl wrapper */}
+      {result &&
+        (portalTarget
+          ? createPortal(
+              <PersonalColorResult result={result} previewUrl={previewUrl} />,
+              portalTarget,
+            )
+          : null)}
 
       {/* Modal */}
       {showModal && state && (
