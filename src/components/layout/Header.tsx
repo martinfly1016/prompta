@@ -24,24 +24,34 @@ export function Header() {
                 </svg>
               </button>
               <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 py-2 min-w-[260px]">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 py-2 min-w-[320px]">
                   <Link
                     href="/tools"
                     className="block px-4 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 border-b border-gray-100 mb-1"
                   >
                     すべてのツール →
                   </Link>
-                  {/* Featured interactive tool */}
+                  {/* Featured interactive tools */}
                   <Link
                     href="/tools/personal-color-analysis"
                     className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 hover:border-sky-300 transition-all"
                   >
-                    <span className="text-lg">🎨</span>
-                    <div>
-                      <div className="font-semibold text-sky-700">パーソナルカラー診断</div>
-                      <div className="text-xs text-gray-500">写真アップロードで AI 診断</div>
+                    <span className="text-lg shrink-0">🎨</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-sky-700 whitespace-nowrap">パーソナルカラー診断</div>
+                      <div className="text-xs text-gray-500 whitespace-nowrap">4 シーズン + 16 色パレット</div>
                     </div>
-                    <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
+                  </Link>
+                  <Link
+                    href="/tools/hair-color-diagnosis"
+                    className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-100 hover:border-violet-300 transition-all"
+                  >
+                    <span className="text-lg shrink-0">💇</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-violet-700 whitespace-nowrap">似合う髪色診断</div>
+                      <div className="text-xs text-gray-500 whitespace-nowrap">5 候補 + Before/After</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">NEW</span>
                   </Link>
                   <div className="border-t border-gray-100 my-1" />
                   <p className="px-4 pt-1 pb-1 text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
@@ -152,7 +162,14 @@ function MobileNav() {
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-100"
           >
             <span>🎨</span>
-            <span>パーソナルカラー診断</span>
+            <span className="whitespace-nowrap">パーソナルカラー診断</span>
+          </Link>
+          <Link
+            href="/tools/hair-color-diagnosis"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-violet-700 bg-gradient-to-r from-violet-50 to-purple-50 rounded-lg border border-violet-100"
+          >
+            <span>💇</span>
+            <span className="whitespace-nowrap">似合う髪色診断</span>
             <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
           </Link>
           {TOOLS.map(tool => (

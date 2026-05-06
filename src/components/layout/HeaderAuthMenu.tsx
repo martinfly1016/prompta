@@ -85,13 +85,19 @@ export function HeaderAuthMenu() {
           </div>
           <Link
             href="/tools/personal-color-analysis"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700 whitespace-nowrap"
           >
             🎨 パーソナルカラー診断
           </Link>
           <Link
+            href="/tools/hair-color-diagnosis"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-violet-50 hover:text-violet-700 whitespace-nowrap"
+          >
+            💇 似合う髪色診断
+          </Link>
+          <Link
             href="/prompts"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700 whitespace-nowrap"
           >
             📚 プロンプト一覧
           </Link>
