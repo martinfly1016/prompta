@@ -144,6 +144,28 @@ function PaletteRow({
   )
 }
 
+// JSON-LD ItemList that names both tools — gives Google an explicit cluster
+// signal so the personal-color page can rank for nearby hair-color queries
+// (e.g. パーソナルカラー 髪色) without diluting its own primary intent.
+const RELATED_TOOLS_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      url: `${SITE_CONFIG.url}/tools/personal-color-analysis`,
+      name: 'パーソナルカラー診断 AI',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      url: `${SITE_CONFIG.url}/tools/hair-color-diagnosis`,
+      name: '似合う髪色診断 AI',
+    },
+  ],
+}
+
 export default function PersonalColorAnalysisPage() {
   const r = MOCK_RESULT
   const seasonEmoji =
@@ -157,6 +179,10 @@ export default function PersonalColorAnalysisPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(RELATED_TOOLS_LD) }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
           items={[
@@ -413,6 +439,40 @@ export default function PersonalColorAnalysisPage() {
                 </div>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cross-link to hair color tool — captures 似合う髪色診断 (5,400/月)
+          / 髪色シミュレーション (2,400/月) cluster traffic */}
+      <section className="py-12 bg-gradient-to-br from-violet-50 via-purple-50 to-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl border border-violet-200 p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="text-6xl shrink-0">💇</div>
+              <div className="flex-1 text-center md:text-left">
+                <span className="inline-block px-2.5 py-0.5 text-[10px] font-semibold text-violet-700 bg-violet-100 rounded mb-2">
+                  関連ツール
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
+                  あなたに似合う髪色だけ詳しく診断したい？
+                </h2>
+                <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                  「
+                  <strong className="text-violet-700">似合う髪色診断 AI</strong>
+                  」では、写真からヘアカラーに特化して 5 候補（安心の定番・トレンド・個性派）を提案し、
+                  <strong>Gemini 2.5 Flash Image</strong>{' '}
+                  が実際に染めたらどう見えるかを Before/After シミュレーション画像で生成します。
+                  クレジットは本ツールと共通でご利用いただけます。
+                </p>
+                <Link
+                  href="/tools/hair-color-diagnosis"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 shadow-sm transition-all"
+                >
+                  似合う髪色診断 AI を試す（Before/After 付き） →
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

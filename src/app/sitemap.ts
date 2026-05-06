@@ -58,6 +58,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       },
     },
+    {
+      url: `${BASE}/tools/hair-color-diagnosis`,
+      lastModified: latestDate,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
 
     // Legal pages
     { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },

@@ -93,26 +93,32 @@ async function sendPurchaseEmail(p: {
   amountJpy: number
   sessionId: string
 }) {
-  const toolUrl = `${SITE_CONFIG.url}/tools/personal-color-analysis`
+  const personalColorUrl = `${SITE_CONFIG.url}/tools/personal-color-analysis`
+  const hairColorUrl = `${SITE_CONFIG.url}/tools/hair-color-diagnosis`
   const signinUrl = `${SITE_CONFIG.url}/auth/signin`
   const subject = `【prompta.jp】ご購入ありがとうございます — クレジット ${p.creditsGranted} 回追加`
   const text = `prompta.jp をご利用いただきありがとうございます。
 
 ご購入が完了しました：
-  - 商品: パーソナルカラー診断 10回パック
+  - 商品: AI 診断ツール共通 10 回パック
   - 金額: ¥${p.amountJpy.toLocaleString()}
   - 追加クレジット: ${p.creditsGranted} 回
   - 現在の残高: ${p.balance} 回
   - 注文 ID: ${p.sessionId}
 
-▼ クレジットを使う
-${toolUrl}
+クレジットは以下のツールで共通でご利用いただけます：
+
+▼ パーソナルカラー診断 AI（4 シーズン + 16 色パレット）
+${personalColorUrl}
+
+▼ 似合う髪色診断 AI（5 候補 + Before/After シミュレーション）
+${hairColorUrl}
 
 ▼ 別のデバイスで使う場合
 このメールアドレス（${p.email}）でサインインすると、クレジットが自動的に同期されます：
 ${signinUrl}
 
-万が一サインインできない場合は、ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力していただくと復元リンクをお送りします。
+万が一サインインできない場合は、各ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力していただくと復元リンクをお送りします。
 
 ※ このメールは受領証ではありません。Stripe からの正式な領収書（PDF 添付）は別途送信されます。
 
@@ -125,7 +131,8 @@ ${SITE_CONFIG.url}
 
   <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;margin-bottom:20px">
     <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">ご注文内容</p>
-    <p style="margin:0 0 16px;font-size:18px;font-weight:700;color:#0c4a6e">パーソナルカラー診断 10回パック</p>
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">AI 診断ツール共通 10 回パック</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">パーソナルカラー診断 / 似合う髪色診断 で共通利用可</p>
     <table style="width:100%;font-size:14px;border-collapse:collapse">
       <tr><td style="padding:6px 0;color:#6b7280">金額</td><td style="padding:6px 0;text-align:right;font-weight:600">¥${p.amountJpy.toLocaleString()}</td></tr>
       <tr><td style="padding:6px 0;color:#6b7280">追加クレジット</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted} 回</td></tr>
@@ -133,9 +140,14 @@ ${SITE_CONFIG.url}
     </table>
   </div>
 
-  <p style="margin:24px 0;text-align:center">
-    <a href="${toolUrl}" style="display:inline-block;background:#0284c7;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px">クレジットを使って診断する →</a>
-  </p>
+  <div style="display:flex;gap:8px;margin:20px 0;flex-wrap:wrap">
+    <a href="${personalColorUrl}" style="flex:1 1 200px;display:block;background:#0284c7;color:#fff;padding:14px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;text-align:center;line-height:1.4">
+      🎨 パーソナルカラー診断<br><span style="font-size:11px;opacity:0.85;font-weight:400">4 シーズン + 16 色パレット</span>
+    </a>
+    <a href="${hairColorUrl}" style="flex:1 1 200px;display:block;background:#7c3aed;color:#fff;padding:14px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;text-align:center;line-height:1.4">
+      💇 似合う髪色診断<br><span style="font-size:11px;opacity:0.85;font-weight:400">5 候補 + Before/After</span>
+    </a>
+  </div>
 
   <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:24px 0">
     <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：クレジットの紐付け</p>
@@ -149,7 +161,7 @@ ${SITE_CONFIG.url}
   </div>
 
   <p style="margin:16px 0;font-size:12px;color:#9ca3af;line-height:1.6">
-    クレジットが見つからない場合は、ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力すると復元リンクをお送りします。
+    クレジットが見つからない場合は、各ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力すると復元リンクをお送りします。
   </p>
 
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">

@@ -25,36 +25,59 @@ export default async function ToolsPage() {
             <p className="text-gray-600 leading-relaxed">写真アップロードで使える AI 診断ツールから、各 AI モデル向けプロンプト集まで網羅しています。</p>
           </div>
 
-          {/* Featured interactive tool */}
+          {/* Featured interactive tools */}
           <div className="mb-12">
             <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">インタラクティブ AI ツール</h2>
-            <Link
-              href="/tools/personal-color-analysis"
-              className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-2xl border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
-            >
-              <div className="flex items-start gap-5">
-                <div className="text-5xl shrink-0">🎨</div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
-                      パーソナルカラー診断 AI
-                    </h3>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
-                  </div>
-                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                    写真をアップロードするだけで、AI が 4 シーズン判定 + 似合う 16 色 + 避けたい色を診断。Gemini 2.5 Flash 搭載、無料 3 回/日。
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
-                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">登録不要</span>
-                    <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">写真を保存しません</span>
-                    <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">
-                      診断する →
-                    </span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <Link
+                href="/tools/personal-color-analysis"
+                className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-2xl border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="text-5xl shrink-0">🎨</div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
+                        パーソナルカラー診断 AI
+                      </h3>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                      写真から 4 シーズン判定 + 似合う 16 色 + 避けたい色を診断。Gemini 2.5 Flash、無料 3 回/日。
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">登録不要</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">診断する →</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+
+              <Link
+                href="/tools/hair-color-diagnosis"
+                className="group block p-6 bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 rounded-2xl border border-violet-100 hover:border-violet-300 hover:shadow-lg transition-all"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="text-5xl shrink-0">💇</div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-violet-700 transition-colors">
+                        似合う髪色診断 AI
+                      </h3>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                      写真からヘアカラー 5 提案 + Before/After シミュレーション画像。Gemini 2.5 Flash Image、無料 3 回/日。
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">Before/After 付き</span>
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-violet-600 font-medium">診断する →</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
 
           <div>
