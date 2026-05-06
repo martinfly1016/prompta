@@ -138,14 +138,22 @@ ${SITE_CONFIG.url}
     </table>
   </div>
 
-  <div style="display:flex;gap:8px;margin:20px 0;flex-wrap:wrap">
-    <a href="${personalColorUrl}" style="flex:1 1 200px;display:block;background:#0284c7;color:#fff;padding:14px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;text-align:center;line-height:1.4">
-      🎨 パーソナルカラー診断<br><span style="font-size:11px;opacity:0.85;font-weight:400">4 シーズン + 16 色パレット</span>
-    </a>
-    <a href="${hairColorUrl}" style="flex:1 1 200px;display:block;background:#7c3aed;color:#fff;padding:14px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;text-align:center;line-height:1.4">
-      💇 似合う髪色診断<br><span style="font-size:11px;opacity:0.85;font-weight:400">5 候補 + Before/After</span>
-    </a>
-  </div>
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:20px 0;border-collapse:separate">
+    <tr>
+      <td style="padding:0 0 10px 0">
+        <a href="${personalColorUrl}" style="display:block;background:#0284c7;color:#fff;padding:14px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;text-align:center;line-height:1.4">
+          🎨 パーソナルカラー診断<br><span style="font-size:12px;opacity:0.85;font-weight:400">4 シーズン + 16 色パレット</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="${hairColorUrl}" style="display:block;background:#7c3aed;color:#fff;padding:14px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;text-align:center;line-height:1.4">
+          💇 似合う髪色診断<br><span style="font-size:12px;opacity:0.85;font-weight:400">5 候補 + Before/After シミュレーション</span>
+        </a>
+      </td>
+    </tr>
+  </table>
 
   <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:24px 0">
     <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：クレジットの紐付け</p>
