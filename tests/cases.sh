@@ -98,11 +98,8 @@ test_signout_hides_balance() {
 
   # Login as user → grant 10 credits via webhook → check shows 10
   login_as "signout-test@example.com" "$jar"
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:customer_details.email=signout-test@example.com" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "signout-test@example.com" 10 >/dev/null
+  sleep 1
 
   local before=$(http_get "$BASE/api/tools/hair-color/check" "$jar")
   local credits=$(http_body "$before" | node -e "let s='';process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(s).paidCredits)}catch{}})")
@@ -133,11 +130,8 @@ test_isolated_balances() {
   login_as "user-b@example.com" "$jarB"
 
   # Grant 10 to A only
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:customer_details.email=user-a@example.com" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "user-a@example.com" 10 >/dev/null
+  sleep 1
 
   local respA=$(http_get "$BASE/api/tools/hair-color/check" "$jarA")
   local respB=$(http_get "$BASE/api/tools/hair-color/check" "$jarB")
@@ -155,11 +149,8 @@ test_webhook_grants_credits() {
   reset_db
 
   local email="webhook-test-$(date +%s)@example.com"
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:customer_details.email=$email" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "$email" 10 >/dev/null
+  sleep 1
 
   assert_db_count "PaidCredits" "email='$email'" "1" "PaidCredits row created"
   assert_db_value "SELECT balance FROM \"PaidCredits\" WHERE email='$email'" "10" "balance is 10"
@@ -168,8 +159,16 @@ test_webhook_grants_credits() {
 
 # ===== TEST 9: Webhook idempotency =====
 test_webhook_idempotency() {
-  it "Same checkout.session.completed event 2x → balance stays at 10 (not 20)"
-  skip "Requires same sessionId on 2 trigger calls — stripe trigger generates new session each time. Tested manually via Dashboard 'Resend' button."
+  it "Same sessionId 2x → no double grant"
+  reset_db
+  local email="idempotent-$(date +%s)@example.com"
+  local sid="cs_test_idem_$(date +%s)"
+  node tests/send-webhook.js "$email" 10 "$sid" >/dev/null
+  sleep 1
+  node tests/send-webhook.js "$email" 10 "$sid" >/dev/null
+  sleep 1
+  assert_db_value "SELECT balance FROM \"PaidCredits\" WHERE email='$email'" "10" "balance still 10 after duplicate webhook"
+  assert_db_count "StripePayment" "\"sessionId\"='$sid'" "1" "only 1 StripePayment row"
 }
 
 # ===== TEST 10: Webhook bad signature → 400 =====
@@ -197,11 +196,8 @@ test_paid_path_after_free() {
 
   local email="paid-path-$(date +%s)@example.com"
   login_as "$email" "$jar"
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:customer_details.email=$email" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "$email" 10 >/dev/null
+  sleep 1
 
   # Burn 3 free
   for i in 1 2 3; do
@@ -224,12 +220,8 @@ test_cross_tool_pool() {
 
   local email="cross-tool-$(date +%s)@example.com"
   login_as "$email" "$jar"
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:metadata.product=hair-color-pack" \
-    --override "checkout_session:customer_details.email=$email" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "$email" 10 "" "hair-color-pack" >/dev/null
+  sleep 1
 
   # Burn 3 free hair-color
   for i in 1 2 3; do http_post_json "$BASE/api/tools/hair-color/consume" '{}' "$jar" >/dev/null; done
@@ -253,11 +245,8 @@ test_paid_refund_on_failure() {
 
   local email="paid-refund-$(date +%s)@example.com"
   login_as "$email" "$jar"
-  stripe trigger checkout.session.completed \
-    --override "checkout_session:metadata.credits=10" \
-    --override "checkout_session:customer_details.email=$email" \
-    >/dev/null 2>&1
-  sleep 3
+  node tests/send-webhook.js "$email" 10 >/dev/null
+  sleep 1
 
   # Burn 3 free first
   for i in 1 2 3; do http_post_json "$BASE/api/tools/hair-color/consume" '{}' "$jar" >/dev/null; done
@@ -283,11 +272,8 @@ test_repeated_purchase_accumulates() {
   reset_db
   local email="accumulate-$(date +%s)@example.com"
   for i in 1 2; do
-    stripe trigger checkout.session.completed \
-      --override "checkout_session:metadata.credits=10" \
-      --override "checkout_session:customer_details.email=$email" \
-      >/dev/null 2>&1
-    sleep 3
+    node tests/send-webhook.js "$email" 10 >/dev/null
+    sleep 1
   done
   assert_db_value "SELECT balance FROM \"PaidCredits\" WHERE email='$email'" "20" "balance accumulates to 20"
   assert_db_value "SELECT \"totalEarned\" FROM \"PaidCredits\" WHERE email='$email'" "20" "totalEarned=20"
@@ -319,6 +305,7 @@ test_sunset_endpoints() {
 # ===== TEST 17: One real Gemini E2E call =====
 test_real_gemini_e2e() {
   it "End-to-end /analyze with real Gemini call (1 credit ~$0.045)"
+  ensure_real_photo
   if [ ! -f "$REAL_PHOTO" ]; then
     skip "REAL_PHOTO not found at $REAL_PHOTO"
     return

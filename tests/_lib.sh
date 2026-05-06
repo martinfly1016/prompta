@@ -45,10 +45,12 @@ skip() {
 
 # === HTTP helpers (curl-based, follows cookies via per-test jar) ===
 
-# Returns a fresh cookie jar path scoped to this test
+# Returns a fresh cookie jar path scoped to this test. Strips spaces AND
+# slashes/special chars from the test title so the path stays in /tmp.
 jar() {
   local name="${1:-default}"
-  echo "/tmp/prompta-test-${CURRENT_TEST// /-}-${name}.cookies"
+  local safe=$(echo "$CURRENT_TEST" | tr -c 'A-Za-z0-9' '_')
+  echo "/tmp/prompta-test-${safe}-${name}.cookies"
 }
 
 # GET with optional cookie jar
@@ -175,8 +177,15 @@ ensure_tiny_png() {
   fi
 }
 
-# Real portrait for the one E2E /analyze test
-REAL_PHOTO=/Users/yuchao/Documents/vibe\ coding/prompta/seo/style-test-samples/output/_v2_expression-neutral-to-subtle-smile.png
+# Real portrait for the one E2E /analyze test. Copied to /tmp at run-time
+# so curl's -F image=@<path> doesn't choke on the project's space-laden path.
+REAL_PHOTO=/tmp/prompta-test-portrait.png
+ensure_real_photo() {
+  if [ ! -f "$REAL_PHOTO" ]; then
+    local src="/Users/yuchao/Documents/vibe coding/prompta/seo/style-test-samples/output/_v2_expression-neutral-to-subtle-smile.png"
+    [ -f "$src" ] && cp "$src" "$REAL_PHOTO"
+  fi
+}
 
 # === Summary ===
 

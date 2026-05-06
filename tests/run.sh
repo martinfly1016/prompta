@@ -24,10 +24,27 @@ set -uo pipefail
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
-# Load .env.local for NEXTAUTH_SECRET, STRIPE_SECRET_KEY, GOOGLE_AI_API_KEY
+# Source .env (base prod config) then .env.local (test mode overrides)
+# so NEXTAUTH_SECRET / GOOGLE_AI_API_KEY / DATABASE_URL come from .env and
+# STRIPE_SECRET_KEY=sk_test_* / STRIPE_PRICE_ID=price_test_* override.
 set -a
+[ -f .env ] && source .env
 [ -f .env.local ] && source .env.local
 set +a
+
+# Hard guard: refuse to run against live Stripe key — would charge real money
+if [[ "${STRIPE_SECRET_KEY:-}" == sk_live_* ]]; then
+  echo "REFUSE: STRIPE_SECRET_KEY is sk_live_* — put sk_test_* in .env.local to override"
+  exit 1
+fi
+if [ -z "${STRIPE_SECRET_KEY:-}" ]; then
+  echo "Missing STRIPE_SECRET_KEY (need sk_test_*)"
+  exit 1
+fi
+if [[ ! "${STRIPE_PRICE_ID:-}" =~ ^price_ ]]; then
+  echo "Missing or invalid STRIPE_PRICE_ID"
+  exit 1
+fi
 
 # Source helpers + cases
 source tests/_lib.sh
@@ -73,6 +90,8 @@ if [ -z "$WHSEC" ]; then
   exit 1
 fi
 echo "  webhook secret: ${WHSEC:0:14}…"
+# Export so test cases (which spawn node) can sign payloads with the same secret
+export STRIPE_WEBHOOK_SECRET="$WHSEC"
 
 # === 3. Start dev + stripe listen ===
 echo
