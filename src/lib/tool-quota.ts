@@ -1,7 +1,8 @@
-// Anonymous-tier daily quota for interactive tools (e.g. personal-color-analysis).
-// Defends against trivial cookie-clearing reset by also tracking ip+ua hash.
-// Counts only "free" usages here; "paid" credits will live in a separate model
-// when Stripe lands.
+// Anonymous-tier free trial quota for interactive tools (e.g.
+// personal-color-analysis, hair-color-diagnosis). Limit is LIFETIME per
+// (anonId, tool) — once exhausted, the user must buy a paid pack to keep
+// going. Defends against trivial cookie-clearing reset by also tracking
+// ip+ua hash with a slightly higher cap.
 
 import { createHash, randomUUID } from 'node:crypto'
 import type { NextRequest } from 'next/server'
@@ -9,14 +10,13 @@ import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 
 export const ANON_COOKIE = 'prompta_anon'
-export const FREE_DAILY_LIMIT = 3
-export const FREE_IP_DAILY_LIMIT = 5 // shared-IP tolerance
+export const FREE_LIMIT = 3
+export const FREE_IP_LIMIT = 5 // shared-IP tolerance (households, offices)
 
-function startOfTodayUTC(): Date {
-  const d = new Date()
-  d.setUTCHours(0, 0, 0, 0)
-  return d
-}
+// Backward-compat aliases — older imports may still reference the daily
+// names. Same semantics now (lifetime, not daily).
+export const FREE_DAILY_LIMIT = FREE_LIMIT
+export const FREE_IP_DAILY_LIMIT = FREE_IP_LIMIT
 
 export function hashIp(ip: string, ua: string): string {
   return createHash('sha256').update(`${ip}|${ua}`).digest('hex').slice(0, 32)
@@ -58,28 +58,28 @@ export async function getQuotaState(
   ipHash: string,
   tool: string,
 ): Promise<QuotaState> {
-  const since = startOfTodayUTC()
+  // Lifetime count per (anonId, tool) and (ipHash, tool) — no date floor.
   const [freeUsed, ipUsed] = await Promise.all([
     prisma.toolUsage.count({
-      where: { anonId, tool, type: 'free', createdAt: { gte: since } },
+      where: { anonId, tool, type: 'free' },
     }),
     prisma.toolUsage.count({
-      where: { ipHash, tool, type: 'free', createdAt: { gte: since } },
+      where: { ipHash, tool, type: 'free' },
     }),
   ])
 
   let blockReason: QuotaState['blockReason'] = 'none'
   let canUse = true
-  if (freeUsed >= FREE_DAILY_LIMIT) {
+  if (freeUsed >= FREE_LIMIT) {
     blockReason = 'free_exhausted'
     canUse = false
-  } else if (ipUsed >= FREE_IP_DAILY_LIMIT) {
+  } else if (ipUsed >= FREE_IP_LIMIT) {
     blockReason = 'ip_exhausted'
     canUse = false
   }
 
   return {
-    remainingFree: Math.max(FREE_DAILY_LIMIT - freeUsed, 0),
+    remainingFree: Math.max(FREE_LIMIT - freeUsed, 0),
     freeUsedToday: freeUsed,
     ipUsedToday: ipUsed,
     paidCredits: 0,

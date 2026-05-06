@@ -74,7 +74,7 @@ const FAQ = [
   },
   {
     q: '料金はどうなっていますか？',
-    a: '無料枠：1 日 3 回まで（UTC 0:00 リセット）。それ以上は ¥300 / 10 回パックを Stripe で購入できます。クレジットは「パーソナルカラー診断」ツールと共通でご利用いただけます。1 回の診断で「5 候補の提示 + 一番おすすめのカラーで Before/After」が含まれます。別の候補を試す場合は 1 回ずつ追加でクレジットを消費します。',
+    a: '無料試用：本ツールにつき 3 回まで（リセットなし）。それ以上は ¥300 / 10 回パックを Stripe で購入できます。クレジットは「パーソナルカラー診断」ツールと共通でご利用いただけます。1 回の診断で「5 候補の提示 + 一番おすすめのカラーで Before/After」が含まれます。別の候補を試す場合は 1 回ずつ追加でクレジットを消費します。',
   },
   {
     q: '別の候補もシミュレーションできますか？',
@@ -115,7 +115,7 @@ const TOOL_LD = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'JPY',
-    description: '無料枠 1 日 3 回 + ¥300/10 回パック',
+    description: '無料試用 3 回 + ¥300/10 回パック',
   },
   aggregateRating: undefined,
 }
@@ -179,7 +179,7 @@ export default function HairColorDiagnosisPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ 無料枠 3 回/日
+              ✓ 無料試用 3 回
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ 登録不要

@@ -42,10 +42,10 @@ export default async function ToolsPage() {
                       </h3>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                      写真から 4 シーズン判定 + 似合う 16 色 + 避けたい色を診断。Gemini 2.5 Flash、無料 3 回/日。
+                      写真から 4 シーズン判定 + 似合う 16 色 + 避けたい色を診断。Gemini 2.5 Flash、無料試用 3 回。
                     </p>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料試用 3 回</span>
                       <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">登録不要</span>
                       <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">診断する →</span>
                     </div>
@@ -67,11 +67,11 @@ export default async function ToolsPage() {
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                      写真からヘアカラー 5 提案 + Before/After シミュレーション画像。Gemini 2.5 Flash Image、無料 3 回/日。
+                      写真からヘアカラー 5 提案 + Before/After シミュレーション画像。Gemini 2.5 Flash Image、無料試用 3 回。
                     </p>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
                       <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">Before/After 付き</span>
-                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料 3 回/日</span>
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">無料試用 3 回</span>
                       <span className="ml-auto inline-flex items-center gap-1 text-violet-600 font-medium">診断する →</span>
                     </div>
                   </div>

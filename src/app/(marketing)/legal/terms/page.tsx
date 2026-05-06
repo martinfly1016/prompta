@@ -34,7 +34,7 @@ export default function TermsPage() {
             <h2 className="text-xl font-bold text-gray-900 mb-3">第 2 条（サービス内容）</h2>
             <ul className="list-disc pl-6 space-y-2">
               <li>AI プロンプトの閲覧・コピー（無料）</li>
-              <li>パーソナルカラー診断 AI ツール（無料 3 回／日 ＋ 有料クレジットパック）</li>
+              <li>パーソナルカラー診断 AI ツール（無料試用 3 回 ＋ 有料クレジットパック）</li>
               <li>その他の AI 関連ツールおよびガイド</li>
             </ul>
             <p className="mt-3">
