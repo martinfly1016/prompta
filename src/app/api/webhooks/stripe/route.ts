@@ -114,11 +114,9 @@ ${personalColorUrl}
 ▼ 似合う髪色診断 AI（5 候補 + Before/After シミュレーション）
 ${hairColorUrl}
 
-▼ 別のデバイスで使う場合
-このメールアドレス（${p.email}）でサインインすると、クレジットが自動的に同期されます：
+▼ 別のデバイス・別のブラウザで使う場合
+このメールアドレス（${p.email}）で Google サインイン または「メールでサインインリンクを送る」を使うと、クレジットが自動的に表示されます：
 ${signinUrl}
-
-万が一サインインできない場合は、各ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力していただくと復元リンクをお送りします。
 
 ※ このメールは受領証ではありません。Stripe からの正式な領収書（PDF 添付）は別途送信されます。
 
@@ -153,16 +151,12 @@ ${SITE_CONFIG.url}
     <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：クレジットの紐付け</p>
     <p style="margin:0;font-size:13px;color:#78350f;line-height:1.6">
       クレジットは <strong>${p.email}</strong> に紐付けられています。
-      別のデバイスから利用する場合、このメールアドレスでサインインしてください。
+      別のデバイス・別のブラウザから利用する場合、このメールアドレスで Google サインインまたはメールリンクサインインを使うと自動的に表示されます。
     </p>
     <p style="margin:8px 0 0">
       <a href="${signinUrl}" style="font-size:12px;color:#0284c7;text-decoration:underline">サインインページへ →</a>
     </p>
   </div>
-
-  <p style="margin:16px 0;font-size:12px;color:#9ca3af;line-height:1.6">
-    クレジットが見つからない場合は、各ツールページのモーダル下部「以前購入したクレジットがある場合 →」からこのメールアドレスを入力すると復元リンクをお送りします。
-  </p>
 
   <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
 

@@ -23,6 +23,14 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions).catch(() => null)
   const sessionEmail = session?.user?.email
 
+  // Sign-in required to purchase. See personal-color route for rationale.
+  if (!sessionEmail) {
+    return NextResponse.json(
+      { error: 'auth_required', signInUrl: '/auth/signin' },
+      { status: 401 },
+    )
+  }
+
   const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
   const returnPath =
     locale === 'en'
@@ -36,16 +44,14 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card'],
       currency: 'jpy',
       locale,
-      ...(sessionEmail
-        ? { customer_email: sessionEmail }
-        : { customer_creation: 'always' as const }),
+      customer_email: sessionEmail,
       success_url: `${SITE_CONFIG.url}${returnPath}?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_CONFIG.url}${returnPath}?purchase=cancelled`,
-      ...(sessionEmail ? { payment_intent_data: { receipt_email: sessionEmail } } : {}),
+      payment_intent_data: { receipt_email: sessionEmail },
       metadata: {
         product: 'hair-color-pack',
         credits: String(CREDITS_PER_PACK),
-        sessionEmail: sessionEmail ?? '',
+        sessionEmail,
       },
     })
     return NextResponse.json({ url: checkout.url })

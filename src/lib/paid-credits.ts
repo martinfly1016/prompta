@@ -1,10 +1,13 @@
-// Paid credits — server-side balance keyed by emailHash, with a signed
-// cookie that proves "this browser belongs to this email's credit account".
-// Cookie is sha256(emailHash + secret) HMAC; if user clears cookies they
-// can recover via a future "メールでクレジット復元" flow (Phase 2.5).
+// Paid credits — server-side balance keyed by emailHash. Visibility on a
+// browser is gated by NextAuth session (the user must sign in with the
+// purchase email). The signed-cookie path below is retained for backward
+// compatibility with already-issued cookies but is no longer the primary
+// auth source — getOwnerEmailHash() prefers session over cookie.
 
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto'
 import { cookies } from 'next/headers'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 export const CREDITS_COOKIE = 'prompta_credits'
@@ -54,6 +57,17 @@ export async function readCreditsCookie(): Promise<string | null> {
   const store = await cookies()
   const v = store.get(CREDITS_COOKIE)?.value
   return v ? unpackCookie(v) : null
+}
+
+// Single source of truth for "who owns the credits this request can see".
+// Prefers NextAuth session.user.email (the post-2026-05-06 model). Falls
+// back to the legacy signed cookie so users who bought before this change
+// still see their balance until their cookie expires (1 year max).
+export async function getOwnerEmailHash(): Promise<string | null> {
+  const session = await getServerSession(authOptions).catch(() => null)
+  const sessionEmail = session?.user?.email
+  if (sessionEmail) return emailHash(sessionEmail)
+  return readCreditsCookie()
 }
 
 export async function getPaidBalance(eh: string | null): Promise<number> {

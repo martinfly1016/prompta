@@ -5,7 +5,7 @@ import {
   getQuotaState,
   hashIp,
 } from '@/lib/tool-quota'
-import { getPaidBalance, readCreditsCookie } from '@/lib/paid-credits'
+import { getPaidBalance, getOwnerEmailHash } from '@/lib/paid-credits'
 import { stripeEnabled } from '@/lib/stripe'
 
 const TOOL = 'personal-color'
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const ua = req.headers.get('user-agent') || ''
   const ipHash = hashIp(ip, ua)
   const state = await getQuotaState(anonId, ipHash, TOOL)
-  const eh = await readCreditsCookie()
+  const eh = await getOwnerEmailHash()
   const paidCredits = await getPaidBalance(eh)
   return NextResponse.json({
     ...state,

@@ -28,6 +28,16 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions).catch(() => null)
   const sessionEmail = session?.user?.email
 
+  // Sign-in is now required to purchase: paid credits are tied to the
+  // NextAuth session email rather than a browser cookie. Returning 401
+  // lets the wizard redirect to /auth/signin with a callback back here.
+  if (!sessionEmail) {
+    return NextResponse.json(
+      { error: 'auth_required', signInUrl: '/auth/signin' },
+      { status: 401 },
+    )
+  }
+
   // Locale routing — anonymous EN visitors should land back on /en/... and
   // see Stripe's English Checkout. Default to Japanese for backward compat.
   const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
@@ -45,20 +55,18 @@ export async function POST(req: NextRequest) {
       locale,
       // When signed in: pin the email so Link/saved-wallet cannot override it.
       // When anonymous: let Stripe collect (and create) the email at checkout.
-      ...(sessionEmail
-        ? { customer_email: sessionEmail }
-        : { customer_creation: 'always' as const }),
+      customer_email: sessionEmail,
       success_url: `${SITE_CONFIG.url}${returnPath}?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_CONFIG.url}${returnPath}?purchase=cancelled`,
       // Stripe-built-in automatic receipt with PDF invoice link.
       // For signed-in users, force Stripe to send to the locked email; for
       // anonymous users we pass the same email at webhook time once Stripe
       // collects it.
-      ...(sessionEmail ? { payment_intent_data: { receipt_email: sessionEmail } } : {}),
+      payment_intent_data: { receipt_email: sessionEmail },
       metadata: {
         product: 'personal-color-pack',
         credits: String(CREDITS_PER_PACK),
-        sessionEmail: sessionEmail ?? '',
+        sessionEmail,
       },
     })
     return NextResponse.json({ url: checkout.url })

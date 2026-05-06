@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useSession, signIn } from 'next-auth/react'
 
 export type Locale = 'ja' | 'en'
 
@@ -82,18 +83,16 @@ const STRINGS_JA = {
     '即時利用、有効期限なし',
     'パーソナルカラー診断ツールと共通',
     'Stripe 決済（VISA/Master/AMEX/JCB）',
-    'メール 1 つで管理、登録不要',
+    'Google サインイン または メールリンクで管理',
   ],
   purchasing: '処理中…',
   purchaseButton: `💳 10 回パックを購入（${PRICE_LABEL}）`,
   stripeNote: '※ 決済機能は Stripe 接入中。しばらくお待ちください。',
   stripeComingTitle: 'Stripe 決済は近日公開',
-  recoverPrompt: '以前購入したクレジットがある場合 →',
-  recoverDesc: '購入時のメールアドレスに復元リンクをお送りします。',
-  recoverSend: '送信',
-  recoverSending: '送信中…',
-  recoverDefaultMessage: '指定のメールアドレスにクレジットが紐づいている場合、復元リンクを送信しました。',
-  recoverError: (m: string) => `エラー: ${m}`,
+  signInRequired: '購入にはサインインが必要です',
+  signInRequiredDesc: 'クレジットはアカウント（メールアドレス）に紐づきます。サインイン後に購入手続きへ進みます。',
+  signInButton: '🔐 サインインして続ける',
+  signInBenefit: '別デバイスでも同じメールでサインインすればクレジット同期',
   closeButton: '閉じる',
   purchaseCancelled: '購入がキャンセルされました',
   purchaseSuccess: '🎉 10 クレジットが追加されました！',
@@ -144,6 +143,8 @@ export interface HairColorQuotaGateProps {
 
 export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = {}) {
   const t = STRINGS_JA // EN locale to be added later (mirrors personal-color rollout)
+  const { status: authStatus } = useSession()
+  const isSignedIn = authStatus === 'authenticated'
   const [state, setState] = useState<QuotaState | null>(null)
   const [showModal, setShowModal] = useState(false)
   const [pending, setPending] = useState(false)
@@ -156,10 +157,6 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   const [elapsedSec, setElapsedSec] = useState(0)
   const [stepIndex, setStepIndex] = useState(0)
   const [purchaseBanner, setPurchaseBanner] = useState<string | null>(null)
-  const [showRecover, setShowRecover] = useState(false)
-  const [recoverEmail, setRecoverEmail] = useState('')
-  const [recoverPending, setRecoverPending] = useState(false)
-  const [recoverMessage, setRecoverMessage] = useState<string | null>(null)
   const [simulatingHex, setSimulatingHex] = useState<string | null>(null)
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -188,49 +185,23 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search)
       const purchase = params.get('purchase')
-      const sessionId = params.get('session_id')
-      const recovered = params.get('recovered')
-      if (purchase === 'success' && sessionId) {
-        claimPurchase(sessionId)
-      } else if (purchase === 'cancelled') {
-        setPurchaseBanner(t.purchaseCancelled)
-        cleanUrl()
-      } else if (recovered === 'true') {
-        const balance = params.get('balance')
-        setPurchaseBanner(t.recoveredSuccess(balance))
+      if (purchase === 'success') {
+        // Webhook + signed-in session combine to grant + reveal credits.
+        // No client-side claim needed.
+        setPurchaseBanner(t.purchaseSuccess)
         cleanUrl()
         refresh()
-      } else if (recovered === 'false') {
-        const reason = params.get('reason')
-        setPurchaseBanner(reason === 'expired' ? t.recoverExpired : t.recoverInvalid)
+      } else if (purchase === 'cancelled') {
+        setPurchaseBanner(t.purchaseCancelled)
         cleanUrl()
       }
     }
   }, [])
 
-  async function submitRecover(e: React.FormEvent) {
-    e.preventDefault()
-    if (!recoverEmail.trim()) return
-    setRecoverPending(true)
-    setRecoverMessage(null)
-    try {
-      const r = await fetch('/api/tools/hair-color/recover/request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: recoverEmail.trim() }),
-      })
-      const data = await r.json()
-      setRecoverMessage(
-        r.ok
-          ? data.message ?? t.recoverDefaultMessage
-          : t.recoverError(data.error ?? 'unknown'),
-      )
-    } catch (e: any) {
-      setRecoverMessage(t.errNetwork(e?.message ?? ''))
-    } finally {
-      setRecoverPending(false)
-    }
-  }
+  // Refresh paid balance whenever the auth session flips signed-in/out
+  useEffect(() => {
+    refresh()
+  }, [authStatus])
 
   function refresh() {
     fetch('/api/tools/hair-color/check')
@@ -243,29 +214,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     const u = new URL(window.location.href)
     u.searchParams.delete('purchase')
     u.searchParams.delete('session_id')
-    u.searchParams.delete('recovered')
-    u.searchParams.delete('balance')
-    u.searchParams.delete('reason')
     window.history.replaceState({}, '', u.toString())
-  }
-
-  async function claimPurchase(sessionId: string) {
-    try {
-      const r = await fetch('/api/checkout/hair-color/claim', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId }),
-      })
-      if (r.ok) {
-        setPurchaseBanner(t.purchaseSuccess)
-        refresh()
-      } else {
-        const err = await r.json().catch(() => ({}))
-        setPurchaseBanner(t.purchaseError(err.error ?? 'unknown'))
-      }
-    } finally {
-      cleanUrl()
-    }
   }
 
   async function handlePickFile() {
@@ -369,9 +318,21 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   }
 
   async function handlePurchase() {
+    if (!isSignedIn) {
+      // Redirect to signIn with callback back to this tool page so the user
+      // lands here after authenticating and can immediately purchase.
+      const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
+      signIn(undefined, { callbackUrl })
+      return
+    }
     setPending(true)
     try {
       const r = await fetch(`/api/checkout/hair-color?locale=${locale}`, { method: 'POST' })
+      if (r.status === 401) {
+        const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
+        signIn(undefined, { callbackUrl })
+        return
+      }
       if (!r.ok) {
         const err = await r.json().catch(() => ({}))
         setPurchaseBanner(t.stripeError(err.error ?? 'config'))
@@ -527,16 +488,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
               </ul>
             </div>
 
-            {stripeReady ? (
-              <button
-                type="button"
-                onClick={handlePurchase}
-                disabled={pending}
-                className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {pending ? t.purchasing : t.purchaseButton}
-              </button>
-            ) : (
+            {!stripeReady ? (
               <>
                 <button
                   type="button"
@@ -548,51 +500,43 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
                 </button>
                 <p className="mt-2 text-[11px] text-gray-400 text-center">{t.stripeNote}</p>
               </>
-            )}
-
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              {!showRecover ? (
+            ) : isSignedIn ? (
+              <button
+                type="button"
+                onClick={handlePurchase}
+                disabled={pending}
+                className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {pending ? t.purchasing : t.purchaseButton}
+              </button>
+            ) : (
+              <div className="space-y-3">
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                  <p className="text-xs font-semibold text-amber-900 mb-1">
+                    🔐 {t.signInRequired}
+                  </p>
+                  <p className="text-[11px] text-amber-800 leading-relaxed">
+                    {t.signInRequiredDesc}
+                  </p>
+                </div>
                 <button
                   type="button"
-                  onClick={() => setShowRecover(true)}
-                  className="w-full text-xs text-violet-600 hover:text-violet-700 underline transition-colors"
+                  onClick={handlePurchase}
+                  disabled={pending}
+                  className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {t.recoverPrompt}
+                  {t.signInButton}
                 </button>
-              ) : (
-                <form onSubmit={submitRecover} className="space-y-2">
-                  <p className="text-xs text-gray-600">{t.recoverDesc}</p>
-                  <div className="flex gap-2">
-                    <input
-                      type="email"
-                      required
-                      placeholder="example@gmail.com"
-                      value={recoverEmail}
-                      onChange={(e) => setRecoverEmail(e.target.value)}
-                      className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:border-violet-400 focus:ring-1 focus:ring-violet-400 outline-none"
-                      disabled={recoverPending}
-                    />
-                    <button
-                      type="submit"
-                      disabled={recoverPending || !recoverEmail.trim()}
-                      className="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {recoverPending ? t.recoverSending : t.recoverSend}
-                    </button>
-                  </div>
-                  {recoverMessage && (
-                    <p className="text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded">
-                      {recoverMessage}
-                    </p>
-                  )}
-                </form>
-              )}
-            </div>
+                <p className="text-[10px] text-gray-500 text-center">
+                  ✓ {t.signInBenefit}
+                </p>
+              </div>
+            )}
 
             <button
               type="button"
               onClick={() => setShowModal(false)}
-              className="mt-3 w-full px-5 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="mt-4 w-full px-5 py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
             >
               {t.closeButton}
             </button>

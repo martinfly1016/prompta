@@ -8,7 +8,7 @@ import {
 } from '@/lib/tool-quota'
 import {
   getPaidBalance,
-  readCreditsCookie,
+  getOwnerEmailHash,
   spendOneCredit,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
@@ -26,11 +26,11 @@ export async function POST(req: NextRequest) {
 
   if (state.canUse) {
     state = await consumeFreeQuota(anonId, ipHash, TOOL)
-    const paidCredits = await getPaidBalance(await readCreditsCookie())
+    const paidCredits = await getPaidBalance(await getOwnerEmailHash())
     return NextResponse.json({ ...state, paidCredits, source: 'free', stripeEnabled })
   }
 
-  const eh = await readCreditsCookie()
+  const eh = await getOwnerEmailHash()
   if (eh) {
     const result = await spendOneCredit(eh)
     if (result.ok) {

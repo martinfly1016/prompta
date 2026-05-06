@@ -8,7 +8,7 @@ import {
 } from '@/lib/tool-quota'
 import {
   getPaidBalance,
-  readCreditsCookie,
+  getOwnerEmailHash,
   spendOneCredit,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     consumedType = 'free'
     consumedRecordId = created?.id ?? null
   } else {
-    const eh = await readCreditsCookie()
+    const eh = await getOwnerEmailHash()
     if (eh) {
       const r = await spendOneCredit(eh)
       if (r.ok) {
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (!consumedType) {
-    const eh = await readCreditsCookie()
+    const eh = await getOwnerEmailHash()
     const paidCredits = await getPaidBalance(eh)
     return NextResponse.json(
       { error: 'quota_exhausted', ...stateBefore, paidCredits, stripeEnabled },
@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const sim = await simulateHairColor(buf, file.type, hex, nameJa, nameEn)
-    const eh = await readCreditsCookie()
+    const eh = await getOwnerEmailHash()
     const paidCredits = await getPaidBalance(eh)
     const after = await getQuotaState(anonId, ipHash, TOOL)
     return NextResponse.json({
