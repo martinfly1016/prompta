@@ -89,13 +89,6 @@ export async function getQuotaState(
   }
 }
 
-// Compute a 64-bit signed int from a string for use as a Postgres advisory
-// lock key. Takes the first 8 bytes of SHA-256 and reinterprets as int8.
-function lockKey(parts: string): bigint {
-  const h = createHash('sha256').update(parts).digest()
-  return h.readBigInt64BE(0)
-}
-
 export interface ReserveSuccess {
   ok: true
   id: string
@@ -108,72 +101,90 @@ export interface ReserveFailure {
 }
 export type ReserveResult = ReserveSuccess | ReserveFailure
 
-// Atomically reserve one free quota slot for (anonId, tool). Concurrent
-// requests for the same anonId are serialized via a Postgres transaction-
-// scoped advisory lock, eliminating the read-modify-write race that
-// previously let burst-clicks bypass FREE_LIMIT. The IP cap is checked in
-// the same transaction; cross-anonId/same-IP races are still possible but
-// require multiple anonIds, are bounded, and don't grant unlimited free
-// usage.
+// Atomically reserve one free quota slot. Strategy: optimistic INSERT, then
+// rank our own row among committed rows (ordered by createdAt, id). If our
+// rank exceeds the per-anon or per-ip cap, delete our own row and report
+// the failure. Two-phase delete-after-rank avoids the read-modify-write
+// race that lets concurrent INSERTs all see count<LIMIT and bypass the cap.
+//
+// We deliberately INSERT outside any transaction so the row is visible to
+// other concurrent rank queries the moment our INSERT statement returns.
+// Wrapping the INSERT and the rank count in a single transaction would put
+// us under READ COMMITTED isolation where peer transactions' uncommitted
+// rows are invisible — re-creating the original race.
 export async function consumeFreeQuota(
   anonId: string,
   ipHash: string,
   tool: string,
 ): Promise<ReserveResult> {
-  const key = lockKey(`tool-quota:${tool}:${anonId}`)
+  const created = await prisma.toolUsage.create({
+    data: { anonId, ipHash, tool, type: 'free' },
+    select: { id: true, createdAt: true },
+  })
 
-  return prisma.$transaction(async (tx) => {
-    await tx.$executeRaw`SELECT pg_advisory_xact_lock(${key})`
+  const rankWhere = (filter: Record<string, unknown>) => ({
+    ...filter,
+    tool,
+    type: 'free' as const,
+    OR: [
+      { createdAt: { lt: created.createdAt } },
+      { createdAt: created.createdAt, id: { lte: created.id } },
+    ],
+  })
 
-    const [freeUsed, ipUsed] = await Promise.all([
-      tx.toolUsage.count({ where: { anonId, tool, type: 'free' } }),
-      tx.toolUsage.count({ where: { ipHash, tool, type: 'free' } }),
-    ])
+  const [anonRank, ipRank, freeUsedAfter, ipUsedAfter] = await Promise.all([
+    prisma.toolUsage.count({ where: rankWhere({ anonId }) }),
+    prisma.toolUsage.count({ where: rankWhere({ ipHash }) }),
+    prisma.toolUsage.count({ where: { anonId, tool, type: 'free' } }),
+    prisma.toolUsage.count({ where: { ipHash, tool, type: 'free' } }),
+  ])
 
-    const buildState = (extra: Partial<QuotaState> = {}): QuotaState => ({
-      remainingFree: Math.max(FREE_LIMIT - freeUsed, 0),
-      freeUsedToday: freeUsed,
-      ipUsedToday: ipUsed,
+  const buildState = (extra: Partial<QuotaState> = {}): QuotaState => {
+    const free = extra.freeUsedToday ?? freeUsedAfter
+    const ip = extra.ipUsedToday ?? ipUsedAfter
+    return {
+      remainingFree: Math.max(FREE_LIMIT - free, 0),
+      freeUsedToday: free,
+      ipUsedToday: ip,
       paidCredits: 0,
-      canUse: freeUsed < FREE_LIMIT && ipUsed < FREE_IP_LIMIT,
+      canUse: free < FREE_LIMIT && ip < FREE_IP_LIMIT,
       blockReason:
-        freeUsed >= FREE_LIMIT
+        free >= FREE_LIMIT
           ? 'free_exhausted'
-          : ipUsed >= FREE_IP_LIMIT
+          : ip >= FREE_IP_LIMIT
             ? 'ip_exhausted'
             : 'none',
       anonId,
       ...extra,
-    })
-
-    if (freeUsed >= FREE_LIMIT) {
-      return { ok: false, reason: 'free_exhausted', state: buildState() }
     }
-    if (ipUsed >= FREE_IP_LIMIT) {
-      return { ok: false, reason: 'ip_exhausted', state: buildState() }
-    }
+  }
 
-    const row = await tx.toolUsage.create({
-      data: { anonId, ipHash, tool, type: 'free' },
-      select: { id: true },
-    })
-
-    // After the insert, the new free count is freeUsed + 1.
+  if (anonRank > FREE_LIMIT) {
+    await prisma.toolUsage
+      .delete({ where: { id: created.id } })
+      .catch(() => {})
     return {
-      ok: true,
-      id: row.id,
+      ok: false,
+      reason: 'free_exhausted',
       state: buildState({
-        remainingFree: Math.max(FREE_LIMIT - (freeUsed + 1), 0),
-        freeUsedToday: freeUsed + 1,
-        ipUsedToday: ipUsed + 1,
-        canUse: freeUsed + 1 < FREE_LIMIT && ipUsed + 1 < FREE_IP_LIMIT,
-        blockReason:
-          freeUsed + 1 >= FREE_LIMIT
-            ? 'free_exhausted'
-            : ipUsed + 1 >= FREE_IP_LIMIT
-              ? 'ip_exhausted'
-              : 'none',
+        freeUsedToday: Math.max(freeUsedAfter - 1, 0),
+        ipUsedToday: Math.max(ipUsedAfter - 1, 0),
       }),
     }
-  })
+  }
+  if (ipRank > FREE_IP_LIMIT) {
+    await prisma.toolUsage
+      .delete({ where: { id: created.id } })
+      .catch(() => {})
+    return {
+      ok: false,
+      reason: 'ip_exhausted',
+      state: buildState({
+        freeUsedToday: Math.max(freeUsedAfter - 1, 0),
+        ipUsedToday: Math.max(ipUsedAfter - 1, 0),
+      }),
+    }
+  }
+
+  return { ok: true, id: created.id, state: buildState() }
 }
