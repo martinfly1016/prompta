@@ -264,6 +264,17 @@ npx tsx src/scripts/data-analys/photo-edit-traffic.ts --days=7
 - 分类分布: hairstyle:N, clothing:N, ...
 - 工具分布: stable-diffusion:N, midjourney:N, ...
 
+### 未审核 tag backlog（GSC noindex 大头）
+- 总 tag: N | approved: M | **noindex: N-M (X%)**
+- 本周期新增 tag: K（含 K_approved approved / K_unapproved 未审核）
+- Top 5 高价值未审核（按 prompt 数）:
+  - {tag-slug-1} ({prompts} prompts)
+  - ...
+- 污染 tag（tool名/-ai 后缀/-プロンプト 后缀）数量: N — 应删除而非批准
+
+> noindex 比例 < 60% 健康；> 80% 说明审核没跟上 → 在 §6 加批量审核 action item。
+> Query: `SELECT count, isApproved FROM Tag` + `findMany where:{isApproved:false} orderBy:{prompts:{_count:'desc'}} take:20`
+
 ## 7. photo-edit 单页流量追踪 / ツール化候補
 
 > 写真加工 prompt 中，单条获得稳定有机流量 = 用户对该任务有真实需求 = ツール化候補。
