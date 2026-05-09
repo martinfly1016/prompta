@@ -4,7 +4,11 @@ prompta.jp の freemium / Stripe / NextAuth / AgentMail スタック対応の系
 
 **スタック**: Next.js 14 + Prisma + PostgreSQL + Stripe Checkout + NextAuth (Credentials/Google/Email) + AgentMail。
 
-**現状（2026-05-09）**: `tests/cases.sh` に 17 ケース実装済 → **5 ケース新規追加 (race × 2 + email-pin + webhook payment_status guard + webhook missing-email)** で 22 ケース。さらに **3 ケース Phase 2 で延期** + **4 ケース手動検証**で全 29 ケースの計画。
+**現状（2026-05-09 最終）**: `tests/cases.sh` に 17 ケース実装済 → **6 ケース新規追加** で **23 自動化ケース**。さらに **5 ケース手動検証**で全 28 ケース計画。
+- 旧 17 + 新 race × 2 (#18, #19) + email-pin × 2 (#23 lightweight + #26 full Stripe API) + webhook × 2 (#24 payment_status + #25 missing-email) = 23
+- recovery-token 系 (#20-22) は credit-recovery.ts dead code 削除により **テスト不要**（移除 from matrix）
+- #27 OAuth account linking は手動 M5 として実行（Playwright 工程量 > ROI と判断）
+- **自動化カバレッジ 23/25 = 92%**（手動 M1-M5 を除く）
 
 ---
 
@@ -82,25 +86,27 @@ FILTER=webhook ./tests/run.sh
 
 ## 3. 自動化新規 ケース
 
-### 3.1 即時追加（5 ケース、`tests/cases.sh` に実装済）
+### 3.1 自動化追加（6 ケース、`tests/cases.sh` に実装済）
 
 | # | 名前 | カテゴリ | 動機 |
 |---|---|---|---|
 | 18 | `test_race_free_quota_burst` | race | **2026-05-09 prod 事故**：5 並列 simulate で FREE_LIMIT=3 を超えて 4 行作成。rank-after-insert 修正後の regression 防止 |
 | 19 | `test_race_paid_credit_burst` | race | balance=1 で 2 並列 spend → 1 つだけ成功すべき。`spendOneCredit` の `where:{balance:{gt:0}}` 原子性検証 |
-| 23 | `test_checkout_email_pin` | checkout | サインイン中ユーザーの `customer_email` が body/query 注入で変えられないこと（Stripe Link 事故対応の lightweight 検証） |
-| 24 | `test_webhook_pending_does_not_grant` | webhook | webhook handler に `payment_status === 'paid'` ガード追加。card-only なので prod ではトリガーされないが future-proof（malformed テストイベントもキャッチ） |
-| 25 | `test_webhook_missing_email` | webhook | email field 欠落 → 200 だが grant せず（無限リトライ防止）、`tests/send-webhook.js` の `WEBHOOK_TEST_NO_EMAIL=1` フラグで発火 |
+| 23 | `test_checkout_email_pin` | checkout | body/query 注入で `customer_email` が変えられない**ことの軽量 lightweight 検証（Stripe API 呼ばない）** |
+| 24 | `test_webhook_pending_does_not_grant` | webhook | webhook handler に `payment_status === 'paid'` ガード追加。card-only なので prod ではトリガーされないが future-proof |
+| 25 | `test_webhook_missing_email` | webhook | email field 欠落 → 200 だが grant せず（無限リトライ防止） |
+| 26 | `test_checkout_email_pin_full` | checkout | **Stripe API で session を実 retrieve**して `customer_email` および `metadata.sessionEmail` が victim と一致確認。#23 の強化版で full coverage |
 
-詳細コードは [tests/cases.sh](../tests/cases.sh) を参照。`ALL_TESTS` 配列にも追加されているので `./tests/run.sh` だけで全部走る（17 → 22 ケース）。
+詳細コードは [tests/cases.sh](../tests/cases.sh) を参照。`ALL_TESTS` 配列にも追加されているので `./tests/run.sh` だけで全部走る（17 → 23 ケース）。
 
-### 3.2 Phase 2（要 server 改造、後続で実装）
+### 3.2 Phase 2（残）
 
-| # | 名前 | 必要な作業 |
+| # | 名前 | 状況 |
 |---|---|---|
-| 20–22 | `test_recovery_token_*` | `src/lib/credit-recovery.ts` 自体は実装済だが現在どの route も使っていない（旧 endpoint sunset 済）。再有効化するか dead code 削除するかの設計判断が先 |
-| 26 | `test_checkout_email_pin_full` | Stripe API で session.customer_email を実取得して victim email と一致確認。23 の lightweight 版を強化 |
-| 27 | `test_oauth_account_linking` | `allowDangerousEmailAccountLinking` の確認 — magic link → Google で User row が 1 つに merge されること。OAuth フローの test 自動化に Playwright 等が必要 |
+| ~~20–22~~ | ~~`test_recovery_token_*`~~ | **削除**: `src/lib/credit-recovery.ts` を 2026-05-09 削除（dead code）— 関連 endpoint は既に sunset 済で再有効化計画なし、テスト対象消失 |
+| ~~24~~ | ~~`test_webhook_pending_does_not_grant`~~ | **完了 2026-05-09**: 上記 #24 として実装済 |
+| ~~26~~ | ~~`test_checkout_email_pin_full`~~ | **完了 2026-05-09**: 上記 #26 として実装済 |
+| **27** | `test_oauth_account_linking` | **手動 M5 へ移管** — Playwright + Google OAuth テストアカウント設定の工程量 > ROI と判断 |
 
 ---
 
@@ -161,6 +167,29 @@ FILTER=webhook ./tests/run.sh
 4. webhook 自体は 200 を返す（Stripe 側でリトライ発生しない）
 
 **頻度**: 半年に 1 回 / メール送信プロバイダー切替後。
+
+### M5. OAuth account auto-linking（Playwright 不要の手動版）
+
+**目的**: `allowDangerousEmailAccountLinking: true` が機能している — 同 email で magic link 先 / Google 後でログインしても User row は 1 つに merge される。
+
+**手順**:
+1. ブラウザ A: `your-test@gmail.com` で **Email magic link** ログイン → クレジット ¥300 購入 → balance 10
+2. 別ブラウザ B（Cookie 全消去）: 同 `your-test@gmail.com` で **Google OAuth** ログイン
+3. 確認:
+   - サインイン成功（OAuthAccountNotLinked エラーが出ない）
+   - check API で `paidCredits=10`（balance が同じ User に紐付いていれば見える）
+4. DB を直接確認（手動でも可）:
+   ```sql
+   SELECT id, email FROM "User" WHERE email='your-test@gmail.com';   -- 1 行
+   SELECT provider, "providerAccountId", "userId" FROM "Account"
+     WHERE "userId" = (上の id);                                       -- 2 行（email + google）
+   ```
+
+**頻度**: NextAuth 設定変更後 / Google OAuth client rotate 後。
+
+**自動化されない理由**:
+- Playwright + Google OAuth テストアカウント設定 + redirect URL 登録 = 半日工程
+- prompta 規模では人手 5 分の方が ROI 高い。next-auth 自体の v4 リリース回ごとに NextAuth 公式が大量回帰テストを回しているので、本機能の regression 確率は低い
 
 ---
 
@@ -265,7 +294,7 @@ Tier 1 + Tier 2 全部
 
 | 指標 | 現状 | 目標 |
 |---|---|---|
-| 自動化カバレッジ | 17/29 = 58.6% | **22/29 = 75.9%（即時 5 追加後）／ 25/29 = 86%（Phase 2 完了後）** |
+| 自動化カバレッジ | 17/29 = 58.6% | **23/25 = 92.0%（Phase 1 + 2 完了、recovery 系は dead code 削除で対象外、OAuth は M5 手動）** |
 | 月次フル実行時間 | ~10 分 | < 15 分 |
 | Bug 発見ラグ（prod 事故 → test 化） | 5/9 race-bypass: 0.5 日 | < 3 日 |
 | Tier 1 (CI) 実行時間 | ~3-5 分 | < 7 分 |
@@ -281,12 +310,15 @@ Tier 1 + Tier 2 全部
 - [ ] `./tests/run.sh` 全グリーン確認（user 操作 — local Postgres + stripe CLI が必要）
 - [ ] CI（GitHub Actions）に `tests/run.sh` を組込み
 
-### Phase 2（1-2 週）
+### Phase 2（2026-05-09 完了）
 
-- [x] ~~**#24 webhook payment_status guard**~~ — 2026-05-09 完了
-- [ ] **#26 checkout email pin full** — Stripe API で session.customer_email を retrieve して victim email と一致確認
-- [ ] **#27 OAuth account linking** — Playwright でブラウザ E2E、magic link → Google マージ確認
-- [ ] credit-recovery dead code の削除 or 再有効化（#20-22 の前提条件）
+- [x] ~~**#24 webhook payment_status guard**~~ — handler 改修 + test 追加
+- [x] ~~**#26 checkout email pin full**~~ — Stripe API retrieve で完全検証 + helper script
+- [x] ~~**credit-recovery dead code 削除**~~ — `src/lib/credit-recovery.ts` 削除、#20-22 不要
+- [→] **#27 OAuth account linking** — 手動 M5 へ移管（Playwright 工程量 > ROI）
+
+### Phase 3（必要時、未着手）
+
 - [ ] Stripe Webhook 「refund」「dispute」イベント受信 → `StripePayment.status` 更新の追加実装 + test
 - [ ] Cross-tool quota の混在 race（hair-color simulate と personal-color analyze の同時実行）
 

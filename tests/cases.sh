@@ -494,6 +494,64 @@ test_webhook_pending_does_not_grant() {
   assert_db_value "SELECT balance FROM \"PaidCredits\" WHERE email='$email'" "10" "subsequent paid event grants normally"
 }
 
+# ===== TEST 26: Full email pin verification via Stripe API =====
+# Stronger version of #23: actually retrieve the Stripe session and verify
+# session.customer_email matches the signed-in user's email, even when the
+# request body and query string both try to inject a different address.
+# Required STRIPE_SECRET_KEY in env (sk_test_*) for live API call.
+test_checkout_email_pin_full() {
+  it "Checkout email pin (FULL via Stripe API): session.customer_email == session email"
+  reset_db
+  local jar=$(jar "email-pin-full")
+  rm -f "$jar"
+
+  local victim="victim-full-$(date +%s)@example.com"
+  login_as "$victim" "$jar"
+
+  # Inject hacker email both ways
+  local resp=$(curl -sS -b "$jar" -c "$jar" -X POST \
+    "$BASE/api/checkout/personal-color?customer_email=hacker@evil.com" \
+    -H "Content-Type: application/json" \
+    -d '{"customer_email":"hacker@evil.com","email":"hacker@evil.com"}' \
+    -w "\n%{http_code}")
+  local code=$(http_status "$resp")
+  if [ "$code" != "200" ]; then
+    fail "checkout returned HTTP $code: $(http_body "$resp" | head -c 200)"
+    return
+  fi
+
+  # Parse session id from Stripe checkout URL: https://checkout.stripe.com/c/pay/cs_test_xxx#...
+  local url=$(http_body "$resp" | node -e "let s='';process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(s).url||'')}catch{}})")
+  local sid=$(echo "$url" | grep -oE 'cs_test_[A-Za-z0-9_]+' | head -1)
+  if [ -z "$sid" ]; then
+    fail "could not parse cs_test_* session id from URL: ${url:0:120}"
+    return
+  fi
+  ok "session id extracted: $sid"
+
+  # Retrieve from Stripe API and verify customer_email
+  local session_json=$(node tests/inspect-stripe-session.js "$sid" 2>&1)
+  if [ $? -ne 0 ]; then
+    fail "Stripe retrieve failed: $session_json"
+    return
+  fi
+
+  local actual_email=$(echo "$session_json" | node -e "let s='';process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>{try{console.log(JSON.parse(s).customer_email||'')}catch{}})")
+  if [ "$actual_email" = "$victim" ]; then
+    ok "Stripe.customer_email = $victim (server pin enforced even against body/query injection)"
+  else
+    fail "INJECTION SUCCEEDED: expected customer_email=$victim, Stripe says '$actual_email'"
+  fi
+
+  # Bonus: verify metadata.sessionEmail also matches (set explicitly by route)
+  local meta_email=$(echo "$session_json" | node -e "let s='';process.stdin.on('data',c=>s+=c);process.stdin.on('end',()=>{try{const d=JSON.parse(s);console.log((d.metadata||{}).sessionEmail||'')}catch{}})")
+  if [ "$meta_email" = "$victim" ]; then
+    ok "metadata.sessionEmail = $victim"
+  else
+    fail "metadata.sessionEmail = '$meta_email' (expected $victim)"
+  fi
+}
+
 # ===== TEST 25: Webhook with missing email field =====
 # When Stripe ever sends a session without customer_details.email AND
 # customer_email (e.g. malformed event), webhook must:
@@ -548,6 +606,7 @@ ALL_TESTS=(
   test_race_free_quota_burst
   test_race_paid_credit_burst
   test_checkout_email_pin
+  test_checkout_email_pin_full
   test_webhook_pending_does_not_grant
   test_webhook_missing_email
 )
