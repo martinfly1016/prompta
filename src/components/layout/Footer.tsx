@@ -159,12 +159,15 @@ export function Footer() {
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} {SITE_CONFIG.nameEn}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/guides" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-end">
+            <Link href="/legal/terms" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
               利用規約
             </Link>
-            <Link href="/guides" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+            <Link href="/legal/privacy" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
               プライバシーポリシー
+            </Link>
+            <Link href="/legal/tokushoho" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+              特定商取引法に基づく表記
             </Link>
           </div>
         </div>

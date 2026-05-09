@@ -68,6 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Legal pages
     { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/legal/terms`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/legal/tokushoho`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
 
     // Tool pages — lastModified = latest prompt in that tool
     ...tools.map(t => ({
