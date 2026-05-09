@@ -204,6 +204,9 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=$(date
 #    GA 默认 traffic-report 的 source dimension 已包含此信息，但需要按 channel=Referral 过滤
 #    主 agent 在 Phase F 直接用 ga-query.ts 加 dimensionFilter，或者改为 inline tsx：
 #    详见输出 §6「Referral 来源 / GEO 信号」节。
+
+# G) photo-edit 类 prompt 单页流量追踪（识别 ツール化候補）
+npx tsx src/scripts/data-analys/photo-edit-traffic.ts --days=7
 ```
 
 > macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
@@ -261,6 +264,29 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=$(date
 - 分类分布: hairstyle:N, clothing:N, ...
 - 工具分布: stable-diffusion:N, midjourney:N, ...
 
+## 7. photo-edit 单页流量追踪 / ツール化候補
+
+> 写真加工 prompt 中，单条获得稳定有机流量 = 用户对该任务有真实需求 = ツール化候補。
+> personal-color-analysis / hair-color-diagnosis 都是从单条 prompt 流量验证后做成 freemium AI 工具的。
+
+### 评级阈值（per-prompt 7d）
+- 🟢 **強候補**: ≥ 30 sessions/7d AND 平均停留 ≥ 60s — **連続 2 週 🟢 提议 tool 化**
+- 🟡 **観察**: ≥ 10 sessions/7d
+- ⚪ **noise floor**: < 10 sessions/7d
+
+### Top 候補（按 sessions 倒序，本周期 ≥ 5 sessions 的）
+| slug | sessions | dwell | bounce | tool | 评级 | 上周期 | 备注 |
+|---|---|---|---|---|---|---|---|
+| {slug} | N | Ns | N% | gemini | 🟡/🟢/⚪ | N | (連続 N 週🟢/初登场) |
+
+### 长尾（5+ sessions 但 < 10 的，作为「pre-watch」清单）
+- ⚪ {slug} — N sess / Ns dwell — 备注
+
+### 行动
+- 🟢 連続 2 週 → 在 §6 行动建议加「ツール化提案」item，含：估算开发成本、对比已上线两个工具的转化漏斗
+- 🟡 → 下周仍跟踪，无操作
+- ⚪ 全员 → 内容质量优化（加 Before/After 样片、补 R7 保留清单）
+
 ## 5. 异常 / 高亮
 - 🔴 ... (任何 Δ < -20% 的指标)
 - 🟢 ... (任何 Δ > +30% 的指标)
@@ -276,6 +302,7 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=$(date
 - `tool-usage` 的 `previousPeriodTotal=0` 时 `deltaPct` 为 `null`，输出时显示「新增 / N/A」而非「+∞%」。
 - 真实「使用次数」以 `ToolUsage` 为准，不要拿 GA `eventCount` 替代（事件数包含很多无关交互）。
 - 唯一访客 `uniqueAnon` 与 GA `activeUsers` 通常不一致（口径不同：anonId 是 cookie 级，跨设备会重复；GA 用浏览器指纹），二者皆列出，**不要相互替换**。
+- **§7 ツール化判断准则**: 単条 prompt 流量大 ≠ 一定该做工具。还要看 (a) 任务可被自动化（不只是「读个例子」）、(b) 用户愿意付费的痛点（化妆/医疗/职业相关 > 单纯娱乐）、(c) Gemini/ChatGPT API 能稳定产出（参考 [project_gemini_image_limits.md](memory) 的能力边界）。passport-id-photo / linkedin-profile / background-replace 是天然候选，娱乐类（年代変身/絵画风）即便流量大也不适合做工具。
 
 ### full-report — 综合周报
 
