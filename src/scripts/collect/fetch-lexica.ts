@@ -49,16 +49,20 @@ function parseArgs(): { keywords: string[]; perKeyword: number } {
     if (arg.startsWith('--per=')) perKeyword = parseInt(arg.split('=')[1])
   }
 
-  // Default keyword set covers high-priority categories per SEO algorithm
+  // Default keyword set covers high-priority categories per SEO algorithm.
+  // Tilted away from costume (we're at 62 prompts, the largest bucket; last
+  // 14d intake was 86% costume) and toward color / portrait / camera which
+  // GSC shows have unmet demand. Cosplay/cyberpunk/gothic kept producing
+  // medieval-armor & fantasy-armor results that AI re-classified as costume.
   const defaultKeywords = [
     'hairstyle portrait',
-    'cosplay character',
-    'fantasy costume',
-    'cyberpunk city',
-    'anime girl',
-    'cinematic lighting',
-    'gothic dress',
+    'pastel color palette',
     'fashion photography',
+    'cinematic lighting',
+    'anime girl',
+    'natural skin makeup',
+    'studio portrait lighting',
+    'low angle camera',
   ]
 
   const keywords = keywordsArg

@@ -20,7 +20,7 @@ argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--p
   - `text` — AI 文本 prompt（Haiku 生成，适用于 ChatGPT/Claude/Gemini）
 - `--pages=N` — CivitAI 抓取页数（默认 3，每页 20 条）。仅 source=civitai 有效
 - `--per=N` — Lexica 每个关键词抓取数（默认 8）。仅 source=lexica 有效
-- `--keywords=a,b,c` — Lexica 自定义关键词（逗号分隔）。默认覆盖 hairstyle/cosplay/costume/cyberpunk/anime/cinematic/gothic/fashion 8 类
+- `--keywords=a,b,c` — Lexica 自定义关键词（逗号分隔）。默认覆盖 hairstyle/color-palette/fashion/cinematic/anime/makeup/portrait-lighting/camera-angle 8 类（2026-05-09 调整，重心从 costume 偏向移到 color/portrait/camera）
 - `--target=N` — 目标入库数量（默认 15）
 - `--cursor=STRING` — 上次采集的 cursor，用于续抓（仅 source=civitai）
 - `--tool=TOOL` — 指定工具（仅 source=text）：chatgpt | claude | gemini | dall-e。默认均匀分配 chatgpt/claude/gemini（photo-edit 类默认 gemini，可显式指定 chatgpt/dall-e）
@@ -80,7 +80,7 @@ argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--p
 cd src/scripts/collect && npx tsx fetch-lexica.ts --per={PER} {--keywords=K1,K2如有} > /tmp/prompta-raw.json 2>/tmp/prompta-fetch.log
 ```
 - 永久图片 URL（`image.lexica.art/full_jpg/{id}`），无签名过期问题
-- 默认 8 个关键词覆盖 hairstyle/cosplay/costume/cyberpunk/anime/cinematic/gothic/fashion
+- 默认 8 个关键词覆盖 hairstyle/color/fashion/cinematic/anime/makeup/portrait-lighting/camera-angle（2026-05-09 起从原 cosplay/cyberpunk/gothic 主导改为 color/portrait/camera 主导，避免 costume 过载）
 - 每次稳定产出 30-45 条带图 SD prompt
 - toolSlug = `stable-diffusion`
 
@@ -683,15 +683,17 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 
 ```
 SEO_BASE_PRIORITY = {
-  // 画像系分类
+  // 画像系分类（数値は月検索ボリューム × CTR ポテンシャル ÷ KD で算出）
   hairstyle:   240,   // 月搜索量 2400, KD 10
   clothing:    130,   // 月搜索量 1300, KD 10
   cosplay:     120,   // 月搜索量 480,  KD 4
-  costume:      53,   // 月搜索量 320,  KD 6
+  color:        80,   // GSC 28d 曝光 3,500+、本周 921 imp、CTR 仅 1.34% — 内容深度不足，需补
+                      // 旧值 25 严重低估了实际流量，2026-05-09 上调
   camera:       52,   // 月搜索量 260,  KD 5
   body-type:    43,   // 月搜索量 390,  KD 9
-  color:        25,   // 月搜索量 320,  KD 13
   anime:        19,   // 月搜索量 260,  KD 14
+  costume:      10,   // 库存 62（最高）+ 最近 14d +24（占新内容 86%） — 强力降权
+                      // 旧值 53，2026-05-09 因过载下调
   background:    3,
   expression:    3,
 
