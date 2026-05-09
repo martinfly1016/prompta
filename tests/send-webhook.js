@@ -5,6 +5,10 @@
 //
 // Usage:
 //   node tests/send-webhook.js <email> <credits> [sessionId] [product]
+//
+// Flags (env-var):
+//   WEBHOOK_TEST_NO_EMAIL=1     — drop both customer_details.email AND customer_email
+//                                  (tests the malformed-payload guard in webhook handler)
 
 const Stripe = require('stripe')
 const http = require('http')
@@ -33,15 +37,16 @@ const stripe = new Stripe(SECRET_KEY)
 // includes the fields the webhook handler reads: id, customer_details.email,
 // customer_email, metadata.credits, metadata.product, amount_total,
 // payment_intent.
+const noEmail = process.env.WEBHOOK_TEST_NO_EMAIL === '1'
 const session = {
   id: sessionId,
   object: 'checkout.session',
   amount_total: parseInt(credits, 10) * 30,
   currency: 'jpy',
-  customer_details: { email },
+  customer_details: noEmail ? {} : { email },
   customer_email: null,
   payment_intent: `pi_test_${Date.now()}`,
-  metadata: { credits, product, sessionEmail: email },
+  metadata: { credits, product, sessionEmail: noEmail ? '' : email },
   payment_status: 'paid',
   status: 'complete',
 }
