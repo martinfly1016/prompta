@@ -194,9 +194,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・制服・和風・ファンタジー衣装まで、Stable Diffusion と NovelAI で使える呪文を画像付きで多数紹介。',
   },
   'clothing': {
-    seoTitle: '服装プロンプト集【呪文・コピペOK】｜ドレス・制服・ファンタジー衣装・カジュアル',
-    seoH1: '服装プロンプト集｜ドレス・制服・ファンタジー・カジュアルの呪文',
-    seoDescription: '服装プロンプトのコピペ集。ドレス・制服・ファンタジー衣装・カジュアルなど、AI画像生成で使える服装呪文を多数紹介。BREAKコマンドによる色滲み対策も解説。',
+    seoTitle: '服装プロンプト 女性キャラ 50+選【コピペOK】｜Stable Diffusion ドレス・制服・ファンタジー衣装',
+    seoH1: '服装プロンプト集｜女性キャラのドレス・制服・ファンタジー・カジュアル呪文',
+    seoDescription: '女性キャラの服装プロンプトをコピペで使える 50+ 例文集。ドレス・制服・ファンタジー衣装・カジュアル・パンクファッションまで Stable Diffusion・NovelAI で動作確認済み。BREAK コマンドによる色滲み対策も画像付きで解説。',
   },
   'body-type': {
     seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
@@ -204,9 +204,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'スレンダー・アスレチック・ぽっちゃり・小柄・高身長など体型プロンプトを多数紹介。Stable Diffusion・NovelAI 対応の呪文とネガティブプロンプト、ControlNet 連携まで徹底解説。',
   },
   'color': {
-    seoTitle: '色プロンプト集【コピペOK】｜118色の色名・色指定・色滲み対策の呪文',
-    seoH1: '色プロンプト集｜118色の色名・CutOff・BREAK で色滲みを防ぐ',
-    seoDescription: 'そのままコピペで使える色プロンプト集。赤・青・パステル・ネオンなど118色以上の色名呪文と、CutOff・BREAK による色滲み防止テクニックを画像付きで紹介。すぐ試せます。',
+    seoTitle: '色プロンプト 完全ガイド【Stable Diffusion 呪文・コピペOK】｜118色 + 色滲み対策',
+    seoH1: '色プロンプト集｜Stable Diffusion で 118 色 + BREAK・CutOff で色滲み防止',
+    seoDescription: 'Stable Diffusion・NovelAI で色を正確に出すプロンプト集。赤・青・パステル・ネオンなど 118 色以上の色名呪文と、BREAK・CutOff による色滲み（color bleeding）防止テクニックを画像付きで完全解説。コピペですぐ試せます。',
   },
   'anime': {
     seoTitle: 'アニメプロンプト集【呪文・コピペOK】｜キャラクターデザイン・画風・表情指定',
@@ -214,9 +214,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'アニメスタイルのAI画像生成プロンプト集。アニメキャラクター設計・画風指定・表情描写のコツと、niji mode・Anything V5 など人気モデルの使い分けを画像付きで紹介。',
   },
   'hairstyle': {
-    seoTitle: '髪型プロンプト集【呪文・コピペOK】｜ロング・ショート・ツインテール・髪色指定',
+    seoTitle: '髪型プロンプト 女性キャラ 50+選【コピペOK】｜ロング・ショート・ツインテール・前髪・髪色',
     seoH1: '髪型プロンプト集｜女性キャラの髪型・髪色・髪質を自在にコントロール',
-    seoDescription: '髪型プロンプトのコピペ集。ロングヘア・ショートカット・ポニーテール・ツインテール・髪色グラデーションまで、Stable Diffusion・NovelAI で使える呪文を画像付きで紹介。',
+    seoDescription: '女性キャラの髪型プロンプトをコピペで使える 50+ 例文集。ロングヘア・ショートカット・ポニーテール・ツインテール・髪色グラデーションを Stable Diffusion・NovelAI 対応の呪文で画像付き解説。前髪指定や色滲み対策まで。',
   },
   'costume': {
     seoTitle: 'コスチュームプロンプト集【呪文・コピペOK】｜和服・甲冑・アクセサリー・装飾品',
