@@ -6,9 +6,10 @@
 
 - `rank-track [--keywords=K1,K2] [--days=28]` — 关键词排名追踪，对比 baseline
 - `content-gap [--competitor=DOMAIN] [--limit=20]` — 内容缺口分析（SEMrush）
-- `traffic-report [--days=28] [--dimension=page|category|source]` — GA 流量归因分析
+- `traffic-report [--days=28] [--dimension=page|category|source] [--page-filter=/path]` — GA 流量归因分析
 - `collect-roi [--since=YYYY-MM-DD] [--slugs=s1,s2]` — 采集效果评估
-- `full-report` — 综合报告（按顺序执行上述 4 项，输出完整周报）
+- `daily-report [--days=7]` — 7 日运营日报（流量+搜索+工具使用+收入+新内容，含 vs 上 7 日 delta）
+- `full-report` — 综合报告（按顺序执行 rank-track → content-gap → traffic-report → collect-roi）
 
 ## 前提条件
 
@@ -171,6 +172,110 @@ npx tsx src/scripts/data-analys/ga-query.ts \
 - 索引率 < 70% → 可能内容质量不足或内链不够，建议补强 seoIntro 或增加内链
 - 高曝光低点击 → title/description 不够吸引人，建议优化
 - 给出「下次采集建议」：哪些关键词/分类的采集 ROI 最高
+
+### daily-report — 7 日运营日报
+
+**用途**: 每日/每周固定快照，覆盖站点流量、搜索曝光、两个 freemium 工具页（パーソナルカラー / 髪色诊断）的真实使用与收入、新增内容。重点是 **vs 上一个 7 天周期的 delta**。
+
+**默认窗口**: 过去 7 天。可用 `--days=N` 调整（同时上一周期窗口也跟着变）。
+
+**执行步骤**（agent 编排，并发拉数据）:
+
+```bash
+# A) GA 站点级流量
+npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=source --limit=10
+npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=page --limit=20
+
+# B) GA 工具页流量（按 BEGINS_WITH 过滤）
+npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=page --page-filter=/tools/personal-color-analysis --limit=10
+npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=page --page-filter=/tools/hair-color-diagnosis --limit=10
+
+# C) GSC 搜索数据
+npx tsx src/scripts/data-analys/gsc-query.ts --mode=top-queries --days=7 --limit=20
+npx tsx src/scripts/data-analys/gsc-query.ts --mode=top-pages --days=7 --limit=20
+
+# D) DB 工具真实调用 + Stripe 收入（含上一周期对比）
+npx tsx src/scripts/data-analys/db-query.ts --mode=tool-usage --days=7
+
+# E) 新内容
+npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=$(date -v-7d +%Y-%m-%d)
+
+# F) Referral 来源细分（含 chatgpt.com / qiita.com 等 LLM/外站引用）
+#    GA 默认 traffic-report 的 source dimension 已包含此信息，但需要按 channel=Referral 过滤
+#    主 agent 在 Phase F 直接用 ga-query.ts 加 dimensionFilter，或者改为 inline tsx：
+#    详见输出 §6「Referral 来源 / GEO 信号」节。
+```
+
+> macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
+
+**输出格式**:
+
+```
+# Prompta 日报（YYYY-MM-DD ~ YYYY-MM-DD，过去 7 天）
+
+## 1. 站点流量总览
+| 指标 | 本周期 | 上周期 | Δ |
+|---|---|---|---|
+| 会话数 | N | N | ±N% |
+| 活跃用户 | N | N | ±N% |
+| 自然搜索点击 | N | N | ±N% |
+| 自然搜索曝光 | N | N | ±N% |
+
+### 流量来源（Top 5）
+| 渠道 | 会话 | 占比 |
+
+### Referral 来源 / GEO 信号（重点监控）
+| 来源 | 会话 | 平均停留 | 跳出率 | 备注 |
+|---|---|---|---|---|
+| **chatgpt.com** | N | Ns | N% | LLM 引用，**周环比要持续追** |
+| qiita.com | N | Ns | N% | 自有 Qiita 文章引流 |
+| accounts.google.com | N | — | — | （登录回流，可忽略） |
+| その他 | … | | | |
+
+> **GEO 监控原则**: chatgpt.com / perplexity.ai / claude.ai / phind.com 等 LLM 来源的 sessions 数环比变化是 **GEO（Generative Engine Optimization）的早期信号**。环比涨 ≥ 30% 时标 🟢，跌 ≥ 30% 时标 🔴 + 排查 llms.txt / canonical / 内容是否被改动。
+
+## 2. 搜索表现（GSC）
+### Top 10 查询
+| 关键词 | 曝光 | 点击 | CTR | 排名 |
+### Top 10 着陆页
+| 页面 | 曝光 | 点击 | CTR | 排名 |
+
+## 3. 工具使用情况（重点）
+
+### 🎨 パーソナルカラー診断（/tools/personal-color-analysis）
+- **GA 流量**: 会话 N · 用户 N · 平均停留 Ns · 跳出率 N% · 事件数 N
+- **真实调用**: 总 N 次（free N / paid N）· 唯一访客 N · 唯一邮箱 N
+- **vs 上周期**: ±N% （前 7 天 N 次）
+- **按日分布**: 5/2:N · 5/3:N · ...
+
+### 💇 似合う髪色診断（/tools/hair-color-diagnosis）
+（同上结构）
+
+### 💴 收入
+- 本周期: ¥N · N 笔 · N 个付费用户 · 发放积分 N
+- 上周期: ¥N · N 笔
+- 转化漏斗: 工具页会话 → free 调用 → paid 调用 → 支付（按链路给百分比）
+
+## 4. 新内容
+- 本周期入库 N 条 prompt
+- 分类分布: hairstyle:N, clothing:N, ...
+- 工具分布: stable-diffusion:N, midjourney:N, ...
+
+## 5. 异常 / 高亮
+- 🔴 ... (任何 Δ < -20% 的指标)
+- 🟢 ... (任何 Δ > +30% 的指标)
+- ⚠️ ... (高曝光低 CTR 页 / 高跳出率页 / 0 转化的工具页)
+
+## 6. 行动建议
+1. [紧急] ...
+2. [重要] ...
+```
+
+**分析要点**:
+- 工具页转化链路: `pageviews → free 调用 → paid 调用 → 付费`，任何一段大幅衰减都要标注。
+- `tool-usage` 的 `previousPeriodTotal=0` 时 `deltaPct` 为 `null`，输出时显示「新增 / N/A」而非「+∞%」。
+- 真实「使用次数」以 `ToolUsage` 为准，不要拿 GA `eventCount` 替代（事件数包含很多无关交互）。
+- 唯一访客 `uniqueAnon` 与 GA `activeUsers` 通常不一致（口径不同：anonId 是 cookie 级，跨设备会重复；GA 用浏览器指纹），二者皆列出，**不要相互替换**。
 
 ### full-report — 综合周报
 

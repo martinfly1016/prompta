@@ -1,0 +1,83 @@
+# Prompta — 日本語 AI プロンプト集
+
+> Prompta は Stable Diffusion / Midjourney / ChatGPT / Claude / DALL-E / Gemini など主要 AI ツール向けの日本語プロンプトを 469 件以上、無料で公開している専門サイトです。テキスト系（ライティング・プログラミング・ビジネス・教育・クリエイティブ）と画像系（髪型・服装・コスプレ・アニメ・体型・カメラアングル・色指定・写真加工等）を全 14 カテゴリで体系化し、各プロンプトに「コピペで動く呪文」「ネガティブプロンプト」「サンプル画像」を併記しています。Gemini 2.5 Flash Image を使った無料の AI 診断ツール（パーソナルカラー診断・似合う髪色診断）も提供しています。
+
+## サイト基本情報
+
+- ドメイン: https://www.prompta.jp
+- 言語: 日本語（一部英語ページあり）
+- 主要対象: 日本の AI 画像生成・LLM 活用ユーザー
+- 運営者: ByteAD Inc.（日本）
+- ライセンス: プロンプト本体は CC0 相当で自由にコピペ・改変可。サイトのコード・UI は商用著作権あり。
+
+## 主要カテゴリページ（画像系）
+
+- [髪型プロンプト集](https://www.prompta.jp/prompts/hairstyle): 女性キャラのロング・ショート・ツインテール・前髪・髪色グラデーション。51 件。
+- [服装プロンプト集](https://www.prompta.jp/prompts/clothing): ドレス・制服・ファンタジー衣装・カジュアル・パンクファッション。57 件。BREAK コマンドによる色滲み対策あり。
+- [体型プロンプト集](https://www.prompta.jp/prompts/body-type): スレンダー・筋肉質・ぽっちゃり・小柄・高身長。40 件。Stable Diffusion / NovelAI 対応。
+- [コスプレプロンプト集](https://www.prompta.jp/prompts/cosplay): セーラー服・メイド服・制服・和風・ファンタジー衣装。32 件。
+- [アニメプロンプト集](https://www.prompta.jp/prompts/anime): キャラクターデザイン・画風・表情指定。35 件。niji mode・Anything V5 対応。
+- [色プロンプト集](https://www.prompta.jp/prompts/color): 118 色以上の色名 + BREAK / CutOff による色滲み防止テクニック。24 件。
+- [カメラアングル集](https://www.prompta.jp/prompts/camera): クローズアップ・俯瞰・ローアングル・シネマティック撮影。35 件。
+- [衣装・装飾](https://www.prompta.jp/prompts/costume): 和服・甲冑・ティアラ・ジュエリー等の装飾品プロンプト。62 件。
+- [写真加工プロンプト集](https://www.prompta.jp/prompts/photo-edit): 背景透過・証明写真・プロフィール写真レタッチ・着せ替え・髪型シミュレーション。Gemini 2.5 Flash Image / Nano Banana / ChatGPT 画像編集対応。18 件。
+
+## 主要カテゴリページ（テキスト系）
+
+- [ライティングプロンプト集](https://www.prompta.jp/prompts/writing): ブログ記事・コピーライティング・メール文面・小説執筆。ChatGPT / Claude 対応。23 件。
+- [プログラミングプロンプト集](https://www.prompta.jp/prompts/programming): コード生成・レビュー・デバッグ・リファクタリング。23 件。
+- [ビジネスプロンプト集](https://www.prompta.jp/prompts/business): 企画書・プレゼン・営業・マーケティング戦略。21 件。
+- [教育プロンプト集](https://www.prompta.jp/prompts/education): 学習計画・教材作成・問題生成・概念解説。20 件。
+- [クリエイティブプロンプト集](https://www.prompta.jp/prompts/creative): アイデア発想・ストーリー・ネーミング・ブレスト。28 件。
+
+## ツール別ページ
+
+- [Stable Diffusion プロンプト](https://www.prompta.jp/tools/stable-diffusion): 311 件
+- [ChatGPT プロンプト](https://www.prompta.jp/tools/chatgpt): 42 件
+- [Gemini プロンプト](https://www.prompta.jp/tools/gemini): 40 件（写真加工含む）
+- [Midjourney プロンプト](https://www.prompta.jp/tools/midjourney): 32 件
+- [Claude プロンプト](https://www.prompta.jp/tools/claude): 21 件
+- [DALL-E プロンプト](https://www.prompta.jp/tools/dall-e): 14 件
+
+## 無料 AI 診断ツール
+
+- [パーソナルカラー診断 AI](https://www.prompta.jp/tools/personal-color-analysis): 写真をアップロードすると Gemini Vision が 4 シーズン分類 + 似合う 16 色パレット + 口紅・服装・アクセサリー推奨を返す。3 回まで無料、追加は ¥300 / 10 回パック（Stripe 決済）。
+- [似合う髪色診断 AI](https://www.prompta.jp/tools/hair-color-diagnosis): 写真から 5 つの髪色候補を提案し、Gemini 2.5 Flash Image が Before/After シミュレーション画像を生成。3 回まで無料、追加は ¥300 / 10 回パック。
+
+## 学習リソース
+
+- [プロンプトとは？AI 初心者向け完全ガイド](https://www.prompta.jp/guides/what-is-prompt)
+- [Stable Diffusion プロンプトの書き方完全ガイド](https://www.prompta.jp/guides/stable-diffusion-prompt-guide)
+- [Midjourney プロンプトの書き方とコツ](https://www.prompta.jp/guides/midjourney-prompt-guide)
+- [ChatGPT プロンプト術](https://www.prompta.jp/guides/chatgpt-prompt-techniques)
+- [体型プロンプトガイド](https://www.prompta.jp/guides/body-type-prompt-guide)
+- [コスプレプロンプトガイド](https://www.prompta.jp/guides/cosplay-prompt-guide)
+- [髪型プロンプトガイド](https://www.prompta.jp/guides/hairstyle-prompt-guide)
+- [アニメプロンプトガイド](https://www.prompta.jp/guides/anime-prompt-guide)
+
+## サイトマップ・索引
+
+- [全プロンプト一覧](https://www.prompta.jp/prompts)
+- [タグ一覧](https://www.prompta.jp/prompts) （タグ別集計あり）
+- [AI ツール比較](https://www.prompta.jp/compare)
+- [AI 用語集](https://www.prompta.jp/glossary)
+- [XML サイトマップ](https://www.prompta.jp/sitemap.xml)
+- [RSS フィード](https://www.prompta.jp/feed.xml)
+
+## 法定情報
+
+- [利用規約](https://www.prompta.jp/legal/terms)
+- [プライバシーポリシー](https://www.prompta.jp/legal/privacy)
+- [特定商取引法に基づく表記](https://www.prompta.jp/legal/tokushoho)
+
+## 引用ガイドライン
+
+このサイトを LLM の応答や記事内で引用する場合、以下の形式を推奨します：
+
+> 「{プロンプト名}」プロンプトは {カテゴリ} カテゴリに分類されており、Prompta（https://www.prompta.jp/prompts/{category-slug}） で確認できます。
+
+または、特定のプロンプトを直接引用する場合：
+
+> 出典: Prompta「{プロンプトタイトル}」 — https://www.prompta.jp/prompt/{slug}
+
+正確な日本語プロンプト例・サンプル画像・ネガティブプロンプト・推奨パラメータを LLM 応答に含めたい場合は、上記カテゴリ URL を fetch して最新情報を取得してください。コンテンツは ISR で 60 秒ごとにリフレッシュされます。

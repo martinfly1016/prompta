@@ -5,6 +5,7 @@
  * Usage:
  *   npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=28 --dimension=page --limit=30
  *   npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=source --limit=10
+ *   npx tsx src/scripts/data-analys/ga-query.ts --mode=traffic-report --days=7 --dimension=page --page-filter=/tools/personal-color-analysis
  *
  * Prerequisites:
  *   npm install --save-dev googleapis
@@ -19,6 +20,7 @@ async function main() {
   const days = parseInt(args['days'] || '28', 10)
   const dimension = args['dimension'] || 'page'
   const limit = parseInt(args['limit'] || '30', 10)
+  const pageFilter = args['page-filter']
 
   const { google } = await import('googleapis')
   const credentials = loadGoogleCredentials()
@@ -43,21 +45,30 @@ async function main() {
   startDate.setDate(endDate.getDate() - days)
   const fmt = (d: Date) => d.toISOString().split('T')[0]
 
+  const requestBody: Record<string, unknown> = {
+    dateRanges: [{ startDate: fmt(startDate), endDate: fmt(endDate) }],
+    dimensions: [{ name: gaDimension }],
+    metrics: [
+      { name: 'activeUsers' },
+      { name: 'sessions' },
+      { name: 'averageSessionDuration' },
+      { name: 'bounceRate' },
+      { name: 'eventCount' },
+    ],
+    limit,
+    orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+  }
+  if (pageFilter && gaDimension === 'pagePath') {
+    requestBody.dimensionFilter = {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: { matchType: 'BEGINS_WITH', value: pageFilter },
+      },
+    }
+  }
   const resp = await analyticsdata.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
-    requestBody: {
-      dateRanges: [{ startDate: fmt(startDate), endDate: fmt(endDate) }],
-      dimensions: [{ name: gaDimension }],
-      metrics: [
-        { name: 'activeUsers' },
-        { name: 'sessions' },
-        { name: 'averageSessionDuration' },
-        { name: 'bounceRate' },
-        { name: 'eventCount' },
-      ],
-      limit,
-      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-    },
+    requestBody,
   })
 
   const rows = resp.data.rows || []

@@ -5,6 +5,7 @@
  *   npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=2026-04-16
  *   npx tsx src/scripts/data-analys/db-query.ts --mode=category-counts
  *   npx tsx src/scripts/data-analys/db-query.ts --mode=tag-stats
+ *   npx tsx src/scripts/data-analys/db-query.ts --mode=tool-usage --days=7
  */
 
 import { PrismaClient } from '@prisma/client'
@@ -81,8 +82,73 @@ async function main() {
         })),
       }, null, 2))
 
+    } else if (mode === 'tool-usage') {
+      const days = parseInt(args['days'] || '7', 10)
+      const since = new Date()
+      since.setDate(since.getDate() - days)
+      const prevSince = new Date(since)
+      prevSince.setDate(prevSince.getDate() - days)
+
+      const tools = ['personal-color', 'hair-color']
+      const summary: Record<string, unknown> = {}
+
+      for (const tool of tools) {
+        const usages = await prisma.toolUsage.findMany({
+          where: { tool, createdAt: { gte: since } },
+          select: { type: true, anonId: true, emailHash: true, createdAt: true },
+        })
+        const prevUsages = await prisma.toolUsage.count({
+          where: { tool, createdAt: { gte: prevSince, lt: since } },
+        })
+
+        const free = usages.filter(u => u.type === 'free').length
+        const paid = usages.filter(u => u.type === 'paid').length
+        const uniqAnon = new Set(usages.map(u => u.anonId)).size
+        const uniqEmail = new Set(usages.filter(u => u.emailHash).map(u => u.emailHash)).size
+
+        const byDay: Record<string, number> = {}
+        for (const u of usages) {
+          const d = u.createdAt.toISOString().split('T')[0]
+          byDay[d] = (byDay[d] || 0) + 1
+        }
+
+        summary[tool] = {
+          total: usages.length,
+          free,
+          paid,
+          uniqueAnon: uniqAnon,
+          uniqueEmail: uniqEmail,
+          previousPeriodTotal: prevUsages,
+          deltaPct: prevUsages === 0 ? null : Math.round(((usages.length - prevUsages) / prevUsages) * 100),
+          byDay,
+        }
+      }
+
+      const payments = await prisma.stripePayment.findMany({
+        where: { status: 'paid', createdAt: { gte: since } },
+        select: { amountJpy: true, creditsGranted: true, createdAt: true, emailHash: true },
+      })
+      const prevPayments = await prisma.stripePayment.aggregate({
+        where: { status: 'paid', createdAt: { gte: prevSince, lt: since } },
+        _sum: { amountJpy: true },
+        _count: true,
+      })
+
+      summary['payments'] = {
+        count: payments.length,
+        revenueJpy: payments.reduce((s, p) => s + p.amountJpy, 0),
+        creditsGranted: payments.reduce((s, p) => s + p.creditsGranted, 0),
+        uniquePayers: new Set(payments.map(p => p.emailHash)).size,
+        previousPeriod: {
+          count: prevPayments._count,
+          revenueJpy: prevPayments._sum.amountJpy || 0,
+        },
+      }
+
+      console.log(JSON.stringify({ days, since: since.toISOString().split('T')[0], ...summary }, null, 2))
+
     } else {
-      console.error(`Unknown mode: ${mode}. Use recent-prompts, category-counts, tag-stats`)
+      console.error(`Unknown mode: ${mode}. Use recent-prompts, category-counts, tag-stats, tool-usage`)
       process.exit(1)
     }
   } finally {
