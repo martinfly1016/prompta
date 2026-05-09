@@ -3,7 +3,6 @@ import {
   consumeFreeQuota,
   ensureAnonId,
   extractClientIp,
-  getQuotaState,
   hashIp,
 } from '@/lib/tool-quota'
 import {
@@ -24,17 +23,20 @@ export async function POST(req: NextRequest) {
   const ua = req.headers.get('user-agent') || ''
   const ipHash = hashIp(ip, ua)
 
-  // 1. Check free state first (do not consume yet)
-  let state = await getQuotaState(anonId, ipHash, TOOL)
-
-  // 2. If free still available, consume free
-  if (state.canUse) {
-    state = await consumeFreeQuota(anonId, ipHash, TOOL)
+  // 1. Try to atomically reserve a free slot
+  const reservation = await consumeFreeQuota(anonId, ipHash, TOOL)
+  if (reservation.ok) {
     const paidCredits = await getPaidBalance(await getOwnerEmailHash())
-    return NextResponse.json({ ...state, paidCredits, source: 'free', stripeEnabled })
+    return NextResponse.json({
+      ...reservation.state,
+      paidCredits,
+      source: 'free',
+      stripeEnabled,
+    })
   }
 
-  // 3. Free exhausted — try paid credits
+  // 2. Free exhausted — try paid credits
+  const state = reservation.state
   const eh = await getOwnerEmailHash()
   if (eh) {
     const result = await spendOneCredit(eh)

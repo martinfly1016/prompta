@@ -72,21 +72,15 @@ export async function POST(req: NextRequest) {
   let consumedType: 'free' | 'paid' | null = null
   let consumedRecordId: string | null = null
   let emailHashUsed: string | null = null
+  let lastState = await getQuotaState(anonId, ipHash, TOOL)
 
-  const stateBefore = await getQuotaState(anonId, ipHash, TOOL)
-
-  if (stateBefore.canUse) {
-    // Consume free
-    await consumeFreeQuota(anonId, ipHash, TOOL)
-    const created = await prisma.toolUsage.findFirst({
-      where: { anonId, tool: TOOL, type: 'free' },
-      orderBy: { createdAt: 'desc' },
-      select: { id: true },
-    })
+  const reservation = await consumeFreeQuota(anonId, ipHash, TOOL)
+  if (reservation.ok) {
     consumedType = 'free'
-    consumedRecordId = created?.id ?? null
+    consumedRecordId = reservation.id
+    lastState = reservation.state
   } else {
-    // Try paid credits
+    lastState = reservation.state
     const eh = await getOwnerEmailHash()
     if (eh) {
       const r = await spendOneCredit(eh)
@@ -108,7 +102,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         error: 'quota_exhausted',
-        ...stateBefore,
+        ...lastState,
         paidCredits,
         stripeEnabled,
       },

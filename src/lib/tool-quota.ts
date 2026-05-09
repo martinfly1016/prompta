@@ -89,15 +89,91 @@ export async function getQuotaState(
   }
 }
 
+// Compute a 64-bit signed int from a string for use as a Postgres advisory
+// lock key. Takes the first 8 bytes of SHA-256 and reinterprets as int8.
+function lockKey(parts: string): bigint {
+  const h = createHash('sha256').update(parts).digest()
+  return h.readBigInt64BE(0)
+}
+
+export interface ReserveSuccess {
+  ok: true
+  id: string
+  state: QuotaState
+}
+export interface ReserveFailure {
+  ok: false
+  reason: 'free_exhausted' | 'ip_exhausted'
+  state: QuotaState
+}
+export type ReserveResult = ReserveSuccess | ReserveFailure
+
+// Atomically reserve one free quota slot for (anonId, tool). Concurrent
+// requests for the same anonId are serialized via a Postgres transaction-
+// scoped advisory lock, eliminating the read-modify-write race that
+// previously let burst-clicks bypass FREE_LIMIT. The IP cap is checked in
+// the same transaction; cross-anonId/same-IP races are still possible but
+// require multiple anonIds, are bounded, and don't grant unlimited free
+// usage.
 export async function consumeFreeQuota(
   anonId: string,
   ipHash: string,
   tool: string,
-): Promise<QuotaState> {
-  const state = await getQuotaState(anonId, ipHash, tool)
-  if (!state.canUse) return state
-  await prisma.toolUsage.create({
-    data: { anonId, ipHash, tool, type: 'free' },
+): Promise<ReserveResult> {
+  const key = lockKey(`tool-quota:${tool}:${anonId}`)
+
+  return prisma.$transaction(async (tx) => {
+    await tx.$executeRaw`SELECT pg_advisory_xact_lock(${key})`
+
+    const [freeUsed, ipUsed] = await Promise.all([
+      tx.toolUsage.count({ where: { anonId, tool, type: 'free' } }),
+      tx.toolUsage.count({ where: { ipHash, tool, type: 'free' } }),
+    ])
+
+    const buildState = (extra: Partial<QuotaState> = {}): QuotaState => ({
+      remainingFree: Math.max(FREE_LIMIT - freeUsed, 0),
+      freeUsedToday: freeUsed,
+      ipUsedToday: ipUsed,
+      paidCredits: 0,
+      canUse: freeUsed < FREE_LIMIT && ipUsed < FREE_IP_LIMIT,
+      blockReason:
+        freeUsed >= FREE_LIMIT
+          ? 'free_exhausted'
+          : ipUsed >= FREE_IP_LIMIT
+            ? 'ip_exhausted'
+            : 'none',
+      anonId,
+      ...extra,
+    })
+
+    if (freeUsed >= FREE_LIMIT) {
+      return { ok: false, reason: 'free_exhausted', state: buildState() }
+    }
+    if (ipUsed >= FREE_IP_LIMIT) {
+      return { ok: false, reason: 'ip_exhausted', state: buildState() }
+    }
+
+    const row = await tx.toolUsage.create({
+      data: { anonId, ipHash, tool, type: 'free' },
+      select: { id: true },
+    })
+
+    // After the insert, the new free count is freeUsed + 1.
+    return {
+      ok: true,
+      id: row.id,
+      state: buildState({
+        remainingFree: Math.max(FREE_LIMIT - (freeUsed + 1), 0),
+        freeUsedToday: freeUsed + 1,
+        ipUsedToday: ipUsed + 1,
+        canUse: freeUsed + 1 < FREE_LIMIT && ipUsed + 1 < FREE_IP_LIMIT,
+        blockReason:
+          freeUsed + 1 >= FREE_LIMIT
+            ? 'free_exhausted'
+            : ipUsed + 1 >= FREE_IP_LIMIT
+              ? 'ip_exhausted'
+              : 'none',
+      }),
+    }
   })
-  return getQuotaState(anonId, ipHash, tool)
 }
