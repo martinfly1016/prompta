@@ -350,10 +350,13 @@ test_race_free_quota_burst() {
   http_get "$BASE/api/tools/hair-color/check" "$jar" >/dev/null
 
   rm -f /tmp/prompta-race-free-*.out
-  for i in 1 2 3 4 5; do
-    ( http_post_json "$BASE/api/tools/hair-color/consume" '{}' "$jar" >/tmp/prompta-race-free-$i.out ) &
-  done
-  wait
+  # Use xargs -P 5 instead of `& wait` — macOS /bin/bash 3.2 has a known
+  # reaping race that leaves the parent stuck in __wait4 even after all
+  # children exit. xargs spawns its own process and is robust here.
+  # `-I IDX` (not the default {}) so the substitution token doesn't collide
+  # with the empty-JSON body `-d '{}'`.
+  export RACE_JAR="$jar" RACE_URL="$BASE/api/tools/hair-color/consume"
+  printf '1\n2\n3\n4\n5\n' | xargs -P 5 -I IDX sh -c 'curl -sS -b "$RACE_JAR" -c "$RACE_JAR" -X POST -H "Content-Type: application/json" -d "{}" "$RACE_URL" -w "\n%{http_code}" > /tmp/prompta-race-free-IDX.out 2>&1'
 
   local count_200=0 count_429=0
   for i in 1 2 3 4 5; do
@@ -403,10 +406,9 @@ test_race_paid_credit_burst() {
 
   # Now 2 concurrent /consume — only 1 should succeed (paid), other gets 429
   rm -f /tmp/prompta-race-paid-*.out
-  for i in 1 2; do
-    ( http_post_json "$BASE/api/tools/hair-color/consume" '{}' "$jar" >/tmp/prompta-race-paid-$i.out ) &
-  done
-  wait
+  # xargs -P 2 instead of `& wait` (avoid macOS bash 3.2 wait4 race)
+  export RACE_JAR="$jar" RACE_URL="$BASE/api/tools/hair-color/consume"
+  printf '1\n2\n' | xargs -P 2 -I IDX sh -c 'curl -sS -b "$RACE_JAR" -c "$RACE_JAR" -X POST -H "Content-Type: application/json" -d "{}" "$RACE_URL" -w "\n%{http_code}" > /tmp/prompta-race-paid-IDX.out 2>&1'
 
   local paid_ok=0 blocked=0
   for i in 1 2; do
