@@ -38,6 +38,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true, error: 'no email' })
     }
 
+    // payment_status guard — only grant when the money actually moved.
+    // checkout.session.completed fires when the user finishes the form, but
+    // for ACH / invoice flows payment_status can still be 'unpaid' at that
+    // point. We only enable card payments today so this is future-proofing,
+    // but it also catches malformed test events.
+    if (session.payment_status !== 'paid') {
+      console.warn(
+        `[stripe webhook] ${sessionId}: payment_status=${session.payment_status}, skip grant`,
+      )
+      return NextResponse.json({
+        received: true,
+        skipped: 'payment_not_paid',
+        payment_status: session.payment_status ?? null,
+      })
+    }
+
     // Idempotency: skip if we already processed this session
     const existing = await prisma.stripePayment.findUnique({ where: { sessionId } })
     if (existing && existing.status === 'paid') {

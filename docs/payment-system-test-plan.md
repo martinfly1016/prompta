@@ -4,7 +4,7 @@ prompta.jp の freemium / Stripe / NextAuth / AgentMail スタック対応の系
 
 **スタック**: Next.js 14 + Prisma + PostgreSQL + Stripe Checkout + NextAuth (Credentials/Google/Email) + AgentMail。
 
-**現状（2026-05-09）**: `tests/cases.sh` に 17 ケース実装済 → **4 ケース新規追加 (race × 2 + email-pin + webhook missing-email)** で 21 ケース。さらに **4 ケース Phase 2 で延期** + **4 ケース手動検証**で全 29 ケースの計画。
+**現状（2026-05-09）**: `tests/cases.sh` に 17 ケース実装済 → **5 ケース新規追加 (race × 2 + email-pin + webhook payment_status guard + webhook missing-email)** で 22 ケース。さらに **3 ケース Phase 2 で延期** + **4 ケース手動検証**で全 29 ケースの計画。
 
 ---
 
@@ -82,23 +82,23 @@ FILTER=webhook ./tests/run.sh
 
 ## 3. 自動化新規 ケース
 
-### 3.1 即時追加（4 ケース、`tests/cases.sh` に実装済）
+### 3.1 即時追加（5 ケース、`tests/cases.sh` に実装済）
 
 | # | 名前 | カテゴリ | 動機 |
 |---|---|---|---|
 | 18 | `test_race_free_quota_burst` | race | **2026-05-09 prod 事故**：5 並列 simulate で FREE_LIMIT=3 を超えて 4 行作成。rank-after-insert 修正後の regression 防止 |
 | 19 | `test_race_paid_credit_burst` | race | balance=1 で 2 並列 spend → 1 つだけ成功すべき。`spendOneCredit` の `where:{balance:{gt:0}}` 原子性検証 |
 | 23 | `test_checkout_email_pin` | checkout | サインイン中ユーザーの `customer_email` が body/query 注入で変えられないこと（Stripe Link 事故対応の lightweight 検証） |
+| 24 | `test_webhook_pending_does_not_grant` | webhook | webhook handler に `payment_status === 'paid'` ガード追加。card-only なので prod ではトリガーされないが future-proof（malformed テストイベントもキャッチ） |
 | 25 | `test_webhook_missing_email` | webhook | email field 欠落 → 200 だが grant せず（無限リトライ防止）、`tests/send-webhook.js` の `WEBHOOK_TEST_NO_EMAIL=1` フラグで発火 |
 
-詳細コードは [tests/cases.sh](../tests/cases.sh) を参照。`ALL_TESTS` 配列にも追加されているので `./tests/run.sh` だけで全部走る（17 → 21 ケース）。
+詳細コードは [tests/cases.sh](../tests/cases.sh) を参照。`ALL_TESTS` 配列にも追加されているので `./tests/run.sh` だけで全部走る（17 → 22 ケース）。
 
 ### 3.2 Phase 2（要 server 改造、後続で実装）
 
 | # | 名前 | 必要な作業 |
 |---|---|---|
 | 20–22 | `test_recovery_token_*` | `src/lib/credit-recovery.ts` 自体は実装済だが現在どの route も使っていない（旧 endpoint sunset 済）。再有効化するか dead code 削除するかの設計判断が先 |
-| 24 | `test_webhook_pending_does_not_grant` | webhook handler に `payment_status === 'paid'` ガードを追加する必要あり（現在 type=`completed` のみで判定）。card-only なので prod ではトリガーされないが future-proof |
 | 26 | `test_checkout_email_pin_full` | Stripe API で session.customer_email を実取得して victim email と一致確認。23 の lightweight 版を強化 |
 | 27 | `test_oauth_account_linking` | `allowDangerousEmailAccountLinking` の確認 — magic link → Google で User row が 1 つに merge されること。OAuth フローの test 自動化に Playwright 等が必要 |
 
@@ -172,7 +172,7 @@ FILTER=webhook ./tests/run.sh
 
 ```
 1, 2, 3, 4         (free quota 基本)
-8, 9, 10, 25       (webhook 基本 + missing-email edge)
+8, 9, 10, 24, 25   (webhook 基本 + payment_status guard + missing-email edge)
 18, 19             (race — bug regression 防止)
 23                 (checkout email pin — Stripe Link 事故防止)
 ```
@@ -265,7 +265,7 @@ Tier 1 + Tier 2 全部
 
 | 指標 | 現状 | 目標 |
 |---|---|---|
-| 自動化カバレッジ | 17/29 = 58.6% | **21/29 = 72.4%（即時 4 追加後）／ 25/29 = 86%（Phase 2 完了後）** |
+| 自動化カバレッジ | 17/29 = 58.6% | **22/29 = 75.9%（即時 5 追加後）／ 25/29 = 86%（Phase 2 完了後）** |
 | 月次フル実行時間 | ~10 分 | < 15 分 |
 | Bug 発見ラグ（prod 事故 → test 化） | 5/9 race-bypass: 0.5 日 | < 3 日 |
 | Tier 1 (CI) 実行時間 | ~3-5 分 | < 7 分 |
@@ -283,7 +283,7 @@ Tier 1 + Tier 2 全部
 
 ### Phase 2（1-2 週）
 
-- [ ] **#24 webhook payment_status guard** — handler に `payment_status === 'paid'` チェック追加 + test
+- [x] ~~**#24 webhook payment_status guard**~~ — 2026-05-09 完了
 - [ ] **#26 checkout email pin full** — Stripe API で session.customer_email を retrieve して victim email と一致確認
 - [ ] **#27 OAuth account linking** — Playwright でブラウザ E2E、magic link → Google マージ確認
 - [ ] credit-recovery dead code の削除 or 再有効化（#20-22 の前提条件）

@@ -466,6 +466,34 @@ test_checkout_email_pin() {
   # never reads body.email or query.customer_email — server only uses session.user.email.
 }
 
+# ===== TEST 24: Webhook with payment_status=unpaid does NOT grant =====
+# Stripe sends checkout.session.completed when the user finishes the form,
+# but for ACH/invoice flows payment_status can still be 'unpaid' at that
+# point. We only enable card payments today so this is future-proofing,
+# but the guard also catches malformed test events.
+test_webhook_pending_does_not_grant() {
+  it "Webhook with payment_status=unpaid → 200 returned, no grant"
+  reset_db
+
+  local email="pending-$(date +%s)@example.com"
+  local sid="cs_test_pending_$(date +%s)"
+  WEBHOOK_TEST_PAYMENT_STATUS=unpaid node tests/send-webhook.js "$email" 10 "$sid" >/dev/null
+  sleep 1
+
+  # No PaidCredits row should exist (payment_status guard kicked in)
+  assert_db_count "PaidCredits" "email='$email'" "0" "no PaidCredits row for unpaid session"
+
+  # No StripePayment row either (we don't write a pending row for skipped events,
+  # the route returns early before any DB write)
+  assert_db_count "StripePayment" "\"sessionId\"='$sid'" "0" "no StripePayment row for unpaid session"
+
+  # Sanity: same sessionId with payment_status=paid afterwards SHOULD grant
+  # (no idempotency-blocking row from the earlier unpaid attempt)
+  node tests/send-webhook.js "$email" 10 "$sid" >/dev/null
+  sleep 1
+  assert_db_value "SELECT balance FROM \"PaidCredits\" WHERE email='$email'" "10" "subsequent paid event grants normally"
+}
+
 # ===== TEST 25: Webhook with missing email field =====
 # When Stripe ever sends a session without customer_details.email AND
 # customer_email (e.g. malformed event), webhook must:
@@ -520,5 +548,6 @@ ALL_TESTS=(
   test_race_free_quota_burst
   test_race_paid_credit_burst
   test_checkout_email_pin
+  test_webhook_pending_does_not_grant
   test_webhook_missing_email
 )
