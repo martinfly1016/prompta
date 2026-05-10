@@ -43,11 +43,24 @@ export const getPromptsByCategory = cache(async (categorySlug: string, limit?: n
   })
 })
 
+// Homepage / RSS feed surfaces require visual assets — either a gallery image
+// or a Before/After sample pair. Pure-text prompts (chatgpt/claude) and
+// photo-edit prompts without rendered samples can still be reached via
+// category/tool pages but are filtered out of the showcase to avoid empty
+// thumbnail tiles.
+const HAS_VISUAL = {
+  OR: [
+    { images: { some: {} } },
+    { AND: [{ sampleBeforeUrl: { not: null } }, { sampleAfterUrl: { not: null } }] },
+  ],
+}
+
 export const getFeaturedPrompts = cache(async (limit: number = 12) => {
   return prisma.prompt.findMany({
     where: {
       isPublished: true,
       isFeatured: true,
+      ...HAS_VISUAL,
     },
     include: promptInclude,
     orderBy: { createdAt: 'desc' },
@@ -57,7 +70,10 @@ export const getFeaturedPrompts = cache(async (limit: number = 12) => {
 
 export const getLatestPrompts = cache(async (limit: number = 8) => {
   return prisma.prompt.findMany({
-    where: { isPublished: true },
+    where: {
+      isPublished: true,
+      ...HAS_VISUAL,
+    },
     include: promptInclude,
     orderBy: { createdAt: 'desc' },
     take: limit,
