@@ -4,6 +4,7 @@ import {
   hairLengthOptions,
   hairStyleOptions,
   expressionOptions,
+  fabricColorOptions,
 } from '../options'
 
 export const config: PromptParamsConfig = {
@@ -28,6 +29,24 @@ export const config: PromptParamsConfig = {
       label: '髪型',
       match: 'straight hair',
       options: hairStyleOptions('straight hair'),
+    },
+    {
+      id: 'collar',
+      type: 'color',
+      label: 'セーラーカラーの色',
+      match: 'blue sailor collar',
+      options: fabricColorOptions('sailor collar', 'blue sailor collar'),
+    },
+    {
+      id: 'sleeves',
+      type: 'select',
+      label: '袖の長さ',
+      match: 'long sleeves',
+      options: [
+        { value: 'short sleeves', label: '半袖' },
+        { value: 'long sleeves', label: '長袖' },
+        { value: 'sleeveless', label: 'ノースリーブ' },
+      ],
     },
     {
       id: 'expression',
