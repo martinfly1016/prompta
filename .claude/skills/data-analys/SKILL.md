@@ -207,6 +207,9 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=recent-prompts --since=$(date
 
 # G) photo-edit 类 prompt 单页流量追踪（识别 ツール化候補）
 npx tsx src/scripts/data-analys/photo-edit-traffic.ts --days=7
+
+# H) Paywall 漏斗事件（hair-color / personal-color CTA → click → checkout）
+npx tsx src/scripts/data-analys/ga-query.ts --mode=tool-funnel --days=7
 ```
 
 > macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
@@ -258,6 +261,37 @@ npx tsx src/scripts/data-analys/photo-edit-traffic.ts --days=7
 - 本周期: ¥N · N 笔 · N 个付费用户 · 发放积分 N
 - 上周期: ¥N · N 笔
 - 转化漏斗: 工具页会话 → free 调用 → paid 调用 → 支付（按链路给百分比）
+
+## 3.5 Paywall 漏斗事件（GA4）
+
+> 数据源: `ga-query.ts --mode=tool-funnel`。前端事件: `paywall_view` (modal 打开) → `paywall_purchase_click` (购入按钮按下) → `checkout_started` (Stripe 跳转) → StripePayment（已记 §3 收入）。
+
+### 总聚合（所有工具汇总）
+| 事件 | 本周期 | 上周期 | Δ |
+|---|---|---|---|
+| paywall_view | N | N | ±N% |
+| paywall_purchase_click | N | N | ±N% |
+| checkout_started | N | N | ±N% |
+| StripePayment 成交 | N | N | ±N% |
+
+**漏斗转化率**: view→click X% · click→checkout Y% · checkout→pay Z%
+
+### 按工具/触发器切片（仅当 GA4 自定义维度 `tool` + `trigger` 已注册时）
+
+| 工具 | 触发器 | paywall_view | view→click |
+|---|---|---|---|
+| hair-color | badge | N | X% |
+| hair-color | candidate_card | N | X% |
+| hair-color | upsell_banner | N | X% |
+| hair-color | exhausted_pick / analyze / simulate / 429 | N | X% |
+| personal-color | exhausted_pick / analyze | N | X% |
+
+> ⚠️ 若 `perToolBreakdown` 输出 `_note: 'Per-tool/per-trigger split unavailable'`，说明用户还没在 **GA4 admin → Property → Custom definitions** 注册 `tool` 和 `trigger` 这两个 event-scoped 自定义维度。注册后 24-48h 才能查到切片数据。在此之前只输出聚合行。
+
+### 解读重点
+- **view→click < 10%**: 价格 / signin gate / 文案问题；考虑去掉登录前置 / 改 modal 文案
+- **click→checkout < 50%**: Stripe API 配置或 sign-in flow 卡住
+- **某个 trigger 占 view 的 80%+**: 其他 CTA 入口失效或不可见，需排查 UI
 
 ## 4. 新内容
 - 本周期入库 N 条 prompt

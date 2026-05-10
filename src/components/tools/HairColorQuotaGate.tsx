@@ -3,6 +3,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useSession, signIn } from 'next-auth/react'
+import {
+  trackPaywallView,
+  trackPurchaseClick,
+  trackCheckoutStarted,
+  type PaywallTrigger,
+} from '@/lib/track'
+
+const TOOL = 'hair-color' as const
+
+function openPaywall(setShow: (v: boolean) => void, trigger: PaywallTrigger) {
+  trackPaywallView(TOOL, trigger)
+  setShow(true)
+}
 
 export type Locale = 'ja' | 'en'
 
@@ -224,7 +237,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   async function handlePickFile() {
     if (!state) return
     if (!state.canUse) {
-      setShowModal(true)
+      openPaywall(setShowModal, 'exhausted_pick')
       return
     }
     fileInputRef.current?.click()
@@ -262,7 +275,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
       if (!r.ok) {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
-          setShowModal(true)
+          openPaywall(setShowModal, 'exhausted_analyze')
         } else if (r.status === 413 || r.status === 415 || r.status === 422) {
           setError(data.message ?? t.errAnalyze('check image'))
           setPreviewUrl(null)
@@ -291,7 +304,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   async function runSimulate(candidate: HairCandidate) {
     if (!originalFile) return
     if (!state || (!state.canUse && state.paidCredits <= 0)) {
-      setShowModal(true)
+      openPaywall(setShowModal, 'exhausted_simulate')
       return
     }
     setSimulatingHex(candidate.hex)
@@ -306,7 +319,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
       const data = await r.json()
       if (!r.ok) {
         if (r.status === 429) {
-          setShowModal(true)
+          openPaywall(setShowModal, 'exhausted_429')
         } else {
           setError(t.simErrorPrefix + (data.message ?? data.error ?? 'unknown'))
         }
@@ -322,6 +335,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   }
 
   async function handlePurchase() {
+    trackPurchaseClick(TOOL, isSignedIn)
     if (!isSignedIn) {
       // Redirect to signIn with callback back to this tool page so the user
       // lands here after authenticating and can immediately purchase.
@@ -344,7 +358,10 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
         return
       }
       const { url } = await r.json()
-      if (url) window.location.href = url
+      if (url) {
+        trackCheckoutStarted(TOOL)
+        window.location.href = url
+      }
     } catch (e: any) {
       setPurchaseBanner(t.errNetwork(e?.message ?? ''))
       setPending(false)
@@ -377,7 +394,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
         {state && exhausted && paidCredits === 0 ? (
           <button
             type="button"
-            onClick={() => setShowModal(true)}
+            onClick={() => openPaywall(setShowModal, 'badge')}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 transition-colors"
             aria-live="polite"
           >
@@ -461,7 +478,8 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
                 previewUrl={previewUrl}
                 activeSimulation={activeSimulation}
                 onPick={runSimulate}
-                onUpgrade={() => setShowModal(true)}
+                onUpgradeFromBanner={() => openPaywall(setShowModal, 'upsell_banner')}
+                onUpgradeFromCard={() => openPaywall(setShowModal, 'candidate_card')}
                 simulatingHex={simulatingHex}
                 paidCredits={paidCredits}
                 remainingFree={remaining}
@@ -582,7 +600,8 @@ function HairColorResult({
   previewUrl,
   activeSimulation,
   onPick,
-  onUpgrade,
+  onUpgradeFromBanner,
+  onUpgradeFromCard,
   simulatingHex,
   paidCredits,
   remainingFree,
@@ -592,7 +611,8 @@ function HairColorResult({
   previewUrl: string | null
   activeSimulation: PreviewSimulation | null
   onPick: (c: HairCandidate) => void
-  onUpgrade: () => void
+  onUpgradeFromBanner: () => void
+  onUpgradeFromCard: () => void
   simulatingHex: string | null
   paidCredits: number
   remainingFree: number
@@ -708,7 +728,7 @@ function HairColorResult({
           {showUpsell && (
             <button
               type="button"
-              onClick={onUpgrade}
+              onClick={onUpgradeFromBanner}
               className="mb-4 w-full text-left px-4 py-2.5 text-xs bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 rounded-lg hover:from-violet-100 hover:to-purple-100 transition-colors"
             >
               <span className="text-gray-700">
@@ -727,7 +747,7 @@ function HairColorResult({
                 isSimulating={simulatingHex === c.hex}
                 disabled={!canSpend}
                 onPick={() => onPick(c)}
-                onUpgrade={onUpgrade}
+                onUpgrade={onUpgradeFromCard}
                 t={t}
               />
             ))}

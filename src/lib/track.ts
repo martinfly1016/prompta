@@ -71,3 +71,34 @@ export function trackPromptTry(
   // Treat "try in external" as a stronger copy signal too — counts toward copyCount
   fireDbIncrement('copy', promptId)
 }
+
+// --- Freemium tool paywall funnel events ---
+// 3-step funnel: paywall_view → paywall_purchase_click → checkout_started → (Stripe success)
+// Trigger labels distinguish how the user reached the paywall.
+
+export type PaywallTool = 'hair-color' | 'personal-color'
+export type PaywallTrigger =
+  | 'badge'             // exhausted-state badge click (preventive)
+  | 'candidate_card'    // disabled candidate "クレジット不足" →购入
+  | 'upsell_banner'     // soft upsell banner above candidates
+  | 'exhausted_pick'    // tried to upload new photo while exhausted
+  | 'exhausted_analyze' // backend 429 from /analyze endpoint
+  | 'exhausted_simulate'// no credits when picking a candidate
+  | 'exhausted_429'     // backend 429 from /simulate endpoint
+
+function fireToolEvent(eventName: string, params: Record<string, unknown>) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  try { window.gtag('event', eventName, params) } catch {}
+}
+
+export function trackPaywallView(tool: PaywallTool, trigger: PaywallTrigger) {
+  fireToolEvent('paywall_view', { tool, trigger })
+}
+
+export function trackPurchaseClick(tool: PaywallTool, signedIn: boolean) {
+  fireToolEvent('paywall_purchase_click', { tool, signed_in: signedIn })
+}
+
+export function trackCheckoutStarted(tool: PaywallTool) {
+  fireToolEvent('checkout_started', { tool })
+}

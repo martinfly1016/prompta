@@ -3,6 +3,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useSession, signIn } from 'next-auth/react'
+import {
+  trackPaywallView,
+  trackPurchaseClick,
+  trackCheckoutStarted,
+  type PaywallTrigger,
+} from '@/lib/track'
+
+const TOOL = 'personal-color' as const
+
+function openPaywall(setShow: (v: boolean) => void, trigger: PaywallTrigger) {
+  trackPaywallView(TOOL, trigger)
+  setShow(true)
+}
 
 export type Locale = 'ja' | 'en'
 
@@ -266,7 +279,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   async function handlePickFile() {
     if (!state) return
     if (!state.canUse) {
-      setShowModal(true)
+      openPaywall(setShowModal, 'exhausted_pick')
       return
     }
     fileInputRef.current?.click()
@@ -305,7 +318,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
       if (!r.ok) {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
-          setShowModal(true)
+          openPaywall(setShowModal, 'exhausted_analyze')
         } else if (r.status === 413 || r.status === 415 || r.status === 422) {
           // Validation error — quota was NOT consumed, user can retry with another image
           setError(data.message ?? t.errCheckImage)
@@ -333,6 +346,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   }
 
   async function handlePurchase() {
+    trackPurchaseClick(TOOL, isSignedIn)
     if (!isSignedIn) {
       const callbackUrl =
         typeof window !== 'undefined'
@@ -359,7 +373,10 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         return
       }
       const { url } = await r.json()
-      if (url) window.location.href = url
+      if (url) {
+        trackCheckoutStarted(TOOL)
+        window.location.href = url
+      }
     } catch (e: any) {
       setPurchaseBanner(t.errNetwork(e?.message ?? ''))
       setPending(false)
