@@ -124,6 +124,11 @@ const STRINGS = {
     avoidColors: '避けたい色',
     uploadedAlt: 'アップロード写真',
     enResultNote: '',
+    ctaExhaustedTrigger: '→ 続けて使う（10回 ¥300）',
+    upsellBannerHeading: 'もう一人診断する？',
+    upsellBannerBody: 'クレジット切れの場合は ',
+    upsellBannerLink: '10 回 ¥300 パック',
+    upsellBannerSuffix: 'で続行できます',
   },
   en: {
     season: { spring: 'Spring (Warm)', summer: 'Summer (Cool)', autumn: 'Autumn (Warm)', winter: 'Winter (Cool)' },
@@ -191,6 +196,11 @@ const STRINGS = {
     uploadedAlt: 'Your uploaded photo',
     enResultNote:
       '🌐 Note: AI-generated descriptions and color names are currently in Japanese. Full English output rolls out in the next update — the seasonal label, palette HEX codes, and badges are universal.',
+    ctaExhaustedTrigger: '→ Continue (10-pack ¥300)',
+    upsellBannerHeading: 'Diagnose another person?',
+    upsellBannerBody: 'If credits run out, the ',
+    upsellBannerLink: '10-analysis ¥300 pack',
+    upsellBannerSuffix: ' lets you keep going.',
   },
 } as const
 
@@ -407,38 +417,47 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
 
       {/* Status chip */}
       <div className="flex justify-center mb-4">
-        <div
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
-            paidCredits > 0
-              ? 'bg-blue-50 text-blue-700 border-blue-200'
-              : exhausted
-                ? 'bg-rose-50 text-rose-700 border-rose-200'
+        {state && exhausted && paidCredits === 0 ? (
+          <button
+            type="button"
+            onClick={() => openPaywall(setShowModal, 'badge')}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 transition-colors"
+            aria-live="polite"
+          >
+            <span className="text-base">🔒</span>
+            <span>{t.statusExhausted}</span>
+            <span className="ml-1 underline font-semibold">{t.ctaExhaustedTrigger}</span>
+          </button>
+        ) : (
+          <div
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
+              paidCredits > 0
+                ? 'bg-blue-50 text-blue-700 border-blue-200'
                 : remaining <= 1
                   ? 'bg-amber-50 text-amber-700 border-amber-200'
                   : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-          }`}
-          aria-live="polite"
-        >
-          <span className="text-base">
-            {paidCredits > 0 ? '💎' : exhausted ? '🔒' : '✨'}
-          </span>
-          {state ? (
-            paidCredits > 0 ? (
-              <span>
-                {t.statusPaidPrefix}
-                <strong className="font-bold">{paidCredits}</strong>
-                {t.statusPaidSuffix}
-                {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
-              </span>
-            ) : exhausted ? (
-              <span>{t.statusExhausted}</span>
+            }`}
+            aria-live="polite"
+          >
+            <span className="text-base">
+              {paidCredits > 0 ? '💎' : '✨'}
+            </span>
+            {state ? (
+              paidCredits > 0 ? (
+                <span>
+                  {t.statusPaidPrefix}
+                  <strong className="font-bold">{paidCredits}</strong>
+                  {t.statusPaidSuffix}
+                  {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
+                </span>
+              ) : (
+                <span>{t.statusFree(remaining)}</span>
+              )
             ) : (
-              <span>{t.statusFree(remaining)}</span>
-            )
-          ) : (
-            <span>{t.statusChecking}</span>
-          )}
-        </div>
+              <span>{t.statusChecking}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <input
@@ -482,7 +501,13 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
       {result &&
         (portalTarget
           ? createPortal(
-              <PersonalColorResult result={result} previewUrl={previewUrl} t={t} />,
+              <PersonalColorResult
+                result={result}
+                previewUrl={previewUrl}
+                showUpsell={paidCredits === 0 && remaining <= 1}
+                onUpgrade={() => openPaywall(setShowModal, 'upsell_banner')}
+                t={t}
+              />,
               portalTarget,
             )
           : null)}
@@ -599,10 +624,14 @@ type Strings = (typeof STRINGS)[Locale]
 function PersonalColorResult({
   result,
   previewUrl,
+  showUpsell,
+  onUpgrade,
   t,
 }: {
   result: AnalysisResult
   previewUrl: string | null
+  showUpsell: boolean
+  onUpgrade: () => void
   t: Strings
 }) {
   const groups: Record<RecommendedColor['role'], RecommendedColor[]> = {
@@ -753,6 +782,23 @@ function PersonalColorResult({
                 ))}
               </div>
             </div>
+          )}
+
+          {showUpsell && (
+            <button
+              type="button"
+              onClick={onUpgrade}
+              className="mt-8 w-full text-left px-4 py-3 bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-200 rounded-lg hover:from-sky-100 hover:to-blue-100 transition-colors"
+            >
+              <div className="text-sm font-semibold text-gray-900 mb-1">
+                💡 {t.upsellBannerHeading}
+              </div>
+              <div className="text-xs text-gray-700">
+                {t.upsellBannerBody}
+                <strong className="text-sky-700 underline">{t.upsellBannerLink}</strong>
+                {t.upsellBannerSuffix}
+              </div>
+            </button>
           )}
         </div>
       </div>
