@@ -174,6 +174,13 @@ export const CATEGORIES: Category[] = [
     description: 'AI画像生成で使えるカメラアングル・撮影技法プロンプト集。クローズアップ、俯瞰、ローアングルなど、構図や撮影テクニックの表現方法。',
     icon: '📷',
   },
+  {
+    slug: 'photo-edit',
+    name: '写真加工',
+    nameEn: 'Photo Editing',
+    description: 'AI写真加工プロンプト集。背景透過、証明写真生成、プロフィール写真レタッチ、服装の着せ替え、髪型シミュレーション、美肌加工など、ユーザーがアップロードした写真をAIで編集するためのプロンプト。Gemini 2.5 Flash Image・Nano Banana・ChatGPTの画像編集機能で使えます。',
+    icon: '📸',
+  },
 ]
 
 // Per-category SEO overrides. Leave a field unset to fall back to the default
@@ -249,9 +256,14 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'ChatGPT・Claude で使えるクリエイティブプロンプト集。アイデア発想、ストーリー執筆、ネーミング、ブレインストーミングのテンプレートをコピペOKで紹介。',
   },
   'camera': {
-    seoTitle: 'カメラアングルプロンプト集【構図・ライティングの呪文】｜クローズアップ・俯瞰・シネマティック',
-    seoH1: 'カメラアングル・構図プロンプト集｜クローズアップ・俯瞰・シネマティック撮影',
-    seoDescription: 'カメラアングル・構図・ライティングのAIプロンプト集。クローズアップ・俯瞰・ローアングル・シネマティック撮影まで、Stable Diffusion・Midjourney で使える呪文を紹介。',
+    seoTitle: 'カメラアングル プロンプト 35選【コピペOK】｜Stable Diffusion・Midjourney 俯瞰・ローアングル・シネマティック',
+    seoH1: 'カメラアングル・構図プロンプト 35 選｜Stable Diffusion で俯瞰・ローアングル・シネマティック撮影',
+    seoDescription: 'Stable Diffusion・Midjourney で使えるカメラアングル・構図プロンプト 35 選。クローズアップ・俯瞰・ローアングル・ハイアングル・シネマティック撮影まで、構図とライティングの呪文を画像付きで紹介。コピペで動作確認済み。',
+  },
+  'photo-edit': {
+    seoTitle: 'AI写真加工プロンプト集【コピペOK】｜背景削除・証明写真・プロフィール写真・着せ替え',
+    seoH1: 'AI写真加工プロンプト集｜背景削除・証明写真・プロフィール写真・着せ替え',
+    seoDescription: 'AI写真加工プロンプトのコピペ集。背景透過・背景削除・証明写真生成・プロフィール写真レタッチ・服装着せ替え・髪型シミュレーション・美肌加工を、Gemini 2.5 Flash Image・Nano Banana・ChatGPT で実行できる指示文として多数紹介。',
   },
 }
 
@@ -518,8 +530,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'stable-diffusion-prompt-guide',
-    title: 'Stable Diffusion プロンプトの書き方完全ガイド',
-    description: 'Stable Diffusionで美しい画像を生成するためのプロンプトの書き方を徹底解説。品質タグ、構図、スタイル指定のコツ。',
+    title: 'Stable Diffusion プロンプト 書き方ガイド【呪文・コピペOK】｜品質タグ・構図・ネガティブ実例',
+    description: 'Stable Diffusion で美しい画像を生成するプロンプト書き方の完全ガイド。品質タグ、構図、スタイル指定、ネガティブプロンプト、BREAK・LoRA 連携まで、コピペで使える呪文と実例を画像付きで徹底解説。初心者の基礎から応用テクニックまで。',
     targetKeyword: 'stable diffusion プロンプト 書き方',
     monthlySearchVolume: 3600,
   },
@@ -574,8 +586,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'body-type-prompt-guide',
-    title: '体型プロンプトの書き方｜スレンダー・筋肉質・ぽっちゃりを Stable Diffusion で再現',
-    description: 'AI画像生成で体型を自在にコントロールするプロンプト完全ガイド。スレンダー・アスレチック・ぽっちゃり・小柄・高身長の指定方法と重み付けテクニックを解説。',
+    title: '体型・身長差プロンプト 完全ガイド【コピペOK】｜Stable Diffusion スレンダー・筋肉質・ぽっちゃり・体格差',
+    description: 'Stable Diffusion で体型・身長差・体格差を自在にコントロールするプロンプト完全ガイド。スレンダー・アスレチック・ぽっちゃり・小柄・高身長・身長差の指定方法と重み付けテクニックを画像付きで解説。コピペで再現可能。',
     targetKeyword: '体型 プロンプト 書き方',
     monthlySearchVolume: 390,
   },
