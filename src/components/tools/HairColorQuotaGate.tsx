@@ -124,7 +124,11 @@ const STRINGS_JA = {
   simErrorPrefix: 'シミュレーションエラー: ',
   simExhausted: 'クレジットが足りません。10 回パックをご購入ください。',
   pickCandidate: 'この色を試す（1 クレジット）',
-  pickCandidateDisabled: 'クレジット不足',
+  pickCandidateDisabled: '💳 10 回パックを購入（¥300）',
+  ctaExhaustedTrigger: '→ 続けて使う（10回 ¥300）',
+  candidatesUpsellPrefix: 'クレジット切れの場合は ',
+  candidatesUpsellLink: '10 回 ¥300 パック',
+  candidatesUpsellSuffix: 'で続行できます',
   currentlyShowing: 'プレビュー中：',
   retryNote: '※ プレビューが不自然な場合、写真の照明や髪の見え方によって AI が苦手なケースがあります。別の角度の写真でお試しください。',
   uploadedAlt: 'アップロード写真',
@@ -370,38 +374,47 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
       )}
 
       <div className="flex justify-center mb-4">
-        <div
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
-            paidCredits > 0
-              ? 'bg-violet-50 text-violet-700 border-violet-200'
-              : exhausted
-                ? 'bg-rose-50 text-rose-700 border-rose-200'
+        {state && exhausted && paidCredits === 0 ? (
+          <button
+            type="button"
+            onClick={() => setShowModal(true)}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 transition-colors"
+            aria-live="polite"
+          >
+            <span className="text-base">🔒</span>
+            <span>{t.statusExhausted}</span>
+            <span className="ml-1 underline font-semibold">{t.ctaExhaustedTrigger}</span>
+          </button>
+        ) : (
+          <div
+            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
+              paidCredits > 0
+                ? 'bg-violet-50 text-violet-700 border-violet-200'
                 : remaining <= 1
                   ? 'bg-amber-50 text-amber-700 border-amber-200'
                   : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-          }`}
-          aria-live="polite"
-        >
-          <span className="text-base">
-            {paidCredits > 0 ? '💎' : exhausted ? '🔒' : '✨'}
-          </span>
-          {state ? (
-            paidCredits > 0 ? (
-              <span>
-                {t.statusPaidPrefix}
-                <strong className="font-bold">{paidCredits}</strong>
-                {t.statusPaidSuffix}
-                {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
-              </span>
-            ) : exhausted ? (
-              <span>{t.statusExhausted}</span>
+            }`}
+            aria-live="polite"
+          >
+            <span className="text-base">
+              {paidCredits > 0 ? '💎' : '✨'}
+            </span>
+            {state ? (
+              paidCredits > 0 ? (
+                <span>
+                  {t.statusPaidPrefix}
+                  <strong className="font-bold">{paidCredits}</strong>
+                  {t.statusPaidSuffix}
+                  {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
+                </span>
+              ) : (
+                <span>{t.statusFree(remaining)}</span>
+              )
             ) : (
-              <span>{t.statusFree(remaining)}</span>
-            )
-          ) : (
-            <span>{t.statusChecking}</span>
-          )}
-        </div>
+              <span>{t.statusChecking}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <input
@@ -448,6 +461,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
                 previewUrl={previewUrl}
                 activeSimulation={activeSimulation}
                 onPick={runSimulate}
+                onUpgrade={() => setShowModal(true)}
                 simulatingHex={simulatingHex}
                 paidCredits={paidCredits}
                 remainingFree={remaining}
@@ -568,6 +582,7 @@ function HairColorResult({
   previewUrl,
   activeSimulation,
   onPick,
+  onUpgrade,
   simulatingHex,
   paidCredits,
   remainingFree,
@@ -577,6 +592,7 @@ function HairColorResult({
   previewUrl: string | null
   activeSimulation: PreviewSimulation | null
   onPick: (c: HairCandidate) => void
+  onUpgrade: () => void
   simulatingHex: string | null
   paidCredits: number
   remainingFree: number
@@ -584,6 +600,7 @@ function HairColorResult({
 }) {
   const { diagnosis } = result
   const canSpend = paidCredits > 0 || remainingFree > 0
+  const showUpsell = paidCredits === 0 && remainingFree <= 1
 
   return (
     <section
@@ -688,6 +705,19 @@ function HairColorResult({
             <h3 className="text-base font-bold text-gray-900">{t.candidatesHeading}</h3>
             <span className="text-xs text-gray-500">{t.candidatesNote}</span>
           </div>
+          {showUpsell && (
+            <button
+              type="button"
+              onClick={onUpgrade}
+              className="mb-4 w-full text-left px-4 py-2.5 text-xs bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 rounded-lg hover:from-violet-100 hover:to-purple-100 transition-colors"
+            >
+              <span className="text-gray-700">
+                💡 {t.candidatesUpsellPrefix}
+                <strong className="text-violet-700 underline">{t.candidatesUpsellLink}</strong>
+                {t.candidatesUpsellSuffix}
+              </span>
+            </button>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {diagnosis.candidates.map((c) => (
               <CandidateCard
@@ -697,6 +727,7 @@ function HairColorResult({
                 isSimulating={simulatingHex === c.hex}
                 disabled={!canSpend}
                 onPick={() => onPick(c)}
+                onUpgrade={onUpgrade}
                 t={t}
               />
             ))}
@@ -770,6 +801,7 @@ function CandidateCard({
   isSimulating,
   disabled,
   onPick,
+  onUpgrade,
   t,
 }: {
   candidate: HairCandidate
@@ -777,6 +809,7 @@ function CandidateCard({
   isSimulating: boolean
   disabled: boolean
   onPick: () => void
+  onUpgrade: () => void
   t: Strings
 }) {
   const cat = t.category[candidate.category]
@@ -815,15 +848,15 @@ function CandidateCard({
         </p>
         <button
           type="button"
-          onClick={onPick}
-          disabled={isSimulating || isActive || disabled}
+          onClick={disabled ? onUpgrade : onPick}
+          disabled={isSimulating || isActive}
           className={`w-full px-3 py-2 text-xs font-semibold rounded-lg transition-all ${
             isActive
               ? 'bg-violet-100 text-violet-700 cursor-default'
               : isSimulating
                 ? 'bg-violet-200 text-violet-700 cursor-wait'
                 : disabled
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  ? 'bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100'
                   : 'bg-violet-600 text-white hover:bg-violet-700'
           }`}
         >
