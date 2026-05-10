@@ -490,6 +490,85 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
 
 4. 将完整的 `EnrichedPromptData[]` 写入 `/tmp/prompta-enriched.json`。
 
+### Phase 4.5: ParamConfig 抽取（可选，仅 tag-style 有效）
+
+为采集到的 SD/MJ tag-style prompt 生成 `PromptParamsConfig` —— 让用户能在详情页通过控件实时改色/长度/样式。**仅以下 source 适用：`lexica` / `civitai` / `midjourney`**，narrative prompt（promptsChat / text / photo-edit）跳过。
+
+#### 何时生成 config
+
+判断条件（同时满足才生成）：
+1. `source ∈ {lexica, civitai, midjourney}`
+2. content 是逗号分隔的 tag 串（不是长段落叙述）
+3. 至少能识别出 **2 个** 可参数化轴（颜色/长度/样式/表情/视点之一）
+
+#### Haiku sub-agent 任务
+
+对每条满足条件的 prompt 调一次 Haiku，prompt 模板：
+
+```
+你是 prompt 参数化助手。给定一条 SD/MJ tag-style prompt content，识别可由用户调节的属性，输出 ParamConfig JSON。
+
+输入 content:
+"""
+{prompt.content}
+"""
+
+可识别的标准轴（只挑实际出现的）：
+- hairColor (e.g. "black hair" / "blonde hair") → 用 hairColorOptions
+- hairLength (e.g. "long hair") → 用 hairLengthOptions
+- hairStyle (e.g. "straight hair" / "twintails") → 用 hairStyleOptions
+- expression (e.g. "smile" / "smirk") → 用 expressionOptions
+- eyeColor (e.g. "blue eyes") → 用 eyeColorOptions
+- 其他衣物颜色（如 "blue sailor collar" / "red dress"）→ 用 fabricColorOptions(suffix)
+
+强制规则：
+- 每个 param 的 `match` 字段必须是 content 中**精确**出现且**仅出现一次**的子串
+- 同一个轴若有歧义（如 content 同时含 `long hair` 和 `very long hair`），整轴跳过
+- 至少识别 2 个 param，否则返回空数组 `{ "params": [] }`
+- match 包含的字符串不能与其他 match 互相重叠
+
+输出格式（严格 JSON，无注释，无 markdown）：
+{
+  "params": [
+    { "id": "hairColor", "type": "color", "label": "髪色", "match": "black hair", "useOptions": "hairColor" },
+    { "id": "hairLength", "type": "select", "label": "髪の長さ", "match": "long hair", "useOptions": "hairLength" },
+    ...
+  ]
+}
+
+`useOptions` 引用的常量在 src/lib/prompt-params/options.ts 中定义。
+fabricColor 类需写成 `{"useOptions":"fabric","suffix":"sailor collar"}`。
+```
+
+#### 落库与生成 TS 文件
+
+对每条非空的 Haiku 输出，生成 TS 文件 `src/lib/prompt-params/configs/{slug}.ts`：
+
+```ts
+import type { PromptParamsConfig } from '../types'
+import { hairColorOptions, hairLengthOptions /* ... */ } from '../options'
+
+export const config: PromptParamsConfig = {
+  params: [
+    { id: 'hairColor', type: 'color', label: '髪色', match: 'black hair', options: hairColorOptions('black hair') },
+    // ...
+  ],
+}
+```
+
+#### 同步与验证
+
+1. 跑 `npx tsx scripts/prompt-params/sync.ts` 重新生成 `configs.generated.ts`
+2. 跑 `npx tsx scripts/prompt-params/audit.ts` 校验所有 match 在 DB 中存在且唯一
+3. 任何 `✗` 必须修复（删除 param 或重写 match）；`!` warning 也建议修
+4. typecheck：`npx tsc --noEmit`
+
+#### 输出到报告
+
+在 Phase 8 报告中加入：
+- 新增 ParamConfig 数（X 个 prompt 拿到面板）
+- 跳过原因分类（narrative / 单轴不足 / source 不支持）
+
 ### Phase 5: 下载图片
 
 ```bash

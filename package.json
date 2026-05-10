@@ -11,7 +11,9 @@
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "node -r ts-node/register prisma/seed.ts"
+    "db:seed": "node -r ts-node/register prisma/seed.ts",
+    "params:sync": "tsx scripts/prompt-params/sync.ts",
+    "params:audit": "tsx scripts/prompt-params/audit.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
