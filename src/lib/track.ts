@@ -62,6 +62,27 @@ export function trackPromptCopy(promptId: string | undefined, meta: TrackMeta) {
   fireDbIncrement('copy', promptId)
 }
 
+export function trackParamChange(
+  promptId: string | undefined,
+  paramId: string,
+  value: string,
+  meta: TrackMeta,
+) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  try {
+    window.gtag('event', 'prompt_param_changed', {
+      prompt_id: promptId,
+      prompt_slug: meta.slug,
+      prompt_category: meta.category ?? undefined,
+      prompt_tool: meta.tool ?? undefined,
+      param_id: paramId,
+      param_value: value,
+    })
+  } catch {
+    // ignore
+  }
+}
+
 export function trackPromptTry(
   promptId: string | undefined,
   target: 'chatgpt' | 'gemini' | 'dall-e' | 'claude',

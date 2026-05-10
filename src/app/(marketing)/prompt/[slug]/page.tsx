@@ -13,6 +13,8 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
 import { ShareButtons } from '@/components/ui/ShareButtons'
 import { EmbedButton } from '@/components/ui/EmbedButton'
+import { PromptParamsPanel } from '@/components/prompt/params/PromptParamsPanel'
+import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 
 export const revalidate = 60
 
@@ -65,6 +67,9 @@ export default async function PromptDetailPage({ params }: Props) {
   const isTextPrompt = prompt.toolSlug ? !IMAGE_TOOLS.has(prompt.toolSlug) : false
   // photo-edit prompts (Gemini-based image editing) get a "Try in Gemini" button
   const isPhotoEdit = prompt.categorySlug === 'photo-edit' && prompt.toolSlug === 'gemini'
+
+  // Optional interactive parameter panel (registry-driven, slug-keyed)
+  const paramsConfig = getPromptParamsConfig(prompt.slug)
 
   // Find relevant guides based on the prompt's tool and category
   const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
@@ -184,26 +189,41 @@ export default async function PromptDetailPage({ params }: Props) {
 
           {/* Prompt Content */}
           <section className="mb-8">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-bold text-gray-900">プロンプト</h2>
-              <CopyButton
-                text={prompt.content}
-                variant="compact"
+            {paramsConfig ? (
+              <PromptParamsPanel
                 promptId={prompt.id}
                 slug={prompt.slug}
                 category={prompt.categorySlug}
                 tool={prompt.toolSlug}
+                content={prompt.content}
+                params={paramsConfig.params}
               />
-            </div>
-            <div className="bg-gray-900 text-gray-100 rounded-xl p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap">{prompt.content}</div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-lg font-bold text-gray-900">プロンプト</h2>
+                  <CopyButton
+                    text={prompt.content}
+                    variant="compact"
+                    promptId={prompt.id}
+                    slug={prompt.slug}
+                    category={prompt.categorySlug}
+                    tool={prompt.toolSlug}
+                  />
+                </div>
+                <div className="bg-gray-900 text-gray-100 rounded-xl p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap">{prompt.content}</div>
+              </>
+            )}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              <CopyButton
-                text={prompt.content}
-                promptId={prompt.id}
-                slug={prompt.slug}
-                category={prompt.categorySlug}
-                tool={prompt.toolSlug}
-              />
+              {!paramsConfig && (
+                <CopyButton
+                  text={prompt.content}
+                  promptId={prompt.id}
+                  slug={prompt.slug}
+                  category={prompt.categorySlug}
+                  tool={prompt.toolSlug}
+                />
+              )}
               {isTextPrompt && (
                 <TryInChatGPTButton
                   content={prompt.content}
