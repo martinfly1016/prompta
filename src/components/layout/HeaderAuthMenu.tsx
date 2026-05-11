@@ -77,12 +77,21 @@ export function HeaderAuthMenu() {
           <div className="px-4 py-3 border-b border-gray-100">
             <p className="text-xs text-gray-500">サインイン中</p>
             <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
-            {typeof credits === 'number' && credits > 0 && (
-              <p className="mt-1 inline-flex items-center gap-1 text-xs text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md">
-                💎 保有クレジット {credits} 回
-              </p>
+            {typeof credits === 'number' && (
+              <Link
+                href="/account"
+                className="mt-1 inline-flex items-center gap-1 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md transition-colors"
+              >
+                💎 保有クレジット {credits} 回 →
+              </Link>
             )}
           </div>
+          <Link
+            href="/account"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700 whitespace-nowrap font-medium"
+          >
+            👤 アカウント
+          </Link>
           <Link
             href="/tools/personal-color-analysis"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-50 hover:text-sky-700 whitespace-nowrap"
