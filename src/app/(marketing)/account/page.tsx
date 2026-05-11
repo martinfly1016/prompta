@@ -41,7 +41,7 @@ export default async function AccountPage() {
   const email = session.user.email
   const eh = emailHash(email)
 
-  const [credits, payments, usages] = await Promise.all([
+  const [credits, payments, usages, generations] = await Promise.all([
     prisma.paidCredits.findUnique({ where: { emailHash: eh } }),
     prisma.stripePayment.findMany({
       where: { emailHash: eh },
@@ -52,6 +52,12 @@ export default async function AccountPage() {
       where: { emailHash: eh, type: 'paid' },
       orderBy: { createdAt: 'desc' },
       take: 30,
+    }),
+    prisma.generationOutput.findMany({
+      where: { emailHash: eh, outputBlobUrl: { not: null } },
+      orderBy: { createdAt: 'desc' },
+      take: 12,
+      select: { id: true, tool: true, outputBlobUrl: true, createdAt: true, outputJson: true },
     }),
   ])
 
@@ -153,6 +159,41 @@ export default async function AccountPage() {
           <p className="mt-2 text-xs text-gray-500">最終購入：{fmtDate(lastPurchase)}</p>
         )}
       </section>
+
+      {/* Generation gallery (Phase 2) */}
+      {generations.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">生成した画像</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {generations.map(g => (
+              <a
+                key={g.id}
+                href={g.outputBlobUrl!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block relative aspect-square overflow-hidden rounded-xl bg-gray-100 border border-gray-200 hover:border-sky-300 transition-all"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={g.outputBlobUrl!}
+                  alt={`${g.tool} 生成画像`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-[10px] p-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">{TOOL_LABELS[g.tool]?.icon ?? '🔧'} {TOOL_LABELS[g.tool]?.label ?? g.tool}</span>
+                    <span className="opacity-80">{new Date(g.createdAt).toLocaleDateString('ja-JP')}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-gray-400">
+            ※ 画像クリックで原寸大表示。2026-05-12 以降の生成画像のみ表示されます。
+          </p>
+        </section>
+      )}
 
       {/* Usage history */}
       <section className="mb-8">

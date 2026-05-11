@@ -9,6 +9,7 @@ import { prisma } from '@/lib/prisma'
 import { analyzePersonalColor } from '@/lib/personal-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
 import { validateImageBuffer } from '@/lib/image-validation'
+import { saveGenerationOutput } from '@/lib/generation-output'
 
 const TOOL = 'personal-color'
 const MAX_BYTES = 8 * 1024 * 1024 // 8MB before base64
@@ -87,6 +88,12 @@ export async function POST(req: NextRequest) {
   try {
     const result = await analyzePersonalColor(buf, file.type)
     const paidCredits = await getPaidBalance(eh)
+    // Phase 2: persist analysis JSON (no image — personal-color is text result).
+    await saveGenerationOutput({
+      emailHash: eh,
+      tool: TOOL,
+      outputJson: JSON.stringify(result),
+    }).catch(e => console.error('[personal-color/analyze] save failed:', (e as Error).message))
     return NextResponse.json({
       ok: true,
       result,

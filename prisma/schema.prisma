@@ -298,3 +298,27 @@ model StripePayment {
   @@index([emailHash])
   @@index([status])
 }
+
+// Phase 2 (2026-05-11): persist tool generation outputs for the /account
+// gallery view + future re-download. Only paid (credit-spending) calls
+// produce GenerationOutput rows; free welcome-bonus calls do too since
+// every call now spends 1 credit.
+model GenerationOutput {
+  id            String   @id @default(cuid())
+  emailHash     String
+  tool          String   // "personal-color" | "hair-color" | "prompt:{slug}" (future)
+  promptSlug    String?  // future: for embedded prompt generation
+  // JSON metadata about the input/output. For personal-color: full
+  // diagnosis result. For hair-color: candidate hex + name + preview info.
+  inputParams   String?  @db.Text
+  outputJson    String?  @db.Text
+  outputBlobUrl String?  // Vercel Blob URL of generated image (if any)
+  thumbnailUrl  String?  // smaller version for grid view (future)
+  creditsUsed   Int      @default(1)
+  status        String   @default("completed") // completed | failed | refunded
+  errorMessage  String?
+  createdAt     DateTime @default(now())
+
+  @@index([emailHash, createdAt])
+  @@index([tool, createdAt])
+}

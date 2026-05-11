@@ -9,6 +9,7 @@ import { prisma } from '@/lib/prisma'
 import { diagnoseHairColor, simulateHairColor } from '@/lib/hair-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
 import { validateImageBuffer } from '@/lib/image-validation'
+import { saveGenerationOutput } from '@/lib/generation-output'
 
 const TOOL = 'hair-color'
 const MAX_BYTES = 8 * 1024 * 1024
@@ -110,6 +111,25 @@ export async function POST(req: NextRequest) {
     }
 
     const paidCredits = await getPaidBalance(eh)
+    // Phase 2: persist diagnosis JSON + preview image (if generated).
+    const imageBuf = previewSimulation?.imageBase64
+      ? Buffer.from(previewSimulation.imageBase64, 'base64')
+      : null
+    await saveGenerationOutput({
+      emailHash: eh,
+      tool: TOOL,
+      outputJson: JSON.stringify({
+        diagnosis,
+        preview: previewSimulation ? {
+          hex: previewSimulation.hex,
+          nameJa: previewSimulation.nameJa,
+          nameEn: previewSimulation.nameEn,
+        } : null,
+      }),
+      image: imageBuf && previewSimulation
+        ? { buffer: imageBuf, mimeType: previewSimulation.mimeType }
+        : undefined,
+    }).catch(e => console.error('[hair-color/analyze] save failed:', (e as Error).message))
     return NextResponse.json({
       ok: true,
       result: { diagnosis, previewSimulation },
