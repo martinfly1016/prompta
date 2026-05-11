@@ -147,8 +147,47 @@ async function main() {
 
       console.log(JSON.stringify({ days, since: since.toISOString().split('T')[0], ...summary }, null, 2))
 
+    } else if (mode === 'paywall-hits') {
+      // Server-side ground truth: count anonIds that hit the 3-call free quota.
+      // Use this to cross-check GA4 paywall_view event, especially before instrumentation.
+      const days = parseInt(args['days'] || '7', 10)
+      const since = new Date()
+      since.setDate(since.getDate() - days)
+
+      const tools = ['personal-color', 'hair-color']
+      const result: Record<string, unknown> = { days, since: since.toISOString().split('T')[0] }
+
+      for (const tool of tools) {
+        const usages = await prisma.toolUsage.findMany({
+          where: { tool, createdAt: { gte: since } },
+          select: { anonId: true, type: true },
+        })
+        // Group by anonId
+        const byAnon = new Map<string, { free: number; paid: number }>()
+        for (const u of usages) {
+          const cur = byAnon.get(u.anonId) ?? { free: 0, paid: 0 }
+          if (u.type === 'free') cur.free++
+          else cur.paid++
+          byAnon.set(u.anonId, cur)
+        }
+        const counts = Array.from(byAnon.values())
+        const exhausted = counts.filter(c => c.free >= 3).length
+        const partial = counts.filter(c => c.free < 3).length
+        const paid = counts.filter(c => c.paid > 0).length
+        const exhaustedToPaid = counts.filter(c => c.free >= 3 && c.paid > 0).length
+        result[tool] = {
+          uniqueAnons: byAnon.size,
+          exhausted,            // hit ≥3 free calls
+          partial,              // <3 free calls (still has quota)
+          paid,                 // any paid call
+          exhaustedToPaid,      // hit limit AND paid (real conversion)
+          conversionRate: exhausted === 0 ? null : Math.round((exhaustedToPaid / exhausted) * 100) + '%',
+        }
+      }
+      console.log(JSON.stringify(result, null, 2))
+
     } else {
-      console.error(`Unknown mode: ${mode}. Use recent-prompts, category-counts, tag-stats, tool-usage`)
+      console.error(`Unknown mode: ${mode}. Use recent-prompts, category-counts, tag-stats, tool-usage, paywall-hits`)
       process.exit(1)
     }
   } finally {

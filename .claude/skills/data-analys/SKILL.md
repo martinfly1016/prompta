@@ -286,7 +286,26 @@ npx tsx src/scripts/data-analys/ga-query.ts --mode=tool-funnel --days=7
 | hair-color | exhausted_pick / analyze / simulate / 429 | N | X% |
 | personal-color | exhausted_pick / analyze | N | X% |
 
-> ⚠️ 若 `perToolBreakdown` 输出 `_note: 'Per-tool/per-trigger split unavailable'`，说明用户还没在 **GA4 admin → Property → Custom definitions** 注册 `tool` 和 `trigger` 这两个 event-scoped 自定义维度。注册后 24-48h 才能查到切片数据。在此之前只输出聚合行。
+> ⚠️ 若 `perToolBreakdown` 输出 `_note: 'Per-tool/per-trigger split unavailable'`，说明用户还没在 **GA4 admin → Property → Custom definitions** 注册 `tool` 和 `trigger` 这两个 event-scoped 自定义维度。
+> 注册当下立即可查（**没有 24-48h 处理延迟**，GA4 实时数据流近实时——5/11 实测确认）。**之前 SKILL 误标的「24-48h」是把 GSC 的延迟错套到 GA4 上**。
+> 在注册前 `runReport` 调 `customEvent:trigger` 会失败，输出 fallback 聚合行；注册后立即返回切片。
+
+### 3.5.1 DB 兜底口径（推荐与 §3.5 GA 漏斗交叉验证）
+
+`paywall_view` 事件 2026-05-10 才上线，**之前的撞墙数据 GA 漏记**。但 `ToolUsage` 表完整保留每次调用，可以反推「实际撞 3 次 free quota 的 anon 数」：
+
+```bash
+npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
+```
+
+输出：
+| 工具 | 唯一 anon | ≥3 free（撞墙）| <3 free | 撞墙→付费转化 |
+|---|---|---|---|---|
+
+**用法**：
+- 撞墙数远 > paywall_view → instrumentation gap（修代码）
+- 撞墙数 ≈ paywall_view → 两者一致，可以放心切到 GA 切片
+- 撞墙→付费 < 15% → UI/价格优化重点（文案？free quota 调 5？）
 
 ### 解读重点
 - **view→click < 10%**: 价格 / signin gate / 文案问题；考虑去掉登录前置 / 改 modal 文案
