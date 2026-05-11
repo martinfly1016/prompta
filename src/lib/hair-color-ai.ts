@@ -8,7 +8,14 @@
 //      preserve clause + R5 negative + R3 output spec + R4 quality anchor.
 
 const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image'
+// Paid tool — use the premium image edit model (Nano Banana Pro) for
+// stricter structure preservation. Content-production scripts (collect /
+// style-test-live) continue to use GEMINI_IMAGE_MODEL (cheap default).
+// Override either via env if needed.
+const IMAGE_MODEL =
+  process.env.GEMINI_PAID_IMAGE_MODEL ||
+  process.env.GEMINI_IMAGE_MODEL ||
+  'nano-banana-pro-preview'
 const TEXT_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent`
 const IMAGE_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:generateContent`
 
@@ -186,39 +193,23 @@ export async function diagnoseHairColor(
   }
 }
 
-// Build the recolor prompt with strict DO / DO NOT separation. Gemini
-// 2.5 Flash Image weights instructions front-loaded with structural
-// markers; a positive-then-negative split lets the model treat the DO
-// NOT block as hard guardrails rather than soft hints buried in prose.
-//
-// Failure mode this prompt targets: when the source photo has hair
-// tied back / pulled up, Gemini regenerated flowing loose hair because
-// the "preserve hairstyle" clause was a single fragment inside a long
-// list. The explicit DO NOT block + tied-back case mitigates that.
+// Build the recolor prompt — principled, NOT enumerated. We don't list
+// hairstyles (infinite); we state the invariant: every non-hair pixel
+// AND the hair-silhouette outline must be byte-identical to source.
+// Only hair-pixel COLOR may change. Treat as color-only inpainting.
 function buildRecolorPrompt(hex: string, nameJa: string, nameEn: string): string {
   return `TASK
-Recolor ONLY the hair of the person in the uploaded photo to ${hex} (${nameEn} / ${nameJa}). Nothing else changes.
+Recolor the hair to ${hex} (${nameEn} / ${nameJa}).
 
-✅ DO
-- Apply the new color naturally to every visible hair strand (roots → mid-lengths → ends, including flyaways)
-- Match the lighting direction and highlight/shadow distribution of the source photo
-- Preserve natural hair texture and per-strand visibility
-- Output at the original resolution, photorealistic
+STRICT INVARIANT
+- The hairstyle must NOT change in any way — same length, same shape, same arrangement, same partition, same bangs, same bound/loose state, same individual strand placement.
+- Every non-hair pixel must be IDENTICAL to the source (face, skin, eyes, brows, lips, ears, neck, shoulders, clothing, background).
+- The hair-silhouette outline — where hair meets skin / background / clothing — must be IDENTICAL to the source, pixel-for-pixel.
+- ONLY the COLOR of hair pixels may change. No new hair pixels, no removed hair pixels.
 
-❌ DO NOT (any violation = failure; treat as hard rules):
-- DO NOT change the hairstyle, hair length, hair cut, or how the hair is arranged
-- DO NOT release hair that is tied back / in a bun / ponytail / pulled up — keep it bound exactly as in the source
-- DO NOT invent hair strands or hair that is NOT visible in the source photo (especially behind the head, sides, or top)
-- DO NOT change the bangs: keep the same position, shape, parting, and density
-- DO NOT modify the face, jawline, skin tone, freckles, eyes, eyebrows, lip color, or makeup
-- DO NOT change clothing, accessories, pose, head angle, or background
-- DO NOT add or remove flyaways
-- DO NOT cast the new hair color onto the skin / forehead / collar
-- DO NOT regenerate the hair from scratch — only replace the COLOR of existing hair pixels
-- DO NOT produce a plastic, doll-like, or wig-like result
+Treat this as a color-only inpainting operation: do not regenerate, reshape, lengthen, shorten, loosen, tighten, or add to any hair. If the source has tightly bound hair with no loose strands near the face, the output must show the same. If the source has flowing hair, keep the same flow. Output the same composition with only hair color modified.
 
-EDGE CASE — OCCLUDED HAIR
-If parts of the hair are not visible in the source photo (e.g. tied back at the nape, hidden behind the head), DO NOT fabricate them. Keep the hair silhouette IDENTICAL to the source.`
+Photorealistic. Original resolution.`
 }
 
 export interface HairSimulationResult {
