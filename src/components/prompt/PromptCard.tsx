@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { NormalizedPrompt } from '@/lib/data'
+import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 
 interface PromptCardProps {
   prompt: NormalizedPrompt
   priority?: boolean // true for above-fold images (first 4-8 cards)
 }
+
+const NEW_BADGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000
+const HOT_MIN_VIEWS = 10
+const HOT_MIN_COPY_RATE = 0.2
+const STATS_MIN_VIEWS = 5
 
 export function PromptCard({ prompt, priority = false }: PromptCardProps) {
   // photo-edit prompts have no `images[]` rows — use the After sample as the
@@ -15,6 +21,12 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
     ? `${prompt.title} — Before/After サンプル`
     : prompt.images[0]?.alt || prompt.title
   const hasImage = !!thumbUrl
+  const hasBeforeAfter = !!(prompt.sampleBeforeUrl && prompt.sampleAfterUrl)
+  const hasParams = !!getPromptParamsConfig(prompt.slug)
+  const copyRate = prompt.viewCount > 0 ? prompt.copyCount / prompt.viewCount : 0
+  const isHot = prompt.viewCount >= HOT_MIN_VIEWS && copyRate >= HOT_MIN_COPY_RATE
+  const isNew = Date.now() - new Date(prompt.createdAt).getTime() < NEW_BADGE_WINDOW_MS
+  const showStats = prompt.viewCount >= STATS_MIN_VIEWS
 
   return (
     <Link
@@ -39,7 +51,7 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
             </p>
           </div>
         )}
-        {/* Tool badge */}
+        {/* Tool badge (top-left) */}
         {prompt.toolName && (
           <span
             className="absolute top-2 left-2 px-2 py-0.5 text-xs font-medium text-white rounded-md"
@@ -48,6 +60,29 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
             {prompt.toolName}
           </span>
         )}
+        {/* Signal badges (top-right) — stack of pills */}
+        <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+          {isHot && (
+            <span className="px-1.5 py-0.5 text-[10px] font-bold text-white bg-orange-500/95 rounded-md backdrop-blur-sm shadow-sm">
+              🔥 人気
+            </span>
+          )}
+          {hasParams && (
+            <span className="px-1.5 py-0.5 text-[10px] font-semibold text-amber-900 bg-amber-100/95 rounded-md backdrop-blur-sm shadow-sm">
+              ⚙ カスタマイズ
+            </span>
+          )}
+          {hasBeforeAfter && (
+            <span className="px-1.5 py-0.5 text-[10px] font-semibold text-sky-900 bg-sky-100/95 rounded-md backdrop-blur-sm shadow-sm">
+              🆎 Before/After
+            </span>
+          )}
+          {isNew && (
+            <span className="px-1.5 py-0.5 text-[10px] font-bold text-emerald-900 bg-emerald-100/95 rounded-md backdrop-blur-sm shadow-sm">
+              NEW
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Content */}
@@ -73,22 +108,24 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
           ))}
         </div>
 
-        {/* Stats */}
-        <div className="flex items-center gap-3 text-[11px] text-gray-400">
-          <span className="flex items-center gap-1">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-            {prompt.viewCount.toLocaleString()}
-          </span>
-          <span className="flex items-center gap-1">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-            {prompt.copyCount.toLocaleString()}
-          </span>
-        </div>
+        {/* Stats — hidden when below noise floor to avoid "nobody used this" signal */}
+        {showStats && (
+          <div className="flex items-center gap-3 text-[11px] text-gray-400">
+            <span className="flex items-center gap-1">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              {prompt.viewCount.toLocaleString()}
+            </span>
+            <span className="flex items-center gap-1">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              {prompt.copyCount.toLocaleString()}
+            </span>
+          </div>
+        )}
       </div>
     </Link>
   )
