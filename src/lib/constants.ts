@@ -261,9 +261,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'Stable Diffusion・Midjourney で使えるカメラアングル・構図プロンプト 35 選。クローズアップ・俯瞰・ローアングル・ハイアングル・シネマティック撮影まで、構図とライティングの呪文を画像付きで紹介。コピペで動作確認済み。',
   },
   'photo-edit': {
-    seoTitle: 'AI写真加工プロンプト集【コピペOK】｜背景削除・証明写真・プロフィール写真・着せ替え',
-    seoH1: 'AI写真加工プロンプト集｜背景削除・証明写真・プロフィール写真・着せ替え',
-    seoDescription: 'AI写真加工プロンプトのコピペ集。背景透過・背景削除・証明写真生成・プロフィール写真レタッチ・服装着せ替え・髪型シミュレーション・美肌加工を、Gemini 2.5 Flash Image・Nano Banana・ChatGPT で実行できる指示文として多数紹介。',
+    seoTitle: 'AI写真加工プロンプト集【コピペOK】｜壁紙・髪色シミュレーション・配色・背景削除',
+    seoH1: 'AI写真加工プロンプト集｜壁紙シミュレーション・髪色変更・配色・背景削除・証明写真',
+    seoDescription: 'AI写真加工プロンプトのコピペ集。壁紙・インテリア配色シミュレーション、髪色変更、家外壁色、背景透過/削除、証明写真、プロフィール写真レタッチ、服装着せ替え、美肌加工を Gemini 2.5 Flash Image・Nano Banana・ChatGPT 対応プロンプトで実例付き紹介。',
   },
 }
 
@@ -421,6 +421,28 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       '実機材名（Sony A7, 35mm lens）はMidjourneyで特に有効',
       'ネガティブに「flat composition, boring angle, bad lighting」を入れる',
       'コピペ可能なテンプレートから始めて、要素を差し替えるのが最速',
+    ],
+  },
+
+  'photo-edit': {
+    intro:
+      'AI写真加工プロンプトは、あなたがアップロードした実際の写真を AI に編集させるための「指示文」です。AI 画像生成（テキストから新規生成）とは区別される領域で、**Google Gemini 2.5 Flash Image（通称 Nano Banana）/ ChatGPT の画像編集機能 / DALL-E 3 inpainting** などが代表的なツール。「服を別のスタイルに着せ替える」「背景を削除する」「壁の色を変える」「白黒写真をカラー化する」といった作業を、Photoshop を開かずに自然文の指示だけで実行できます。\n\n【3 大ツールの使い分け】\n- **Gemini 2.5 Flash Image (Nano Banana)** — 最も柔軟で精度が高い。識別保持（ID preservation）に強く、人物の顔・骨格を残したまま服装/髪型/背景を変えるのが得意。本サイトのプロンプトは Gemini で動作確認済み。\n- **ChatGPT 画像編集** — Gemini と並ぶ実用ツール。証明写真・プロフィール写真生成は ChatGPT の方が安定する傾向。長文プロンプトに強い。\n- **DALL-E 3 inpainting** — 部分マスク指定での編集が可能。ホクロ除去・小さな修復に向く。\n\n【7 大ユースケース】(1) **壁紙・インテリア配色シミュレーション** — リフォーム前の DIY 検討。(2) **髪色変更シミュレーション** — 美容院予約前の試着。(3) **証明写真・パスポート写真 AI 生成** — 自撮りからフォーマル写真へ。(4) **プロフィール写真・LinkedIn ヘッドショット** — ビジネス用途。(5) **服装着せ替え（参照画像から移植）** — EC・ファッション提案。(6) **背景透過・置換・削除** — 商品撮影・人物切り抜き。(7) **白黒写真カラー化・古写真修復** — 家族写真のレストア。\n\n【効くプロンプト 5 大原則】① **「アップロードした写真の **だけ** を編集」を明示** — 「Edit only the X of the uploaded photo」と書き、AI が全体を再生成しないよう制御。② **保持要素を列挙** — 「Keep the person\'s identity, eye shape, jawline, hair length, pose, background exactly」と保持事項を全部書く。③ **目標を具体的に** — 色は HEX 指定（#A8B89A）、服装は素材まで（cotton, knit）、髪色は CIELab 系（cool ash brown, warm honey blonde）。④ **「Do not regenerate from scratch」** — 既存ピクセル上で操作することを明示。⑤ **出力解像度を指定** — 「Output at the original resolution, photorealistic and natural-looking」で品質を担保。\n\n【Nano Banana の能力境界】Gemini 2.5 Flash Image でも難しい領域があります: **(a) 透明 PNG 生成不可** — 背景透過用途は remove.bg / Photoroom を推奨。**(b) 大幅な構造変更は識別崩壊** — 「年代変身（50 年後）」「ジブリ風変換」など整図再描画が必要なものは顔が変わりがち。**(c) 集合写真の特定人物だけ削除** — 周囲のピクセル復元が完璧でないため、痕跡が残ることが多い。サイト内の各プロンプト詳細ページで Before/After サンプルを公開しているため、実際の挙動を確認したうえで利用ください。',
+    useCases: [
+      '部屋の壁紙・配色シミュレーション（リフォーム前 DIY 検討）',
+      '髪色変更シミュレーション（美容院予約前の試着）',
+      '証明写真・パスポート写真の AI 生成（マイナンバー・運転免許用）',
+      'プロフィール写真・LinkedIn ヘッドショットの整え',
+      '服装の着せ替え・参照画像からの移植（EC・ファッション提案）',
+      '背景透過・背景置換・不要物除去',
+      '白黒写真のカラー化・古写真の修復',
+      '美肌レタッチ・ホクロ除去（識別保持型の小修正）',
+    ],
+    tips: [
+      '「Edit only the X of the uploaded photo」で AI に全体再生成を防止',
+      '保持する要素（顔・骨格・髪型・背景・ポーズ）は冗長でも全部書く',
+      '色は HEX、素材は具体名、髪色は CIELab 系で曖昧さを排除',
+      '「Do not regenerate from scratch — operate on existing pixels」で識別を保護',
+      '透明 PNG / 大幅な構造変更は Gemini 苦手。詳細ページの Before/After サンプルで挙動確認してから使う',
     ],
   },
 
