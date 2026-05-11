@@ -31,7 +31,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_CONFIG.url}/tools/${tool.slug}${page > 1 ? `?page=${page}` : ''}` },
+    alternates: { canonical: `${SITE_CONFIG.url}/tools/${tool.slug}` },
+    robots: page > 1 ? { index: false, follow: true } : undefined,
     openGraph: {
       title,
       description,
