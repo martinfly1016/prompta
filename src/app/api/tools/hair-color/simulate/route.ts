@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  consumeFreeQuota,
-  ensureAnonId,
-  extractClientIp,
-  getQuotaState,
-  hashIp,
-} from '@/lib/tool-quota'
+import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
@@ -21,8 +15,7 @@ const MAX_BYTES = 8 * 1024 * 1024
 const ALLOWED_MIMES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 const HEX_RE = /^#[0-9A-F]{6}$/i
 
-// Re-simulation endpoint: client re-sends the original image plus the
-// chosen candidate's hex / name. Costs 1 quota slot per call.
+// Phase 0 (2026-05-11) — credit-only. Login required + 1 credit per simulate.
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
@@ -68,47 +61,30 @@ export async function POST(req: NextRequest) {
   const ua = req.headers.get('user-agent') || ''
   const ipHash = hashIp(ip, ua)
 
-  let consumedType: 'free' | 'paid' | null = null
-  let consumedRecordId: string | null = null
-  let emailHashUsed: string | null = null
-  let lastState = await getQuotaState(anonId, ipHash, TOOL)
-
-  const reservation = await consumeFreeQuota(anonId, ipHash, TOOL)
-  if (reservation.ok) {
-    consumedType = 'free'
-    consumedRecordId = reservation.id
-    lastState = reservation.state
-  } else {
-    lastState = reservation.state
-    const eh = await getOwnerEmailHash()
-    if (eh) {
-      const r = await spendOneCredit(eh)
-      if (r.ok) {
-        const rec = await prisma.toolUsage.create({
-          data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
-          select: { id: true },
-        })
-        consumedType = 'paid'
-        consumedRecordId = rec.id
-        emailHashUsed = eh
-      }
-    }
+  const eh = await getOwnerEmailHash()
+  if (!eh) {
+    return NextResponse.json(
+      { error: 'login_required', blockReason: 'login_required', paidCredits: 0, stripeEnabled },
+      { status: 401 },
+    )
   }
 
-  if (!consumedType) {
-    const eh = await getOwnerEmailHash()
-    const paidCredits = await getPaidBalance(eh)
+  const spend = await spendOneCredit(eh)
+  if (!spend.ok) {
     return NextResponse.json(
-      { error: 'quota_exhausted', ...lastState, paidCredits, stripeEnabled },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
       { status: 429 },
     )
   }
 
+  const usage = await prisma.toolUsage.create({
+    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
+    select: { id: true },
+  })
+
   try {
     const sim = await simulateHairColor(buf, file.type, hex, nameJa, nameEn)
-    const eh = await getOwnerEmailHash()
     const paidCredits = await getPaidBalance(eh)
-    const after = await getQuotaState(anonId, ipHash, TOOL)
     return NextResponse.json({
       ok: true,
       simulation: {
@@ -118,23 +94,17 @@ export async function POST(req: NextRequest) {
         imageBase64: sim.imageBase64,
         mimeType: sim.mimeType,
       },
-      source: consumedType,
-      quota: { ...after, paidCredits, stripeEnabled },
+      source: 'paid',
+      quota: { paidCredits, canUse: paidCredits > 0, stripeEnabled },
     })
   } catch (e: any) {
-    if (consumedRecordId) {
-      await prisma.toolUsage
-        .delete({ where: { id: consumedRecordId } })
-        .catch(() => {})
-    }
-    if (consumedType === 'paid' && emailHashUsed) {
-      await prisma.paidCredits
-        .update({
-          where: { emailHash: emailHashUsed },
-          data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
-        })
-        .catch(() => {})
-    }
+    await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
+    await prisma.paidCredits
+      .update({
+        where: { emailHash: eh },
+        data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
+      })
+      .catch(() => {})
     console.error('[hair-color/simulate] failed:', e?.message)
     return NextResponse.json(
       { error: 'simulation_failed', message: e?.message ?? 'unknown', refunded: true },

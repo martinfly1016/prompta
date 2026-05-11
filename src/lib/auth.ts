@@ -146,6 +146,16 @@ export const authOptions: NextAuthOptions = {
       } catch {
         // ignore
       }
+      // Phase 0 (2026-05-11) — grant welcome bonus credits on every sign-in,
+      // but idempotent (welcomeBonusAt gate prevents repeat grants).
+      try {
+        if (user?.email) {
+          const { grantWelcomeBonusIfEligible } = await import('@/lib/paid-credits')
+          await grantWelcomeBonusIfEligible(user.email)
+        }
+      } catch (e) {
+        console.error('[auth] welcome bonus grant failed:', (e as Error)?.message)
+      }
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

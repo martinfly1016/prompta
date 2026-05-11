@@ -266,15 +266,20 @@ model ToolUsage {
 }
 
 model PaidCredits {
-  id           String   @id @default(cuid())
-  emailHash    String   @unique
-  email        String
-  balance      Int      @default(0)
-  totalEarned  Int      @default(0)
-  totalUsed    Int      @default(0)
-  lastPurchase DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             String    @id @default(cuid())
+  emailHash      String    @unique
+  email          String
+  balance        Int       @default(0)
+  totalEarned    Int       @default(0)
+  totalUsed      Int       @default(0)
+  // Welcome bonus on first login (Phase 0 pivot 2026-05-11):
+  // welcomeBonusAt = null means user has not yet received the one-time gift.
+  // Bonus is included in `balance` + `totalEarned` so credit math stays simple.
+  welcomeBonus   Int       @default(0)
+  welcomeBonusAt DateTime?
+  lastPurchase   DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model StripePayment {

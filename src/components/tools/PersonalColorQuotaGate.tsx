@@ -25,7 +25,7 @@ interface QuotaState {
   ipUsedToday: number
   paidCredits: number
   canUse: boolean
-  blockReason: 'none' | 'free_exhausted' | 'ip_exhausted'
+  blockReason: 'none' | 'login_required' | 'credits_exhausted' | 'free_exhausted' | 'ip_exhausted'
   stripeEnabled?: boolean
 }
 
@@ -49,7 +49,8 @@ interface AnalysisResult {
   confidence: number
 }
 
-const FREE_LIMIT = 3
+// Phase 0 (2026-05-11) — credit-only. Welcome bonus = 3 on first login.
+const WELCOME_CREDITS = 3
 const PRICE_LABEL = '¥300 / 10回パック'
 const PRICE_LABEL_EN = '¥300 / 10-pack'
 const MAX_BYTES = 8 * 1024 * 1024
@@ -70,11 +71,12 @@ const STRINGS = {
       accessory: { icon: '💍', title: 'アクセサリー' },
     },
     statusChecking: '利用状況を確認中…',
-    statusFree: (n: number) => `無料試用：残り ${n} / ${FREE_LIMIT} 回`,
-    statusExhausted: '無料試用 3 回を使い切りました',
+    statusLoginRequired: `ログインで ${WELCOME_CREDITS} クレジット獲得（無料）`,
+    statusFree: (n: number) => `クレジット残り ${n} 回`,
+    statusExhausted: 'クレジットを使い切りました',
     statusPaidPrefix: '保有クレジット：',
     statusPaidSuffix: ' 回',
-    statusPaidNoteFreeUsed: '（無料枠は使用済）',
+    statusPaidNoteFreeUsed: '',
     pickButton: '📁 写真を選択して診断',
     pickCaption: 'JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。',
     errImageTooLarge: '画像サイズが大きすぎます（最大 8MB）',
@@ -82,10 +84,10 @@ const STRINGS = {
     errCheckImage: '画像を確認してください。',
     errNetwork: (m: string) => `通信エラー: ${m}`,
     errAnalyze: (m: string) => `診断エラー: ${m}`,
-    modalTitleFree: '無料試用 3 回を使い切りました',
-    modalTitleIp: 'このネットワークの試用上限に達しました',
-    modalDescFree: '無料試用は本ツールにつき 3 回までです。続けてご利用いただく場合は 10 回パックをご購入ください。クレジットは似合う髪色診断ツールと共通でご利用いただけます。',
-    modalDescIp: '同じネットワークから 5 回以上利用されています。続けてご利用いただく場合は 10 回パックをご購入ください。',
+    modalTitleFree: 'クレジット不足',
+    modalTitleIp: 'クレジット不足',
+    modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。クレジットは全ツール共通でご利用いただけます。',
+    modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。',
     pricePackTitle: '10 回パック',
     priceFeatures: ['即時利用、有効期限なし', '似合う髪色診断ツールと共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', 'Google サインイン または メールリンクで管理'],
     purchasing: '処理中…',
@@ -141,11 +143,12 @@ const STRINGS = {
       accessory: { icon: '💍', title: 'Accessory metals' },
     },
     statusChecking: 'Checking usage…',
-    statusFree: (n: number) => `Free trial: ${n} / ${FREE_LIMIT} left`,
-    statusExhausted: 'Free trial (3 uses) exhausted',
+    statusLoginRequired: `Sign in to get ${WELCOME_CREDITS} free credits`,
+    statusFree: (n: number) => `${n} credits left`,
+    statusExhausted: 'Out of credits',
     statusPaidPrefix: 'Credits: ',
     statusPaidSuffix: ' left',
-    statusPaidNoteFreeUsed: '(free quota spent)',
+    statusPaidNoteFreeUsed: '',
     pickButton: '📁 Pick a photo to analyze',
     pickCaption: 'JPG / PNG / WebP (max 8MB). Photos are deleted from our server after analysis.',
     errImageTooLarge: 'Image is too large (max 8MB)',
@@ -153,10 +156,10 @@ const STRINGS = {
     errCheckImage: 'Please check your image.',
     errNetwork: (m: string) => `Network error: ${m}`,
     errAnalyze: (m: string) => `Analysis error: ${m}`,
-    modalTitleFree: "You've used all 3 free trial analyses",
-    modalTitleIp: 'This network has reached its trial limit',
-    modalDescFree: 'The free trial allows 3 uses per tool. Grab a 10-analysis pack to keep going — credits are shared with the hair color diagnosis tool.',
-    modalDescIp: 'This network has been used 5+ times. Grab a 10-analysis pack to keep going.',
+    modalTitleFree: 'Out of credits',
+    modalTitleIp: 'Out of credits',
+    modalDescFree: 'You have used all your credits. Grab a 10-analysis pack to keep going — credits are shared across all tools.',
+    modalDescIp: 'You have used all your credits. Grab a 10-analysis pack to keep going.',
     pricePackTitle: '10-analysis pack',
     priceFeatures: ['Instant access, never expires', 'Shared with the hair color diagnosis tool', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Sign in with Google or email link to manage'],
     purchasing: 'Processing…',
@@ -393,9 +396,12 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
     }
   }
 
-  const remaining = state?.remainingFree ?? FREE_LIMIT
+  // Phase 0: remaining = current credit balance (welcome bonus + purchased).
+  // remainingFree is always 0 from the API now; we just read paidCredits.
   const paidCredits = state?.paidCredits ?? 0
+  const remaining = paidCredits
   const exhausted = state?.canUse === false
+  const loginRequired = state?.blockReason === 'login_required'
   const stripeReady = state?.stripeEnabled === true
 
   return (
@@ -415,9 +421,23 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         </div>
       )}
 
-      {/* Status chip */}
+      {/* Status chip — Phase 0: 3 distinct states (login / exhausted / has credits) */}
       <div className="flex justify-center mb-4">
-        {state && exhausted && paidCredits === 0 ? (
+        {!state ? (
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-gray-50 text-gray-500 border-gray-200">
+            <span className="text-base">⏳</span>
+            <span>{t.statusChecking}</span>
+          </div>
+        ) : loginRequired ? (
+          <a
+            href="/auth/signin"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 transition-colors"
+            aria-live="polite"
+          >
+            <span className="text-base">🔐</span>
+            <span className="font-semibold">{t.statusLoginRequired}</span>
+          </a>
+        ) : exhausted && paidCredits === 0 ? (
           <button
             type="button"
             onClick={() => openPaywall(setShowModal, 'badge')}
@@ -431,31 +451,18 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         ) : (
           <div
             className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
-              paidCredits > 0
-                ? 'bg-blue-50 text-blue-700 border-blue-200'
-                : remaining <= 1
-                  ? 'bg-amber-50 text-amber-700 border-amber-200'
-                  : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              remaining <= 1
+                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                : 'bg-blue-50 text-blue-700 border-blue-200'
             }`}
             aria-live="polite"
           >
-            <span className="text-base">
-              {paidCredits > 0 ? '💎' : '✨'}
+            <span className="text-base">💎</span>
+            <span>
+              {t.statusPaidPrefix}
+              <strong className="font-bold">{paidCredits}</strong>
+              {t.statusPaidSuffix}
             </span>
-            {state ? (
-              paidCredits > 0 ? (
-                <span>
-                  {t.statusPaidPrefix}
-                  <strong className="font-bold">{paidCredits}</strong>
-                  {t.statusPaidSuffix}
-                  {exhausted && <span className="text-gray-500 ml-2">{t.statusPaidNoteFreeUsed}</span>}
-                </span>
-              ) : (
-                <span>{t.statusFree(remaining)}</span>
-              )
-            ) : (
-              <span>{t.statusChecking}</span>
-            )}
           </div>
         )}
       </div>

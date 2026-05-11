@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  consumeFreeQuota,
-  ensureAnonId,
-  extractClientIp,
-  getQuotaState,
-  hashIp,
-} from '@/lib/tool-quota'
+import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
@@ -20,11 +14,9 @@ const TOOL = 'hair-color'
 const MAX_BYTES = 8 * 1024 * 1024
 const ALLOWED_MIMES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
-// Diagnosis (Vision) + auto-simulation of the top "safe" candidate.
-// Both calls are wrapped in a single quota slot — user pays 1 credit and
-// receives 5 hair color suggestions plus a Before/After preview of the
-// first safe candidate. Additional simulations cost extra credits via the
-// /simulate endpoint.
+// Phase 0 (2026-05-11) — credit-only. Login required + 1 credit per analyze.
+// Diagnosis (Vision) + auto-simulation of the top "safe" candidate counts
+// as a single billable unit. Additional simulations cost extra via /simulate.
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
@@ -62,50 +54,29 @@ export async function POST(req: NextRequest) {
   const ua = req.headers.get('user-agent') || ''
   const ipHash = hashIp(ip, ua)
 
-  let consumedType: 'free' | 'paid' | null = null
-  let consumedRecordId: string | null = null
-  let emailHashUsed: string | null = null
-  let lastState = await getQuotaState(anonId, ipHash, TOOL)
-
-  const reservation = await consumeFreeQuota(anonId, ipHash, TOOL)
-  if (reservation.ok) {
-    consumedType = 'free'
-    consumedRecordId = reservation.id
-    lastState = reservation.state
-  } else {
-    lastState = reservation.state
-    const eh = await getOwnerEmailHash()
-    if (eh) {
-      const r = await spendOneCredit(eh)
-      if (r.ok) {
-        const rec = await prisma.toolUsage.create({
-          data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
-          select: { id: true },
-        })
-        consumedType = 'paid'
-        consumedRecordId = rec.id
-        emailHashUsed = eh
-      }
-    }
+  const eh = await getOwnerEmailHash()
+  if (!eh) {
+    return NextResponse.json(
+      { error: 'login_required', blockReason: 'login_required', paidCredits: 0, stripeEnabled },
+      { status: 401 },
+    )
   }
 
-  if (!consumedType) {
-    const eh = await getOwnerEmailHash()
-    const paidCredits = await getPaidBalance(eh)
+  const spend = await spendOneCredit(eh)
+  if (!spend.ok) {
     return NextResponse.json(
-      {
-        error: 'quota_exhausted',
-        ...lastState,
-        paidCredits,
-        stripeEnabled,
-      },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
       { status: 429 },
     )
   }
 
+  const usage = await prisma.toolUsage.create({
+    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
+    select: { id: true },
+  })
+
   try {
     const diagnosis = await diagnoseHairColor(buf, file.type)
-
     const safePick =
       diagnosis.candidates.find((c) => c.category === 'safe') ?? diagnosis.candidates[0]
 
@@ -134,35 +105,25 @@ export async function POST(req: NextRequest) {
           mimeType: sim.mimeType,
         }
       } catch (simErr: any) {
-        // Image edit failure is non-fatal — diagnosis still has value.
-        // Log and continue without preview.
         console.error('[hair-color/analyze] simulation failed:', simErr?.message)
       }
     }
 
-    const eh = await getOwnerEmailHash()
     const paidCredits = await getPaidBalance(eh)
-    const after = await getQuotaState(anonId, ipHash, TOOL)
     return NextResponse.json({
       ok: true,
       result: { diagnosis, previewSimulation },
-      source: consumedType,
-      quota: { ...after, paidCredits, stripeEnabled },
+      source: 'paid',
+      quota: { paidCredits, canUse: paidCredits > 0, stripeEnabled },
     })
   } catch (e: any) {
-    if (consumedRecordId) {
-      await prisma.toolUsage
-        .delete({ where: { id: consumedRecordId } })
-        .catch(() => {})
-    }
-    if (consumedType === 'paid' && emailHashUsed) {
-      await prisma.paidCredits
-        .update({
-          where: { emailHash: emailHashUsed },
-          data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
-        })
-        .catch(() => {})
-    }
+    await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
+    await prisma.paidCredits
+      .update({
+        where: { emailHash: eh },
+        data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
+      })
+      .catch(() => {})
     console.error('[hair-color/analyze] failed:', e?.message)
     return NextResponse.json(
       { error: 'analysis_failed', message: e?.message ?? 'unknown', refunded: true },

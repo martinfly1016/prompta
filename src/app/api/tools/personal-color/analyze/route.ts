@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  consumeFreeQuota,
-  ensureAnonId,
-  extractClientIp,
-  getQuotaState,
-  hashIp,
-} from '@/lib/tool-quota'
+import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
@@ -23,12 +17,11 @@ const ALLOWED_MIMES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 export const maxDuration = 60 // Vercel hobby cap; analysis takes 15-23s
 
 // POST multipart/form-data with field "image".
-// Workflow:
+// Phase 0 (2026-05-11) workflow — credit-only:
 //  1. Validate image
-//  2. Reserve a usage slot (free first, then paid). Returns 429 if both empty.
-//  3. Call Gemini analyze.
-//  4. On Gemini failure → refund the reserved slot + return 500.
-//  5. On success → return result + updated quota state.
+//  2. Require login (401 if not). Spend 1 credit (429 if balance=0).
+//  3. Call Gemini analyze. Refund on failure.
+//  4. Return result + new balance.
 export async function POST(req: NextRequest) {
   // 1. Parse multipart
   let file: File | null = null
@@ -52,8 +45,7 @@ export async function POST(req: NextRequest) {
     )
 
   // 1b. Deep validation BEFORE quota — magic bytes + actual decode + dim
-  // bounds. An invalid upload must never cost the user a free use or a
-  // paid credit.
+  // bounds. An invalid upload must never cost the user a credit.
   const buf = Buffer.from(await file.arrayBuffer())
   const validation = await validateImageBuffer(buf, file.type)
   if (!validation.ok) {
@@ -63,82 +55,53 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // 2. Reserve quota
+  // 2. Require login + spend credit
   const anonId = await ensureAnonId()
   const ip = extractClientIp(req)
   const ua = req.headers.get('user-agent') || ''
   const ipHash = hashIp(ip, ua)
 
-  let consumedType: 'free' | 'paid' | null = null
-  let consumedRecordId: string | null = null
-  let emailHashUsed: string | null = null
-  let lastState = await getQuotaState(anonId, ipHash, TOOL)
-
-  const reservation = await consumeFreeQuota(anonId, ipHash, TOOL)
-  if (reservation.ok) {
-    consumedType = 'free'
-    consumedRecordId = reservation.id
-    lastState = reservation.state
-  } else {
-    lastState = reservation.state
-    const eh = await getOwnerEmailHash()
-    if (eh) {
-      const r = await spendOneCredit(eh)
-      if (r.ok) {
-        const rec = await prisma.toolUsage.create({
-          data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
-          select: { id: true },
-        })
-        consumedType = 'paid'
-        consumedRecordId = rec.id
-        emailHashUsed = eh
-      }
-    }
+  const eh = await getOwnerEmailHash()
+  if (!eh) {
+    return NextResponse.json(
+      { error: 'login_required', blockReason: 'login_required', paidCredits: 0, stripeEnabled },
+      { status: 401 },
+    )
   }
 
-  if (!consumedType) {
-    const eh = await getOwnerEmailHash()
-    const paidCredits = await getPaidBalance(eh)
+  const spend = await spendOneCredit(eh)
+  if (!spend.ok) {
     return NextResponse.json(
-      {
-        error: 'quota_exhausted',
-        ...lastState,
-        paidCredits,
-        stripeEnabled,
-      },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
       { status: 429 },
     )
   }
 
+  // Log paid usage (for analytics / history)
+  const usage = await prisma.toolUsage.create({
+    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
+    select: { id: true },
+  })
+
   // 3. Run Gemini (buf already read during validation step 1b)
   try {
     const result = await analyzePersonalColor(buf, file.type)
-
-    // 5. Success — return result + fresh state
-    const eh = await getOwnerEmailHash()
     const paidCredits = await getPaidBalance(eh)
-    const after = await getQuotaState(anonId, ipHash, TOOL)
     return NextResponse.json({
       ok: true,
       result,
-      source: consumedType,
-      quota: { ...after, paidCredits, stripeEnabled },
+      source: 'paid',
+      quota: { paidCredits, canUse: paidCredits > 0, stripeEnabled },
     })
   } catch (e: any) {
     // 4. Refund on failure
-    if (consumedRecordId) {
-      await prisma.toolUsage
-        .delete({ where: { id: consumedRecordId } })
-        .catch(() => {})
-    }
-    if (consumedType === 'paid' && emailHashUsed) {
-      await prisma.paidCredits
-        .update({
-          where: { emailHash: emailHashUsed },
-          data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
-        })
-        .catch(() => {})
-    }
+    await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
+    await prisma.paidCredits
+      .update({
+        where: { emailHash: eh },
+        data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
+      })
+      .catch(() => {})
     console.error('[personal-color/analyze] failed:', e?.message)
     return NextResponse.json(
       {

@@ -118,3 +118,48 @@ export async function grantCredits(
   })
   return { balance: row.balance }
 }
+
+// Welcome bonus on first login. Idempotent — uses welcomeBonusAt timestamp
+// to gate repeat grants. Granted via NextAuth events.signIn hook.
+//
+// Anti-abuse note: emailHash uses email.toLowerCase().trim() — does NOT
+// normalize Gmail aliases (user.name+x@gmail.com vs username@gmail.com).
+// Acceptable trade-off for now given:
+//   (a) Gemini API cost per gift = ~$0.12 for 3 credits
+//   (b) Google OAuth (the dominant sign-in path) issues per-account
+//       verified emails, harder to fake than email magic link
+//   (c) Currently <20 registered users — abuse impact is low
+// If abuse detected: add email canonicalization here + IP rate limit.
+export const WELCOME_BONUS_CREDITS = 3
+
+export async function grantWelcomeBonusIfEligible(
+  email: string,
+): Promise<{ granted: boolean; balance: number }> {
+  const eh = emailHash(email)
+  const existing = await prisma.paidCredits.findUnique({
+    where: { emailHash: eh },
+    select: { welcomeBonusAt: true, balance: true },
+  })
+  if (existing?.welcomeBonusAt) {
+    return { granted: false, balance: existing.balance }
+  }
+  const row = await prisma.paidCredits.upsert({
+    where: { emailHash: eh },
+    create: {
+      emailHash: eh,
+      email,
+      balance: WELCOME_BONUS_CREDITS,
+      totalEarned: WELCOME_BONUS_CREDITS,
+      welcomeBonus: WELCOME_BONUS_CREDITS,
+      welcomeBonusAt: new Date(),
+    },
+    update: {
+      balance: { increment: WELCOME_BONUS_CREDITS },
+      totalEarned: { increment: WELCOME_BONUS_CREDITS },
+      welcomeBonus: WELCOME_BONUS_CREDITS,
+      welcomeBonusAt: new Date(),
+    },
+    select: { balance: true },
+  })
+  return { granted: true, balance: row.balance }
+}
