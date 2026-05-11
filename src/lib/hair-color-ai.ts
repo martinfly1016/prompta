@@ -8,14 +8,16 @@
 //      preserve clause + R5 negative + R3 output spec + R4 quality anchor.
 
 const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-// Paid tool — use the premium image edit model (Nano Banana Pro) for
-// stricter structure preservation. Content-production scripts (collect /
-// style-test-live) continue to use GEMINI_IMAGE_MODEL (cheap default).
-// Override either via env if needed.
+// Default: gemini-2.5-flash-image ($0.039/call). The premium variants
+// (nano-banana-pro-preview / gemini-3-pro-image-preview) are ~3.4× the
+// cost ($0.134/call at 1K) which puts ¥300/10-credit packs at 17% gross
+// margin and welcome-bonus payback at 1:4 (vs current 1:7 conversion).
+// Opt-in via GEMINI_PAID_IMAGE_MODEL when business model can absorb it
+// (e.g. a future ¥600/10-credit "premium" tier, or 2-credit-per-call mode).
 const IMAGE_MODEL =
   process.env.GEMINI_PAID_IMAGE_MODEL ||
   process.env.GEMINI_IMAGE_MODEL ||
-  'nano-banana-pro-preview'
+  'gemini-2.5-flash-image'
 const TEXT_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent`
 const IMAGE_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:generateContent`
 
