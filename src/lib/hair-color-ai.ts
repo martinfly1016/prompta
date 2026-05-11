@@ -186,21 +186,39 @@ export async function diagnoseHairColor(
   }
 }
 
-// Build the recolor prompt following the project's R1-R7 photo-edit rules
-// (see CLAUDE.md memory: project_gemini_image_limits.md). Hairstyle-only
-// edits are in Gemini's "stable" zone — no R6 needed, but R7's enumerated
-// preserve clause is mandatory or the model drifts (changes hair length,
-// adds flyaways, alters lip color, etc.).
+// Build the recolor prompt with strict DO / DO NOT separation. Gemini
+// 2.5 Flash Image weights instructions front-loaded with structural
+// markers; a positive-then-negative split lets the model treat the DO
+// NOT block as hard guardrails rather than soft hints buried in prose.
+//
+// Failure mode this prompt targets: when the source photo has hair
+// tied back / pulled up, Gemini regenerated flowing loose hair because
+// the "preserve hairstyle" clause was a single fragment inside a long
+// list. The explicit DO NOT block + tied-back case mitigates that.
 function buildRecolorPrompt(hex: string, nameJa: string, nameEn: string): string {
-  return `Recolor only the hair of the person in the uploaded photo to ${hex} (${nameEn} / ${nameJa}). Apply the new color naturally to every visible hair strand including roots, mid-lengths, ends, and any flyaways, with realistic gradient and light reflection consistent with the lighting in the source photo.
+  return `TASK
+Recolor ONLY the hair of the person in the uploaded photo to ${hex} (${nameEn} / ${nameJa}). Nothing else changes.
 
-Preserve the person's identity, facial features, eye shape, eye color, nose, jawline, ears, skin tone, freckles, lip color, eyebrow shape, makeup state, hair length, hairstyle cut and shape, bangs position and shape, individual hair strand placement, clothing, accessories, pose, head angle, and background exactly as the source. Keep the hair texture, volume, and parting unchanged — only the color changes.
+✅ DO
+- Apply the new color naturally to every visible hair strand (roots → mid-lengths → ends, including flyaways)
+- Match the lighting direction and highlight/shadow distribution of the source photo
+- Preserve natural hair texture and per-strand visibility
+- Output at the original resolution, photorealistic
 
-Photorealistic and natural-looking. Preserve natural hair texture and individual strand visibility. Maintain natural skin texture and the original lighting.
+❌ DO NOT (any violation = failure; treat as hard rules):
+- DO NOT change the hairstyle, hair length, hair cut, or how the hair is arranged
+- DO NOT release hair that is tied back / in a bun / ponytail / pulled up — keep it bound exactly as in the source
+- DO NOT invent hair strands or hair that is NOT visible in the source photo (especially behind the head, sides, or top)
+- DO NOT change the bangs: keep the same position, shape, parting, and density
+- DO NOT modify the face, jawline, skin tone, freckles, eyes, eyebrows, lip color, or makeup
+- DO NOT change clothing, accessories, pose, head angle, or background
+- DO NOT add or remove flyaways
+- DO NOT cast the new hair color onto the skin / forehead / collar
+- DO NOT regenerate the hair from scratch — only replace the COLOR of existing hair pixels
+- DO NOT produce a plastic, doll-like, or wig-like result
 
-Do not modify the hair length or cut. Do not add or remove flyaways. Do not change the facial structure or invent details around the hairline. No color cast on the skin or forehead from the new hair color. Avoid plastic-looking or wig-like results.
-
-Output at the original resolution.`
+EDGE CASE — OCCLUDED HAIR
+If parts of the hair are not visible in the source photo (e.g. tied back at the nape, hidden behind the head), DO NOT fabricate them. Keep the hair silhouette IDENTICAL to the source.`
 }
 
 export interface HairSimulationResult {
