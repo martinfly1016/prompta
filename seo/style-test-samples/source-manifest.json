@@ -11,13 +11,23 @@
     "outfit-swap": "seo/style-test-samples/source/portrait-casual-outfit.jpg",
     "hairstyle": "seo/style-test-samples/source/portrait-long-hair.jpg",
     "expression": "seo/style-test-samples/source/portrait-neutral-face.jpg",
-    "skin-retouching": "seo/style-test-samples/source/portrait-skin-detail.jpg"
+    "skin-retouching": "seo/style-test-samples/source/portrait-skin-detail.jpg",
+    "wall": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "wallpaper": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "interior": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "exterior": "seo/style-test-samples/source/house-exterior-suburb.jpg",
+    "hair-color": "seo/style-test-samples/source/portrait-long-hair.jpg"
   },
   "bySlug": {
     "photo-auto-enhance-vivid": "seo/style-test-samples/source/portrait-default.jpg",
     "hairstyle-grid-9-variations": "seo/style-test-samples/source/portrait-long-hair.jpg",
     "pose-correct-face-forward": "seo/style-test-samples/source/portrait-casual-outfit.jpg",
     "id-photo-asia-2-inch-blue": "seo/style-test-samples/source/casual-portrait.jpg",
-    "era-transform-1970s-classic": "seo/style-test-samples/source/portrait-default.jpg"
+    "era-transform-1970s-classic": "seo/style-test-samples/source/portrait-default.jpg",
+    "wallpaper-pattern-try-on": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "wall-color-change-living-room": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "interior-color-coordination-palette": "seo/style-test-samples/source/room-interior-livingroom.jpg",
+    "house-exterior-paint-color-simulate": "seo/style-test-samples/source/house-exterior-suburb.jpg",
+    "hair-color-natural-simulation": "seo/style-test-samples/source/portrait-long-hair.jpg"
   }
 }
