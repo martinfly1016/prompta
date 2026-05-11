@@ -8,16 +8,26 @@
 //      preserve clause + R5 negative + R3 output spec + R4 quality anchor.
 
 const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-// Default: gemini-2.5-flash-image ($0.039/call). The premium variants
-// (nano-banana-pro-preview / gemini-3-pro-image-preview) are ~3.4× the
-// cost ($0.134/call at 1K) which puts ¥300/10-credit packs at 17% gross
-// margin and welcome-bonus payback at 1:4 (vs current 1:7 conversion).
-// Opt-in via GEMINI_PAID_IMAGE_MODEL when business model can absorb it
-// (e.g. a future ¥600/10-credit "premium" tier, or 2-credit-per-call mode).
+// Default: gemini-3.1-flash-image-preview (a.k.a. "Nano Banana 2"),
+// the sweet-spot variant — $0.067/call at 1K, ~58% gross margin per
+// credit. Visual quality is on par with the $0.134 Pro tier (verified
+// 2026-05-11 A/B/C test on tied-back hair) at 50% of Pro's cost.
+//
+// Why NB2 over Flash ($0.039) for paid tools:
+//   - Old prompt + Flash = catastrophic structure drift → 1:8 conversion
+//     baseline is biased by buggy result quality
+//   - New TASK/STRICT INVARIANT prompt + NB2 produces pixel-faithful
+//     output → quality issue removed → conversion should improve
+//   - Welcome-bonus economics: 1:5 break-even is plausible post-fix
+//   - Long-term: repeat purchases run at 58% margin (no welcome cost)
+//
+// Content production (collect / style-test-live) stays on the cheap
+// Flash via GEMINI_IMAGE_MODEL — that's high-volume internal cost, not
+// user-facing revenue. See memory: reference_gemini_image_models.md.
 const IMAGE_MODEL =
   process.env.GEMINI_PAID_IMAGE_MODEL ||
   process.env.GEMINI_IMAGE_MODEL ||
-  'gemini-2.5-flash-image'
+  'gemini-3.1-flash-image-preview'
 const TEXT_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent`
 const IMAGE_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:generateContent`
 
