@@ -545,8 +545,8 @@ export interface Guide {
 export const GUIDES: Guide[] = [
   {
     slug: 'what-is-prompt',
-    title: 'プロンプトとは？AI初心者向け完全ガイド',
-    description: 'プロンプトの意味と基本的な使い方を初心者向けにわかりやすく解説。ChatGPTやStable Diffusionでの効果的なプロンプト作成法。',
+    title: 'プロンプトとは？意味・書き方・コツを徹底解説【AI初心者向け完全ガイド】',
+    description: 'プロンプトの意味から書き方の5つのコツ、よくある失敗例、業務活用事例まで網羅した完全ガイド。ChatGPT・Claude・Gemini・Stable Diffusion・Midjourney・DALL-E対応の具体例つきでAIプロンプトを基礎から実践まで学べます。',
     targetKeyword: 'プロンプトとは',
     monthlySearchVolume: 49500,
   },

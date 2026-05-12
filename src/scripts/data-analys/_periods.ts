@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { loadGoogleCredentials, GA4_PROPERTY_ID } from './config'
 
 async function main() {

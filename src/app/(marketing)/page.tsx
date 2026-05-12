@@ -3,15 +3,50 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { getTools, getCategories, getFeaturedPrompts, getLatestPrompts, getGuides } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
-import { generateOrganizationSchema } from '@/lib/schema'
+import { generateOrganizationSchema, generateFaqSchema } from '@/lib/schema'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'AIプロンプト集 — Stable Diffusion・Midjourney・ChatGPT・Claude対応',
-  description: 'Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-Eなど主要AIツール対応の高品質プロンプト集。画像生成プロンプトからビジネス活用まで、AIを最大限活用するプロンプトを無料提供。',
+  title: 'AIプロンプト一覧｜コピペで使える500+のプロンプト集 - Prompta',
+  description: 'Stable Diffusion・Midjourney・ChatGPT・Claude・Gemini・DALL-E対応の高品質AIプロンプトを500+件、無料で一覧公開。画像生成・文章作成・写真加工のテンプレートをカテゴリ別にコピペで使えます。',
   alternates: { canonical: SITE_CONFIG.url },
+  openGraph: {
+    title: 'AIプロンプト一覧｜コピペで使える500+のプロンプト集',
+    description: 'Stable Diffusion・Midjourney・ChatGPT・Claude・Gemini・DALL-E対応の高品質AIプロンプトをカテゴリ別に無料公開。',
+  },
+  twitter: {
+    title: 'AIプロンプト一覧｜コピペで使える500+のプロンプト集',
+    description: 'Stable Diffusion・Midjourney・ChatGPT・Claude・Gemini・DALL-E対応の高品質AIプロンプトをカテゴリ別に無料公開。',
+  },
 }
+
+const HOME_FAQ: Array<{ question: string; answer: string }> = [
+  {
+    question: 'プロンプトとは何ですか？',
+    answer: 'プロンプト（Prompt）とは、ChatGPTやStable DiffusionなどのAIに対して入力する「指示文」のことです。生成したい内容や回答してほしいことをテキストで具体的に伝える役割を持ち、プロンプトの質がAIの出力結果を大きく左右します。詳細は「プロンプトとは？AI初心者向け完全ガイド」で解説しています。',
+  },
+  {
+    question: 'Promptaのプロンプトはどのツールで使えますか？',
+    answer: 'Stable Diffusion・Midjourney・ChatGPT・Claude・Gemini・DALL-Eの6つの主要AIツールに対応しています。画像生成系プロンプト（呪文）と文章生成系プロンプト（テンプレート）を両方カバーしており、各プロンプトに対応ツールを明記しています。',
+  },
+  {
+    question: 'プロンプトの書き方にコツはありますか？',
+    answer: '効果的なプロンプトには、(1) 具体的かつ明確な指示、(2) ロール設定（「あなたは〇〇の専門家です」）、(3) 出力形式の指定、(4) 制約条件（文字数・トーン）の指定、(5) 期待する出力例の提示（Few-Shot）の5つの要素が重要です。詳しいテクニックはガイドを参照してください。',
+  },
+  {
+    question: 'プロンプトは日本語で書けますか？',
+    answer: 'ChatGPTやClaudeなどの文章生成AIは日本語プロンプトに完全対応しています。Stable DiffusionやMidjourneyなどの画像生成AIは英語が推奨されますが、DALL-E 3やGeminiは日本語も理解できます。Promptaでは日本語ユーザー向けに、日本語の解説と英語のプロンプト本文を両方掲載しています。',
+  },
+  {
+    question: 'Promptaのプロンプトは無料で使えますか？',
+    answer: 'はい、サイト上で公開している500+件のプロンプトはすべて無料でコピー・利用可能です。商用利用も自由ですが、生成された画像・文章の利用条件は各AIツールの利用規約に従ってください。',
+  },
+  {
+    question: 'プロンプト集と他サイトの違いは何ですか？',
+    answer: 'Promptaは日本語ユーザー向けに最適化された画像系・文章系プロンプトの統合カタログです。各プロンプトに日本語の解説・カテゴリ・対応ツール・サンプル画像を整備し、写真加工系（似合う髪色診断・パーソナルカラー診断など）はAIツールとしてその場で試せる仕組みも提供しています。',
+  },
+]
 
 export default async function HomePage() {
   const [tools, categories, featured, latest, guides] = await Promise.all([
@@ -26,6 +61,7 @@ export default async function HomePage() {
     baseUrl: SITE_CONFIG.url,
     siteName: SITE_CONFIG.nameEn,
   })
+  const faqSchema = generateFaqSchema(HOME_FAQ)
 
   return (
     <>
@@ -33,15 +69,19 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
 
       {/* Hero — compact */}
       <section className="bg-gradient-to-b from-sky-50 to-white py-8 lg:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
-            AIを使いこなすための<span className="text-sky-600">プロンプト集</span>
+            <span className="text-sky-600">AIプロンプト一覧</span>｜コピペで使える500+のプロンプト集
           </h1>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-5">
-            Stable Diffusion、Midjourney、ChatGPT、Claude、DALL-E対応の高品質プロンプトを無料提供。
+            Stable Diffusion・Midjourney・ChatGPT・Claude・Gemini・DALL-E対応の高品質プロンプトをカテゴリ別に無料公開。画像生成から写真加工・文章作成まで、コピペで即実践できます。
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link href="/prompts" className="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all">
@@ -131,6 +171,29 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* FAQ — answers head queries (プロンプトとは / 書き方 / コツ / 無料か) */}
+      <section className="py-10 bg-white border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">よくある質問</h2>
+          <div className="space-y-4">
+            {HOME_FAQ.map((item, i) => (
+              <details key={i} className="group bg-gray-50 rounded-xl border border-gray-200 open:border-sky-300 open:bg-sky-50/30">
+                <summary className="cursor-pointer p-4 font-semibold text-sm sm:text-base text-gray-900 group-open:text-sky-700 list-none flex items-start justify-between gap-2">
+                  <span>{item.question}</span>
+                  <span className="text-sky-600 text-xl leading-none shrink-0 group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-4 pb-4 text-sm text-gray-700 leading-relaxed">{item.answer}</div>
+              </details>
+            ))}
+          </div>
+          <div className="mt-6 text-center">
+            <Link href="/guides/what-is-prompt" className="inline-flex items-center gap-1 text-sm font-medium text-sky-600 hover:text-sky-700 transition-colors">
+              プロンプトの基礎をもっと学ぶ →
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="py-10 bg-sky-600">
