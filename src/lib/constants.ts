@@ -768,6 +768,49 @@ export const TOOL_PAGE_CONTENT: Record<string, ToolPageContent> = {
       { question: 'ChatGPTプロンプトをチームで共有・管理するには？', answer: '小規模なら .md ファイルでGit管理、規模が大きくなればNotion・Confluence・PromptLayer・LangChain などの専用ツールに移行します。重要なのは「変数化」「メタデータ追加」「バージョン履歴」の3点です。Promptaのような共有プラットフォームを社内・個人で使うのも有効です。' },
     ],
   },
+  gemini: {
+    seoTitle: 'Geminiプロンプト集｜Google Gemini 2.5活用テンプレートとマルチモーダル指示の書き方',
+    seoDescription: 'Google Gemini向けの実用プロンプトを無料公開。マルチモーダル理解（画像・動画・音声）と最大1Mトークン長文対応を活かす指示テンプレート、Nano Banana画像生成、Gemini独自機能の活用法を解説。',
+    intro: {
+      heading: 'Geminiプロンプトとは？— Google Gemini 2.5を使いこなすための指示文',
+      paragraphs: [
+        'Geminiプロンプトとは、Google が提供するマルチモーダル AI「Gemini」に与える指示文のことです。テキスト・画像・動画・音声を統合的に扱える点が最大の特徴で、ChatGPTやClaudeと比較しても画像理解とマルチモーダル指示で頭一つ抜けています。',
+        '2026年5月時点で主力モデルは Gemini 2.5 Pro / 2.5 Flash / 2.5 Flash Image（通称 Nano Banana）の3系統です。Pro は最大1Mトークンの超長文に対応し、論文・コード・大量資料の分析に圧倒的な強み。Flash は応答速度とコストのバランスがよく、業務の定型タスクで実用度が高い。Flash Image (Nano Banana) は画像編集に特化し、写真加工や合成で Stable Diffusion / Midjourney に並ぶ品質を実現しています。',
+        'PromptaではGeminiで使える実用プロンプトを、文章生成・コード生成・画像理解・写真加工などのシーン別に多数公開しています。特に Nano Banana を使った写真加工プロンプト（似合う髪色・パーソナルカラー・背景置換など）はPromptaでツール化して提供しており、コピペで即試せます。',
+      ],
+    },
+    useCases: {
+      heading: 'Geminiプロンプトの代表的な活用シーン',
+      items: [
+        { name: '長文ドキュメント分析', desc: '最大1Mトークン対応を活かし、論文・契約書・技術仕様書をまるごと読ませて要点抽出・比較分析。' },
+        { name: 'マルチモーダル指示', desc: '画像・動画・音声を含めて「これを見て○○して」と指示。OCR・図表理解・動画要約も自然言語で完結。' },
+        { name: '写真加工（Nano Banana）', desc: '似合う髪色シミュレーション・パーソナルカラー診断・背景置換・写真修復など、Gemini 2.5 Flash Image での画像編集タスク。' },
+        { name: 'Google サービス統合', desc: 'Gmail・Docs・Sheets・Drive と統合した業務自動化。Workspace 連携で資料探索や予定調整も自然言語で。' },
+        { name: 'コード生成・分析', desc: '長文コードベース全体を読ませてリファクタリング提案・バグ調査・テストケース生成・技術ドキュメント作成。' },
+        { name: 'リアルタイム情報取得', desc: 'Google検索と統合された AI Mode / Gemini App から最新情報・ニュース・株価・天気を加味した回答を生成。' },
+      ],
+    },
+    tips: {
+      heading: 'Geminiで効果的なプロンプトを書く5つのコツ',
+      items: [
+        { name: 'マルチモーダル素材を活かす', desc: '画像・PDF・動画・音声を直接添付できるのがGeminiの最大の強み。「この画像/動画を見て○○して」と素材を渡す前提でプロンプトを設計します。' },
+        { name: '長文を惜しまず渡す', desc: '最大1Mトークン対応を活用し、関連資料・コードベース・過去の議論をまるごと文脈として渡します。要約せずに渡した方が精度が出やすい場面が多いです。' },
+        { name: '構造化を明示する', desc: '「JSON形式で」「Markdown表で」「箇条書きで5つ」など出力形式を指示。Geminiは構造化出力に強く、後工程の自動化と組み合わせやすい。' },
+        { name: 'ロール + 目的 + 制約', desc: 'ChatGPT/Claudeと同様、ロール設定（「あなたは○○の専門家」）＋目的（「○○のために」）＋制約（文字数・トーン）の3点セットが効果的。' },
+        { name: '画像編集は具体的に指示', desc: 'Nano Banana で写真加工する場合、「自然に」「違和感なく」など曖昧表現を避け、「髪の色だけを暗めのアッシュベージュに変更、髪型・表情・背景は完全保持」のように保持要素を明示します。' },
+      ],
+    },
+    faqs: [
+      { question: 'Geminiのプロンプトとは何ですか？', answer: 'Google が提供する AI「Gemini」に対して入力する指示文のことです。テキストだけでなく画像・動画・音声・PDFも一緒に渡せるマルチモーダル指示が可能で、最大1Mトークンの超長文にも対応しています。プロンプトの質によって出力品質が大きく変わるのは他のAIと同じです。' },
+      { question: 'Geminiで効果的なプロンプトの書き方は？', answer: '(1) マルチモーダル素材を活かす、(2) 長文を惜しまず渡す、(3) 出力形式を明示する、(4) ロール・目的・制約の3点セット、(5) 画像編集は保持要素を明示する、の5つが基本です。詳しい一般テクニックは<a href="/guides/prompt-writing-guide" class="text-sky-600 hover:underline">プロンプトの書き方完全ガイド</a>で解説しています。' },
+      { question: 'Gemini 2.5 Pro / Flash / Flash Image (Nano Banana) の違いは？', answer: '2.5 Pro は最大1Mトークン対応で長文分析・複雑な推論に最強、API コストは高め。2.5 Flash は速度とコストのバランス重視で日常業務に最適、ChatGPT API より安価。2.5 Flash Image（Nano Banana）は画像編集特化モデルで、写真加工・合成タスクが得意。用途に応じて使い分けます。' },
+      { question: 'Geminiは日本語のプロンプトに対応していますか？', answer: 'はい、Gemini は日本語に完全対応しています。敬語・ビジネス用語も自然に扱え、ChatGPT・Claudeと同等の日本語品質です。マルチモーダル機能（画像内のテキスト読み取りなど）も日本語OCRに強く、Google翻訳の血統が活きています。' },
+      { question: 'GeminiとChatGPT・Claudeの使い分けは？', answer: '画像・動画・音声を含むマルチモーダルタスクと、超長文（書籍・大量資料）の分析はGeminiが最強。創造的ライティングと対話型UIはChatGPTが優位、長文の精緻な要約・分析と倫理的応答はClaudeが優位です。Googleサービスとの統合が必要ならGemini一択になります。' },
+      { question: 'Nano Banana（Gemini 2.5 Flash Image）で写真加工するには？', answer: '元写真と「○○を××に変更、その他要素は完全保持」という保持要素明示プロンプトを組み合わせます。Promptaでは似合う髪色診断・パーソナルカラー診断・背景置換などNano Banana活用ツールを<a href="/tools/hair-color-diagnosis" class="text-sky-600 hover:underline">無料公開中</a>で、コピペ不要で写真をアップロードするだけで試せます。' },
+      { question: 'Geminiのプロンプトは無料で使えますか？', answer: 'Promptaに掲載しているGeminiプロンプトはすべて無料でコピー・利用可能です。Gemini本体の利用は、無料版（gemini.google.com）と有料版（Gemini Advanced / AI Pro / Vertex AI API）が選べます。商用利用時の規約はGoogle側の利用規約に従ってください。' },
+      { question: 'GeminiのAPIで業務自動化するには？', answer: 'Google AI Studio または Vertex AI 経由で API キーを取得し、generateContent エンドポイントに JSON でプロンプトを送ります。Promptaでも Gemini 2.5 Flash Image API を使った写真加工ツール（パーソナルカラー診断・似合う髪色診断）を運用しており、プロンプトテンプレートを工夫することで安定した品質を実現しています。' },
+    ],
+  },
 }
 
 // Tool slug to tool lookup

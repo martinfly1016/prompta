@@ -215,6 +215,11 @@ npx tsx src/scripts/data-analys/ga-query.ts --mode=tool-funnel --days=7
 #    2026-05-12 SEO 优化基线，监控 14 个核心 head keyword 的 7d-vs-7d 排名变化
 #    用于判断 d314307 的 cannibalization 修复是否在 GSC 数据中显现
 npx tsx src/scripts/data-analys/_head_keyword_track.ts --days=7
+
+# J) GSC 高曝光低排名机会词扫描（28 日窗口，曝光 >= 40 AND 排名 > 20）
+#    动态发现「Google 已认 Prompta 相关但排名卡在 page-2/3」的候选词
+#    低 traffic 站点用 7d 窗口几乎找不到 >= 40 曝光的词，所以默认 28d 与 GSC UI 一致
+npx tsx src/scripts/data-analys/_rank_opportunities.ts --days=28 --minImpressions=40 --minPosition=20
 ```
 
 > macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
@@ -296,6 +301,38 @@ npx tsx src/scripts/data-analys/_head_keyword_track.ts --days=7
 | 2026-05-19~05-25 | … | … | … | 5/12 ship 第 2 周 |
 
 > 每次跑日报时把本周数据 append 一行（手动），3 个核心 cluster anchor keyword 各取一个。3-4 周后能看出趋势线。
+
+## 2.6 GSC 高曝光低排名机会词（28 日窗口）
+
+> 数据源: `_rank_opportunities.ts`。**Filter: 28 日曝光 >= 40 AND 排名 > 20**。这是 Google 已经认为 Prompta 相关但卡在 page-2/3 的候选词 — 推一把就能进 top 20 拿到 click 的最高 ROI cluster。7 日窗口对低流量站点几乎不出结果，所以默认 28 日（与 GSC UI 默认 Performance 报告窗口一致）。
+
+### 2.6.1 机会词表
+| 排名 | 关键词 | 28d 曝光 | 点击 | top page | 着陆页数 |
+|---|---|---|---|---|---|
+| 38.3 | gemini プロンプト | 71 | 0 | /tools/gemini | 1 |
+| … | … | … | … | … | … |
+
+> 列表按 28d 曝光降序。`着陆页数 ≥ 3` 自动标 🔴（cannibalization），`= 2` 标 🟡。`点击 ≥ 1` 表示距离 top 20 仅一步之遥，优先处理。
+
+### 2.6.2 按着陆页聚合（找到机会量最集中的页面）
+| 页面 | 机会词数 | 28d 曝光合计 | 代表关键词 |
+|---|---|---|---|
+| /tools/gemini | 1 | 71 | gemini プロンプト |
+| /guides/what-is-prompt | 2 | 74 | ai プロンプト と は / プロンプト |
+| … | … | … | … |
+
+### 2.6.3 行动判断准则
+- **🟢 立即扩 TOOL_PAGE_CONTENT**: 着陆页是 `/tools/{tool}` 且未在 `TOOL_PAGE_CONTENT` 配置中 → 复制 chatgpt / gemini 的格式加一条（intro + use cases + tips + 8 FAQ + FAQ schema）
+- **🟢 立即扩 GUIDE_CONTENT**: 着陆页是 `/guides/{slug}` 且字数 < 3000 → 扩充到 3500+ 字、加 H2、加 FAQ
+- **🟡 等爬观察**: 着陆页是最近改动过的（≤ 14 天）→ 等 Google 爬完再判
+- **🔴 Cannibalization 修复**: 着陆页数 ≥ 3 → 在 §6 行动建议列「明确该词的 canonical URL」item
+- **⚪ Category SEO**: 着陆页是 `/prompts/{category}` → 扩 categorySeoOverride / categoryIntro
+
+### 2.6.4 5/12 基线（每周回查迭代）
+| 日期 | 机会词数 | 总曝光 | 最高曝光词 | 备注 |
+|---|---|---|---|---|
+| 2026-05-12 | 6 (含 2 个 ≥ 40) | 237 | gemini プロンプト (71) | Tier 1+2 优化 ship 同日 |
+| … | … | … | … | … |
 
 ## 3. 工具使用情况（重点）
 
@@ -443,7 +480,9 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 | `src/scripts/data-analys/db-query.ts` | 本地 DB 查询（Prisma，prompt 入库/tag 状态） |
 | `src/scripts/data-analys/photo-edit-traffic.ts` | photo-edit 单 prompt 流量追踪（§7 ツール化候補） |
 | `src/scripts/data-analys/_head_keyword_track.ts` | **§2.5 头部关键词排名追踪**（プロンプト cluster 14 词，7d-vs-7d） |
+| `src/scripts/data-analys/_rank_opportunities.ts` | **§2.6 高曝光低排名机会词扫描**（28d，曝光 ≥ 40 AND 排名 > 20） |
 | `src/scripts/data-analys/_head_keyword_pages.ts` | 头部词的着陆页分布（90 日窗口，诊断 cannibalization 用，非日报） |
+| `src/scripts/data-analys/_recrawl_seo_pages.ts` | URL Inspection baseline + IndexNow push（4 个 SEO 改动页跟踪） |
 | `src/scripts/data-analys/_periods.ts` | GA4 当周/上周流量总览（@ts-nocheck）— §1 站点总览的 vs 上周对比 |
 | `src/scripts/data-analys/_gsc_periods.ts` | GSC 当周/上周聚合（clicks/impressions/CTR/position）— §1 自然搜索行 |
 | `src/scripts/data-analys/_tag_backlog.ts` / `_tag_list_unapproved.ts` / `_tag_backlog_r2.ts` / `_tag_seo_backfill.ts` / `_tag_clean_broken.ts` | tag 审核积压管理（详 collect-content Phase 7.5 Gate） |
