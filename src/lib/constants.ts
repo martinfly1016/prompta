@@ -701,9 +701,82 @@ export function getRelatedGuides(currentSlug: string): Guide[] {
   })
 }
 
+// Per-tool extended SEO content. Add an entry to give a tool page a long-form
+// intro, use cases, tips, and FAQ schema. Tools without an entry render the
+// default [tool] template only.
+export interface ToolPageContent {
+  /** Override for <title> + H1 keyword line. If absent, fall back to "{Tool}プロンプト集..." default. */
+  seoTitle?: string
+  seoDescription?: string
+  /** Long-form intro block between hero and prompt grid */
+  intro: {
+    heading: string
+    paragraphs: string[]
+  }
+  useCases: {
+    heading: string
+    items: { name: string; desc: string }[]
+  }
+  tips: {
+    heading: string
+    items: { name: string; desc: string }[]
+  }
+  faqs: { question: string; answer: string }[]
+}
+
+export const TOOL_PAGE_CONTENT: Record<string, ToolPageContent> = {
+  chatgpt: {
+    seoTitle: 'ChatGPTプロンプト集｜業務で使える厳選テンプレートとコツ',
+    seoDescription: 'ChatGPT向けの実用プロンプトを無料公開。文章作成・コード生成・要約・アイデア出しなど業務で使えるテンプレート集と効果的な書き方のコツ、GPT-5新機能の活用法を解説。',
+    intro: {
+      heading: 'ChatGPTプロンプトとは？— OpenAI ChatGPTを使いこなすための指示文',
+      paragraphs: [
+        'ChatGPTプロンプトとは、OpenAIが提供する対話型AI「ChatGPT」に与える指示文のことです。プロンプトの質によって、文章作成・要約・翻訳・コード生成・アイデア出しなど、あらゆるタスクの出力品質が大きく変わります。',
+        'ChatGPTは2022年11月の公開以来、日本でも数千万人が利用する主要AIツールとなり、無料版（GPT-4o mini）でも実用的なタスクをこなせるレベルに到達しています。ただし、AI から良い結果を引き出すには「ロール設定」「具体的な背景情報」「出力形式の指定」など、プロンプトエンジニアリングの基本テクニックを意識する必要があります。',
+        'Promptaでは、ビジネス・ライティング・プログラミング・教育・クリエイティブなどシーン別に、ChatGPTで実際に使えるプロンプトを多数公開しています。コピペするだけですぐに業務に活用できる実用テンプレートを揃えています。',
+      ],
+    },
+    useCases: {
+      heading: 'ChatGPTプロンプトの代表的な活用シーン',
+      items: [
+        { name: 'ビジネス文書作成', desc: 'メール・議事録要約・提案書・お詫び文・FAQ作成など、定型業務を2〜5倍速化。' },
+        { name: 'プログラミング支援', desc: 'コード生成・リファクタリング・バグ調査・テストケース生成・技術ドキュメント作成。' },
+        { name: 'ライティング・編集', desc: 'ブログ記事下書き・SNS投稿文・キャッチコピー大量生成・文章校正。' },
+        { name: 'マーケティング・営業', desc: 'ターゲットペルソナ設計・広告コピーA/Bテスト案・競合分析レポート。' },
+        { name: '教育・学習', desc: '概念説明の言い換え・練習問題自動作成・英会話練習相手・専門書の要約。' },
+        { name: 'アイデア発想', desc: 'ブレスト・ネーミング・ストーリー構成・企画書のたたき台生成。' },
+      ],
+    },
+    tips: {
+      heading: 'ChatGPTで効果的なプロンプトを書く5つのコツ',
+      items: [
+        { name: 'ロールを設定する', desc: '「あなたは○○の専門家です」と冒頭で役割を与えると、専門性の高い回答が得られます。職種＋経験年数＋対象を組み合わせるとさらに精度向上。' },
+        { name: '具体的な背景情報を渡す', desc: '対象読者・目的・利用シーンを明示します。「30代女性向け」「社内研修資料として」など、文脈を共有することで的外れな回答を防げます。' },
+        { name: '出力形式を指定する', desc: '「箇条書きで5つ」「比較表で」「Markdown形式で」のように、後工程で使いやすい形を指定します。' },
+        { name: '例示する（Few-Shot）', desc: '「Input: A → Output: B」のように、期待する入出力ペアを1〜3個提示すると、抽象的なルール定義よりも遥かに高い精度を得られます。' },
+        { name: '段階指示する（Chain of Thought）', desc: '複雑なタスクには「ステップバイステップで考えてください」を追加すると、論理推論精度が大幅に向上します。' },
+      ],
+    },
+    faqs: [
+      { question: 'ChatGPTのプロンプトとは何ですか？', answer: 'ChatGPTに対して入力する「指示文」のことです。「メールを書いて」のような短い指示から、ロール設定・背景情報・出力形式を含む詳細な指示まで、すべてプロンプトと呼びます。プロンプトの質によってAIの出力品質が大きく変わるため、効果的な書き方を学ぶことが重要です。' },
+      { question: 'ChatGPTで効果的なプロンプトの書き方は？', answer: '(1) ロールを設定する「あなたは○○の専門家です」、(2) 具体的な背景情報を渡す、(3) 出力形式を指定する、(4) 例示する（Few-Shot）、(5) 段階指示する（Chain of Thought）の5つが基本です。詳しくは<a href="/guides/prompt-writing-guide" class="text-sky-600 hover:underline">プロンプトの書き方完全ガイド</a>と<a href="/guides/chatgpt-prompt-techniques" class="text-sky-600 hover:underline">ChatGPTプロンプト術</a>をご覧ください。' },
+      { question: 'ChatGPT プロンプトテンプレートはどこで入手できますか？', answer: 'Promptaでは、文章作成・コード生成・要約・アイデア出しなど、業務カテゴリ別に実用プロンプトテンプレートを無料公開しています。コピペで即実践できる形式で整備しています。テンプレート設計のコツは<a href="/guides/prompt-writing-guide" class="text-sky-600 hover:underline">プロンプトの書き方完全ガイド</a>で解説しています。' },
+      { question: 'ChatGPTは日本語のプロンプトに対応していますか？', answer: 'はい、ChatGPTは日本語プロンプトに完全対応しています。GPT-4o以降のモデルは、日本語特有の敬語・ビジネス慣習も理解できるため、英語で書く必要はありません。ただし、専門的な技術文書やコード生成のときは英語の方が精度が出やすい場合もあります。' },
+      { question: 'ChatGPTのプロンプトは無料で使えますか？', answer: 'Promptaに掲載しているChatGPTプロンプトはすべて無料でコピー・利用可能です。商用利用も自由ですが、生成された結果物の利用条件はOpenAIの利用規約に従ってください。ChatGPT本体の利用は、無料版（GPT-4o mini中心）と有料版（ChatGPT Plus/Pro/Team/Enterprise）が選べます。' },
+      { question: 'ChatGPTとClaudeでプロンプトの書き方は違いますか？', answer: '基本テクニック（ロール設定・出力形式指定・Few-Shot）は共通ですが、ChatGPTはシステムプロンプト（カスタム指示）でグローバル設定を、Claudeは<context>や<task>などXMLタグで構造化するスタイルが特に効果的です。長文の文脈理解はClaudeが、創造的ライティングとコード生成はChatGPTがそれぞれ強みを持ちます。' },
+      { question: 'GPT-5でプロンプトの書き方は変わりますか？', answer: 'GPT-5は長文理解・推論・マルチモーダル能力が向上していますが、基本テクニックは変わりません。むしろ高性能モデルほど、長すぎるプロンプトより簡潔で明確な指示の方が良い結果を引き出せる傾向があります。「対話で改善していく」アプローチがGPT-5世代でも有効です。' },
+      { question: 'ChatGPTプロンプトをチームで共有・管理するには？', answer: '小規模なら .md ファイルでGit管理、規模が大きくなればNotion・Confluence・PromptLayer・LangChain などの専用ツールに移行します。重要なのは「変数化」「メタデータ追加」「バージョン履歴」の3点です。Promptaのような共有プラットフォームを社内・個人で使うのも有効です。' },
+    ],
+  },
+}
+
 // Tool slug to tool lookup
 export function getToolBySlug(slug: string): Tool | undefined {
   return TOOLS.find(t => t.slug === slug)
+}
+
+export function getToolPageContent(slug: string): ToolPageContent | undefined {
+  return TOOL_PAGE_CONTENT[slug]
 }
 
 // Category slug to category lookup

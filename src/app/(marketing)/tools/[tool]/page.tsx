@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG, getGuidesForTool } from '@/lib/constants'
-import { generateSoftwareApplicationSchema } from '@/lib/schema'
+import { SITE_CONFIG, getGuidesForTool, getToolPageContent } from '@/lib/constants'
+import { generateSoftwareApplicationSchema, generateFaqSchema } from '@/lib/schema'
 import { getToolBySlug, getToolSlugs, getPromptsByToolPaginated, getTools, getCategories } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
@@ -25,8 +25,11 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!tool) return {}
   const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
-  const title = `${tool.name}プロンプト集【無料・コピペOK】— ${tool.nameJa}向けAIプロンプト${suffix}`
-  const description = `${tool.name}（${tool.nameJa}）で使える高品質プロンプト集。コピペでそのまま使える実用例を多数掲載。${(tool.description ?? '').slice(0, 70)}`.slice(0, 158)
+  const extended = getToolPageContent(tool.slug)
+  const defaultTitle = `${tool.name}プロンプト集【無料・コピペOK】— ${tool.nameJa}向けAIプロンプト${suffix}`
+  const title = extended?.seoTitle ? `${extended.seoTitle}${suffix}` : defaultTitle
+  const defaultDescription = `${tool.name}（${tool.nameJa}）で使える高品質プロンプト集。コピペでそのまま使える実用例を多数掲載。${(tool.description ?? '').slice(0, 70)}`.slice(0, 158)
+  const description = (extended?.seoDescription ?? defaultDescription).slice(0, 158)
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(`${tool.name} プロンプト集`)}&tool=${tool.slug}&type=tool`
   return {
     title,
@@ -59,10 +62,15 @@ export default async function ToolPage({ params, searchParams }: Props) {
     { name: tool.name, nameJa: tool.nameJa, description: tool.description ?? '', slug: tool.slug },
     { baseUrl: SITE_CONFIG.url, siteName: SITE_CONFIG.nameEn }
   )
+  const extended = getToolPageContent(tool.slug)
+  const faqSchema = extended?.faqs.length ? generateFaqSchema(extended.faqs) : null
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ name: 'AIツール', href: '/tools' }, { name: tool.name, href: `/tools/${tool.slug}` }]} />
@@ -82,6 +90,20 @@ export default async function ToolPage({ params, searchParams }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Tool intro — long-form SEO copy (only renders for tools with TOOL_PAGE_CONTENT entry) */}
+      {extended && (
+        <section className="bg-white py-10 border-b border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-5">{extended.intro.heading}</h2>
+            <div className="space-y-3 text-sm sm:text-base text-gray-700 leading-relaxed">
+              {extended.intro.paragraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Category filters */}
       {toolCategories.length > 0 && (
@@ -132,7 +154,7 @@ export default async function ToolPage({ params, searchParams }: Props) {
             return toolGuides.length > 0 ? (
               <div className="mt-8 p-4 bg-gray-50 rounded-xl">
                 <p className="text-sm font-semibold text-gray-700 mb-2">詳しい使い方ガイド</p>
-                {toolGuides.slice(0, 2).map(guide => (
+                {toolGuides.slice(0, 4).map(guide => (
                   <Link
                     key={guide.slug}
                     href={`/guides/${guide.slug}`}
@@ -146,6 +168,62 @@ export default async function ToolPage({ params, searchParams }: Props) {
           })()}
         </div>
       </section>
+
+      {/* Use cases + tips + FAQ (only for tools with extended content) */}
+      {extended && (
+        <>
+          <section className="py-12 bg-gray-50 border-t border-gray-100">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">{extended.useCases.heading}</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {extended.useCases.items.map((u, i) => (
+                  <div key={i} className="p-4 bg-white rounded-xl border border-gray-200">
+                    <h3 className="font-semibold text-gray-900 mb-1.5 text-sm sm:text-base">{u.name}</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">{u.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="py-12 bg-white">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">{extended.tips.heading}</h2>
+              <ol className="space-y-4">
+                {extended.tips.items.map((t, i) => (
+                  <li key={i} className="flex gap-4">
+                    <span className="flex items-center justify-center w-8 h-8 bg-sky-100 text-sky-700 font-bold text-sm rounded-full shrink-0">{i + 1}</span>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base mb-1">{t.name}</h3>
+                      <p className="text-sm text-gray-600 leading-relaxed">{t.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+
+          <section className="py-12 bg-gray-50 border-t border-gray-100">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-center">よくある質問</h2>
+              <div className="space-y-3">
+                {extended.faqs.map((f, i) => (
+                  <details key={i} className="group bg-white rounded-xl border border-gray-200 open:border-sky-300 open:bg-sky-50/30">
+                    <summary className="cursor-pointer p-4 font-semibold text-sm sm:text-base text-gray-900 group-open:text-sky-700 list-none flex items-start justify-between gap-2">
+                      <span>{f.question}</span>
+                      <span className="text-sky-600 text-xl leading-none shrink-0 group-open:rotate-45 transition-transform">+</span>
+                    </summary>
+                    <div
+                      className="px-4 pb-4 text-sm text-gray-700 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: f.answer }}
+                    />
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Related Tools */}
       <section className="py-12 bg-gray-50">
