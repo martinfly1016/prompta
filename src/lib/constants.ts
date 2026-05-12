@@ -620,6 +620,13 @@ export const GUIDES: Guide[] = [
     targetKeyword: '色 プロンプト 色指定',
     monthlySearchVolume: 320,
   },
+  {
+    slug: 'prompt-writing-guide',
+    title: 'プロンプトの書き方完全ガイド｜効果的なAIプロンプト作成の7つのコツとテンプレート集',
+    description: 'ChatGPT・Claude・Gemini・Stable Diffusion対応のプロンプト書き方完全ガイド。7つのコツ、コピペで使えるテンプレート、ツール別の違い、NG例と改善方法、業務活用例まで実践的に解説。',
+    targetKeyword: 'プロンプト 書き方',
+    monthlySearchVolume: 5400,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -667,6 +674,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'color-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['color', 'anime', 'camera', 'hairstyle'],
+  },
+  'prompt-writing-guide': {
+    tools: ['chatgpt', 'claude', 'gemini', 'stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['writing', 'programming', 'business', 'education', 'creative'],
   },
 }
 
