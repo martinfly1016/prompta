@@ -447,19 +447,37 @@ cd src/scripts/collect && npx tsx check-duplicates.ts < /tmp/prompta-raw.json > 
    >
    > tags 规则：
    > - 3-5 个日文标签
-   > - **必须优先从以下已审核标签词表中选择**（不在词表中的标签不会显示独立页面）：
-   >   ChatGPT, Claude, Gemini, プログラミング, コード品質, 開発効率化,
-   >   ビジネス, 業務効率化, 意思決定, 教育, 教育サポート, 学習効率化,
-   >   ファンタジー, ダークファンタジー, クリエイティブ, アニメ, アニメ プロンプト,
-   >   コスプレ, 服装, 衣装, 服装プロンプト, 衣装プロンプト,
-   >   髪型, ロングヘア, 金髪, 黒髪, ポートレート,
-   >   カメラ, シネマティック, ライティング, 色, マルチカラー,
-   >   体型, 猫, ドレス, 和風, ゴシック, 兜, セーラー服, キャラクター,
-   >   クリエイティブ プロンプト, 文章品質, 執筆効率化, アイデア生成, 創造性, ユーモア,
-   >   写真加工, 背景透過, 背景削除, 背景置換, 証明写真, プロフィール写真,
-   >   美肌加工, 顔加工, 着せ替え, 髪型変更, 写真修復, カラー化, 不要物除去, 表情変更, Nano Banana
+   > - **必须优先从以下已審査済みタグ词表中选择**（不在词表中的标签默认 `isApproved=false`，不会进 sitemap，详情页加 noindex）。
+   >   词表为 2026-05-12 R2 后的实际 DB approved tag（141 个），按 50 音排序：
+   >   1980年代, ChatGPT, Claude, DALL-E, Gemini, Nano Banana,
+   >   アート, アイデア生成, アクション, アクセサリー, アニメ, アニメ プロンプト,
+   >   アブストラクト, イラスト, インテリア, エレガント, カメラ, カメラアングル,
+   >   カラー化, キャラクター, キャラクターデザイン, キリマンジャロ, キリン,
+   >   クリエイティブ, クリエイティブ プロンプト, コード品質, ゴールド, ゴシック,
+   >   コスチューム, コスプレ, サイバーパンク, シネマティック, ジブリ, シミュレーション,
+   >   ジュエリー, シュルレアリスム, ショートヘア, シルエット, スタジオライティング,
+   >   スレンダー, セーラー服, セピア, ダークファンタジー, タトゥー, ダンス, ちび,
+   >   ドラマティック, ドレス, ネックレス, パステルカラー, ビジネス, ファッション,
+   >   ファンタジー, ファンタジーキャラ, ファンタジー衣装, フィルムフォト, プリーツスカート,
+   >   フリル, プログラミング, プロフィール写真, プロフェッショナル, ヘッドドレス,
+   >   ポートレート, ぽっちゃり, マルチカラー, ミニマルアート, モノクロ, ユーモア,
+   >   ライティング, ローアングル, ロングヘア,
+   >   不要物除去, 体型, 体格差, 俯瞰, 兜, 全身, 写真修復, 写真加工, 冬服, 制服,
+   >   前髪, 剣, 創造性, 和風, 図書館, 執筆効率化, 夕焼け, 学校制服, 学生服,
+   >   学習サマリー, 学習効率化, 宇宙, 宇宙船, 後ろ姿, 怪獣, 意思決定, 戦闘, 探検家,
+   >   教材要約, 教育, 教育サポート, 文章品質, 暗い, 服装, 服装プロンプト,
+   >   未来, 未来的, 業務効率化, 水彩画, 漢服, 猫, 田園風景, 甲冑, 着せ替え, 窓辺,
+   >   美肌加工, 肖像画, 背景, 背景削除, 背景置換, 背景透過, 色, 衣装, 衣装プロンプト,
+   >   表情変更, 要点抽出, 証明写真, 読書, 赤, 身長差, 逆光, 部屋デザイン, 金髪,
+   >   鎧, 開発効率化, 顔加工, 髪型, 髪型変更, 魔法使い, 黒髪
    > - 第一个标签是分类关键词（如「髪型」或「プログラミング」）
-   > - 只有在词表中确实没有合适标签时，才可新增1个新标签（会自动标记为未审核）
+   > - **新タグの作成は最大 1 個まで**（且仅在词表确实没有匹配项时）。新タグは自動的に `isApproved=false` で作成され、 Phase 8 Tag Approval Gate でレビューされます。
+   > - **禁止生成的污染 tag 形式**（即使语义匹配也不要建）：
+   >   - `{tag名} プロンプト` 后缀（如「髪型プロンプト」「カメラアングルプロンプト」）— 与基础 tag 重复
+   >   - `{tag名} ai` 后缀（如「ビューティーai」「ファッションai」）— tool 名乱掺主题
+   >   - 解像度/品質パラメータ（`8k解像度`, `8d`, `高解像度撮影`, `超詳細` 等）
+   >   - 工具名混合技巧（`midjourneyテクニック` 等）
+   >   - 任何含 U+FFFD `�` 或其他乱码字符的 slug/name
    >
    > difficulty 判断：
    > - beginner: 简单直接的 prompt，<50 words
@@ -610,6 +628,48 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 
 如果页面未刷新，注明"ISR 缓存尚未更新，稍后会自动刷新"。
 
+### Phase 7.5: Tag Approval Gate（2026-05-12 追加）
+
+**目的**：防止未审核 tag 堆积成 GSC noindex 大头。R2 清理（5/12）后 noindex 占比降到 74.8%，新采集如果继续无差别建 tag 会反弹。
+
+**核心策略**：采集流程不自动批准 tag（保持 `isApproved=false` 默认行为），但每次采集**结束后必须**主动检查新增 tag 状态并提示用户审批。
+
+**执行步骤**（每次跑完 Phase 6 之后，Phase 8 报告之前）：
+
+1. 列出本次入库后新出现的未审核 tag 及其当前 prompt 数：
+
+   ```bash
+   npx tsx src/scripts/data-analys/_tag_list_unapproved.ts | head -30
+   ```
+
+   输出格式：`{prompt数}\t{slug}\t{name}`。
+
+2. 按 prompt 数和语义价值分桶：
+
+   | 桶 | 阈值 | 处理 |
+   |---|---|---|
+   | 🟢 **推荐批准** | 累计 ≥ 3 prompt AND 通过 pollution 过滤 | 在 Phase 8 报告 §New Tag Review 列出，等用户授权批量批准 |
+   | 🟡 **观察** | 累计 = 2 prompt | 不动，下次采集再判 |
+   | ⚪ **暂留** | 累计 = 1 prompt | 不动，等积累 |
+   | 🔴 **建议删除** | 命中 pollution pattern（见 Phase 4 tag 规则） | 在 §New Tag Review 列出，等用户授权删除 |
+
+3. **不要在采集流程里自动调用** `_tag_backlog_r2.ts` 或任何会改 `isApproved` 的脚本。审批必须显式由用户授权后再跑。
+
+4. 当 §New Tag Review 推荐数 ≥ 5 时，在 Phase 8 末尾追加 prompt：
+   > 「本次采集发现 N 个 tag 已累计 ≥3 prompt 可批准 + M 个污染 tag 建议删除。是否现在跑 R{next} 清理？」
+
+**为什么不自动批准**：
+- 审批要看语义（语义相似的应该 merge 而不是新建）
+- 污染过滤（"X プロンプト"、"X ai"、参数）需要人脑判断
+- 自动批准 + 自动生成 seoIntro 会创造低质量索引页面，对 GSC 信任分负面
+
+**参考脚本**（已存在，不要重复造轮子）：
+- `src/scripts/data-analys/_tag_list_unapproved.ts` — 列出未批准 tag（按 prompt 数倒序）
+- `src/scripts/data-analys/_tag_backlog.ts` — 当前 approved / noindex 占比快照
+- `src/scripts/data-analys/_tag_backlog_r2.ts` — 批准 + 删除模板（手动调整 `APPROVE_SLUGS` / `DELETE_SLUGS` 后跑）
+- `src/scripts/data-analys/_tag_seo_backfill.ts` — 给新批准 tag 批量生成 seoIntro（Gemini Flash，~$0.0002/tag）
+- `src/scripts/data-analys/_tag_clean_broken.ts` — 清理含 U+FFFD 损坏字符的 tag
+
 ### Phase 8: 生成报告
 
 输出结构化报告：
@@ -635,6 +695,19 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 - https://www.prompta.jp/prompt/slug-1
 - https://www.prompta.jp/prompt/slug-2
 - ...
+
+### New Tag Review（Phase 7.5 Gate 输出）
+- 未审核 tag 总数: N（vs 采集前 N0）
+- 🟢 推荐批准（≥3 prompt + 通过 pollution 过滤）:
+  - `{slug}` ({prompts} prompts)
+  - ...
+- 🔴 建议删除（pollution）:
+  - `{slug}` ({prompts} prompts) — 原因: {X プロンプト 后缀 / X ai 后缀 / 解像度参数 / 乱码 / 其他}
+  - ...
+- 🟡 观察中（2 prompt）: {count} 个，不动
+- ⚪ 暂留（1 prompt）: {count} 个
+
+> 若 🟢+🔴 合计 ≥ 5，下方追加询问句。
 
 ### 下次采集
 - Cursor: {cursor}
@@ -672,6 +745,15 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 - https://www.prompta.jp/prompt/slug-1
 - https://www.prompta.jp/prompt/slug-2
 - ...
+
+### New Tag Review（Phase 7.5 Gate 输出）
+- 未审核 tag 总数: N（vs 生成前 N0）
+- 🟢 推荐批准（≥3 prompt + 通过 pollution 过滤）:
+  - `{slug}` ({prompts} prompts)
+  - ...
+- 🔴 建议删除（pollution）:
+  - `{slug}` ({prompts} prompts) — 原因: {…}
+  - ...
 
 ### 下次生成
 - 建议: {基于工具/分类分布的建议，指出哪些工具/分类仍缺内容}
