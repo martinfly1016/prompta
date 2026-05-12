@@ -19,6 +19,9 @@ const TARGET_URLS = [
   { path: '/guides/what-is-prompt', label: 'Type-A anchor: プロンプトとは / 意味', commit: 'd314307' },
   { path: '/guides/prompt-writing-guide', label: 'Type-B anchor: プロンプト 書き方', commit: '963a500' },
   { path: '/tools/chatgpt', label: 'Tool-specific: chatgpt プロンプト', commit: '768a122' },
+  { path: '/tools/gemini', label: 'Tool-specific: gemini プロンプト (28d pos 38.3)', commit: 'a7fe3fa' },
+  { path: '/prompts/writing', label: 'Category SEO: ai ライティング プロンプト (pos 20.3)', commit: 'pending' },
+  { path: '/prompts/cosplay', label: 'Category SEO: ai コスプレ (pos 23.5)', commit: 'pending' },
 ]
 
 const HOST = 'www.prompta.jp'

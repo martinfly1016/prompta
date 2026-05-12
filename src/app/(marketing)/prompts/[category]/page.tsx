@@ -6,7 +6,7 @@ import { getCategoryBySlug, getCategorySlugs, getPromptsByCategoryPaginated, get
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
-import { generateCollectionPageSchema } from '@/lib/schema'
+import { generateCollectionPageSchema, generateFaqSchema } from '@/lib/schema'
 
 export const revalidate = 60
 
@@ -74,10 +74,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const seoOverride = CATEGORY_SEO_OVERRIDES[category.slug]
   const h1Text = seoOverride?.seoH1 ?? `${category.name}プロンプト集`
   const schema = generateCollectionPageSchema(`${category.name}プロンプト集`, category.description, `${SITE_CONFIG.url}/prompts/${category.slug}`, total)
+  const categoryIntro = CATEGORY_INTROS[category.slug]
+  const faqSchema = categoryIntro?.faqs?.length ? generateFaqSchema(categoryIntro.faqs) : null
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ name: '全プロンプト', href: '/prompts' }, { name: category.name, href: `/prompts/${category.slug}` }]} />
       </div>
@@ -136,6 +141,26 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                 </li>
               ))}
             </ul>
+
+            {categoryIntro?.faqs?.length ? (
+              <>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 mt-10">よくある質問</h3>
+                <div className="space-y-3">
+                  {categoryIntro.faqs.map((f, i) => (
+                    <details key={i} className="group bg-gray-50 rounded-xl border border-gray-200 open:border-sky-300 open:bg-sky-50/30">
+                      <summary className="cursor-pointer p-4 font-semibold text-sm sm:text-base text-gray-900 group-open:text-sky-700 list-none flex items-start justify-between gap-2">
+                        <span>{f.question}</span>
+                        <span className="text-sky-600 text-xl leading-none shrink-0 group-open:rotate-45 transition-transform">+</span>
+                      </summary>
+                      <div
+                        className="px-4 pb-4 text-sm text-gray-700 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: f.answer }}
+                      />
+                    </details>
+                  ))}
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
       )}
