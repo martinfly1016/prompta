@@ -210,6 +210,11 @@ npx tsx src/scripts/data-analys/photo-edit-traffic.ts --days=7
 
 # H) Paywall 漏斗事件（hair-color / personal-color CTA → click → checkout）
 npx tsx src/scripts/data-analys/ga-query.ts --mode=tool-funnel --days=7
+
+# I) 头部关键词排名追踪（プロンプト cluster — A定义/B書き方/C一覧）
+#    2026-05-12 SEO 优化基线，监控 14 个核心 head keyword 的 7d-vs-7d 排名变化
+#    用于判断 d314307 的 cannibalization 修复是否在 GSC 数据中显现
+npx tsx src/scripts/data-analys/_head_keyword_track.ts --days=7
 ```
 
 > macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
@@ -245,6 +250,52 @@ npx tsx src/scripts/data-analys/ga-query.ts --mode=tool-funnel --days=7
 | 关键词 | 曝光 | 点击 | CTR | 排名 |
 ### Top 10 着陆页
 | 页面 | 曝光 | 点击 | CTR | 排名 |
+
+## 2.5 头部关键词排名追踪（プロンプト cluster）
+
+> 数据源: `_head_keyword_track.ts`。2026-05-12 SEO 优化（commit `d314307`）开始监控的 14 个 head keyword，分 3 cluster：A 定义 / B 書き方 / C 一覧。**rank 数字越小越好**（1 = SERP 第 1 位），排名变化 ≥ 5 位标 🟢/🔴，≥ 2 位标改善/悪化，否则 ⚪ 横ばい。GSC 数据有 24-48h 延迟，所以窗口比 GA 早 1 天。
+
+### 2.5.1 排名表
+| Cluster | 关键词 | 本周期排名 | 上周期排名 | Δ | 状态 | 曝光本/上 | 着陆页 |
+|---|---|---|---|---|---|---|---|
+| A-定义 | プロンプト | 43.6 | 74.8 | **-31.2** | 🟢 大幅改善 | 12 / 6 | /guides/what-is-prompt |
+| A-定义 | プロンプトとは | … | … | … | … | … | /guides/what-is-prompt |
+| A-定义 | プロンプト 意味 | … | … | … | … | … | … |
+| A-定义 | ai プロンプト とは | … | … | … | … | … | … |
+| B-書き方 | プロンプト 書き方 | … | … | … | … | … | … |
+| B-書き方 | プロンプト 生成 | … | … | … | … | … | … |
+| B-書き方 | ai プロンプト コツ | … | … | … | … | … | … |
+| B-書き方 | 生成ai プロンプト | … | … | … | … | … | … |
+| C-一覧 | ai プロンプト | … | … | … | … | … | … |
+| C-一覧 | プロンプト 集 | … | … | … | … | … | … |
+| C-一覧 | プロンプト ai | … | … | … | … | … | … |
+| C-一覧 | chatgpt プロンプト | … | … | … | … | … | … |
+| C-一覧 | chat gpt プロンプト | … | … | … | … | … | … |
+
+> 表格末按 `Δ` 升序排序（最大改善在前），让一眼能看出本周大涨/大跌项。
+
+### 2.5.2 Cluster 概览
+| Cluster | 平均排名（本周期） | 平均 Δ | 着陆页集中度 | 备注 |
+|---|---|---|---|---|
+| A-定义 | N | ±N | M URLs 争抢 → 期望 ≤ 1 (canonical = /guides/what-is-prompt) | … |
+| B-書き方 | N | ±N | M URLs | … |
+| C-一覧 | N | ±N | M URLs → 期望 ≤ 1 (canonical = / homepage) | … |
+
+### 2.5.3 解读重点
+- **Cannibalization 监控**: 任意 head keyword 出现 ≥ 3 个不同 prompta.jp 着陆页 → 标 🔴 + 在 §6 行动建议加「明确该词的 canonical URL」item
+- **🟢 改善 verification**: 5/12 优化的目标词（プロンプト / プロンプトとは / プロンプト 意味 / ai プロンプト とは / プロンプト 集 / ai プロンプト 一覧 等）必须显示 🟢 改善 — 若連続 2 周仍 ⚪ 横ばい或 🔴 → 内容/canonical 修复不到位
+- **🆕 新登场**: 之前 GSC 无曝光，本周首次出现 → 通常意味着新内容上线后开始爬，是积极信号；记录在 §6 「新キーワード进入」节
+- **⚫ 消失**: 之前有曝光本周 0 → 通常是 GSC 24-48h 延迟假象（5/10-5/11 数据缺失），但若連続 2 周仍 0 → 内容已被去索引或排名跌出 top 100
+- **Δ ≥ +5 (悪化)** 必须立刻排查：URL 是否还存在、是否新增 noindex、canonical 是否被改、HotKey 段落是否被 prompt-params 替换、internal link 是否减少
+
+### 2.5.4 历史基线（用于多周对比，每周日报追加 1 行）
+| 日期窗口 | プロンプト | プロンプトとは | ai プロンプト | 备注 |
+|---|---|---|---|---|
+| 2026-05-05~05-11 | 43.6 | 50.5 | 68.3 | 优化前基线（5/12 ship d314307） |
+| 2026-05-12~05-18 | … | … | … | 5/12 ship 第 1 周 |
+| 2026-05-19~05-25 | … | … | … | 5/12 ship 第 2 周 |
+
+> 每次跑日报时把本周数据 append 一行（手动），3 个核心 cluster anchor keyword 各取一个。3-4 周后能看出趋势线。
 
 ## 3. 工具使用情况（重点）
 
@@ -388,8 +439,14 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 | `src/scripts/data-analys/config.ts` | 共享配置（env 加载、认证、站点 URL） |
 | `src/scripts/data-analys/gsc-query.ts` | GSC Search Analytics API 封装 |
 | `src/scripts/data-analys/ga-query.ts` | GA4 Data API 封装 |
-| `src/scripts/data-analys/semrush-query.ts` | SEMrush REST API 封装 |
+| `src/scripts/data-analys/semrush-query.ts` | SEMrush REST API 封装（**`SEMRUSH_API_KEY` 未配置，暂不可用**） |
 | `src/scripts/data-analys/db-query.ts` | 本地 DB 查询（Prisma，prompt 入库/tag 状态） |
+| `src/scripts/data-analys/photo-edit-traffic.ts` | photo-edit 单 prompt 流量追踪（§7 ツール化候補） |
+| `src/scripts/data-analys/_head_keyword_track.ts` | **§2.5 头部关键词排名追踪**（プロンプト cluster 14 词，7d-vs-7d） |
+| `src/scripts/data-analys/_head_keyword_pages.ts` | 头部词的着陆页分布（90 日窗口，诊断 cannibalization 用，非日报） |
+| `src/scripts/data-analys/_periods.ts` | GA4 当周/上周流量总览（@ts-nocheck）— §1 站点总览的 vs 上周对比 |
+| `src/scripts/data-analys/_gsc_periods.ts` | GSC 当周/上周聚合（clicks/impressions/CTR/position）— §1 自然搜索行 |
+| `src/scripts/data-analys/_tag_backlog.ts` / `_tag_list_unapproved.ts` / `_tag_backlog_r2.ts` / `_tag_seo_backfill.ts` / `_tag_clean_broken.ts` | tag 审核积压管理（详 collect-content Phase 7.5 Gate） |
 
 ## Baseline 数据
 
