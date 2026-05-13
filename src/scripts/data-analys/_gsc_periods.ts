@@ -9,9 +9,16 @@ async function main() {
   })
   const webmasters = google.webmasters({ version: 'v3', auth })
 
+  // Dynamic windows: ends yesterday, 7-day spans.
+  const fmt = (d: Date) => d.toISOString().split('T')[0]
+  const today = new Date()
+  const thisEnd = new Date(today); thisEnd.setDate(today.getDate() - 1)
+  const thisStart = new Date(thisEnd); thisStart.setDate(thisEnd.getDate() - 6)
+  const prevEnd = new Date(thisStart); prevEnd.setDate(thisStart.getDate() - 1)
+  const prevStart = new Date(prevEnd); prevStart.setDate(prevEnd.getDate() - 6)
   const periods = [
-    { name: 'this', startDate: '2026-05-05', endDate: '2026-05-11' },
-    { name: 'prev', startDate: '2026-04-28', endDate: '2026-05-04' },
+    { name: 'this', startDate: fmt(thisStart), endDate: fmt(thisEnd) },
+    { name: 'prev', startDate: fmt(prevStart), endDate: fmt(prevEnd) },
   ]
 
   const out: any = {}

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { loadGoogleCredentials, GA4_PROPERTY_ID } from './config'
+import { loadGoogleCredentials, GA4_PROPERTY_ID, parseArgs } from './config'
 
 async function main() {
   const { google } = await import('googleapis')
@@ -10,9 +10,18 @@ async function main() {
   })
   const analyticsdata = google.analyticsdata({ version: 'v1beta', auth })
 
+  // Dynamic windows: ends yesterday (GSC/GA both lag <= 24h), 7-day spans.
+  // Override via --this-start / --prev-start CLI args if needed.
+  const args = parseArgs()
+  const fmt = (d: Date) => d.toISOString().split('T')[0]
+  const today = new Date()
+  const thisEnd = new Date(today); thisEnd.setDate(today.getDate() - 1)
+  const thisStart = new Date(thisEnd); thisStart.setDate(thisEnd.getDate() - 6)
+  const prevEnd = new Date(thisStart); prevEnd.setDate(thisStart.getDate() - 1)
+  const prevStart = new Date(prevEnd); prevStart.setDate(prevEnd.getDate() - 6)
   const periods = [
-    { name: 'this', startDate: '2026-05-05', endDate: '2026-05-11' },
-    { name: 'prev', startDate: '2026-04-28', endDate: '2026-05-04' },
+    { name: 'this', startDate: args['this-start'] ?? fmt(thisStart), endDate: args['this-end'] ?? fmt(thisEnd) },
+    { name: 'prev', startDate: args['prev-start'] ?? fmt(prevStart), endDate: args['prev-end'] ?? fmt(prevEnd) },
   ]
 
   const out: any = {}

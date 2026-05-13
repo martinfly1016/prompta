@@ -354,6 +354,12 @@ npx tsx src/scripts/data-analys/_rank_opportunities.ts --days=28 --minImpression
 
 > 数据源: `ga-query.ts --mode=tool-funnel`。前端事件: `paywall_view` (modal 打开) → `paywall_purchase_click` (购入按钮按下) → `checkout_started` (Stripe 跳转) → StripePayment（已记 §3 收入）。
 
+> 🚨 **5/9 race condition 历史数据警告**: 5/9 03:49 - 13:03 JST 期间 hair-color / personal-color 存在 `consumeFreeQuota` race，5 个 anon 触发 13 次 `paywall_view.exhausted_pick` 重复事件（同 ms 多次写入 ToolUsage）。5/9 13:04 commit `5c8e847` (rank-after-insert) ship 后**彻底解决**。5/11 commit `df57544` Phase 0 又把整个 free quota 体系废除。
+> **如果 paywall_view 突然飙高 / exhausted anon 突然多**，先用 `_paywall_users_detail.ts` 看每个 anon 的 ToolUsage 时间戳：
+>   - 同 ms 多次写入 → race / button-debounce bug 复发
+>   - 时间分散正常 → 真实用户撞墙
+> 对 5/9 早段历史数据下 paywall 转化结论会被误导（实际「撞 3 次墙的 anon」≈ 0，5 个 anon 都是 race 误触）。建议对比窗口起点设 ≥ 2026-05-10 避免污染。
+
 ### 总聚合（所有工具汇总）
 | 事件 | 本周期 | 上周期 | Δ |
 |---|---|---|---|
@@ -394,6 +400,18 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 - 撞墙数远 > paywall_view → instrumentation gap（修代码）
 - 撞墙数 ≈ paywall_view → 两者一致，可以放心切到 GA 切片
 - 撞墙→付费 < 15% → UI/价格优化重点（文案？free quota 调 5？）
+
+> ⚠️ **必查防误报**: 看到撞墙数 ≥ 3 时，**必须**先跑 `_paywall_users_detail.ts` 看每个 exhausted anon 的 ToolUsage 时间戳。同 ms / 同秒级多次写入是 race / bot / button-debounce bug，**不是真实用户撞墙**。5/9 早段的 13 次 paywall_view + 5 anon exhausted 全是这种 race，2 个 anon 4 次同 ms 写入（已修复 — commit `5c8e847`）。**Phase 0 后理论上不应再出现 type=free 的 ToolUsage 写入**，若出现是新 bug 信号。
+
+### 3.5.2 真实付费样本极少时的判断准则
+
+5/12 前真实付费转化样本极少（n=0~1），加上 5/9 早段污染数据，**目前没有足够样本判断 paywall 文案 / 价格优化方向**。下面这些指标在 n < 10 时**不要下结论**：
+
+- 「view→click < 10% → 文案有问题」 — 可能只是样本太小
+- 「exhausted_pick 占 view 80% → 其他 CTA 失效」 — 可能其他入口本来就少
+- 「撞墙→付费 < 15% → 该降价」 — 可能 race 误触膨胀分母
+
+**真实付费样本 ≥ 10 之前**，paywall 节诊断只做事实陈述（「本周 N 次 view / N 次 click」），不做归因。
 
 ### 解读重点
 - **view→click < 10%**: 价格 / signin gate / 文案问题；考虑去掉登录前置 / 改 modal 文案
@@ -483,6 +501,7 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 | `src/scripts/data-analys/_rank_opportunities.ts` | **§2.6 高曝光低排名机会词扫描**（28d，曝光 ≥ 40 AND 排名 > 20） |
 | `src/scripts/data-analys/_head_keyword_pages.ts` | 头部词的着陆页分布（90 日窗口，诊断 cannibalization 用，非日报） |
 | `src/scripts/data-analys/_recrawl_seo_pages.ts` | URL Inspection baseline + IndexNow push（4 个 SEO 改动页跟踪） |
+| `src/scripts/data-analys/_paywall_users_detail.ts` | **§3.5 防误报**: 列每个 exhausted anon 的 ToolUsage 时间戳，区分 race bug 残留 vs 真实撞墙 |
 | `src/scripts/data-analys/_periods.ts` | GA4 当周/上周流量总览（@ts-nocheck）— §1 站点总览的 vs 上周对比 |
 | `src/scripts/data-analys/_gsc_periods.ts` | GSC 当周/上周聚合（clicks/impressions/CTR/position）— §1 自然搜索行 |
 | `src/scripts/data-analys/_tag_backlog.ts` / `_tag_list_unapproved.ts` / `_tag_backlog_r2.ts` / `_tag_seo_backfill.ts` / `_tag_clean_broken.ts` | tag 审核积压管理（详 collect-content Phase 7.5 Gate） |
