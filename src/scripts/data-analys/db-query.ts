@@ -89,16 +89,32 @@ async function main() {
       const prevSince = new Date(since)
       prevSince.setDate(prevSince.getDate() - days)
 
+      // Exclude e2e-test users (emailHash of 'e2e-test+*' emails). Compute
+      // their hashes upfront so the Prisma `where` clause stays declarative.
+      const { createHash } = await import('node:crypto')
+      const testEmails = ['e2e-test+t1@prompta.jp', 'e2e-test+t2@prompta.jp', 'e2e-test+t3@prompta.jp']
+      const testEmailHashes = testEmails.map(e =>
+        createHash('sha256').update(e.toLowerCase().trim()).digest('hex'),
+      )
+
       const tools = ['personal-color', 'hair-color']
       const summary: Record<string, unknown> = {}
 
       for (const tool of tools) {
         const usages = await prisma.toolUsage.findMany({
-          where: { tool, createdAt: { gte: since } },
+          where: {
+            tool,
+            createdAt: { gte: since },
+            OR: [{ emailHash: null }, { emailHash: { notIn: testEmailHashes } }],
+          },
           select: { type: true, anonId: true, emailHash: true, createdAt: true },
         })
         const prevUsages = await prisma.toolUsage.count({
-          where: { tool, createdAt: { gte: prevSince, lt: since } },
+          where: {
+            tool,
+            createdAt: { gte: prevSince, lt: since },
+            OR: [{ emailHash: null }, { emailHash: { notIn: testEmailHashes } }],
+          },
         })
 
         const free = usages.filter(u => u.type === 'free').length
