@@ -1,0 +1,130 @@
+name: E2E paid-flow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Only run when paid-feature surfaces or tests change. Saves CI minutes
+      # on docs / collect / unrelated commits.
+      - 'src/app/(marketing)/tools/**'
+      - 'src/app/api/tools/**'
+      - 'src/app/api/webhooks/stripe/**'
+      - 'src/app/api/test/**'
+      - 'src/components/tools/**'
+      - 'src/lib/paid-credits.ts'
+      - 'src/lib/tool-quota.ts'
+      - 'src/lib/auth.ts'
+      - 'src/scripts/e2e/**'
+      - 'e2e/**'
+      - 'playwright.config.ts'
+      - 'package.json'
+      - 'prisma/schema.prisma'
+      - '.github/workflows/e2e.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  paid-flow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: prompta_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/prompta_test
+      NEXTAUTH_SECRET: ci-test-secret-do-not-use-in-prod-do-not-use-in-prod
+      NEXTAUTH_URL: http://localhost:3000
+      ENABLE_TEST_AUTH: 'true'
+      SKIP_ENV_VALIDATION: 'true'
+      NODE_ENV: test
+      # Stub keys — only the test-* endpoints are exercised, no real
+      # outbound calls are made.
+      STRIPE_SECRET_KEY: sk_test_ci_stub
+      STRIPE_WEBHOOK_SECRET: whsec_ci_stub
+      GOOGLE_AI_API_KEY: ci_stub_not_used_in_e2e
+      BLOB_READ_WRITE_TOKEN: vercel_blob_rw_ci_stub
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Prisma generate + push schema
+        run: |
+          npx prisma generate
+          npx prisma db push --skip-generate
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Playwright Chromium
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright system deps (cached path)
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Start server (background)
+        run: |
+          npm run start > /tmp/server.log 2>&1 &
+          echo "$!" > /tmp/server.pid
+
+      - name: Wait for server
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/api/test/login -X POST \
+                -H "Content-Type: application/json" \
+                -d '{"email":"warmup@nowhere"}' > /dev/null 2>&1; then
+              echo "server up after ${i}s"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run API smoke (T1+T2)
+        env:
+          E2E_BASE_URL: http://localhost:3000
+        run: npm run e2e:api -- --tier=2
+
+      - name: Run Playwright UI tests
+        env:
+          E2E_BASE_URL: http://localhost:3000
+        run: npm run e2e
+
+      - name: Server log on failure
+        if: failure()
+        run: tail -200 /tmp/server.log
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

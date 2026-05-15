@@ -13,7 +13,11 @@
     "db:studio": "prisma studio",
     "db:seed": "node -r ts-node/register prisma/seed.ts",
     "params:sync": "tsx scripts/prompt-params/sync.ts",
-    "params:audit": "tsx scripts/prompt-params/audit.ts"
+    "params:audit": "tsx scripts/prompt-params/audit.ts",
+    "e2e:api": "tsx src/scripts/e2e/run-paid-flow.ts",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",
@@ -39,6 +43,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.9.1",
