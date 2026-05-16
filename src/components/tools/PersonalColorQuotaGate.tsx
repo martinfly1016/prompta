@@ -292,7 +292,13 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   async function handlePickFile() {
     if (!state) return
     if (!state.canUse) {
-      openPaywall(setShowModal, 'exhausted_pick')
+      // Phase 0 (5/11 df57544): canUse=false has two distinct causes —
+      // unauthenticated (login_required) vs. signed-in with 0 credits
+      // (exhausted_pick). Keep the trigger labels separate so GA4 can slice
+      // "acquire new users" vs. "re-monetize existing users" funnels.
+      const trigger: PaywallTrigger =
+        state.blockReason === 'login_required' ? 'login_required' : 'exhausted_pick'
+      openPaywall(setShowModal, trigger)
       return
     }
     fileInputRef.current?.click()

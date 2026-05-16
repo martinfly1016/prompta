@@ -239,7 +239,9 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   async function handlePickFile() {
     if (!state) return
     if (!state.canUse) {
-      openPaywall(setShowModal, 'exhausted_pick')
+      const trigger: PaywallTrigger =
+        state.blockReason === 'login_required' ? 'login_required' : 'exhausted_pick'
+      openPaywall(setShowModal, trigger)
       return
     }
     fileInputRef.current?.click()

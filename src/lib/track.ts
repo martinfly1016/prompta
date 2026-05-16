@@ -102,7 +102,8 @@ export type PaywallTrigger =
   | 'badge'             // exhausted-state badge click (preventive)
   | 'candidate_card'    // disabled candidate "クレジット不足" →购入
   | 'upsell_banner'     // soft upsell banner above candidates
-  | 'exhausted_pick'    // tried to upload new photo while exhausted
+  | 'login_required'    // unauthenticated user clicked an action that needs credits
+  | 'exhausted_pick'    // signed-in user with 0 credits tried to upload a new photo
   | 'exhausted_analyze' // backend 429 from /analyze endpoint
   | 'exhausted_simulate'// no credits when picking a candidate
   | 'exhausted_429'     // backend 429 from /simulate endpoint
