@@ -6,6 +6,10 @@ import { ALL_CONFIGS } from './configs.generated'
 const ALIASES: Record<string, string> = {
   'chibi-girl-walk-29': 'chibi-girl-walk-26',
   'orange-hair-braid-multicolor-jacket': 'braid-sidelocks-body-markings',
+  // 2026-05-16 batch — near-duplicate prompt contents share single config
+  'anime-girl-red-14': 'anime-prompt-f061b77b',
+  'anime-girl-scene-12': 'anime-prompt-f061b77b',
+  'anime-girl-meadow-22': 'anime-girl-meadow-21',
 }
 
 export function getPromptParamsConfig(slug: string): PromptParamsConfig | null {
