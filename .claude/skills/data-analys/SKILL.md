@@ -493,7 +493,7 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 - **activation ≥ 5%**: 机制本身有效；不应纠结 copy-rate
 - **Δ bounce < -3pp AND Δ engage > +3pp**: 参数化提升页面投入度（统计 noise ≈ 3pp）
 - **8 周连续 activation < 5%**: UX 问题（默认折叠？提示不显眼？）→ 改面板交互
-- **细粒度 param_id / param_value 切片**: GA4 admin 需注册 4 个自定义维度 `prompt_slug` / `param_id` / `param_value` / `prompt_category`（event-scoped, text）。注册后即时可查。未注册时本节只能给整体激活率，看不到「哪个 param 最受欢迎」「用户改成什么值」
+- **细粒度 param_id / param_value 切片**: 4 个自定义维度 `prompt_slug` / `param_id` / `param_value` / `prompt_category` 已于 **2026-05-16** 注册（GA4 admin → Custom definitions）。GA4 **不 backfill 历史事件**，5/16 前的事件维度值永久 `(not set)`。脚本检测到 (not set) 时自动输出「⏳ 等新事件」提示，5/16 后的新事件来时自动出现「按 param_id 聚合」+「Top 用户偏好」两个子表
 
 ## 5. 异常 / 高亮
 - 🔴 ... (任何 Δ < -20% 的指标)

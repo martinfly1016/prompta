@@ -108,6 +108,37 @@ async function main() {
     })
   }
 
+  // Q3: per-param breakdown (custom dims registered 2026-05-16 — events
+  // before that date have (not set) values; filtered out below).
+  const paramDetailQ = await ga.properties.runReport({
+    property,
+    requestBody: {
+      dateRanges: [dateRange],
+      dimensions: [
+        { name: 'customEvent:prompt_slug' },
+        { name: 'customEvent:param_id' },
+        { name: 'customEvent:param_value' },
+      ],
+      metrics: [{ name: 'eventCount' }, { name: 'activeUsers' }],
+      dimensionFilter: { filter: { fieldName: 'eventName', stringFilter: { value: 'prompt_param_changed' } } },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: '1000',
+    },
+  })
+  type ParamDetail = { slug: string; paramId: string; paramValue: string; events: number; users: number }
+  const paramDetails: ParamDetail[] = []
+  let notSetEvents = 0
+  for (const row of paramDetailQ.data.rows || []) {
+    const [slug, pid, pval] = row.dimensionValues!.map((d) => d.value || '')
+    const events = parseInt(row.metricValues?.[0]?.value || '0')
+    const users = parseInt(row.metricValues?.[1]?.value || '0')
+    if (slug === '(not set)' || pid === '(not set)') {
+      notSetEvents += events
+      continue
+    }
+    paramDetails.push({ slug, paramId: pid, paramValue: pval, events, users })
+  }
+
   // Aggregation
   const paramPages = allPages.filter((p) => PARAM_SLUGS.has(p.slug))
   const ctrlPages = allPages.filter((p) => !PARAM_SLUGS.has(p.slug))
@@ -181,6 +212,41 @@ async function main() {
     lines.push('')
   }
 
+  // Per-param breakdown (custom dims registered 2026-05-16 — only emits
+  // when post-registration event data is available)
+  if (paramDetails.length > 0) {
+    lines.push('## 细粒度切片（哪个参数被改最多 / 用户改成什么值）')
+    lines.push('')
+
+    const byParamId = new Map<string, { events: number; users: number }>()
+    for (const d of paramDetails) {
+      const cur = byParamId.get(d.paramId) ?? { events: 0, users: 0 }
+      cur.events += d.events
+      cur.users = Math.max(cur.users, d.users)
+      byParamId.set(d.paramId, cur)
+    }
+    lines.push('### 按 param_id 聚合（全 slug）')
+    lines.push('| param_id | events | max users |')
+    lines.push('|---|---|---|')
+    for (const [pid, agg] of Array.from(byParamId.entries()).sort((a, b) => b[1].events - a[1].events)) {
+      lines.push(`| ${pid} | ${agg.events} | ${agg.users} |`)
+    }
+    lines.push('')
+
+    lines.push('### Top 用户偏好（slug × param_id × value，events ≥ 2）')
+    lines.push('| slug | param_id | param_value | events |')
+    lines.push('|---|---|---|---|')
+    const top = paramDetails.filter((d) => d.events >= 2).slice(0, 20)
+    if (top.length === 0) lines.push('| (样本不足，events 全部 < 2) | — | — | — |')
+    for (const d of top) {
+      lines.push(`| ${d.slug} | ${d.paramId} | ${d.paramValue} | ${d.events} |`)
+    }
+    lines.push('')
+  } else if (notSetEvents > 0) {
+    lines.push(`> ⏳ 细粒度切片暂不可用：${notSetEvents} 个事件 prompt_slug/param_id 仍为 (not set) — 这些是 2026-05-16 维度注册前的历史事件，GA4 不 backfill。后续注册之后的新事件会自动带正确值。`)
+    lines.push('')
+  }
+
   console.log(lines.join('\n'))
 
   // Machine-readable summary for downstream report
@@ -199,6 +265,8 @@ async function main() {
     deltaBouncePp: parseFloat(bounceDelta.toFixed(2)),
     deltaEngagePp: parseFloat(engageDelta.toFixed(2)),
     touchedSlugs: Array.from(touchedBySlug.values()),
+    paramDetails,
+    notSetEvents,
   }, null, 2))
 }
 
