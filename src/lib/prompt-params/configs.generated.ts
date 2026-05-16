@@ -2,34 +2,40 @@
 // Add a new config by dropping a TS file in ./configs/<slug>.ts that exports `config`.
 
 import type { PromptParamsConfig } from './types'
-import { config as c0 } from './configs/anime-girl-space-03'
-import { config as c1 } from './configs/blue-serafuku-school-uniform'
-import { config as c2 } from './configs/braid-sidelocks-body-markings'
-import { config as c3 } from './configs/chibi-girl-walk-26'
-import { config as c4 } from './configs/cybernetic-soldier-heavy-armor'
-import { config as c5 } from './configs/fantasy-swordswoman-confident'
-import { config as c6 } from './configs/hatsune-miku-ink-wash-japanese'
-import { config as c7 } from './configs/sailor-uniform-pleated-skirt'
-import { config as c8 } from './configs/slender-crop-top-elegant-confident'
-import { config as c9 } from './configs/slim-pain-expression-glamor-tragic'
-import { config as c10 } from './configs/straight-long-black-hair-glossy'
-import { config as c11 } from './configs/twintail-blonde-sailor-outfit'
-import { config as c12 } from './configs/white-hair-paladin-sword'
-import { config as c13 } from './configs/witch-library-grey-hair-elegant'
+import { config as c0 } from './configs/anime-girl-scene-10'
+import { config as c1 } from './configs/anime-girl-space-03'
+import { config as c2 } from './configs/anime-prompt-f061b77b'
+import { config as c3 } from './configs/anime-woman-neon-08'
+import { config as c4 } from './configs/blue-serafuku-school-uniform'
+import { config as c5 } from './configs/braid-sidelocks-body-markings'
+import { config as c6 } from './configs/chibi-girl-walk-26'
+import { config as c7 } from './configs/cybernetic-soldier-heavy-armor'
+import { config as c8 } from './configs/fantasy-swordswoman-confident'
+import { config as c9 } from './configs/hatsune-miku-ink-wash-japanese'
+import { config as c10 } from './configs/sailor-uniform-pleated-skirt'
+import { config as c11 } from './configs/slender-crop-top-elegant-confident'
+import { config as c12 } from './configs/slim-pain-expression-glamor-tragic'
+import { config as c13 } from './configs/straight-long-black-hair-glossy'
+import { config as c14 } from './configs/twintail-blonde-sailor-outfit'
+import { config as c15 } from './configs/white-hair-paladin-sword'
+import { config as c16 } from './configs/witch-library-grey-hair-elegant'
 
 export const ALL_CONFIGS: Record<string, PromptParamsConfig> = {
-  'anime-girl-space-03': c0,
-  'blue-serafuku-school-uniform': c1,
-  'braid-sidelocks-body-markings': c2,
-  'chibi-girl-walk-26': c3,
-  'cybernetic-soldier-heavy-armor': c4,
-  'fantasy-swordswoman-confident': c5,
-  'hatsune-miku-ink-wash-japanese': c6,
-  'sailor-uniform-pleated-skirt': c7,
-  'slender-crop-top-elegant-confident': c8,
-  'slim-pain-expression-glamor-tragic': c9,
-  'straight-long-black-hair-glossy': c10,
-  'twintail-blonde-sailor-outfit': c11,
-  'white-hair-paladin-sword': c12,
-  'witch-library-grey-hair-elegant': c13,
+  'anime-girl-scene-10': c0,
+  'anime-girl-space-03': c1,
+  'anime-prompt-f061b77b': c2,
+  'anime-woman-neon-08': c3,
+  'blue-serafuku-school-uniform': c4,
+  'braid-sidelocks-body-markings': c5,
+  'chibi-girl-walk-26': c6,
+  'cybernetic-soldier-heavy-armor': c7,
+  'fantasy-swordswoman-confident': c8,
+  'hatsune-miku-ink-wash-japanese': c9,
+  'sailor-uniform-pleated-skirt': c10,
+  'slender-crop-top-elegant-confident': c11,
+  'slim-pain-expression-glamor-tragic': c12,
+  'straight-long-black-hair-glossy': c13,
+  'twintail-blonde-sailor-outfit': c14,
+  'white-hair-paladin-sword': c15,
+  'witch-library-grey-hair-elegant': c16,
 }
