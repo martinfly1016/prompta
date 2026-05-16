@@ -220,6 +220,11 @@ npx tsx src/scripts/data-analys/_head_keyword_track.ts --days=7
 #    动态发现「Google 已认 Prompta 相关但排名卡在 page-2/3」的候选词
 #    低 traffic 站点用 7d 窗口几乎找不到 >= 40 曝光的词，所以默认 28d 与 GSC UI 一致
 npx tsx src/scripts/data-analys/_rank_opportunities.ts --days=28 --minImpressions=40 --minPosition=20
+
+# K) Prompt 参数化效果监控（§8）
+#    16 个参数化 slug 的激活率 + engagement vs 非参数化对照
+#    指标解读: copy-rate 不是参数化的合适指标（用户最终只 copy 一次），看 activation 和 bounce/engage 差异
+npx tsx src/scripts/data-analys/param-monitor.ts --days=7
 ```
 
 > macOS 上用 `date -v-7d +%Y-%m-%d`；Linux 上换成 `date -d '7 days ago' +%Y-%m-%d`。
@@ -457,6 +462,39 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 - 🟡 → 下周仍跟踪，无操作
 - ⚪ 全员 → 内容质量优化（加 Before/After 样片、补 R7 保留清单）
 
+## 8. Prompt 参数化效果监控
+
+> 数据源: `param-monitor.ts`。**copy-rate 不是合适指标**（用户找到满意 prompt 后只 copy 一次，参数化不改变这个最终动作）— 看 **activation rate**（调参 sessions 占比）+ **bounce/engage 差异**（参数化 vs 非参数化）。slug 列表自动来自 `getConfiguredSlugs()`，无需手维护。
+
+### 8.1 激活率
+| 指标 | 本周期 | 决策线 | 状态 |
+|---|---|---|---|
+| 参数化页面 sessions | N | — | — |
+| 触发 prompt_param_changed sessions | N | ≥5% | 🟢/🔴 |
+| 调参用户数 | N | — | — |
+| 平均事件/用户 | N | ≥3（真实试错）| 🟢/🔴 |
+
+### 8.2 Engagement 对比
+| 组 | sessions | bounce | engage | dwell |
+|---|---|---|---|---|
+| 参数化 16 slug | N | N% | N% | Ns |
+| 非参数化（所有 prompt 页）| N | N% | N% | Ns |
+
+**Δ bounce**: ±Npp 🟢/🔴/⚪ · **Δ engage**: ±Npp 🟢/🔴/⚪
+
+> dwell 受少数「开 tab 不关」用户拉偏，bounce / engage 才是干净对比。
+
+### 8.3 已调参 slug 排行 + 0 调参 slug
+- 已调参（events 倒序）: {slug-1}/N events · ...
+- 0 调参（有流量未触发）: {slug-list} → §6 加「检查 UX 是否过于隐蔽」item
+- 0 流量 slug: {slug-list} → 等流量自然涨，不归因
+
+### 8.4 解读重点 / 决策准则
+- **activation ≥ 5%**: 机制本身有效；不应纠结 copy-rate
+- **Δ bounce < -3pp AND Δ engage > +3pp**: 参数化提升页面投入度（统计 noise ≈ 3pp）
+- **8 周连续 activation < 5%**: UX 问题（默认折叠？提示不显眼？）→ 改面板交互
+- **细粒度 param_id / param_value 切片**: GA4 admin 需注册 4 个自定义维度 `prompt_slug` / `param_id` / `param_value` / `prompt_category`（event-scoped, text）。注册后即时可查。未注册时本节只能给整体激活率，看不到「哪个 param 最受欢迎」「用户改成什么值」
+
 ## 5. 异常 / 高亮
 - 🔴 ... (任何 Δ < -20% 的指标)
 - 🟢 ... (任何 Δ > +30% 的指标)
@@ -502,6 +540,8 @@ npx tsx src/scripts/data-analys/db-query.ts --mode=paywall-hits --days=7
 | `src/scripts/data-analys/_head_keyword_pages.ts` | 头部词的着陆页分布（90 日窗口，诊断 cannibalization 用，非日报） |
 | `src/scripts/data-analys/_recrawl_seo_pages.ts` | URL Inspection baseline + IndexNow push（4 个 SEO 改动页跟踪） |
 | `src/scripts/data-analys/_paywall_users_detail.ts` | **§3.5 防误报**: 列每个 exhausted anon 的 ToolUsage 时间戳，区分 race bug 残留 vs 真实撞墙 |
+| `src/scripts/data-analys/_owner_exclusion.ts` | **共享 owner/E2E 邮箱排除清单** — 跨 tool-usage / paywall-hits / users-detail 统一口径 |
+| `src/scripts/data-analys/param-monitor.ts` | **§8 Prompt 参数化效果监控**（激活率 + engagement 对比，slug 列表自动从 registry 拉取）|
 | `src/scripts/data-analys/_periods.ts` | GA4 当周/上周流量总览（@ts-nocheck）— §1 站点总览的 vs 上周对比 |
 | `src/scripts/data-analys/_gsc_periods.ts` | GSC 当周/上周聚合（clicks/impressions/CTR/position）— §1 自然搜索行 |
 | `src/scripts/data-analys/_tag_backlog.ts` / `_tag_list_unapproved.ts` / `_tag_backlog_r2.ts` / `_tag_seo_backfill.ts` / `_tag_clean_broken.ts` | tag 审核积压管理（详 collect-content Phase 7.5 Gate） |

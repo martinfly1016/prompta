@@ -89,13 +89,10 @@ async function main() {
       const prevSince = new Date(since)
       prevSince.setDate(prevSince.getDate() - days)
 
-      // Exclude e2e-test users (emailHash of 'e2e-test+*' emails). Compute
-      // their hashes upfront so the Prisma `where` clause stays declarative.
-      const { createHash } = await import('node:crypto')
-      const testEmails = ['e2e-test+t1@prompta.jp', 'e2e-test+t2@prompta.jp', 'e2e-test+t3@prompta.jp']
-      const testEmailHashes = testEmails.map(e =>
-        createHash('sha256').update(e.toLowerCase().trim()).digest('hex'),
-      )
+      // Exclude E2E test accounts AND the site owner's personal accounts.
+      // Owner manual smoke testing (e.g. NB2 model selection on 5/11) otherwise
+      // shows up as "real external user" usage and inflates tool-usage metrics.
+      const { OWNER_TEST_EMAIL_HASHES: testEmailHashes } = await import('./_owner_exclusion')
 
       const tools = ['personal-color', 'hair-color']
       const summary: Record<string, unknown> = {}
@@ -170,12 +167,18 @@ async function main() {
       const since = new Date()
       since.setDate(since.getDate() - days)
 
+      const { OWNER_TEST_EMAIL_HASHES: testEmailHashes } = await import('./_owner_exclusion')
+
       const tools = ['personal-color', 'hair-color']
       const result: Record<string, unknown> = { days, since: since.toISOString().split('T')[0] }
 
       for (const tool of tools) {
         const usages = await prisma.toolUsage.findMany({
-          where: { tool, createdAt: { gte: since } },
+          where: {
+            tool,
+            createdAt: { gte: since },
+            OR: [{ emailHash: null }, { emailHash: { notIn: testEmailHashes } }],
+          },
           select: { anonId: true, type: true },
         })
         // Group by anonId

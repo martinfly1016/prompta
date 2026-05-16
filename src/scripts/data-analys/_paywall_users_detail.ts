@@ -7,6 +7,7 @@
  * Window: last 7 days by default.
  */
 import { PrismaClient } from '@prisma/client'
+import { OWNER_TEST_EMAIL_HASHES } from './_owner_exclusion'
 
 async function main() {
   const p = new PrismaClient()
@@ -17,9 +18,15 @@ async function main() {
   for (const tool of ['personal-color', 'hair-color']) {
     console.log(`\n========== ${tool} ==========\n`)
 
-    // Find anon users who hit exhausted (>= 3 free in window)
+    // Find anon users who hit exhausted (>= 3 free in window).
+    // Owner/E2E test accounts are excluded so manual smoke testing doesn't
+    // pollute the "real user" timeline.
     const usages = await p.toolUsage.findMany({
-      where: { tool, createdAt: { gte: since } },
+      where: {
+        tool,
+        createdAt: { gte: since },
+        OR: [{ emailHash: null }, { emailHash: { notIn: OWNER_TEST_EMAIL_HASHES } }],
+      },
       orderBy: { createdAt: 'asc' },
       select: { anonId: true, ipHash: true, type: true, createdAt: true, emailHash: true },
     })
