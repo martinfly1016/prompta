@@ -194,23 +194,6 @@ export default function HairColorDiagnosisPage() {
         </div>
       </section>
 
-      {/* Cross-link to personal-color tool */}
-      <section className="py-2">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/tools/personal-color-analysis"
-            className="block bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-200 rounded-xl px-4 py-3 hover:border-sky-300 transition-all"
-          >
-            <p className="text-xs sm:text-sm text-gray-700">
-              <span className="text-base mr-1.5">💡</span>
-              <strong className="text-sky-700">全身のパーソナルカラー</strong>
-              （服・口紅・アクセサリー含む 16 色パレット）から診断したい方は
-              <span className="text-sky-600 font-semibold underline ml-1">パーソナルカラー診断 AI →</span>
-            </p>
-          </Link>
-        </div>
-      </section>
-
       {/* Upload section */}
       <section className="py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -232,6 +215,26 @@ export default function HairColorDiagnosisPage() {
         id="hair-color-result-portal"
         className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"
       />
+
+      {/* Cross-link to personal-color tool — moved below Upload so users see
+          this tool's own CTA first (was above-the-fold pre-2026-05-17,
+          which diverted hair-color traffic to personal-color and inflated
+          hair-color bounce to 88.2% / 0 real usage / 5/10-5/16). */}
+      <section className="py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/tools/personal-color-analysis"
+            className="block bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-200 rounded-xl px-4 py-3 hover:border-sky-300 transition-all"
+          >
+            <p className="text-xs sm:text-sm text-gray-700">
+              <span className="text-base mr-1.5">💡</span>
+              <strong className="text-sky-700">全身のパーソナルカラー</strong>
+              （服・口紅・アクセサリー含む 16 色パレット）から診断したい方は
+              <span className="text-sky-600 font-semibold underline ml-1">パーソナルカラー診断 AI →</span>
+            </p>
+          </Link>
+        </div>
+      </section>
 
       {/* How it works */}
       <section className="py-8 bg-gray-50">
