@@ -65,6 +65,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
 
+    // Personal color 4-season subpages (P0 SEO targets per
+    // keyword-research-2026-05-17.md §D — KD 16-18, monthly volume
+    // 600-900 each)
+    {
+      url: `${BASE}/tools/personal-color-analysis/spring`,
+      lastModified: latestDate,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE}/tools/personal-color-analysis/summer`,
+      lastModified: latestDate,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE}/tools/personal-color-analysis/autumn`,
+      lastModified: latestDate,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${BASE}/tools/personal-color-analysis/winter`,
+      lastModified: latestDate,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+
     // Legal pages
     { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/legal/terms`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },

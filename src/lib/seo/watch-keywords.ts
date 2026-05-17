@@ -79,6 +79,15 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: 'パーソナルカラー診断 方法', cluster: 'tools-pc', targetPage: '/tools/personal-color-analysis', monthlyVolume: 420, kd: 22, discoveredAt: '2026-05-17' },
 
   // ============================================================
+  // tools-pc-seasonal: 4 season subpages (5/17 ship)
+  // 月搜 ~600-900 each, KD 16-18 (lowest in the watch list)
+  // ============================================================
+  { keyword: 'パーソナルカラー 春', cluster: 'tools-pc-seasonal', targetPage: '/tools/personal-color-analysis/spring', monthlyVolume: 890, kd: 18, discoveredAt: '2026-05-17' },
+  { keyword: 'パーソナルカラー 夏', cluster: 'tools-pc-seasonal', targetPage: '/tools/personal-color-analysis/summer', monthlyVolume: 780, kd: 16, discoveredAt: '2026-05-17' },
+  { keyword: 'パーソナルカラー 秋', cluster: 'tools-pc-seasonal', targetPage: '/tools/personal-color-analysis/autumn', monthlyVolume: 720, kd: 17, discoveredAt: '2026-05-17' },
+  { keyword: 'パーソナルカラー 冬', cluster: 'tools-pc-seasonal', targetPage: '/tools/personal-color-analysis/winter', monthlyVolume: 720, kd: 17, discoveredAt: '2026-05-17' },
+
+  // ============================================================
   // photo-edit: AI 写真加工 cluster（chatgpt.com referral 受益区）
   // ============================================================
   { keyword: 'ai 写真 加工', cluster: 'photo-edit', targetPage: '/prompts/photo-edit', monthlyVolume: 890, kd: 24, discoveredAt: '2026-05-17' },

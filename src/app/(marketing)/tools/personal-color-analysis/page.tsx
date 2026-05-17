@@ -440,6 +440,53 @@ export default function PersonalColorAnalysisPage() {
         </div>
       </section>
 
+      {/* 4 季节子页内链 — captures 「パーソナルカラー 春/夏/秋/冬」 keywords
+          (~600-900 monthly each, KD 16-18) */}
+      <section className="py-12 border-t border-gray-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-2">4 シーズン別 完全ガイド</h2>
+            <p className="text-sm text-gray-600">
+              診断する前に、各シーズンの特徴・似合う色・メイク・髪色を学んでおくと、結果が出たときにすぐ活用できます。
+            </p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <Link
+              href="/tools/personal-color-analysis/spring"
+              className="group block bg-gradient-to-br from-orange-50 to-pink-50 rounded-xl border border-orange-200 hover:border-orange-300 hover:shadow-sm transition-all p-4 text-center"
+            >
+              <div className="w-14 h-14 rounded-full mx-auto mb-2" style={{ backgroundColor: '#FF8C66' }} />
+              <div className="text-sm font-bold text-gray-900 group-hover:text-orange-700">スプリング（春）</div>
+              <div className="text-[11px] text-gray-500 mt-0.5">黄み・明るい・フレッシュ</div>
+            </Link>
+            <Link
+              href="/tools/personal-color-analysis/summer"
+              className="group block bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl border border-blue-200 hover:border-blue-300 hover:shadow-sm transition-all p-4 text-center"
+            >
+              <div className="w-14 h-14 rounded-full mx-auto mb-2" style={{ backgroundColor: '#A8C8D8' }} />
+              <div className="text-sm font-bold text-gray-900 group-hover:text-blue-700">サマー（夏）</div>
+              <div className="text-[11px] text-gray-500 mt-0.5">青み・ソフト・エレガント</div>
+            </Link>
+            <Link
+              href="/tools/personal-color-analysis/autumn"
+              className="group block bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200 hover:border-amber-300 hover:shadow-sm transition-all p-4 text-center"
+            >
+              <div className="w-14 h-14 rounded-full mx-auto mb-2" style={{ backgroundColor: '#B85C3D' }} />
+              <div className="text-sm font-bold text-gray-900 group-hover:text-amber-700">オータム（秋）</div>
+              <div className="text-[11px] text-gray-500 mt-0.5">黄み・ディープ・リッチ</div>
+            </Link>
+            <Link
+              href="/tools/personal-color-analysis/winter"
+              className="group block bg-gradient-to-br from-slate-50 to-purple-50 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all p-4 text-center"
+            >
+              <div className="w-14 h-14 rounded-full mx-auto mb-2" style={{ backgroundColor: '#1A1A1A' }} />
+              <div className="text-sm font-bold text-gray-900 group-hover:text-slate-700">ウィンター（冬）</div>
+              <div className="text-[11px] text-gray-500 mt-0.5">青み・シャープ・クール</div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Cross-link to hair color tool — captures 似合う髪色診断 (5,400/月)
           / 髪色シミュレーション (2,400/月) cluster traffic */}
       <section className="py-12 bg-gradient-to-br from-violet-50 via-purple-50 to-white border-t border-gray-100">
