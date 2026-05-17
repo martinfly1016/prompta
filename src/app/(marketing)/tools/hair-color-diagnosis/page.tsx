@@ -7,7 +7,7 @@ import { HairColorQuotaGate } from '@/components/tools/HairColorQuotaGate'
 export const metadata: Metadata = {
   title: '似合う髪色診断 AI — 写真からヘアカラー提案 + Before/After',
   description:
-    '写真をアップロードするだけで AI があなたに似合う髪色を 5 つ提案し、Gemini 2.5 Flash Image で Before/After のシミュレーション画像を生成。パーソナルカラーに基づいて安心の定番・トレンド・個性派から選べます。Google ログインで 3 回無料。',
+    '自分に似合う髪色が分からない？写真 1 枚で AI が髪色 5 候補を自動提案し、Gemini 2.5 Flash Image で Before/After を生成。従来の髪色シミュレーターと違い、パーソナルカラー・瞳・肌色から判定する AI 髪色診断です。Google ログインで 3 回無料。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/hair-color-diagnosis`,
   },
@@ -91,6 +91,22 @@ const FAQ = [
   {
     q: 'プロのカラリストの代替になりますか？',
     a: 'なりません。AI 診断は照明・撮影条件に左右されるため、参考値としてご利用ください。実際にカラーリングする前には、必ず信頼できる美容師にご相談ください。本ツールは「サロン来店前のイメトレ」「セルフカラーの方向性決め」「美容師さんへのオーダー時の参考画像づくり」に最適です。',
+  },
+  {
+    q: '髪色 AI 診断と普通の髪色シミュレーターは何が違いますか？',
+    a: '従来の髪色シミュレーターは「自分で色を選んでプレビュー」する受動的なツールです。本ツールは AI が肌色・瞳・パーソナルカラーから「あなたに似合う色」を自動判定し、その候補で Before/After を生成する点が大きく違います。色選びに迷う方ほど効果を実感しやすく、サロン来店前のイメージトレーニングとして特に好評です。Gemini 2.5 Flash Image 搭載で実際に染めたような写実的なシミュレーションが可能です。',
+  },
+  {
+    q: '自分に似合う髪色を見つけるコツは何ですか？',
+    a: 'まず①パーソナルカラー（春/夏/秋/冬）を把握する、②現在の髪色が暖色系か寒色系かを認識する、③瞳の色とのコントラスト（メリハリ）を考慮する、の 3 ステップが基本です。本ツールはこれら全てを AI で自動判定するため、迷う必要はありません。アップロード写真を撮る際は「自然光・正面・素顔（メイク薄め）・フィルターなし」の 4 条件を守ると精度が大幅に上がります。',
+  },
+  {
+    q: 'パーソナルカラー診断と似合う髪色診断、どちらを先に使うべきですか？',
+    a: '目的によります。「髪色だけサクッと知りたい」なら本ツール（似合う髪色診断）を直接、「服・口紅・アクセサリーも含めた全体コーディネート」を考えたいなら 先に 「パーソナルカラー診断 AI」を使うのがおすすめです。クレジットは両ツール共通なので、両方試して比較しても無駄になりません。多くのユーザーは「先に髪色 → 後で服装」の順で活用しています。',
+  },
+  {
+    q: 'AI 髪色シミュレーターで失敗しないコツは？',
+    a: '①ブリーチが必要な明るい色を選ぶ場合は、AI のシミュレーション結果と実際のサロン仕上がりに差が出やすい点を理解しておく、②「個性派チャレンジ」枠の色をいきなり試すのではなく、まず「安心の定番」枠で AI 判定の精度を確認する、③別の候補を 2-3 色試して比較してから美容師さんに相談する — の 3 点が失敗回避のコツです。AI が示すのは「あなたに似合う方向性」であり、最終的な仕上がりは美容師さんとの相談で詰めることをおすすめします。',
   },
 ]
 
@@ -315,6 +331,113 @@ export default function HairColorDiagnosisPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* What is "似合う髪色" — captures `自分 に 似合う 髪色` (1.2K/月) + `髪色 ai 診断` (1.8K/月) */}
+      <section className="py-12 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">
+            自分に似合う髪色とは？AI が判定する <span className="text-violet-700">4 つの要素</span>
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed mb-4">
+            「自分に似合う髪色」は、なんとなく好きな色ではなく、肌・瞳・顔立ち・現在の髪色との調和で決まります。本ツールは、写真 1
+            枚から以下の 4 要素を AI で同時に判定し、サロンで実際に再現可能な髪色 5
+            候補を提案します。プロのカラリストが診断時に見ている観点と同じ軸です。
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl">🌡️</span>
+                <h3 className="text-sm font-bold text-gray-900">アンダートーン（暖み／青み）</h3>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                肌が黄み寄りのウォーム系か、青み寄りのクール系かを判定。アッシュ系・オレンジ系などの選び分けの基礎になります。
+              </p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl">👁️</span>
+                <h3 className="text-sm font-bold text-gray-900">瞳の色とコントラスト</h3>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                瞳の暗さと肌色の差（コントラスト）が高いほど、はっきりした髪色がマッチします。低コントラストの方はソフトな色が似合う傾向。
+              </p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl">🍂</span>
+                <h3 className="text-sm font-bold text-gray-900">パーソナルカラー（4 シーズン）</h3>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                春・夏・秋・冬の 4
+                分類で「似合う色の世界」を絞ります。例えばオータム（秋）の方はテラコッタやモカブラウンが映えます。
+              </p>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-200 p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-2xl">💇</span>
+                <h3 className="text-sm font-bold text-gray-900">現在の髪色との相性</h3>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                ブリーチが必要な色か、現状からの自然な遷移か。実現可能性とダメージ予測も含めて 5
+                候補に「安心の定番／トレンド／個性派」のバランスを取ります。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI髪色シミュレーター vs 従来 — captures `髪色 シミュレーター` (680/月) */}
+      <section className="py-12 bg-gradient-to-b from-violet-50/50 to-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">
+            AI 髪色シミュレーターと <span className="text-violet-700">従来ツールの違い</span>
+          </h2>
+          <p className="text-sm text-gray-700 leading-relaxed mb-4">
+            「髪色シミュレーター」は古くからある定番ツールですが、AI を組み込むことで使い勝手と精度が大きく変わります。本ツールと一般的な髪色シミュレーターの違いを比較しました。
+          </p>
+          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-gray-700">
+                <tr>
+                  <th className="px-4 py-3 text-left font-semibold w-1/3">項目</th>
+                  <th className="px-4 py-3 text-left font-semibold text-gray-500">従来の髪色シミュレーター</th>
+                  <th className="px-4 py-3 text-left font-semibold text-violet-700">本ツール（AI 髪色診断）</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">色選び</td>
+                  <td className="px-4 py-3 text-xs text-gray-600">自分でカラーパレットから選ぶ</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">AI が肌・瞳・パーソナルカラーから自動提案</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">候補数</td>
+                  <td className="px-4 py-3 text-xs text-gray-600">無制限（全色から選択）</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">5 候補に絞り込み（迷わない）</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">プレビュー精度</td>
+                  <td className="px-4 py-3 text-xs text-gray-600">色置換のみ（不自然なエッジ）</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">Gemini 2.5 Flash Image による写実的な仕上がり</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">パーソナル要素</td>
+                  <td className="px-4 py-3 text-xs text-gray-600">なし（みんな同じ色見本）</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">あり（あなたの写真から判定）</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-gray-900">所要時間</td>
+                  <td className="px-4 py-3 text-xs text-gray-600">数分（手動で何度も試す）</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">15-25 秒で 5 候補 + Before/After 1 枚</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-500 mt-3">
+            ※ 従来ツールも比較・参考用途では有効ですが、「自分に似合う髪色」を素早く絞り込みたい場合は AI 診断のほうが効率的です。
+          </p>
         </div>
       </section>
 
