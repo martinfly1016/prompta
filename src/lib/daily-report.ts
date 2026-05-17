@@ -13,6 +13,7 @@
 import { google } from 'googleapis'
 import { PrismaClient } from '@prisma/client'
 import { createHash } from 'node:crypto'
+import { WATCH_KEYWORDS, type WatchKeyword } from './seo/watch-keywords'
 
 const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || ''
 const GSC_SITE = process.env.GSC_SITE_URL || 'sc-domain:prompta.jp'
@@ -254,6 +255,98 @@ async function dbTagBacklog(prisma: PrismaClient) {
   return { total, approved, noindex, noindexPct }
 }
 
+interface WatchKeywordResult {
+  config: WatchKeyword
+  thisPos: number | null
+  prevPos: number | null
+  thisImp: number
+  prevImp: number
+  thisClicks: number
+  topPage: string | null
+}
+
+async function gscWatchKeywords(
+  searchconsole: any,
+  w: PeriodWindows,
+): Promise<WatchKeywordResult[]> {
+  // GSC API: query keyword + page, filter by exact keyword match for each
+  // watch entry. Two periods → 2 * N requests but each is fast (~200ms).
+  async function fetchPeriod(start: string, end: string) {
+    const r = await searchconsole.searchanalytics.query({
+      siteUrl: GSC_SITE,
+      requestBody: {
+        startDate: start,
+        endDate: end,
+        dimensions: ['query', 'page'],
+        rowLimit: 25000,
+      },
+    })
+    return r.data.rows || []
+  }
+  const [thisRows, prevRows] = await Promise.all([
+    fetchPeriod(w.thisStart, w.thisEnd),
+    fetchPeriod(w.prevStart, w.prevEnd),
+  ])
+
+  // Build per-keyword aggregation maps
+  type Agg = { pos: number; imp: number; clicks: number; topPage: string }
+  function aggregate(rows: any[]): Map<string, Agg> {
+    const byKw = new Map<string, { weightedPosSum: number; totalImp: number; clicks: number; pages: Map<string, number> }>()
+    for (const row of rows) {
+      const kw = row.keys?.[0]
+      const page = row.keys?.[1]
+      if (!kw || !page) continue
+      const imp = row.impressions || 0
+      if (imp === 0) continue
+      const pos = row.position || 0
+      const clicks = row.clicks || 0
+      let entry = byKw.get(kw)
+      if (!entry) {
+        entry = { weightedPosSum: 0, totalImp: 0, clicks: 0, pages: new Map() }
+        byKw.set(kw, entry)
+      }
+      entry.weightedPosSum += pos * imp
+      entry.totalImp += imp
+      entry.clicks += clicks
+      entry.pages.set(page, (entry.pages.get(page) || 0) + imp)
+    }
+    const out = new Map<string, Agg>()
+    for (const [kw, e] of byKw) {
+      let topPage = ''
+      let maxImp = 0
+      for (const [p, i] of e.pages) {
+        if (i > maxImp) {
+          maxImp = i
+          topPage = p
+        }
+      }
+      out.set(kw, {
+        pos: e.totalImp > 0 ? e.weightedPosSum / e.totalImp : 0,
+        imp: e.totalImp,
+        clicks: e.clicks,
+        topPage,
+      })
+    }
+    return out
+  }
+  const thisMap = aggregate(thisRows)
+  const prevMap = aggregate(prevRows)
+
+  return WATCH_KEYWORDS.map((config) => {
+    const t = thisMap.get(config.keyword)
+    const p = prevMap.get(config.keyword)
+    return {
+      config,
+      thisPos: t ? t.pos : null,
+      prevPos: p ? p.pos : null,
+      thisImp: t ? t.imp : 0,
+      prevImp: p ? p.imp : 0,
+      thisClicks: t ? t.clicks : 0,
+      topPage: t ? t.topPage : null,
+    }
+  })
+}
+
 async function dbPaywallHits(prisma: PrismaClient, w: PeriodWindows) {
   const since = new Date(w.thisStart + 'T00:00:00Z')
   const exclude = { OR: [{ emailHash: null }, { emailHash: { notIn: OWNER_TEST_EMAIL_HASHES } }] }
@@ -302,7 +395,7 @@ export async function buildDailyReport(): Promise<DailyReportOutput> {
   const w = computeWindows()
 
   try {
-    const [traffic, refs, gsc, tu, nc, tb, ph] = await Promise.all([
+    const [traffic, refs, gsc, tu, nc, tb, ph, kws] = await Promise.all([
       gaTrafficPeriods(ga, w),
       gaReferralCounts(ga, w, ['chatgpt.com', 'openai', 'perplexity', 'copilot.com', 'qiita.com']),
       gscPeriods(sc, w),
@@ -310,9 +403,10 @@ export async function buildDailyReport(): Promise<DailyReportOutput> {
       dbNewPrompts(prisma, w),
       dbTagBacklog(prisma),
       dbPaywallHits(prisma, w),
+      gscWatchKeywords(sc, w),
     ])
 
-    const d = { traffic, refs, gsc, tu, nc, tb, ph }
+    const d = { traffic, refs, gsc, tu, nc, tb, ph, kws }
     const highlights = buildHighlights(d)
     return {
       subject: `Prompta 日報 ${w.thisStart} ~ ${w.thisEnd}`,
@@ -325,8 +419,25 @@ export async function buildDailyReport(): Promise<DailyReportOutput> {
 }
 
 function buildHighlights(d: any): string[] {
-  const { traffic, refs, gsc, tu, nc, tb, ph } = d
+  const { traffic, refs, gsc, tu, nc, tb, ph, kws } = d
   const out: string[] = []
+  // Watch keyword regressions / breakthroughs
+  for (const k of (kws as WatchKeywordResult[]) || []) {
+    if (k.thisPos === null || k.prevPos === null) continue
+    const delta = k.thisPos - k.prevPos
+    // top10-defense regression: ANY drop out of top 10 is a red flag
+    if (k.config.cluster === 'top10-defense' && k.prevPos <= 10 && k.thisPos > 10) {
+      out.push(`🔴 「${k.config.keyword}」跌出 top 10 (${k.prevPos.toFixed(1)} → ${k.thisPos.toFixed(1)}) — 立即排查`)
+    }
+    // Big breakthrough (drop ≥ 10 positions)
+    if (delta <= -10 && k.thisImp >= 5) {
+      out.push(`🟢 「${k.config.keyword}」排名大涨 ${(-delta).toFixed(1)} 位 (${k.prevPos.toFixed(1)} → ${k.thisPos.toFixed(1)})`)
+    }
+    // Big regression (climb ≥ 10 positions)
+    if (delta >= 10 && k.prevImp >= 5) {
+      out.push(`🔴 「${k.config.keyword}」排名跌 ${delta.toFixed(1)} 位 (${k.prevPos.toFixed(1)} → ${k.thisPos.toFixed(1)})`)
+    }
+  }
   const chatGptCur = refs.thisM['chatgpt.com'] || 0
   const chatGptPrev = refs.prevM['chatgpt.com'] || 0
   if (chatGptPrev > 0 && (chatGptCur - chatGptPrev) / chatGptPrev > 0.3) {
@@ -453,6 +564,37 @@ function formatReport(w: PeriodWindows, d: any, highlights: string[]): string {
   lines.push('')
   for (const h of highlights) lines.push(`- ${h}`)
   lines.push('')
+
+  // §6 watch keywords
+  const kws = d.kws as WatchKeywordResult[]
+  if (kws && kws.length > 0) {
+    lines.push('## 6. 重点关键词追踪')
+    lines.push('')
+    const byCluster = new Map<string, WatchKeywordResult[]>()
+    for (const k of kws) {
+      const c = k.config.cluster
+      if (!byCluster.has(c)) byCluster.set(c, [])
+      byCluster.get(c)!.push(k)
+    }
+    for (const [cluster, list] of byCluster) {
+      lines.push(`### ${cluster}`)
+      lines.push('| 关键词 | 本周 pos | 上周 pos | Δ | imp 本/上 | clicks |')
+      lines.push('|---|---|---|---|---|---|')
+      for (const k of list) {
+        const cur = k.thisPos !== null ? k.thisPos.toFixed(1) : '—'
+        const prv = k.prevPos !== null ? k.prevPos.toFixed(1) : '—'
+        let delta = '—'
+        if (k.thisPos !== null && k.prevPos !== null) {
+          const d = k.thisPos - k.prevPos
+          delta = `${d >= 0 ? '+' : ''}${d.toFixed(1)}`
+        } else if (k.thisPos !== null && k.prevPos === null) {
+          delta = '🆕'
+        }
+        lines.push(`| ${k.config.keyword} | ${cur} | ${prv} | ${delta} | ${k.thisImp}/${k.prevImp} | ${k.thisClicks} |`)
+      }
+      lines.push('')
+    }
+  }
 
   lines.push('---')
   lines.push('')
@@ -692,6 +834,66 @@ function formatReportHtml(w: PeriodWindows, d: any, highlights: string[]): strin
   out.push(`<h2 style="${HTML_STYLES.h2}">5. 自动高亮</h2>`)
   for (const h of highlights) {
     out.push(`<div style="${highlightStyle(h)}">${escapeHtml(h)}</div>`)
+  }
+
+  // §6 watch keywords
+  const kws = d.kws as WatchKeywordResult[]
+  if (kws && kws.length > 0) {
+    out.push(`<h2 style="${HTML_STYLES.h2}">6. 重点关键词追踪</h2>`)
+    const byCluster = new Map<string, WatchKeywordResult[]>()
+    for (const k of kws) {
+      const c = k.config.cluster
+      if (!byCluster.has(c)) byCluster.set(c, [])
+      byCluster.get(c)!.push(k)
+    }
+    const clusterLabels: Record<string, string> = {
+      'top10-defense': 'Top-10 防御',
+      'head-ai': 'Head AI 词 (5/12 ship)',
+      'tools-hair': 'Hair-color 工具长尾',
+      'tools-pc': 'Personal-color 工具长尾',
+      'tools-pc-seasonal': 'パーソナルカラー 季节子页',
+      'photo-edit': 'Photo-edit cluster',
+      'new-tool-candidate': '新工具候选',
+      'opportunity': '机会词',
+    }
+    for (const [cluster, list] of byCluster) {
+      const label = clusterLabels[cluster] || cluster
+      out.push(`<div style="font-size:13px;font-weight:600;color:#374151;margin:16px 0 6px;">${escapeHtml(label)}</div>`)
+      out.push(`<table style="${HTML_STYLES.table}">`)
+      out.push(`<thead><tr>
+        <th style="${HTML_STYLES.th}">关键词</th>
+        <th style="${HTML_STYLES.thNum}">本周 pos</th>
+        <th style="${HTML_STYLES.thNum}">上周 pos</th>
+        <th style="${HTML_STYLES.thNum}">Δ</th>
+        <th style="${HTML_STYLES.thNum}">imp 本/上</th>
+        <th style="${HTML_STYLES.thNum}">clicks</th>
+      </tr></thead><tbody>`)
+      for (const k of list) {
+        const cur = k.thisPos !== null ? k.thisPos.toFixed(1) : '—'
+        const prv = k.prevPos !== null ? k.prevPos.toFixed(1) : '—'
+        let deltaCell = `<td style="${HTML_STYLES.tdNum}${HTML_STYLES.neutral}">—</td>`
+        if (k.thisPos !== null && k.prevPos !== null) {
+          const d = k.thisPos - k.prevPos
+          // For position, lower is better → positive delta is bad
+          const sty = d < -2 ? HTML_STYLES.good : d > 2 ? HTML_STYLES.bad : HTML_STYLES.neutral
+          deltaCell = `<td style="${HTML_STYLES.tdNum}${sty}">${d >= 0 ? '+' : ''}${d.toFixed(1)}</td>`
+        } else if (k.thisPos !== null && k.prevPos === null) {
+          deltaCell = `<td style="${HTML_STYLES.tdNum}${HTML_STYLES.good}">🆕</td>`
+        } else if (k.thisPos === null && k.prevPos !== null) {
+          deltaCell = `<td style="${HTML_STYLES.tdNum}${HTML_STYLES.bad}">⚫ 消失</td>`
+        }
+        out.push(`<tr>
+          <td style="${HTML_STYLES.td}">${escapeHtml(k.config.keyword)}</td>
+          <td style="${HTML_STYLES.tdNum}">${cur}</td>
+          <td style="${HTML_STYLES.tdNum}">${prv}</td>
+          ${deltaCell}
+          <td style="${HTML_STYLES.tdNum}">${k.thisImp}/${k.prevImp}</td>
+          <td style="${HTML_STYLES.tdNum}">${k.thisClicks}</td>
+        </tr>`)
+      }
+      out.push('</tbody></table>')
+    }
+    out.push(`<div style="font-size:11px;color:#9ca3af;margin-top:4px;">维护 watch list: <code style="${HTML_STYLES.code}">src/lib/seo/watch-keywords.ts</code></div>`)
   }
 
   // footer
