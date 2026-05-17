@@ -2,78 +2,102 @@
 // Add a new config by dropping a TS file in ./configs/<slug>.ts that exports `config`.
 
 import type { PromptParamsConfig } from './types'
-import { config as c0 } from './configs/alice-in-wonderland-cosplay'
-import { config as c1 } from './configs/anime-blonde-girl-artgerm-style'
-import { config as c2 } from './configs/anime-boy-space-09'
-import { config as c3 } from './configs/anime-girl-meadow-21'
-import { config as c4 } from './configs/anime-girl-scene-10'
-import { config as c5 } from './configs/anime-girl-space-03'
-import { config as c6 } from './configs/anime-prompt-f061b77b'
-import { config as c7 } from './configs/anime-woman-neon-08'
-import { config as c8 } from './configs/black-lagoon-neon-rainy-night-anime'
-import { config as c9 } from './configs/blue-serafuku-school-uniform'
-import { config as c10 } from './configs/braid-sidelocks-body-markings'
-import { config as c11 } from './configs/brown-jacket-black-pants-blonde'
-import { config as c12 } from './configs/business-suit-woman'
-import { config as c13 } from './configs/business-suit-woman-8s35'
-import { config as c14 } from './configs/chibi-girl-walk-26'
-import { config as c15 } from './configs/color-theme-13'
-import { config as c16 } from './configs/cybernetic-soldier-heavy-armor'
-import { config as c17 } from './configs/cyborg-robot-outfit-dystopian-city'
-import { config as c18 } from './configs/elegant-dress-woman'
-import { config as c19 } from './configs/fantasy-swordswoman-confident'
-import { config as c20 } from './configs/formal-evening-gown-sx9u'
-import { config as c21 } from './configs/hatsune-miku-ink-wash-japanese'
-import { config as c22 } from './configs/monochrome-theme-14'
-import { config as c23 } from './configs/neon-futuristic-cityscape-aerial'
-import { config as c24 } from './configs/red-cocktail-dress-elegant'
-import { config as c25 } from './configs/sailor-uniform-pleated-skirt'
-import { config as c26 } from './configs/school-uniform-pleated-skirt'
-import { config as c27 } from './configs/slender-crop-top-elegant-confident'
-import { config as c28 } from './configs/slender-cropped-triangle-pose-grace'
-import { config as c29 } from './configs/slim-pain-expression-glamor-tragic'
-import { config as c30 } from './configs/straight-long-black-hair-glossy'
-import { config as c31 } from './configs/twintail-blonde-sailor-outfit'
-import { config as c32 } from './configs/untied-necktie-uniform-girl'
-import { config as c33 } from './configs/watercolor-anime-winter-scene'
-import { config as c34 } from './configs/white-hair-paladin-sword'
-import { config as c35 } from './configs/witch-library-grey-hair-elegant'
+import { config as c0 } from './configs/afro-tribal-artistic-hairstyle'
+import { config as c1 } from './configs/alice-in-wonderland-cosplay'
+import { config as c2 } from './configs/anime-blonde-girl-artgerm-style'
+import { config as c3 } from './configs/anime-boy-space-09'
+import { config as c4 } from './configs/anime-girl-meadow-21'
+import { config as c5 } from './configs/anime-girl-scene-10'
+import { config as c6 } from './configs/anime-girl-space-03'
+import { config as c7 } from './configs/anime-prompt-f061b77b'
+import { config as c8 } from './configs/anime-woman-neon-08'
+import { config as c9 } from './configs/asian-long-straight-hair-makeup'
+import { config as c10 } from './configs/black-lagoon-neon-rainy-night-anime'
+import { config as c11 } from './configs/blue-braided-hair-pink-eyes'
+import { config as c12 } from './configs/blue-serafuku-school-uniform'
+import { config as c13 } from './configs/boba-tea-cute-girl-anime-style'
+import { config as c14 } from './configs/braid-sidelocks-body-markings'
+import { config as c15 } from './configs/brown-jacket-black-pants-blonde'
+import { config as c16 } from './configs/business-suit-woman'
+import { config as c17 } from './configs/business-suit-woman-8s35'
+import { config as c18 } from './configs/chibi-girl-walk-26'
+import { config as c19 } from './configs/child-robot-size-contrast-embrace'
+import { config as c20 } from './configs/color-theme-13'
+import { config as c21 } from './configs/cybernetic-soldier-heavy-armor'
+import { config as c22 } from './configs/cyborg-robot-outfit-dystopian-city'
+import { config as c23 } from './configs/dalle-1980s-anime-space-opera-girl'
+import { config as c24 } from './configs/elegant-dress-woman'
+import { config as c25 } from './configs/fantasy-swordswoman-confident'
+import { config as c26 } from './configs/formal-evening-gown-sx9u'
+import { config as c27 } from './configs/hatsune-miku-ink-wash-japanese'
+import { config as c28 } from './configs/impressionist-anime-fox-girl-fantasy'
+import { config as c29 } from './configs/monochrome-theme-14'
+import { config as c30 } from './configs/neon-futuristic-cityscape-aerial'
+import { config as c31 } from './configs/old-man-giant-baby-monster-bodytype'
+import { config as c32 } from './configs/red-cocktail-dress-elegant'
+import { config as c33 } from './configs/red-hair-business-suit-portrait'
+import { config as c34 } from './configs/sailor-uniform-pleated-skirt'
+import { config as c35 } from './configs/school-uniform-pleated-skirt'
+import { config as c36 } from './configs/slender-crop-top-elegant-confident'
+import { config as c37 } from './configs/slender-cropped-triangle-pose-grace'
+import { config as c38 } from './configs/slim-glamor-portrait-classic'
+import { config as c39 } from './configs/slim-pain-expression-glamor-tragic'
+import { config as c40 } from './configs/straight-long-black-hair-glossy'
+import { config as c41 } from './configs/twintail-blonde-sailor-outfit'
+import { config as c42 } from './configs/untied-necktie-uniform-girl'
+import { config as c43 } from './configs/vibrant-palette-8'
+import { config as c44 } from './configs/watercolor-anime-winter-scene'
+import { config as c45 } from './configs/white-cat-reading-cozy-nook'
+import { config as c46 } from './configs/white-hair-paladin-sword'
+import { config as c47 } from './configs/witch-library-grey-hair-elegant'
 
 export const ALL_CONFIGS: Record<string, PromptParamsConfig> = {
-  'alice-in-wonderland-cosplay': c0,
-  'anime-blonde-girl-artgerm-style': c1,
-  'anime-boy-space-09': c2,
-  'anime-girl-meadow-21': c3,
-  'anime-girl-scene-10': c4,
-  'anime-girl-space-03': c5,
-  'anime-prompt-f061b77b': c6,
-  'anime-woman-neon-08': c7,
-  'black-lagoon-neon-rainy-night-anime': c8,
-  'blue-serafuku-school-uniform': c9,
-  'braid-sidelocks-body-markings': c10,
-  'brown-jacket-black-pants-blonde': c11,
-  'business-suit-woman': c12,
-  'business-suit-woman-8s35': c13,
-  'chibi-girl-walk-26': c14,
-  'color-theme-13': c15,
-  'cybernetic-soldier-heavy-armor': c16,
-  'cyborg-robot-outfit-dystopian-city': c17,
-  'elegant-dress-woman': c18,
-  'fantasy-swordswoman-confident': c19,
-  'formal-evening-gown-sx9u': c20,
-  'hatsune-miku-ink-wash-japanese': c21,
-  'monochrome-theme-14': c22,
-  'neon-futuristic-cityscape-aerial': c23,
-  'red-cocktail-dress-elegant': c24,
-  'sailor-uniform-pleated-skirt': c25,
-  'school-uniform-pleated-skirt': c26,
-  'slender-crop-top-elegant-confident': c27,
-  'slender-cropped-triangle-pose-grace': c28,
-  'slim-pain-expression-glamor-tragic': c29,
-  'straight-long-black-hair-glossy': c30,
-  'twintail-blonde-sailor-outfit': c31,
-  'untied-necktie-uniform-girl': c32,
-  'watercolor-anime-winter-scene': c33,
-  'white-hair-paladin-sword': c34,
-  'witch-library-grey-hair-elegant': c35,
+  'afro-tribal-artistic-hairstyle': c0,
+  'alice-in-wonderland-cosplay': c1,
+  'anime-blonde-girl-artgerm-style': c2,
+  'anime-boy-space-09': c3,
+  'anime-girl-meadow-21': c4,
+  'anime-girl-scene-10': c5,
+  'anime-girl-space-03': c6,
+  'anime-prompt-f061b77b': c7,
+  'anime-woman-neon-08': c8,
+  'asian-long-straight-hair-makeup': c9,
+  'black-lagoon-neon-rainy-night-anime': c10,
+  'blue-braided-hair-pink-eyes': c11,
+  'blue-serafuku-school-uniform': c12,
+  'boba-tea-cute-girl-anime-style': c13,
+  'braid-sidelocks-body-markings': c14,
+  'brown-jacket-black-pants-blonde': c15,
+  'business-suit-woman': c16,
+  'business-suit-woman-8s35': c17,
+  'chibi-girl-walk-26': c18,
+  'child-robot-size-contrast-embrace': c19,
+  'color-theme-13': c20,
+  'cybernetic-soldier-heavy-armor': c21,
+  'cyborg-robot-outfit-dystopian-city': c22,
+  'dalle-1980s-anime-space-opera-girl': c23,
+  'elegant-dress-woman': c24,
+  'fantasy-swordswoman-confident': c25,
+  'formal-evening-gown-sx9u': c26,
+  'hatsune-miku-ink-wash-japanese': c27,
+  'impressionist-anime-fox-girl-fantasy': c28,
+  'monochrome-theme-14': c29,
+  'neon-futuristic-cityscape-aerial': c30,
+  'old-man-giant-baby-monster-bodytype': c31,
+  'red-cocktail-dress-elegant': c32,
+  'red-hair-business-suit-portrait': c33,
+  'sailor-uniform-pleated-skirt': c34,
+  'school-uniform-pleated-skirt': c35,
+  'slender-crop-top-elegant-confident': c36,
+  'slender-cropped-triangle-pose-grace': c37,
+  'slim-glamor-portrait-classic': c38,
+  'slim-pain-expression-glamor-tragic': c39,
+  'straight-long-black-hair-glossy': c40,
+  'twintail-blonde-sailor-outfit': c41,
+  'untied-necktie-uniform-girl': c42,
+  'vibrant-palette-8': c43,
+  'watercolor-anime-winter-scene': c44,
+  'white-cat-reading-cozy-nook': c45,
+  'white-hair-paladin-sword': c46,
+  'witch-library-grey-hair-elegant': c47,
 }

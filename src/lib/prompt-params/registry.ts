@@ -10,6 +10,9 @@ const ALIASES: Record<string, string> = {
   'anime-girl-red-14': 'anime-prompt-f061b77b',
   'anime-girl-scene-12': 'anime-prompt-f061b77b',
   'anime-girl-meadow-22': 'anime-girl-meadow-21',
+  // 2026-05-17 batch B — anime-boy-pink-01 shares the `pink hair heart`
+  // + `muted colors` substring matches with anime-boy-space-09.
+  'anime-boy-pink-01': 'anime-boy-space-09',
 }
 
 export function getPromptParamsConfig(slug: string): PromptParamsConfig | null {
