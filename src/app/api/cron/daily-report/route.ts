@@ -32,14 +32,13 @@ export async function GET(req: NextRequest) {
 
   const started = Date.now()
   try {
-    const md = await buildDailyReport()
-    const date = new Date().toISOString().slice(0, 10)
-    const subject = `Prompta 日報 ${date}`
+    const report = await buildDailyReport()
 
     const result = await sendEmail({
       to: TO_EMAIL,
-      subject,
-      text: md,
+      subject: report.subject,
+      text: report.text,
+      html: report.html,
     })
 
     const elapsedMs = Date.now() - started
@@ -52,9 +51,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       to: TO_EMAIL,
-      subject,
+      subject: report.subject,
       elapsedMs,
-      preview: md.slice(0, 300),
+      preview: report.text.slice(0, 300),
     })
   } catch (e: any) {
     return NextResponse.json(

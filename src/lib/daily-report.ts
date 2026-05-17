@@ -281,7 +281,13 @@ async function dbPaywallHits(prisma: PrismaClient, w: PeriodWindows) {
   return { pc, hc }
 }
 
-export async function buildDailyReport(): Promise<string> {
+export interface DailyReportOutput {
+  text: string
+  html: string
+  subject: string
+}
+
+export async function buildDailyReport(): Promise<DailyReportOutput> {
   const creds = loadCreds()
   const auth = new google.auth.GoogleAuth({
     credentials: creds as any,
@@ -306,13 +312,53 @@ export async function buildDailyReport(): Promise<string> {
       dbPaywallHits(prisma, w),
     ])
 
-    return formatReport(w, { traffic, refs, gsc, tu, nc, tb, ph })
+    const d = { traffic, refs, gsc, tu, nc, tb, ph }
+    const highlights = buildHighlights(d)
+    return {
+      subject: `Prompta 日報 ${w.thisStart} ~ ${w.thisEnd}`,
+      text: formatReport(w, d, highlights),
+      html: formatReportHtml(w, d, highlights),
+    }
   } finally {
     await prisma.$disconnect()
   }
 }
 
-function formatReport(w: PeriodWindows, d: any): string {
+function buildHighlights(d: any): string[] {
+  const { traffic, refs, gsc, tu, nc, tb, ph } = d
+  const out: string[] = []
+  const chatGptCur = refs.thisM['chatgpt.com'] || 0
+  const chatGptPrev = refs.prevM['chatgpt.com'] || 0
+  if (chatGptPrev > 0 && (chatGptCur - chatGptPrev) / chatGptPrev > 0.3) {
+    out.push(`🟢 chatgpt.com referral +${(((chatGptCur - chatGptPrev) / chatGptPrev) * 100).toFixed(0)}% (${chatGptCur} vs ${chatGptPrev}) — GEO 信号加速`)
+  }
+  if (gsc.thisP.clicks > 0 && traffic.thisP.sessions > 0) {
+    const gscDelta = ((gsc.thisP.clicks - gsc.prevP.clicks) / Math.max(gsc.prevP.clicks, 1)) * 100
+    const gaDelta = ((traffic.thisP.sessions - traffic.prevP.sessions) / Math.max(traffic.prevP.sessions, 1)) * 100
+    if (gscDelta < -20 && gaDelta > 0) {
+      out.push(`⚠️ GSC clicks ${gscDelta.toFixed(0)}% vs GA sessions +${gaDelta.toFixed(0)}% — 数据延迟假象，等 24-48h 数据补齐再判`)
+    }
+  }
+  if (tu.thisPay._count === 0) {
+    out.push(`🔴 本周 0 新付费成交 · 累计真实付费 ${tu.realPaid}/${tu.totalRealUsers} · 本周新注册 ${tu.newSignups7d}`)
+  }
+  if (tu.newSignups7d >= 3) {
+    out.push(`🟢 本周新注册 ${tu.newSignups7d} 个真实用户 — 跟踪 7 日内是否撞 welcome credit 上限`)
+  }
+  if (nc.total >= 30) {
+    out.push(`📦 本周入库 ${nc.total} 条 prompt`)
+  }
+  if (tb.noindexPct > 80) {
+    out.push(`🔴 noindex tag 占比 ${tb.noindexPct.toFixed(0)}% > 80% — 需要批量审批清理`)
+  }
+  if (ph.pc.exhausted === 0 && ph.hc.exhausted === 0) {
+    out.push(`⚪ 本周真实撞墙样本 = 0（paywall 决策样本仍不足）`)
+  }
+  if (out.length === 0) out.push('（无显著异常）')
+  return out
+}
+
+function formatReport(w: PeriodWindows, d: any, highlights: string[]): string {
   const { traffic, refs, gsc, tu, nc, tb, ph } = d
   const lines: string[] = []
 
@@ -405,35 +451,6 @@ function formatReport(w: PeriodWindows, d: any): string {
   // §5 highlights
   lines.push('## 5. 自动高亮')
   lines.push('')
-  const highlights: string[] = []
-  const chatGptCur = refs.thisM['chatgpt.com'] || 0
-  const chatGptPrev = refs.prevM['chatgpt.com'] || 0
-  if (chatGptPrev > 0 && (chatGptCur - chatGptPrev) / chatGptPrev > 0.3) {
-    highlights.push(`🟢 chatgpt.com referral +${(((chatGptCur - chatGptPrev) / chatGptPrev) * 100).toFixed(0)}% (${chatGptCur} vs ${chatGptPrev}) — GEO 信号加速`)
-  }
-  if (gsc.thisP.clicks > 0 && traffic.thisP.sessions > 0) {
-    const gscDelta = ((gsc.thisP.clicks - gsc.prevP.clicks) / Math.max(gsc.prevP.clicks, 1)) * 100
-    const gaDelta = ((traffic.thisP.sessions - traffic.prevP.sessions) / Math.max(traffic.prevP.sessions, 1)) * 100
-    if (gscDelta < -20 && gaDelta > 0) {
-      highlights.push(`⚠️ GSC clicks ${gscDelta.toFixed(0)}% vs GA sessions +${gaDelta.toFixed(0)}% — 数据延迟假象，等 5/19 复查`)
-    }
-  }
-  if (tu.thisPay._count === 0) {
-    highlights.push(`🔴 本周 0 新付费成交 · 累计真实付费 ${tu.realPaid}/${tu.totalRealUsers} · 本周新注册 ${tu.newSignups7d}`)
-  }
-  if (tu.newSignups7d >= 3) {
-    highlights.push(`🟢 本周新注册 ${tu.newSignups7d} 个真实用户 — 跟踪 7 日内是否撞 welcome credit 上限`)
-  }
-  if (nc.total >= 30) {
-    highlights.push(`📦 本周入库 ${nc.total} 条 prompt`)
-  }
-  if (tb.noindexPct > 80) {
-    highlights.push(`🔴 noindex tag 占比 ${tb.noindexPct.toFixed(0)}% > 80% — 需要 R{next} 清理`)
-  }
-  if (ph.pc.exhausted === 0 && ph.hc.exhausted === 0) {
-    highlights.push(`⚪ 本周真实撞墙样本 = 0（paywall 决策样本仍不足）`)
-  }
-  if (highlights.length === 0) highlights.push('（无显著异常）')
   for (const h of highlights) lines.push(`- ${h}`)
   lines.push('')
 
@@ -443,4 +460,247 @@ function formatReport(w: PeriodWindows, d: any): string {
   lines.push('> 这封自动日報只覆盖核心数据快照，不含 AI 解读。')
 
   return lines.join('\n')
+}
+
+// ---------- HTML formatter ----------
+
+const HTML_STYLES = {
+  body: 'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#222;line-height:1.5;max-width:760px;margin:0 auto;padding:24px 16px;',
+  h1: 'font-size:22px;margin:0 0 4px;color:#111;',
+  meta: 'color:#666;font-size:13px;margin-bottom:24px;',
+  h2: 'font-size:16px;margin:24px 0 8px;color:#111;border-bottom:1px solid #e5e7eb;padding-bottom:6px;',
+  table: 'border-collapse:collapse;width:100%;font-size:13px;margin:8px 0 16px;',
+  th: 'text-align:left;padding:8px 10px;background:#f9fafb;border-bottom:2px solid #e5e7eb;font-weight:600;color:#374151;',
+  thNum: 'text-align:right;padding:8px 10px;background:#f9fafb;border-bottom:2px solid #e5e7eb;font-weight:600;color:#374151;',
+  td: 'padding:8px 10px;border-bottom:1px solid #f3f4f6;',
+  tdNum: 'padding:8px 10px;border-bottom:1px solid #f3f4f6;text-align:right;font-variant-numeric:tabular-nums;',
+  good: 'color:#16a34a;font-weight:600;',
+  bad: 'color:#dc2626;font-weight:600;',
+  neutral: 'color:#6b7280;',
+  note: 'background:#fffbeb;border-left:3px solid #f59e0b;padding:8px 12px;font-size:12px;color:#78350f;margin:8px 0 16px;',
+  hl: 'margin:6px 0;padding:8px 12px;border-radius:6px;font-size:13px;',
+  hlGood: 'background:#f0fdf4;border-left:3px solid #16a34a;',
+  hlBad: 'background:#fef2f2;border-left:3px solid #dc2626;',
+  hlWarn: 'background:#fffbeb;border-left:3px solid #f59e0b;',
+  hlNeutral: 'background:#f9fafb;border-left:3px solid #9ca3af;',
+  footer: 'margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb;color:#6b7280;font-size:12px;',
+  code: 'background:#f3f4f6;padding:2px 6px;border-radius:3px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;',
+}
+
+function deltaStyle(p: number, posIsGood = true): string {
+  if (Math.abs(p) < 5) return HTML_STYLES.neutral
+  const isGood = posIsGood ? p > 0 : p < 0
+  return isGood ? HTML_STYLES.good : HTML_STYLES.bad
+}
+
+function pctCell(cur: number, prev: number, posIsGood = true): string {
+  if (prev === 0) {
+    if (cur === 0) return `<td style="${HTML_STYLES.tdNum}${HTML_STYLES.neutral}">±0%</td>`
+    return `<td style="${HTML_STYLES.tdNum}${HTML_STYLES.good}">新規</td>`
+  }
+  const p = ((cur - prev) / prev) * 100
+  const sign = p >= 0 ? '+' : ''
+  return `<td style="${HTML_STYLES.tdNum}${deltaStyle(p, posIsGood)}">${sign}${p.toFixed(1)}%</td>`
+}
+
+function ppCell(curPct: number, prevPct: number, posIsGood = true): string {
+  const d = curPct - prevPct
+  const sign = d >= 0 ? '+' : ''
+  return `<td style="${HTML_STYLES.tdNum}${deltaStyle(d, posIsGood)}">${sign}${d.toFixed(1)}pp</td>`
+}
+
+function highlightStyle(h: string): string {
+  if (h.startsWith('🟢') || h.startsWith('📦')) return HTML_STYLES.hl + HTML_STYLES.hlGood
+  if (h.startsWith('🔴')) return HTML_STYLES.hl + HTML_STYLES.hlBad
+  if (h.startsWith('⚠️')) return HTML_STYLES.hl + HTML_STYLES.hlWarn
+  return HTML_STYLES.hl + HTML_STYLES.hlNeutral
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/[&<>"']/g, (c) =>
+    c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#39;',
+  )
+}
+
+function formatReportHtml(w: PeriodWindows, d: any, highlights: string[]): string {
+  const { traffic, refs, gsc, tu, nc, tb, ph } = d
+  const out: string[] = []
+  out.push(`<div style="${HTML_STYLES.body}">`)
+  out.push(`<h1 style="${HTML_STYLES.h1}">Prompta 日報 ${w.thisStart} 〜 ${w.thisEnd}</h1>`)
+  out.push(`<div style="${HTML_STYLES.meta}">比較期間 ${w.prevStart} 〜 ${w.prevEnd}　・　データ取得時刻 ${new Date().toISOString()} (UTC)</div>`)
+
+  // §1 站点流量
+  out.push(`<h2 style="${HTML_STYLES.h2}">1. 站点流量</h2>`)
+  out.push(`<table style="${HTML_STYLES.table}">`)
+  out.push(`<thead><tr>
+    <th style="${HTML_STYLES.th}">指标</th>
+    <th style="${HTML_STYLES.thNum}">本周</th>
+    <th style="${HTML_STYLES.thNum}">上周</th>
+    <th style="${HTML_STYLES.thNum}">Δ</th>
+  </tr></thead><tbody>`)
+  const rows: Array<[string, number, number, boolean, boolean]> = [
+    ['GA sessions', traffic.thisP.sessions, traffic.prevP.sessions, true, false],
+    ['GA 活跃用户', traffic.thisP.activeUsers, traffic.prevP.activeUsers, true, false],
+    ['GA PV', traffic.thisP.pageviews, traffic.prevP.pageviews, true, false],
+    ['GSC clicks', gsc.thisP.clicks, gsc.prevP.clicks, true, false],
+    ['GSC 曝光', gsc.thisP.impressions, gsc.prevP.impressions, true, false],
+  ]
+  for (const [label, cur, prev, posIsGood] of rows) {
+    out.push(`<tr>
+      <td style="${HTML_STYLES.td}">${label}</td>
+      <td style="${HTML_STYLES.tdNum}">${cur}</td>
+      <td style="${HTML_STYLES.tdNum}">${prev}</td>
+      ${pctCell(cur, prev, posIsGood)}
+    </tr>`)
+  }
+  // bounce & CTR & position are percentages/scores (use ppCell)
+  out.push(`<tr>
+    <td style="${HTML_STYLES.td}">GA bounce</td>
+    <td style="${HTML_STYLES.tdNum}">${traffic.thisP.bounceRate.toFixed(1)}%</td>
+    <td style="${HTML_STYLES.tdNum}">${traffic.prevP.bounceRate.toFixed(1)}%</td>
+    ${ppCell(traffic.thisP.bounceRate, traffic.prevP.bounceRate, false)}
+  </tr>`)
+  out.push(`<tr>
+    <td style="${HTML_STYLES.td}">GSC CTR</td>
+    <td style="${HTML_STYLES.tdNum}">${gsc.thisP.ctr.toFixed(2)}%</td>
+    <td style="${HTML_STYLES.tdNum}">${gsc.prevP.ctr.toFixed(2)}%</td>
+    ${ppCell(gsc.thisP.ctr, gsc.prevP.ctr, true)}
+  </tr>`)
+  out.push(`<tr>
+    <td style="${HTML_STYLES.td}">GSC 平均排名</td>
+    <td style="${HTML_STYLES.tdNum}">${gsc.thisP.position.toFixed(2)}</td>
+    <td style="${HTML_STYLES.tdNum}">${gsc.prevP.position.toFixed(2)}</td>
+    ${ppCell(gsc.thisP.position, gsc.prevP.position, false)}
+  </tr>`)
+  out.push('</tbody></table>')
+  out.push(`<div style="${HTML_STYLES.note}">GSC 数据有 24-48h 延迟。GA 与 GSC 强烈背离时（如 GA +5% / GSC -30%）首先怀疑 GSC 数据未补齐。</div>`)
+
+  // §2 GEO
+  out.push(`<h2 style="${HTML_STYLES.h2}">2. GEO / Referral 信号</h2>`)
+  out.push(`<table style="${HTML_STYLES.table}">`)
+  out.push(`<thead><tr>
+    <th style="${HTML_STYLES.th}">Source</th>
+    <th style="${HTML_STYLES.thNum}">本周</th>
+    <th style="${HTML_STYLES.thNum}">上周</th>
+    <th style="${HTML_STYLES.thNum}">Δ</th>
+  </tr></thead><tbody>`)
+  for (const src of ['chatgpt.com', 'openai', 'perplexity', 'copilot.com', 'qiita.com']) {
+    const cur = refs.thisM[src] || 0
+    const prv = refs.prevM[src] || 0
+    if (cur === 0 && prv === 0) continue
+    out.push(`<tr>
+      <td style="${HTML_STYLES.td}"><code style="${HTML_STYLES.code}">${escapeHtml(src)}</code></td>
+      <td style="${HTML_STYLES.tdNum}">${cur}</td>
+      <td style="${HTML_STYLES.tdNum}">${prv}</td>
+      ${pctCell(cur, prv, true)}
+    </tr>`)
+  }
+  out.push('</tbody></table>')
+
+  // §3 tools
+  out.push(`<h2 style="${HTML_STYLES.h2}">3. 工具使用（排除 owner）</h2>`)
+  out.push(`<table style="${HTML_STYLES.table}">`)
+  out.push(`<thead><tr>
+    <th style="${HTML_STYLES.th}">工具</th>
+    <th style="${HTML_STYLES.thNum}">调用</th>
+    <th style="${HTML_STYLES.thNum}">free</th>
+    <th style="${HTML_STYLES.thNum}">paid</th>
+    <th style="${HTML_STYLES.thNum}">uniq anon</th>
+    <th style="${HTML_STYLES.thNum}">uniq email</th>
+    <th style="${HTML_STYLES.thNum}">上周</th>
+    <th style="${HTML_STYLES.thNum}">Δ</th>
+  </tr></thead><tbody>`)
+  for (const [label, t] of [['personal-color', tu.pc], ['hair-color', tu.hc]] as const) {
+    out.push(`<tr>
+      <td style="${HTML_STYLES.td}"><code style="${HTML_STYLES.code}">${label}</code></td>
+      <td style="${HTML_STYLES.tdNum}">${t.total}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.free}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.paid}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.uniqueAnon}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.uniqueEmail}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.prevTotal}</td>
+      ${pctCell(t.total, t.prevTotal, true)}
+    </tr>`)
+  }
+  out.push('</tbody></table>')
+  out.push(`<div style="font-size:13px;color:#374151;">
+    <strong>累计真实用户</strong>: ${tu.totalRealUsers} 个注册 · ${tu.realPaid} 个付费<br/>
+    <strong>本周新注册</strong>: ${tu.newSignups7d} 个
+  </div>`)
+
+  // §3.5 收入
+  out.push(`<h2 style="${HTML_STYLES.h2}">3.5 收入</h2>`)
+  const thisRev = tu.thisPay._sum.amountJpy || 0
+  const prevRev = tu.prevPay._sum.amountJpy || 0
+  out.push(`<table style="${HTML_STYLES.table}">`)
+  out.push(`<thead><tr>
+    <th style="${HTML_STYLES.th}">期间</th>
+    <th style="${HTML_STYLES.thNum}">笔数</th>
+    <th style="${HTML_STYLES.thNum}">金额</th>
+  </tr></thead><tbody>`)
+  out.push(`<tr>
+    <td style="${HTML_STYLES.td}">本周</td>
+    <td style="${HTML_STYLES.tdNum}">${tu.thisPay._count}</td>
+    <td style="${HTML_STYLES.tdNum}">¥${thisRev}</td>
+  </tr>`)
+  out.push(`<tr>
+    <td style="${HTML_STYLES.td}">上周</td>
+    <td style="${HTML_STYLES.tdNum}">${tu.prevPay._count}</td>
+    <td style="${HTML_STYLES.tdNum}">¥${prevRev}</td>
+  </tr>`)
+  out.push('</tbody></table>')
+
+  // §3.6 paywall hits
+  out.push(`<h2 style="${HTML_STYLES.h2}">3.6 Paywall DB 兜底（≥3 free 撞墙数）</h2>`)
+  out.push(`<table style="${HTML_STYLES.table}">`)
+  out.push(`<thead><tr>
+    <th style="${HTML_STYLES.th}">工具</th>
+    <th style="${HTML_STYLES.thNum}">unique anon</th>
+    <th style="${HTML_STYLES.thNum}">exhausted</th>
+    <th style="${HTML_STYLES.thNum}">paid</th>
+  </tr></thead><tbody>`)
+  for (const [label, t] of [['personal-color', ph.pc], ['hair-color', ph.hc]] as const) {
+    out.push(`<tr>
+      <td style="${HTML_STYLES.td}"><code style="${HTML_STYLES.code}">${label}</code></td>
+      <td style="${HTML_STYLES.tdNum}">${t.uniqueAnons}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.exhausted}</td>
+      <td style="${HTML_STYLES.tdNum}">${t.paid}</td>
+    </tr>`)
+  }
+  out.push('</tbody></table>')
+
+  // §4 new content
+  out.push(`<h2 style="${HTML_STYLES.h2}">4. 新内容（7d）</h2>`)
+  out.push(`<div style="font-size:13px;color:#374151;">入库 <strong>${nc.total}</strong> 条 prompt</div>`)
+  if (nc.total > 0) {
+    const catStr = Object.entries(nc.cats)
+      .sort((a, b) => (b[1] as number) - (a[1] as number))
+      .map(([k, v]) => `${escapeHtml(k)}:${v}`)
+      .join(' · ')
+    const toolStr = Object.entries(nc.tools)
+      .sort((a, b) => (b[1] as number) - (a[1] as number))
+      .map(([k, v]) => `${escapeHtml(k)}:${v}`)
+      .join(' · ')
+    out.push(`<div style="font-size:12px;color:#6b7280;margin-top:4px;">分类: ${catStr}</div>`)
+    out.push(`<div style="font-size:12px;color:#6b7280;margin-top:4px;">工具: ${toolStr}</div>`)
+  }
+  out.push(`<div style="font-size:13px;color:#374151;margin-top:8px;">
+    <strong>Tag backlog</strong>: ${tb.approved} approved / ${tb.total} 总 / <strong>${tb.noindexPct.toFixed(1)}%</strong> noindex
+  </div>`)
+
+  // §5 highlights
+  out.push(`<h2 style="${HTML_STYLES.h2}">5. 自动高亮</h2>`)
+  for (const h of highlights) {
+    out.push(`<div style="${highlightStyle(h)}">${escapeHtml(h)}</div>`)
+  }
+
+  // footer
+  out.push(`<div style="${HTML_STYLES.footer}">
+    完整深度分析（行动建议 + 头部词排名 + 参数化效果）：在终端跑
+    <code style="${HTML_STYLES.code}">/data-analys daily-report</code><br/>
+    这封自动日報只覆盖核心数据快照，不含 AI 解读。
+  </div>`)
+
+  out.push('</div>')
+  return out.join('\n')
 }
