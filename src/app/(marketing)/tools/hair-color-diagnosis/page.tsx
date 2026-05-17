@@ -7,7 +7,7 @@ import { HairColorQuotaGate } from '@/components/tools/HairColorQuotaGate'
 export const metadata: Metadata = {
   title: '似合う髪色診断 AI — 写真からヘアカラー提案 + Before/After',
   description:
-    '写真をアップロードするだけで AI があなたに似合う髪色を 5 つ提案し、Gemini 2.5 Flash Image で Before/After のシミュレーション画像を生成。パーソナルカラーに基づいて安心の定番・トレンド・個性派から選べます。無料・登録不要。',
+    '写真をアップロードするだけで AI があなたに似合う髪色を 5 つ提案し、Gemini 2.5 Flash Image で Before/After のシミュレーション画像を生成。パーソナルカラーに基づいて安心の定番・トレンド・個性派から選べます。Google ログインで 3 回無料。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/hair-color-diagnosis`,
   },
@@ -179,10 +179,7 @@ export default function HairColorDiagnosisPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ 無料試用 3 回
-            </span>
-            <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ 登録不要
+              ✓ Google ログインで 3 回無料
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ 写真は保存しません

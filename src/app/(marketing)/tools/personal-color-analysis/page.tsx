@@ -5,9 +5,9 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { PersonalColorQuotaGate } from '@/components/tools/PersonalColorQuotaGate'
 
 export const metadata: Metadata = {
-  title: 'パーソナルカラー診断 写真 AI — 無料・登録不要',
+  title: 'パーソナルカラー診断 写真 AI — Google ログインで 3 回無料',
   description:
-    '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット + 似合う髪色・口紅・服装の提案。Gemini 2.5 Flash 搭載、無料・登録不要。',
+    '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット + 似合う髪色・口紅・服装の提案。Gemini 2.5 Flash 搭載、Google ログインで 3 回無料。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/personal-color-analysis`,
     languages: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'パーソナルカラー診断 写真 AI — 無料・登録不要',
+    title: 'パーソナルカラー診断 写真 AI — Google ログインで 3 回無料',
     description:
       '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット。',
     type: 'website',
@@ -199,14 +199,11 @@ export default function PersonalColorAnalysisPage() {
             パーソナルカラー<span className="text-sky-600">診断 AI</span>
           </h1>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-5">
-            写真をアップロードするだけで、AI が4シーズン分類 + 似合う16色を診断。無料・登録不要・数秒で結果。
+            写真をアップロードするだけで、AI が4シーズン分類 + 似合う16色を診断。Google ログインで 3 回無料・数秒で結果。
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ 完全無料
-            </span>
-            <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ 登録不要
+              ✓ Google ログインで 3 回無料
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ 写真は保存しません

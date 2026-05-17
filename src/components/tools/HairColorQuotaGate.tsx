@@ -91,8 +91,12 @@ const STRINGS_JA = {
   errAnalyze: (m: string) => `診断エラー: ${m}`,
   modalTitleFree: 'クレジット不足',
   modalTitleIp: 'クレジット不足',
+  modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} 回無料`,
   modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。クレジットは全ツール共通でご利用いただけます。',
   modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。',
+  modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。クレジットを使い切ったあとに有料パックをご検討ください。`,
+  signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} 回）`,
+  signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
   pricePackTitle: '10 回パック',
   priceFeatures: [
     '即時利用、有効期限なし',
@@ -338,6 +342,15 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     }
   }
 
+  // Sign-in-only path for the login_required modal variant: users who have
+  // never used the tool should be steered to "claim 3 free credits" rather
+  // than the Stripe checkout flow.
+  async function handleSignInFree() {
+    trackPurchaseClick(TOOL, false)
+    const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
+    signIn(undefined, { callbackUrl })
+  }
+
   async function handlePurchase() {
     trackPurchaseClick(TOOL, isSignedIn)
     if (!isSignedIn) {
@@ -506,28 +519,55 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-center mb-5">
-              <div className="text-5xl mb-3">💇</div>
+              <div className="text-5xl mb-3">{loginRequired ? '🎁' : '💇'}</div>
               <h3 className="text-lg font-bold text-gray-900 mb-1">
-                {state.blockReason === 'ip_exhausted' ? t.modalTitleIp : t.modalTitleFree}
+                {loginRequired
+                  ? t.modalTitleLogin
+                  : state.blockReason === 'ip_exhausted'
+                    ? t.modalTitleIp
+                    : t.modalTitleFree}
               </h3>
               <p className="text-sm text-gray-600">
-                {state.blockReason === 'ip_exhausted' ? t.modalDescIp : t.modalDescFree}
+                {loginRequired
+                  ? t.modalDescLogin
+                  : state.blockReason === 'ip_exhausted'
+                    ? t.modalDescIp
+                    : t.modalDescFree}
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-5 border border-violet-100 mb-4">
-              <div className="flex items-baseline justify-between mb-2">
-                <span className="text-sm font-semibold text-gray-900">{t.pricePackTitle}</span>
-                <span className="text-xl font-bold text-violet-700">{PRICE_LABEL}</span>
+            {/* Price pack box — only shown for credit-exhausted users.
+                login_required users haven't tried the tool yet, so showing
+                a ¥300 price tag would derail their first impression. */}
+            {!loginRequired && (
+              <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-5 border border-violet-100 mb-4">
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-sm font-semibold text-gray-900">{t.pricePackTitle}</span>
+                  <span className="text-xl font-bold text-violet-700">{PRICE_LABEL}</span>
+                </div>
+                <ul className="text-xs text-gray-600 space-y-1">
+                  {t.priceFeatures.map((f, i) => (
+                    <li key={i}>✓ {f}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="text-xs text-gray-600 space-y-1">
-                {t.priceFeatures.map((f, i) => (
-                  <li key={i}>✓ {f}</li>
-                ))}
-              </ul>
-            </div>
+            )}
 
-            {!stripeReady ? (
+            {loginRequired ? (
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={handleSignInFree}
+                  disabled={pending}
+                  className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {t.signInFreeButton}
+                </button>
+                <p className="text-[11px] text-gray-500 text-center">
+                  {t.signInFreeBenefit}
+                </p>
+              </div>
+            ) : !stripeReady ? (
               <>
                 <button
                   type="button"
