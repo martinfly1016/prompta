@@ -201,9 +201,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・制服・和風・ファンタジー衣装まで、Stable Diffusion と NovelAI で使える呪文を画像付きで多数紹介。',
   },
   'clothing': {
-    seoTitle: '服装プロンプト 女性キャラ 50+選【コピペOK】｜Stable Diffusion ドレス・制服・ファンタジー衣装',
-    seoH1: '服装プロンプト集｜女性キャラのドレス・制服・ファンタジー・カジュアル呪文',
-    seoDescription: '女性キャラの服装プロンプトをコピペで使える 50+ 例文集。ドレス・制服・ファンタジー衣装・カジュアル・パンクファッションまで Stable Diffusion・NovelAI で動作確認済み。BREAK コマンドによる色滲み対策も画像付きで解説。',
+    seoTitle: '服装プロンプト集【無料・コピペOK】女性・制服・メイド服・ファンタジー衣装｜AI画像生成',
+    seoH1: '服装プロンプト集｜女性キャラのドレス・制服・メイド服・ビジネススーツ・ファンタジー衣装',
+    seoDescription: '女性キャラの服装・衣装プロンプトをコピペで使える無料例文集。ドレス・制服・メイド服・ビジネススーツ・ファンタジー衣装・カジュアル・パンクファッションを Stable Diffusion・Midjourney・NovelAI で動作確認済み。BREAK コマンドによる色滲み対策、衣装の組み合わせ方も画像付きで解説。',
   },
   'body-type': {
     seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
@@ -211,9 +211,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'スレンダー・アスレチック・ぽっちゃり・小柄・高身長など体型プロンプトを多数紹介。Stable Diffusion・NovelAI 対応の呪文とネガティブプロンプト、ControlNet 連携まで徹底解説。',
   },
   'color': {
-    seoTitle: '色プロンプト 完全ガイド【Stable Diffusion 呪文・コピペOK】｜118色 + 色滲み対策',
-    seoH1: '色プロンプト集｜Stable Diffusion で 118 色 + BREAK・CutOff で色滲み防止',
-    seoDescription: 'Stable Diffusion・NovelAI で色を正確に出すプロンプト集。赤・青・パステル・ネオンなど 118 色以上の色名呪文と、BREAK・CutOff による色滲み（color bleeding）防止テクニックを画像付きで完全解説。コピペですぐ試せます。',
+    seoTitle: '色プロンプト集【無料・コピペOK】髪色・服色・背景色の指定例｜Stable Diffusion 118色',
+    seoH1: '色プロンプト集｜髪色・服色・背景色の指定例 + 色滲み対策 118 色',
+    seoDescription: 'AI画像生成で色を思い通りに指定する無料プロンプト集。髪色・服色・背景色・パステル・ネオン 118 色以上の英語呪文を画像付き解説。Stable Diffusion・Midjourney・NovelAI 対応、BREAK・CutOff による色滲み（color bleeding）防止テクニックも紹介。コピペですぐ試せます。',
   },
   'anime': {
     seoTitle: 'アニメプロンプト集【呪文・コピペOK】｜キャラクターデザイン・画風・表情指定',
@@ -221,9 +221,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'アニメスタイルのAI画像生成プロンプト集。アニメキャラクター設計・画風指定・表情描写のコツと、niji mode・Anything V5 など人気モデルの使い分けを画像付きで紹介。',
   },
   'hairstyle': {
-    seoTitle: '髪型プロンプト 女性キャラ 50+選【コピペOK】｜ロング・ショート・ツインテール・前髪・髪色',
+    seoTitle: '髪型プロンプト集【無料・コピペOK】女性・ロング・ボブ・ツインテール｜AI画像生成',
     seoH1: '髪型プロンプト集｜女性キャラの髪型・髪色・髪質を自在にコントロール',
-    seoDescription: '女性キャラの髪型プロンプトをコピペで使える 50+ 例文集。ロングヘア・ショートカット・ポニーテール・ツインテール・髪色グラデーションを Stable Diffusion・NovelAI 対応の呪文で画像付き解説。前髪指定や色滲み対策まで。',
+    seoDescription: '女性向け髪型プロンプトを無料でコピペできる例文集。ロング・ショート・ボブ・ポニーテール・ツインテール・髪色グラデーションを Stable Diffusion・Midjourney・NovelAI 対応の呪文で画像付き解説。「自分に似合う髪型・髪色を AI で試したい」方は無料の「似合う髪色診断 AI」もご利用ください。',
   },
   'costume': {
     seoTitle: 'コスチュームプロンプト集【呪文・コピペOK】｜和服・甲冑・アクセサリー・装飾品',
@@ -256,9 +256,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'ChatGPT・Claude で使えるクリエイティブプロンプト集。アイデア発想、ストーリー執筆、ネーミング、ブレインストーミングのテンプレートをコピペOKで紹介。',
   },
   'camera': {
-    seoTitle: 'カメラアングル プロンプト 35選【コピペOK】｜Stable Diffusion・Midjourney 俯瞰・ローアングル・シネマティック',
-    seoH1: 'カメラアングル・構図プロンプト 35 選｜Stable Diffusion で俯瞰・ローアングル・シネマティック撮影',
-    seoDescription: 'Stable Diffusion・Midjourney で使えるカメラアングル・構図プロンプト 35 選。クローズアップ・俯瞰・ローアングル・ハイアングル・シネマティック撮影まで、構図とライティングの呪文を画像付きで紹介。コピペで動作確認済み。',
+    seoTitle: 'カメラプロンプト集【無料・コピペOK】レンズ・構図・ライティング指定｜AI画像生成',
+    seoH1: 'カメラアングル・構図・ライティングプロンプト集｜Stable Diffusion・Midjourney 撮影呪文 35 選',
+    seoDescription: 'Stable Diffusion・Midjourney・NovelAI で使えるカメラ・構図・ライティングプロンプト 35 選。クローズアップ・俯瞰・ローアングル・ハイアングル・シネマティック撮影、スタジオライティング・自然光・逆光・ゴールデンアワーの呪文を画像付きで紹介。無料コピペで動作確認済み。',
   },
   'photo-edit': {
     seoTitle: 'AI写真加工プロンプト集【コピペOK】｜壁紙・髪色シミュレーション・配色・背景削除',
@@ -296,6 +296,14 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       'アニメ調なら「anime style」、リアル調なら「photorealistic」を併用',
       '髪色の色滲みにはBREAK構文やCutOffで対策',
     ],
+    faqs: [
+      { question: '女性向け髪型プロンプトのおすすめは？', answer: 'ロング系（long hair, very long hair, waist-length hair）、ツインテール系（twin tails, low twin tails）、ボブ・ショート系（short bob, pixie cut）、アップスタイル（ponytail, bun, double bun）の 4 グループを覚えておくと、ほぼすべての女性キャラ髪型がカバーできます。「1girl, [長さ], [スタイル], [色], [質感]」の順で書くと AI の解釈が安定します。' },
+      { question: '髪型プロンプトは ChatGPT でも使えますか？', answer: 'ChatGPT 自体は画像生成ができませんが、DALL-E 3（ChatGPT の画像生成機能）や Gemini 2.5 Flash Image、Midjourney、Stable Diffusion で使えます。本ページの英語プロンプトはすべて Stable Diffusion・NovelAI 用の構文ですが、DALL-E に渡す場合は自然な英文章に書き換えると認識率が上がります（例: "A girl with long wavy blonde hair tied in a ponytail"）。' },
+      { question: '自分に似合う髪型・髪色を AI で試せますか？', answer: 'はい。当サイトの「似合う髪色診断 AI」では、写真 1 枚で AI があなたのパーソナルカラーに合う髪色を 5 候補提案し、Gemini 2.5 Flash Image で Before/After シミュレーション画像を生成します。Google ログインで 3 回無料、写真は保存されません。' },
+      { question: '前髪・もみあげ・後れ毛の細かい指定方法は？', answer: '前髪は「blunt bangs（ぱっつん）」「side-swept bangs（流し前髪）」「curtain bangs（センター分け）」「hime cut（姫カット）」など。もみあげは「sideburns, short sideburns」、後れ毛は「stray hair, hair strands」と書きます。これらは省略されがちなので (blunt bangs:1.2) のように重み付けすると確実です。' },
+      { question: '髪色プロンプトと色滲み対策は？', answer: '基本色は blonde / brunette / black hair / red hair / silver hair / blue hair / pink hair。グラデーションは「gradient hair, pink to blue」、メッシュは「streaked hair, blonde with pink highlights」。複数キャラや服色と髪色が混ざる「color bleeding」を防ぐには BREAK 構文（「red hair BREAK blue dress」）または CutOff 拡張機能で領域固定が有効です。' },
+      { question: 'ロング・ボブ・ショートの違いを画像で比較したい', answer: '本ページの 50+ 例文を順番にコピペして、同じプロンプトの「[hair length]」部分だけ差し替えると、AI の挙動が比較できます。Stable Diffusion・NovelAI ともにシードを固定（seed: 12345）すると、長さ以外を完全一致させて比較画像が作れます。' },
+    ],
   },
 
   'clothing': {
@@ -312,6 +320,14 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       '素材名（silk, wool, cotton）を入れると質感が劇的に向上',
       '「detailed clothing, intricate fabric texture」で品質タグを補強',
       'ネガティブに「nude, deformed clothes, extra sleeves」を追加',
+    ],
+    faqs: [
+      { question: '女性向け服装プロンプトのおすすめは？', answer: '日常系（T-shirt, jeans, hoodie, casual dress）、フォーマル系（cocktail dress, evening gown, business suit）、制服系（school uniform, sailor uniform, office uniform）、コスチューム系（maid outfit, kimono, traditional dress）の 4 ジャンルを覚えると、ほぼすべてカバーできます。「1girl, [トップス], [ボトムス], [足元], [アクセサリー]」の順で書くと AI が解釈しやすくなります。' },
+      { question: 'メイド服プロンプトの書き方は？', answer: '基本構文は「maid outfit, white apron, black dress, frilled headdress, knee-high socks, mary jane shoes」。クラシック寄りは「victorian maid outfit, long black dress」、現代寄りは「modern maid uniform, short dress」と書き分けます。コスプレ調なら「moe maid costume, anime style」、リアル調なら「professional maid uniform, photorealistic」と質感タグを補強してください。' },
+      { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, stockings, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
+      { question: '色違いの服装で色滲み（color bleeding）を防ぐには？', answer: '複数の色を指定すると Stable Diffusion では色が混ざってしまうことがあります。「red dress BREAK blue jacket」のように BREAK で分割するか、CutOff 拡張機能で「red:dress || blue:jacket」と領域ごとに色を固定すると安定します。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」がさらに確実です。' },
+      { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現（セーラー服・メイド服・ナース服）、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・制服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
+      { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '「medieval armor, knight plate, chainmail」が騎士系、「mage robe, wizard hat, magical staff」が魔法使い系、「elf tunic, leather boots, archer quiver」がエルフ系、「dark sorceress dress, gothic ornaments」が女魔法使い系。Stable Diffusion なら ChilloutMix・RealisticVision、Midjourney なら「--style raw --ar 2:3」がファンタジー衣装の写実度を上げます。' },
     ],
   },
 
@@ -378,6 +394,14 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       'ネガティブに「oversaturated, washed out colors」を入れる',
       'CFGスケール 8-12 で色指定が安定しやすい',
     ],
+    faqs: [
+      { question: '髪色プロンプトの基本的な指定方法は？', answer: '基本色は blonde / brunette / black / red / silver / blue / pink hair。グラデーションは「gradient hair, pink to blue」「ombre hair, dark roots to light tips」、メッシュは「streaked hair, blonde with pink highlights」、インナーカラーは「inner color hair, black with hidden red」。「自分に似合う髪色を AI で試したい」方は当サイトの「似合う髪色診断 AI」（Google ログインで 3 回無料）もご利用ください。' },
+      { question: '服色（衣装の色）を正確に指定するには？', answer: '「red dress」「navy blazer」「emerald green skirt」のように形容詞として書きます。複数の服に別々の色を指定すると色が混ざる「color bleeding」が起きやすいので、BREAK 構文（「red dress BREAK blue jacket」）か CutOff 拡張機能（「red:dress || blue:jacket」）で領域固定するのが安全です。Attention ウェイト併用（(red dress:1.2) BREAK (blue jacket:1.2)）でさらに安定します。' },
+      { question: '背景色だけを指定するには？', answer: '「plain white background」「pure black background」「gradient sunset background, orange to pink」のように指定。被写体と背景の色を分離したい場合は「subject: girl in red, BREAK background: blue gradient」のように BREAK で完全分離します。スタジオ風には「seamless backdrop, studio background」、グラデーション系は「gradient background, [start color] to [end color]」が定番。' },
+      { question: 'パーソナルカラーに合った色を AI でみつけたい', answer: '当サイトの「パーソナルカラー診断 AI」では、写真 1 枚で AI が 4 シーズン（春・夏・秋・冬）を判定し、似合う 16 色（服・口紅・髪色・アクセサリー）を提案します。Google ログインで 3 回無料で利用可能。各シーズンの完全ガイド（春 / 夏 / 秋 / 冬）も別ページにあります。' },
+      { question: '色滲み（color bleeding）が起きる仕組みと対策は？', answer: 'Stable Diffusion は近接した単語を関連付けて処理するため、「red dress, blue jacket」のように複数色を併記すると色が混ざる「color bleeding」が発生します。対策は ① BREAK 構文で分割、② CutOff 拡張機能で領域分離、③ Attention ウェイト併用、④ ControlNet の Color Map で色配置を物理固定、の 4 段階。CFG スケールを 8-12 に上げると色の解釈が強化されます。' },
+      { question: 'パステル・ネオン・モノクロなど特殊な色調を出すには？', answer: '全体トーンを最初に書きます。「pastel colors, soft palette」「neon colors, vivid」「monochrome black and white」「sepia tones, vintage」のような形容詞句を冒頭に置くと、AI が全体カラースキームを統一しやすくなります。「cinematic color grading, film grain」を追加すると映画的な色合いに、「watercolor palette, soft washes」で水彩風になります。' },
+    ],
   },
 
   'costume': {
@@ -433,6 +457,14 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       '実機材名（Sony A7, 35mm lens）はMidjourneyで特に有効',
       'ネガティブに「flat composition, boring angle, bad lighting」を入れる',
       'コピペ可能なテンプレートから始めて、要素を差し替えるのが最速',
+    ],
+    faqs: [
+      { question: 'カメラアングル・構図プロンプトの基本指定方法は？', answer: '基本は「[アングル], [距離], [構図]」の 3 要素。アングルは「low angle（ローアングル）」「high angle（ハイアングル）」「bird-eye view（俯瞰）」「dutch angle（傾き）」。距離は「close-up（クローズアップ）」「medium shot（ミディアム）」「full body（全身）」「wide shot（広角）」。構図は「rule of thirds（三分割法）」「centered composition（中央構図）」「leading lines（リーディングライン）」を組み合わせます。' },
+      { question: 'ライティングプロンプトの種類と使い分けは？', answer: '主要なライティングは ① natural light（自然光）、② studio lighting（スタジオライティング）、③ rim lighting（リムライト・逆光）、④ cinematic lighting（映画的照明）、⑤ golden hour（ゴールデンアワー）、⑥ blue hour（青の時間）、⑦ neon lighting（ネオン）、⑧ candlelight（キャンドルライト）。シネマティックさを出すには「dramatic lighting, depth of field, volumetric light」を組み合わせるのが定番です。' },
+      { question: 'シネマティックな写真風プロンプトを作るには？', answer: '「cinematic photography, film grain, anamorphic lens, dramatic lighting, depth of field, 35mm film, kodak portra」を組み合わせると映画ワンシーン風の質感になります。Midjourney は「--ar 2:3 --style raw --stylize 250」、Stable Diffusion は ChilloutMix・RealisticVision 系モデルが向いています。「cinematic color grading, teal and orange」で映画的なカラーグレーディングも可能。' },
+      { question: '俯瞰・ローアングルなど特殊アングルが反映されない', answer: '重み付けを上げてください。「(low angle:1.3)」「(bird-eye view:1.4)」のように 1.3 以上の強調が必要です。それでも反映されない場合は ControlNet（OpenPose・Depth）で参照画像のカメラ位置を物理固定するのが確実。Midjourney は「--ar 9:16」（縦長）でローアングル感が出やすく、「--ar 16:9」（横長）で俯瞰感が強調されます。' },
+      { question: '実機材名（Sony・Canon・35mm レンズ）を書く効果は？', answer: 'Midjourney では実機材名が非常に強力で、「Sony A7 IV, 50mm f/1.4 lens, ISO 200」と書くだけで一気にプロカメラマン風になります。Stable Diffusion でも一定の効果があり、「shot on Canon EOS R5, 85mm portrait lens, shallow depth of field」のように具体化すると質感が向上。逆に DALL-E 3 では機材名はあまり効かないため、ライティング・構図の言葉で代替してください。' },
+      { question: 'ポートレート写真のおすすめプロンプトは？', answer: '基本テンプレート: 「professional portrait photography, soft natural light from the side, shallow depth of field, blurred background, [被写体]、85mm lens, eye-level angle, sharp focus on eyes」。ビジネス用途なら「LinkedIn profile photo, neutral background, formal lighting」、芸術系なら「fine art portrait, dramatic chiaroscuro lighting」、ファッション系なら「Vogue editorial photography, dramatic pose」を組み合わせます。' },
     ],
   },
 

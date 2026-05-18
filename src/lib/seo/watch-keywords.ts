@@ -97,6 +97,18 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   // new-tool-candidate: 高搜索量但无对应工具（决策候选）
   // ============================================================
   { keyword: 'ai 証明写真', cluster: 'new-tool-candidate', targetPage: null, monthlyVolume: 540, kd: 28, discoveredAt: '2026-05-17', notes: 'P1 新工具候选 — AI 証明写真生成器' },
+
+  // ============================================================
+  // opportunity: high-impression / mid-position keywords where existing
+  // pages already have Google trust — title/H2/FAQ rewrite is the
+  // fastest lever to push from page-2 to top-5. Tracking added
+  // 2026-05-18 per seo-opportunity-analysis-2026-05-18.md §P0.
+  // ============================================================
+  { keyword: 'プロンプト 髪型', cluster: 'opportunity', targetPage: '/prompts/hairstyle', monthlyVolume: 2400, kd: 8, discoveredAt: '2026-05-18', notes: 'GSC 28d: 8801 imp / 2.20% CTR / pos 18 — title rewrite 5/18' },
+  { keyword: 'プロンプト 服装', cluster: 'opportunity', targetPage: '/prompts/clothing', monthlyVolume: 1300, kd: 7, discoveredAt: '2026-05-18', notes: 'GSC 28d: 6706 imp / 3.37% CTR / pos 14 — title rewrite 5/18' },
+  { keyword: 'プロンプト 色', cluster: 'opportunity', targetPage: '/prompts/color', monthlyVolume: 390, kd: 13, discoveredAt: '2026-05-18', notes: 'GSC 28d: 2957 imp / 2.87% CTR / pos 6.71 — meta rewrite 5/18' },
+  { keyword: 'プロンプト カメラ', cluster: 'opportunity', targetPage: '/prompts/camera', monthlyVolume: 260, kd: 7, discoveredAt: '2026-05-18', notes: 'GSC 28d: 2916 imp / 1.78% CTR / pos 8.04 — added ライティング 5/18' },
+  { keyword: 'midjourney プロンプト', cluster: 'opportunity', targetPage: '/guides/midjourney-prompt-guide', monthlyVolume: 1300, kd: 23, discoveredAt: '2026-05-18', notes: 'Semrush pos 33 — Hub upgrade pending' },
 ]
 
 /** Default landing-page assumption when watch entry has no explicit target. */
