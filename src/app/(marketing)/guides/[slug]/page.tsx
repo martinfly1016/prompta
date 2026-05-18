@@ -1339,6 +1339,303 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       { q: 'プロンプトで業務効率はどれくらい上がりますか？', a: 'タスクと使い方に大きく依存しますが、ライティングで2〜5倍、コード生成で3〜10倍、定型文書作成で5倍以上の効率化が報告されています。重要なのはAIに任せる部分と人間が判断する部分を明確に切り分け、プロンプトをテンプレート化・社内共有することです。' },
     ],
   },
+
+  'personal-color-hair-color': {
+    sections: [
+      {
+        title: 'パーソナルカラー × 髪色の関係 — なぜ「似合う」が決まる？',
+        content: `「自分に似合う髪色」は、なんとなく好きな色ではなく、肌・瞳・顔の輪郭との調和で科学的に決まります。その判定軸が**パーソナルカラー**です。
+
+パーソナルカラーは、肌のアンダートーン（暖み／青み）・瞳の色・髪の質感・全体のコントラストから、人を 4 シーズン（春・夏・秋・冬）に分類する手法。1980 年代に米国の Carole Jackson が体系化し、日本では資生堂・カネボウなどのコスメブランドや、美容師・ヘアカラーリストが診断ツールとして実用しています。
+
+**髪色とパーソナルカラーの関係は単純です**:
+- **イエベ（暖み肌）** × **明るい瞳** → スプリング（春）— コーラル系のあたたかい髪色が映える
+- **ブルベ（青み肌）** × **ソフトな瞳** → サマー（夏）— アッシュ系のくすみ髪色が映える
+- **イエベ（暖み肌）** × **深い瞳** → オータム（秋）— こっくりブラウン系が映える
+- **ブルベ（青み肌）** × **強いコントラスト瞳** → ウィンター（冬）— 真っ黒・赤系が映える
+
+逆に「似合わない色」を選ぶと、髪色が浮いて見えたり顔色が悪く見えたり、せっかく染めても垢抜けない原因になります。本ガイドでは 4 シーズン別の推奨髪色とその理由、美容師さんへのオーダー方法、AI 診断ツールの活用法までを完全解説します。`,
+      },
+      {
+        title: 'スプリング（春）タイプに似合う髪色 5 選',
+        content: `**特徴**: 黄み寄りで明るい肌、明るいブラウン〜ライトブラウンの瞳、生まれつき柔らかい質感の髪。クリア・明るい・黄みの 3 要素が揃うタイプ。代表的な芸能人は新垣結衣さん、佐々木希さん、有村架純さん。
+
+**推奨髪色 5 選**:
+
+1. **ライトブラウン** — スプリング王道。透明感がありながら柔らかい印象に。ダメージも目立ちにくく初心者向け。
+2. **ハニーゴールド** — ツヤと明るさが両立、明るいキャラの方に。光に当たると黄金色に輝く。
+3. **キャラメルブラウン** — オフィスでも浮かない万能系。深みのあるブラウンに黄みのニュアンス。
+4. **ストロベリーブロンド** — 個性派チャレンジ枠。ピンクみのあるブロンドで欧米風の印象。
+5. **シナモンブラウン** — 落ち着きと明るさのバランスが取れた赤みブラウン。
+
+**美容師オーダーのコツ**:
+- 「黄み寄り・明るめ」を強調する
+- 「アッシュ系（青み）にしないでください」と明示する
+- ブリーチは不要なケースが多い（5 のストロベリー以外）
+
+**避けたい髪色**: アッシュグレー、ブルーブラック、寒色系ピンク。顔色が悪く沈んで見える原因に。`,
+      },
+      {
+        title: 'サマー（夏）タイプに似合う髪色 5 選',
+        content: `**特徴**: 青み寄りで明るくソフトな肌、グレー寄りの瞳、ダークブラウンや黒の落ち着いた髪。透明感・くすみ・青みの 3 要素が揃うタイプ。日本人で最も多いタイプとされ、代表的な芸能人は石原さとみさん、長澤まさみさん、綾瀬はるかさん。
+
+**推奨髪色 5 選**:
+
+1. **アッシュブラウン** — サマー王道。涼しげな透明感が特徴。日本人女性の最大公約数。
+2. **ココアブラウン** — 柔らかく上品な印象。茶色系のなかでも青みを含む。
+3. **ラベンダーアッシュ** — トレンド感を取り入れたい方に。光が当たると紫がかる。
+4. **グレージュ** — グレー × ベージュの絶妙バランス。外国人風カラーの代表。
+5. **ブルーブラック** — 強さと知性を出したい方に。黒だが青みが効いて重く見えない。
+
+**美容師オーダーのコツ**:
+- 「青み寄り・くすみカラー」を伝える
+- 「黄ばまない色味」を強調する
+- ブリーチ 1 回で発色が良くなる（特に 3 ラベンダー、4 グレージュ）
+
+**避けたい髪色**: オレンジブラウン、ゴールド、明るいキャメル。黄ばんで見え、青み肌から浮く。`,
+      },
+      {
+        title: 'オータム（秋）タイプに似合う髪色 5 選',
+        content: `**特徴**: 黄みを強く含んだイエローオークル肌、ダークブラウン〜こげ茶の瞳、生まれつき赤褐色の髪。ディープ・黄み・マットの 3 要素が揃うタイプ。代表的な芸能人は杏さん、ヨンアさん、栗山千明さん、北川景子さん。
+
+**推奨髪色 5 選**:
+
+1. **チョコレートブラウン** — オータム王道。深みと落ち着き。フォーマルな印象にも合う。
+2. **ハニーカラメル** — 暖かみと華やかさ。ハイライトで動きをつけると上品。
+3. **テラコッタブラウン** — 個性派、肌の色気を引き立てる赤みブラウン。
+4. **ダークオーバーン** — 深い赤褐色。シックで知的な印象、欧州貴族風。
+5. **マロンブラウン** — 栗色の温かみ、秋冬コーディネートに最高にマッチ。
+
+**美容師オーダーのコツ**:
+- 「暖色寄り・深め・マット」を伝える
+- 「黄み・赤み OK」と明示（オータムは黄み肌なので浮かない）
+- ハイライトを入れる場合は「ゴールド系の細めハイライト」と指定
+
+**避けたい髪色**: アッシュグレー、プラチナブロンド、寒色系ピンク。マットな肌から色が浮いて顔色を悪く見せる。`,
+      },
+      {
+        title: 'ウィンター（冬）タイプに似合う髪色 5 選',
+        content: `**特徴**: 青み寄りで透明感がありコントラストの強い肌、真っ黒〜ダークブラウンの瞳、生まれつき太くハリのある黒髪。コントラスト・青み・クリアの 3 要素が揃うタイプ。代表的な芸能人は小松菜奈さん、菜々緒さん、桐谷美玲さん、深田恭子さん。
+
+**推奨髪色 5 選**:
+
+1. **ジェットブラック** — ウィンター最強。生まれ持った黒髪を活かす。シャープで知的な印象。
+2. **ダークアッシュ** — 黒に近いがアッシュ感ありで重くならない。クールな大人系。
+3. **ブルーブラック** — 黒髪に青い艶めき。光に当たると神秘的。
+4. **プラチナホワイト** — 強烈な個性派。ブリーチ複数回必要。海外風の代表。
+5. **ワインレッド** — 深みのある赤、コントラスト肌に映える。
+
+**美容師オーダーのコツ**:
+- 「強くハッキリした色」を伝える
+- 「黄み・くすみは NG」と明示
+- 4 のプラチナはブリーチ 3-4 回が必要、ダメージを覚悟する
+
+**避けたい髪色**: ベージュ、テラコッタ、オリーブ、マスタード系。ぼんやり見え、ウィンター本来のシャープさを台無しに。`,
+      },
+      {
+        title: '自分のパーソナルカラーが分からない時の対処法',
+        content: `「自分が春・夏・秋・冬のどれか分からない」のは最も多い悩みです。判断が難しい主な原因は:
+
+- **複数シーズンの特徴が混在**するパターン（例: 肌は黄みだが髪は柔らかいなど）
+- **照明・季節・日焼け**で見え方が変わる
+- **自己診断の主観バイアス**（好みの色を「似合う」と思い込みやすい）
+
+**最速の解決法は AI 写真診断ツールの活用です**。当サイトの **[似合う髪色診断 AI](/tools/hair-color-diagnosis)** は写真 1 枚で:
+
+1. AI があなたのパーソナルカラーを判定（4 シーズン分類）
+2. 似合う髪色を 5 候補提案（安心の定番・トレンド・個性派のバランス）
+3. Gemini 2.5 Flash Image で **Before/After シミュレーション**を生成
+
+**Google ログインで 3 回無料**、写真は保存されません。実際の美容院に行く前のイメージトレーニングや、美容師さんへのオーダー時の参考画像として最適です。
+
+より総合的に診断したい方は **[パーソナルカラー診断 AI](/tools/personal-color-analysis)** をご利用ください。髪色だけでなく服・口紅・アクセサリーまで含む 16 色のパレットを提案します。各シーズン詳細ガイドも参考に: [スプリング](/tools/personal-color-analysis/spring) / [サマー](/tools/personal-color-analysis/summer) / [オータム](/tools/personal-color-analysis/autumn) / [ウィンター](/tools/personal-color-analysis/winter)。
+
+**美容師さんに依頼する場合**は「私はおそらく [シーズン名] です。[推奨髪色] のような色を希望します」と伝えると、プロが微調整して最適なカラーを作ってくれます。`,
+      },
+    ],
+    faq: [
+      { q: 'パーソナルカラーと似合う髪色の関係は何ですか？', a: 'パーソナルカラーは肌のアンダートーン（暖み／青み）・瞳・髪の質感・全体のコントラストから 4 シーズン（春・夏・秋・冬）に分類する手法です。各シーズンに「似合う色の世界」があり、髪色もその世界に属する色が肌の透明感を最大限に引き出します。例えば春タイプは「黄み × 明るい」髪色（ライトブラウン・ハニーゴールド）、冬タイプは「青み × 強い」髪色（ジェットブラック・ワインレッド）が映えます。' },
+      { q: 'イエベ・ブルベの違いは？', a: 'イエベ（イエローベース）は黄み寄りの肌で春・秋タイプが該当、ブルベ（ブルーベース）は青み寄りの肌で夏・冬タイプが該当します。簡易判定は (1) ゴールドのアクセサリーが似合えばイエベ、シルバーが似合えばブルベ。(2) 手首の血管が緑がかればイエベ、青や紫ならブルベ。(3) 焼けるとすぐ赤くなるならブルベ、小麦色になるならイエベ。ただし精度は中程度なので、AI 写真診断や専門家によるドレーピング診断と組み合わせるのがおすすめ。' },
+      { q: 'ブリーチが必要な髪色はどれですか？', a: '春タイプの「ストロベリーブロンド」、夏タイプの「ラベンダーアッシュ」「グレージュ」、冬タイプの「プラチナホワイト」はブリーチが必要（特にプラチナは 3-4 回）。一方、各シーズンの王道カラー（ライトブラウン・アッシュブラウン・チョコレートブラウン・ジェットブラック）はブリーチ不要です。ブリーチ回数が増えるほど髪のダメージは大きくなるため、ダメージケアと費用も考慮してください。' },
+      { q: 'AI で似合う髪色を試せますか？', a: 'はい。当サイトの「似合う髪色診断 AI」では写真 1 枚で 4 シーズン判定 + 似合う髪色 5 候補 + Before/After シミュレーション画像を Gemini 2.5 Flash Image で自動生成します。Google ログインで 3 回無料、写真は保存されません。実際の美容院予約前のイメージトレーニングに最適です。本格的なパーソナルカラー全体判定をしたい方は「パーソナルカラー診断 AI」も併用できます（クレジット共通）。' },
+      { q: '美容師さんへのオーダー方法は？', a: '効果的なオーダー文の構造は (1) 自分のパーソナルカラー判定結果（例: ブルベ夏）、(2) 希望の髪色名（例: アッシュブラウン）、(3) ハイライトの有無、(4) ブリーチを希望するか、(5) ダメージ予算、の 5 点。AI 診断ツールの Before/After 画像を見せると意図がさらに正確に伝わります。「夏タイプなので青み寄りで黄ばまない色味、ブリーチなしでアッシュブラウン希望、ハイライトはお任せ」のようにシンプルに伝えるのが理想です。' },
+      { q: '同じパーソナルカラーでもイメージが違うのは？', a: '4 シーズンの中でも「ライト・ブライト・ディープ・ソフト」などのサブタイプがあり（例: ライトスプリング、ブライトスプリング、ライトサマー、ディープオータム）、同じ春タイプでもライト寄りなら淡いライトブラウン、ブライト寄りならハッキリしたコーラルブラウンが映えます。AI 診断では最も近い 4 シーズンに分類しますが、より細かいタイプ判定は専門家の対面診断が確実です。' },
+    ],
+  },
+
+  'gemini-prompt-collection': {
+    sections: [
+      {
+        title: 'Gemini 2.5 とは — Pro / Flash / Nano Banana の使い分け',
+        content: `**Google Gemini 2.5** は Google が 2024 年末から 2026 年にかけて段階的にリリースした最新世代のマルチモーダル AI モデル群です。テキスト・画像・動画・音声を統合的に処理でき、最大 1M トークンの長文対応と画像生成・編集機能を併せ持つのが特徴。ChatGPT・Claude と並ぶ第三の選択肢として急速に普及しています。
+
+**3 つのバリエーションを使い分けるのが効率化のコツ**:
+
+1. **Gemini 2.5 Pro** — 最高精度モデル。複雑な推論・長文の精緻な分析・コード生成に最適。レスポンス時間は長めだが品質重視の場面で。
+2. **Gemini 2.5 Flash** — 高速・低コストモデル。日常的な質問・要約・翻訳・短いコード生成に最適。Pro の 3-5 倍速い。
+3. **Gemini 2.5 Flash Image（通称 Nano Banana）** — 画像生成・編集専用モデル。アップロード写真の編集（背景置換・髪色変更・着せ替え）と新規画像生成の両方に対応。ChatGPT 画像生成・DALL-E 3 と並ぶ実用ツール。
+
+本ガイドで紹介するプロンプトは、用途に応じてこの 3 モデルを選んで使い分けることを前提に構成しています。プロンプトの「型」は ChatGPT・Claude と共通ですが、Gemini 特有の効果的な書き方も後半で解説します。`,
+      },
+      {
+        title: '画像生成プロンプト集（Nano Banana 用）— 10 例文',
+        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。
+
+**人物・キャラ系**:
+
+1. \`A young Japanese woman with long black wavy hair, wearing a cream knit sweater, sitting by a window in autumn afternoon light, soft cinematic depth of field, photorealistic\`
+2. \`A fantasy elf warrior with silver hair and emerald eyes, wearing leather armor with gold accents, standing in an ancient forest with sunbeams, digital art\`
+
+**風景・スタイル系**:
+
+3. \`A serene Japanese rural landscape in late autumn, rice fields with golden stalks, distant mountains with red maples, soft morning fog, Studio Ghibli style\`
+4. \`A futuristic Tokyo cityscape at night, neon signs reflecting on wet streets, cyberpunk aesthetic, cinematic wide shot, blade runner inspired\`
+
+**写真加工系**（既存写真の編集）— ユーザー画像をアップロードしてから:
+
+5. \`Replace the background of the uploaded photo with a soft cream studio backdrop. Keep the person's identity, hair, clothing, and pose exactly. Photorealistic, natural lighting.\`
+6. \`Change the hair color of the person in the uploaded photo to ash brown. Keep the person's face, eye shape, jawline, and skin tone exactly unchanged. Maintain natural hair texture and lighting consistency.\`
+7. \`Convert the uploaded black and white photo to natural color, with realistic skin tones and period-accurate clothing colors for the 1950s. Preserve all facial features and composition exactly.\`
+
+**ビジネス用途**:
+
+8. \`A clean modern infographic showing 4 key benefits of cloud computing, with icons in pastel colors, minimalist style, suitable for a tech presentation slide\`
+
+**マルチモーダル指示**（画像 + テキスト）:
+
+9. \`Analyze the uploaded chart image and create a similar visualization but for the data: Q1 sales 120K, Q2 145K, Q3 168K, Q4 195K. Use the same color scheme.\`
+10. \`Based on the uploaded floor plan, suggest 3 different interior design styles for the living room. Create a visualization for each style.\`
+
+各プロンプトは **R1-R9 規則**（アップロード写真の参照表現・保持声明・出力規格指定）を守ることで成功率が大幅に上がります。詳細は当サイトの [/prompts/photo-edit](/prompts/photo-edit) で多数例を公開中。`,
+      },
+      {
+        title: '文章作成プロンプト集 — ブログ・SEO・メール 10 例文',
+        content: `Gemini は最大 1M トークンの長文対応が強み。ブログ記事・レポート・メール文面など長文生成に特に向いています。
+
+**ブログ・SEO 系**:
+
+1. **SEO ブログ記事生成**:
+\`あなたはSEOに精通したライターです。以下のキーワードに対して、検索意図を考察したうえで、見出し構造（H2/H3）を提案してください。読者は[ターゲット]、トーンは[ですます調/常体]、文字数は[目安]字程度。\nキーワード: [入力]\n参考にすべき情報: [競合記事 URL 3 つ]\`
+
+2. **記事リライト・改善提案**:
+\`以下の記事を読み、SEO 観点（タイトル・H2/H3・内部リンク・冗長表現）と読みやすさ観点（文章のリズム・専門用語の解説）の両面から、具体的な改善点を 10 個リストアップしてください。\n記事: [本文貼り付け]\`
+
+3. **メタディスクリプション生成**:
+\`以下の記事タイトルと冒頭 500 字を読み、検索結果で CTR が高くなる魅力的なメタディスクリプションを 3 案、それぞれ 120-155 字で作成してください。\nタイトル: [入力]\n冒頭: [貼り付け]\`
+
+**ビジネスメール系**:
+
+4. **クライアント向け提案メール**:
+\`以下の状況で、丁寧かつ簡潔なクライアント向けメール文面を日本語で作成してください。\n状況: [背景]\n依頼内容: [何を伝えるか]\nトーン: 信頼関係構築重視\n結びの一文: 次回ミーティングの提案を含める\`
+
+5. **謝罪メール**:
+\`[トラブル内容]について顧客への謝罪メールを作成してください。事実関係、原因、再発防止策、補償案の 4 構成で。誠実かつ過度に卑屈にならないトーン。\`
+
+**長文系（Gemini Pro 推奨）**:
+
+6. **議事録要約**: \`以下の 2 時間分のミーティング書き起こしを読み、(1) 決定事項、(2) アクションアイテム（担当者と期日）、(3) 未解決の論点、(4) 次回までの宿題、の 4 セクションで要約してください。\`
+
+7. **競合分析レポート**: \`以下の 5 つの競合サイトの「ホームページ・料金ページ・特徴ページ」を読み、各社の (1) ターゲット顧客、(2) 価値訴求、(3) 価格帯、(4) 差別化ポイントを比較表にまとめてください。\`
+
+**創作系**:
+
+8. **小説プロット**: \`以下の設定で、5 章構成の短編小説プロットを作成してください。各章のタイトル、主要シーン 3 つ、登場人物の心理変化を簡潔に。\n設定: [入力]\nジャンル: [入力]\`
+
+9. **キャッチコピー 10 案**: \`[商品名]の魅力を 1 行で伝えるキャッチコピーを 10 案、機能訴求 3 / 感情訴求 3 / ベネフィット訴求 3 / 比較訴求 1 のバランスで作成してください。\`
+
+10. **企画書骨子**: \`以下のアイデアを起案者として企画書の骨子に展開してください。背景・課題・提案内容・期待効果・実行計画・予算感の 6 セクションで。\nアイデア: [入力]\`
+
+**Gemini 特有のコツ**: 長文では \`---\` のセクション区切りや見出しを Markdown 形式で明示すると整形精度が上がります。`,
+      },
+      {
+        title: 'AI 写真加工プロンプト集（Gemini 2.5 Flash Image）— 5 例文',
+        content: `Gemini 2.5 Flash Image（Nano Banana）はアップロード写真への編集が ChatGPT 画像生成と並ぶ精度を持ちます。**R1-R9 規則**（対象明示・保持声明・出力規格・質感タグ・反向防呆）を守ると成功率が大幅に向上。
+
+**1. 背景置換**:
+\`Replace the background of the uploaded photo with a clean cream studio backdrop. Keep the person's identity, eye shape, nose, jawline, hair length, hair color, clothing color, clothing fit, and pose exactly as the source. No white halo around the subject and no color cast on the skin from the new background. Output at the original resolution, photorealistic and natural-looking.\`
+
+**2. 髪色変更**:
+\`Change the hair color of the person in the uploaded photo to ash brown (#8B7355). Preserve the person's identity, eye shape, nose, jawline, face proportions, clothing, makeup state, background, and pose exactly. Maintain natural hair texture, lighting consistency, and individual strand definition. Do not modify the facial structure. Output at the original resolution.\`
+
+**3. 服装着せ替え**:
+\`Replace the outfit of the person in the uploaded photo with a navy business suit, white blouse, and small pearl earrings. Lock identity, eye shape, nose, jawline, hair length, hair color, bangs, eyebrow shape, lip color, and pose exactly. Do not alter facial features or invent accessories. Do not regenerate the photo from scratch — only operate on the existing pixels. Output at the original resolution, photorealistic.\`
+
+**4. 美肌レタッチ（年齢相応の自然さ）**:
+\`Apply gentle, natural skin retouching to the uploaded photo. Reduce only obvious blemishes and even out skin tone slightly. Preserve identity, facial structure, freckles, moles, fine lines around the eyes, eyebrow shape, lip color (do not add lipstick), makeup state, hair, clothing, and background exactly. Do not over-smooth the skin and avoid any plastic-looking face.\`
+
+**5. 白黒写真カラー化**:
+\`Convert the uploaded black and white photo to natural color, with realistic, period-accurate skin tones, clothing colors appropriate for the 1950s era, and natural film grain preserved. Lock identity, pose, face proportions, clothing shape, hair shape, and grain texture exactly as the source. Do not regenerate the photo from scratch — only add color to existing pixels.\`
+
+これらは**当サイトの [/prompts/photo-edit](/prompts/photo-edit) で多数の実例とサンプル画像を公開**しています。「自分の写真でやってみたい」方は当サイトの [パーソナルカラー診断 AI](/tools/personal-color-analysis) や [似合う髪色診断 AI](/tools/hair-color-diagnosis) で**Google ログインで 3 回無料**ですぐに試せます。`,
+      },
+      {
+        title: '学習・教育プロンプト集 — 10 例文',
+        content: `Gemini の長文対応と多言語能力は学習用途で特に強みを発揮します。
+
+1. **概念解説（小学生でも分かるように）**: \`「[難解な概念]」を小学校 5 年生でも理解できる言葉で、200 字以内で説明してください。比喩を 1 つ含めてください。\`
+
+2. **学習計画作成**: \`[目標、例: TOEIC 800 点]を 6 ヶ月で達成するための週単位学習計画を作成してください。現在のレベル: [入力]、平日の学習時間: [入力]時間。週ごとに目標、教材、テスト方法を明記。\`
+
+3. **問題演習生成**: \`[科目・単元]について、難易度を「易・中・難」に分けて練習問題を各 5 問、合計 15 問作成してください。各問題に解説と関連知識を 100 字程度で添えてください。\`
+
+4. **記憶術・ニーモニック**: \`「[暗記したい内容]」を覚えるためのニーモニック（語呂合わせ）を 3 案作成してください。日本語、できれば短くインパクトのあるもの。\`
+
+5. **英語学習 — シャドーイング教材生成**: \`[トピック]について、ネイティブの自然な英語で 2 分間のモノローグを作成してください。難易度は [初級/中級/上級]、文法のポイントを 3 つ明示。\`
+
+6. **語彙学習**: \`[英単語]の「コア意味 → 拡張意味 → 使用例文 3 つ → 類義語との違い → よくある誤用」を 1 セットで解説してください。\`
+
+7. **論文・本の要約**: \`以下の論文（または本）の要約を、3 階層（30 字 / 200 字 / 1000 字）で作成してください。最も重要な発見や主張を強調してください。\n[本文または PDF アップロード]\`
+
+8. **議論の練習**: \`「[論争のあるトピック]」について、賛成と反対のそれぞれの立場から最強の論拠を 5 つずつ提示してください。エビデンスや具体例を必ず含めてください。\`
+
+9. **コード学習・デバッグ**: \`以下のコードを行ごとに解説してください。初心者が理解できるよう、各行で何が起きているかを説明し、潜在的なバグや改善点も指摘してください。\n[コード貼り付け]\`
+
+10. **試験準備 — 想定質問生成**: \`[試験名]の過去問の傾向を踏まえて、出題されそうな問題を 20 問作成してください。各問題に難易度、出題頻度、解答のコツを添えてください。\``,
+      },
+      {
+        title: '仕事効率化プロンプト集 — 議事録・要約・スケジュール 10 例文',
+        content: `**1. 議事録自動整形**:
+\`以下のミーティング書き起こしから議事録を作成してください。フォーマット: (1) 日時・参加者、(2) アジェンダ、(3) 決定事項、(4) アクションアイテム（担当者・期日）、(5) 次回までの宿題。\n[書き起こし貼り付け]\`
+
+**2. 長文書類要約**:
+\`以下の 50 ページの PDF を、エグゼクティブサマリー（500 字）、主要発見 5 つ、推奨アクション 3 つの構造で要約してください。\n[PDF アップロード]\`
+
+**3. データ分析結果の解釈**:
+\`以下の表データを分析し、(1) 主要トレンド、(2) 異常値、(3) ビジネスへの示唆、(4) さらに調査すべき点を整理してください。\n[CSV データ貼り付け]\`
+
+**4. プレゼン構成**:
+\`[テーマ]について 15 分のプレゼンの構成を作ってください。スライド 10 枚、各スライドのタイトル・要点 3 つ・話す時間配分を明記。\`
+
+**5. 企画書作成**:
+\`以下の企画アイデアを A4 1 枚にまとめてください。背景・課題・解決策・期待効果・KPI・予算感・スケジュールの 7 セクション。\n[アイデア入力]\`
+
+**6. 顧客対応テンプレート**:
+\`[よくある問い合わせ内容]に対する顧客対応テンプレートを 3 パターン（標準・丁寧・くだけた）作成してください。各 200 字程度。\`
+
+**7. メール文面生成**:
+\`[相手・目的・伝えたい要点 3 つ]を踏まえて、ビジネスメールを作成してください。タイトル含む。トーンは [指定]。\`
+
+**8. スケジュール調整**:
+\`以下の参加者リストとそれぞれの空き時間から、全員が参加できる時間帯を 3 つ提案してください。最初の選択肢を本命としてください。\n参加者: [入力]\`
+
+**9. KPI レポート骨子**:
+\`[期間]の [事業] KPI レポートの骨子を作ってください。データを入れる枠だけ用意、(1) 売上、(2) 新規顧客、(3) リピート率、(4) 解約率、(5) ROI の 5 指標に対して目標・実績・前期比・分析の 4 列表を作成。\`
+
+**10. プロジェクト振り返り（KPT 形式）**:
+\`以下のプロジェクト概要から KPT（Keep / Problem / Try）形式で振り返りをまとめてください。各カテゴリ 3-5 点ずつ、具体的なアクションに繋がる形で。\n[プロジェクト概要]\`
+
+**Gemini を使いこなすコツ**: 仕事系プロンプトは **Markdown 形式の出力指定**（「以下の Markdown 形式で出力してください: ## [見出し]\\n- [リスト項目]」）と、**例示（Few-Shot）**（「以下の例にならって作成してください: [例 1] [例 2]」）を組み合わせると精度が劇的に上がります。`,
+      },
+    ],
+    faq: [
+      { q: 'Gemini プロンプトの書き方は ChatGPT と違いますか？', a: '基本テクニック（具体性・ロール設定・例示・出力フォーマット指定）は ChatGPT・Claude と共通です。ただし Gemini 特有のコツとして (1) 長文の Markdown 整形が得意なので「Markdown 形式で出力」を明示、(2) マルチモーダル（画像+テキスト同時入力）に強いので画像と質問を組み合わせるプロンプトを使う、(3) 最大 1M トークン対応なので長大な PDF や複数文書を一度に渡せる、の 3 点を意識すると Gemini の強みを引き出せます。' },
+      { q: 'Gemini 2.5 Flash と Pro の違いは？', a: 'Flash は高速・低コスト（Pro の 3-5 倍速）で、日常的な質問・要約・翻訳・短文生成に最適。Pro は最高精度で、複雑な推論・長文の精緻な分析・コード生成・専門領域に適しています。料金は Flash が大幅に安いので、簡単なタスクは Flash、品質が重要な場合のみ Pro を使うのが効率的。Gemini API なら同じプロンプトでモデル名だけ切り替えて両者の出力を比較できます。' },
+      { q: 'Nano Banana（Gemini 2.5 Flash Image）とは？', a: '通称「Nano Banana」は Gemini 2.5 Flash Image の俗称で、Google の画像生成・編集専用モデルです。アップロード写真の編集（背景置換・髪色変更・着せ替え・年代変換）と新規画像生成の両方に対応。ChatGPT 画像生成・DALL-E 3 と並ぶ実用ツールで、特に**人物の識別保持（identity preservation）**が強み。当サイトの [パーソナルカラー診断 AI](/tools/personal-color-analysis) と [似合う髪色診断 AI](/tools/hair-color-diagnosis) はこのモデルで Before/After を生成しています。' },
+      { q: 'ChatGPT のプロンプトを Gemini にそのまま使えますか？', a: '基本的に使えますが、最大限の精度を引き出したい場合は微調整がおすすめ。ChatGPT 用プロンプトの「You are...」ロール設定はそのまま機能しますが、Gemini ではより自然な日本語の指示（「あなたは…の専門家です」）と Markdown 出力指定の組み合わせがベスト。Claude 用の XML タグ（\`<context>\` \`<task>\`）は Gemini では効果が薄く、代わりに Markdown 見出しで構造化するのが効率的です。' },
+      { q: 'Gemini プロンプトの料金は？', a: 'Gemini の利用方法は (1) Web UI（gemini.google.com）が無料、(2) Google One AI Premium が月額 2,900 円で Gemini Advanced（Gemini 2.5 Pro 利用可）、(3) Gemini API が従量課金（Flash $0.075/1M tokens、Pro $1.25/1M tokens 程度）の 3 通り。個人利用なら Web UI で十分、ビジネス用途で大量利用するなら API、画像生成を多用するなら Gemini Advanced がコスパ最適です。' },
+      { q: 'Gemini と Stable Diffusion / Midjourney の使い分けは？', a: 'Gemini 2.5 Flash Image（Nano Banana）は**既存写真の編集**（背景置換・髪色変更・着せ替え）に特に強く、ChatGPT 画像生成と並ぶトップクラス。Stable Diffusion は**ゼロから画像を生成**する用途で、ネガティブプロンプトや ControlNet で細かい制御が効きます。Midjourney は**芸術性・スタイル統一**が突出していて、コンセプトアートやファッション撮影風の画像に最適。用途別に使い分けるのが効率的で、当サイトでも [/tools/gemini](/tools/gemini) と [/tools/stable-diffusion](/tools/stable-diffusion) [/tools/midjourney](/tools/midjourney) の各専用プロンプト集を公開しています。' },
+    ],
+  },
 }
 
 export default async function GuidePage({ params }: Props) {

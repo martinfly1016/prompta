@@ -685,6 +685,20 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'プロンプト 書き方',
     monthlySearchVolume: 5400,
   },
+  {
+    slug: 'personal-color-hair-color',
+    title: 'パーソナルカラー別 似合う髪色完全ガイド｜春・夏・秋・冬タイプの推奨ヘアカラー',
+    description: 'パーソナルカラー（春・夏・秋・冬）別に似合う髪色を完全解説。イエベ・ブルベの違い、ブリーチの要不要、美容院オーダーのコツまで網羅。写真 1 枚で AI 診断できる「似合う髪色診断 AI」（無料 3 回）への案内付き。',
+    targetKeyword: 'パーソナルカラー 髪色',
+    monthlySearchVolume: 5400,
+  },
+  {
+    slug: 'gemini-prompt-collection',
+    title: 'Geminiプロンプト集【用途別・無料コピペOK】画像生成・文章作成・SEO・学習活用 50+ 例文',
+    description: 'Google Gemini 2.5 で使えるプロンプトを用途別に 50+ 例文収録。画像生成（Nano Banana）・文章作成・SEO・写真加工・学習・仕事効率化まで、コピペですぐ使える無料テンプレートと Gemini 独自機能の活用法を解説。',
+    targetKeyword: 'gemini プロンプト 一覧',
+    monthlySearchVolume: 1300,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking

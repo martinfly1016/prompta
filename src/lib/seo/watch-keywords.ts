@@ -109,6 +109,11 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: 'プロンプト 色', cluster: 'opportunity', targetPage: '/prompts/color', monthlyVolume: 390, kd: 13, discoveredAt: '2026-05-18', notes: 'GSC 28d: 2957 imp / 2.87% CTR / pos 6.71 — meta rewrite 5/18' },
   { keyword: 'プロンプト カメラ', cluster: 'opportunity', targetPage: '/prompts/camera', monthlyVolume: 260, kd: 7, discoveredAt: '2026-05-18', notes: 'GSC 28d: 2916 imp / 1.78% CTR / pos 8.04 — added ライティング 5/18' },
   { keyword: 'midjourney プロンプト', cluster: 'opportunity', targetPage: '/guides/midjourney-prompt-guide', monthlyVolume: 1300, kd: 23, discoveredAt: '2026-05-18', notes: 'Semrush pos 33 — Hub upgrade pending' },
+
+  // Week 2/3 new guides (ship 5/18) — track climb from 0 to top-20
+  { keyword: 'パーソナルカラー 髪色', cluster: 'opportunity', targetPage: '/guides/personal-color-hair-color', monthlyVolume: 5400, kd: 30, discoveredAt: '2026-05-18', notes: 'Week 2 new guide' },
+  { keyword: 'gemini プロンプト 一覧', cluster: 'opportunity', targetPage: '/guides/gemini-prompt-collection', monthlyVolume: 1300, kd: 22, discoveredAt: '2026-05-18', notes: 'Week 3 new guide; GSC pos 8.90' },
+  { keyword: 'gemini プロンプト集', cluster: 'opportunity', targetPage: '/guides/gemini-prompt-collection', monthlyVolume: 1100, kd: 22, discoveredAt: '2026-05-18', notes: 'GSC pos 8.97' },
 ]
 
 /** Default landing-page assumption when watch entry has no explicit target. */
