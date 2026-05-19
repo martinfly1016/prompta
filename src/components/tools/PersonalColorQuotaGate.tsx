@@ -49,10 +49,12 @@ interface AnalysisResult {
   confidence: number
 }
 
-// Phase 0 (2026-05-11) — credit-only. Welcome bonus = 3 on first login.
-const WELCOME_CREDITS = 3
-const PRICE_LABEL = '¥300 / 10回パック'
-const PRICE_LABEL_EN = '¥300 / 10-pack'
+// Phase 0 (2026-05-11) — credit-only. Pricing rebased 5/19: 150 credit / ¥300.
+// Welcome bonus = 50 credit on first login (= 10 image gens OR 50 text runs).
+// Image gen = 5 credit / call; text/vision = 1 credit / call.
+const WELCOME_CREDITS = 50
+const PRICE_LABEL = '¥300 / 150 クレジット'
+const PRICE_LABEL_EN = '¥300 / 150 credits'
 const MAX_BYTES = 8 * 1024 * 1024
 const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' } as const
 
@@ -72,10 +74,10 @@ const STRINGS = {
     },
     statusChecking: '利用状況を確認中…',
     statusLoginRequired: `ログインで ${WELCOME_CREDITS} クレジット獲得（無料）`,
-    statusFree: (n: number) => `クレジット残り ${n} 回`,
+    statusFree: (n: number) => `クレジット残り ${n}`,
     statusExhausted: 'クレジットを使い切りました',
     statusPaidPrefix: '保有クレジット：',
-    statusPaidSuffix: ' 回',
+    statusPaidSuffix: '',
     statusPaidNoteFreeUsed: '',
     pickButton: '📁 写真を選択して診断',
     pickCaption: 'JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。',
@@ -86,16 +88,16 @@ const STRINGS = {
     errAnalyze: (m: string) => `診断エラー: ${m}`,
     modalTitleFree: 'クレジット不足',
     modalTitleIp: 'クレジット不足',
-    modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} 回無料`,
-    modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。クレジットは全ツール共通でご利用いただけます。',
-    modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。',
-    modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント。即時利用可能・別ツールでも共通でお使いいただけます。クレジットを使い切ったあとに有料パックをご検討ください。`,
-    signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} 回）`,
+    modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} クレジット無料`,
+    modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。クレジットは全ツール共通でご利用いただけます。',
+    modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。',
+    modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 10 回 OR 文字実行 50 回）。即時利用可能・別ツールでも共通でお使いいただけます。`,
+    signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} クレジット）`,
     signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
-    pricePackTitle: '10 回パック',
-    priceFeatures: ['即時利用、有効期限なし', '似合う髪色診断ツールと共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', 'Google サインイン または メールリンクで管理'],
+    pricePackTitle: '150 クレジットパック',
+    priceFeatures: ['画像生成 30 回 OR 文字実行 150 回', '全ツール・全プロンプト共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', '即時利用、有効期限なし'],
     purchasing: '処理中…',
-    purchaseButton: (price: string) => `💳 10 回パックを購入（${price}）`,
+    purchaseButton: (price: string) => `💳 150 クレジットパックを購入（${price}）`,
     stripeComingTitle: 'Stripe 決済は近日公開',
     stripeNote: '※ 決済機能は Stripe 接入中。しばらくお待ちください。',
     signInRequired: '購入にはサインインが必要です',
@@ -104,8 +106,8 @@ const STRINGS = {
     signInBenefit: '別デバイスでも同じメールでサインインすればクレジット同期',
     closeButton: '閉じる',
     purchaseCancelled: '購入がキャンセルされました',
-    purchaseSuccess: '🎉 10 クレジットが追加されました！',
-    recoveredSuccess: (balance: string | null) => `🎉 クレジットを復元しました${balance ? `（残り ${balance} 回）` : ''}`,
+    purchaseSuccess: '🎉 150 クレジットが追加されました！',
+    recoveredSuccess: (balance: string | null) => `🎉 クレジットを復元しました${balance ? `（残り ${balance}）` : ''}`,
     recoverExpired: '復元リンクの有効期限が切れています。フォームから再送信してください。',
     recoverInvalid: '復元リンクが無効です。再度メールをご確認ください。',
     purchaseError: (err: string) => `購入処理エラー: ${err}`,
@@ -130,10 +132,10 @@ const STRINGS = {
     avoidColors: '避けたい色',
     uploadedAlt: 'アップロード写真',
     enResultNote: '',
-    ctaExhaustedTrigger: '→ 続けて使う（10回 ¥300）',
+    ctaExhaustedTrigger: '→ 続けて使う（150 クレジット ¥300）',
     upsellBannerHeading: 'もう一人診断する？',
     upsellBannerBody: 'クレジット切れの場合は ',
-    upsellBannerLink: '10 回 ¥300 パック',
+    upsellBannerLink: '150 クレジット ¥300 パック',
     upsellBannerSuffix: 'で続行できます',
   },
   en: {
@@ -151,7 +153,7 @@ const STRINGS = {
     statusFree: (n: number) => `${n} credits left`,
     statusExhausted: 'Out of credits',
     statusPaidPrefix: 'Credits: ',
-    statusPaidSuffix: ' left',
+    statusPaidSuffix: '',
     statusPaidNoteFreeUsed: '',
     pickButton: '📁 Pick a photo to analyze',
     pickCaption: 'JPG / PNG / WebP (max 8MB). Photos are deleted from our server after analysis.',
@@ -162,16 +164,16 @@ const STRINGS = {
     errAnalyze: (m: string) => `Analysis error: ${m}`,
     modalTitleFree: 'Out of credits',
     modalTitleIp: 'Out of credits',
-    modalTitleLogin: `Sign in for ${WELCOME_CREDITS} free analyses`,
-    modalDescFree: 'You have used all your credits. Grab a 10-analysis pack to keep going — credits are shared across all tools.',
-    modalDescIp: 'You have used all your credits. Grab a 10-analysis pack to keep going.',
-    modalDescLogin: `Sign in with Google to get ${WELCOME_CREDITS} free credits — instantly usable across all our AI tools. Buy a 10-pack only when you run out.`,
-    signInFreeButton: `🔐 Sign in with Google (${WELCOME_CREDITS} free)`,
+    modalTitleLogin: `Sign in for ${WELCOME_CREDITS} free credits`,
+    modalDescFree: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going — shared across all tools and prompts.',
+    modalDescIp: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going.',
+    modalDescLogin: `Sign in with Google to get ${WELCOME_CREDITS} free credits — that's 10 image runs OR 50 text runs across all our AI tools and 180+ prompts.`,
+    signInFreeButton: `🔐 Sign in with Google (${WELCOME_CREDITS} free credits)`,
     signInFreeBenefit: 'Email is used to save results and sync across devices. No spam.',
-    pricePackTitle: '10-analysis pack',
-    priceFeatures: ['Instant access, never expires', 'Shared with the hair color diagnosis tool', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Sign in with Google or email link to manage'],
+    pricePackTitle: '150-credit pack',
+    priceFeatures: ['30 image generations OR 150 text runs (mix freely)', 'Shared with all tools and 180+ prompts', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Instant access, never expires'],
     purchasing: 'Processing…',
-    purchaseButton: (price: string) => `💳 Buy 10-pack (${price})`,
+    purchaseButton: (price: string) => `💳 Buy 150-credit pack (${price})`,
     stripeComingTitle: 'Stripe checkout coming soon',
     stripeNote: '※ Stripe integration in progress. Please check back soon.',
     signInRequired: 'Sign in required to purchase',
@@ -180,7 +182,7 @@ const STRINGS = {
     signInBenefit: 'Sign in with the same email on another device to sync credits',
     closeButton: 'Close',
     purchaseCancelled: 'Purchase was cancelled',
-    purchaseSuccess: '🎉 10 credits added!',
+    purchaseSuccess: '🎉 150 credits added!',
     recoveredSuccess: (balance: string | null) => `🎉 Credits restored${balance ? ` (${balance} left)` : ''}`,
     recoverExpired: 'Recovery link expired. Please request a new one from the form.',
     recoverInvalid: 'Recovery link invalid. Please check your email again.',
@@ -207,10 +209,10 @@ const STRINGS = {
     uploadedAlt: 'Your uploaded photo',
     enResultNote:
       '🌐 Note: AI-generated descriptions and color names are currently in Japanese. Full English output rolls out in the next update — the seasonal label, palette HEX codes, and badges are universal.',
-    ctaExhaustedTrigger: '→ Continue (10-pack ¥300)',
+    ctaExhaustedTrigger: '→ Continue (150 credits ¥300)',
     upsellBannerHeading: 'Diagnose another person?',
     upsellBannerBody: 'If credits run out, the ',
-    upsellBannerLink: '10-analysis ¥300 pack',
+    upsellBannerLink: '150-credit ¥300 pack',
     upsellBannerSuffix: ' lets you keep going.',
   },
 } as const

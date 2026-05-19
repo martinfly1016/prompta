@@ -9,7 +9,7 @@ import {
 import { SITE_CONFIG } from '@/lib/constants'
 import { authOptions } from '@/lib/auth'
 
-// Creates a Stripe Checkout session for the 10-pack credit purchase.
+// Creates a Stripe Checkout session for the 150-credit pack purchase.
 // Returns the hosted Checkout URL — frontend redirects to it.
 //
 // When the user is signed in, we lock the customer email to their session

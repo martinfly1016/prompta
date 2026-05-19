@@ -3,7 +3,7 @@ import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
-  spendOneCredit,
+  spendCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { simulateHairColor } from '@/lib/hair-color-ai'
@@ -70,7 +70,8 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const spend = await spendOneCredit(eh)
+  // 5/19 pricing: image gen = 5 credit (Gemini Flash Image ~$0.04 cost)
+  const spend = await spendCredits(eh, 5)
   if (!spend.ok) {
     return NextResponse.json(
       { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },

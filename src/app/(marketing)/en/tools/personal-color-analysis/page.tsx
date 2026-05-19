@@ -94,7 +94,7 @@ const FAQ = [
   },
   {
     q: 'Is this really free? What happens after the free uses?',
-    a: 'You get 3 free analyses per day with no signup. After that, a 10-pack costs ¥300 (~$2 USD) via Stripe — credits never expire and are tied to one email so you can recover them on any device.',
+    a: 'Sign in with Google to get 50 free credits (= 10 image runs OR 50 text runs). After that, a 150-credit pack costs ¥300 (~$2 USD) via Stripe — credits never expire, are tied to one email so you can recover them on any device, and shared across all tools + 180+ prompts. Image generation costs 5 credits; text/vision analysis costs 1 credit.',
   },
   {
     q: 'How do you handle my photo?',
@@ -178,7 +178,7 @@ export default function PersonalColorAnalysisEnPage() {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'JPY',
-      description: '3 free analyses per day; ¥300 for a 10-pack',
+      description: 'Sign in for 50 free credits; ¥300 for a 150-credit pack',
     },
     aggregateRating: {
       '@type': 'AggregateRating',

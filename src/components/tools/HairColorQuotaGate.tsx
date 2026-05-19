@@ -61,9 +61,13 @@ interface AnalyzeResponse {
   previewSimulation: PreviewSimulation | null
 }
 
-// Phase 0 (2026-05-11) — credit-only. Welcome bonus = 3 on first login.
-const WELCOME_CREDITS = 3
-const PRICE_LABEL = '¥300 / 10回パック'
+// Phase 0 (2026-05-11) — credit-only. Pricing rebased 5/19: 150 credit / ¥300.
+// Welcome bonus = 50 credit on first login (= 10 hair-color simulations OR
+// 50 text prompt executions, mixed OK).
+// Image gen = 5 credit / image; text/vision = 1 credit / call.
+const WELCOME_CREDITS = 50
+const PRICE_LABEL = '¥300 / 150 クレジット'
+const SIM_COST = 5  // hair-color simulate = image gen = 5 credit
 const MAX_BYTES = 8 * 1024 * 1024
 const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' } as const
 
@@ -78,10 +82,10 @@ const STRINGS_JA = {
   toneLabel: { warm: '暖色系', cool: '寒色系', neutral: 'ニュートラル' },
   statusChecking: '利用状況を確認中…',
   statusLoginRequired: `ログインで ${WELCOME_CREDITS} クレジット獲得（無料）`,
-  statusFree: (n: number) => `クレジット残り ${n} 回`,
+  statusFree: (n: number) => `クレジット残り ${n}`,
   statusExhausted: 'クレジットを使い切りました',
   statusPaidPrefix: '保有クレジット：',
-  statusPaidSuffix: ' 回',
+  statusPaidSuffix: '',
   statusPaidNoteFreeUsed: '',
   pickButton: '📁 写真を選択して髪色診断',
   pickCaption: 'JPG / PNG / WebP（最大 8MB）。写真は解析後サーバーから削除されます。',
@@ -91,21 +95,21 @@ const STRINGS_JA = {
   errAnalyze: (m: string) => `診断エラー: ${m}`,
   modalTitleFree: 'クレジット不足',
   modalTitleIp: 'クレジット不足',
-  modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} 回無料`,
-  modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。クレジットは全ツール共通でご利用いただけます。',
-  modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 10 回パックをご購入ください。',
-  modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。クレジットを使い切ったあとに有料パックをご検討ください。`,
-  signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} 回）`,
+  modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} クレジット無料`,
+  modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。クレジットは全ツール共通でご利用いただけます。',
+  modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。',
+  modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 10 回 OR 文字実行 50 回）。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。`,
+  signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} クレジット）`,
   signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
-  pricePackTitle: '10 回パック',
+  pricePackTitle: '150 クレジットパック',
   priceFeatures: [
-    '即時利用、有効期限なし',
-    'パーソナルカラー診断ツールと共通',
+    '画像生成 30 回 OR 文字実行 150 回（混合 OK）',
+    '全ツール・全プロンプト共通で使用可',
     'Stripe 決済（VISA/Master/AMEX/JCB）',
-    'Google サインイン または メールリンクで管理',
+    '即時利用、有効期限なし',
   ],
   purchasing: '処理中…',
-  purchaseButton: `💳 10 回パックを購入（${PRICE_LABEL}）`,
+  purchaseButton: `💳 150 クレジットパックを購入（${PRICE_LABEL}）`,
   stripeNote: '※ 決済機能は Stripe 接入中。しばらくお待ちください。',
   stripeComingTitle: 'Stripe 決済は近日公開',
   signInRequired: '購入にはサインインが必要です',
@@ -114,8 +118,8 @@ const STRINGS_JA = {
   signInBenefit: '別デバイスでも同じメールでサインインすればクレジット同期',
   closeButton: '閉じる',
   purchaseCancelled: '購入がキャンセルされました',
-  purchaseSuccess: '🎉 10 クレジットが追加されました！',
-  recoveredSuccess: (balance: string | null) => `🎉 クレジットを復元しました${balance ? `（残り ${balance} 回）` : ''}`,
+  purchaseSuccess: '🎉 150 クレジットが追加されました！',
+  recoveredSuccess: (balance: string | null) => `🎉 クレジットを復元しました${balance ? `（残り ${balance}）` : ''}`,
   recoverExpired: '復元リンクの有効期限が切れています。フォームから再送信してください。',
   recoverInvalid: '復元リンクが無効です。再度メールをご確認ください。',
   purchaseError: (err: string) => `購入処理エラー: ${err}`,
@@ -134,19 +138,19 @@ const STRINGS_JA = {
   resultBadge: '✨ あなたの髪色診断結果',
   resultLabel: 'あなたに似合う髪色',
   candidatesHeading: '5 つの推薦カラー',
-  candidatesNote: '色をタップ → AI が Before/After を生成します（1 クレジット）',
+  candidatesNote: `色をタップ → AI が Before/After を生成します（${SIM_COST} クレジット）`,
   beforeAfterHeading: 'Before / After プレビュー',
   beforeLabel: 'Before（元の写真）',
   afterLabel: 'After（AI シミュレーション）',
   noPreview: 'プレビュー画像が生成できませんでした。「色をタップ」で再試行できます。',
   simulating: '生成中…（約 15-25 秒）',
   simErrorPrefix: 'シミュレーションエラー: ',
-  simExhausted: 'クレジットが足りません。10 回パックをご購入ください。',
-  pickCandidate: 'この色を試す（1 クレジット）',
-  pickCandidateDisabled: '💳 10 回パックを購入（¥300）',
-  ctaExhaustedTrigger: '→ 続けて使う（10回 ¥300）',
+  simExhausted: 'クレジットが足りません。150 クレジットパックをご購入ください。',
+  pickCandidate: `この色を試す（${SIM_COST} クレジット）`,
+  pickCandidateDisabled: '💳 150 クレジットパックを購入（¥300）',
+  ctaExhaustedTrigger: '→ 続けて使う（150 クレジット ¥300）',
   candidatesUpsellPrefix: 'クレジット切れの場合は ',
-  candidatesUpsellLink: '10 回 ¥300 パック',
+  candidatesUpsellLink: '150 クレジット ¥300 パック',
   candidatesUpsellSuffix: 'で続行できます',
   currentlyShowing: 'プレビュー中：',
   retryNote: '※ プレビューが不自然な場合、写真の照明や髪の見え方によって AI が苦手なケースがあります。別の角度の写真でお試しください。',

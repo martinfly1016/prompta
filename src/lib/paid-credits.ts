@@ -82,10 +82,25 @@ export async function getPaidBalance(eh: string | null): Promise<number> {
 export async function spendOneCredit(
   eh: string,
 ): Promise<{ ok: boolean; balance: number }> {
-  // Race-safe: only update if balance > 0
+  return spendCredits(eh, 1)
+}
+
+/**
+ * Spend N credits atomically. Race-safe: only succeeds if balance >= n.
+ * Used by:
+ *   - hair-color simulate (5 credit, image gen)
+ *   - hair-color analyze / personal-color analyze (1 credit, vision-to-text)
+ *   - prompt-execute (1 credit text / 5 credit image / 10 credit hd)
+ * Refund via `grantCredits(email, n)` if downstream API call fails.
+ */
+export async function spendCredits(
+  eh: string,
+  n: number,
+): Promise<{ ok: boolean; balance: number }> {
+  if (n <= 0) throw new Error(`spendCredits: n must be > 0, got ${n}`)
   const result = await prisma.paidCredits.updateMany({
-    where: { emailHash: eh, balance: { gt: 0 } },
-    data: { balance: { decrement: 1 }, totalUsed: { increment: 1 } },
+    where: { emailHash: eh, balance: { gte: n } },
+    data: { balance: { decrement: n }, totalUsed: { increment: n } },
   })
   if (result.count === 0) return { ok: false, balance: 0 }
   const after = await prisma.paidCredits.findUnique({
@@ -130,7 +145,9 @@ export async function grantCredits(
 //       verified emails, harder to fake than email magic link
 //   (c) Currently <20 registered users — abuse impact is low
 // If abuse detected: add email canonicalization here + IP rate limit.
-export const WELCOME_BONUS_CREDITS = 3
+// Pricing baseline (2026-05-19): 50 welcome credits = 10 images OR 50 text runs
+// OR mixed. Cost per new login = ~10 × $0.04 = $0.40 (if user maxes image use).
+export const WELCOME_BONUS_CREDITS = 50
 
 export async function grantWelcomeBonusIfEligible(
   email: string,

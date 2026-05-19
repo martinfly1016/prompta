@@ -81,8 +81,11 @@ export default async function AccountPage() {
         <p className="text-xs font-medium text-sky-700 uppercase tracking-wider mb-2">保有クレジット</p>
         <div className="flex items-baseline gap-2 mb-3">
           <span className="text-5xl font-bold text-gray-900">{balance}</span>
-          <span className="text-lg text-gray-500">回</span>
+          <span className="text-lg text-gray-500">クレジット</span>
         </div>
+        <p className="text-xs text-gray-500 mb-3">
+          画像生成 1 回 = 5 クレジット ／ 文字実行 1 回 = 1 クレジット
+        </p>
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-5">
           <span>累計獲得 <strong className="text-gray-900">{totalEarned}</strong></span>
           <span>累計使用 <strong className="text-gray-900">{totalUsed}</strong></span>
@@ -105,7 +108,7 @@ export default async function AccountPage() {
           >
             💇 髪色診断で使う
           </Link>
-          {balance < 5 && (
+          {balance < 25 && (
             <Link
               href="/tools/personal-color-analysis#purchase"
               className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-colors"
