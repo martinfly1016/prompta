@@ -15,6 +15,7 @@ import { ShareButtons } from '@/components/ui/ShareButtons'
 import { EmbedButton } from '@/components/ui/EmbedButton'
 import { PromptParamsPanel } from '@/components/prompt/params/PromptParamsPanel'
 import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
+import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
 
 export const revalidate = 60
 
@@ -117,6 +118,33 @@ export default async function PromptDetailPage({ params }: Props) {
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">{prompt.title}</h1>
             <p className="text-gray-600 leading-relaxed">{prompt.description}</p>
+            {(() => {
+              const verified = getVerifiedTools(prompt.slug)
+              if (verified.length === 0) return null
+              return (
+                <div className="mt-4 flex flex-wrap items-center gap-2 rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2">
+                  <span className="text-sm font-medium text-emerald-800">
+                    🎨 動作確認済み:
+                  </span>
+                  {verified.map((toolSlug) => {
+                    const meta = TOOL_BADGE_META[toolSlug]
+                    return (
+                      <Link
+                        key={toolSlug}
+                        href={meta.href}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium bg-white text-emerald-700 border border-emerald-200 rounded-full hover:bg-emerald-100 hover:border-emerald-300 transition-colors"
+                      >
+                        <span>{meta.icon}</span>
+                        <span>{meta.label}</span>
+                      </Link>
+                    )
+                  })}
+                  <span className="text-xs text-emerald-600 ml-1">
+                    どのツールにコピペしても OK
+                  </span>
+                </div>
+              )
+            })()}
             <div className="flex items-center gap-4 mt-4 text-sm text-gray-500">
               <span className="flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>

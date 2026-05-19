@@ -152,6 +152,7 @@ async function compareOne(slug: string, content: string): Promise<void> {
   console.log(`Testing ${prompts.length} prompts`)
 
   for (const pr of prompts) {
+    if (!pr.slug) continue
     await compareOne(pr.slug, pr.content)
   }
 
