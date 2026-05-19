@@ -296,6 +296,43 @@ async function groupC() {
       `status=${r.status} balance=${balance}`,
     )
   }
+
+  // C3 — provider error → 500 + refund (balance + totalEarned + totalUsed
+  // all restored). Uses E2E force-error marker (ENABLE_TEST_AUTH-gated).
+  await seedCredits(TEST_EMAIL_IMG, 20)
+  const c3cookies = await loginAs(TEST_EMAIL_IMG)
+  {
+    // Snapshot BEFORE the failed call
+    const before = await http('POST', '/api/test/credits-snapshot', {
+      json: { email: TEST_EMAIL_IMG },
+    })
+    const beforeBal = before.body?.balance
+    const beforeEarn = before.body?.totalEarned
+    const beforeUsed = before.body?.totalUsed
+
+    const r = await http('POST', '/api/prompt/execute', {
+      cookies: c3cookies,
+      json: {
+        promptSlug: TEST_SLUG_IMG,
+        providerId: 'gemini-image',
+        content: 'black and white coloring page __E2E_FORCE_PROVIDER_ERROR__ test',
+      },
+    })
+
+    // Snapshot AFTER — should match BEFORE exactly (no net change)
+    const after = await http('POST', '/api/test/credits-snapshot', {
+      json: { email: TEST_EMAIL_IMG },
+    })
+    const balOk = after.body?.balance === beforeBal
+    const earnOk = after.body?.totalEarned === beforeEarn
+    const usedOk = after.body?.totalUsed === beforeUsed
+    record(
+      'C3',
+      'provider error → 500 + balance/totalEarned/totalUsed unchanged',
+      r.status === 500 && r.body?.error === 'provider_error' && balOk && earnOk && usedOk,
+      `status=${r.status} bal ${beforeBal}→${after.body?.balance} earn ${beforeEarn}→${after.body?.totalEarned} used ${beforeUsed}→${after.body?.totalUsed}`,
+    )
+  }
 }
 
 // ============================================================

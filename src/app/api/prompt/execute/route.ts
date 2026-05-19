@@ -164,6 +164,15 @@ export async function POST(req: NextRequest) {
   // 6. Provider call (refund on failure)
   let result: { mode: 'text' | 'image'; text?: string; imageUrl?: string }
   try {
+    // Test-only failure injection: lets the E2E suite verify the refund
+    // path end-to-end without depending on flaky safety-filter triggers.
+    // Hard-gated by ENABLE_TEST_AUTH — never fires in prod.
+    if (
+      process.env.ENABLE_TEST_AUTH === 'true' &&
+      body.content.includes('__E2E_FORCE_PROVIDER_ERROR__')
+    ) {
+      throw new Error('E2E_FORCE_PROVIDER_ERROR')
+    }
     const out = await provider.call({
       prompt: body.content,
       negativePrompt: body.negativePrompt,
