@@ -209,7 +209,14 @@ export async function POST(req: NextRequest) {
   // 7. Log usage (for daily-report + /account history)
   await prisma.toolUsage
     .create({
-      data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
+      data: {
+        anonId,
+        ipHash,
+        tool: TOOL,
+        type: 'paid',
+        emailHash: eh,
+        creditsConsumed: cost,
+      },
     })
     .catch((e) => console.error('[prompt-execute] toolUsage log failed:', e.message))
 

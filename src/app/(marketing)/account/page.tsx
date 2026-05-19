@@ -225,7 +225,7 @@ export default async function AccountPage() {
                       <div className="text-xs text-gray-500">{fmtDate(u.createdAt)}</div>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">-1 クレジット</span>
+                  <span className="text-xs text-gray-500">-{u.creditsConsumed} クレジット</span>
                 </div>
               )
             })}

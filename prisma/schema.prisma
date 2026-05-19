@@ -252,13 +252,16 @@ model Guide {
 // ==================== Tool Usage Quota ====================
 
 model ToolUsage {
-  id          String   @id @default(cuid())
-  anonId      String
-  ipHash      String
-  tool        String
-  type        String   @default("free")
-  emailHash   String?  // set when type="paid"
-  createdAt   DateTime @default(now())
+  id              String   @id @default(cuid())
+  anonId          String
+  ipHash          String
+  tool            String
+  type            String   @default("free")
+  emailHash       String?  // set when type="paid"
+  // Credits actually consumed for this row (1 for text/vision, 5 for image
+  // gen, 10 for HD image). Default 1 keeps existing rows backward-compatible.
+  creditsConsumed Int      @default(1)
+  createdAt       DateTime @default(now())
 
   @@index([anonId, tool, createdAt])
   @@index([ipHash, tool, createdAt])

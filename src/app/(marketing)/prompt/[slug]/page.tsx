@@ -5,18 +5,14 @@ import { notFound } from 'next/navigation'
 import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
 import { getPromptBySlug, getPromptSlugs, getRelatedPrompts, getApprovedTagSlugs } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
-import { CopyButton } from '@/components/ui/CopyButton'
-import { TryInChatGPTButton } from '@/components/ui/TryInChatGPTButton'
-import { TryInGeminiButton } from '@/components/ui/TryInGeminiButton'
 import { PromptViewTracker } from '@/components/prompt/PromptViewTracker'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generatePromptSchema } from '@/lib/schema'
 import { ShareButtons } from '@/components/ui/ShareButtons'
 import { EmbedButton } from '@/components/ui/EmbedButton'
-import { PromptParamsPanel } from '@/components/prompt/params/PromptParamsPanel'
 import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
-import { PromptExecutor } from '@/components/prompt/PromptExecutor'
+import { PromptInteractive } from '@/components/prompt/PromptInteractive'
 
 export const revalidate = 60
 
@@ -216,85 +212,21 @@ export default async function PromptDetailPage({ params }: Props) {
             </section>
           )}
 
-          {/* Prompt Content */}
-          <section className="mb-8">
-            {paramsConfig ? (
-              <PromptParamsPanel
-                promptId={prompt.id}
-                slug={prompt.slug}
-                category={prompt.categorySlug}
-                tool={prompt.toolSlug}
-                content={prompt.content}
-                params={paramsConfig.params}
-              />
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-lg font-bold text-gray-900">プロンプト</h2>
-                  <CopyButton
-                    text={prompt.content}
-                    variant="compact"
-                    promptId={prompt.id}
-                    slug={prompt.slug}
-                    category={prompt.categorySlug}
-                    tool={prompt.toolSlug}
-                  />
-                </div>
-                <div className="bg-gray-900 text-gray-100 rounded-xl p-6 font-mono text-sm leading-relaxed whitespace-pre-wrap">{prompt.content}</div>
-              </>
-            )}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-              {!paramsConfig && (
-                <CopyButton
-                  text={prompt.content}
-                  promptId={prompt.id}
-                  slug={prompt.slug}
-                  category={prompt.categorySlug}
-                  tool={prompt.toolSlug}
-                />
-              )}
-              {isTextPrompt && (
-                <TryInChatGPTButton
-                  content={prompt.content}
-                  promptId={prompt.id}
-                  slug={prompt.slug}
-                  category={prompt.categorySlug}
-                  tool={prompt.toolSlug}
-                />
-              )}
-              {isPhotoEdit && (
-                <TryInGeminiButton
-                  content={prompt.content}
-                  promptId={prompt.id}
-                  slug={prompt.slug}
-                  category={prompt.categorySlug}
-                  tool={prompt.toolSlug}
-                />
-              )}
-            </div>
-            {isTextPrompt && (
-              <p className="mt-3 text-xs text-gray-500 text-center">
-                {prompt.content.length <= 2000
-                  ? '「ChatGPTで試す」ボタンを押すと、入力欄にプロンプトが自動入力された状態でChatGPTが開きます。'
-                  : '長いプロンプトのため、ボタンを押すとプロンプトがクリップボードにコピーされ、ChatGPTが新しいタブで開きます。入力欄に貼り付けてご利用ください。'}
-              </p>
-            )}
-            {isPhotoEdit && (
-              <p className="mt-3 text-xs text-gray-500 text-center">
-                「Geminiで試す」ボタンを押すとプロンプトがコピーされ、Gemini が新しいタブで開きます。編集したい写真をアップロードしてプロンプトを貼り付けてください。
-              </p>
-            )}
-          </section>
-
-          {/* In-site execution — Gemini / ChatGPT / text dispatch */}
-          <PromptExecutor
+          {/* Prompt Content + Customize panel + In-site execution
+              (PromptInteractive lifts state up so customized content
+              flows into PromptExecutor + out-bound ChatGPT/Gemini buttons) */}
+          <PromptInteractive
             prompt={{
+              id: prompt.id,
               slug: prompt.slug,
               title: prompt.title,
               content: prompt.content,
               categorySlug: prompt.categorySlug,
               toolSlug: prompt.toolSlug,
             }}
+            paramsConfig={paramsConfig}
+            isTextPrompt={isTextPrompt}
+            isPhotoEdit={isPhotoEdit}
           />
 
           {/* Usage */}

@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
   }
 
   const usage = await prisma.toolUsage.create({
-    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
+    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh, creditsConsumed: 5 },
     select: { id: true },
   })
 

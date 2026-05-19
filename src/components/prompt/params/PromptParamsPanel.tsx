@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ParamConfig } from '@/lib/prompt-params/types'
 import { defaultValues } from '@/lib/prompt-params/interpolate'
 import { CopyButton } from '@/components/ui/CopyButton'
@@ -15,6 +15,10 @@ interface Props {
   tool?: string | null
   content: string
   params: ParamConfig[]
+  /** Optional callback fired when rendered content changes — lets a parent
+   *  wrapper (e.g. PromptInteractive) feed the interpolated prompt to
+   *  PromptExecutor's execute call. */
+  onRenderedChange?: (rendered: string) => void
 }
 
 type Segment = { text: string; paramId?: string }
@@ -38,7 +42,7 @@ function buildSegments(content: string, params: ParamConfig[]): Segment[] {
   return segs
 }
 
-export function PromptParamsPanel({ promptId, slug, category, tool, content, params }: Props) {
+export function PromptParamsPanel({ promptId, slug, category, tool, content, params, onRenderedChange }: Props) {
   const segments = useMemo(() => buildSegments(content, params), [content, params])
   const [values, setValues] = useState(() => defaultValues(params))
 
@@ -49,6 +53,10 @@ export function PromptParamsPanel({ promptId, slug, category, tool, content, par
         .join(''),
     [segments, values],
   )
+
+  useEffect(() => {
+    onRenderedChange?.(rendered)
+  }, [rendered, onRenderedChange])
 
   const dirty = params.some(p => values[p.id] !== p.match)
 
