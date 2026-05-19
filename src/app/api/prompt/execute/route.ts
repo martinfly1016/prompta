@@ -225,6 +225,29 @@ export async function POST(req: NextRequest) {
     })
     .catch((e) => console.error('[prompt-execute] toolUsage log failed:', e.message))
 
+  // 7b. Persist image output to /account gallery (image mode only; text
+  // outputs are short-lived by design and don't need a gallery row).
+  if (result.mode === 'image' && result.imageUrl) {
+    await prisma.generationOutput
+      .create({
+        data: {
+          emailHash: eh,
+          tool: TOOL,
+          promptSlug: body.promptSlug,
+          outputBlobUrl: result.imageUrl,
+          creditsUsed: cost,
+          status: 'completed',
+          outputJson: JSON.stringify({
+            providerId: body.providerId,
+            contentSnippet: body.content.slice(0, 200),
+          }),
+        },
+      })
+      .catch((e) =>
+        console.error('[prompt-execute] generation log failed:', e.message),
+      )
+  }
+
   // 8. Cache (image only)
   if (result.mode === 'image' && !body.sourceImage) {
     cacheSet(cacheKey, result, spend.balance)

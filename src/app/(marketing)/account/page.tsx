@@ -57,8 +57,8 @@ export default async function AccountPage() {
     prisma.generationOutput.findMany({
       where: { emailHash: eh, outputBlobUrl: { not: null } },
       orderBy: { createdAt: 'desc' },
-      take: 12,
-      select: { id: true, tool: true, outputBlobUrl: true, createdAt: true, outputJson: true },
+      take: 24,
+      select: { id: true, tool: true, promptSlug: true, outputBlobUrl: true, createdAt: true, outputJson: true },
     }),
   ])
 
@@ -167,34 +167,54 @@ export default async function AccountPage() {
       {/* Generation gallery (Phase 2) */}
       {generations.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-lg font-bold text-gray-900 mb-3">生成した画像</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-3">生成した画像（最近 24 件）</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {generations.map(g => (
-              <a
-                key={g.id}
-                href={g.outputBlobUrl!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block relative aspect-square overflow-hidden rounded-xl bg-gray-100 border border-gray-200 hover:border-sky-300 transition-all"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={g.outputBlobUrl!}
-                  alt={`${g.tool} 生成画像`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white text-[10px] p-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">{TOOL_LABELS[g.tool]?.icon ?? '🔧'} {TOOL_LABELS[g.tool]?.label ?? g.tool}</span>
-                    <span className="opacity-80">{new Date(g.createdAt).toLocaleDateString('ja-JP')}</span>
+            {generations.map(g => {
+              const tool = TOOL_LABELS[g.tool]
+              return (
+                <div
+                  key={g.id}
+                  className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 border border-gray-200 hover:border-sky-300 transition-all"
+                >
+                  <a
+                    href={g.outputBlobUrl!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={g.outputBlobUrl!}
+                      alt={`${g.tool} 生成画像`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                  </a>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white text-[10px] p-2 pointer-events-none">
+                    <div className="flex items-center justify-between mb-0.5">
+                      <span className="font-medium truncate">
+                        {tool?.icon ?? '🔧'} {tool?.label ?? g.tool}
+                      </span>
+                      <span className="opacity-80 shrink-0 ml-1">
+                        {new Date(g.createdAt).toLocaleDateString('ja-JP')}
+                      </span>
+                    </div>
+                    {g.promptSlug && (
+                      <Link
+                        href={`/prompt/${g.promptSlug}`}
+                        className="block text-[10px] opacity-90 truncate underline-offset-2 hover:underline pointer-events-auto"
+                        title={g.promptSlug}
+                      >
+                        → {g.promptSlug}
+                      </Link>
+                    )}
                   </div>
                 </div>
-              </a>
-            ))}
+              )
+            })}
           </div>
           <p className="mt-2 text-xs text-gray-400">
-            ※ 画像クリックで原寸大表示。2026-05-12 以降の生成画像のみ表示されます。
+            ※ 画像クリックで原寸大表示。プロンプト名クリックで生成元へ。生成画像は 24 時間で自動削除される予定（現在は保持中）。
           </p>
         </section>
       )}
