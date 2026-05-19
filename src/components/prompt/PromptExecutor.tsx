@@ -109,6 +109,41 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
+  /**
+   * Force-download the result image. The `download` attribute on a plain
+   * <a> is ignored cross-origin (Vercel Blob URLs are on a different host),
+   * which causes the browser to navigate same-tab — losing the executor
+   * state. Workaround: fetch the image client-side into a blob: URL, then
+   * trigger download via an in-memory anchor.
+   *
+   * Fallback: if fetch fails (e.g. CORS), open the image in a new tab so
+   * the user can long-press / right-click to save without losing the page.
+   */
+  const [downloading, setDownloading] = useState(false)
+  async function downloadResultImage() {
+    if (!result || result.mode !== 'image' || !result.imageUrl) return
+    setDownloading(true)
+    try {
+      const res = await fetch(result.imageUrl)
+      if (!res.ok) throw new Error(`fetch ${res.status}`)
+      const blob = await res.blob()
+      const blobUrl = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = blobUrl
+      a.download = `prompta-${prompt.slug}-${Date.now()}.png`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(blobUrl)
+    } catch (e) {
+      // Fallback: open in new tab so user can manually save without
+      // losing the current page state.
+      window.open(result.imageUrl, '_blank', 'noopener,noreferrer')
+    } finally {
+      setDownloading(false)
+    }
+  }
+
   async function execute() {
     setError(null)
     setResult(null)
@@ -346,15 +381,24 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
                 className="w-full rounded-lg border border-gray-200"
               />
               <p className="mt-2 text-xs text-gray-500">
-                ※ 生成画像は 24 時間後に削除されます。必要な場合は早めにダウンロードしてください。
+                ※ 生成画像は <Link href="/account" className="text-sky-600 hover:underline">/account</Link> にも自動保存されます。いつでもダウンロードできます。
               </p>
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={downloadResultImage}
+                  disabled={downloading}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+                >
+                  {downloading ? '⬇️ ダウンロード中…' : '⬇️ ダウンロード'}
+                </button>
                 <a
                   href={result.imageUrl}
-                  download
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white text-gray-700 text-sm font-medium border border-gray-200 hover:border-sky-300 transition-colors"
                 >
-                  ⬇️ ダウンロード
+                  🔗 別タブで開く
                 </a>
                 <button
                   type="button"
