@@ -62,10 +62,9 @@ interface AnalyzeResponse {
 }
 
 // Phase 0 (2026-05-11) — credit-only. Pricing rebased 5/19: 150 credit / ¥300.
-// Welcome bonus = 50 credit on first login (= 10 hair-color simulations OR
-// 50 text prompt executions, mixed OK).
-// Image gen = 5 credit / image; text/vision = 1 credit / call.
-const WELCOME_CREDITS = 50
+// Welcome bonus = 15 credit on first login (= 3 image runs OR 15 text runs).
+// Matches the original "3 free trials" UX under the new 5-credit-per-image pricing.
+const WELCOME_CREDITS = 15
 const PRICE_LABEL = '¥300 / 150 クレジット'
 const SIM_COST = 5  // hair-color simulate = image gen = 5 credit
 const MAX_BYTES = 8 * 1024 * 1024
@@ -98,7 +97,7 @@ const STRINGS_JA = {
   modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} クレジット無料`,
   modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。クレジットは全ツール共通でご利用いただけます。',
   modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。',
-  modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 10 回 OR 文字実行 50 回）。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。`,
+  modalDescLogin: `初回ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 3 回 OR 文字実行 15 回）。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。`,
   signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} クレジット）`,
   signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
   pricePackTitle: '150 クレジットパック',

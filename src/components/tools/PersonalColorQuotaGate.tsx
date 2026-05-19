@@ -50,9 +50,9 @@ interface AnalysisResult {
 }
 
 // Phase 0 (2026-05-11) — credit-only. Pricing rebased 5/19: 150 credit / ¥300.
-// Welcome bonus = 50 credit on first login (= 10 image gens OR 50 text runs).
-// Image gen = 5 credit / call; text/vision = 1 credit / call.
-const WELCOME_CREDITS = 50
+// Welcome bonus = 15 credit on first login (= 3 image gens OR 15 text runs).
+// Matches the original "3 free trials" UX under the new 5-credit pricing.
+const WELCOME_CREDITS = 15
 const PRICE_LABEL = '¥300 / 150 クレジット'
 const PRICE_LABEL_EN = '¥300 / 150 credits'
 const MAX_BYTES = 8 * 1024 * 1024
@@ -91,7 +91,7 @@ const STRINGS = {
     modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} クレジット無料`,
     modalDescFree: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。クレジットは全ツール共通でご利用いただけます。',
     modalDescIp: 'クレジットを使い切りました。続けてご利用いただく場合は 150 クレジットパック ¥300 をご購入ください。',
-    modalDescLogin: `初回 Google ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 10 回 OR 文字実行 50 回）。即時利用可能・別ツールでも共通でお使いいただけます。`,
+    modalDescLogin: `初回ログインで ${WELCOME_CREDITS} クレジット無料プレゼント（=画像生成 3 回 OR 文字実行 15 回）。即時利用可能・別ツールでも共通でお使いいただけます。`,
     signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} クレジット）`,
     signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
     pricePackTitle: '150 クレジットパック',
@@ -167,7 +167,7 @@ const STRINGS = {
     modalTitleLogin: `Sign in for ${WELCOME_CREDITS} free credits`,
     modalDescFree: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going — shared across all tools and prompts.',
     modalDescIp: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going.',
-    modalDescLogin: `Sign in with Google to get ${WELCOME_CREDITS} free credits — that's 10 image runs OR 50 text runs across all our AI tools and 180+ prompts.`,
+    modalDescLogin: `Sign in to get ${WELCOME_CREDITS} free credits — that's 3 image runs OR 15 text runs across all our AI tools and 180+ prompts.`,
     signInFreeButton: `🔐 Sign in with Google (${WELCOME_CREDITS} free credits)`,
     signInFreeBenefit: 'Email is used to save results and sync across devices. No spam.',
     pricePackTitle: '150-credit pack',

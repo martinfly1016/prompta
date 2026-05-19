@@ -145,9 +145,10 @@ export async function grantCredits(
 //       verified emails, harder to fake than email magic link
 //   (c) Currently <20 registered users — abuse impact is low
 // If abuse detected: add email canonicalization here + IP rate limit.
-// Pricing baseline (2026-05-19): 50 welcome credits = 10 images OR 50 text runs
-// OR mixed. Cost per new login = ~10 × $0.04 = $0.40 (if user maxes image use).
-export const WELCOME_BONUS_CREDITS = 50
+// Pricing baseline (2026-05-19): 15 welcome credits = 3 images OR 15 text runs
+// OR mixed. Matches the previous "3 free image trials" UX under the new
+// 5-credit-per-image pricing. Cost per new login = ~3 × $0.04 = $0.12 max.
+export const WELCOME_BONUS_CREDITS = 15
 
 export async function grantWelcomeBonusIfEligible(
   email: string,

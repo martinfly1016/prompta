@@ -253,7 +253,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
 
       {!isSignedIn && (
         <p className="mt-3 text-xs text-gray-500">
-          ※ 実行にはサインインが必要です（Google または メールリンク、初回 50 クレジット無料プレゼント）
+          ※ 実行にはサインインが必要です（Google または メールリンク、初回 15 クレジット無料プレゼント）
         </p>
       )}
 
