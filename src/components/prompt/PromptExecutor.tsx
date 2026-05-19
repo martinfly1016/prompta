@@ -97,7 +97,9 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
     setResult(null)
 
     if (!isSignedIn) {
-      await signIn('google', { callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined })
+      // Let user pick provider (Google OAuth or email magic link) via the
+      // custom sign-in page configured in NextAuth (`pages.signIn`).
+      await signIn(undefined, { callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined })
       return
     }
 
@@ -128,7 +130,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         if (j.error === 'credits_exhausted') {
           setError('クレジットが足りません。150 クレジットパック ¥300 をご購入ください。')
         } else if (j.error === 'login_required') {
-          await signIn('google', { callbackUrl: window.location.href })
+          await signIn(undefined, { callbackUrl: window.location.href })
         } else if (j.error === 'rate_limited') {
           setError('リクエストが多すぎます。少し時間を空けてから再試行してください。')
         } else if (j.error === 'provider_error') {
@@ -251,7 +253,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
 
       {!isSignedIn && (
         <p className="mt-3 text-xs text-gray-500">
-          ※ 実行には Google サインインが必要です（初回 50 クレジット無料プレゼント）
+          ※ 実行にはサインインが必要です（Google または メールリンク、初回 50 クレジット無料プレゼント）
         </p>
       )}
 
