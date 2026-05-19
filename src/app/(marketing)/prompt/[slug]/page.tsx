@@ -16,6 +16,7 @@ import { EmbedButton } from '@/components/ui/EmbedButton'
 import { PromptParamsPanel } from '@/components/prompt/params/PromptParamsPanel'
 import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
+import { PromptExecutor } from '@/components/prompt/PromptExecutor'
 
 export const revalidate = 60
 
@@ -284,6 +285,17 @@ export default async function PromptDetailPage({ params }: Props) {
               </p>
             )}
           </section>
+
+          {/* In-site execution — Gemini / ChatGPT / text dispatch */}
+          <PromptExecutor
+            prompt={{
+              slug: prompt.slug,
+              title: prompt.title,
+              content: prompt.content,
+              categorySlug: prompt.categorySlug,
+              toolSlug: prompt.toolSlug,
+            }}
+          />
 
           {/* Usage */}
           <section className="mb-8 p-6 bg-sky-50 rounded-xl">

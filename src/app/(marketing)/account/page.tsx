@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 const TOOL_LABELS: Record<string, { icon: string; label: string; href: string }> = {
   'personal-color': { icon: '🎨', label: 'パーソナルカラー診断', href: '/tools/personal-color-analysis' },
   'hair-color': { icon: '💇', label: '似合う髪色診断', href: '/tools/hair-color-diagnosis' },
+  'prompt-execute': { icon: '🚀', label: 'プロンプト実行', href: '/prompts' },
 }
 
 function fmtDate(d: Date | null | undefined): string {
