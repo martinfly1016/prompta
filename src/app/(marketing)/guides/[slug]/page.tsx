@@ -1636,6 +1636,239 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       { q: 'Gemini と Stable Diffusion / Midjourney の使い分けは？', a: 'Gemini 2.5 Flash Image（Nano Banana）は**既存写真の編集**（背景置換・髪色変更・着せ替え）に特に強く、ChatGPT 画像生成と並ぶトップクラス。Stable Diffusion は**ゼロから画像を生成**する用途で、ネガティブプロンプトや ControlNet で細かい制御が効きます。Midjourney は**芸術性・スタイル統一**が突出していて、コンセプトアートやファッション撮影風の画像に最適。用途別に使い分けるのが効率的で、当サイトでも [/tools/gemini](/tools/gemini) と [/tools/stable-diffusion](/tools/stable-diffusion) [/tools/midjourney](/tools/midjourney) の各専用プロンプト集を公開しています。' },
     ],
   },
+
+  'ai-coloring-page-prompt': {
+    sections: [
+      {
+        title: 'AI で塗り絵を作るとは — Stable Diffusion / DALL-E / Midjourney で線画ぬりえを無料生成',
+        content: `**AI 塗り絵プロンプト**とは、Stable Diffusion・DALL-E 3・Midjourney などの AI 画像生成ツールに「黒い線だけで描かれた白黒の塗り絵（線画）」を出力させる呪文（指示文）のことです。市販の塗り絵本やフリー素材サイトと違い、**好きなテーマ・好きな難易度で無料でオリジナル塗り絵を作成**でき、印刷してそのまま塗り絵として使えます。
+
+**こんな人におすすめ**:
+
+- 子供の習い事・自宅学習用に好きなキャラの塗り絵を作りたい保護者
+- 大人の塗り絵（コロリアージュ）で癒し・脳トレを楽しみたい方
+- 高齢者介護・リハビリの現場でレクリエーション素材を必要としているスタッフ
+- 線画を出発点にデジタル彩色（クリスタ・Procreate）を学びたいイラスト学習者
+
+**AI 塗り絵の最大のメリット**は (1) **無料**（API 無料枠 + Stable Diffusion ローカル実行）、(2) **オリジナル**（市販品にない自由なテーマ）、(3) **難易度調整**（thick outline で簡単 / fine detail で本格）。一方デメリットは (a) 著作権リスクのあるキャラ（ポケモン・ディズニーなど）の生成は推奨されず、(b) 印刷向け解像度設定（300 DPI / A4 サイズ）に少しコツが必要な点です。本ガイドではこの 2 点を含め、すぐ使えるテンプレートと注意点を実例つきで解説します。`,
+      },
+      {
+        title: '塗り絵プロンプトの基本テンプレート — どのツールでもこの型',
+        content: `Stable Diffusion / DALL-E / Midjourney すべてで共通の「塗り絵専用プロンプト」の基本構造です。コピペして \`[subject]\` の部分だけ書き換えれば、即使えます。
+
+**ベーステンプレート（英語推奨 — 日本語より精度が高い）**:
+
+\`\`\`
+black and white coloring page of [subject], clean line art, printable, thick outline, simple composition, white background, no shading, no grayscale, suitable for [audience]
+\`\`\`
+
+**Negative prompt（除外指定）**:
+
+\`\`\`
+color, grayscale, shadow, gradient, realistic photo, complex background, text, watermark, logo, copyrighted character, anime character, mascot
+\`\`\`
+
+**重要キーワード解説**:
+
+- \`black and white coloring page\` — 塗り絵であることを明示。これがないと普通のイラストになる
+- \`clean line art\` — はっきりした線、塗り絵に必須
+- \`thick outline\` — 太い線（子供向け・高齢者向けに最適）。本格派は \`fine detail line art\` に置換
+- \`no shading, no grayscale\` — 灰色の陰影を排除（塗り絵では塗る人が陰影を付けるので不要）
+- \`white background\` — 余計な背景を排除し、印刷向けに最適化
+- \`suitable for [audience]\` — \`adults\` / \`children\` / \`seniors\` / \`beginners\` で対象を明示
+
+**具体例**:
+
+\`\`\`
+black and white coloring page of beautiful cherry blossoms in a Japanese garden, clean line art, printable, thick outline, simple composition, white background, no shading, no grayscale, suitable for adults
+\`\`\`
+
+この型に当てはめれば、花・動物・風景・マンダラ・幾何学模様など何でも塗り絵化できます。`,
+      },
+      {
+        title: 'テーマ別プロンプト例 30 — 大人向け・子供向け・高齢者向け',
+        content: `**大人向け塗り絵（コロリアージュ・治癒系）— 細かい線で集中力 UP**:
+
+1. \`black and white coloring page of intricate mandala pattern with floral motifs, fine line art, printable, complex symmetry, white background, no shading, suitable for adults\`
+2. \`black and white coloring page of detailed botanical illustration of roses and leaves, fine line art, printable, vintage style, white background, no shading, suitable for adults\`
+3. \`black and white coloring page of a serene Japanese zen garden with stones and bamboo, clean line art, printable, simple composition, white background, no shading, suitable for adults\`
+4. \`black and white coloring page of art nouveau style peacock with elaborate feathers, fine line art, printable, decorative pattern, white background, no shading, suitable for adults\`
+5. \`black and white coloring page of forest animals — deer, owl, fox — in a magical woodland, clean line art, printable, whimsical, white background, no shading, suitable for adults\`
+
+**子供向け塗り絵 — 太い線・シンプル**:
+
+6. \`black and white coloring page of a friendly cartoon dinosaur in a jungle, clean line art, printable, thick outline, simple composition, white background, no shading, suitable for children\`
+7. \`black and white coloring page of cute sea animals — fish, octopus, turtle, starfish — in the ocean, clean line art, printable, thick outline, white background, no shading, suitable for children\`
+8. \`black and white coloring page of a shinkansen bullet train on a track with mountains, clean line art, printable, thick outline, white background, no shading, suitable for children\`
+9. \`black and white coloring page of various fruits — apple, banana, strawberry, grape — on a table, clean line art, printable, thick outline, white background, no shading, suitable for children\`
+10. \`black and white coloring page of seasonal events — Christmas tree with presents — clean line art, printable, thick outline, white background, no shading, suitable for children\`
+
+**高齢者向け塗り絵 — 大きな線・見やすい構図**:
+
+11. \`black and white coloring page of large simple flowers — sunflower, tulip, daisy — with thick outlines, clean line art, printable, very simple composition, white background, no shading, suitable for seniors\`
+12. \`black and white coloring page of Showa era Japanese countryside landscape with thatched roof house, clean line art, printable, thick outline, white background, no shading, suitable for seniors\`
+13. \`black and white coloring page of seasonal Japanese flowers — sakura in spring, hydrangea in summer — with very thick outline, clean line art, printable, white background, no shading, suitable for seniors\`
+14. \`black and white coloring page of large simple animal — cat, dog, rabbit — with thick outline, clean line art, printable, very simple composition, white background, no shading, suitable for seniors\`
+15. \`black and white coloring page of traditional Japanese pattern with bold thick lines for nursing care recreation, clean line art, printable, very simple, white background, no shading, suitable for seniors\`
+
+**マンダラ・幾何学模様**:
+
+16. \`black and white coloring page of geometric mandala with concentric circles and lotus petals, fine line art, printable, perfect symmetry, white background, no shading\`
+17. \`black and white coloring page of Scandinavian folk pattern, clean line art, printable, decorative tiles, white background, no shading\`
+
+**花・植物専門**:
+
+18. \`black and white coloring page of cherry blossom branch with petals falling, clean line art, printable, Japanese style, white background, no shading\`
+19. \`black and white coloring page of rose bouquet with leaves and ribbon, fine line art, printable, vintage style, white background, no shading\`
+20. \`black and white coloring page of botanical line art of various herbs and plants, fine line art, printable, scientific illustration style, white background, no shading\`
+
+**動物専門**:
+
+21. \`black and white coloring page of woodland animals in a meadow, clean line art, printable, white background, no shading\`
+22. \`black and white coloring page of cat sitting by a window, clean line art, printable, cozy scene, white background, no shading\`
+
+**風景・建物**:
+
+23. \`black and white coloring page of European old town street with cafe and lamp post, clean line art, printable, white background, no shading\`
+24. \`black and white coloring page of Mt. Fuji with cherry trees in foreground, clean line art, printable, Japanese landscape, white background, no shading\`
+
+**乗り物・機械（子供向け）**:
+
+25. \`black and white coloring page of various vehicles — car, bus, truck, ambulance — on a road, clean line art, printable, thick outline, white background, no shading, suitable for children\`
+
+**昆虫・自然**:
+
+26. \`black and white coloring page of butterflies and dragonflies in a garden, clean line art, printable, white background, no shading\`
+
+**ケーキ・スイーツ（女の子向け）**:
+
+27. \`black and white coloring page of decorated cakes, donuts, macarons on a stand, clean line art, printable, white background, no shading\`
+
+**カフェ風イラスト**:
+
+28. \`black and white coloring page of cozy cafe interior with coffee cup and pastries, clean line art, printable, white background, no shading, suitable for adults\`
+
+**初心者向け超シンプル**:
+
+29. \`black and white coloring page of single large flower with very thick outline, simple geometric petals, printable, white background, no shading, suitable for beginners\`
+
+**印刷専用最終形**:
+
+30. \`black and white coloring page of [your subject], clean line art, A4 portrait orientation, 300 DPI quality, thick outline, simple composition, white background, no shading, no grayscale, suitable for printing\``,
+      },
+      {
+        title: 'Stable Diffusion・DALL-E・Midjourney — ツール別の使い分け',
+        content: `塗り絵プロンプトはどの AI 画像生成ツールでも基本構造は同じですが、**それぞれ得意な領域が異なる**ため、用途に応じた使い分けが効率的です。
+
+**Stable Diffusion**（[/tools/stable-diffusion](/tools/stable-diffusion)）—**推奨度: ★★★**:
+
+- **メリット**: ローカル実行で完全無料、無制限生成、Negative prompt の効きが強い（\`color\` \`grayscale\` を確実に除外）
+- **デメリット**: セットアップが必要、GPU が必要
+- **おすすめモデル**: \`Anything V5\` \`Counterfeit\` などのアニメ系、\`Realistic Vision\` などのリアル系。**塗り絵 LoRA**（Coloring Book LoRA, Line Art LoRA）を追加すると精度が劇的に向上
+- **設定**: Sampler は \`DPM++ 2M Karras\`、Steps 25-30、CFG Scale 7-9 が標準
+
+**DALL-E 3**（[/tools/dall-e](/tools/dall-e)）— **推奨度: ★★★**:
+
+- **メリット**: ChatGPT Plus / Bing Image Creator で簡単アクセス、自然文プロンプトの理解が最高クラス、線がきれい
+- **デメリット**: 1 日の生成枚数制限、Negative prompt がない（プロンプトに「no shading」と明示）
+- **使い方**: ChatGPT Plus に上記テンプレートをそのまま投げるだけ。「もう少し線を太く」のような追加指示も自然文で OK
+
+**Midjourney**（[/tools/midjourney](/tools/midjourney)）— **推奨度: ★★**:
+
+- **メリット**: アート性・スタイル統一が突出、コロリアージュ風の繊細な線画が美しい
+- **デメリット**: 有料（月 $10〜）、Discord 経由、「黒線のみ」を守らない傾向あり
+- **使い方**: プロンプト末尾に \`--no color, shading, grayscale --ar 4:3\` を追加。バージョンは \`--v 6\` 推奨
+
+**Gemini 2.5 Flash Image（Nano Banana）**（[/tools/gemini](/tools/gemini)）— **推奨度: ★**:
+
+- 2026 年 5 月時点で塗り絵専用には**最適化されていない**。線画よりも自然なイラスト寄り出力になる傾向あり。既存写真からの線画変換（写真→塗り絵）には使えるが、ゼロから生成する用途では SD / DALL-E が優位
+
+**おすすめの使い分け**:
+
+| 用途 | 第一選択 | 第二選択 |
+|---|---|---|
+| 大量生成・無制限 | Stable Diffusion | — |
+| 簡単に試したい | DALL-E 3 | Stable Diffusion |
+| 芸術性重視 | Midjourney | Stable Diffusion |
+| 写真→線画変換 | Gemini | Stable Diffusion (img2img) |`,
+      },
+      {
+        title: '印刷向け解像度・サイズ設定 — A4 で綺麗に印刷するコツ',
+        content: `AI で生成した塗り絵を**家庭用プリンタで A4 印刷**するには、解像度とアスペクト比の指定が重要です。
+
+**推奨設定**:
+
+- **解像度**: 300 DPI（家庭用プリンタの標準）→ A4 サイズなら 2480×3508 px
+- **アスペクト比**: A4 縦は 1:1.414（≈ 7:10）→ Stable Diffusion で \`768×1024\` または \`1024×1448\` で生成し、印刷時に A4 にフィット
+- **ファイル形式**: PNG（無圧縮、線がジャギらない）。JPG は圧縮ノイズで線が乱れるので非推奨
+
+**Stable Diffusion での A4 設定**:
+
+1. Width: 768、Height: 1024 で生成（縦長 A4 比率に近い）
+2. Hires.fix で 1.5x にアップスケール → 1152×1536
+3. 出力 PNG を Photoshop / GIMP / [Squoosh](https://squoosh.app/) で 2480×3508 にリサイズ（Bicubic Sharper）
+4. プリンタ印刷時に「フチなし印刷」「用紙: 普通紙 A4 縦」を選択
+
+**DALL-E 3 での A4 設定**:
+
+DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウンロード → A4 にリサイズ印刷で十分綺麗。プロンプトに \`A4 portrait orientation, 300 DPI quality\` を明記すれば、自然と縦長レイアウトを選んでくれます。
+
+**Midjourney での A4 設定**:
+
+プロンプト末尾に \`--ar 7:10 --quality 2\` を追加。これで A4 比率の高品質画像が生成されます。
+
+**家庭用プリンタの設定（重要）**:
+
+- 用紙設定: 「**マット紙**」または「**スーパーファイン紙**」が塗り絵向け。普通のコピー用紙でも可だが、塗料が滲みやすい
+- 印刷品質: 「**高品質**」モード（インクは増えるが線がはっきり）
+- カラー設定: 「**モノクロ印刷**」（カラーインク節約）
+
+**コンビニ印刷の場合**:
+
+セブンイレブン / ローソンのマルチコピー機で 1 枚 20 円。PNG をネットプリント / プリントスマッシュで送信 → コンビニで番号入力で印刷。家庭用プリンタより線が綺麗に出るので、清書版はコンビニ印刷がおすすめ。`,
+      },
+      {
+        title: '著作権の注意 — 既存キャラクター・IP を生成してはいけない理由',
+        content: `**重要**: AI 塗り絵プロンプトを作るとき、**実在する商業キャラクター（ポケモン、ディズニー、サンリオ、鬼滅の刃、ドラえもん、アンパンマン、プリキュアなど）の名前を含めるのは推奨されません**。
+
+**理由**:
+
+1. **著作権法違反のリスク**: AI が生成した画像でも、識別可能な既存キャラを描いていれば翻案権侵害になり得ます。個人の私的利用（自宅で塗るだけ）はグレーゾーンですが、**ネット公開・販売は明確に NG**
+2. **AI ツール側の利用規約違反**: OpenAI（DALL-E）・Midjourney・主要 Stable Diffusion サービスの多くが「既存キャラの模倣」を禁止または非推奨
+3. **品質も低い**: そもそも AI モデルはキャラ名を渡しても精度が低く（似ているけど違う）、塗り絵として完成度が低い結果になりがち
+
+**安全な代替手段**:
+
+| やりたいこと | NG プロンプト | OK プロンプト |
+|---|---|---|
+| かわいいモンスター | \`cute pokemon style monster\` | \`cute fantasy creature with big eyes and small wings\` |
+| 魔法少女風 | \`magical girl like sailor moon\` | \`original magical girl character with star wand and ribbons\` |
+| ロボットヒーロー | \`gundam style robot\` | \`futuristic mecha warrior with armor plates\` |
+| 動物キャラ | \`mickey mouse style mouse\` | \`friendly cartoon mouse with round ears\` |
+
+**著作権リスクのない安全テーマ**:
+
+- 自然（花・植物・風景・天気）
+- 動物（実在する動物の一般的描写）
+- 食べ物（果物・スイーツ・料理）
+- 幾何学模様（マンダラ・タイル・パターン）
+- 季節イベント（クリスマスツリー・桜・紅葉）
+- オリジナルキャラ（「赤毛の少年」「翼のある妖精」など特徴を自分で組む）
+
+**法的グレーの避け方**: 「〇〇風」「〇〇 inspired」も避けるのが無難。完全オリジナルの特徴（色・髪型・服装）を自分で組み立てて Negative Prompt に \`copyrighted character, anime character\` を入れれば安心です。
+
+**当サイトの方針**: Prompta では IP 関連キーワード（ポケモン / ディズニー / 鬼滅 等）を含むプロンプトの収録はしていません。代わりに上記の「安全な代替テーマ」のプロンプトを継続的に拡充しています。`,
+      },
+    ],
+    faq: [
+      { q: 'AI 塗り絵は本当に無料で作れますか？', a: 'はい。Stable Diffusion はローカル PC で実行すれば完全無料（電気代のみ）、生成枚数も無制限。DALL-E 3 は ChatGPT Plus（月 $20）または Bing Image Creator（無料、1 日数十枚）で使えます。Midjourney のみ月 $10〜の有料サブスクが必要。**初心者には Bing Image Creator（DALL-E 3 ベース、無料）が最もハードル低い**です。当ガイドのテンプレートはどのツールでも共通で使えます。' },
+      { q: 'AI 塗り絵プロンプトを日本語で書いても大丈夫ですか？', a: '基本的に**英語推奨**です。Stable Diffusion / DALL-E / Midjourney のいずれも英語データで学習されているため、英語プロンプトの方が精度が高くなります。本ガイドのテンプレートは英語ですが、コピペするだけで使えるので英語が苦手でも問題ありません。どうしても日本語で書きたい場合は ChatGPT に「以下の塗り絵を作りたいので英語プロンプトに翻訳して: [日本語の内容]」と頼むのが最速です。' },
+      { q: '生成した塗り絵は商用利用できますか？', a: 'ツールによります。**Stable Diffusion**（オープンソース）は生成物の権利が制限なく利用者に帰属し商用利用 OK。**DALL-E 3**（OpenAI）は ChatGPT Plus / API ユーザーには商用利用権が付与されています（規約要確認）。**Midjourney** は有料プラン（$10〜）で商用利用権付き、無料トライアルでは商用 NG。ただし**既存キャラ（ポケモン等）を含む生成物は商用 NG**。安全テーマ（花・動物・幾何学）+ オリジナルキャラのみが商用安全です。' },
+      { q: '子供と一緒に塗り絵を作りたい場合、どのツールが安全ですか？', a: '**Bing Image Creator**（DALL-E 3 ベース、無料）が最も安全です。OpenAI の Safety Filter が強く、不適切な内容を弾いてくれます。Stable Diffusion ローカル版はフィルタなしで何でも生成できるため、子供と一緒に使うなら避けたほうが無難。Midjourney は Discord 経由でパブリック投稿される（プライベートプラン以外）ため、子供の前で使う場合は注意が必要です。本ガイドのテンプレートをそのまま Bing Image Creator に貼り付ければ、安全に塗り絵が量産できます。' },
+      { q: '高齢者介護のレクリエーション素材として使えますか？', a: 'はい、まさに最適な用途です。本ガイドのテンプレートで \`suitable for seniors\` \`very thick outline\` \`very simple composition\` を含めれば、高齢者向けに見やすく塗りやすい塗り絵が生成できます。**昭和風の風景**（懐かしさが認知症介護で有効）、**季節の花**（春は桜、夏はあじさい、秋は紅葉、冬は梅）、**簡単な動物**（猫・犬・うさぎ）など、回想法と組み合わせると効果的。介護施設での集団レクリエーションなら、テーマを月替わりで AI 生成しておくと素材費 0 円で済みます。' },
+      { q: '線画の太さや細かさをどう調整すればいいですか？', a: '**太さ**は \`thick outline\`（太い、子供・高齢者向け）/ \`medium outline\`（中、一般向け）/ \`fine line art\`（細い、本格コロリアージュ向け）の 3 段階で指定。**細かさ**（線の密度）は \`simple composition\` / \`moderate detail\` / \`intricate detail\` で調整。例: 高齢者向けなら \`thick outline + very simple composition\`、コロリアージュ大人向けなら \`fine line art + intricate detail\`。失敗例として \`thick outline + intricate detail\` の組み合わせは線が潰れてしまうので避けてください。Stable Diffusion で更に細かく調整するなら CFG Scale を 9-11 に上げて指示を強く反映させる手も有効です。' },
+    ],
+  },
 }
 
 export default async function GuidePage({ params }: Props) {

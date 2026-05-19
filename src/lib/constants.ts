@@ -699,6 +699,13 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'gemini プロンプト 一覧',
     monthlySearchVolume: 1300,
   },
+  {
+    slug: 'ai-coloring-page-prompt',
+    title: 'AI塗り絵プロンプト完全ガイド｜Stable Diffusion・DALL-E で線画ぬりえを無料生成',
+    description: 'AI で大人向け・子供向けの塗り絵（ぬりえ）線画を無料生成するプロンプト完全ガイド。花・マンダラ・動物・風景のテンプレート、negative prompt、Stable Diffusion / DALL-E / Midjourney の使い分け、印刷向け解像度設定まで実例つきで解説。',
+    targetKeyword: 'ai 塗り絵',
+    monthlySearchVolume: 480,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -750,6 +757,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'prompt-writing-guide': {
     tools: ['chatgpt', 'claude', 'gemini', 'stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['writing', 'programming', 'business', 'education', 'creative'],
+  },
+  'ai-coloring-page-prompt': {
+    tools: ['stable-diffusion', 'dall-e', 'midjourney'],
+    categories: ['creative'],
   },
 }
 

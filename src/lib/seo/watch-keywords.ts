@@ -114,6 +114,18 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: 'パーソナルカラー 髪色', cluster: 'opportunity', targetPage: '/guides/personal-color-hair-color', monthlyVolume: 5400, kd: 30, discoveredAt: '2026-05-18', notes: 'Week 2 new guide' },
   { keyword: 'gemini プロンプト 一覧', cluster: 'opportunity', targetPage: '/guides/gemini-prompt-collection', monthlyVolume: 1300, kd: 22, discoveredAt: '2026-05-18', notes: 'Week 3 new guide; GSC pos 8.90' },
   { keyword: 'gemini プロンプト集', cluster: 'opportunity', targetPage: '/guides/gemini-prompt-collection', monthlyVolume: 1100, kd: 22, discoveredAt: '2026-05-18', notes: 'GSC pos 8.97' },
+
+  // ============================================================
+  // 塗り絵試点 (5/19 ship Option A — 6/2 評価)
+  // 新カテゴリ実験。1 guide + 10-15 prompt + 2 tag のみ。
+  // 期待: 6/2 時点で塗り絵/線画 cluster 関連 GSC impression
+  // 出現 → Option B 全套 MVP（工具页 + 6 分类页 + 30 prompt）投入
+  // 詳: seo/coloring-trial-2026-05-19.md
+  // ============================================================
+  { keyword: 'ai 塗り絵', cluster: 'opportunity', targetPage: '/guides/ai-coloring-page-prompt', monthlyVolume: 480, kd: 19, discoveredAt: '2026-05-19', notes: '塗り絵試点メイン目標。低 KD で最も早く順位上昇期待' },
+  { keyword: '線画 プロンプト', cluster: 'opportunity', targetPage: '/guides/ai-coloring-page-prompt', monthlyVolume: 320, kd: 24, discoveredAt: '2026-05-19', notes: '塗り絵試点サブ目標' },
+  { keyword: '大人 の 塗り絵 無料', cluster: 'opportunity', targetPage: '/guides/ai-coloring-page-prompt', monthlyVolume: 9900, kd: 36, discoveredAt: '2026-05-19', notes: '塗り絵試点ストレッチ目標。KD 高い、6-8 週まで impression 期待しない' },
+  { keyword: 'マンダラ 塗り絵', cluster: 'opportunity', targetPage: '/guides/ai-coloring-page-prompt', monthlyVolume: 4400, kd: 30, discoveredAt: '2026-05-19', notes: '塗り絵試点サブ目標' },
 ]
 
 /** Default landing-page assumption when watch entry has no explicit target. */
