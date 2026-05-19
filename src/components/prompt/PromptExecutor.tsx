@@ -45,8 +45,16 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<ExecuteResult | null>(null)
   const [balance, setBalance] = useState<number | null>(null)
-  const [sourceImage, setSourceImage] = useState<{ base64: string; mimeType: string } | null>(null)
+  const [sourceImage, setSourceImage] = useState<{ base64: string; mimeType: string; name: string; size: number } | null>(null)
+  const [sourcePreviewUrl, setSourcePreviewUrl] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  // Revoke object URL when component unmounts or source changes to avoid memory leaks
+  useEffect(() => {
+    return () => {
+      if (sourcePreviewUrl) URL.revokeObjectURL(sourcePreviewUrl)
+    }
+  }, [sourcePreviewUrl])
 
   // Read balance once on mount when signed in
   useEffect(() => {
@@ -87,9 +95,18 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       return
     }
     setError(null)
+    if (sourcePreviewUrl) URL.revokeObjectURL(sourcePreviewUrl)
     const buf = await file.arrayBuffer()
     const base64 = Buffer.from(buf).toString('base64')
-    setSourceImage({ base64, mimeType: file.type })
+    setSourceImage({ base64, mimeType: file.type, name: file.name, size: file.size })
+    setSourcePreviewUrl(URL.createObjectURL(file))
+  }
+
+  function clearPhoto() {
+    if (sourcePreviewUrl) URL.revokeObjectURL(sourcePreviewUrl)
+    setSourceImage(null)
+    setSourcePreviewUrl(null)
+    if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
   async function execute() {
@@ -205,7 +222,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
 
       {mode === 'image-edit' && (
         <div className="mb-4 rounded-lg bg-white border border-gray-200 p-4">
-          <p className="text-sm font-medium text-gray-700 mb-2">
+          <p className="text-sm font-medium text-gray-700 mb-3">
             📸 編集元の写真をアップロード
           </p>
           <input
@@ -218,17 +235,52 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
             }}
             className="hidden"
           />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed border-gray-300 text-gray-700 hover:border-sky-400 hover:bg-sky-50 transition-colors text-sm font-medium"
-          >
-            📁 写真を選択（JPG / PNG / WebP, 最大 8MB）
-          </button>
-          {sourceImage && (
-            <p className="mt-2 text-xs text-emerald-700">
-              ✓ 写真が選択されました（{sourceImage.mimeType}）
-            </p>
+          {!sourceImage ? (
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed border-gray-300 text-gray-700 hover:border-sky-400 hover:bg-sky-50 transition-colors text-sm font-medium"
+            >
+              📁 写真を選択（JPG / PNG / WebP, 最大 8MB）
+            </button>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              {sourcePreviewUrl && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={sourcePreviewUrl}
+                  alt="アップロードした編集元の写真"
+                  className="w-40 h-40 sm:w-48 sm:h-48 object-cover rounded-lg border border-gray-200 bg-gray-50"
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-emerald-700 font-medium mb-1">
+                  ✓ 写真がアップロードされました
+                </p>
+                <p className="text-xs text-gray-500 truncate" title={sourceImage.name}>
+                  {sourceImage.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {(sourceImage.size / 1024).toFixed(0)} KB · {sourceImage.mimeType}
+                </p>
+                <div className="mt-3 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-gray-700 border border-gray-200 hover:border-sky-300 hover:bg-sky-50 transition-colors"
+                  >
+                    🔄 差し替え
+                  </button>
+                  <button
+                    type="button"
+                    onClick={clearPhoto}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-gray-500 border border-gray-200 hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 transition-colors"
+                  >
+                    削除
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       )}
