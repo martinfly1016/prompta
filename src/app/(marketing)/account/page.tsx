@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { emailHash } from '@/lib/paid-credits'
 import { SITE_CONFIG } from '@/lib/constants'
+import { TopUpCreditsButton } from '@/components/credits/TopUpCreditsButton'
 
 // Phase 1 — /account MVP (2026-05-11)
 // Server-rendered single source of truth for "what I bought / have / used".
@@ -110,12 +111,9 @@ export default async function AccountPage() {
             💇 髪色診断で使う
           </Link>
           {balance < 25 && (
-            <Link
-              href="/tools/personal-color-analysis#purchase"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-colors"
-            >
+            <TopUpCreditsButton returnTo="/account" currentBalance={balance}>
               💳 クレジットを補充する
-            </Link>
+            </TopUpCreditsButton>
           )}
         </div>
       </section>
