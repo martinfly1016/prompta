@@ -86,6 +86,26 @@ export async function spendOneCredit(
 }
 
 /**
+ * Refund N credits after a failed provider call. Distinct from grantCredits
+ * (which records a purchase): refund restores balance + DECREMENTS totalUsed
+ * (because the spend never actually happened) and does NOT touch totalEarned
+ * or lastPurchase (no money came in).
+ *
+ * Use this in API routes that call spendCredits and then fail before
+ * delivering the paid output (e.g. provider 5xx, safety filter, timeout).
+ */
+export async function refundCredits(eh: string, n: number): Promise<void> {
+  if (n <= 0) throw new Error(`refundCredits: n must be > 0, got ${n}`)
+  await prisma.paidCredits.update({
+    where: { emailHash: eh },
+    data: {
+      balance: { increment: n },
+      totalUsed: { decrement: n },
+    },
+  })
+}
+
+/**
  * Spend N credits atomically. Race-safe: only succeeds if balance >= n.
  * Used by:
  *   - hair-color simulate (5 credit, image gen)

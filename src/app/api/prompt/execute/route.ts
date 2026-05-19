@@ -34,7 +34,7 @@ import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getOwnerEmailHash,
   spendCredits,
-  grantCredits,
+  refundCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { stripeEnabled } from '@/lib/stripe'
@@ -191,13 +191,9 @@ export async function POST(req: NextRequest) {
       throw new Error('Provider returned empty result')
     }
   } catch (e: any) {
-    // Refund the spent credits since the call failed
-    await grantCredits(
-      // grantCredits needs email — we only have emailHash. Workaround:
-      // look up the email from PaidCredits row (it's stored there).
-      await getEmailByHash(eh),
-      cost,
-    ).catch((err) => {
+    // Refund: restores balance + decrements totalUsed (the spend never
+    // delivered). Doesn't bump totalEarned (no purchase) or lastPurchase.
+    await refundCredits(eh, cost).catch((err) => {
       console.error('[prompt-execute] refund failed:', err.message)
     })
     return NextResponse.json(
@@ -228,11 +224,3 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ...result, balance: spend.balance })
 }
 
-async function getEmailByHash(eh: string): Promise<string> {
-  const row = await prisma.paidCredits.findUnique({
-    where: { emailHash: eh },
-    select: { email: true },
-  })
-  if (!row?.email) throw new Error(`No email for hash ${eh.slice(0, 8)}`)
-  return row.email
-}
