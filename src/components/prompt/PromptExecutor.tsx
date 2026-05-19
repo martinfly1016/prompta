@@ -120,6 +120,36 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
    * the user can long-press / right-click to save without losing the page.
    */
   const [downloading, setDownloading] = useState(false)
+  const [checkoutPending, setCheckoutPending] = useState(false)
+
+  async function startCheckout() {
+    if (!isSignedIn) {
+      await signIn(undefined, {
+        callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined,
+      })
+      return
+    }
+    setCheckoutPending(true)
+    try {
+      const returnTo = `/prompt/${prompt.slug}`
+      const r = await fetch(
+        `/api/checkout/personal-color?returnTo=${encodeURIComponent(returnTo)}`,
+        { method: 'POST' },
+      )
+      if (!r.ok) {
+        const body = await r.json().catch(() => ({}))
+        setError(`購入処理エラー: ${body?.error ?? r.status}`)
+        return
+      }
+      const { url } = await r.json()
+      if (url) window.location.href = url
+    } catch (e: any) {
+      setError(`購入処理エラー: ${e?.message ?? 'unknown'}`)
+    } finally {
+      setCheckoutPending(false)
+    }
+  }
+
   async function downloadResultImage() {
     if (!result || result.mode !== 'image' || !result.imageUrl) return
     setDownloading(true)
@@ -360,12 +390,14 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
           {error}
           {error.includes('クレジットが足りません') && (
             <div className="mt-2">
-              <Link
-                href="/tools/personal-color-analysis#purchase"
-                className="inline-flex items-center gap-1 text-red-700 font-medium underline"
+              <button
+                type="button"
+                onClick={startCheckout}
+                disabled={checkoutPending}
+                className="inline-flex items-center gap-1 text-red-700 font-medium underline disabled:opacity-50"
               >
-                💳 150 クレジットパックを購入（¥300）
-              </Link>
+                {checkoutPending ? '処理中…' : '💳 150 クレジットパックを購入（¥300）'}
+              </button>
             </div>
           )}
         </div>

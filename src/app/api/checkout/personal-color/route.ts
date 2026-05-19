@@ -41,8 +41,15 @@ export async function POST(req: NextRequest) {
   // Locale routing — anonymous EN visitors should land back on /en/... and
   // see Stripe's English Checkout. Default to Japanese for backward compat.
   const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
-  const returnPath =
-    locale === 'en'
+  // returnTo lets callers (e.g. PromptExecutor on a prompt detail page)
+  // redirect users back to where they were instead of always landing on
+  // the personal-color tool. Allow-list of paths to prevent open redirect.
+  const rawReturn = req.nextUrl.searchParams.get('returnTo') ?? ''
+  const allowedReturn =
+    /^\/(prompt|prompts|account|tools|guides|tag|en)(\/.*)?$/.test(rawReturn)
+  const returnPath = allowedReturn
+    ? rawReturn
+    : locale === 'en'
       ? '/en/tools/personal-color-analysis'
       : '/tools/personal-color-analysis'
 
