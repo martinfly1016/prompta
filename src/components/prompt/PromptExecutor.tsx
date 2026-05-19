@@ -320,23 +320,34 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={execute}
-        disabled={running || (mode === 'image-edit' && !sourceImage)}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
-      >
-        {running ? (
-          <>
-            <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-            生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
-          </>
-        ) : (
-          <>
-            🚀 実行（{provider?.credits ?? 5} クレジット消費）
-          </>
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={execute}
+          disabled={running || (mode === 'image-edit' && !sourceImage)}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+        >
+          {running ? (
+            <>
+              <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+              生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
+            </>
+          ) : (
+            <>
+              🚀 実行（{provider?.credits ?? 5} クレジット消費）
+            </>
+          )}
+        </button>
+        {provider && (
+          <span className="inline-flex items-center gap-1 text-xs text-gray-600">
+            <span className="text-base leading-none">{provider.icon}</span>
+            <span>
+              <span className="text-gray-500">使用モデル:</span>{' '}
+              <span className="font-medium text-gray-700">{provider.label}</span>
+            </span>
+          </span>
         )}
-      </button>
+      </div>
 
       {!isSignedIn && (
         <p className="mt-3 text-xs text-gray-500">
