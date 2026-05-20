@@ -94,7 +94,7 @@ async function main() {
       // shows up as "real external user" usage and inflates tool-usage metrics.
       const { OWNER_TEST_EMAIL_HASHES: testEmailHashes } = await import('./_owner_exclusion')
 
-      const tools = ['personal-color', 'hair-color']
+      const tools = ['personal-color', 'hair-color', 'prompt-execute']
       const summary: Record<string, unknown> = {}
 
       for (const tool of tools) {
@@ -104,20 +104,25 @@ async function main() {
             createdAt: { gte: since },
             OR: [{ emailHash: null }, { emailHash: { notIn: testEmailHashes } }],
           },
-          select: { type: true, anonId: true, emailHash: true, createdAt: true },
+          select: { type: true, anonId: true, emailHash: true, createdAt: true, creditsConsumed: true },
         })
-        const prevUsages = await prisma.toolUsage.count({
+        const prevAgg = await prisma.toolUsage.aggregate({
           where: {
             tool,
             createdAt: { gte: prevSince, lt: since },
             OR: [{ emailHash: null }, { emailHash: { notIn: testEmailHashes } }],
           },
+          _count: true,
+          _sum: { creditsConsumed: true },
         })
+        const prevUsages = prevAgg._count
+        const prevCredits = prevAgg._sum.creditsConsumed ?? 0
 
         const free = usages.filter(u => u.type === 'free').length
         const paid = usages.filter(u => u.type === 'paid').length
         const uniqAnon = new Set(usages.map(u => u.anonId)).size
         const uniqEmail = new Set(usages.filter(u => u.emailHash).map(u => u.emailHash)).size
+        const creditsConsumed = usages.reduce((s, u) => s + (u.creditsConsumed ?? 1), 0)
 
         const byDay: Record<string, number> = {}
         for (const u of usages) {
@@ -131,8 +136,11 @@ async function main() {
           paid,
           uniqueAnon: uniqAnon,
           uniqueEmail: uniqEmail,
+          creditsConsumed,                  // sum across all rows; 1 for text, 5 for image, etc.
           previousPeriodTotal: prevUsages,
+          previousPeriodCredits: prevCredits,
           deltaPct: prevUsages === 0 ? null : Math.round(((usages.length - prevUsages) / prevUsages) * 100),
+          creditsDeltaPct: prevCredits === 0 ? null : Math.round(((creditsConsumed - prevCredits) / prevCredits) * 100),
           byDay,
         }
       }

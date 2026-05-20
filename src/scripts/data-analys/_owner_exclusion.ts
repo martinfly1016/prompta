@@ -8,9 +8,14 @@ export const OWNER_TEST_EMAILS = [
   'e2e-test+t1@prompta.jp',
   'e2e-test+t2@prompta.jp',
   'e2e-test+t3@prompta.jp',
+  // PromptExecutor E2E suite (5/19 ship, src/scripts/e2e/run-prompt-execute.ts)
+  'e2e-test+pe1@prompta.jp',
+  'e2e-test+pe2@prompta.jp',
+  'e2e-test+probe@prompta.jp',
   // Site owner personal accounts (manual smoke testing)
   'martinfly1016@gmail.com',
   'yuchao@byte-ad.com',
+  'prompta.jp@gmail.com',
 ]
 
 export const OWNER_TEST_EMAIL_HASHES = OWNER_TEST_EMAILS.map((e) =>
