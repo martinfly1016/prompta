@@ -12,6 +12,9 @@ export const OWNER_TEST_EMAILS = [
   'e2e-test+pe1@prompta.jp',
   'e2e-test+pe2@prompta.jp',
   'e2e-test+probe@prompta.jp',
+  'probe@example.com', // generic probe used by smoke tests pre-5/19
+  // Legacy admin seed from 2025-10-25 initial setup
+  'admin@example.com',
   // Site owner personal accounts (manual smoke testing)
   'martinfly1016@gmail.com',
   'yuchao@byte-ad.com',
