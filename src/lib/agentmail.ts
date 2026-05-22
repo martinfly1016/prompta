@@ -1,8 +1,13 @@
-// Thin AgentMail wrapper — outbound transactional email via the existing
-// prompta-agent@agentmail.to inbox.
+// Thin AgentMail wrapper — outbound transactional email.
+// Inbox is configured via AGENTMAIL_INBOX_ID env var.
 
 const AGENTMAIL_API = 'https://api.agentmail.to/v0'
-const INBOX_ID = process.env.AGENTMAIL_INBOX_ID || 'prompta-agent@agentmail.to'
+
+// Single source of truth for the inbox address — used both as the
+// AgentMail API path segment and as the user-facing "From" / contact email
+// across auth, privacy, terms.
+export const FROM_EMAIL = process.env.AGENTMAIL_INBOX_ID || 'terribleassignment338@agentmail.to'
+const INBOX_ID = FROM_EMAIL
 
 export const agentmailEnabled = Boolean(process.env.AGENTMAIL_API_KEY)
 

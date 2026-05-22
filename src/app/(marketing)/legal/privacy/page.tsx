@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
+import { FROM_EMAIL } from '@/lib/agentmail'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 const EFFECTIVE_DATE = '2026-05-05'
-const CONTACT_EMAIL = 'prompta-agent@agentmail.to'
+const CONTACT_EMAIL = FROM_EMAIL
 
 export default function PrivacyPage() {
   return (

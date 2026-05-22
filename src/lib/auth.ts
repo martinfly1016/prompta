@@ -6,7 +6,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { sendEmail } from '@/lib/agentmail'
+import { sendEmail, FROM_EMAIL } from '@/lib/agentmail'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const googleEnabled = Boolean(
@@ -61,7 +61,7 @@ if (emailMagicLinkEnabled) {
       // server config is unused since we override sendVerificationRequest,
       // but the provider requires it to be defined
       server: { host: 'unused', port: 587, auth: { user: 'unused', pass: 'unused' } },
-      from: 'prompta-agent@agentmail.to',
+      from: FROM_EMAIL,
       maxAge: 60 * 60, // 1h link validity
       async sendVerificationRequest({ identifier, url }) {
         const subject = '【prompta.jp】サインインリンク'
