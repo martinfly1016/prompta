@@ -87,6 +87,37 @@ input.json schema：
 }
 ```
 
+### ⚠️ 必須: SEMrush API endpoint 使用（Web UI scraping は禁止）
+
+Web UI scraping は proxy rate-limit でカバレッジが激減するため**禁止**。代わりに以下の **REST API endpoint をバッチで呼ぶ**：
+
+| 用途 | endpoint | 仕様 |
+|---|---|---|
+| バッチ keyword 難易度 | `phrase_kdi` | カンマ区切りで複数 keyword 一気に取得可能（推奨 50 件/call） |
+| keyword 詳細（volume / intent / trend） | `phrase_this` | 1 keyword / call |
+| SERP top URLs | `phrase_organic` | 1 keyword / call、display_limit=5 |
+| competitor organic keywords | `domain_organic` | 1 domain / call、export_columns に `Ph,Po,Nq,Kd,Tr` |
+| domain overview | `domain_rank` | 1 domain / call |
+
+**実装サンプル（推奨フロー）**:
+
+```bash
+# 1. 入力 keyword をチャンク化（50 件/chunk）
+jq -r '.keywords | map(.keyword) | _nwise(50) | join(";")' input.json > chunks.txt
+
+# 2. 各 chunk について phrase_kdi を呼び出し（API key は環境変数）
+while read chunk; do
+  curl "https://api.semrush.com/?type=phrase_kdi_all&phrase=${chunk}&database=jp&key=${SEMRUSH_KEY}&export_columns=Ph,Kd"
+done < chunks.txt
+
+# 3. 各 keyword について phrase_this（volume / intent / trend）
+# 4. 各 keyword について phrase_organic（top 5 URLs）
+```
+
+**API 利用予算目安**: 148 keyword × 平均 3 endpoint = ~444 API call。Pro plan の 10K reports/day 制限内で余裕。
+
+---
+
 ### 出力（SEMrush agent が生成）— `keyword-universe.json`
 
 input.json の各 keyword について、以下を SEMrush から取得：
@@ -104,7 +135,48 @@ input.json の各 keyword について、以下を SEMrush から取得：
 | `promptaCurrentRank` | input から | ✅ | prompta の現在順位（input で渡したもの、pass-through） |
 | `_notes` | agent 判断 | optional | データなし / 無関連 等の場合 |
 
-「**データが取れない場合**」（SEMrush に未登録キーワード、検索量 0 等）も **欠落させず** `searchVolume: null` + `_notes` で理由を残す。`photo-edit-keywords-raw.json` の前例参照。
+「**データが取れない場合**」（SEMrush に未登録キーワード、検索量 0 等）も **欠落させず** `searchVolume: null` + `_notes` で理由を残す。
+
+### keyword-universe.json — Inline schema example（コピペ用 minimal template）
+
+```json
+{
+  "_meta": {
+    "snapshotDate": "2026-05-22",
+    "semrushDatabase": "jp",
+    "apiUnitsConsumed": 444,
+    "agentVersion": "SEMrush-snapshot-v2",
+    "notes": "Full API-based collection, no UI scraping"
+  },
+  "data": [
+    {
+      "keyword": "コスプレ プロンプト",
+      "searchVolume": 590,
+      "keywordDifficulty": 25,
+      "cpcJpy": 12,
+      "intent": "informational",
+      "searchTrend": [320, 480, 590, 720, 590, 480, ...],
+      "serpFeatures": ["image_pack"],
+      "topUrls": [
+        {"position": 1, "url": "https://example1.com/...", "title": "..."},
+        {"position": 2, "url": "https://example2.com/...", "title": "..."}
+      ],
+      "promptaCurrentRank": 5,
+      "_notes": null
+    },
+    {
+      "keyword": "未登録 キーワード",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "cpcJpy": null,
+      "intent": null,
+      "topUrls": [],
+      "promptaCurrentRank": null,
+      "_notes": "SEMrush database に該当データなし"
+    }
+  ]
+}
+```
 
 ### 推奨 SEMrush API endpoint
 
@@ -155,6 +227,48 @@ ai-freak.com
 - ソート: `roi = searchVolume / max(keywordDifficulty, 1)` 降順
 - top 30 / competitor まで取得
 - `_recommendation`: 自由テキスト（new content / 拡張 / new tool / tag 追加 等の方向性 1 行）
+- **`priority` フィールド必須**: 各 gap に以下のいずれかをタグ：
+  - `"actionable"` — prompta が取りに行ける標準機会
+  - `"deprioritize"` — NSFW / 単一ブランド名（pixai / kling / playground 等）/ ゲーム特化（ff11 / 装備 / キャラクターコード等）/ アダルト系
+  - `"manual-review"` — 文脈次第（agent が判断付かない場合）
+
+### content-gap.json — Inline schema example
+
+```json
+{
+  "_meta": {...},
+  "data": [
+    {
+      "competitor": "romptn.com",
+      "competitorTotalKeywords": 12345,
+      "gaps": [
+        {
+          "keyword": "stable diffusion プロンプト",
+          "competitorPosition": 2,
+          "promptaPosition": null,
+          "searchVolume": 6600,
+          "keywordDifficulty": 20,
+          "estimatedTraffic": 1320,
+          "competitorUrl": "https://romptn.com/...",
+          "roi": 330,
+          "priority": "actionable",
+          "_recommendation": "expand stable-diffusion-prompt-guide"
+        },
+        {
+          "keyword": "ai エロ",
+          "competitorPosition": 44,
+          "promptaPosition": null,
+          "searchVolume": 40500,
+          "keywordDifficulty": 34,
+          "roi": 1191.2,
+          "priority": "deprioritize",
+          "_recommendation": "NSFW — exclude from prompta strategy"
+        }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
@@ -162,10 +276,13 @@ ai-freak.com
 
 ### 出力 — `domain-rankings.json`
 
-prompta.jp が現在 organic で当たっている上位 100-200 キーワード：
+prompta.jp が現在 organic で当たっている上位 100-200 キーワード。
+
+**⚠️ Schema は flat-root 必須。`data[0]` で配列ラップしないこと**（v1 では agent が誤ってラップし、修正された前例あり）。
 
 ```json
 {
+  "_meta": {...},
   "totalOrganicKeywords": 234,
   "estimatedMonthlyTraffic": 1500,
   "topKeywords": [
@@ -176,9 +293,18 @@ prompta.jp が現在 organic で当たっている上位 100-200 キーワード
       "url": "https://www.prompta.jp/prompts/cosplay",
       "estimatedTraffic": 12,
       "trend": "up",
-      "keywordDifficulty": 27
+      "keywordDifficulty": 27,
+      "intent": "informational"
     }
   ]
+}
+```
+
+**❌ DO NOT**:
+```json
+{
+  "_meta": {...},
+  "data": [{ "totalOrganicKeywords": ... }]   ← 余分なラップ、絶対禁止
 }
 ```
 
@@ -229,14 +355,17 @@ prompta が **未開拓 or 浅薄に開拓されている** topic cluster を 10
 # SEMrush Snapshot — {YYYY-MM-DD}
 
 ## TL;DR
-- Universe: N keywords scanned, 平均 KD = X, 平均 volume = Y
-- Content Gap: 計 N 件 high-ROI gaps（top 10 列挙）
+- Universe: N keywords scanned, **coverage = K/N (P%)** with non-null vol+KD, 平均 KD = X, 平均 volume = Y
+  - ⚠️ If coverage < 50% → 「COVERAGE BELOW THRESHOLD: {reason}」を冒頭に明記
+- Content Gap: 計 N 件 gaps、うち **actionable = M 件 / deprioritize = D 件 / manual-review = R 件**
 - Domain: prompta 全 N 件 organic, est traffic = N/月（vs 先月 ±N%）
 - Topic Clusters: M 件未開拓 cluster 特定
 
-## Top 5 推奨アクション（agent 判断、根拠付き）
+## Top 5 推奨アクション（**`priority: actionable` のみから**、agent 判断、根拠付き）
 1. **{action}**: 根拠 = {keyword X, volume Y, KD Z, current rank N}, 推定 ROI = {N}
 2. ...
+
+> **重要**: NSFW / 単一ブランド / ゲーム特化 query は `priority: deprioritize` 扱いなので **このリストに含めない**。それらは「Deprioritized findings (informational only)」セクションに別途列挙。
 
 ## Anomaly / Warnings
 - SEMrush で取れなかった keyword: N 件（リスト在 _missing.txt）
@@ -299,6 +428,9 @@ SEMrush agent は **以下を保証**：
 3. **タイムスタンプ**: `_meta.snapshotDate` を実行時刻基準で正確に
 4. **再現性**: 同じ input を使えば 24h 以内なら同等の結果が出ること（SEMrush 自体は数日 lag あるため厳密一致は不要）
 5. **エラー時の挙動**: API 失敗時は途中まで保存 + README.md に明記、勝手に他の API source（ahrefs 等）にフォールバックしない
+6. **🎯 最低カバレッジ閾値（v2 で追加・必須）**: `keyword-universe.json` の `data` 配列で、`searchVolume` と `keywordDifficulty` が**両方 non-null** な行が **≥ 50% (= ≥ 75/148)** であること。下回った場合は README.md の冒頭に大文字で **「⚠️ COVERAGE BELOW THRESHOLD」** と明記し、quota / rate-limit / API 障害のいずれが原因かを書くこと。
+7. **🎯 Schema 厳守（v2 で追加・必須）**: 各 deliverable の root shape は §3 / §5 / §6 / §7 の inline JSON example と完全一致。特に `domain-rankings.json` は flat root（`data[0]` ラップ禁止）。Agent は出力前に schema validation 推奨（`jq` 等で root keys 確認）。
+8. **🎯 `priority` フィールド必須（v2 で追加・必須）**: `content-gap.json` の各 gap、`keyword-universe.json` の各 row に `priority: "actionable" | "deprioritize" | "manual-review"` を付与。README の Top 5 Recommended Actions は `priority == "actionable"` のものだけから抽出すること。
 
 ---
 
@@ -348,4 +480,37 @@ SEMrush agent は **以下を保証**：
 
 ## 変更履歴
 
-- 2026-05-22: 初版作成。
+- **2026-05-22 v2**: 初回 snapshot で発生した問題を反映した改訂版
+  - **§3 Deliverable A** に「API endpoint 必須使用 + バッチ呼び出し」要求を明示。Web UI スクレイピングは禁止（rate limit で覆盖率劇減）
+  - **§3 / §5 / §6 / §7** に **inline JSON schema example** を追加（笑い的に「附録 C 参照」だけだった → agent が schema を間違える事故防止）
+  - **§9 データ品質契約** に「**keyword-universe で ≥50% (=75/148) 以上の searchVolume + keywordDifficulty を埋めること**」を必須化
+  - **§9** に「`_recommendation` field で NSFW / 単一ブランド名 / ゲーム特化 query は明示的に `priority: deprioritize` マークすること」を追加
+  - **§7 README** の「Top 5 Recommended Actions」は `priority != deprioritize` のものだけから抽出するルールを追加
+  - **§11 Lessons Learned from First Run** 節を新設
+
+- 2026-05-22 v1（初版）: 作成。SEMrush agent が proxy 経由で rate-limit され、148 中 11 件しか metric が取れない事象が発生。下記 §11 参照。
+
+---
+
+## 11. Lessons Learned from First Run (2026-05-22 v1)
+
+### 観察された問題
+
+1. **覆盖率 7.4%**: keyword-universe.json で 148 入力中 11 件しか searchVolume / KD が埋まらなかった。残り 137 件は null + _notes。agent は web UI を scraping し proxy で「请求过于频繁、请1分钟后再试」rate limit を受けてフォールバック。
+2. **Schema 違反**: domain-rankings.json が brief の flat-root 仕様ではなく `data[0]` 配列ラップで届いた（修正側で `jq` で展開）。
+3. **品質ノイズ**: content-gap.json の top ROI 15 件中 13 件が NSFW / ゲーム / 単一ブランド系。`_recommendation` で「deprioritize」とマークされてはいたが、README の Top 5 Recommended Actions に紛れ込んだ。
+4. **API units 過少**: `apiUnitsConsumed: 6` — brief 想定 ~200 units の 3% のみ消費。本来の API 呼び出しを使えていない証拠。
+
+### v2 で追加した対策
+
+- §3 Deliverable A 冒頭に **「使用すべき SEMrush API endpoint」明示**:
+  - `phrase_kdi` — バッチ KD（カンマ区切りで複数 keyword 一気に）
+  - `phrase_this` — volume + intent + trend
+  - `phrase_organic` — SERP top 5 URLs
+  - `domain_organic` — competitor / our 用
+  - `domain_rank` — domain overview
+- §9 に「**最低カバレッジ閾値: keyword-universe で searchVolume + KD が両方 non-null な行が ≥50% (= ≥75/148)**」必須化。下回った場合は agent が README で明示的に rate-limit / quota 問題を報告
+- §3 / §5 / §6 / §7 に inline schema example を追加（コピペで使えるテンプレ）
+- README の Top 5 Recommended Actions は `priority != deprioritize` の項目から抽出する（純流量だけで選ばない）
+
+これらは agent 側で実装すべきもので、本 brief の契約に明記済。
