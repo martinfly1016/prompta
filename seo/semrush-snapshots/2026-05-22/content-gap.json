@@ -3,8 +3,8 @@
     "snapshotDate": "2026-05-22",
     "semrushDatabase": "jp",
     "apiUnitsConsumed": 6,
-    "agentVersion": "SEMrush-snapshot-v1",
-    "notes": "Gap analysis derived from first 100 Organic Research rows per competitor, compared against sampled prompta.jp organic positions."
+    "agentVersion": "SEMrush-snapshot-v2-ui-platform",
+    "notes": "Generated from logged-in Semrush platform data captured via low-frequency Organic Research/Keyword Overview pages. API key is unavailable; Web UI platform session was used per user instruction."
   },
   "data": [
     {
@@ -20,7 +20,8 @@
           "estimatedTraffic": 10,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 14800,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "pixai",
@@ -31,7 +32,8 @@
           "estimatedTraffic": 24,
           "competitorUrl": "romptn.com/article/3510",
           "roi": 5590.91,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai エロ",
@@ -42,7 +44,8 @@
           "estimatedTraffic": 12,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 1191.18,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "キャラクター コード",
@@ -53,7 +56,8 @@
           "estimatedTraffic": 27,
           "competitorUrl": "romptn.com/article/67569",
           "roi": 1005.56,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "立ちバック プロンプト",
@@ -64,7 +68,8 @@
           "estimatedTraffic": 18,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 720,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai アダルト",
@@ -75,7 +80,8 @@
           "estimatedTraffic": 54,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 565.63,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "生成ai エロ",
@@ -86,7 +92,8 @@
           "estimatedTraffic": 495,
           "competitorUrl": "mania.romptn.com/article/stable-diffusion/37/",
           "roi": 521.05,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai イラスト エロ",
@@ -97,7 +104,8 @@
           "estimatedTraffic": 18,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 504.17,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "lora",
@@ -108,6 +116,7 @@
           "estimatedTraffic": 10,
           "competitorUrl": "romptn.com/article/8796",
           "roi": 493.33,
+          "priority": "actionable",
           "_recommendation": "create LoRA explainer/guide connected to Stable Diffusion prompt workflows"
         },
         {
@@ -119,7 +128,8 @@
           "estimatedTraffic": 16,
           "competitorUrl": "mania.romptn.com/article/stable-diffusion/43/",
           "roi": 337.5,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion プロンプト",
@@ -130,7 +140,8 @@
           "estimatedTraffic": 858,
           "competitorUrl": "romptn.com/article/27449",
           "roi": 330,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 使い方",
@@ -141,7 +152,8 @@
           "estimatedTraffic": 40,
           "competitorUrl": "romptn.com/article/5211",
           "roi": 261.29,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "aiエロ画像",
@@ -152,7 +164,8 @@
           "estimatedTraffic": 33,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 244.44,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "まん ぐりがえし エロ",
@@ -163,7 +176,8 @@
           "estimatedTraffic": 13,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 231.58,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "playground アプリ",
@@ -174,7 +188,8 @@
           "estimatedTraffic": 202,
           "competitorUrl": "romptn.com/article/56887",
           "roi": 225,
-          "_recommendation": "review manually before content planning"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "kling ai 料金",
@@ -185,7 +200,8 @@
           "estimatedTraffic": 16,
           "competitorUrl": "romptn.com/article/55361",
           "roi": 218.18,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai イラスト 自動生成 サイト 登録不要",
@@ -196,7 +212,8 @@
           "estimatedTraffic": 198,
           "competitorUrl": "romptn.com/create-image",
           "roi": 206.25,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "ai イラスト 自動生成 サイト 登録不要",
@@ -207,7 +224,8 @@
           "estimatedTraffic": 85,
           "competitorUrl": "romptn.com/create-image",
           "roi": 206.25,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "ai エロ画像生成",
@@ -218,7 +236,8 @@
           "estimatedTraffic": 162,
           "competitorUrl": "mania.romptn.com/",
           "roi": 192.86,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai エロ画像生成",
@@ -229,7 +248,8 @@
           "estimatedTraffic": 135,
           "competitorUrl": "mania.romptn.com/article/stable-diffusion/37/",
           "roi": 192.86,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion 髪型",
@@ -240,7 +260,8 @@
           "estimatedTraffic": 57,
           "competitorUrl": "romptn.com/article/2657",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "ネガティブプロンプト",
@@ -251,6 +272,7 @@
           "estimatedTraffic": 26,
           "competitorUrl": "romptn.com/article/2905",
           "roi": 161.11,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -262,7 +284,8 @@
           "estimatedTraffic": 27,
           "competitorUrl": "romptn.com/article/56887",
           "roi": 154.29,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "stable diffusion 学習させる",
@@ -273,7 +296,8 @@
           "estimatedTraffic": 37,
           "competitorUrl": "romptn.com/article/7407",
           "roi": 152.63,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "エロ プロンプト",
@@ -284,7 +308,8 @@
           "estimatedTraffic": 16,
           "competitorUrl": "mania.romptn.com/article/image-generation/5218/",
           "roi": 150,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion エロ",
@@ -295,7 +320,8 @@
           "estimatedTraffic": 893,
           "competitorUrl": "mania.romptn.com/article/stable-diffusion/37/",
           "roi": 135.71,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ai 画像生成 登録不要",
@@ -306,7 +332,8 @@
           "estimatedTraffic": 22,
           "competitorUrl": "romptn.com/create-image",
           "roi": 133.33,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "stable diffusion seed",
@@ -317,7 +344,8 @@
           "estimatedTraffic": 203,
           "competitorUrl": "romptn.com/article/4780",
           "roi": 126.09,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 利用方法",
@@ -328,7 +356,8 @@
           "estimatedTraffic": 1700,
           "competitorUrl": "romptn.com/article/5211",
           "roi": 116.13,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion モデル",
@@ -339,7 +368,8 @@
           "estimatedTraffic": 87,
           "competitorUrl": "romptn.com/article/15500",
           "roi": 116,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         }
       ]
     },
@@ -356,7 +386,8 @@
           "estimatedTraffic": 62,
           "competitorUrl": "ururuailab.com/equip-blm/",
           "roi": 480,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 ナイト 装備",
@@ -367,7 +398,8 @@
           "estimatedTraffic": 21,
           "competitorUrl": "ururuailab.com/equip-pld01/",
           "roi": 360,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 青 魔 道士",
@@ -378,7 +410,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "ururuailab.com/equip-blu01/",
           "roi": 360,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion プロンプト",
@@ -389,7 +422,8 @@
           "estimatedTraffic": 4,
           "competitorUrl": "ururuailab.com/sd-prompt-quality/",
           "roi": 330,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "モンク 装備 ff11",
@@ -400,7 +434,8 @@
           "estimatedTraffic": 18,
           "competitorUrl": "ururuailab.com/equip-mon/",
           "roi": 260,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "コルセア ff11",
@@ -411,7 +446,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ururuailab.com/equip-cor/",
           "roi": 220,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 黒 装備",
@@ -422,7 +458,8 @@
           "estimatedTraffic": 98,
           "competitorUrl": "ururuailab.com/equip-blm/",
           "roi": 210,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 白魔 道士 装備",
@@ -433,7 +470,8 @@
           "estimatedTraffic": 6,
           "competitorUrl": "ururuailab.com/equip-whm/",
           "roi": 210,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -444,7 +482,8 @@
           "estimatedTraffic": 171,
           "competitorUrl": "ururuailab.com/sd-prompt-clothes/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 髪型",
@@ -455,7 +494,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "ururuailab.com/facial-expression-hairstyle/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "ff11 モンク 最強 装備",
@@ -466,7 +506,8 @@
           "estimatedTraffic": 15,
           "competitorUrl": "ururuailab.com/equip-mon/",
           "roi": 170,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 モンク 装備 ユニクロ",
@@ -477,7 +518,8 @@
           "estimatedTraffic": 5,
           "competitorUrl": "ururuailab.com/equip-mon/",
           "roi": 170,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 戦士",
@@ -488,7 +530,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ururuailab.com/equip-war/",
           "roi": 160,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "侍 装備 ff11",
@@ -499,7 +542,8 @@
           "estimatedTraffic": 18,
           "competitorUrl": "ururuailab.com/equip-sam/",
           "roi": 140,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 モンク 装備",
@@ -510,7 +554,8 @@
           "estimatedTraffic": 79,
           "competitorUrl": "ururuailab.com/equip-mon01/",
           "roi": 125.71,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 青 魔 道士 装備",
@@ -521,7 +566,8 @@
           "estimatedTraffic": 30,
           "competitorUrl": "ururuailab.com/equip-blu/",
           "roi": 111.11,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 吟遊 詩人 装備",
@@ -532,7 +578,8 @@
           "estimatedTraffic": 7,
           "competitorUrl": "ururuailab.com/equip-brd/",
           "roi": 110,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 白 装備",
@@ -543,7 +590,8 @@
           "estimatedTraffic": 4,
           "competitorUrl": "ururuailab.com/equip-whm/",
           "roi": 110,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 戦士 ダブル アタック 100 装備",
@@ -554,7 +602,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "ururuailab.com/equip-war/",
           "roi": 110,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 コルセア",
@@ -565,7 +614,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ururuailab.com/equip-cor/",
           "roi": 110,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "戦士 装備",
@@ -576,7 +626,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ururuailab.com/equip-war/",
           "roi": 110,
-          "_recommendation": "review manually before content planning"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 侍 装備",
@@ -587,7 +638,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "ururuailab.com/equip-sam/",
           "roi": 102.86,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 踊り子 装備",
@@ -598,7 +650,8 @@
           "estimatedTraffic": 50,
           "competitorUrl": "ururuailab.com/equip-dnc/",
           "roi": 97.5,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 詩人 装備",
@@ -609,7 +662,8 @@
           "estimatedTraffic": 33,
           "competitorUrl": "ururuailab.com/equip-brd/",
           "roi": 96,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "染み パンティ",
@@ -620,7 +674,8 @@
           "estimatedTraffic": 4,
           "competitorUrl": "ururuailab.com/sd-prompt-underwear/",
           "roi": 90.63,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "stable diffusion 呪文",
@@ -631,7 +686,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ururuailab.com/sd-prompt-underwear/",
           "roi": 90.48,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "踊り子 装備 ff11",
@@ -642,7 +698,8 @@
           "estimatedTraffic": 11,
           "competitorUrl": "ururuailab.com/equip-dnc/",
           "roi": 90,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "黒 装備 ff11",
@@ -653,7 +710,8 @@
           "estimatedTraffic": 11,
           "competitorUrl": "ururuailab.com/equip-blm/",
           "roi": 90,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "黒 ff11",
@@ -664,7 +722,8 @@
           "estimatedTraffic": 8,
           "competitorUrl": "ururuailab.com/equip-blm/",
           "roi": 90,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "ff11 戦士 サベッジ 装備",
@@ -675,7 +734,8 @@
           "estimatedTraffic": 4,
           "competitorUrl": "ururuailab.com/equip-war/",
           "roi": 90,
-          "_recommendation": "deprioritize: likely game-specific/off-strategy query"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         }
       ]
     },
@@ -692,7 +752,8 @@
           "estimatedTraffic": 21,
           "competitorUrl": "noplog.com/blog/2026/01/23/ai-illust-standing-pose-prompts/",
           "roi": 720,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "立ちバック プロンプト",
@@ -703,7 +764,8 @@
           "estimatedTraffic": 6,
           "competitorUrl": "noplog.com/blog/2026/01/23/ai-illust-standing-pose-prompts/",
           "roi": 720,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion プロンプト",
@@ -714,7 +776,8 @@
           "estimatedTraffic": 33,
           "competitorUrl": "noplog.com/blog/2025/02/26/stable-diffusion-expression-technique-prompts-examples/",
           "roi": 330,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion プロンプト",
@@ -725,7 +788,8 @@
           "estimatedTraffic": 9,
           "competitorUrl": "noplog.com/blog/2025/02/26/stable-diffusion-expression-technique-prompts-examples/",
           "roi": 330,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -736,7 +800,8 @@
           "estimatedTraffic": 247,
           "competitorUrl": "noplog.com/blog/2025/08/30/stable-diffusion-clothing-prompts/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 髪型",
@@ -747,7 +812,8 @@
           "estimatedTraffic": 95,
           "competitorUrl": "noplog.com/blog/2025/02/09/ai-illust-stable-diffusion-hair-prompts/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -758,7 +824,8 @@
           "estimatedTraffic": 57,
           "competitorUrl": "noplog.com/blog/2025/07/17/ai-illust-stable-diffusion-clothing-prompts/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -769,7 +836,8 @@
           "estimatedTraffic": 47,
           "competitorUrl": "noplog.com/blog/2025/07/17/ai-illust-stable-diffusion-clothing-prompts/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 表情",
@@ -780,7 +848,8 @@
           "estimatedTraffic": 216,
           "competitorUrl": "noplog.com/blog/2025/09/16/stable-diffusion-facial-expression-prompts/",
           "roi": 133.33,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "aiイラスト プロンプト",
@@ -791,7 +860,8 @@
           "estimatedTraffic": 57,
           "competitorUrl": "noplog.com/blog/2026/01/23/ai-illust-standing-pose-prompts/",
           "roi": 126.67,
-          "_recommendation": "expand prompt/category coverage"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "aiイラスト プロンプト",
@@ -802,7 +872,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "noplog.com/blog/2025/02/26/stable-diffusion-expression-technique-prompts-examples/",
           "roi": 126.67,
-          "_recommendation": "expand prompt/category coverage"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "controlnet",
@@ -813,7 +884,8 @@
           "estimatedTraffic": 6,
           "competitorUrl": "noplog.com/blog/2025/12/29/controlnet-introduction-basic-guide/",
           "roi": 118.92,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "stable diffusion 呪文",
@@ -824,7 +896,8 @@
           "estimatedTraffic": 95,
           "competitorUrl": "noplog.com/blog/2025/02/26/stable-diffusion-expression-technique-prompts-examples/",
           "roi": 90.48,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 呪文",
@@ -835,7 +908,8 @@
           "estimatedTraffic": 5,
           "competitorUrl": "noplog.com/blog/2025/02/26/stable-diffusion-expression-technique-prompts-examples/",
           "roi": 90.48,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion ポーズ",
@@ -846,7 +920,8 @@
           "estimatedTraffic": 48,
           "competitorUrl": "noplog.com/blog/2026/01/23/ai-illust-standing-pose-prompts/",
           "roi": 88.89,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "プロンプト 衣装",
@@ -857,7 +932,8 @@
           "estimatedTraffic": 11,
           "competitorUrl": "noplog.com/blog/2025/08/30/stable-diffusion-clothing-prompts/",
           "roi": 78,
-          "_recommendation": "expand prompt/category coverage"
+          "priority": "actionable",
+          "_recommendation": "expand matching prompt category and guide coverage"
         },
         {
           "keyword": "aiイラスト 呪文",
@@ -868,7 +944,8 @@
           "estimatedTraffic": 112,
           "competitorUrl": "noplog.com/blog/2024/12/18/ai-illustration-prompt-various-expression-techniques/",
           "roi": 76.19,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "aiイラスト 呪文",
@@ -879,7 +956,8 @@
           "estimatedTraffic": 4,
           "competitorUrl": "noplog.com/blog/2025/01/08/ai-illustration-stablediffusion-prompts-character-settings/",
           "roi": 76.19,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "年齢 プロンプト",
@@ -890,6 +968,7 @@
           "estimatedTraffic": 70,
           "competitorUrl": "noplog.com/blog/2025/01/08/ai-illustration-stablediffusion-prompts-character-settings/",
           "roi": 58.82,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -901,6 +980,7 @@
           "estimatedTraffic": 5,
           "competitorUrl": "noplog.com/blog/2026/02/10/stable-diffusion-body-type-prompts/",
           "roi": 53.64,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -912,7 +992,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/08/13/【html＆css】webデザインを作る！cssの基本／背景を彩る/",
           "roi": 49.17,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "プロンプト 服",
@@ -923,6 +1004,7 @@
           "estimatedTraffic": 9,
           "competitorUrl": "noplog.com/blog/2025/08/30/stable-diffusion-clothing-prompts/",
           "roi": 45.71,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -934,7 +1016,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2025/01/24/unity-beginners-2d-game-animation-animator/",
           "roi": 42.14,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "inpaint",
@@ -945,7 +1028,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/09/12/【stablediffusion】sketchで画像生成／inpaintで画像編集/",
           "roi": 38.26,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "下 から の アングル",
@@ -956,7 +1040,8 @@
           "estimatedTraffic": 6,
           "competitorUrl": "noplog.com/blog/2024/12/30/ai-illustration-stablediffusion-prompts-by-angle-144-composition/",
           "roi": 37.89,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "ai 画風",
@@ -967,7 +1052,8 @@
           "estimatedTraffic": 0.06,
           "competitorUrl": "5月05日",
           "roi": 28,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "wordpress マルチ サイト",
@@ -978,7 +1064,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/07/02/【wordpress】マルチサイト機能で複数のサイトを作成す/",
           "roi": 27.86,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "ress css",
@@ -989,7 +1076,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/08/23/【html＆css】デフォルトcssをリセットしよう/",
           "roi": 24,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "wordpress ブロック エディタ カスタマイズ",
@@ -1000,7 +1088,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/06/25/【wordpress】ブロックエディターをカスタマイズする/",
           "roi": 23.33,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "css id",
@@ -1011,7 +1100,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "noplog.com/blog/2024/08/20/【html＆css】クラスとidを使った指定方法/",
           "roi": 22.69,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         }
       ]
     },
@@ -1028,7 +1118,8 @@
           "estimatedTraffic": 9,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 244.44,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "m 字 パンチラ 画像",
@@ -1039,7 +1130,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 210,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "m 字 パンチラ 画像",
@@ -1050,7 +1142,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 210,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -1061,7 +1154,8 @@
           "estimatedTraffic": 7,
           "competitorUrl": "ai-freak.com/clothing_prompt/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "stable diffusion 服装",
@@ -1072,7 +1166,8 @@
           "estimatedTraffic": 2,
           "competitorUrl": "ai-freak.com/clothing_prompt/",
           "roi": 172.73,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "エロ プロンプト",
@@ -1083,7 +1178,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 150,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "エロ プロンプト",
@@ -1094,7 +1190,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 150,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion エロ",
@@ -1105,7 +1202,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 135.71,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion 表情",
@@ -1116,7 +1214,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/facial-expression/",
           "roi": 133.33,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "aiイラスト プロンプト",
@@ -1127,7 +1226,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/stable-diffusion-prompt/",
           "roi": 126.67,
-          "_recommendation": "expand prompt/category coverage"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "m 字 開 脚 画像",
@@ -1138,7 +1238,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 126.32,
-          "_recommendation": "review manually before content planning"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "えろ 実写",
@@ -1149,7 +1250,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 114.29,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "えろ 実写",
@@ -1160,7 +1262,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 114.29,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "アナル 体位",
@@ -1171,7 +1274,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 110,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "アナル 体位",
@@ -1182,7 +1286,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 110,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "looking at viewer",
@@ -1193,7 +1298,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ai-freak.com/look-prompt/",
           "roi": 97.78,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "机 の 下 パンチラ",
@@ -1204,7 +1310,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 97.5,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "机 の 下 パンチラ",
@@ -1215,7 +1322,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 97.5,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "脚 エロ",
@@ -1226,7 +1334,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 90.63,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "stable diffusion ポーズ",
@@ -1237,7 +1346,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/gravure_prompt/",
           "roi": 88.89,
-          "_recommendation": "expand Stable Diffusion prompt guide and add supporting prompt examples"
+          "priority": "actionable",
+          "_recommendation": "expand Stable Diffusion prompt guide and supporting examples"
         },
         {
           "keyword": "エロ 画像 カラー",
@@ -1248,7 +1358,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 80,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "aiイラスト 呪文",
@@ -1259,7 +1370,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/stable-diffusion-prompt/",
           "roi": 76.19,
-          "_recommendation": "evaluate AI image-generation guide or tool-led content"
+          "priority": "actionable",
+          "_recommendation": "evaluate AI image-generation or tool-led content"
         },
         {
           "keyword": "実写 エロ",
@@ -1270,7 +1382,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 58.82,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "えろ リアル",
@@ -1281,7 +1394,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 57.14,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         },
         {
           "keyword": "プロンプト 胸",
@@ -1292,6 +1406,7 @@
           "estimatedTraffic": 41,
           "competitorUrl": "ai-freak.com/body-prompt/",
           "roi": 53.64,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -1303,6 +1418,7 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/gravure_prompt/",
           "roi": 53.64,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -1314,6 +1430,7 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/stable-diffusion-prompt/",
           "roi": 53.64,
+          "priority": "actionable",
           "_recommendation": "expand prompt/category coverage"
         },
         {
@@ -1325,7 +1442,8 @@
           "estimatedTraffic": 1,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 52.63,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "nsfw プロンプト",
@@ -1336,7 +1454,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/stable-diffusion-prompt/",
           "roi": 48.89,
-          "_recommendation": "deprioritize: adult/brand-risk query despite high ROI"
+          "priority": "deprioritize",
+          "_recommendation": "deprioritize: NSFW, single-brand, or game-specific query; exclude from prompta strategy unless manually approved"
         },
         {
           "keyword": "乱 交 英語",
@@ -1347,7 +1466,8 @@
           "estimatedTraffic": 0,
           "competitorUrl": "ai-freak.com/sexy-prompt/",
           "roi": 47.06,
-          "_recommendation": "review manually before content planning"
+          "priority": "manual-review",
+          "_recommendation": "manual review before content planning"
         }
       ]
     }

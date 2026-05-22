@@ -3,8 +3,8 @@
     "snapshotDate": "2026-05-22",
     "semrushDatabase": "jp",
     "apiUnitsConsumed": 6,
-    "agentVersion": "SEMrush-snapshot-v1",
-    "notes": "Organic Research positions report for prompta.jp, JP database."
+    "agentVersion": "SEMrush-snapshot-v2-ui-platform",
+    "notes": "Generated from logged-in Semrush platform data captured via low-frequency Organic Research/Keyword Overview pages. API key is unavailable; Web UI platform session was used per user instruction."
   },
   "totalOrganicKeywords": 34,
   "estimatedMonthlyTraffic": 152,
@@ -17,7 +17,8 @@
       "estimatedTraffic": 36,
       "trend": null,
       "keywordDifficulty": 3,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ プロンプト",
@@ -27,7 +28,8 @@
       "estimatedTraffic": 29,
       "trend": null,
       "keywordDifficulty": 25,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ ai",
@@ -37,7 +39,8 @@
       "estimatedTraffic": 18,
       "trend": null,
       "keywordDifficulty": 22,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト と は",
@@ -47,7 +50,8 @@
       "estimatedTraffic": 18,
       "trend": null,
       "keywordDifficulty": 41,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 身長",
@@ -57,7 +61,8 @@
       "estimatedTraffic": 15,
       "trend": null,
       "keywordDifficulty": 5,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 色",
@@ -67,7 +72,8 @@
       "estimatedTraffic": 11,
       "trend": null,
       "keywordDifficulty": 13,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト アニメ",
@@ -77,7 +83,8 @@
       "estimatedTraffic": 7,
       "trend": null,
       "keywordDifficulty": 9,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 髪型",
@@ -87,7 +94,8 @@
       "estimatedTraffic": 7,
       "trend": null,
       "keywordDifficulty": 8,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 体型",
@@ -97,7 +105,8 @@
       "estimatedTraffic": 6,
       "trend": null,
       "keywordDifficulty": 3,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 服装",
@@ -107,7 +116,8 @@
       "estimatedTraffic": 3,
       "trend": null,
       "keywordDifficulty": 7,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ プロンプト",
@@ -117,7 +127,8 @@
       "estimatedTraffic": 1,
       "trend": null,
       "keywordDifficulty": 25,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト 身長",
@@ -127,7 +138,8 @@
       "estimatedTraffic": 1,
       "trend": null,
       "keywordDifficulty": 5,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "エジプト 衣装 イラスト",
@@ -137,7 +149,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 21,
-      "intent": "I"
+      "intent": "I",
+      "priority": "manual-review"
     },
     {
       "keyword": "プロンプト コスプレ",
@@ -147,7 +160,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 17,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト コスプレ",
@@ -157,7 +171,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 17,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト コスプレ",
@@ -167,7 +182,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 17,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "contrapposto 意味",
@@ -177,7 +193,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 29,
-      "intent": "I"
+      "intent": "I",
+      "priority": "manual-review"
     },
     {
       "keyword": "プロンプト カメラ",
@@ -187,7 +204,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 7,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト カメラ",
@@ -197,7 +215,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 7,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ プロンプト",
@@ -207,7 +226,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 25,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ プロンプト",
@@ -217,7 +237,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 25,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "コスプレ プロンプト",
@@ -227,7 +248,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 25,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "ai コスプレ 画像",
@@ -237,7 +259,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 21,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト",
@@ -247,7 +270,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 39,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト",
@@ -257,7 +281,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 39,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト アニメ",
@@ -267,7 +292,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 9,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト アニメ",
@@ -277,7 +303,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 9,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "プロンプト とは",
@@ -287,7 +314,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 32,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "midjourney プロンプト",
@@ -297,7 +325,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 23,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "ダリ ai",
@@ -307,7 +336,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 39,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "ai アニメ キャラ",
@@ -317,7 +347,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 22,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     },
     {
       "keyword": "absurdres 意味",
@@ -327,7 +358,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 20,
-      "intent": "I"
+      "intent": "I",
+      "priority": "manual-review"
     },
     {
       "keyword": "例 の セーラー服",
@@ -337,7 +369,8 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 29,
-      "intent": "I"
+      "intent": "I",
+      "priority": "manual-review"
     },
     {
       "keyword": "ai 髪 色",
@@ -347,7 +380,9 @@
       "estimatedTraffic": 0,
       "trend": null,
       "keywordDifficulty": 17,
-      "intent": "I"
+      "intent": "I",
+      "priority": "actionable"
     }
-  ]
+  ],
+  "_notes": "SEMrush platform Organic Research data; compare with GSC because Semrush coverage can lag or undercount long-tail queries."
 }
