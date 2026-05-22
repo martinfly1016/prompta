@@ -57,6 +57,16 @@ export default async function HomePage() {
     getGuides(),
   ])
 
+  // Mix curated top guides with newest — gives recently-added guides a homepage
+  // link so Google can pick them up (the data layer returns guides by `order asc`).
+  const curatedHero = guides.slice(0, 3)
+  const heroSlugs = new Set(curatedHero.map(g => g.slug))
+  const newestExtras = [...guides]
+    .filter(g => !heroSlugs.has(g.slug) && g.createdAt)
+    .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''))
+    .slice(0, 3)
+  const heroGuides = [...curatedHero, ...newestExtras]
+
   const orgSchema = generateOrganizationSchema({
     baseUrl: SITE_CONFIG.url,
     siteName: SITE_CONFIG.nameEn,
@@ -161,7 +171,7 @@ export default async function HomePage() {
               </Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {guides.slice(0, 3).map(guide => (
+              {heroGuides.map(guide => (
                 <Link key={guide.slug} href={`/guides/${guide.slug}`} className="group p-5 bg-white rounded-xl border border-gray-200 hover:border-sky-300 hover:shadow-md transition-all duration-200">
                   <h3 className="font-semibold text-sm text-gray-900 group-hover:text-sky-600 transition-colors mb-1.5 line-clamp-2">{guide.title}</h3>
                   <p className="text-xs text-gray-500 line-clamp-2">{guide.description}</p>

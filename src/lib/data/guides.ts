@@ -4,7 +4,7 @@ import { cache } from 'react'
 export const getGuides = cache(async () => {
   return prisma.guide.findMany({
     where: { isPublished: true },
-    orderBy: { order: 'asc' },
+    orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
   })
 })
 

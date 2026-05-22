@@ -85,6 +85,7 @@ export interface NormalizedGuide {
   description: string
   content?: string
   targetKeyword?: string | null
+  createdAt?: string
 }
 
 function normalizeMockPrompt(p: MockPrompt): NormalizedPrompt {
@@ -394,6 +395,7 @@ export async function getGuides(): Promise<NormalizedGuide[]> {
         description: g.description ?? '',
         content: g.content,
         targetKeyword: g.targetKeyword,
+        createdAt: g.createdAt?.toISOString?.() ?? String(g.createdAt),
       }))
     },
     () => MOCK_GUIDES.map(g => ({
