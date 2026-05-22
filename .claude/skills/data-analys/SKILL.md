@@ -65,6 +65,10 @@ npx tsx src/scripts/data-analys/gsc-query.ts \
 
 ### content-gap — 内容缺口分析
 
+> **2026-05-22 更新**: SEMrush API key 未配置 + 直接调用闲置中。**当前正规路径**是月度手动 snapshot —— 详见 [`seo/semrush-monthly-brief.md`](../../../seo/semrush-monthly-brief.md)。SEMrush 数据由具备 API 权限的另一 agent 离线生成，输出落到 `seo/semrush-snapshots/{YYYY-MM-DD}/` 后再被 `/collect-content` Phase 0.5 + 本 mode 消费。
+
+**直接调用 semrush-query.ts**（仅当 SEMRUSH_API_KEY 已配置）:
+
 **输入**: 竞争对手域名（默认 `romptn.com, ururuailab.com, noplog.com, ai-freak.com`）
 
 **执行**:
@@ -75,6 +79,13 @@ npx tsx src/scripts/data-analys/semrush-query.ts \
   --our-domain=prompta.jp \
   --limit=20 \
   --db=jp
+```
+
+**读 snapshot 模式**（推荐，无 API 依赖）:
+```bash
+LATEST=$(ls -1d seo/semrush-snapshots/[0-9]* | sort | tail -1)
+jq '.data[] | select(.competitor == "romptn.com") | .gaps[0:20]' \
+  "$LATEST/content-gap.json"
 ```
 
 **输出格式**:

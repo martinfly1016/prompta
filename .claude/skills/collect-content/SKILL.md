@@ -71,6 +71,58 @@ argument-hint: "[--source=civitai|midjourney|dalle|lexica|promptsChat|text] [--p
    ```
    保存结果供 Phase 1 使用，避免生成语义重复的 prompt。
 
+### Phase 0.5: SEMrush キーワード優先度プリチェック（月度データ依存）
+
+> **目的**: 採集主題を決める前に「市場需要 vs 既存ランキング」を確認し、ROI 高い category × tool を優先する。
+> **データソース**: 月 1 回の手動 SEMrush snapshot（[seo/semrush-monthly-brief.md](../../../seo/semrush-monthly-brief.md) で定義）。
+
+1. **最新 snapshot を探す**：
+   ```bash
+   LATEST_SNAPSHOT=$(ls -1d seo/semrush-snapshots/[0-9]* 2>/dev/null | sort | tail -1)
+   echo "$LATEST_SNAPSHOT"
+   ```
+   存在しない場合（初回 or git pull 漏れ）→ user に refresh を依頼し本 Phase 0.5 をスキップして Phase 1 へ。**強制中断ではない**（snapshot がなくても採集は可能、ただし主題優先度が GSC + DB のみで決まる）。
+
+2. **snapshot age チェック**：
+   ```bash
+   SNAPSHOT_DATE=$(basename "$LATEST_SNAPSHOT")
+   AGE_DAYS=$(( ($(date +%s) - $(date -j -f "%Y-%m-%d" "$SNAPSHOT_DATE" +%s)) / 86400 ))
+   echo "age=$AGE_DAYS days"
+   ```
+   - age ≤ 35 日 → **OK**、続行
+   - age 36-60 日 → ⚠️ user に「snapshot が古い、refresh を考慮」と通知
+   - age > 60 日 → 🔴 強い警告、user 確認後続行
+
+3. **snapshot 読み込み + 優先度計算**：
+
+   `keyword-universe.json` の `data` から、`/collect-content` の `--source` に応じて関連 keyword をフィルタ：
+
+   - source=lexica/civitai/midjourney/dalle（**画像系**）→ category in {hairstyle, clothing, anime, color, camera, body-type, cosplay, costume, photo-edit}
+   - source=promptsChat/text（**テキスト系**）→ category in {writing, programming, business, education, creative}
+
+   各候補 category × tool 組み合わせについて、関連 keyword をマッチ（`{cat-jp}` or `{tool}` を含むもの）し、以下のスコアを計算：
+
+   ```
+   adjusted_priority = base_priority (from DB count gap)
+                     + Σ(searchVolume / max(kd, 10)) for matched keywords
+                     × (1 + 0.3 * gapCount)  // content-gap.json で gap が多い category にブースト
+   ```
+
+4. **出力 table**（user に確認させる）：
+
+   ```
+   | Rank | Category | Tool | DB Count | TopKeyword | Vol | KD | gap | score | 推奨 |
+   |---|---|---|---|---|---|---|---|---|---|
+   | 1 | hairstyle | midjourney | 8 | 髪型 プロンプト | 1300 | 19 | yes | 92.4 | 🟢 採集 5 件 |
+   | 2 | ...
+   ```
+
+5. **content-gap.json から **「prompta 未取得 + competitor 1 位以上」** を別表で抽出**（上位 5 件）→ user に「これらの主題は guide 化 / 新 category 化候補」として通知。**採集対象ではない**が、collect-content 後の戦略タスクとして残す。
+
+6. **採集ターゲット選定確認**: user に「上記 ranking を承認しますか / 別カテゴリを優先しますか」と聞き、承認後に Phase 1 へ進む。
+
+> **snapshot 不在時のフォールバック**: Phase 0 の DB count gap + `watch-keywords.ts` の monthlyVolume/kd（存在分のみ）で従来通り優先度計算。SEMrush snapshot は **強化情報** であり **必須ではない**。
+
 ### Phase 1: 抓取 / 生成
 
 根据 `--source` 参数选择对应抓取脚本或生成流程：

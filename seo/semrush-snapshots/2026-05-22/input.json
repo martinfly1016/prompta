@@ -1,0 +1,960 @@
+{
+  "_meta": {
+    "generatedAt": "2026-05-22T07:58:37.740Z",
+    "counts": {
+      "total": 148,
+      "gscTopQueries": 50,
+      "watchKeywords": 37,
+      "seedCombinatorial": 76
+    },
+    "generatorVersion": "input-builder-v1"
+  },
+  "keywords": [
+    {
+      "keyword": "コスプレ プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5,
+      "notes": "gsc impressions=385 clicks=83"
+    },
+    {
+      "keyword": "画像生成ai プロンプト例 アニメ",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.26,
+      "notes": "gsc impressions=397 clicks=75"
+    },
+    {
+      "keyword": "体型 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.76,
+      "notes": "gsc impressions=1469 clicks=59"
+    },
+    {
+      "keyword": "身長差 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.61,
+      "notes": "gsc impressions=385 clicks=50"
+    },
+    {
+      "keyword": "体格差 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 3.28,
+      "notes": "gsc impressions=326 clicks=36"
+    },
+    {
+      "keyword": "プロンプト 体型",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.8,
+      "notes": "gsc impressions=474 clicks=26"
+    },
+    {
+      "keyword": "プロンプト 画風 アニメ",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.7,
+      "notes": "gsc impressions=172 clicks=26"
+    },
+    {
+      "keyword": "アニメキャラ プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 3.41,
+      "notes": "gsc impressions=131 clicks=25"
+    },
+    {
+      "keyword": "身長 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 6.67,
+      "notes": "gsc impressions=555 clicks=21"
+    },
+    {
+      "keyword": "アニメ プロンプト一覧",
+      "source": "gsc-top-queries",
+      "promptaRank": 3.38,
+      "notes": "gsc impressions=82 clicks=18"
+    },
+    {
+      "keyword": "プロンプト アニメキャラ",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.66,
+      "notes": "gsc impressions=71 clicks=18"
+    },
+    {
+      "keyword": "chatgpt 画像生成 プロンプト例 アニメ",
+      "source": "gsc-top-queries",
+      "promptaRank": 6.68,
+      "notes": "gsc impressions=151 clicks=16"
+    },
+    {
+      "keyword": "プロンプト コスプレ",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.02,
+      "notes": "gsc impressions=105 clicks=15"
+    },
+    {
+      "keyword": "腹筋 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.55,
+      "notes": "gsc impressions=224 clicks=15"
+    },
+    {
+      "keyword": "stable diffusion 体格差",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.91,
+      "notes": "gsc impressions=47 clicks=14"
+    },
+    {
+      "keyword": "身長差プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 2,
+      "notes": "gsc impressions=21 clicks=14"
+    },
+    {
+      "keyword": "stable diffusion 体型",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.26,
+      "notes": "gsc impressions=280 clicks=13"
+    },
+    {
+      "keyword": "アニメキャラ プロンプト一覧",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.06,
+      "notes": "gsc impressions=145 clicks=13"
+    },
+    {
+      "keyword": "アニメ風 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.03,
+      "notes": "gsc impressions=166 clicks=13"
+    },
+    {
+      "keyword": "セーラー服 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.59,
+      "notes": "gsc impressions=667 clicks=13"
+    },
+    {
+      "keyword": "プロンプト 体格差",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.65,
+      "notes": "gsc impressions=65 clicks=13"
+    },
+    {
+      "keyword": "gemini プロンプト 一覧",
+      "source": "gsc-top-queries",
+      "promptaRank": 8.78,
+      "notes": "gsc impressions=310 clicks=12"
+    },
+    {
+      "keyword": "ぽっちゃり プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.42,
+      "notes": "gsc impressions=160 clicks=12"
+    },
+    {
+      "keyword": "プロンプト 体型 女性",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.08,
+      "notes": "gsc impressions=212 clicks=12"
+    },
+    {
+      "keyword": "プロンプト 服装 コスプレ",
+      "source": "gsc-top-queries",
+      "promptaRank": 3.37,
+      "notes": "gsc impressions=92 clicks=12"
+    },
+    {
+      "keyword": "体格 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.81,
+      "notes": "gsc impressions=160 clicks=12"
+    },
+    {
+      "keyword": "スレンダー プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.48,
+      "notes": "gsc impressions=87 clicks=11"
+    },
+    {
+      "keyword": "制服 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 7.68,
+      "notes": "gsc impressions=575 clicks=11"
+    },
+    {
+      "keyword": "prompta",
+      "source": "gsc-top-queries",
+      "promptaRank": 1.06,
+      "notes": "gsc impressions=16 clicks=10"
+    },
+    {
+      "keyword": "プロンプト 服装 女性",
+      "source": "gsc-top-queries",
+      "promptaRank": 7.31,
+      "notes": "gsc impressions=276 clicks=10"
+    },
+    {
+      "keyword": "gemini プロンプト集",
+      "source": "gsc-top-queries",
+      "promptaRank": 8.89,
+      "notes": "gsc impressions=188 clicks=9"
+    },
+    {
+      "keyword": "stable diffusion プロンプト コピペ",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.45,
+      "notes": "gsc impressions=31 clicks=9"
+    },
+    {
+      "keyword": "stable diffusion 筋肉質",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.46,
+      "notes": "gsc impressions=24 clicks=9"
+    },
+    {
+      "keyword": "コスプレ プロンプト 一覧",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.4,
+      "notes": "gsc impressions=42 clicks=9"
+    },
+    {
+      "keyword": "プロンプト 身長差",
+      "source": "gsc-top-queries",
+      "promptaRank": 2.63,
+      "notes": "gsc impressions=78 clicks=9"
+    },
+    {
+      "keyword": "色 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 6.73,
+      "notes": "gsc impressions=451 clicks=9"
+    },
+    {
+      "keyword": "ai プロンプト 体型",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.77,
+      "notes": "gsc impressions=99 clicks=8"
+    },
+    {
+      "keyword": "geminiプロンプト 一覧",
+      "source": "gsc-top-queries",
+      "promptaRank": 8.24,
+      "notes": "gsc impressions=147 clicks=8"
+    },
+    {
+      "keyword": "stable diffusion プロンプト コツ",
+      "source": "gsc-top-queries",
+      "promptaRank": 6.58,
+      "notes": "gsc impressions=134 clicks=8"
+    },
+    {
+      "keyword": "stable diffusion 身長",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.67,
+      "notes": "gsc impressions=144 clicks=8"
+    },
+    {
+      "keyword": "アニメ プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.06,
+      "notes": "gsc impressions=94 clicks=8"
+    },
+    {
+      "keyword": "プロンプト 服装 ファンタジー",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.71,
+      "notes": "gsc impressions=116 clicks=8"
+    },
+    {
+      "keyword": "筋肉質 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.68,
+      "notes": "gsc impressions=196 clicks=8"
+    },
+    {
+      "keyword": "衣装 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 8.85,
+      "notes": "gsc impressions=206 clicks=8"
+    },
+    {
+      "keyword": "stable diffusion コスプレ プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.85,
+      "notes": "gsc impressions=40 clicks=7"
+    },
+    {
+      "keyword": "stable diffusion セーラー服",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.06,
+      "notes": "gsc impressions=96 clicks=7"
+    },
+    {
+      "keyword": "stable diffusion 身長差",
+      "source": "gsc-top-queries",
+      "promptaRank": 4.17,
+      "notes": "gsc impressions=47 clicks=7"
+    },
+    {
+      "keyword": "アニメ調 プロンプト",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.22,
+      "notes": "gsc impressions=157 clicks=7"
+    },
+    {
+      "keyword": "プロンプト スレンダー",
+      "source": "gsc-top-queries",
+      "promptaRank": 1.74,
+      "notes": "gsc impressions=23 clicks=7"
+    },
+    {
+      "keyword": "プロンプト 体格",
+      "source": "gsc-top-queries",
+      "promptaRank": 5.17,
+      "notes": "gsc impressions=66 clicks=7"
+    },
+    {
+      "keyword": "プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/what-is-prompt",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "notes": "cluster=head-ai; 5/12 ship d314307 目标词"
+    },
+    {
+      "keyword": "プロンプトとは",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/what-is-prompt",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "notes": "cluster=head-ai"
+    },
+    {
+      "keyword": "生成ai プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/gemini",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "notes": "cluster=head-ai; 5/12 ship 后 -98 位巨幅改善"
+    },
+    {
+      "keyword": "ai プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/what-is-prompt",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "notes": "cluster=head-ai"
+    },
+    {
+      "keyword": "chatgpt プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/chatgpt",
+      "searchVolume": null,
+      "keywordDifficulty": null,
+      "notes": "cluster=head-ai"
+    },
+    {
+      "keyword": "gemini プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/gemini",
+      "searchVolume": 1000,
+      "keywordDifficulty": 38,
+      "notes": "cluster=head-ai; 机会词 — 28d 64 imp / pos 38"
+    },
+    {
+      "keyword": "似合う 髪色 診断",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/hair-color-diagnosis",
+      "searchVolume": 2600,
+      "keywordDifficulty": 26,
+      "notes": "cluster=tools-hair"
+    },
+    {
+      "keyword": "髪色 ai 診断",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/hair-color-diagnosis",
+      "searchVolume": 1800,
+      "keywordDifficulty": 24,
+      "notes": "cluster=tools-hair"
+    },
+    {
+      "keyword": "自分 に 似合う 髪色",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/hair-color-diagnosis",
+      "searchVolume": 1200,
+      "keywordDifficulty": 20,
+      "notes": "cluster=tools-hair"
+    },
+    {
+      "keyword": "髪色 シミュレーター",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/hair-color-diagnosis",
+      "searchVolume": 680,
+      "keywordDifficulty": 22,
+      "notes": "cluster=tools-hair"
+    },
+    {
+      "keyword": "パーソナルカラー ai",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis",
+      "searchVolume": 2100,
+      "keywordDifficulty": 28,
+      "notes": "cluster=tools-pc"
+    },
+    {
+      "keyword": "パーソナルカラー診断 方法",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis",
+      "searchVolume": 420,
+      "keywordDifficulty": 22,
+      "notes": "cluster=tools-pc"
+    },
+    {
+      "keyword": "パーソナルカラー 春",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis/spring",
+      "searchVolume": 890,
+      "keywordDifficulty": 18,
+      "notes": "cluster=tools-pc-seasonal"
+    },
+    {
+      "keyword": "パーソナルカラー 夏",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis/summer",
+      "searchVolume": 780,
+      "keywordDifficulty": 16,
+      "notes": "cluster=tools-pc-seasonal"
+    },
+    {
+      "keyword": "パーソナルカラー 秋",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis/autumn",
+      "searchVolume": 720,
+      "keywordDifficulty": 17,
+      "notes": "cluster=tools-pc-seasonal"
+    },
+    {
+      "keyword": "パーソナルカラー 冬",
+      "source": "watch-keywords",
+      "currentTargetPage": "/tools/personal-color-analysis/winter",
+      "searchVolume": 720,
+      "keywordDifficulty": 17,
+      "notes": "cluster=tools-pc-seasonal"
+    },
+    {
+      "keyword": "ai 写真 加工",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/photo-edit",
+      "searchVolume": 890,
+      "keywordDifficulty": 24,
+      "notes": "cluster=photo-edit"
+    },
+    {
+      "keyword": "ai 背景削除",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/photo-edit",
+      "searchVolume": 680,
+      "keywordDifficulty": 22,
+      "notes": "cluster=photo-edit"
+    },
+    {
+      "keyword": "ai 証明写真",
+      "source": "watch-keywords",
+      "currentTargetPage": null,
+      "searchVolume": 540,
+      "keywordDifficulty": 28,
+      "notes": "cluster=new-tool-candidate; P1 新工具候选 — AI 証明写真生成器"
+    },
+    {
+      "keyword": "プロンプト 髪型",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/hairstyle",
+      "searchVolume": 2400,
+      "keywordDifficulty": 8,
+      "notes": "cluster=opportunity; GSC 28d: 8801 imp / 2.20% CTR / pos 18 — title rewrite 5/18"
+    },
+    {
+      "keyword": "プロンプト 服装",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/clothing",
+      "searchVolume": 1300,
+      "keywordDifficulty": 7,
+      "notes": "cluster=opportunity; GSC 28d: 6706 imp / 3.37% CTR / pos 14 — title rewrite 5/18"
+    },
+    {
+      "keyword": "プロンプト 色",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/color",
+      "searchVolume": 390,
+      "keywordDifficulty": 13,
+      "notes": "cluster=opportunity; GSC 28d: 2957 imp / 2.87% CTR / pos 6.71 — meta rewrite 5/18"
+    },
+    {
+      "keyword": "プロンプト カメラ",
+      "source": "watch-keywords",
+      "currentTargetPage": "/prompts/camera",
+      "searchVolume": 260,
+      "keywordDifficulty": 7,
+      "notes": "cluster=opportunity; GSC 28d: 2916 imp / 1.78% CTR / pos 8.04 — added ライティング 5/18"
+    },
+    {
+      "keyword": "midjourney プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/midjourney-prompt-guide",
+      "searchVolume": 1300,
+      "keywordDifficulty": 23,
+      "notes": "cluster=opportunity; Semrush pos 33 — Hub upgrade pending"
+    },
+    {
+      "keyword": "パーソナルカラー 髪色",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/personal-color-hair-color",
+      "searchVolume": 5400,
+      "keywordDifficulty": 30,
+      "notes": "cluster=opportunity; Week 2 new guide"
+    },
+    {
+      "keyword": "ai 塗り絵",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/ai-coloring-page-prompt",
+      "searchVolume": 480,
+      "keywordDifficulty": 19,
+      "notes": "cluster=opportunity; 塗り絵試点メイン目標。低 KD で最も早く順位上昇期待"
+    },
+    {
+      "keyword": "線画 プロンプト",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/ai-coloring-page-prompt",
+      "searchVolume": 320,
+      "keywordDifficulty": 24,
+      "notes": "cluster=opportunity; 塗り絵試点サブ目標"
+    },
+    {
+      "keyword": "大人 の 塗り絵 無料",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/ai-coloring-page-prompt",
+      "searchVolume": 9900,
+      "keywordDifficulty": 36,
+      "notes": "cluster=opportunity; 塗り絵試点ストレッチ目標。KD 高い、6-8 週まで impression 期待しない"
+    },
+    {
+      "keyword": "マンダラ 塗り絵",
+      "source": "watch-keywords",
+      "currentTargetPage": "/guides/ai-coloring-page-prompt",
+      "searchVolume": 4400,
+      "keywordDifficulty": 30,
+      "notes": "cluster=opportunity; 塗り絵試点サブ目標"
+    },
+    {
+      "keyword": "髪型 プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/hairstyle",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai 髪型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/hairstyle",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 髪型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 髪型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 髪型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "服装 プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/clothing",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai 服装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/clothing",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 服装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 服装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 服装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ai アニメ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/anime",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt アニメ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion アニメ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney アニメ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "カラー プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/color",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai カラー",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/color",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt カラー",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion カラー",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney カラー",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "カメラ プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/camera",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai カメラ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/camera",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt カメラ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion カメラ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney カメラ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ai 体型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/body-type",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 体型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 体型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 体型",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ai 衣装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/costume",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 衣装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 衣装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 衣装",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ai コスプレ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/cosplay",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt コスプレ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion コスプレ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney コスプレ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ライティング プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/writing",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai ライティング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/writing",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt ライティング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion ライティング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney ライティング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "プログラミング プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/programming",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai プログラミング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/programming",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt プログラミング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion プログラミング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney プログラミング",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "ビジネス プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/business",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai ビジネス",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/business",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt ビジネス",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion ビジネス",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney ビジネス",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "教育 プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/education",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai 教育",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/education",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 教育",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 教育",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 教育",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "クリエイティブ プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/creative",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai クリエイティブ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/creative",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt クリエイティブ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion クリエイティブ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney クリエイティブ",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "写真加工 プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/photo-edit",
+      "notes": "category x prompt"
+    },
+    {
+      "keyword": "ai 写真加工",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/prompts/photo-edit",
+      "notes": "ai x category"
+    },
+    {
+      "keyword": "chatgpt 写真加工",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/chatgpt",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "stable-diffusion 写真加工",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "midjourney 写真加工",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/midjourney",
+      "notes": "tool x category"
+    },
+    {
+      "keyword": "claude プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/claude",
+      "notes": "tool x prompt"
+    },
+    {
+      "keyword": "stable-diffusion プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/stable-diffusion",
+      "notes": "tool x prompt"
+    },
+    {
+      "keyword": "dall-e プロンプト",
+      "source": "seed-combinatorial",
+      "currentTargetPage": "/tools/dall-e",
+      "notes": "tool x prompt"
+    }
+  ]
+}
