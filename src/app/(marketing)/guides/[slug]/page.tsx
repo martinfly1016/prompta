@@ -223,38 +223,479 @@ AIは2025年までの学習データに基づいて回答するため、最新�
   'stable-diffusion-prompt-guide': {
     sections: [
       {
-        title: 'Stable Diffusionのプロンプト基礎',
-        content: `Stable Diffusion（SD）のプロンプトは、生成したい画像の特徴を英語のキーワードで記述します。キーワードはカンマ（,）で区切って並べ、重要度に応じて順序を調整します。
+        title: 'Stable Diffusionのプロンプト基礎 — 仕組みと書き方',
+        content: `Stable Diffusion（SD）のプロンプトは、生成したい画像の特徴を英語のキーワードで記述する「呪文」形式です。文章ではなくカンマ（,）区切りのキーワード列で、AIに「何を、どんなスタイルで、どんな品質で描いてほしいか」を伝えます。
 
-基本構文：\`主題, スタイル, 品質タグ, 照明, 構図\`
+**プロンプトの基本構文（推奨順序）：**
 
-例：\`beautiful girl, long hair, white dress, in garden, (masterpiece:1.2), (best quality:1.4), soft lighting, bokeh background\``,
+\`主題, スタイル, 品質タグ, 構図, 照明, 背景, 細部, 雰囲気\`
+
+**例：**
+
+\`beautiful girl, long hair, white dress, in garden, (masterpiece:1.2), (best quality:1.4), soft lighting, bokeh background\`
+
+順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
+
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。`,
       },
       {
-        title: '品質タグの使い方',
-        content: `高品質な画像を生成するために、以下の品質タグを使用します：
+        title: '基本構文 — プロンプトを構成する 8 つの要素',
+        content: `効果的な Stable Diffusion プロンプトは以下 8 つの要素から構成されます：
 
-- **masterpiece** — 傑作レベルの品質
-- **best quality** — 最高品質
-- **ultra-detailed** — 超精細
-- **8k** — 8K解像度相当の詳細さ
-- **realistic** — リアルなスタイル
+1. **主題 (Subject)** — 描きたい中心人物・物体（例：\`young woman\`, \`samurai\`, \`cat\`）
+2. **スタイル (Style)** — アートスタイル指定（例：\`photorealistic\`, \`anime style\`, \`oil painting\`, \`watercolor\`）
+3. **品質タグ (Quality)** — 品質向上ワード（例：\`masterpiece\`, \`best quality\`, \`ultra-detailed\`, \`8k\`）
+4. **構図 (Composition)** — カメラアングル・距離（例：\`portrait\`, \`full body\`, \`from above\`, \`close-up\`）
+5. **照明 (Lighting)** — 光の状態（例：\`soft lighting\`, \`golden hour\`, \`studio lighting\`, \`rim light\`）
+6. **背景 (Background)** — 環境・場所（例：\`in garden\`, \`urban street\`, \`forest\`, \`solid white background\`）
+7. **細部 (Details)** — 髪型・服装・表情など具体描写（例：\`long blonde hair\`, \`red kimono\`, \`smiling\`）
+8. **雰囲気 (Mood)** — 全体トーン（例：\`dramatic\`, \`peaceful\`, \`mysterious\`, \`cinematic\`）
 
-重み付け：\`(masterpiece:1.2)\` のように数値で強調度を調整できます。1.0が標準、1.5で強い強調、0.5で弱い適用になります。`,
+**順序の原則**：上記 1→8 の順番が概ね有効な記述順。ただし「強調したい要素」は順序を前に持ってくることで重みが上がります。
+
+実際のプロンプト例（人物・全身ポートレート）：
+
+\`young japanese woman, anime style, (masterpiece:1.3), (best quality:1.4), full body shot, soft natural lighting, traditional shrine background, long black hair, red kimono, gentle smile, serene atmosphere\``,
       },
       {
-        title: 'ネガティブプロンプト',
-        content: `ネガティブプロンプトは、生成結果から除外したい要素を指定します。品質向上に欠かせないテクニックです。
+        title: '品質タグの使い方 — 高品質な生成結果のためのキーワード',
+        content: `品質タグは Stable Diffusion 出力の品質を底上げする「呪文」です。**ほぼ全てのプロンプトに 2-4 個入れる**のが定番。
 
-推奨ネガティブプロンプト：
+**基本品質タグ（最頻出）：**
+
+- \`masterpiece\` — 傑作レベルの品質
+- \`best quality\` — 最高品質
+- \`high quality\` — 高品質
+- \`ultra-detailed\` — 超精細描写
+- \`8k\` / \`4k\` — 高解像度相当
+- \`detailed face\` / \`detailed eyes\` — 顔・目を精細に
+- \`sharp focus\` — 鮮明なピント
+
+**スタイル系タグ：**
+
+- \`photorealistic\` / \`realistic\` — 写実的
+- \`anime style\` / \`manga style\` — アニメ・漫画調
+- \`oil painting\` — 油絵調
+- \`watercolor\` — 水彩画調
+- \`cinematic\` — シネマティック
+- \`octane render\` / \`unreal engine\` — 3DCG レンダラー風
+
+**作家・モデル系タグ（影響度大）：**
+
+- \`by Greg Rutkowski\` — ファンタジー絵師風
+- \`by Studio Ghibli\` — ジブリ風
+- \`Artstation trending\` — Artstation 人気作風
+
+これらを 3-5 個組み合わせるのが基本テクニック。例：\`(masterpiece:1.2), (best quality:1.4), ultra-detailed, sharp focus, cinematic lighting\``,
+      },
+      {
+        title: '強調と重み付け — 括弧と数値で意図を伝える',
+        content: `Stable Diffusion では、特定キーワードの影響度を**数値で精密にコントロール**できます。
+
+**重み付け記法：**
+
+| 記法 | 効果 | 例 |
+|---|---|---|
+| \`(word)\` | 1.1 倍に強調 | \`(beautiful)\` |
+| \`((word))\` | 1.21 倍に強調 | \`((beautiful))\` |
+| \`(word:1.3)\` | 1.3 倍に強調（推奨） | \`(masterpiece:1.3)\` |
+| \`(word:0.5)\` | 0.5 倍に弱める | \`(blurry:0.5)\` |
+| \`[word]\` | 0.91 倍に弱める | \`[shadows]\` |
+
+**推奨範囲**：\`0.5\` 〜 \`1.5\`。\`1.5\` 超えると画像が崩れやすく、\`0.3\` 未満はほぼ無視されます。
+
+**実用テクニック：**
+
+- 品質タグは \`(masterpiece:1.2), (best quality:1.4)\` のように **1.2-1.4** で強調
+- 主題の細部（顔・目）は \`(detailed face:1.3), (detailed eyes:1.2)\` で明示強調
+- 不要要素（影や血色）は \`[shadows]\` や \`(red face:0.5)\` で抑制
+
+**BREAK キーワード（一部 UI で対応）：**
+
+\`a girl, red hair BREAK a boy, blue eyes\`
+
+→ AI に「区切り」を伝え、2 つの要素を独立して処理。混色防止に有効。`,
+      },
+      {
+        title: 'モデル別のプロンプト戦略 — Realistic / Anime / Fantasy',
+        content: `Stable Diffusion はモデル（チェックポイント）ごとに**得意なスタイルが異なります**。同じプロンプトでも結果は全く違います。代表 3 系統の書き分け：
+
+**1. リアル系モデル（Realistic Vision, Juggernaut, epiCRealism など）**
+
+- プロンプト方針：写真的なキーワードを重視
+- 必須タグ：\`photorealistic, RAW photo, professional photography, 8k, ultra-detailed\`
+- 照明指定：\`studio lighting, soft natural light, golden hour\` など具体的に
+- ネガティブ重視：\`(anime:1.2), illustration, painting, cartoon, drawing\` を抑制
+
+**2. アニメ系モデル（Anything V5, Counterfeit, MeinaMix など）**
+
+- プロンプト方針：アニメ用語・danbooru タグを活用
+- 必須タグ：\`anime style, masterpiece, best quality, illustration\`
+- danbooru タグ例：\`1girl, solo, long_hair, school_uniform\`（アンダーバー区切り）
+- スタイル強調：\`(anime screencap:1.2), kawaii, manga style\`
+
+**3. ファンタジー / アート系モデル（Dreamshaper, Deliberate, Realistic Vision Fantasy）**
+
+- プロンプト方針：作家名・絵画用語を活用
+- 必須タグ：\`fantasy art, concept art, detailed, dramatic\`
+- 作家タグ：\`by Greg Rutkowski, by Akihiko Yoshida, Artstation\`
+- 雰囲気タグ：\`epic, mystical, atmospheric, ethereal\`
+
+prompta.jp で公開している Stable Diffusion プロンプトは <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">/tools/stable-diffusion</a> から閲覧できます。`,
+      },
+      {
+        title: 'Stable Diffusion 髪型プロンプト — コピペできる実例',
+        content: `「stable diffusion 髪型」「sd 髪型 プロンプト」で検索されるユースケース向け。髪型は SD で**最もコントロールしやすい要素**の一つ。
+
+**髪の長さ：**
+
+- \`short hair\` — ショートヘア
+- \`medium hair\` / \`shoulder-length hair\` — セミロング
+- \`long hair\` — ロングヘア
+- \`very long hair\` — 超ロング（背中以下）
+- \`buzz cut\` — 坊主に近い超短髪
+
+**髪型スタイル：**
+
+- \`ponytail\` — ポニーテール
+- \`twintails\` / \`pigtails\` — ツインテール
+- \`braided hair\` / \`braids\` — 編み込み・三つ編み
+- \`bob cut\` / \`bob\` — ボブカット
+- \`bun\` — お団子
+- \`curly hair\` — 巻き髪
+- \`straight hair\` — ストレート
+- \`wavy hair\` — ウェーブ
+- \`pixie cut\` — ピクシーカット
+
+**髪色：**
+
+- \`black hair\`, \`brown hair\`, \`blonde hair\`, \`silver hair\`, \`pink hair\`, \`red hair\`, \`blue hair\`, \`gradient hair\`
+
+**前髪：**
+
+- \`bangs\` — 前髪あり
+- \`hime cut\` / \`hime bangs\` — 姫カット前髪
+- \`side-swept bangs\` — 流し前髪
+- \`forehead\` — 前髪なし（おでこ出し）
+
+**実例プロンプト（ロング・編み込み）：**
+
+\`young woman, (masterpiece:1.2), (best quality:1.4), portrait, long braided hair, blonde hair, hime bangs, gentle smile, soft lighting, sharp focus\`
+
+より多くの髪型サンプルは <a href="/prompts/hairstyle" class="text-sky-600 hover:underline">/prompts/hairstyle</a> で公開中。日本人モデル向け詳細は <a href="/guides/hairstyle-prompt-guide" class="text-sky-600 hover:underline">髪型プロンプト完全ガイド</a> を参照してください。`,
+      },
+      {
+        title: 'Stable Diffusion 服装プロンプト — 和洋・ファンタジーまで',
+        content: `「stable diffusion 服装」向け。服装プロンプトは**素材・カット・色**の 3 軸で記述すると精度が上がります。
+
+**和装：**
+
+- \`kimono\` / \`furisode\`（振袖）/ \`yukata\`（浴衣）
+- \`hakama\` / \`samurai armor\`
+- \`shrine maiden outfit\` / \`miko\`（巫女）
+- 色指定：\`red kimono with floral pattern\`, \`navy yukata\`
+
+**現代カジュアル：**
+
+- \`white t-shirt\`, \`blue jeans\`, \`hoodie\`, \`sneakers\`
+- \`oversized sweater\`, \`crop top\`, \`high-waisted skirt\`
+- \`denim jacket\`, \`leather jacket\`, \`bomber jacket\`
+
+**フォーマル：**
+
+- \`business suit\`, \`black blazer\`, \`pencil skirt\`
+- \`elegant evening gown\`, \`tuxedo\`
+- \`white dress shirt with tie\`
+
+**ファンタジー・コスプレ：**
+
+- \`fantasy armor\`, \`mage robe\`, \`elven dress\`, \`knight in shining armor\`
+- \`cyberpunk outfit\`, \`sci-fi suit\`, \`mecha pilot suit\`
+- \`magical girl uniform\`, \`gothic lolita\`
+
+**学校・制服：**
+
+- \`school uniform\`, \`sailor uniform\`, \`blazer uniform\`
+- \`japanese high school uniform\`, \`college blazer\`
+
+**実例プロンプト（フォーマル・スーツ）：**
+
+\`businesswoman portrait, (masterpiece:1.3), (best quality:1.4), wearing black tailored business suit, white shirt, confident expression, modern office background, soft window lighting\`
+
+より多くの服装サンプルは <a href="/prompts/clothing" class="text-sky-600 hover:underline">/prompts/clothing</a> で公開中。コスプレ向けは <a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> も合わせてどうぞ。`,
+      },
+      {
+        title: 'Stable Diffusion 体型・身長プロンプト — 多様な人物造形',
+        content: `「stable diffusion 体型」「プロンプト 身長」「プロンプト 体格」向け。体型表現は **danbooru タグ + 自然語** の組み合わせが効果的。
+
+**体型（基本）：**
+
+- \`slim\` — 細身
+- \`slender\` — スリム
+- \`athletic build\` — アスリート体型
+- \`muscular\` — 筋肉質
+- \`curvy\` — グラマラス
+- \`petite\` — 小柄
+- \`tall\` — 長身
+- \`average build\` — 平均体型
+
+**プロポーション系：**
+
+- \`long legs\` — 脚長
+- \`short legs\` — 脚短め
+- \`wide hips\` — ヒップ広め
+- \`narrow waist\` — 細いウエスト
+- \`broad shoulders\` — 肩幅広い
+- \`small frame\` — 小柄なフレーム
+
+**身長・年代の表現：**
+
+- \`adult woman\` / \`adult man\` — 成人
+- \`teenager\` / \`young adult\` — 10 代後半-20 代前半
+- \`young woman in her twenties\` — 20 代
+- \`mature woman\` — 落ち着いた大人
+- 注：年齢表現は明確な英語表現を使用、未成年扱いになる曖昧表現は避ける
+
+**人種・国籍（モデル特性として）：**
+
+- \`japanese\` / \`asian\` / \`european\` / \`african\` / \`hispanic\`
+- \`japanese woman\`, \`korean man\` — 国籍明示
+
+**実例プロンプト（長身・アスリート）：**
+
+\`tall athletic japanese woman, (masterpiece:1.3), (best quality:1.4), full body, long legs, slender build, sportswear, dynamic pose, studio lighting, gradient background\`
+
+より多くの体型サンプルは <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> で公開中。詳細解説は <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> を参照してください。`,
+      },
+      {
+        title: '背景・構図プロンプト — カメラアングルと環境設定',
+        content: `背景と構図は同じ主題でも**雰囲気を一変させる**重要な要素です。
+
+**カメラアングル（重要）：**
+
+- \`portrait\` / \`headshot\` — 顔・胸から上
+- \`upper body shot\` — 上半身
+- \`full body shot\` — 全身
+- \`from above\` / \`top-down view\` — 俯瞰
+- \`from below\` / \`low angle\` — あおり
+- \`side view\` / \`profile\` — 横顔
+- \`back view\` / \`from behind\` — 後ろ姿
+- \`close-up\` — 接写
+- \`wide shot\` — 引き
+- \`dutch angle\` — 斜め構図
+
+**背景（環境）：**
+
+- \`solid white background\` / \`plain background\` — 無地（証明写真風）
+- \`simple background\` — シンプル背景
+- \`outdoor\` / \`indoor\` — 屋外・屋内
+- \`urban street\` / \`tokyo street at night\` — 都市
+- \`forest\` / \`beach\` / \`mountain\` — 自然
+- \`japanese garden\` / \`shrine\` / \`temple\` — 日本的
+- \`cyberpunk city\` / \`futuristic interior\` — SF
+- \`studio backdrop\` / \`gradient background\` — スタジオ
+
+**ポーズ：**
+
+- \`standing\`, \`sitting\`, \`walking\`, \`running\`
+- \`looking at viewer\` — カメラ目線
+- \`looking away\`, \`looking back\`, \`looking up\`
+- \`hand on hip\`, \`arms crossed\`, \`peace sign\`
+
+**構図テクニック：**
+
+- \`rule of thirds\` — 三分割法
+- \`centered composition\` — センター構図
+- \`bokeh background\` / \`shallow depth of field\` — ボケ
+- \`cinematic composition\` — 映画的構図
+
+prompta.jp の <a href="/prompts/camera" class="text-sky-600 hover:underline">/prompts/camera</a> ではカメラ・構図特化のプロンプト集を公開中です。`,
+      },
+      {
+        title: '照明・雰囲気プロンプト — 光が画像の印象を決める',
+        content: `照明は画像の**印象を最も左右する要素**。同じ主題でも照明次第で「日中の爽やかさ」「夕暮れの哀愁」「夜の神秘性」と劇的に変わります。
+
+**自然光：**
+
+- \`natural lighting\` — 自然光（万能）
+- \`golden hour\` / \`sunset light\` — 黄金時刻・夕陽
+- \`blue hour\` — 青の時刻（日の出前・日没後）
+- \`overcast lighting\` — 曇り空の柔らかい光
+- \`morning light\` / \`afternoon sun\` — 朝・昼の光
+
+**人工光・スタジオ：**
+
+- \`studio lighting\` — スタジオ照明
+- \`softbox lighting\` — ソフトボックス光
+- \`rim light\` / \`back light\` — リムライト・逆光
+- \`spotlight\` — スポットライト
+- \`neon lights\` — ネオン（サイバーパンク必須）
+
+**雰囲気タグ：**
+
+- \`dramatic lighting\` — ドラマチックな光
+- \`cinematic lighting\` — 映画的照明
+- \`soft lighting\` — 柔らかい光
+- \`harsh lighting\` — 強い光
+- \`volumetric lighting\` — 体積光（霧の中の光線）
+- \`god rays\` — 神々しい光線
+
+**色温度・色調：**
+
+- \`warm color tone\` — 暖色寄り
+- \`cool color tone\` — 寒色寄り
+- \`monochrome\` / \`black and white\` — モノクロ
+- \`sepia tone\` — セピア
+- \`pastel colors\` — パステル
+
+**実例（黄金時刻・ポートレート）：**
+
+\`young woman portrait, (masterpiece:1.3), golden hour lighting, soft warm tones, rim light from behind, cinematic depth of field, dreamy atmosphere\``,
+      },
+      {
+        title: 'ネガティブプロンプト完全版 — 品質と意図ズレを防ぐ',
+        content: `ネガティブプロンプトは、生成結果から**除外したい要素**を指定します。Stable Diffusion で品質を担保する**最重要テクニック**。
+
+**汎用品質ネガティブ（ほぼ全プロンプトに使う）：**
+
 \`(worst quality:1.4), (low quality:1.4), normal quality, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry\`
 
-不要な要素を具体的に指定することで、生成結果の品質が大幅に向上します。`,
+**人物アナトミー強化（手・顔の崩れ防止）：**
+
+\`extra arms, extra legs, extra fingers, missing arms, missing legs, fused fingers, deformed hands, ugly face, asymmetric eyes, cross-eyed, mutation, disfigured\`
+
+**スタイル不一致防止（リアル系モデルで使用）：**
+
+\`anime, illustration, painting, drawing, sketch, cartoon, manga, 3d render\`
+
+**スタイル不一致防止（アニメ系モデルで使用）：**
+
+\`photorealistic, realistic, photograph, 3d render, RAW photo\`
+
+**NSFW 防止（重要）：**
+
+\`nsfw, nude, naked, sexually suggestive, explicit content\`
+
+**フル例（リアル系・ポートレート）：**
+
+\`(worst quality:1.4), (low quality:1.4), bad anatomy, bad hands, text, watermark, signature, blurry, extra arms, fused fingers, deformed hands, anime, illustration, painting, cartoon, nsfw\`
+
+ネガティブプロンプトは**ほぼテンプレ化**できる要素。一度自分のお気に入りパターンを作って、各生成で使い回すのが効率的です。`,
+      },
+      {
+        title: 'ステップ数・サンプラー・CFG の推奨設定',
+        content: `Stable Diffusion はプロンプト以外に、**生成パラメータ**も品質を左右します。
+
+**ステップ数 (Steps)：**
+
+- **20-30** — 高速・実用品質（推奨デフォルト）
+- **40-50** — 高品質・細部まで描き込み
+- **60+** — 微改善のみ、コスパ悪
+
+**サンプラー (Sampler) — 用途別おすすめ：**
+
+| サンプラー | 特徴 | 用途 |
+|---|---|---|
+| **DPM++ 2M Karras** | 万能・高速 | 推奨デフォルト |
+| **DPM++ SDE Karras** | 高品質 | じっくり生成 |
+| **Euler a** | 創造性高い | アート系 |
+| **DDIM** | 一貫性高い | 動画用 |
+| **UniPC** | 高速 | 高速確認 |
+
+**CFG Scale (Classifier-Free Guidance)：**
+
+- **5-7** — プロンプトに緩く従う、創造性余地あり
+- **7-9** — 標準（推奨デフォルト）
+- **10-13** — プロンプトに厳密、過剰彩度の傾向
+- **15+** — 画像が崩れる可能性大
+
+**Seed (シード値)：**
+
+- 同じシード + 同じプロンプト = 同じ画像
+- 気に入った構図のシードを保存しておくと、プロンプト微調整で別バリエーション作成可能
+
+**Resolution (解像度)：**
+
+- 推奨：\`512x512\` (SD1.5) / \`768x768\` (SD2.x) / \`1024x1024\` (SDXL)
+- 大きすぎると体や顔が複数生成される（multiple heads 問題）
+- 大きい画像は **Hi-Res Fix** や **img2img upscale** で対応
+
+**推奨デフォルト構成（初心者向け）：**
+
+\`Steps: 28, Sampler: DPM++ 2M Karras, CFG Scale: 7, Resolution: 512x768 (portrait) / 768x512 (landscape)\``,
+      },
+      {
+        title: 'トラブルシューティング — 手・顔の崩れを修正する',
+        content: `Stable Diffusion で**最も発生しやすい品質問題**と対処法：
+
+**問題 1：手の指が崩れる（多指・癒着・歪み）**
+
+- ネガティブに追加：\`bad hands, deformed hands, fused fingers, extra fingers, missing fingers, mutated hands, poorly drawn hands\`
+- ポジティブに追加：\`detailed hands, beautiful hands, perfect anatomy\`
+- 手のポーズを明示：\`hand on hip\`, \`hand on face\` など具体的に
+- **後処理**：手だけ inpainting で再生成（ADetailer 等のツール推奨）
+
+**問題 2：顔がぼやける・崩れる**
+
+- ポジティブに追加：\`(detailed face:1.3), (detailed eyes:1.2), beautiful eyes, perfect face\`
+- ネガティブに追加：\`ugly face, asymmetric eyes, cross-eyed, blurry face, deformed face\`
+- 解像度を上げる（512x512 では顔が小さすぎて崩れやすい）
+- **ADetailer** や **face restoration** ツールで自動補正
+
+**問題 3：体が複数になる・頭が 2 つある**
+
+- 解像度を SD1.5 で 768x768 以下に下げる（SDXL は 1024 OK）
+- ネガティブに追加：\`multiple heads, multiple people, extra arms, extra legs, twins, clones\`
+
+**問題 4：プロンプトが効かない**
+
+- 重要要素を先頭に移動
+- 重み付け強化：\`(important_thing:1.4)\`
+- ネガティブ過剰を見直す（10 個以上は副作用）
+- モデル選択を疑う（リアル系で「anime」を指定しても効果薄い）
+
+**問題 5：似たような画像ばかり生成される**
+
+- Seed を変更（-1 にすればランダム）
+- CFG Scale を下げる（7→5 で創造性増）
+- Sampler を変更（Euler a で別の出力傾向）
+- LoRA / Embedding を活用してスタイル拡張`,
+      },
+      {
+        title: '作品例 — 即使える prompta.jp のサンプル一覧',
+        content: `理論を学んだ後は実例で試すのが早道。Stable Diffusion 対応のサンプルプロンプトを <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">/tools/stable-diffusion</a> から閲覧できます（無料・コピペ可）。
+
+**カテゴリ別おすすめ：**
+
+- 👤 **人物・ポートレート** — <a href="/prompts/hairstyle" class="text-sky-600 hover:underline">髪型</a> / <a href="/prompts/clothing" class="text-sky-600 hover:underline">服装</a> / <a href="/prompts/body-type" class="text-sky-600 hover:underline">体型</a>
+- 🎨 **スタイル** — <a href="/prompts/anime" class="text-sky-600 hover:underline">アニメ</a> / <a href="/prompts/color" class="text-sky-600 hover:underline">カラー指定</a>
+- 📷 **撮影・構図** — <a href="/prompts/camera" class="text-sky-600 hover:underline">カメラ・アングル</a>
+- 🎭 **テーマ** — <a href="/prompts/cosplay" class="text-sky-600 hover:underline">コスプレ</a> / <a href="/prompts/costume" class="text-sky-600 hover:underline">衣装</a>
+
+**関連ガイド：**
+
+- <a href="/guides/hairstyle-prompt-guide" class="text-sky-600 hover:underline">髪型プロンプト完全ガイド</a> — 日本人モデル向け詳細解説
+- <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — 多様な人物造形
+- <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">カラープロンプトガイド</a> — 色彩設計
+- <a href="/guides/negative-prompt-guide" class="text-sky-600 hover:underline">ネガティブプロンプトガイド</a> — 品質改善の必須テクニック
+- <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — キャラクター再現
+
+**他ツールとの使い分け：**
+
+- アニメ・イラスト系を素早く生成したい → <a href="/tools/midjourney" class="text-sky-600 hover:underline">Midjourney</a>
+- 文章で説明的に指示したい → <a href="/tools/dall-e" class="text-sky-600 hover:underline">DALL-E 3</a> や <a href="/tools/gemini" class="text-sky-600 hover:underline">Gemini</a>
+- 写真を編集したい → <a href="/prompts/photo-edit" class="text-sky-600 hover:underline">写真加工プロンプト</a>`,
       },
     ],
     faq: [
-      { q: 'Stable Diffusionのプロンプトは何語で書きますか？', a: '基本的に英語で記述します。日本語にも一部対応していますが、英語の方がより正確に意図が伝わり、高品質な結果が得られます。' },
-      { q: 'プロンプトの長さに制限はありますか？', a: 'トークン数（75トークン程度）に制限があります。長すぎるプロンプトは後半が無視される場合があるため、重要なキーワードを先頭に配置することが重要です。' },
+      { q: 'Stable Diffusionのプロンプトは何語で書きますか？', a: '基本的に英語で記述します。SD は英語コーパスで学習されているため、日本語より英語の方が圧倒的に高品質な結果が得られます。日本人モデルを描く場合も「japanese woman」のように英単語で指定します。' },
+      { q: 'プロンプトの長さに制限はありますか？', a: 'CLIP モデルのトークン上限が 75 トークン（英単語約 50-60 個）です。これを超える部分は無視されるか、影響が極端に弱まります。重要なキーワードを必ず先頭に配置し、不要な装飾は削ぎ落とすのがコツ。WebUI によっては「BREAK」キーワードで複数チャンクに分割可能です。' },
+      { q: '品質タグ（masterpiece など）は本当に効果がありますか？', a: 'はい、特にアニメ系モデル（Anything V5、Counterfeit など）では顕著に効果があります。これらモデルが Danbooru タグでファインチューニングされており、「masterpiece」「best quality」が高評価画像のメタタグとして学習されているためです。リアル系モデルでは効果は穏やかですが、入れて損はありません。' },
+      { q: 'ネガティブプロンプトはどれくらい入れるべきですか？', a: '15-25 個程度がバランス良いです。少なすぎると品質ガードが効かず、多すぎる（30 個超）と副作用で本来描きたい要素まで除外される場合があります。テンプレートとして「品質系 5 個 + アナトミー系 5 個 + スタイル排除 3-5 個」をベースに、ケースごとに 2-3 個追加するのが実用的。' },
+      { q: '生成された画像の手や顔が崩れます。どう改善できますか？', a: '3 つのアプローチがあります。(1) ネガティブプロンプトに「bad hands, deformed hands, fused fingers, asymmetric eyes」を追加。(2) ポジティブに「detailed face, detailed eyes」と重み付け（1.2-1.3）を入れる。(3) 解像度を 768x768 以上に上げ、ADetailer 等の自動補正ツールで顔・手を再生成。詳しくは本ページ「トラブルシューティング」セクションをご覧ください。' },
+      { q: 'プロンプトの順序は本当に大事ですか？', a: 'はい。SD は前方のキーワードに強い重みを置きます。同じ単語でも「woman, red hair」と「red hair, woman」では結果が異なります。主題 → スタイル → 品質 → 構図 → 詳細の順が定石。重み付け「(word:1.3)」で順序を覆すこともできますが、本質的には順序設計が先決です。' },
+      { q: 'おすすめの SD モデル（チェックポイント）は？', a: '用途別に分かれます。(1) リアル系：Realistic Vision V6.0 / Juggernaut XL / epiCRealism。(2) アニメ系：Anything V5 / Counterfeit V3 / MeinaMix。(3) ファンタジー：Dreamshaper / Deliberate。SDXL 系を使う場合は SDXL Base 1.0 + Refiner の組み合わせが標準。モデル選びでプロンプトの書き方も変わる点に注意。' },
+      { q: 'Stable Diffusion を無料で試せますか？', a: 'はい。ローカル PC（NVIDIA GPU 推奨、VRAM 6GB 以上）で AUTOMATIC1111 や ComfyUI を無料インストール可能。クラウドなら Google Colab（無料枠あり）、Civitai（オンライン生成あり）、Hugging Face Spaces（一部無料）が選択肢。商用利用したい場合は各モデルライセンス確認が必要。prompta.jp のプロンプト集は全て無料でコピペ可能です。' },
     ],
   },
   'midjourney-prompt-guide': {
