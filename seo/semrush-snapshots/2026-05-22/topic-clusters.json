@@ -1,0 +1,765 @@
+{
+  "_meta": {
+    "snapshotDate": "2026-05-22",
+    "semrushDatabase": "jp",
+    "apiUnitsConsumed": 6,
+    "agentVersion": "SEMrush-snapshot-v1",
+    "notes": "Clusters inferred from input keywords plus sampled competitor/prompta Organic Research rows; Semrush Topic Research UI was not used due rate-control constraints."
+  },
+  "data": [
+    {
+      "topic": "AI プロンプト基礎 / 使い方",
+      "seedKeyword": "プロンプト と は",
+      "totalSearchVolume": 86370,
+      "averageKeywordDifficulty": 15.2,
+      "promptaCoverage": "good",
+      "subKeywords": [
+        {
+          "keyword": "プロンプト",
+          "volume": 60500,
+          "kd": 39
+        },
+        {
+          "keyword": "stable diffusion プロンプト",
+          "volume": 6600,
+          "kd": 20,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "ネガティブプロンプト",
+          "volume": 2900,
+          "kd": 18,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "プロンプト 髪型",
+          "volume": 2400,
+          "kd": 8
+        },
+        {
+          "keyword": "エロ プロンプト",
+          "volume": 2400,
+          "kd": 16,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "aiイラスト プロンプト",
+          "volume": 1900,
+          "kd": 15,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "プロンプト 服装",
+          "volume": 1300,
+          "kd": 7
+        },
+        {
+          "keyword": "midjourney プロンプト",
+          "volume": 1300,
+          "kd": 23
+        },
+        {
+          "keyword": "年齢 プロンプト",
+          "volume": 1000,
+          "kd": 17,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "プロンプト エロ",
+          "volume": 1000,
+          "kd": 19,
+          "competitor": "ai-freak.com"
+        },
+        {
+          "keyword": "nsfw プロンプト",
+          "volume": 880,
+          "kd": 18,
+          "competitor": "ai-freak.com"
+        },
+        {
+          "keyword": "プロンプト 体型",
+          "volume": 720,
+          "kd": 3
+        }
+      ],
+      "competitorsRanking": [
+        "romptn.com",
+        "ururuailab.com",
+        "noplog.com",
+        "ai-freak.com"
+      ],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "Stable Diffusion プロンプト",
+      "seedKeyword": "stable diffusion プロンプト",
+      "totalSearchVolume": 38600,
+      "averageKeywordDifficulty": 20.2,
+      "promptaCoverage": "none",
+      "subKeywords": [
+        {
+          "keyword": "stable diffusion 使い方",
+          "volume": 8100,
+          "kd": 31,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion プロンプト",
+          "volume": 6600,
+          "kd": 20,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion 利用方法",
+          "volume": 3600,
+          "kd": 31,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion 学習させる",
+          "volume": 2900,
+          "kd": 19,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion seed",
+          "volume": 2900,
+          "kd": 23,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion モデル",
+          "volume": 2900,
+          "kd": 25,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion 表情",
+          "volume": 2400,
+          "kd": 18,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "stable diffusion 髪型",
+          "volume": 1900,
+          "kd": 11,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion エロ",
+          "volume": 1900,
+          "kd": 14,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "stable diffusion 服装",
+          "volume": 1900,
+          "kd": 11,
+          "competitor": "ururuailab.com"
+        },
+        {
+          "keyword": "stable diffusion 呪文",
+          "volume": 1900,
+          "kd": 21,
+          "competitor": "ururuailab.com"
+        },
+        {
+          "keyword": "stable diffusion ポーズ",
+          "volume": 1600,
+          "kd": 18,
+          "competitor": "noplog.com"
+        }
+      ],
+      "competitorsRanking": [
+        "romptn.com",
+        "ururuailab.com",
+        "noplog.com",
+        "ai-freak.com"
+      ],
+      "_recommendation": "high priority: create or expand pillar guide and supporting prompt/category pages"
+    },
+    {
+      "topic": "AI 画像生成 アニメ",
+      "seedKeyword": "画像生成ai プロンプト例 アニメ",
+      "totalSearchVolume": 32590,
+      "averageKeywordDifficulty": 23.9,
+      "promptaCoverage": "partial",
+      "subKeywords": [
+        {
+          "keyword": "ai イラスト エロ",
+          "volume": 12100,
+          "kd": 24,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "ai イラスト 自動生成 サイト 登録不要",
+          "volume": 6600,
+          "kd": 32,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "ai エロ画像生成",
+          "volume": 5400,
+          "kd": 28,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "ai 画像生成 登録不要",
+          "volume": 4400,
+          "kd": 33,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "aiイラスト プロンプト",
+          "volume": 1900,
+          "kd": 15,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "aiイラスト 呪文",
+          "volume": 1600,
+          "kd": 21,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "unity アニメーション 作り方",
+          "volume": 590,
+          "kd": 14,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "画像生成ai プロンプト例 アニメ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 画風 アニメ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "アニメキャラ プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "アニメ プロンプト一覧",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト アニメキャラ",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [
+        "romptn.com",
+        "noplog.com",
+        "ai-freak.com"
+      ],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "髪型 / 色プロンプト",
+      "seedKeyword": "プロンプト 色",
+      "totalSearchVolume": 5170,
+      "averageKeywordDifficulty": 9.5,
+      "promptaCoverage": "partial",
+      "subKeywords": [
+        {
+          "keyword": "プロンプト 髪型",
+          "volume": 2400,
+          "kd": 8
+        },
+        {
+          "keyword": "stable diffusion 髪型",
+          "volume": 1900,
+          "kd": 11,
+          "competitor": "romptn.com"
+        },
+        {
+          "keyword": "エロ 画像 カラー",
+          "volume": 480,
+          "kd": 6,
+          "competitor": "ai-freak.com"
+        },
+        {
+          "keyword": "プロンプト 色",
+          "volume": 390,
+          "kd": 13
+        },
+        {
+          "keyword": "色 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "似合う 髪色 診断",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "髪色 ai 診断",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "自分 に 似合う 髪色",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "髪色 シミュレーター",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "パーソナルカラー ai",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "パーソナルカラー診断 方法",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "パーソナルカラー 春",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [
+        "romptn.com",
+        "ururuailab.com",
+        "noplog.com",
+        "ai-freak.com"
+      ],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "コスプレ / 服装プロンプト",
+      "seedKeyword": "コスプレ プロンプト",
+      "totalSearchVolume": 4552,
+      "averageKeywordDifficulty": 13.8,
+      "promptaCoverage": "good",
+      "subKeywords": [
+        {
+          "keyword": "stable diffusion 服装",
+          "volume": 1900,
+          "kd": 11,
+          "competitor": "ururuailab.com"
+        },
+        {
+          "keyword": "プロンプト 服装",
+          "volume": 1300,
+          "kd": 7
+        },
+        {
+          "keyword": "コスプレ プロンプト",
+          "volume": 590,
+          "kd": 25
+        },
+        {
+          "keyword": "プロンプト 衣装",
+          "volume": 390,
+          "kd": 5,
+          "competitor": "noplog.com"
+        },
+        {
+          "keyword": "プロンプト コスプレ",
+          "volume": 210,
+          "kd": 17
+        },
+        {
+          "keyword": "ai 衣装",
+          "volume": 140,
+          "kd": 18
+        },
+        {
+          "keyword": "ai 服装",
+          "volume": 22,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 服装 コスプレ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "制服 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 服装 女性",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "コスプレ プロンプト 一覧",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 服装 ファンタジー",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [
+        "ururuailab.com",
+        "noplog.com",
+        "ai-freak.com"
+      ],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "Midjourney プロンプト",
+      "seedKeyword": "midjourney プロンプト",
+      "totalSearchVolume": 1300,
+      "averageKeywordDifficulty": 23,
+      "promptaCoverage": "thin",
+      "subKeywords": [
+        {
+          "keyword": "midjourney プロンプト",
+          "volume": 1300,
+          "kd": 23
+        },
+        {
+          "keyword": "midjourney 髪型",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney 服装",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney アニメ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney カラー",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney カメラ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney 体型",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney 衣装",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney コスプレ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney ライティング",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney プログラミング",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney ビジネス",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "体型 / 身長プロンプト",
+      "seedKeyword": "プロンプト 体型",
+      "totalSearchVolume": 720,
+      "averageKeywordDifficulty": 3,
+      "promptaCoverage": "partial",
+      "subKeywords": [
+        {
+          "keyword": "プロンプト 体型",
+          "volume": 720,
+          "kd": 3
+        },
+        {
+          "keyword": "体型 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "身長差 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "体格差 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "身長 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "腹筋 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "stable diffusion 体格差",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "身長差プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "stable diffusion 体型",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 体格差",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "ぽっちゃり プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "プロンプト 体型 女性",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "ChatGPT プロンプト",
+      "seedKeyword": "chatgpt プロンプト",
+      "totalSearchVolume": null,
+      "averageKeywordDifficulty": null,
+      "promptaCoverage": "none",
+      "subKeywords": [
+        {
+          "keyword": "chatgpt 画像生成 プロンプト例 アニメ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 髪型",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 服装",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt アニメ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt カラー",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt カメラ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 体型",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 衣装",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt コスプレ",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt ライティング",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt プログラミング",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "Gemini プロンプト",
+      "seedKeyword": "gemini プロンプト 一覧",
+      "totalSearchVolume": null,
+      "averageKeywordDifficulty": null,
+      "promptaCoverage": "none",
+      "subKeywords": [
+        {
+          "keyword": "gemini プロンプト 一覧",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "gemini プロンプト集",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "geminiプロンプト 一覧",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "gemini プロンプト",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "写真加工 AI",
+      "seedKeyword": "ai 写真加工",
+      "totalSearchVolume": null,
+      "averageKeywordDifficulty": null,
+      "promptaCoverage": "none",
+      "subKeywords": [
+        {
+          "keyword": "ai 写真 加工",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "写真加工 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "ai 写真加工",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 写真加工",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "stable-diffusion 写真加工",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney 写真加工",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    },
+    {
+      "topic": "ビジネス / 教育 AI",
+      "seedKeyword": "ai 教育",
+      "totalSearchVolume": null,
+      "averageKeywordDifficulty": null,
+      "promptaCoverage": "none",
+      "subKeywords": [
+        {
+          "keyword": "ビジネス プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "ai ビジネス",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt ビジネス",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "stable-diffusion ビジネス",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney ビジネス",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "教育 プロンプト",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "ai 教育",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "chatgpt 教育",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "stable-diffusion 教育",
+          "volume": null,
+          "kd": null
+        },
+        {
+          "keyword": "midjourney 教育",
+          "volume": null,
+          "kd": null
+        }
+      ],
+      "competitorsRanking": [],
+      "_recommendation": "support with focused guide/page expansion"
+    }
+  ]
+}

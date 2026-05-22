@@ -1,0 +1,353 @@
+{
+  "_meta": {
+    "snapshotDate": "2026-05-22",
+    "semrushDatabase": "jp",
+    "apiUnitsConsumed": 6,
+    "agentVersion": "SEMrush-snapshot-v1",
+    "notes": "Organic Research positions report for prompta.jp, JP database."
+  },
+  "totalOrganicKeywords": 34,
+  "estimatedMonthlyTraffic": 152,
+  "topKeywords": [
+    {
+      "keyword": "プロンプト 体型",
+      "position": 5,
+      "searchVolume": 720,
+      "url": "https://www.prompta.jp/guides/body-type-prompt-guide",
+      "estimatedTraffic": 36,
+      "trend": null,
+      "keywordDifficulty": 3,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ プロンプト",
+      "position": 5,
+      "searchVolume": 590,
+      "url": "https://www.prompta.jp/guides/cosplay-prompt-guide",
+      "estimatedTraffic": 29,
+      "trend": null,
+      "keywordDifficulty": 25,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ ai",
+      "position": 7,
+      "searchVolume": 720,
+      "url": "https://www.prompta.jp/prompts/cosplay",
+      "estimatedTraffic": 18,
+      "trend": null,
+      "keywordDifficulty": 22,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト と は",
+      "position": 41,
+      "searchVolume": 60500,
+      "url": "https://www.prompta.jp/guides/what-is-prompt",
+      "estimatedTraffic": 18,
+      "trend": null,
+      "keywordDifficulty": 41,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 身長",
+      "position": 7,
+      "searchVolume": 390,
+      "url": "https://www.prompta.jp/prompts/body-type",
+      "estimatedTraffic": 15,
+      "trend": null,
+      "keywordDifficulty": 5,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 色",
+      "position": 9,
+      "searchVolume": 390,
+      "url": "https://www.prompta.jp/prompts/color",
+      "estimatedTraffic": 11,
+      "trend": null,
+      "keywordDifficulty": 13,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト アニメ",
+      "position": 4,
+      "searchVolume": 110,
+      "url": "https://www.prompta.jp/prompts/anime",
+      "estimatedTraffic": 7,
+      "trend": null,
+      "keywordDifficulty": 9,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 髪型",
+      "position": 18,
+      "searchVolume": 2400,
+      "url": "https://www.prompta.jp/prompts/hairstyle",
+      "estimatedTraffic": 7,
+      "trend": null,
+      "keywordDifficulty": 8,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 体型",
+      "position": 12,
+      "searchVolume": 720,
+      "url": "https://www.prompta.jp/tag/体型",
+      "estimatedTraffic": 6,
+      "trend": null,
+      "keywordDifficulty": 3,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 服装",
+      "position": 14,
+      "searchVolume": 1300,
+      "url": "https://www.prompta.jp/prompts/clothing",
+      "estimatedTraffic": 3,
+      "trend": null,
+      "keywordDifficulty": 7,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ プロンプト",
+      "position": 19,
+      "searchVolume": 590,
+      "url": "https://www.prompta.jp/tag/コスプレ",
+      "estimatedTraffic": 1,
+      "trend": null,
+      "keywordDifficulty": 25,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト 身長",
+      "position": 19,
+      "searchVolume": 390,
+      "url": "https://www.prompta.jp/guides/body-type-prompt-guide",
+      "estimatedTraffic": 1,
+      "trend": null,
+      "keywordDifficulty": 5,
+      "intent": "I"
+    },
+    {
+      "keyword": "エジプト 衣装 イラスト",
+      "position": 24,
+      "searchVolume": 170,
+      "url": "https://www.prompta.jp/prompt/anthro-feline-egyptian-costume",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 21,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト コスプレ",
+      "position": 20,
+      "searchVolume": 210,
+      "url": "https://www.prompta.jp/tag/コスプレ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 17,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト コスプレ",
+      "position": 48,
+      "searchVolume": 210,
+      "url": "https://www.prompta.jp/guides/cosplay-prompt-guide",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 17,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト コスプレ",
+      "position": 84,
+      "searchVolume": 210,
+      "url": "https://www.prompta.jp/tag/コスプレ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 17,
+      "intent": "I"
+    },
+    {
+      "keyword": "contrapposto 意味",
+      "position": 62,
+      "searchVolume": 140,
+      "url": "https://www.prompta.jp/guides/body-type-prompt-guide",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 29,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト カメラ",
+      "position": 16,
+      "searchVolume": 260,
+      "url": "https://www.prompta.jp/prompts/camera",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 7,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト カメラ",
+      "position": 27,
+      "searchVolume": 260,
+      "url": "https://www.prompta.jp/tag/カメラ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 7,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ プロンプト",
+      "position": 23,
+      "searchVolume": 590,
+      "url": "https://www.prompta.jp/prompts/cosplay",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 25,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ プロンプト",
+      "position": 62,
+      "searchVolume": 590,
+      "url": "https://www.prompta.jp/tag/コスプレ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 25,
+      "intent": "I"
+    },
+    {
+      "keyword": "コスプレ プロンプト",
+      "position": 93,
+      "searchVolume": 590,
+      "url": "https://www.prompta.jp/prompts/clothing",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 25,
+      "intent": "I"
+    },
+    {
+      "keyword": "ai コスプレ 画像",
+      "position": 33,
+      "searchVolume": 140,
+      "url": "https://www.prompta.jp/prompts/cosplay",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 21,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト",
+      "position": 53,
+      "searchVolume": 60500,
+      "url": "https://www.prompta.jp/guides/what-is-prompt",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 39,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト",
+      "position": 79,
+      "searchVolume": 60500,
+      "url": "https://www.prompta.jp/prompts",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 39,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト アニメ",
+      "position": 21,
+      "searchVolume": 110,
+      "url": "https://www.prompta.jp/guides/anime-prompt-guide",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 9,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト アニメ",
+      "position": 33,
+      "searchVolume": 110,
+      "url": "https://www.prompta.jp/tag/アニメ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 9,
+      "intent": "I"
+    },
+    {
+      "keyword": "プロンプト とは",
+      "position": 68,
+      "searchVolume": 2400,
+      "url": "https://www.prompta.jp/guides/what-is-prompt",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 32,
+      "intent": "I"
+    },
+    {
+      "keyword": "midjourney プロンプト",
+      "position": 33,
+      "searchVolume": 1300,
+      "url": "https://www.prompta.jp/guides/midjourney-prompt-guide",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 23,
+      "intent": "I"
+    },
+    {
+      "keyword": "ダリ ai",
+      "position": 13,
+      "searchVolume": 170,
+      "url": "https://www.prompta.jp/tools/dall-e",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 39,
+      "intent": "I"
+    },
+    {
+      "keyword": "ai アニメ キャラ",
+      "position": 39,
+      "searchVolume": 390,
+      "url": "https://www.prompta.jp/tag/アニメ",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 22,
+      "intent": "I"
+    },
+    {
+      "keyword": "absurdres 意味",
+      "position": 62,
+      "searchVolume": 170,
+      "url": "https://www.prompta.jp/prompt/alice-in-wonderland-cosplay",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 20,
+      "intent": "I"
+    },
+    {
+      "keyword": "例 の セーラー服",
+      "position": 50,
+      "searchVolume": 90,
+      "url": "https://www.prompta.jp/guides/cosplay-prompt-guide",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 29,
+      "intent": "I"
+    },
+    {
+      "keyword": "ai 髪 色",
+      "position": 37,
+      "searchVolume": 110,
+      "url": "https://www.prompta.jp/tools/hair-color-diagnosis",
+      "estimatedTraffic": 0,
+      "trend": null,
+      "keywordDifficulty": 17,
+      "intent": "I"
+    }
+  ]
+}
