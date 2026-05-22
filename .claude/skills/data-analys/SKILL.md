@@ -341,6 +341,8 @@ npx tsx src/scripts/data-analys/param-monitor.ts --days=7
 
 ## 3. 工具使用情况（重点）
 
+> 术语: **執行器 (executor)** = 全站 180 prompt 详情页内嵌的「🚀 ここで試す」面板（站内执行）。DB 列 `ToolUsage.tool = 'prompt-execute'`。代码组件 `PromptExecutor`。5/19-20 ship，**paid-only**（钱包通用化，¥300=150 credit；文字 1 / 图片 5）。本节统一称「执行器」。
+
 ### 🎨 パーソナルカラー診断（/tools/personal-color-analysis）
 - **GA 流量**: 会话 N · 用户 N · 平均停留 Ns · 跳出率 N% · 事件数 N
 - **真实调用**: 总 N 次（free N / paid N）· 唯一访客 N · 唯一邮箱 N
@@ -350,12 +352,27 @@ npx tsx src/scripts/data-analys/param-monitor.ts --days=7
 ### 💇 似合う髪色診断（/tools/hair-color-diagnosis）
 （同上结构）
 
+### 🚀 執行器（/prompt/*  内嵌「ここで試す」面板）
+- **真实调用**: 总 N 次 · 唯一访客 N · 唯一邮箱 N （来自 `tool-usage` 输出的 `prompt-execute` 块）
+- **消耗 credit**: N（文字 N×1 + 图片 N×5；通过 `creditsConsumed` sum 拆分）
+- **vs 上周期**: ±N% · credits ±N%
+- **按日分布**: 5/N:N · 5/N+1:N · ...
+- **Top prompt（执行次数）**: {slug-1} N · {slug-2} N · ... — 用 `tool-usage` 加 `--break-down-by=promptSlug` 或临时 `psql` 聚合 `ToolUsage` where tool='prompt-execute' group by metadata 字段
+- **解读**:
+  - 5/19-20 刚上线，第 1 周看「有没有调用」即可，n<10 不归因
+  - executor 是 **paid-only**，所以 N 次调用 = N 次 credit 消耗 = 真实付费用户使用
+  - 若 N=0 且 §3 收入 > 0 → 钱花在了 personal-color/hair-color，executor 还没启动 → §6 行动「检查 PromptExecutor 入口是否显眼」
+  - 若 N > personal-color + hair-color 合计 → executor 已成主消耗场景，§6 行动「优先扶持 executor UX / 错误处理」
+
 ### 💴 收入
 - 本周期: ¥N · N 笔 · N 个付费用户 · 发放积分 N
 - 上周期: ¥N · N 笔
 - 转化漏斗: 工具页会话 → free 调用 → paid 调用 → 支付（按链路给百分比）
+- **钱包通用化注意**: 同一 credit 池给 3 个 tool 用，单笔购买不归属任何 tool；要看「钱花在哪里」就看 §3 三 tool 的 `creditsConsumed` 比例，不要从 StripePayment 反推
 
 ## 3.5 Paywall 漏斗事件（GA4）
+
+> **適用範圍**: hair-color / personal-color 两个 freemium 工具的 free→paid 撞墙漏斗。**执行器（prompt-execute）不適用** — executor 是 paid-only 直接打 `CreditPurchaseModal`，没有 `paywall_view` 等事件。执行器的转化只能从 §3 「執行器」节的真实调用数 + §3 「收入」节的 StripePayment 反推。
 
 > 数据源: `ga-query.ts --mode=tool-funnel`。前端事件: `paywall_view` (modal 打开) → `paywall_purchase_click` (购入按钮按下) → `checkout_started` (Stripe 跳转) → StripePayment（已记 §3 收入）。
 
