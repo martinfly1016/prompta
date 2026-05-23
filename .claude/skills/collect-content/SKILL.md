@@ -319,6 +319,22 @@ cd src/scripts/collect && npx tsx fetch-huggingface.ts --dataset=promptsChat --c
    > - remove-bystanders / outfit-swap-* — 必加 R6
    > - bg-replace-* — 视情况加（小改不强制）
    > - hairstyle-* / expression-* / face-retouch / id-photo / linkedin — **不需要加**（Gemini 在这些任务上身份保持已经稳定）
+   > - 整图风格化类（figure-ize / plushie / sculpture / OOTD / isometric / sticker / miniature / marble 等）— **不要加**（整图重画就是目标，R6 会与意图冲突）
+   >
+   > **Gemini Nano Banana タスク難度分類**（2026-05-23 PicoTrex batch 实测验证）:
+   >
+   > | 任务族 | 难度 | 触发要点 |
+   > |---|---|---|
+   > | **🟢 整图风格化** — figure / plushie / sculpture / OOTD flat lay / isometric / sticker / miniature / chalk / marble | **稳定** | R6 **不需要**（目标是整图重画） / R7 仍写「保 identity + face shape + hair color + outfit color」让结果可识别 / R3 用 aspect ratio 锁画幅 |
+   > | **🟢 局部身份保持** — hairstyle / expression / face-retouch / id-photo / linkedin / virtual makeup | **稳定** | R6 不需要 / R7 列具体可枚举属性 / R5 反向防呆要写 |
+   > | **🔴 保持身份 + 改环境** — colorize / restore / outfit-swap / bg-replace / remove-bystanders | **风险** | R6 **必加**「Do not regenerate from scratch」/ R7 + R9 选材都要严 / 实测仍可能整图重画 |
+   > | **🔴 透明 PNG 输出** — bg-remove-transparent | **不支持** | Gemini 2.5 Flash Image 无 alpha 通道 → 改用 ChatGPT (DALL-E) 或推荐 Photoroom/remove.bg |
+   >
+   > **Key insight**: 「整图风格化」乍看像「大范围编辑」，其实是 **更安全** 的任务族。区别在于：
+   > - 整图风格化 → 用户预期就是「我变成不同的视觉表达」（玩具/缝制/雕塑），保留 identity recognizability 而非 photo realism → Gemini 强项
+   > - 改环境 → 用户预期是「场景变了，人不变」，需要照片真实感锁定身份 → Gemini 弱项（容易把人也一起重画）
+   >
+   > 选 useCase 时优先取整图风格化类（X 上的 viral hits 大多属于此类）。
    >
    > **Gemini 模型局限性提示（生成 prompt 时同步提示用户）：**
    > - **透明 PNG 输出**：Gemini 2.5 Flash Image 不支持 alpha 通道。`bg-remove-transparent` 类 prompt 应在详情页加标注「Photoroom / remove.bg / rembg 推奨」或将 toolSlug 切到 chatgpt
