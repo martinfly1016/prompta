@@ -340,10 +340,8 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
               <span className="animate-spin inline-block w-4 h-4 border-2 border-gray-900 border-t-transparent rounded-full" />
               生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
             </>
-          ) : isSignedIn ? (
-            <>🚀 無料で試す</>
           ) : (
-            <>🚀 無料で試す（{provider?.credits ?? 5} ポイント消費）</>
+            <>🚀 無料で試す</>
           )}
         </button>
         {provider && (
