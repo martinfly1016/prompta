@@ -720,6 +720,20 @@ Midjourneyの特徴は、アーティスティックな解釈力にあります�
 - **--niji** — アニメ風スタイル用のモデル
 - **--no** — 特定要素の除外（例: --no text）`,
       },
+      {
+        title: '✨ 関連プロンプト集 — Midjourney 実例',
+        content: `本ガイドの Midjourney プロンプト記法を使った実例集。背景・キャラ・カラー・ファッションなど主要ジャンルを網羅。
+
+- [ネオン未来都市 - 背景プロンプト](/prompt/neon-futuristic-cityscape-aerial)
+- [黒白メイド - コスプレプロンプト](/prompt/maid-costume-3d-render)
+- [グリーン肌キャラクター カラー表現](/prompt/green-skin-character-colorful-hat)
+- [青黄トカゲ・王族キャラ](/prompt/royal-creature-blue-yellow-mj)
+- [オレンジジャケット・サイバーパンク街](/prompt/cyberpunk-street-jacket-mj)
+- [花髪・水彩画風 女の子ポートレート](/prompt/flower-hair-watercolor-girl-mj)
+- [白と金のドレス赤髪女性ポートレート](/prompt/white-gold-dress-red-haired-portrait)
+
+→ [Midjourney 全プロンプト集](/tools/midjourney)`,
+      },
     ],
     faq: [
       { q: 'Midjourneyは無料で使えますか？', a: 'Midjourneyは有料サブスクリプション制です。月額プランに加入することで、一定数の画像を生成できます。' },
@@ -744,6 +758,20 @@ Midjourneyの特徴は、アーティスティックな解釈力にあります�
 **Chain of Thought**: 「ステップバイステップで考えてください」と指示することで、論理的な推論を促し、より正確な回答を引き出せます。
 
 **制約付きプロンプト**: 文字数、トーン、フォーマットなどの制約を明確にすることで、期待通りの出力を得やすくなります。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — ChatGPT 実例',
+        content: `本ガイドの ChatGPT プロンプト技法を使った業務・学習・写真加工サンプル集。コピペで即時利用可。
+
+- [実験レポート作成](/prompt/chatgpt-lab-report-writing)
+- [医師の白衣に着せ替え](/prompt/uniform-medical-doctor-white-coat)
+- [日本運転免許証用証明写真変換](/prompt/id-photo-chatgpt-japan-license)
+- [語彙力強化](/prompt/chatgpt-vocabulary-building)
+- [文章校正・推敲](/prompt/chatgpt-writer-proofreader)
+- [SEO 記事最適化](/prompt/chatgpt-seo-article)
+- [LinkedIn 投稿制作](/prompt/chatgpt-linkedin-post-creator)
+
+→ [ChatGPT 全プロンプト集](/tools/chatgpt)`,
       },
     ],
     faq: [
@@ -826,6 +854,19 @@ Anthropicの公式ドキュメントでは、Claudeへのプロンプトを「�
 
 AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ。この視点を持つだけで、ChatGPTやClaudeがあなたの真のパートナーになります。`,
       },
+      {
+        title: '✨ 関連プロンプト集 — 言語学習・文章系',
+        content: `本ガイドの言語学習・文章生成のテクニックを使った Claude / ChatGPT 実例集。
+
+- [学術論文執筆アドバイザー - Claude](/prompt/claude-academic-writing-advisor)
+- [論文執筆 - Claude プロンプト](/prompt/claude-research-paper)
+- [語彙力強化 - ChatGPT](/prompt/chatgpt-vocabulary-building)
+- [読解力向上 - ChatGPT](/prompt/chatgpt-reading-comprehension)
+- [ディベート準備 - ChatGPT](/prompt/chatgpt-debate-preparation)
+- [メール作成 - Claude](/prompt/claude-professional-email)
+
+→ [ライティング系プロンプト一覧](/prompts/writing)`,
+      },
     ],
     faq: [
       {
@@ -861,6 +902,19 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 \`(worst quality:1.4), (low quality:1.4), normal quality, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry, deformed, disfigured, mutation, extra limbs\`
 
 このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — ネガティブプロンプトが効く実例',
+        content: `本ガイドのネガティブプロンプト技法をそのまま使えるサンプル集。高品質生成のテンプレとして。
+
+- [animeプロンプト基礎](/prompt/anime-prompt-f061b77b)
+- [美しいアニメ女性キャラクター](/prompt/anime-girl-space-03)
+- [セーラー服プリーツスカート黒髪](/prompt/sailor-uniform-pleated-skirt)
+- [ストレートロングの黒髪ヘアスタイル](/prompt/straight-long-black-hair-glossy)
+- [初音ミクの水墨画風イラスト](/prompt/hatsune-miku-ink-wash-japanese)
+- [スタジオライティングポートレート](/prompt/studio-lighting-portrait-detailed)
+
+→ [アニメ + 髪型 + 撮影系プロンプト集](/prompts/anime)`,
       },
     ],
     faq: [
@@ -994,6 +1048,19 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 実践テンプレート：
 \`1girl, long black hair, hime cut, (red hair ribbon:1.3), blunt bangs, school uniform, gentle smile, cherry blossom background, anime style, masterpiece\``,
       },
+      {
+        title: '✨ 関連プロンプト集 — すぐ試せる髪型サンプル',
+        content: `本ガイドで紹介した髪型表現テクニックを使ったプロンプトです。クリックで詳細ページに移動、ログイン後にサイト内で実行できます。
+
+- [ストレートロングの黒髪ヘアスタイル](/prompt/straight-long-black-hair-glossy)
+- [ツインテール金髪セーラームーン風美少女](/prompt/twintail-blonde-sailor-outfit)
+- [赤髪ビジネスウーマン 正装スーツ](/prompt/red-hair-business-suit-portrait)
+- [レトロ風ツートンカラーヘア](/prompt/two-tone-red-white-retro-hair)
+- [魔法のエルフ戦士 編み込み髪型](/prompt/elf-warrior-braided-hair)
+- [花髪・水彩画風 女の子ポートレート](/prompt/flower-hair-watercolor-girl-mj)
+
+→ [全ての髪型プロンプト一覧（カテゴリページ）](/prompts/hairstyle)`,
+      },
     ],
     faq: [
       {
@@ -1115,6 +1182,19 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 \`1girl, red hair, twin tails, dynamic pose, sword slash, action lines, dramatic angle, battle scene, fire effects, (anime style:1.2), masterpiece\`
 
 各テンプレートの構成は「人物 → 外見 → 服装 → ポーズ → 背景 → スタイル → 品質」の順です。要素を差し替えるだけで無限のバリエーションが作れます。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — アニメイラスト実例',
+        content: `本ガイドのアニメスタイル表現テクニックを使ったプロンプトです。ポートレート・キャラデザ・水墨画風・80 年代アニメまで幅広く。
+
+- [animeプロンプト基礎](/prompt/anime-prompt-f061b77b)
+- [美しいアニメ女性キャラクター 宇宙](/prompt/anime-girl-space-03)
+- [初音ミクの水墨画風イラスト](/prompt/hatsune-miku-ink-wash-japanese)
+- [アニメキャラクターデザイン ネオン](/prompt/anime-char-neon-07)
+- [オレンジヘアポニーテール キャラクター](/prompt/orange-hair-braid-multicolor-jacket)
+- [80 年代アニメ宇宙戦士女性 DALL-E](/prompt/dalle-1980s-anime-space-opera-girl)
+
+→ [全てのアニメプロンプト](/prompts/anime)`,
       },
     ],
     faq: [
@@ -1249,6 +1329,20 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 
 自分の目的が「写真風コスプレ」なら SD の実写系、「イラスト調キャラ」なら NovelAI、「雰囲気重視のアート」なら Midjourney、と使い分けるのが基本戦略です。`,
       },
+      {
+        title: '✨ 関連プロンプト集 — コスプレ実例',
+        content: `本ガイドのコスプレ表現テクニックを使ったプロンプトです。アニメキャラ再現から学園もの・ファンタジーまで。
+
+- [不思議の国のアリス風コスプレ](/prompt/alice-in-wonderland-cosplay)
+- [解かれたネクタイ制服](/prompt/untied-necktie-uniform-girl)
+- [学校制服プロンプト セーラー服コスプレ](/prompt/school-uniform-pleated-skirt)
+- [ウォーハンマー40K ケイオスウィッチ](/prompt/warhammer-40k-chaos-witch-cosplay)
+- [黒白メイド - コスプレプロンプト](/prompt/maid-costume-3d-render)
+- [ダークアカデミア学校制服](/prompt/dark-academia-school-uniform)
+- [竜姫ゼルダ青目ドレス](/prompt/dragon-princess-zelda-dress)
+
+→ [全てのコスプレプロンプト](/prompts/cosplay)`,
+      },
     ],
     faq: [
       {
@@ -1364,6 +1458,19 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 \`tall man and petite woman, height difference, standing together, romantic, soft lighting, couple portrait\`
 
 体型の特性を**服装のシルエット**で強調するのがプロのテクニックです。細身なら体のラインが出る \`form-fitting dress\`、筋肉質なら \`tank top\` や \`armor\`、ぽっちゃりなら \`flowing dress\` や \`oversized clothing\` が相性が良いです。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — 体型・身長差サンプル',
+        content: `本ガイドの体型表現テクニックを使ったサンプルプロンプトです。スレンダー・カーヴィ・筋肉質・身長差ペアまで幅広くカバー。
+
+- [格闘技女性：強い腹筋とアスレティック体型](/prompt/athletic-jiu-jitsu-girl-muscles)
+- [ピンクジムウェアのカーヴィボディ](/prompt/curvy-pink-gym-simple-background)
+- [スレンダー高身長美女クロップトップ](/prompt/slender-crop-top-elegant-confident)
+- [ダークファンタジー酒場戦士肖像画](/prompt/dark-fantasy-tavern-warrior)
+- [スレンダー体型 ロングブラウンヘア](/prompt/slender-brown-hair-full-length)
+- [老人 × 巨大怪物の体格差](/prompt/old-man-giant-monster-bodytype-dark)
+
+→ [全ての体型プロンプト + 身長差ペア集](/prompts/body-type)`,
       },
     ],
     faq: [
@@ -1485,6 +1592,19 @@ CFGスケール 10-12: 色が鮮明でプロンプトに忠実 → 強い色指�
 CFGスケール 15+: 色が過飽和になりやすい → 不自然になることが多い
 
 ステップ数も色に影響します。20-30ステップが安定圏、50+は色がくすむことがあります。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — カラーパレット実例',
+        content: `本ガイドのカラー指定テクニックを使ったプロンプトです。ネオン・サイバーパンク・モノクロ・パステルまで色彩設計の幅広い実例。
+
+- [ネオン・サイバーパンク色彩表現](/prompt/neon-cyberpunk-1)
+- [AI 色彩表現プロンプト](/prompt/color-theme-13)
+- [グリーン肌キャラクター カラー表現](/prompt/green-skin-character-colorful-hat)
+- [モノクロ・グレースケール映像スタイル](/prompt/monochrome-theme-14)
+- [工筆画風の鮮やかなミネラルカラー](/prompt/gongbi-painting-mineral-pigment-colors)
+- [夕焼け川・森景色 色彩カラー](/prompt/sunset-river-forest-color-mj)
+
+→ [全てのカラープロンプト](/prompts/color)`,
       },
     ],
     faq: [
@@ -1768,6 +1888,20 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 社内 Notion / Confluence でプロンプトカタログを作る、または Promptaのような共有サイトを活用すると、組織のプロンプト資産が蓄積していきます。
 
 プロンプトは「使い捨て」ではなく「資産」です。継続的な投資が業務効率の長期的な差につながります。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — 書き方ガイドの即試せる実例',
+        content: `本ガイドの 7 つのコツ（ゴール設定・ロール・Few-Shot 等）を組み込んだ業務・学習・SEO 用テンプレート集。
+
+- [学術論文執筆アドバイザー - Claude](/prompt/claude-academic-writing-advisor)
+- [論文執筆 - Claude プロンプト](/prompt/claude-research-paper)
+- [SEO 記事最適化 - ChatGPT](/prompt/chatgpt-seo-article)
+- [ビジネスプラン - ChatGPT](/prompt/chatgpt-business-plan)
+- [メール作成 - Claude](/prompt/claude-professional-email)
+- [交渉戦略コーチ - Claude](/prompt/claude-negotiation-strategy)
+- [実験レポート作成 - ChatGPT](/prompt/chatgpt-lab-report-writing)
+
+→ [ライティング系プロンプト一覧](/prompts/writing)`,
       },
     ],
     faq: [
@@ -2068,6 +2202,20 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 
 **Gemini を使いこなすコツ**: 仕事系プロンプトは **Markdown 形式の出力指定**（「以下の Markdown 形式で出力してください: ## [見出し]\\n- [リスト項目]」）と、**例示（Few-Shot）**（「以下の例にならって作成してください: [例 1] [例 2]」）を組み合わせると精度が劇的に上がります。`,
       },
+      {
+        title: '✨ 関連プロンプト集 — Gemini 実例',
+        content: `本ガイドの Gemini 2.5 Flash Image（Nano Banana）プロンプト技法を使った写真加工・編集サンプル集。アップロード写真でそのまま使える。
+
+- [参照画像から服装移植 - 着せ替え](/prompt/outfit-swap-reference-image)
+- [髪色シミュレーション AI](/prompt/hair-color-natural-simulation)
+- [結婚式白無垢に着せ替え](/prompt/wedding-shiromuku-japanese)
+- [自然な美肌レタッチ](/prompt/natural-skin-retouching-gentle)
+- [背景置換 スタジオ風](/prompt/background-replace-studio-neutral)
+- [AI 写真自動補正](/prompt/photo-auto-enhance-vivid)
+- [髪型バリエーション 9 マスグリッド](/prompt/hairstyle-grid-9-variations)
+
+→ [Gemini 全プロンプト集](/tools/gemini)`,
+      },
     ],
     faq: [
       { q: 'Gemini プロンプトの書き方は ChatGPT と違いますか？', a: '基本テクニック（具体性・ロール設定・例示・出力フォーマット指定）は ChatGPT・Claude と共通です。ただし Gemini 特有のコツとして (1) 長文の Markdown 整形が得意なので「Markdown 形式で出力」を明示、(2) マルチモーダル（画像+テキスト同時入力）に強いので画像と質問を組み合わせるプロンプトを使う、(3) 最大 1M トークン対応なので長大な PDF や複数文書を一度に渡せる、の 3 点を意識すると Gemini の強みを引き出せます。' },
@@ -2300,6 +2448,19 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
 **法的グレーの避け方**: 「〇〇風」「〇〇 inspired」も避けるのが無難。完全オリジナルの特徴（色・髪型・服装）を自分で組み立てて Negative Prompt に \`copyrighted character, anime character\` を入れれば安心です。
 
 **当サイトの方針**: Prompta では IP 関連キーワード（ポケモン / ディズニー / 鬼滅 等）を含むプロンプトの収録はしていません。代わりに上記の「安全な代替テーマ」のプロンプトを継続的に拡充しています。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 — 即印刷できる塗り絵サンプル',
+        content: `本ガイドのテンプレートで実際に生成した塗り絵プロンプトです。子供向け・大人向け・高齢者向け・季節物まで。コピペで A4 印刷可。
+
+- [マンダラ花柄 大人の塗り絵](/prompt/mandala-floral-coloring-page-adults)
+- [薔薇の花束 大人の塗り絵](/prompt/rose-bouquet-coloring-page-adults)
+- [かわいい恐竜 子供の塗り絵](/prompt/cute-dinosaur-coloring-page-kids)
+- [海の生き物 子供の塗り絵](/prompt/sea-animals-coloring-page-kids)
+- [大きな花 高齢者向け塗り絵](/prompt/large-flowers-coloring-page-seniors)
+- [桜と禅の塗り絵プロンプト](/prompt/cherry-blossom-zen-coloring-page)
+
+→ [全てのクリエイティブ系プロンプト](/prompts/creative)`,
       },
     ],
     faq: [
