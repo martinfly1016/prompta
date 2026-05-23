@@ -706,6 +706,14 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'ai 塗り絵',
     monthlySearchVolume: 480,
   },
+  {
+    slug: 'height-difference-pair-prompt',
+    title: '身長差プロンプト完全ガイド｜AI イラストで二人の身長差を確実に描く方法',
+    description:
+      'Stable Diffusion・Midjourney・DALL-E で身長差のあるカップル・兄妹・ファンタジーペアを描くプロンプト完全ガイド。BL / 百合 / 男女 / 親子 / RPG パーティ / VTuber コラボ 14 シチュエーション別、ポーズ別パターン、SD 比例崩壊対策、ControlNet 活用法を実例つき 4500 字で解説。',
+    targetKeyword: '身長差 プロンプト',
+    monthlySearchVolume: 720,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -761,6 +769,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'ai-coloring-page-prompt': {
     tools: ['stable-diffusion', 'dall-e', 'midjourney'],
     categories: ['creative'],
+  },
+  'height-difference-pair-prompt': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['body-type', 'anime', 'cosplay', 'clothing'],
   },
 }
 

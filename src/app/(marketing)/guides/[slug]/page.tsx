@@ -2310,6 +2310,360 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
       { q: '線画の太さや細かさをどう調整すればいいですか？', a: '**太さ**は \`thick outline\`（太い、子供・高齢者向け）/ \`medium outline\`（中、一般向け）/ \`fine line art\`（細い、本格コロリアージュ向け）の 3 段階で指定。**細かさ**（線の密度）は \`simple composition\` / \`moderate detail\` / \`intricate detail\` で調整。例: 高齢者向けなら \`thick outline + very simple composition\`、コロリアージュ大人向けなら \`fine line art + intricate detail\`。失敗例として \`thick outline + intricate detail\` の組み合わせは線が潰れてしまうので避けてください。Stable Diffusion で更に細かく調整するなら CFG Scale を 9-11 に上げて指示を強く反映させる手も有効です。' },
     ],
   },
+
+  'height-difference-pair-prompt': {
+    sections: [
+      {
+        title: '身長差プロンプトとは — 2 人以上のキャラを描く時の必須スキル',
+        content: `**身長差プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**身長や体格の異なる 2 人以上のキャラクターを同じ画面に描く**」ための呪文（指示文）です。
+
+BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×後輩、ファンタジー RPG パーティ、VTuber コラボイラスト — 推しキャラ同士の **ペア立ち絵** や **二人並びイラスト** を生成したい時、ほぼ必ず必要になるテクニックです。
+
+**こんな人におすすめ**:
+
+- 推しカップルのファンアートを AI で描きたい
+- オリキャラ (OC) ペアの設定資料を作りたい
+- 同人イラスト・コミッション参考画像を量産したい
+- TRPG キャラの関係性ビジュアルを作りたい
+- VTuber コラボの並び絵を生成したい
+
+**本ガイドで扱う 14 シチュエーション**: BL カップル / 百合カップル / 男女カップル / 兄妹 / 親子 / 先輩後輩 / ファンタジー（騎士×魔法使い）/ RPG パーティ（戦士×ヒーラー）/ ビジネス同僚 / VTuber アイドル / 壁ドン構図 / ハグシーン / メカ×パイロット / 3 人組グループ。
+
+実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。`,
+      },
+      {
+        title: 'なぜ身長差を AI に明示しないと描けないのか — モデルのデフォルト挙動',
+        content: `Stable Diffusion / Midjourney / DALL-E に「**男女のカップルを描いて**」とだけ指示すると、ほとんどの場合**身長は同じ程度に揃えられて**しまいます。これは AI モデルが学習データの平均的な人物比例を覚えており、特に指定しないとそこに収束する性質があるためです。
+
+**身長差を描かせるには、最低でも以下の 3 要素を明示する必要があります**:
+
+1. **人数指定**: \`2girls\` / \`2boys\` / \`1boy and 1girl\` など danbooru タグスタイルで明示
+2. **身長差そのもの**: \`height difference\` / \`tall and short\` / \`size difference\` を **重み付け 1.3-1.4 で強調**
+3. **具体的な高さ表現**: \`tall man around 188cm\` / \`petite woman about 158cm\` のように **数値や形容詞**で各キャラを定量化
+
+**基本テンプレート**（コピペ用）:
+
+\`\`\`
+{tall character description}, around 185cm,
+{short character description}, around 155cm,
+(height difference:1.3), 2 people standing together,
+full body shot, sharp focus, (masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**ネガティブプロンプト推奨**:
+
+\`\`\`
+same height, same size, equal height, identical body proportions
+\`\`\`
+
+このネガティブを入れるだけで、身長差崩壊率が大幅に下がります。`,
+      },
+      {
+        title: '身長差プロンプトを構成する 6 つの要素',
+        content: `効果的な身長差プロンプトは以下 6 要素の組み合わせです：
+
+1. **人数指定（必須）** — \`2girls\`, \`2boys\`, \`1boy and 1girl\`, \`3 characters\`
+2. **身長差キーワード（必須）** — \`height difference\`, \`tall and short\`, \`size difference\`, \`stark size contrast\`
+3. **各キャラの定量化** — \`tall man around 185cm\`, \`petite woman about 158cm\`
+4. **関係性の文脈** — \`couple\`, \`siblings\`, \`parent and child\`, \`adventure party\`, \`band members\`
+5. **ポーズ・アクション** — \`standing side by side\`, \`holding hands\`, \`looking up at\`, \`embracing\`
+6. **構図指定** — \`full body shot\`, \`side angle\`, \`low angle to emphasize height\`
+
+**順序ルール**: SD では前方のトークンに強い重みが乗るので、**「身長差」と「人数」を必ず前半に置く**ことが重要。
+
+**実例（BL カップル）**:
+
+\`\`\`
+2boys, height difference, tall handsome man around 190cm with dark hair,
+shorter cute man around 165cm with light brown hair,
+standing close together, looking at each other,
+(height difference:1.3), full body shot, anime illustration style,
+(masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**実例（ファンタジー）**:
+
+\`\`\`
+1tall knight and 1small mage, dramatic size difference,
+massive armored knight around 210cm with cape,
+petite hooded mage around 150cm with staff,
+torch-lit dungeon, side lighting, (size difference:1.4),
+full body shot, fantasy concept art, (masterpiece:1.3)
+\`\`\``,
+      },
+      {
+        title: 'シチュエーション別 — コピペできる身長差プロンプト 8 例',
+        content: `すぐ使える人気シチュエーション 8 種を厳選。各サンプル画像は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> で確認できます。
+
+**1. BL カップル — 高身長攻め × 低身長受け**
+
+\`\`\`
+2boys, tall handsome man 195cm, shorter cute man 165cm,
+height difference, standing side by side, soft expressions,
+modern casual outfits, cafe background, full body shot,
+(height difference:1.3), BL romance illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">height-diff-bl-couple-tall-short</a>
+
+**2. 百合カップル — 長身お姉さん × 小柄妹系**
+
+\`\`\`
+2girls, tall girl 178cm long dark hair, petite girl 155cm short pastel hair,
+height difference, taller one patting smaller one's head,
+school uniforms, afternoon window light, full body shot,
+(height difference:1.3), yuri illustration style
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">height-diff-yuri-couple-tall-petite</a>
+
+**3. 男女恋人 — 王道タッパ差**
+
+\`\`\`
+1boy and 1girl, tall man 188cm, petite woman 160cm, height difference,
+holding hands, autumn city street, golden hour, full body shot,
+(height difference:1.3), photorealistic illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-hetero-couple-classic" class="text-sky-600 hover:underline">height-diff-hetero-couple-classic</a>
+
+**4. 兄妹 — お兄ちゃんと妹**
+
+\`\`\`
+1boy and 1girl, tall older brother 178cm in high school uniform,
+short younger sister 130cm in elementary school uniform,
+walking together, holding hands, cherry blossoms,
+(height difference:1.3), siblings, family illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-siblings-brother-sister" class="text-sky-600 hover:underline">height-diff-siblings-brother-sister</a>
+
+**5. 親子 — お父さんと小さい娘**
+
+\`\`\`
+1man and 1child, loving father 178cm, small daughter 110cm,
+walking through autumn park, holding hands, warm sunlight,
+(height difference:1.4), family bonding photography style
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-parent-child-hand-holding" class="text-sky-600 hover:underline">height-diff-parent-child-hand-holding</a>
+
+**6. ファンタジー — 巨大騎士 × 小柄魔法使い**
+
+\`\`\`
+1tall knight and 1small mage, massive armored knight 210cm with cape,
+petite hooded mage 150cm with staff, torch-lit dungeon,
+(height difference:1.4), (size difference:1.3),
+full body shot, fantasy concept art
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-fantasy-knight-mage" class="text-sky-600 hover:underline">height-diff-fantasy-knight-mage</a>
+
+**7. 学園もの — 先輩 × 後輩**
+
+\`\`\`
+2girls, tall third-year senpai 180cm sailor uniform red ribbon,
+shorter first-year kohai 158cm same uniform blue ribbon,
+walking from school, golden hour, cherry trees,
+(height difference:1.3), school slice-of-life anime style
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">height-diff-senpai-kohai-school</a>
+
+**8. メカ × パイロット — 極端なスケール対比**
+
+\`\`\`
+1pilot and 1mecha robot, young pilot 160cm in pilot suit,
+massive mecha 18 meters tall glossy white blue armor,
+giant hangar interior, low angle camera, dramatic backlight,
+(size difference:1.5), sci-fi anime illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/height-diff-mecha-pilot-android" class="text-sky-600 hover:underline">height-diff-mecha-pilot-android</a>
+
+その他に **VTuber アイドルデュオ / 壁ドン構図 / ハグシーン / RPG パーティ / 3 人組グループ / OC ペアテンプレート** など 7 シチュエーションも公開中、合計 15 件 → <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a>。`,
+      },
+      {
+        title: 'ポーズ別 — 身長差を強調する 5 つの定番構図',
+        content: `同じカップルでも、ポーズによって身長差の見え方が劇的に変わります。
+
+**1. 並び立ち（最も定番）**
+
+両者がカメラに向かって並んで立つ。身長差が一目瞭然。
+
+\`standing side by side, full body shot, even spacing, looking forward\`
+
+**2. 手をつなぐ**
+
+片方が見上げ、片方が見下ろす自然な構図。
+
+\`holding hands, looking at each other, slight side angle, full body shot\`
+
+**3. ハグ — 包み込む抱擁**
+
+高い方が小柄な相手を包む。少女漫画・BL 定番。
+
+\`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
+
+→ サンプル: <a href="/prompt/height-diff-hug-tall-embracing-short" class="text-sky-600 hover:underline">height-diff-hug-tall-embracing-short</a>
+
+**4. 壁ドン（見上げる視点）**
+
+高身長キャラが壁に手をつき、小柄キャラを見下ろす。
+
+\`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, shoujo manga style\`
+
+→ サンプル: <a href="/prompt/height-diff-couple-kabedon-looking-up" class="text-sky-600 hover:underline">height-diff-couple-kabedon-looking-up</a>
+
+**5. 見上げる × 見下ろす（対面）**
+
+シンプルだが視線の上下で身長差を強烈に演出。
+
+\`shorter character looking up at taller one with soft expression, taller one looking down gently, close shot\`
+
+**ポーズ × カメラアングルの組み合わせコツ**:
+
+- **\`low angle\`（ローアングル）**: 高い方をより高く見せる
+- **\`from above\` / \`high angle\`**: 小柄な方を強調
+- **\`side view\` / \`profile shot\`**: 両者の身長を客観的に比較できる
+- **\`from behind\`**: 後ろ姿で二人の体格差を魅せる`,
+      },
+      {
+        title: '困った時の対処法 — よくある身長差崩壊と修正法',
+        content: `身長差プロンプトは**初回生成で完璧に出ることは少なく**、何度かのリトライ + プロンプト調整が必要です。以下、よくある失敗パターンと対処法。
+
+**問題 1: 同身長になってしまう**
+
+最頻発の問題。SD は人物比例の平均値に収束したがる。
+
+- **対処**: \`(height difference:1.4)\` まで重み付けを上げる
+- **対処**: ネガティブに \`same height, equal height, identical proportions\` を追加
+- **対処**: 各キャラの cm 数値を明記（例: \`tall man around 188cm\`, \`petite woman about 158cm\`）
+
+**問題 2: 一人だけ正しく描かれない（顔が崩れる / 体が変形）**
+
+二人構図は手・顔が崩れやすい。
+
+- **対処**: \`(detailed face:1.2), (detailed eyes:1.2)\` を両キャラ用に追加
+- **対処**: ADetailer（A1111 拡張）で各キャラの顔を独立して再生成
+- **対処**: 解像度を 768x768 以上に上げる（512 では二人構図が壊れやすい）
+
+**問題 3: 二人の体型が似てしまう（例: 高身長キャラが小柄キャラと同じ細さ）**
+
+- **対処**: 各キャラに **明確な体型形容詞**を割り当てる。例: \`muscular tall man\` + \`slim petite woman\`
+- **対処**: ControlNet OpenPose で 2 人分の異なる骨格を参照画像から取り込む（最強の方法）
+
+**問題 4: キャラがくっつきすぎ / 離れすぎ**
+
+- **対処**: 距離を明示。\`standing side by side with small gap\` / \`standing close together arms touching\`
+
+**問題 5: 3 人以上で全員同身長になる**
+
+- **対処**: 3 人各々の身長を明記。\`tall character (left, 188cm), medium character (middle, 168cm), short character (right, 152cm)\`
+- **対処**: \`character lineup illustration, varied heights\` を加える
+
+**ControlNet 活用法（最も確実）**
+
+身長差の崩壊を**ほぼ完全に防ぐ**には、**ControlNet OpenPose** を使うのが最強。手順:
+
+1. 身長差のある 2 人が並んだ参考画像を用意（実写でも OK）
+2. ControlNet タブに参考画像を読み込み、Preprocessor を \`openpose_full\` に設定
+3. プロンプトは本ガイドのテンプレートをそのまま使用
+4. 生成 → 骨格が参考画像の通りになるので、身長差が正確に出る
+
+詳しい ControlNet 操作は <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> 参照。`,
+      },
+      {
+        title: 'ツール別の身長差表現の違い — SD / Midjourney / DALL-E',
+        content: `**Stable Diffusion**（推奨度: ⭐⭐⭐）
+
+- 強み: \`(height difference:1.3)\` のような重み付けが効く、ControlNet で完璧に制御可能、danbooru タグ（\`2girls\` 等）が機能する
+- 弱み: 二人構図で顔・手の崩壊率が高い、初期 seed で大きく結果が変わる
+- 推奨モデル: anime 用なら Counterfeit / MeinaMix、リアル用なら Realistic Vision
+
+**Midjourney**（推奨度: ⭐⭐）
+
+- 強み: 構図のセンスが良い、芸術性が高い、narrative style プロンプトでも身長差を理解する
+- 弱み: 重み付けが SD ほど精密でない、ControlNet 相当の機能なし
+- 工夫: \`--ar 9:16\`（縦長）を使うと身長差が強調されやすい
+
+**DALL-E 3**（推奨度: ⭐⭐）
+
+- 強み: 自然言語の指示理解力が高く、「背の高い男性と小柄な女性」のような日本語的指示が効く
+- 弱み: NSFW フィルターが厳しめ、ファンアート系（特定 IP）が出にくい
+- 工夫: 「片方は他方より明らかに背が高い (clearly taller)」のように relative 指示を入れる
+
+**Gemini 2.5 Flash Image (Nano Banana)**（推奨度: ⭐）
+
+- 強み: 既存写真の編集（カップル写真に身長差を強調する加工）には強い
+- 弱み: ゼロからの生成では身長差プロンプトを正確に解釈しないことが多い
+
+**おすすめワークフロー**:
+
+1. **本格的に身長差ペアを描きたい** → Stable Diffusion + ControlNet OpenPose
+2. **クオリティ重視 / ファンアート** → Midjourney
+3. **自然言語で気軽に試したい** → DALL-E 3（Bing Image Creator で無料）
+
+prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> から該当 prompt の「ここで試す」を押せばサイト内で実行可能（5 ポイント / 回）。`,
+      },
+      {
+        title: '作品例 — prompta.jp で即試せる 15 件',
+        content: `本ガイドで紹介した全プロンプトはサンプル画像つきで公開中。各ページ右上の「🚀 ここで試す」から、ログイン後にサイト内で実行（生成）可能です。
+
+**ペアロマンス系**:
+
+- <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">BL カップル — 高身長×低身長</a>
+- <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">百合カップル — 長身×小柄</a>
+- <a href="/prompt/height-diff-hetero-couple-classic" class="text-sky-600 hover:underline">男女カップル — 王道タッパ差</a>
+- <a href="/prompt/height-diff-couple-kabedon-looking-up" class="text-sky-600 hover:underline">壁ドン構図</a>
+- <a href="/prompt/height-diff-hug-tall-embracing-short" class="text-sky-600 hover:underline">ハグ（包み込む抱擁）</a>
+
+**家族・学園系**:
+
+- <a href="/prompt/height-diff-siblings-brother-sister" class="text-sky-600 hover:underline">兄妹 — お兄ちゃんと妹</a>
+- <a href="/prompt/height-diff-parent-child-hand-holding" class="text-sky-600 hover:underline">親子 — 手をつなぐ日常</a>
+- <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">先輩 × 後輩 — 部活帰り</a>
+
+**ファンタジー・SF**:
+
+- <a href="/prompt/height-diff-fantasy-knight-mage" class="text-sky-600 hover:underline">巨大騎士 × 小柄魔法使い</a>
+- <a href="/prompt/height-diff-rpg-party-warrior-healer" class="text-sky-600 hover:underline">RPG パーティ — 戦士×ヒーラー</a>
+- <a href="/prompt/height-diff-mecha-pilot-android" class="text-sky-600 hover:underline">メカ × パイロット</a>
+
+**ビジネス・アイドル系**:
+
+- <a href="/prompt/height-diff-coworkers-formal-suit" class="text-sky-600 hover:underline">ビジネス同僚 — スーツ姿</a>
+- <a href="/prompt/height-diff-vtuber-idol-duo" class="text-sky-600 hover:underline">VTuber アイドルデュオ</a>
+
+**応用**:
+
+- <a href="/prompt/height-diff-oc-pair-template" class="text-sky-600 hover:underline">OC ペア — オリキャラ並び立ちテンプレート</a>
+- <a href="/prompt/height-diff-trio-mixed-heights" class="text-sky-600 hover:underline">3 人組 — バラバラ身長グループ</a>
+
+**関連ガイド**:
+
+- <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — 単体キャラの体型（curvy / muscular / slim 等）
+- <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎・重み付け・ControlNet
+- <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — キャラクター再現
+
+**カテゴリ別 prompt 集**:
+
+- <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> — 体型・身長系
+- <a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> — コスプレ・キャラ再現
+- <a href="/prompts/clothing" class="text-sky-600 hover:underline">/prompts/clothing</a> — 服装組み合わせ`,
+      },
+    ],
+    faq: [
+      { q: 'プロンプトに身長 cm を書いても効きますか？', a: '**Stable Diffusion / Midjourney は数値そのものを正確には理解しません**が、「188cm」「150cm」のような表記は AI が「大きい数字 = 高い、小さい数字 = 低い」という相対比較として処理してくれます。完全な精度は出ませんが、書かないより書いたほうが効果あり。**より確実な方法**は `tall around 185cm` のように形容詞 + 数値で挟むこと、または `tall and short` `dramatic height difference` のような明示的キーワードを併用することです。DALL-E 3 は自然言語の理解力が高いため、cm 表記の効きが比較的良いです。' },
+      { q: '「2girls / 2boys」の指定は必須ですか？', a: 'Stable Diffusion（特にアニメ系モデル）では**ほぼ必須**です。danbooru タグで学習されているため、`2girls` `2boys` `1boy and 1girl` `3 characters` のような人数指定がないと、AI は「カップル」と書いても 1 人だけ描いたり、4 人描いたりと不安定。Midjourney と DALL-E 3 では自然言語で「two characters」「a couple」と書けば理解しますが、それでも明示したほうが安定します。' },
+      { q: 'ControlNet で身長差を確実に出すには？', a: '**ControlNet OpenPose Preprocessor** を使うのが最強の方法です。手順: (1) 身長差のある 2 人が並んで立つ参考画像（実写でも 3D モデルでも OK）を用意。(2) Stable Diffusion WebUI の ControlNet タブで参考画像を読み込み、Preprocessor を `openpose_full` または `openpose`、Model を `control_v11p_sd15_openpose` に設定。(3) プロンプトは本ガイドのテンプレを使用、CFG Scale 7-9。(4) 生成すると参考画像の骨格通りに 2 人が描かれ、身長差が完全に再現されます。**実写の身長差カップル写真**を Pinterest 等で探して参考にすると、自然な比例が出やすいです。' },
+      { q: 'ネガティブプロンプトで「同身長」を防ぐには？', a: '推奨ネガティブ: `same height, equal height, identical body proportions, same size, similar height`。これに加えて品質ネガティブ（`worst quality, low quality, bad anatomy, bad hands`）と二人構図特化ネガティブ（`extra arms, extra legs, fused body, conjoined twins, merged figures`）を組み合わせると安定。**全文例**: `(worst quality:1.4), (low quality:1.4), same height, equal height, identical proportions, bad anatomy, bad hands, extra arms, fused bodies, blurry`。これだけで身長差が出る確率が体感 30% → 70% に上がります。' },
+      { q: 'Midjourney と Stable Diffusion で身長差表現の違いは？', a: '**Midjourney** は narrative-style（文章プロンプト）が得意で、「a tall man and a petite woman standing together with a clear height difference」のような自然な指示がよく効く。`--ar 9:16` で縦長アスペクト比にすると身長差が強調されやすい。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能もなし。**Stable Diffusion** は重み付け `(height difference:1.4)` で精密に制御でき、ControlNet OpenPose で完璧な骨格指定が可能。danbooru タグ `2girls` `2boys` で確実に人数が固定できる。**結論**: クオリティ重視で気軽に → Midjourney、本格制御 → Stable Diffusion + ControlNet。' },
+      { q: '3 人以上の身長バラバラ構図のコツは？', a: '3 人組以上は **(1) 各々の身長を明記、(2) 立ち位置を明記、(3) `character lineup` キーワード追加** が鉄則。例: `three characters in horizontal lineup, tall character (left, 188cm), medium character (middle, 168cm), short character (right, 152cm), even spacing, character design sheet style`。**着物・制服など全身が見える衣装**を揃えると身長差が視覚的に伝わりやすい。ControlNet OpenPose があれば 3 人骨格を一気に固定できるので失敗率激減。サンプル: <a href="/prompt/height-diff-trio-mixed-heights" class="text-sky-600 hover:underline">3 人組 — バラバラ身長グループ</a>。' },
+      { q: 'キャラの顔だけ似て体格は変えたい場合は？', a: '**LoRA + 身長差プロンプト**の組み合わせがベスト。手順: (1) キャラ LoRA（顔特徴）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `height difference, tall version (a) and short version (b)` のように同キャラの 2 体型を明示、(3) 体型形容詞（`muscular`, `petite`, `slim`）を別々に割り当てる。**もう一つの方法**: img2img で既存キャラのフェイス画像をベースに、prompt で体格だけ変更（Denoising Strength 0.4-0.6 で顔保持）。ファンアート常套手段の「**身長差パロディ**」（推しキャラが小学生化する等）も同じ原理です。' },
+      { q: 'BL / 百合カップル特有の身長差表現は？', a: 'BL / 百合カップルでは「**役割の視覚的記号化**」が重要です。BL なら「**高身長攻め × 低身長受け**」(`tall seme around 195cm, shorter uke around 165cm`) が定番。「攻め × 受け」を直接書くより `dominant tall partner` / `gentle shorter partner` のような英語表現のほうが安全（NSFW フィルター回避）。**百合** なら「**長身お姉さん × 小柄妹系**」(`tall onee-san type, petite imouto type`) の構図がファンアートで頻出。ポーズも BL は「壁ドン」「ハグ」「頭を撫でる」、百合は「お姫様抱っこ」「頭ぽんぽん」が定番。本ガイドでは <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">BL カップル</a> と <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">百合カップル</a> のテンプレを公開中、コピペで使えます。' },
+    ],
+  },
 }
 
 export default async function GuidePage({ params }: Props) {
