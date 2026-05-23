@@ -2811,6 +2811,9 @@ export default async function GuidePage({ params }: Props) {
                           __html: paragraph
                             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                             .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono">$1</code>')
+                            // Convert markdown [text](/path) to anchor — content authors use this
+                            // style for internal site links inside guide section text.
+                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>')
                         }} />
                       )
                     })}
@@ -2835,7 +2838,8 @@ export default async function GuidePage({ params }: Props) {
                         dangerouslySetInnerHTML={{
                           __html: 'A. ' + item.a
                             .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono">$1</code>'),
+                            .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono">$1</code>')
+                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>'),
                         }}
                       />
                     </div>
