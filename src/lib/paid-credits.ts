@@ -70,13 +70,62 @@ export async function getOwnerEmailHash(): Promise<string | null> {
   return readCreditsCookie()
 }
 
-export async function getPaidBalance(eh: string | null): Promise<number> {
-  if (!eh) return 0
+// Credits expire 12 months after the most recent grant (purchase or
+// welcome bonus). Spend does NOT extend expiration; refund does NOT
+// either (the spend itself didn't shorten it).
+export const EXPIRATION_MONTHS = 12
+
+export function computeNewExpiresAt(): Date {
+  const d = new Date()
+  d.setMonth(d.getMonth() + EXPIRATION_MONTHS)
+  return d
+}
+
+/**
+ * Sweep an expired wallet to balance=0. Lazy — only runs when called.
+ * Returns the post-sweep row (balance/expiresAt). If the wallet doesn't
+ * exist or has nothing to sweep, returns the row unchanged.
+ *
+ * Called by getPaidBalance() and spendCredits() so users never get
+ * silently charged against expired credits, and reads stay consistent
+ * with what the deduct path will actually allow.
+ */
+async function sweepIfExpired(eh: string): Promise<{ balance: number; expiresAt: Date | null }> {
   const row = await prisma.paidCredits.findUnique({
     where: { emailHash: eh },
-    select: { balance: true },
+    select: { balance: true, expiresAt: true },
   })
-  return row?.balance ?? 0
+  if (!row) return { balance: 0, expiresAt: null }
+  if (!row.expiresAt || row.balance <= 0) return row
+  if (row.expiresAt.getTime() > Date.now()) return row
+  // Expired with positive balance — zero it out atomically.
+  await prisma.paidCredits.updateMany({
+    where: {
+      emailHash: eh,
+      expiresAt: { lt: new Date() },
+      balance: { gt: 0 },
+    },
+    data: { balance: 0 },
+  })
+  return { balance: 0, expiresAt: row.expiresAt }
+}
+
+export async function getPaidBalance(eh: string | null): Promise<number> {
+  if (!eh) return 0
+  const { balance } = await sweepIfExpired(eh)
+  return balance
+}
+
+/**
+ * Returns both balance and the wallet's expiration date — used by the
+ * /api/tools/balance endpoint and any UI that needs to display
+ * "ポイント有効期限".
+ */
+export async function getCreditsState(
+  eh: string | null,
+): Promise<{ balance: number; expiresAt: Date | null }> {
+  if (!eh) return { balance: 0, expiresAt: null }
+  return sweepIfExpired(eh)
 }
 
 export async function spendOneCredit(
@@ -118,8 +167,17 @@ export async function spendCredits(
   n: number,
 ): Promise<{ ok: boolean; balance: number }> {
   if (n <= 0) throw new Error(`spendCredits: n must be > 0, got ${n}`)
+  // Pre-flight: sweep expired wallets before the conditional decrement so
+  // we don't spend against credits the user no longer technically owns.
+  await sweepIfExpired(eh)
+  const now = new Date()
+  // Atomically decrement only if balance >= n AND (no expiration OR not expired).
   const result = await prisma.paidCredits.updateMany({
-    where: { emailHash: eh, balance: { gte: n } },
+    where: {
+      emailHash: eh,
+      balance: { gte: n },
+      OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+    },
     data: { balance: { decrement: n }, totalUsed: { increment: n } },
   })
   if (result.count === 0) return { ok: false, balance: 0 }
@@ -133,8 +191,9 @@ export async function spendCredits(
 export async function grantCredits(
   email: string,
   count: number,
-): Promise<{ balance: number }> {
+): Promise<{ balance: number; expiresAt: Date }> {
   const eh = emailHash(email)
+  const newExpiresAt = computeNewExpiresAt()
   const row = await prisma.paidCredits.upsert({
     where: { emailHash: eh },
     create: {
@@ -143,15 +202,19 @@ export async function grantCredits(
       balance: count,
       totalEarned: count,
       lastPurchase: new Date(),
+      expiresAt: newExpiresAt,
     },
     update: {
       balance: { increment: count },
       totalEarned: { increment: count },
       lastPurchase: new Date(),
+      // Extend on every grant — purchase or welcome bonus. Each grant
+      // pushes expiration to a fresh now + 12 months window.
+      expiresAt: newExpiresAt,
     },
-    select: { balance: true },
+    select: { balance: true, expiresAt: true },
   })
-  return { balance: row.balance }
+  return { balance: row.balance, expiresAt: row.expiresAt! }
 }
 
 // Welcome bonus on first login. Idempotent — uses welcomeBonusAt timestamp
@@ -172,15 +235,16 @@ export const WELCOME_BONUS_CREDITS = 15
 
 export async function grantWelcomeBonusIfEligible(
   email: string,
-): Promise<{ granted: boolean; balance: number }> {
+): Promise<{ granted: boolean; balance: number; expiresAt: Date | null }> {
   const eh = emailHash(email)
   const existing = await prisma.paidCredits.findUnique({
     where: { emailHash: eh },
-    select: { welcomeBonusAt: true, balance: true },
+    select: { welcomeBonusAt: true, balance: true, expiresAt: true },
   })
   if (existing?.welcomeBonusAt) {
-    return { granted: false, balance: existing.balance }
+    return { granted: false, balance: existing.balance, expiresAt: existing.expiresAt }
   }
+  const newExpiresAt = computeNewExpiresAt()
   const row = await prisma.paidCredits.upsert({
     where: { emailHash: eh },
     create: {
@@ -190,14 +254,16 @@ export async function grantWelcomeBonusIfEligible(
       totalEarned: WELCOME_BONUS_CREDITS,
       welcomeBonus: WELCOME_BONUS_CREDITS,
       welcomeBonusAt: new Date(),
+      expiresAt: newExpiresAt,
     },
     update: {
       balance: { increment: WELCOME_BONUS_CREDITS },
       totalEarned: { increment: WELCOME_BONUS_CREDITS },
       welcomeBonus: WELCOME_BONUS_CREDITS,
       welcomeBonusAt: new Date(),
+      expiresAt: newExpiresAt,
     },
-    select: { balance: true },
+    select: { balance: true, expiresAt: true },
   })
-  return { granted: true, balance: row.balance }
+  return { granted: true, balance: row.balance, expiresAt: row.expiresAt }
 }

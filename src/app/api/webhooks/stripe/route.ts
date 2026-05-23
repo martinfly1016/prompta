@@ -91,6 +91,7 @@ export async function POST(req: NextRequest) {
         email,
         creditsGranted: credits,
         balance: after.balance,
+        expiresAt: after.expiresAt,
         amountJpy,
         sessionId,
       })
@@ -106,12 +107,14 @@ async function sendPurchaseEmail(p: {
   email: string
   creditsGranted: number
   balance: number
+  expiresAt: Date
   amountJpy: number
   sessionId: string
 }) {
   const personalColorUrl = `${SITE_CONFIG.url}/tools/personal-color-analysis`
   const hairColorUrl = `${SITE_CONFIG.url}/tools/hair-color-diagnosis`
   const signinUrl = `${SITE_CONFIG.url}/auth/signin`
+  const expiresLabel = `${p.expiresAt.getFullYear()} 年 ${p.expiresAt.getMonth() + 1} 月 ${p.expiresAt.getDate()} 日`
   const subject = `【prompta.jp】ご購入ありがとうございます — ${p.creditsGranted} ポイント追加`
   const text = `prompta.jp をご利用いただきありがとうございます。
 
@@ -120,6 +123,7 @@ async function sendPurchaseEmail(p: {
   - 金額: ¥${p.amountJpy.toLocaleString()}
   - 追加ポイント: ${p.creditsGranted}
   - 現在の残高: ${p.balance}
+  - ポイント有効期限: ${expiresLabel}まで
   - 注文 ID: ${p.sessionId}
 
 ※ 画像生成 1 回 = 5 ポイント ／ 文字実行 1 回 = 1 ポイント消費
@@ -153,6 +157,7 @@ ${SITE_CONFIG.url}
       <tr><td style="padding:6px 0;color:#6b7280">金額</td><td style="padding:6px 0;text-align:right;font-weight:600">¥${p.amountJpy.toLocaleString()}</td></tr>
       <tr><td style="padding:6px 0;color:#6b7280">追加ポイント</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted}</td></tr>
       <tr style="border-top:1px solid #e0f2fe"><td style="padding:6px 0;color:#6b7280">現在の残高</td><td style="padding:6px 0;text-align:right;font-weight:700;color:#0284c7">💎 ${p.balance}</td></tr>
+      <tr><td style="padding:6px 0;color:#6b7280">有効期限</td><td style="padding:6px 0;text-align:right;font-weight:600">${expiresLabel} まで</td></tr>
     </table>
   </div>
 

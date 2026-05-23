@@ -68,6 +68,12 @@ export default async function AccountPage() {
   const totalUsed = credits?.totalUsed ?? 0
   const welcomeGranted = !!credits?.welcomeBonusAt
   const lastPurchase = credits?.lastPurchase ?? null
+  const expiresAt = credits?.expiresAt ?? null
+  const expiresAtIso = expiresAt ? expiresAt.toISOString() : null
+  const expiresLabel =
+    expiresAt && balance > 0
+      ? `${expiresAt.getFullYear()} 年 ${expiresAt.getMonth() + 1} 月 ${expiresAt.getDate()} 日`
+      : null
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -91,6 +97,9 @@ export default async function AccountPage() {
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-5">
           <span>累計獲得 <strong className="text-gray-900">{totalEarned}</strong></span>
           <span>累計使用 <strong className="text-gray-900">{totalUsed}</strong></span>
+          {expiresLabel && (
+            <span>有効期限 <strong className="text-gray-900">{expiresLabel}</strong></span>
+          )}
           {welcomeGranted && (
             <span className="inline-flex items-center gap-1 text-emerald-700">
               🎁 ウェルカム特典 {credits?.welcomeBonus ?? 0} ポイント受領済
@@ -111,7 +120,7 @@ export default async function AccountPage() {
             💇 髪色診断で使う
           </Link>
           {balance < 25 && (
-            <TopUpCreditsButton returnTo="/account" currentBalance={balance}>
+            <TopUpCreditsButton returnTo="/account" currentBalance={balance} currentExpiresAt={expiresAtIso}>
               💳 ポイントを補充する
             </TopUpCreditsButton>
           )}

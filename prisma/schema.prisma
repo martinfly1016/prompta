@@ -281,6 +281,12 @@ model PaidCredits {
   welcomeBonus   Int       @default(0)
   welcomeBonusAt DateTime?
   lastPurchase   DateTime?
+  // Single expiration per wallet (2026-05-23): every grant (purchase or
+  // welcome bonus) extends expiresAt to now + 12 months. Spend does NOT
+  // extend. Read/write paths sweep when now > expiresAt — balance forced
+  // to 0 lazily so users never lose credits silently between sessions.
+  // Refund does NOT extend (the spend itself didn't shorten it).
+  expiresAt      DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }

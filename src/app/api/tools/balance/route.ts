@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getPaidBalance, getOwnerEmailHash } from '@/lib/paid-credits'
+import { getCreditsState, getOwnerEmailHash } from '@/lib/paid-credits'
 import { stripeEnabled } from '@/lib/stripe'
 
 /**
@@ -8,9 +8,10 @@ import { stripeEnabled } from '@/lib/stripe'
  */
 export async function GET() {
   const eh = await getOwnerEmailHash()
-  const balance = await getPaidBalance(eh)
+  const { balance, expiresAt } = await getCreditsState(eh)
   return NextResponse.json({
     balance,
+    expiresAt: expiresAt?.toISOString() ?? null,
     canUse: !!eh && balance > 0,
     signedIn: !!eh,
     stripeEnabled,

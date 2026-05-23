@@ -10,6 +10,13 @@ interface Props {
   returnTo: string
   /** Optional current balance to display. If undefined, no balance shown. */
   currentBalance?: number | null
+  /** Optional current expiration (ISO string). If set and a balance is
+   *  shown, the modal renders the next-extension preview. */
+  currentExpiresAt?: string | null
+}
+
+function formatJpDate(d: Date): string {
+  return `${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日`
 }
 
 /**
@@ -22,7 +29,7 @@ interface Props {
  *   - /account TopUpCreditsButton
  *   - future surfaces that need to top up credits
  */
-export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }: Props) {
+export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, currentExpiresAt }: Props) {
   const { status: authStatus } = useSession()
   const isSignedIn = authStatus === 'authenticated'
   const [pending, setPending] = useState(false)
@@ -158,9 +165,37 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
           </div>
 
           {currentBalance != null && (
-            <div className="mb-4 px-3 py-2 rounded-lg bg-sky-50 border border-sky-100 text-xs text-sky-800">
-              現在の残高: <strong>{currentBalance}</strong> ポイント → 購入後:{' '}
-              <strong>{currentBalance + 150}</strong> ポイント
+            <div className="mb-4 px-3 py-2 rounded-lg bg-sky-50 border border-sky-100 text-xs text-sky-800 space-y-1">
+              <div>
+                現在の残高: <strong>{currentBalance}</strong> ポイント → 購入後:{' '}
+                <strong>{currentBalance + 150}</strong> ポイント
+              </div>
+              <div className="text-sky-700/80">
+                {currentExpiresAt && currentBalance > 0 ? (
+                  <>
+                    現在の有効期限: <strong>{formatJpDate(new Date(currentExpiresAt))}</strong>{' '}
+                    → 購入後:{' '}
+                    <strong>
+                      {(() => {
+                        const d = new Date()
+                        d.setMonth(d.getMonth() + 12)
+                        return formatJpDate(d)
+                      })()}
+                    </strong>
+                  </>
+                ) : (
+                  <>
+                    購入後の有効期限:{' '}
+                    <strong>
+                      {(() => {
+                        const d = new Date()
+                        d.setMonth(d.getMonth() + 12)
+                        return formatJpDate(d)
+                      })()}
+                    </strong>
+                  </>
+                )}
+              </div>
             </div>
           )}
 

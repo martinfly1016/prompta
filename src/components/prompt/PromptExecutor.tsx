@@ -46,6 +46,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<ExecuteResult | null>(null)
   const [balance, setBalance] = useState<number | null>(null)
+  const [expiresAt, setExpiresAt] = useState<string | null>(null)
   const [sourceImage, setSourceImage] = useState<{ base64: string; mimeType: string; name: string; size: number } | null>(null)
   const [sourcePreviewUrl, setSourcePreviewUrl] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -64,6 +65,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       .then((r) => r.json())
       .then((j) => {
         if (typeof j?.balance === 'number') setBalance(j.balance)
+        if (typeof j?.expiresAt === 'string') setExpiresAt(j.expiresAt)
       })
       .catch(() => {})
   }, [isSignedIn])
@@ -446,6 +448,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         onClose={() => setShowPurchaseModal(false)}
         returnTo={`/prompt/${prompt.slug}`}
         currentBalance={balance}
+        currentExpiresAt={expiresAt}
       />
     </section>
   )

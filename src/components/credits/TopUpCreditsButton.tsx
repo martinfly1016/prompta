@@ -7,6 +7,9 @@ interface Props {
   /** Path to return to after Stripe success/cancel. */
   returnTo: string
   currentBalance?: number | null
+  /** ISO timestamp — passed through to the modal so it can show the
+   *  current expiration alongside the post-purchase one. */
+  currentExpiresAt?: string | null
   /** Tailwind class overrides for the trigger button. */
   className?: string
   children?: React.ReactNode
@@ -23,6 +26,7 @@ interface Props {
 export function TopUpCreditsButton({
   returnTo,
   currentBalance,
+  currentExpiresAt,
   className,
   children,
 }: Props) {
@@ -44,6 +48,7 @@ export function TopUpCreditsButton({
         onClose={() => setOpen(false)}
         returnTo={returnTo}
         currentBalance={currentBalance}
+        currentExpiresAt={currentExpiresAt}
       />
     </>
   )
