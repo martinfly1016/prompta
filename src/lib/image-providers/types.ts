@@ -11,7 +11,7 @@
  * 5 credits per generation; text providers charge 1 credit.
  */
 
-export type ProviderId = 'gemini-image' | 'openai-image' | 'gemini-text'
+export type ProviderId = 'gemini-image' | 'openai-image' | 'gemini-text' | 'fal-sdxl'
 
 export type ExecuteMode = 'text' | 'image-gen' | 'image-edit'
 

@@ -11,11 +11,13 @@
 import { provider as geminiImage } from './gemini-image'
 import { provider as openaiImage } from './openai-image'
 import { provider as geminiText } from './gemini-text'
+import { provider as falSdxl } from './fal-sdxl'
 import type { ExecuteMode, ImageProvider, ProviderId } from './types'
 
 export const PROVIDERS: ImageProvider[] = [
   geminiImage,
   openaiImage,
+  falSdxl,
   geminiText,
 ]
 
@@ -56,6 +58,13 @@ export function recommendForPrompt(args: {
     (toolSlug && TEXT_TOOLS.has(toolSlug))
   ) {
     return { mode: 'text', defaultProviderId: 'gemini-text' }
+  }
+  // SD-tagged prompts default to fal-sdxl — most SD prompts in the DB are
+  // tag-style (comma-delimited keywords + weight syntax) which SDXL handles
+  // natively, whereas Gemini Nano Banana treats them as natural-language
+  // descriptions.
+  if (toolSlug === 'stable-diffusion') {
+    return { mode: 'image-gen', defaultProviderId: 'fal-sdxl' }
   }
   // Default: image generation (hairstyle, clothing, anime, creative, etc.)
   return { mode: 'image-gen', defaultProviderId: 'gemini-image' }
