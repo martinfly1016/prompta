@@ -105,7 +105,7 @@ const STRINGS_JA = {
     '画像生成 30 回 OR 文字実行 150 回（混合 OK）',
     '全ツール・全プロンプト共通で使用可',
     'Stripe 決済（VISA/Master/AMEX/JCB）',
-    '即時利用、有効期限なし',
+    '即時利用、有効期限 12 ヶ月',
   ],
   purchasing: '処理中…',
   purchaseButton: `💳 150 ポイントパックを購入（${PRICE_LABEL}）`,

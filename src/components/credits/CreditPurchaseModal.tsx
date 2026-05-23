@@ -129,11 +129,31 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>パーソナルカラー診断・髪色診断・全 180 プロンプトで共通</span>
+              <span className="inline-flex flex-wrap items-center gap-1">
+                <span>世界最先端の AI モデル</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64"
+                  alt=""
+                  width={14}
+                  height={14}
+                  className="inline-block rounded-sm"
+                />
+                <span>Gemini、</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64"
+                  alt=""
+                  width={14}
+                  height={14}
+                  className="inline-block rounded-sm"
+                />
+                <span>ChatGPT などをサイト内で利用可能</span>
+              </span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>有効期限なし。アカウント（メール）に紐づきデバイス間で同期</span>
+              <span>ポイント有効期限は <strong className="text-gray-900">12 ヶ月</strong>。アカウント（メール）に紐づきデバイス間で同期</span>
             </div>
           </div>
 

@@ -22,7 +22,7 @@ const WEBHOOK_URL =
 
 const PRODUCT_NAME = 'prompta.jp 150 ポイントパック'
 const PRODUCT_DESC =
-  'prompta.jp 上の全ツール・全プロンプトで共通利用可能な 150 ポイントのポイントパック。画像生成 1 回 = 5 ポイント、文字実行 1 回 = 1 ポイント消費。有効期限なし。'
+  'prompta.jp 上の全ツール・全プロンプトで共通利用可能な 150 ポイントのポイントパック。画像生成 1 回 = 5 ポイント、文字実行 1 回 = 1 ポイント消費。ポイント有効期限は購入から 12 ヶ月。'
 const UNIT_AMOUNT_JPY = 300
 const CURRENCY = 'jpy'
 const EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [

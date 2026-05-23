@@ -95,7 +95,7 @@ const STRINGS = {
     signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} ポイント）`,
     signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
     pricePackTitle: '150 ポイントパック',
-    priceFeatures: ['画像生成 30 回 OR 文字実行 150 回', '全ツール・全プロンプト共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', '即時利用、有効期限なし'],
+    priceFeatures: ['画像生成 30 回 OR 文字実行 150 回', '全ツール・全プロンプト共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', '即時利用、有効期限 12 ヶ月'],
     purchasing: '処理中…',
     purchaseButton: (price: string) => `💳 150 ポイントパックを購入（${price}）`,
     stripeComingTitle: 'Stripe 決済は近日公開',
