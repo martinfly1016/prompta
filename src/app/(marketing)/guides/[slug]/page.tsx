@@ -2315,7 +2315,9 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
     sections: [
       {
         title: '身長差プロンプトとは — 2 人以上のキャラを描く時の必須スキル',
-        content: `**身長差プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**身長や体格の異なる 2 人以上のキャラクターを同じ画面に描く**」ための呪文（指示文）です。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-1-concept-6SCjfn0LsZz1xNOeBl2bRO9KCtWHq9.jpg" alt="身長差プロンプトの概念図 - 2 人のキャラクターが並び立つアニメイラスト" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+**身長差プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**身長や体格の異なる 2 人以上のキャラクターを同じ画面に描く**」ための呪文（指示文）です。
 
 BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×後輩、ファンタジー RPG パーティ、VTuber コラボイラスト — 推しキャラ同士の **ペア立ち絵** や **二人並びイラスト** を生成したい時、ほぼ必ず必要になるテクニックです。
 
@@ -2333,7 +2335,9 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
       },
       {
         title: 'なぜ身長差を AI に明示しないと描けないのか — モデルのデフォルト挙動',
-        content: `Stable Diffusion / Midjourney / DALL-E に「**男女のカップルを描いて**」とだけ指示すると、ほとんどの場合**身長は同じ程度に揃えられて**しまいます。これは AI モデルが学習データの平均的な人物比例を覚えており、特に指定しないとそこに収束する性質があるためです。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-2-default-behavior-e5xbn9u7WMoD8TQbFu10YPmzkvqeos.jpg" alt="同身長になりがちな AI 生成の典型例 - 身長差指定の必要性" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+Stable Diffusion / Midjourney / DALL-E に「**男女のカップルを描いて**」とだけ指示すると、ほとんどの場合**身長は同じ程度に揃えられて**しまいます。これは AI モデルが学習データの平均的な人物比例を覚えており、特に指定しないとそこに収束する性質があるためです。
 
 **身長差を描かせるには、最低でも以下の 3 要素を明示する必要があります**:
 
@@ -2360,7 +2364,9 @@ same height, same size, equal height, identical body proportions
       },
       {
         title: '身長差プロンプトを構成する 6 つの要素',
-        content: `効果的な身長差プロンプトは以下 6 要素の組み合わせです：
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-3-six-elements-SiP1x6M9zkxdrank2uTEU9JDpCIZeD.jpg" alt="身長差プロンプトを構成する 6 要素を示すサンプル画像" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+効果的な身長差プロンプトは以下 6 要素の組み合わせです：
 
 1. **人数指定（必須）** — \`2girls\`, \`2boys\`, \`1boy and 1girl\`, \`3 characters\`
 2. **身長差キーワード（必須）** — \`height difference\`, \`tall and short\`, \`size difference\`, \`stark size contrast\`
@@ -2393,7 +2399,9 @@ full body shot, fantasy concept art, (masterpiece:1.3)
       },
       {
         title: 'シチュエーション別 — コピペできる身長差プロンプト 8 例',
-        content: `すぐ使える人気シチュエーション 8 種を厳選。各サンプル画像は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> で確認できます。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-4-situations-HgOjDJs1tMLWXfhZUlhlCoJVU6saeO.jpg" alt="身長差プロンプトの 8 シチュエーション代表例 - BL カップル" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+すぐ使える人気シチュエーション 8 種を厳選。各サンプル画像は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> で確認できます。
 
 **1. BL カップル — 高身長攻め × 低身長受け**
 
@@ -2485,7 +2493,9 @@ giant hangar interior, low angle camera, dramatic backlight,
       },
       {
         title: 'ポーズ別 — 身長差を強調する 5 つの定番構図',
-        content: `同じカップルでも、ポーズによって身長差の見え方が劇的に変わります。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-5-poses-Gy1YhqcXVzRmRaZi7HKY3z39x22GjY.jpg" alt="身長差ハグ構図 - 包み込む抱擁のサンプル画像" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+同じカップルでも、ポーズによって身長差の見え方が劇的に変わります。
 
 **1. 並び立ち（最も定番）**
 
@@ -2530,7 +2540,9 @@ giant hangar interior, low angle camera, dramatic backlight,
       },
       {
         title: '困った時の対処法 — よくある身長差崩壊と修正法',
-        content: `身長差プロンプトは**初回生成で完璧に出ることは少なく**、何度かのリトライ + プロンプト調整が必要です。以下、よくある失敗パターンと対処法。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-6-troubleshooting-jn4WQX8Yz9KjjKdQNx1UNLdGxJwNWK.jpg" alt="身長差プロンプト T-pose 設定資料風サンプル" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+身長差プロンプトは**初回生成で完璧に出ることは少なく**、何度かのリトライ + プロンプト調整が必要です。以下、よくある失敗パターンと対処法。
 
 **問題 1: 同身長になってしまう**
 
@@ -2575,7 +2587,9 @@ giant hangar interior, low angle camera, dramatic backlight,
       },
       {
         title: 'ツール別の身長差表現の違い — SD / Midjourney / DALL-E',
-        content: `**Stable Diffusion**（推奨度: ⭐⭐⭐）
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-7-tools-nYWzns56u2FuEjZ0TuUfo0cq4o2rcl.jpg" alt="Stable Diffusion / Midjourney / DALL-E 身長差表現の違い比較" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+**Stable Diffusion**（推奨度: ⭐⭐⭐）
 
 - 強み: \`(height difference:1.3)\` のような重み付けが効く、ControlNet で完璧に制御可能、danbooru タグ（\`2girls\` 等）が機能する
 - 弱み: 二人構図で顔・手の崩壊率が高い、初期 seed で大きく結果が変わる
@@ -2608,7 +2622,9 @@ prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み
       },
       {
         title: '作品例 — prompta.jp で即試せる 15 件',
-        content: `本ガイドで紹介した全プロンプトはサンプル画像つきで公開中。各ページ右上の「🚀 ここで試す」から、ログイン後にサイト内で実行（生成）可能です。
+        content: `<img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-8-gallery-lCycfFrICJKIn05usQ25dF0Ro7o1x9.jpg" alt="prompta.jp 身長差プロンプト 15 件の作品例ギャラリー" class="w-full rounded-xl border border-gray-200 my-4" loading="lazy" />
+
+本ガイドで紹介した全プロンプトはサンプル画像つきで公開中。各ページ右上の「🚀 ここで試す」から、ログイン後にサイト内で実行（生成）可能です。
 
 **ペアロマンス系**:
 
