@@ -42,7 +42,11 @@ export interface ProviderResult {
 export interface ImageProvider {
   id: ProviderId
   label: string
+  /** Emoji fallback shown only when iconUrl fails to load. */
   icon: string
+  /** Preferred icon — favicon URL of the underlying service. Use Google's
+   *  S2 favicon service so any TLD works without bundling assets. */
+  iconUrl?: string
   /** Supported execute modes. */
   modes: ExecuteMode[]
   /** Credit cost per call (1 for text, 5 for image, 10 for HD image). */

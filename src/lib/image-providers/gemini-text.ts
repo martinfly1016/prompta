@@ -38,6 +38,7 @@ export const provider: ImageProvider = {
   id: 'gemini-text',
   label: 'Gemini 2.5 Flash',
   icon: '📝',
+  iconUrl: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64',
   modes: ['text'],
   credits: 1,
   costUsd: 0.003,

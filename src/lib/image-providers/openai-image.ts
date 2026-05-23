@@ -70,6 +70,7 @@ export const provider: ImageProvider = {
   id: 'openai-image',
   label: 'ChatGPT (DALL-E)',
   icon: '💬',
+  iconUrl: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64',
   modes: ['image-gen'],
   credits: 5,
   costUsd: 0.04,

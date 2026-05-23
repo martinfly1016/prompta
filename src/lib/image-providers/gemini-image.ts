@@ -56,6 +56,7 @@ export const provider: ImageProvider = {
   id: 'gemini-image',
   label: 'Gemini (Nano Banana)',
   icon: '✨',
+  iconUrl: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64',
   modes: ['image-gen', 'image-edit'],
   credits: 5,
   costUsd: 0.039,

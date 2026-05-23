@@ -251,7 +251,12 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
                     : 'bg-white text-gray-700 border-gray-200 hover:border-amber-400 hover:bg-amber-50'
                 }`}
               >
-                <span>{p.icon}</span>
+                {p.iconUrl ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={p.iconUrl} alt="" width={16} height={16} className="inline-block rounded-sm" />
+                ) : (
+                  <span>{p.icon}</span>
+                )}
                 <span>{p.label}</span>
                 <span className="text-xs opacity-75">({p.credits} ポイント)</span>
               </button>
@@ -345,7 +350,12 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         </button>
         {provider && (
           <span className="inline-flex items-center gap-1 text-xs text-gray-600">
-            <span className="text-base leading-none">{provider.icon}</span>
+            {provider.iconUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={provider.iconUrl} alt="" width={16} height={16} className="inline-block rounded-sm" />
+            ) : (
+              <span className="text-base leading-none">{provider.icon}</span>
+            )}
             <span>
               <span className="text-gray-500">使用モデル:</span>{' '}
               <span className="font-medium text-gray-700">{provider.label}</span>
