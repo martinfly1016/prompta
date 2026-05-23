@@ -76,6 +76,24 @@ async function call(opts: ProviderCallOpts): Promise<ProviderResult> {
   if (!imgRes.ok) throw new Error(`fal image fetch ${imgRes.status}`)
   const buf = Buffer.from(await imgRes.arrayBuffer())
   const mimeType = imgRes.headers.get('content-type') || 'image/jpeg'
+
+  // Safety-filter detection: fal's `enable_safety_checker: true` returns a
+  // valid HTTP 200 with a tiny (~14-20 KB) all-black JPEG when content
+  // tripped the filter — not an error response. Real SDXL renders are
+  // typically 100-400 KB. Anything under 50 KB is treated as a safety
+  // reject so the executor's catch path refunds the credit instead of
+  // delivering a black image to the user.
+  if (buf.length < 50_000) {
+    console.warn('[fal-sdxl] safety_filter_block', {
+      bytes: buf.length,
+      promptHead: opts.prompt.slice(0, 120),
+    })
+    throw new Error(
+      'fal-sdxl returned a safety-filter blank (likely NSFW reject). ' +
+      'Try rephrasing the prompt — remove couple/romantic/intimate terms.',
+    )
+  }
+
   return {
     image: {
       base64: buf.toString('base64'),
