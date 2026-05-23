@@ -253,10 +253,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
               >
                 <span>{p.icon}</span>
                 <span>{p.label}</span>
-                {/* Cost shown to anonymous only — signed-in users have balance shown above */}
-                {!isSignedIn && (
-                  <span className="text-xs opacity-75">({p.credits} ポイント)</span>
-                )}
+                <span className="text-xs opacity-75">({p.credits} ポイント)</span>
               </button>
             ))}
           </div>
@@ -340,6 +337,8 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
               <span className="animate-spin inline-block w-4 h-4 border-2 border-gray-900 border-t-transparent rounded-full" />
               生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
             </>
+          ) : isSignedIn ? (
+            <>🚀 生成を開始</>
           ) : (
             <>🚀 無料で試す</>
           )}
