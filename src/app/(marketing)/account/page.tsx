@@ -15,8 +15,8 @@ import { TopUpCreditsButton } from '@/components/credits/TopUpCreditsButton'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'アカウント — クレジット残高・購入履歴・使用履歴 | プロンプタ',
-  description: 'プロンプタのクレジット残高、購入履歴、使用履歴を確認できるアカウントページ。',
+  title: 'アカウント — ポイント残高・購入履歴・使用履歴 | プロンプタ',
+  description: 'プロンプタのポイント残高、購入履歴、使用履歴を確認できるアカウントページ。',
   robots: { index: false, follow: false },
   alternates: { canonical: `${SITE_CONFIG.url}/account` },
 }
@@ -80,20 +80,20 @@ export default async function AccountPage() {
 
       {/* Hero: Balance */}
       <section className="mb-8 p-6 sm:p-8 bg-gradient-to-br from-sky-50 via-indigo-50 to-violet-50 border border-sky-100 rounded-2xl">
-        <p className="text-xs font-medium text-sky-700 uppercase tracking-wider mb-2">保有クレジット</p>
+        <p className="text-xs font-medium text-sky-700 uppercase tracking-wider mb-2">保有ポイント</p>
         <div className="flex items-baseline gap-2 mb-3">
           <span className="text-5xl font-bold text-gray-900">{balance}</span>
-          <span className="text-lg text-gray-500">クレジット</span>
+          <span className="text-lg text-gray-500">ポイント</span>
         </div>
         <p className="text-xs text-gray-500 mb-3">
-          画像生成 1 回 = 5 クレジット ／ 文字実行 1 回 = 1 クレジット
+          画像生成 1 回 = 5 ポイント ／ 文字実行 1 回 = 1 ポイント
         </p>
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-5">
           <span>累計獲得 <strong className="text-gray-900">{totalEarned}</strong></span>
           <span>累計使用 <strong className="text-gray-900">{totalUsed}</strong></span>
           {welcomeGranted && (
             <span className="inline-flex items-center gap-1 text-emerald-700">
-              🎁 ウェルカム特典 {credits?.welcomeBonus ?? 0} クレジット受領済
+              🎁 ウェルカム特典 {credits?.welcomeBonus ?? 0} ポイント受領済
             </span>
           )}
         </div>
@@ -112,7 +112,7 @@ export default async function AccountPage() {
           </Link>
           {balance < 25 && (
             <TopUpCreditsButton returnTo="/account" currentBalance={balance}>
-              💳 クレジットを補充する
+              💳 ポイントを補充する
             </TopUpCreditsButton>
           )}
         </div>
@@ -123,7 +123,7 @@ export default async function AccountPage() {
         <h2 className="text-lg font-bold text-gray-900 mb-3">購入履歴</h2>
         {payments.length === 0 ? (
           <div className="p-6 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-500 text-center">
-            まだ購入履歴がありません。ウェルカム特典のクレジットでツールをお試しください。
+            まだ購入履歴がありません。ウェルカム特典のポイントでツールをお試しください。
           </div>
         ) : (
           <div className="overflow-x-auto bg-white border border-gray-200 rounded-xl">
@@ -132,7 +132,7 @@ export default async function AccountPage() {
                 <tr>
                   <th className="px-4 py-3 text-left font-medium">日時</th>
                   <th className="px-4 py-3 text-right font-medium">金額</th>
-                  <th className="px-4 py-3 text-right font-medium">クレジット</th>
+                  <th className="px-4 py-3 text-right font-medium">ポイント</th>
                   <th className="px-4 py-3 text-left font-medium">状態</th>
                 </tr>
               </thead>
@@ -243,14 +243,14 @@ export default async function AccountPage() {
                       <div className="text-xs text-gray-500">{fmtDate(u.createdAt)}</div>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">-{u.creditsConsumed} クレジット</span>
+                  <span className="text-xs text-gray-500">-{u.creditsConsumed} ポイント</span>
                 </div>
               )
             })}
           </div>
         )}
         <p className="mt-2 text-xs text-gray-400">
-          ※ 2026-05-12 以降のクレジット消費が記録されます。それ以前の使用は表示されません。
+          ※ 2026-05-12 以降のポイント消費が記録されます。それ以前の使用は表示されません。
         </p>
       </section>
 

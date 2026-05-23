@@ -17,7 +17,7 @@ interface Props {
  * Drop in anywhere a "buy credits" CTA is needed:
  *
  *   <TopUpCreditsButton returnTo="/account" currentBalance={balance}>
- *     💳 クレジットを補充する
+ *     💳 ポイントを補充する
  *   </TopUpCreditsButton>
  */
 export function TopUpCreditsButton({
@@ -37,7 +37,7 @@ export function TopUpCreditsButton({
           'inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-colors'
         }
       >
-        {children ?? '💳 クレジットを補充する'}
+        {children ?? '💳 ポイントを補充する'}
       </button>
       <CreditPurchaseModal
         open={open}

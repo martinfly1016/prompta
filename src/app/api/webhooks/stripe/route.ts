@@ -112,19 +112,19 @@ async function sendPurchaseEmail(p: {
   const personalColorUrl = `${SITE_CONFIG.url}/tools/personal-color-analysis`
   const hairColorUrl = `${SITE_CONFIG.url}/tools/hair-color-diagnosis`
   const signinUrl = `${SITE_CONFIG.url}/auth/signin`
-  const subject = `【prompta.jp】ご購入ありがとうございます — ${p.creditsGranted} クレジット追加`
+  const subject = `【prompta.jp】ご購入ありがとうございます — ${p.creditsGranted} ポイント追加`
   const text = `prompta.jp をご利用いただきありがとうございます。
 
 ご購入が完了しました：
-  - 商品: 全ツール共通 150 クレジットパック
+  - 商品: 全ツール共通 150 ポイントパック
   - 金額: ¥${p.amountJpy.toLocaleString()}
-  - 追加クレジット: ${p.creditsGranted}
+  - 追加ポイント: ${p.creditsGranted}
   - 現在の残高: ${p.balance}
   - 注文 ID: ${p.sessionId}
 
-※ 画像生成 1 回 = 5 クレジット ／ 文字実行 1 回 = 1 クレジット消費
+※ 画像生成 1 回 = 5 ポイント ／ 文字実行 1 回 = 1 ポイント消費
 
-クレジットは以下のツール + 全 180 プロンプトで共通でご利用いただけます：
+ポイントは以下のツール + 全 180 プロンプトで共通でご利用いただけます：
 
 ▼ パーソナルカラー診断 AI（4 シーズン + 16 色パレット）
 ${personalColorUrl}
@@ -133,7 +133,7 @@ ${personalColorUrl}
 ${hairColorUrl}
 
 ▼ 別のデバイス・別のブラウザで使う場合
-このメールアドレス（${p.email}）で Google サインイン または「メールでサインインリンクを送る」を使うと、クレジットが自動的に表示されます：
+このメールアドレス（${p.email}）で Google サインイン または「メールでサインインリンクを送る」を使うと、ポイントが自動的に表示されます：
 ${signinUrl}
 
 ※ このメールは受領証ではありません。Stripe からの正式な領収書（PDF 添付）は別途送信されます。
@@ -147,11 +147,11 @@ ${SITE_CONFIG.url}
 
   <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;margin-bottom:20px">
     <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">ご注文内容</p>
-    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">全ツール共通 150 クレジットパック</p>
-    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">全ツール・全 180 プロンプト共通利用可（画像 1 回 = 5 / 文字 1 回 = 1 クレジット）</p>
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">全ツール共通 150 ポイントパック</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">全ツール・全 180 プロンプト共通利用可（画像 1 回 = 5 / 文字 1 回 = 1 ポイント）</p>
     <table style="width:100%;font-size:14px;border-collapse:collapse">
       <tr><td style="padding:6px 0;color:#6b7280">金額</td><td style="padding:6px 0;text-align:right;font-weight:600">¥${p.amountJpy.toLocaleString()}</td></tr>
-      <tr><td style="padding:6px 0;color:#6b7280">追加クレジット</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted}</td></tr>
+      <tr><td style="padding:6px 0;color:#6b7280">追加ポイント</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted}</td></tr>
       <tr style="border-top:1px solid #e0f2fe"><td style="padding:6px 0;color:#6b7280">現在の残高</td><td style="padding:6px 0;text-align:right;font-weight:700;color:#0284c7">💎 ${p.balance}</td></tr>
     </table>
   </div>
@@ -174,9 +174,9 @@ ${SITE_CONFIG.url}
   </table>
 
   <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:24px 0">
-    <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：クレジットの紐付け</p>
+    <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：ポイントの紐付け</p>
     <p style="margin:0;font-size:13px;color:#78350f;line-height:1.6">
-      クレジットは <strong>${p.email}</strong> に紐付けられています。
+      ポイントは <strong>${p.email}</strong> に紐付けられています。
       別のデバイス・別のブラウザから利用する場合、このメールアドレスで Google サインインまたはメールリンクサインインを使うと自動的に表示されます。
     </p>
     <p style="margin:8px 0 0">

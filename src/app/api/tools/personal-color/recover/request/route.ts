@@ -9,6 +9,6 @@ export async function POST() {
     ok: true,
     sunset: true,
     message:
-      'メールアドレスでサインインすることでクレジットにアクセスできます。/auth/signin にアクセスしてください。',
+      'メールアドレスでサインインすることでポイントにアクセスできます。/auth/signin にアクセスしてください。',
   })
 }

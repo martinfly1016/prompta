@@ -36,7 +36,7 @@ export default function PrivacyPage() {
             <p>当サイトは以下の情報を取得することがあります。</p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>
-                <strong>メールアドレス</strong>：サインイン、購入、クレジット復元のために取得します。Google サインインの場合、Google アカウントのメールアドレスとプロフィール情報（名前、アイコン）を取得します。
+                <strong>メールアドレス</strong>：サインイン、購入、ポイント復元のために取得します。Google サインインの場合、Google アカウントのメールアドレスとプロフィール情報（名前、アイコン）を取得します。
               </li>
               <li>
                 <strong>IP アドレス・User-Agent ハッシュ</strong>：無料利用枠の不正利用防止を目的に、ハッシュ化して 24 時間保持します。生の IP アドレスは保存しません。
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
                 <strong>ツール利用ログ</strong>：いつ・どのツールを利用したかの匿名統計（ユーザー特定情報なし）。
               </li>
               <li>
-                <strong>Cookie</strong>：認証セッション、無料利用枠の管理、購入クレジットの紐付けに使用します。
+                <strong>Cookie</strong>：認証セッション、無料利用枠の管理、購入ポイントの紐付けに使用します。
               </li>
             </ul>
           </section>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li>サービスの提供と機能の運用</li>
               <li>無料利用枠の管理および不正利用の防止</li>
-              <li>有料クレジットの発行・利用・復元</li>
+              <li>有料ポイントの発行・利用・復元</li>
               <li>サービスに関するお知らせ・サインインリンクの送信</li>
               <li>サービス改善のための統計分析（個人を特定しない形）</li>
               <li>法令遵守および紛争対応</li>
@@ -163,14 +163,14 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>
-                <strong>必須 Cookie</strong>：サインインセッション、無料利用枠の管理、購入クレジットの紐付け（無効化するとサービスを利用できません）
+                <strong>必須 Cookie</strong>：サインインセッション、無料利用枠の管理、購入ポイントの紐付け（無効化するとサービスを利用できません）
               </li>
               <li>
                 <strong>分析 Cookie</strong>：Google Analytics 4 による匿名アクセス分析
               </li>
             </ul>
             <p className="mt-3">
-              ブラウザの設定で Cookie を無効化できますが、サインインや購入クレジットの利用ができなくなる場合があります。
+              ブラウザの設定で Cookie を無効化できますが、サインインや購入ポイントの利用ができなくなる場合があります。
             </p>
           </section>
 

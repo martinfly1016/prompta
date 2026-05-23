@@ -183,13 +183,13 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       const j = await res.json()
       if (!res.ok) {
         if (j.error === 'credits_exhausted') {
-          setError('クレジットが足りません。150 クレジットパック ¥300 をご購入ください。')
+          setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
         } else if (j.error === 'login_required') {
           await signIn(undefined, { callbackUrl: window.location.href })
         } else if (j.error === 'rate_limited') {
           setError('リクエストが多すぎます。少し時間を空けてから再試行してください。')
         } else if (j.error === 'provider_error') {
-          setError(`生成エラー: ${j.message ?? '不明'}。クレジットは返却されました。`)
+          setError(`生成エラー: ${j.message ?? '不明'}。ポイントは返却されました。`)
         } else {
           setError(`エラー: ${j.error ?? res.status}`)
         }
@@ -210,31 +210,33 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
   }
 
   return (
-    <section className="my-8 rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50 via-indigo-50 to-violet-50 p-6 sm:p-8">
+    <section className="my-8 rounded-2xl border border-amber-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-50 p-6 sm:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
         <div>
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
             🚀 ここで試す
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-gray-700 mt-1">
             このプロンプトをサイト内で実行できます。
             {balance !== null && (
-              <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white border border-sky-200 text-sky-800 font-medium">
-                💎 残り {balance} クレジット
+              <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white border border-amber-300 text-gray-800 font-medium">
+                💎 残り {balance} ポイント
               </span>
             )}
           </p>
         </div>
-        {provider && (
+        {/* Cost reminder — only show to anonymous users to set expectation
+            before sign-in. Signed-in users see balance instead. */}
+        {provider && !isSignedIn && (
           <span className="text-sm font-medium text-gray-700">
-            実行 1 回 = <strong>{provider.credits} クレジット</strong>
+            実行 1 回 = <strong>{provider.credits} ポイント</strong>
           </span>
         )}
       </div>
 
       {providers.length > 1 && (
         <div className="mb-4">
-          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-2">
             実行ツールを選択
           </p>
           <div className="flex flex-wrap gap-2">
@@ -245,13 +247,16 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
                 onClick={() => selectProvider(p.id)}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                   p.id === providerId
-                    ? 'bg-sky-600 text-white border-sky-600'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-sky-300 hover:bg-sky-50'
+                    ? 'bg-gray-800 text-amber-100 border-gray-800'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-amber-400 hover:bg-amber-50'
                 }`}
               >
                 <span>{p.icon}</span>
                 <span>{p.label}</span>
-                <span className="text-xs opacity-75">({p.credits} クレジット)</span>
+                {/* Cost shown to anonymous only — signed-in users have balance shown above */}
+                {!isSignedIn && (
+                  <span className="text-xs opacity-75">({p.credits} ポイント)</span>
+                )}
               </button>
             ))}
           </div>
@@ -328,17 +333,17 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
           type="button"
           onClick={execute}
           disabled={running || (mode === 'image-edit' && !sourceImage)}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-sky-600 text-white font-semibold hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-amber-300 text-gray-900 font-semibold hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
         >
           {running ? (
             <>
-              <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+              <span className="animate-spin inline-block w-4 h-4 border-2 border-gray-900 border-t-transparent rounded-full" />
               生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
             </>
+          ) : isSignedIn ? (
+            <>🚀 無料で試す</>
           ) : (
-            <>
-              🚀 実行（{provider?.credits ?? 5} クレジット消費）
-            </>
+            <>🚀 無料で試す（{provider?.credits ?? 5} ポイント消費）</>
           )}
         </button>
         {provider && (
@@ -353,22 +358,22 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       </div>
 
       {!isSignedIn && (
-        <p className="mt-3 text-xs text-gray-500">
-          ※ 実行にはサインインが必要です（Google または メールリンク、初回 15 クレジット無料プレゼント）
+        <p className="mt-3 text-xs text-gray-600">
+          ※ 実行にはサインインが必要です（Google または メールリンク、初回 15 ポイント無料プレゼント）
         </p>
       )}
 
       {error && (
         <div className="mt-4 rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-800">
           {error}
-          {error.includes('クレジットが足りません') && (
+          {error.includes('ポイントが足りません') && (
             <div className="mt-2">
               <button
                 type="button"
                 onClick={() => setShowPurchaseModal(true)}
                 className="inline-flex items-center gap-1 text-red-700 font-medium underline"
               >
-                💳 150 クレジットパックの詳細を見る
+                💳 150 ポイントパックの詳細を見る
               </button>
             </div>
           )}

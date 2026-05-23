@@ -88,10 +88,10 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 id="purchase-modal-title" className="text-lg font-bold text-gray-900">
-                💎 150 クレジットパック
+                💎 150 ポイントパック
               </h2>
               <p className="mt-1 text-sm text-gray-600">
-                全ツール・全 180 プロンプト共通で使えるクレジット
+                全ツール・全 180 プロンプト共通で使えるポイント
               </p>
             </div>
             <button
@@ -117,15 +117,15 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
           <div className="space-y-2 mb-5 text-sm text-gray-700">
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span><strong className="text-gray-900">150 クレジット</strong> 即時付与</span>
+              <span><strong className="text-gray-900">150 ポイント</strong> 即時付与</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>画像生成 <strong className="text-gray-900">30 回</strong>（5 クレジット/回）</span>
+              <span>画像生成 <strong className="text-gray-900">30 回</strong>（5 ポイント/回）</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>文字実行 <strong className="text-gray-900">150 回</strong>（1 クレジット/回）</span>
+              <span>文字実行 <strong className="text-gray-900">150 回</strong>（1 ポイント/回）</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
@@ -139,13 +139,13 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
 
           {currentBalance != null && (
             <div className="mb-4 px-3 py-2 rounded-lg bg-sky-50 border border-sky-100 text-xs text-sky-800">
-              現在の残高: <strong>{currentBalance}</strong> クレジット → 購入後:{' '}
-              <strong>{currentBalance + 150}</strong> クレジット
+              現在の残高: <strong>{currentBalance}</strong> ポイント → 購入後:{' '}
+              <strong>{currentBalance + 150}</strong> ポイント
             </div>
           )}
 
           <div className="text-xs text-gray-500 mb-5 leading-relaxed">
-            決済は Stripe を経由します（VISA / Master / AMEX / JCB）。当サイトはクレジットカード情報を保持しません。決済完了後、自動的に元のページに戻ります。
+            決済は Stripe を経由します（VISA / Master / AMEX / JCB）。当サイトはポイントカード情報を保持しません。決済完了後、自動的に元のページに戻ります。
           </div>
 
           {error && (
@@ -182,7 +182,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance }:
 
           {!isSignedIn && (
             <p className="mt-3 text-xs text-gray-500 text-center">
-              ※ 購入にはサインインが必要です（クレジットはアカウントに紐づきます）
+              ※ 購入にはサインインが必要です（ポイントはアカウントに紐づきます）
             </p>
           )}
         </div>

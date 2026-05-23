@@ -100,7 +100,7 @@ export function trackPromptTry(
 export type PaywallTool = 'hair-color' | 'personal-color'
 export type PaywallTrigger =
   | 'badge'             // exhausted-state badge click (preventive)
-  | 'candidate_card'    // disabled candidate "クレジット不足" →购入
+  | 'candidate_card'    // disabled candidate "ポイント不足" →购入
   | 'upsell_banner'     // soft upsell banner above candidates
   | 'login_required'    // unauthenticated user clicked an action that needs credits
   | 'exhausted_pick'    // signed-in user with 0 credits tried to upload a new photo

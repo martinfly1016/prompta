@@ -4,7 +4,7 @@ import { SignInForm } from './SignInForm'
 
 export const metadata: Metadata = {
   title: 'サインイン｜prompta.jp',
-  description: 'Google または メールでサインインして、AI ツールの購入クレジットを管理。',
+  description: 'Google または メールでサインインして、AI ツールの購入ポイントを管理。',
   alternates: { canonical: `${SITE_CONFIG.url}/auth/signin` },
   robots: { index: false, follow: false },
 }
@@ -25,7 +25,7 @@ export default function SignInPage({ searchParams }: PageProps) {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">サインイン</h1>
           <p className="text-sm text-gray-600">
-            購入クレジットを管理し、複数デバイスで同期できます。
+            購入ポイントを管理し、複数デバイスで同期できます。
           </p>
         </div>
 

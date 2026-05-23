@@ -507,7 +507,7 @@ export default function PersonalColorAnalysisPage() {
                   」では、写真からヘアカラーに特化して 5 候補（安心の定番・トレンド・個性派）を提案し、
                   <strong>Gemini 2.5 Flash Image</strong>{' '}
                   が実際に染めたらどう見えるかを Before/After シミュレーション画像で生成します。
-                  クレジットは本ツールと共通でご利用いただけます。
+                  ポイントは本ツールと共通でご利用いただけます。
                 </p>
                 <Link
                   href="/tools/hair-color-diagnosis"

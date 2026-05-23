@@ -1,6 +1,6 @@
 // @ts-nocheck
 // One-shot: bootstrap Stripe product + price + webhook for the
-// 150 クレジットパック ¥300 via API. Reads STRIPE_SECRET_KEY from env,
+// 150 ポイントパック ¥300 via API. Reads STRIPE_SECRET_KEY from env,
 // prints price_id + webhook signing secret to stdout.
 //
 // Does NOT write anything to disk — caller must copy the output into Vercel
@@ -20,9 +20,9 @@ if (!KEY) {
 const WEBHOOK_URL =
   process.env.STRIPE_WEBHOOK_URL || 'https://www.prompta.jp/api/webhooks/stripe'
 
-const PRODUCT_NAME = 'prompta.jp 150 クレジットパック'
+const PRODUCT_NAME = 'prompta.jp 150 ポイントパック'
 const PRODUCT_DESC =
-  'prompta.jp 上の全ツール・全プロンプトで共通利用可能な 150 クレジットのクレジットパック。画像生成 1 回 = 5 クレジット、文字実行 1 回 = 1 クレジット消費。有効期限なし。'
+  'prompta.jp 上の全ツール・全プロンプトで共通利用可能な 150 ポイントのポイントパック。画像生成 1 回 = 5 ポイント、文字実行 1 回 = 1 ポイント消費。有効期限なし。'
 const UNIT_AMOUNT_JPY = 300
 const CURRENCY = 'jpy'
 const EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [

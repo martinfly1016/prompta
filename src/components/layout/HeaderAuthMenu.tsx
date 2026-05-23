@@ -82,7 +82,7 @@ export function HeaderAuthMenu() {
                 href="/account"
                 className="mt-1 inline-flex items-center gap-1 text-xs text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md transition-colors"
               >
-                💎 保有クレジット {credits} 回 →
+                💎 保有ポイント {credits} 回 →
               </Link>
             )}
           </div>
