@@ -69,7 +69,7 @@ export interface NormalizedPrompt {
   categoryName: string
   categoryIcon: string | null
   tags: string[]
-  images: { url: string; alt: string | null; width: number | null; height: number | null }[]
+  images: { url: string; alt: string | null; width: number | null; height: number | null; imageType: string | null }[]
   sampleBeforeUrl: string | null
   sampleAfterUrl: string | null
   isFeatured: boolean
@@ -105,7 +105,7 @@ function normalizeMockPrompt(p: MockPrompt): NormalizedPrompt {
     categoryName: cat?.name ?? p.categorySlug,
     categoryIcon: cat?.icon ?? null,
     tags: p.tags,
-    images: p.images.map(url => ({ url, alt: null, width: null, height: null })),
+    images: p.images.map(url => ({ url, alt: null, width: null, height: null, imageType: null })),
     sampleBeforeUrl: null,
     sampleAfterUrl: null,
     isFeatured: p.isFeatured,
@@ -132,7 +132,7 @@ function normalizeDbPrompt(p: any): NormalizedPrompt {
     categoryName: p.category?.name ?? '',
     categoryIcon: p.category?.icon ?? null,
     tags: p.tags?.map((t: { name: string }) => t.name) ?? [],
-    images: p.images?.map((i: { url: string; altText: string | null; width: number | null; height: number | null }) => ({ url: i.url, alt: i.altText, width: i.width, height: i.height })) ?? [],
+    images: p.images?.map((i: { url: string; altText: string | null; width: number | null; height: number | null; imageType: string | null }) => ({ url: i.url, alt: i.altText, width: i.width, height: i.height, imageType: i.imageType })) ?? [],
     sampleBeforeUrl: p.sampleBeforeUrl ?? null,
     sampleAfterUrl: p.sampleAfterUrl ?? null,
     isFeatured: p.isFeatured ?? false,

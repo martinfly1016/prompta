@@ -14,12 +14,14 @@ const HOT_MIN_COPY_RATE = 0.2
 const STATS_MIN_VIEWS = 5
 
 export function PromptCard({ prompt, priority = false }: PromptCardProps) {
-  // photo-edit prompts have no `images[]` rows — use the After sample as the
-  // listing thumbnail when available. Falls back to images[0], then text-only card.
-  const thumbUrl = prompt.sampleAfterUrl || prompt.images[0]?.url || null
+  // Prefer the After sample on cards so a grid of photo-edit prompts doesn't
+  // look identical (the Before would be the same source photo across many
+  // prompts). Order: sampleAfterUrl > imageType='effect' > images[0] > text-only.
+  const effectImage = prompt.images.find(i => i.imageType === 'effect')
+  const thumbUrl = prompt.sampleAfterUrl || effectImage?.url || prompt.images[0]?.url || null
   const thumbAlt = prompt.sampleAfterUrl
     ? `${prompt.title} — Before/After サンプル`
-    : prompt.images[0]?.alt || prompt.title
+    : effectImage?.alt || prompt.images[0]?.alt || prompt.title
   const hasImage = !!thumbUrl
   const hasBeforeAfter = !!(prompt.sampleBeforeUrl && prompt.sampleAfterUrl)
   const hasParams = !!getPromptParamsConfig(prompt.slug)
