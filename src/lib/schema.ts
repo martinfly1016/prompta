@@ -97,6 +97,22 @@ export function generateSoftwareApplicationSchema(
   }
 }
 
+/**
+ * Strip markdown formatting from text destined for JSON-LD structured data.
+ * Schema.org consumers (Google AI Overview, rich results) take the text
+ * literally — embedded `[label](/path)` would surface as raw markdown
+ * characters in featured snippets. Convert link → label, drop bold/code
+ * markers, collapse multiple newlines.
+ */
+function stripMarkdownForSchema(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\(\/[^)]+\)/g, '$1') // [label](/path) → label
+    .replace(/\*\*(.+?)\*\*/g, '$1')            // **bold** → bold
+    .replace(/`(.+?)`/g, '$1')                  // `code` → code
+    .replace(/\n{3,}/g, '\n\n')                 // collapse 3+ blanks
+    .trim()
+}
+
 export function generateHowToSchema(
   title: string,
   description: string,
@@ -115,7 +131,7 @@ export function generateHowToSchema(
       "@type": "HowToStep",
       "position": i + 1,
       "name": step.name,
-      "text": step.text,
+      "text": stripMarkdownForSchema(step.text),
     })),
   }
 }
@@ -131,7 +147,7 @@ export function generateFaqSchema(
       "name": item.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": item.answer,
+        "text": stripMarkdownForSchema(item.answer),
       },
     })),
   }
