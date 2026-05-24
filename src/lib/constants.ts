@@ -730,6 +730,14 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'bl 構図',
     monthlySearchVolume: 8100,
   },
+  {
+    slug: 'bl-pose-collection-guide',
+    title: 'BL ポーズ集｜AIで再現する男性 2 人の定番 30 ポーズ完全ガイド',
+    description:
+      'BL ポーズを AI イラストで再現する完全ガイド。距離別 / アクション別 / 関係性別に 30 種以上のポーズ英語プロンプトを収録。手の使い方・視線・表情・服装パターン、ControlNet OpenPose 活用法、NSFW 回避のコツ、ツール別の出しやすさを実例つきで解説。BL ポーズ素材・資料を探している同人作家・AI イラストレーター向け。',
+    targetKeyword: 'bl ポーズ',
+    monthlySearchVolume: 1900,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -795,6 +803,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
     categories: ['anime', 'body-type', 'clothing', 'cosplay'],
   },
   'bl-composition-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['anime', 'body-type', 'clothing'],
+  },
+  'bl-pose-collection-guide': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['anime', 'body-type', 'clothing'],
   },

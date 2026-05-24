@@ -3906,6 +3906,7 @@ worst quality, low quality, blurry
         title: '関連ガイド・リソース — BL 構図を極める道筋',
         content: `**深掘りガイド**:
 
+- <a href="/guides/bl-pose-collection-guide" class="text-sky-600 hover:underline">BL ポーズ集｜AIで再現する男性 2 人の定番 30 ポーズ完全ガイド</a> — ポーズワード単体を 30 種以上収録した辞書的リソース、本構図ガイドと組み合わせ可
 - <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">カップルポーズ・二人構図のAIプロンプト完全ガイド</a> — 二人構図 cluster の hub。BL 以外の関係性（カップル / 友達 / 兄弟 / OC × 推し）の全パターン
 - <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a> — 身長差 / 体格差を意図的に出す方法（BL 攻め × 受けの体格差にも応用可）
 - <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — 特定 BL 作品のキャラ衣装再現
@@ -3937,6 +3938,397 @@ worst quality, low quality, blurry
       { q: '大人 BL（オフィス・スーツ系）のプロンプトのコツは？', a: '大人 BL は **(1) 衣装の質感、(2) 表情の落ち着き、(3) 照明** が肝心。テンプレ: `2boys in tailored business suits, mature adult features around late 20s to 30s, modern office or upscale bar, charcoal/navy/black suits, blinds casting striped lighting, calm composed expressions with quiet emotional tension, sophisticated adult BL aesthetic, photorealistic or detailed anime illustration`。学園 BL とは別物 — 「mature」「adult」「composed」「sophisticated」をプロンプトに必ず入れる。実例: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィス スーツ姿</a>。' },
       { q: 'ファンタジー BL（騎士×魔法使い等）構図の応用例は？', a: '中世ファンタジー世界観は **(1) 衣装で役割を明示、(2) 体格差で力関係を示す、(3) 背景で世界観を構築** がポイント。テンプレ: `2boys in medieval fantasy setting, tall armored knight 190cm in plate armor with sword + robed mage 168cm with grimoire / royal prince + loyal guard / paladin + dark sorcerer, ancient hall or magical forest, mysterious lighting, fantasy concept art illustration`。組み合わせ例: 騎士×魔法使い / 王子×護衛 / 聖騎士×闇魔法使い / 勇者×旅商人。実例: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>。' },
       { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2boys` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（5 ポイント / 回）。' },
+    ],
+  },
+  'bl-pose-collection-guide': {
+    sections: [
+      {
+        title: 'BL ポーズ集とは — 構図ガイドとの違いと使い分け',
+        content: `**BL ポーズ集**は、男性 2 人キャラクターの**身体の動き・姿勢パターン**そのものを集めた英語プロンプト集です。
+
+「**構図**（composition）」と「**ポーズ**（pose）」は AI イラスト制作で混同されがちですが別物：
+
+| 概念 | 範囲 | 例 |
+|---|---|---|
+| **構図** | 画面全体の組み立て（背景・距離・カメラ） | カフェで並び立ち / 学校廊下で壁ドン |
+| **ポーズ** | キャラクター個別の身体の動き | 手をつなぐ / 髪を撫でる / 振り向く |
+
+本 BL ポーズ集は「**ポーズ単体のプロンプトワードを 30 種類以上**」収録した辞書的リソースです。背景や服装は別途指定するか、本サイトの <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL 構図完全ガイド</a> と組み合わせて使ってください。
+
+**こんな人におすすめ**:
+
+- BL イラストレーター・同人作家として AI を補助ツールに
+- ポーズ素材・トレース資料を探している
+- BL 漫画のコマ割り用に複数ポーズを比較したい
+- 既存の構図にバリエーションを足したい
+- ControlNet OpenPose 用の骨格参考を探している
+
+**ポーズ別に整理した本ガイドの 30 種**:
+
+- **距離別**（接触なし / あり / 密着）9 種
+- **アクション別**（立つ / 座る / 歩く / 寝る / 走る）8 種
+- **関係性別**（攻め × 受け / 対等バディ / 兄弟分）6 種
+- **手の動き**（手繋ぎ / 頬撫で / 髪撫で）4 種
+- **視線パターン**（見上げる / 見つめ合う / 目を逸らす）3 種
+
+実例 BL prompt 22 件は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> で「ここで試す」可能（5 ポイント / 回）。`,
+      },
+      {
+        title: 'BL ポーズプロンプトを構成する 4 要素',
+        content: `BL ポーズプロンプトは構図プロンプトと違い、**ポーズ部分のみを抽出**して柔軟に組み合わせるのが特徴。4 要素を意識すれば応用が効きます。
+
+1. **人数指定（必須）** — \`2boys\` / \`two male characters\` を**最初**に明記
+2. **身体の動き（メイン）** — \`hands gently intertwined\` / \`leaning down to whisper\` / \`brushing hair behind ear\`
+3. **視線・表情（補助）** — \`looking at each other softly\` / \`gentle eye contact\` / \`gaze averted shyly\`
+4. **接触の質感（オプション）** — \`fingers barely touching\` / \`firm grip\` / \`light brush of fingertips\`
+
+**応用テンプレート**（背景は別途追加）:
+
+\`\`\`
+2boys, {pose action}, {gaze description}, {touch quality},
+(intimate pose:1.2), (best quality:1.4), (masterpiece:1.2)
+\`\`\`
+
+**実例**（手繋ぎ・基本）:
+
+\`\`\`
+2boys, gently holding hands with fingers interlocked,
+looking at each other with soft expressions, light touch quality,
+(intimate pose:1.2), anime illustration
+\`\`\`
+
+→ 背景を足せば構図プロンプトに進化。例えば末尾に \`autumn park golden hour, full body shot\` を足せば<a href="/prompt/bl-couple-hand-holding-park" class="text-sky-600 hover:underline">公園手つなぎ構図</a>になる。
+
+**ポーズと構図の組み合わせ方**:
+
+1. 本ガイドからポーズワードを選ぶ
+2. <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL 構図ガイド</a>から背景・服装・カメラを選ぶ
+3. 結合して 1 プロンプトに
+
+これで「定番 30 ポーズ × 構図 96 通り = 2,880 通りの BL シーン」が量産できます。`,
+      },
+      {
+        title: '距離別ポーズ集 — 接触なし / 接触あり / 密着',
+        content: `2 人の物理的な近さで雰囲気が劇的に変わります。**距離は関係性の視覚表現の最重要要素**。
+
+**■ 接触なし（友達距離 〜 微妙な緊張感）**
+
+**1. 並ぶだけ**: \`2boys standing apart with small gap between them, neutral facing forward\` — 友達・知人〜緊張感ある関係性まで広く適用
+
+**2. 視線越し**: \`2boys looking at each other across a small distance, no physical contact, charged silence between them\` — 出会い直後・緊張感シーン
+
+**3. 同方向を見る**: \`2boys side by side looking off in the same direction, parallel pose, contemplative atmosphere\` — 共有感・思考の同調
+
+**■ 接触あり（軽い触れ合い）**
+
+**4. 肩が触れる**: \`2boys standing close enough that shoulders are barely touching, soft awareness in expressions\` — 親密さの一歩前
+
+**5. 指先で触れる**: \`2boys with fingertips lightly touching the other's hand, hesitant gentle contact\` — ロマンス萌芽期
+
+**6. 軽くポンと**: \`2boys, one gently patting the other's shoulder, casual friendly intimate gesture\` — 兄弟分・コンビ・上司部下感
+
+**7. 髪に触れる**: \`2boys, one tucking a stray hair behind the other's ear, gentle intimate gesture, soft expression\` — 萌え定番アクション
+
+**■ 密着（強い親密性）**
+
+**8. 体を密着して立つ**: \`2boys standing pressed close together, shoulders and arms touching, comfortable mutual closeness\` — 安心感ある親密関係
+
+**9. 後ろから寄りかかる**: \`2boys, shorter character leaning back against taller's chest with closed eyes, taller wrapping arms gently around\` — 強い親密性
+
+**密着系の NSFW フィルター回避コツ**: 「intimate」「embracing」は OK だが「erotic」「sensual」は警告される。本ガイドは全部 SFW 表現に統一してあります。`,
+      },
+      {
+        title: 'アクション別ポーズ集 — 立つ / 座る / 歩く / 寝る / 走る',
+        content: `静的・動的を問わず使える BL ポーズ。アクションごとの定型を覚えるとプロンプトが安定。
+
+**■ 立つ系**
+
+**10. ハグして立つ**: \`2boys, taller standing behind shorter wrapping arms around chest, shorter resting head back on taller's shoulder, both with eyes softly closed\` — back-hug pose
+
+**11. 振り返るポーズ**: \`2boys, taller character turning back over shoulder to look at shorter following behind, walking pose mid-step, expectant expression\` — 振り向き美男
+
+**12. ポケットに手**: \`2boys casually standing with hands in pants pockets, slightly slouched relaxed pose, looking at each other with soft smirks\` — クール大人 BL
+
+**■ 座る系**
+
+**13. ソファで並んで座る**: \`2boys sitting close together on a sofa, shoulders touching, both relaxed leaning back, casual home atmosphere\` — 日常 BL
+
+**14. 膝に頭を乗せる**: \`2boys, shorter character lying on a couch with head resting in taller's lap, taller gently stroking shorter's hair, peaceful expression\` — 萌え頂点
+
+**15. テーブル越しに見つめ合う**: \`2boys sitting across a small table looking intently at each other, hands resting near each other on the table top, intense quiet moment\` — 食事シーン定番
+
+**■ 歩く・走る**
+
+**16. 横を並んで歩く**: \`2boys walking side by side at the same pace, casual conversation pose, gentle smiles\` — 自然な日常感
+
+**17. 手を引いて走る**: \`2boys running, taller character pulling shorter by the hand with an excited grin, shorter struggling to keep up laughing\` — 動的ロマンス
+
+**■ 寝る系**
+
+**18. ベッドで隣り合う**: \`2boys lying side by side on a bed facing each other, fully clothed pajamas, gentle conversation pose, soft warm lighting\` — 同棲 BL 必須（SFW で安全）
+
+**19. 抱き枕**: \`2boys, shorter character clinging to taller as if hugging a pillow in sleep, both peacefully asleep, soft morning light\` — 萌えシーン頂点`,
+      },
+      {
+        title: '関係性別ポーズ集 — 攻め × 受け / 対等 / 兄弟分',
+        content: `「攻め」「受け」を字面で書かず、**身長差・体勢・視線**で表現するのが SD でも DALL-E でも安全で効果的。
+
+**■ 攻め × 受け（権力傾斜あり）**
+
+**20. 攻めが見下ろす**: \`2boys, taller dominant character (around 185-195cm) looking down at shorter softer character (around 165-170cm), shorter looking up\` — 王道タッパ差
+
+**21. 攻めが守る**: \`2boys, taller protective character standing slightly in front of shorter character, shorter peeking out from behind taller's shoulder\` — シェルター構図
+
+**22. 攻めが押し倒し風（座位）**: \`2boys on couch, taller character leaning forward over shorter, hands on either side of shorter's shoulders, gentle teasing expression\`（NSFW 回避: full clothing maintained）
+
+**■ 対等（バディ・ライバル）**
+
+**23. 背中合わせ**: \`2 boys standing back to back arms crossed, similar heights, both with confident equal expressions, dynamic pose\` — バディ最強構図
+
+**24. 拳をぶつけ合う**: \`2boys, fist bump pose, both grinning with mutual respect, slight low angle\` — 兄弟分・チームメイト
+
+**25. 肩を組む**: \`2boys, both with arm around each other's shoulder in a friendly bro pose, walking together, casual cheerful atmosphere\` — 友情 BL
+
+**■ 兄弟分・先輩後輩**
+
+**26. 頭ぽんぽん**: \`2boys, taller character gently patting the top of shorter character's head, shorter looking up with mildly annoyed but secretly pleased expression\` — 兄貴系ポーズ
+
+**27. 教える姿勢**: \`2boys, taller character leaning over shorter's shoulder pointing at something they're both looking at, shorter listening attentively\` — 先輩 × 後輩定番`,
+      },
+      {
+        title: '手の使い方 — BL ポーズ特有の繊細な表現',
+        content: `BL イラストの感情表現で最も重要なのが「**手**」。同じ二人でも手の使い方で関係性が劇的に変わる。
+
+**28. 指を絡める手繋ぎ**: \`2boys with fingers interlocked tightly holding hands, intimate grip\` — 強い繋がり
+
+**29. 軽く触れる手繋ぎ**: \`2boys, lightly resting hand on top of the other's hand without gripping, hesitant gentle contact\` — 関係性発展期
+
+**30. 頬を撫でる**: \`2boys, one cupping the other's cheek with gentle hand, looking softly into eyes, intimate close-up\` — ロマンス頂点
+
+**31. 髪を撫でる / 整える**: \`2boys, one running fingers through the other's hair gently, the other relaxing into the touch\` — 親密ジェスチャー
+
+**手の崩壊を防ぐコツ**:
+- ネガティブに必須: \`bad hands, extra fingers, missing fingers, fused fingers, deformed hands\`
+- 接触ポーズ時の追加: \`clear finger separation, anatomically correct hands\`
+- Hand Refiner ControlNet で完璧に補正可能
+- クローズアップ構図を避け、full body shot で手を画面の小さい部分に追い込む
+
+**手の表現に重み付け**:
+
+\`\`\`
+(detailed hands:1.3), (hands carefully drawn:1.2), gentle touch
+\`\`\``,
+      },
+      {
+        title: '視線・表情パターン — 関係性を伝える最強要素',
+        content: `視線と表情だけで物語が変わる。BL ポーズの「**感情解像度**」を上げる要素。
+
+**■ 視線パターン**
+
+**32. 見つめ合い（強）**: \`2boys with intense locked eye contact, neither breaking gaze, charged silent moment between them\`
+
+**33. 見上げる**: \`2boys, shorter looking up at taller with soft questioning expression, taller looking down protectively\` — 月間 1,600 件需要
+
+**34. 目を逸らす（照れ）**: \`2boys, one shyly looking away with reddened cheeks, the other watching with a soft amused smile\`
+
+**35. 横目でちらり**: \`2boys, one stealing a sideways glance at the other from the corner of his eye, subtle longing expression\`
+
+**■ 表情パターン**
+
+| 表情ワード | 効果 |
+|---|---|
+| \`soft loving expression\` | ロマンス頂点 |
+| \`gentle teasing smirk\` | 軽い友情〜ロマンス |
+| \`serious determined gaze\` | バディ・ライバル |
+| \`shy flushed cheeks\` | 関係性発展期 |
+| \`peaceful contented smile\` | 日常 BL |
+| \`tense charged silence\` | 葛藤シーン |
+| \`amused fond gaze\` | 兄弟分・先輩感 |
+
+**応用**: \`(soft loving expression:1.3)\` で重み付けすると感情が強調される。`,
+      },
+      {
+        title: '服装と関係性のヒント — 衣装で関係性を物語る',
+        content: `衣装は背景と同じくらい関係性を物語る要素。BL ポーズと組み合わせると一気に深みが出る。
+
+**■ 制服（学園 BL）**
+
+- \`matching school uniforms\` — 同級生
+- \`different school uniforms\` — 違う学校 / 部活違い
+- \`one in club uniform, the other in regular school uniform\` — 先輩 × 後輩 / 部活違いカップル
+
+**■ スーツ（大人 BL）**
+
+- \`matching dark business suits\` — 同期 / コンビ
+- \`different suit colors (one charcoal one navy)\` — 上司 × 部下
+- \`one in tailored suit one in casual\` — 仕事終わりカップル
+
+**■ カジュアル（同棲・日常）**
+
+- \`matching pajamas different colors\` — 同棲 BL 萌え
+- \`one in oversized sweater one in tee\` — 体格差表現
+- \`coordinated street fashion outfits\` — お出かけシーン
+
+**■ 和服（夏祭り・結婚式）**
+
+- \`matching dark yukata in summer festival\` — 夏祭り
+- \`one in haori the other in plain kimono\` — 時代劇 BL
+- \`white wedding tuxedos\` — 結婚式（→ <a href="/prompt/bl-couple-wedding-ceremony-formal" class="text-sky-600 hover:underline">サンプル</a>）
+
+**■ ファンタジー**
+
+- \`knight armor and mage robes\` — 騎士 × 魔法使い
+- \`prince and royal guard\` — 王子 × 護衛
+- \`paladin and dark sorcerer\` — 光と闇
+
+**衣装プロンプトの基本構造**: \`{character A outfit} and {character B outfit}\` のように 2 人別に書くと AI が混同しにくい。`,
+      },
+      {
+        title: 'ツール別の出しやすさ — ControlNet OpenPose 活用法',
+        content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
+
+- 強み: \`2boys\` + ポーズワードで安定、ControlNet OpenPose で参考画像から骨格コピー、anime BL モデル豊富（Anim4gine / Counterfeit V3 / Animagine XL）
+- 弱み: 接触ポーズで手・腕の融合多発、男性 → 女性化のバイアス
+- **対策**: ネガティブに \`1girl, woman, feminine, breasts\` 必須、ADetailer で顔再生成、解像度 768x768 以上、Hand Refiner ControlNet
+
+**ControlNet OpenPose ワークフロー**（最強）:
+
+1. **参考画像を用意**: Pinterest「BL pose reference」「two men pose」検索、または実写の友人 2 人並び写真
+2. **WebUI ControlNet タブ**: Preprocessor を \`openpose_full\`、Model を \`control_v11p_sd15_openpose\`
+3. **本ガイドのポーズワード**をプロンプトに記載
+4. **生成**: 参考画像の骨格を完全コピーしつつ、プロンプトの BL 表現で味付け
+
+**Midjourney（推奨度: ⭐⭐）**
+
+- 強み: narrative ポーズ（「two men leaning toward each other across a small table」）の理解力高、Niji 6 で BL アニメに強い
+- 弱み: ポーズの精密制御弱、ControlNet なし
+- コツ: \`--ar 4:5\` で 2 人並びを画面に収める、\`--style raw\` でフォトリアル
+
+**DALL-E 3（推奨度: ⭐⭐）**
+
+- 強み: 自然言語の説明力高（「優しく見つめ合う 2 人の男性キャラ」）
+- 弱み: BL ポーズで NSFW 警告頻発、ポーズ制御ほぼ不可
+- コツ: 本ガイドの中立表現テンプレを使う、シンプルなポーズから攻めて成功例を積み上げる
+
+**おすすめワークフロー**:
+
+1. Midjourney Niji 6 でラフを 4 枚出す
+2. 気に入ったポーズを Pinterest 風参考画像として ControlNet に投入
+3. SD + ControlNet OpenPose + 本ガイドポーズワードで本番生成
+
+これで「ポーズ完全制御」+「BL アニメスタイル」を両立できます。`,
+      },
+      {
+        title: '全英語ポーズワード一覧 — 30 種クイック索引',
+        content: `本ガイドで紹介した 30+ ポーズワードを 1 ヶ所に集約。Stable Diffusion / Midjourney / DALL-E どのツールでもそのまま貼り付けて使えます。
+
+**■ 距離別**
+
+\`\`\`
+standing apart with small gap between them
+looking at each other across a small distance, no physical contact
+side by side looking off in the same direction
+standing close enough that shoulders are barely touching
+fingertips lightly touching the other's hand
+one gently patting the other's shoulder
+tucking a stray hair behind the other's ear
+standing pressed close together
+shorter character leaning back against taller's chest
+\`\`\`
+
+**■ アクション別**
+
+\`\`\`
+taller standing behind shorter wrapping arms around chest
+taller character turning back over shoulder to look at shorter
+casually standing with hands in pants pockets
+sitting close together on a sofa shoulders touching
+shorter character lying on a couch with head resting in taller's lap
+sitting across a small table looking intently at each other
+walking side by side at the same pace
+taller character pulling shorter by the hand
+lying side by side on a bed facing each other, fully clothed pajamas
+shorter character clinging to taller as if hugging a pillow in sleep
+\`\`\`
+
+**■ 関係性別**
+
+\`\`\`
+taller dominant character looking down at shorter softer character
+taller protective character standing slightly in front of shorter
+2 boys standing back to back arms crossed, similar heights
+fist bump pose, both grinning with mutual respect
+both with arm around each other's shoulder in a friendly bro pose
+taller gently patting the top of shorter's head
+taller character leaning over shorter's shoulder pointing at something
+\`\`\`
+
+**■ 手の動き**
+
+\`\`\`
+fingers interlocked tightly holding hands
+lightly resting hand on top of the other's hand
+one cupping the other's cheek with gentle hand
+one running fingers through the other's hair gently
+\`\`\`
+
+**■ 視線・表情**
+
+\`\`\`
+intense locked eye contact, neither breaking gaze
+shorter looking up at taller with soft questioning expression
+one shyly looking away with reddened cheeks
+one stealing a sideways glance at the other from the corner of his eye
+\`\`\`
+
+**■ 推奨ネガティブ（BL ポーズ汎用）**
+
+\`\`\`
+1girl, woman, female, feminine, breasts,
+bad hands, extra fingers, missing fingers, fused fingers,
+extra arms, extra legs, fused bodies, conjoined twins,
+awkward pose, stiff pose, looking at camera,
+worst quality, low quality, blurry
+\`\`\`
+
+これだけ揃えれば、BL ポーズ表現の **95% のシーン**を SD / MJ / DALL-E でカバーできます。`,
+      },
+      {
+        title: '関連リソース — BL ポーズを極めるための入り口',
+        content: `**深掘りガイド**:
+
+- <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL カップル構図のAIプロンプト完全ガイド</a> — 構図 × シチュエーション 96 通り（背景・服装込みの完全シーン）
+- <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">カップルポーズ・二人構図のAIプロンプト完全ガイド</a> — BL 以外の二人構図 hub（カップル / 友達 / 兄弟 / OC × 推し）
+- <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a> — 身長差 / 体格差（攻め × 受けの身体差にも応用）
+- <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — ControlNet OpenPose 活用詳細
+- <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — 特定 BL 作品のキャラ衣装再現
+
+**サンプル prompt 集**:
+
+- <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> — 22 件の BL 構図 prompt、すべて SDXL サンプル付き
+- <a href="/tag/二人構図" class="text-sky-600 hover:underline">/tag/二人構図</a> — 二人構図系全体
+- <a href="/tag/カップル" class="text-sky-600 hover:underline">/tag/カップル</a> — カップル系全体
+- <a href="/tag/壁ドン" class="text-sky-600 hover:underline">/tag/壁ドン</a> — 壁ドン構図
+- <a href="/tag/キス" class="text-sky-600 hover:underline">/tag/キス</a> — キスシーン
+- <a href="/tag/ハグ" class="text-sky-600 hover:underline">/tag/ハグ</a> — ハグポーズ
+- <a href="/tag/お姫様抱っこ" class="text-sky-600 hover:underline">/tag/お姫様抱っこ</a> — お姫様抱っこ
+- <a href="/tag/見上げる" class="text-sky-600 hover:underline">/tag/見上げる</a> — 見上げる構図
+
+**ツール**:
+
+- <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">/tools/stable-diffusion</a>
+- <a href="/tools/midjourney" class="text-sky-600 hover:underline">/tools/midjourney</a>
+- <a href="/tools/dall-e" class="text-sky-600 hover:underline">/tools/dall-e</a>`,
+      },
+    ],
+    faq: [
+      { q: 'ポーズと構図の違いは何ですか？', a: '**ポーズ**はキャラクター個別の身体の動き・姿勢（手をつなぐ / 髪を撫でる / 振り向く）、**構図**は画面全体の組み立て（背景・距離・カメラ角度）です。本ガイドは「ポーズワードのみ」を抽出して 30 種類以上収録した辞書的リソース。背景や服装は <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL 構図完全ガイド</a> と組み合わせて使ってください。これにより「30 ポーズ × 96 構図 = 2,880 通り」の BL シーンが量産可能です。' },
+      { q: '密着系ポーズで NSFW フィルターを回避するには？', a: '**3 段階の対処法**: (1) **キーワードを中立化** — `embracing` → `holding gently`、`intimate` → `quietly close`、`erotic`/`sensual` は使わない、(2) **服装を明示** — `fully clothed pajamas` `casual outfits` のように衣装を明記して脱衣を防ぐ、(3) **シーンを穏やかに** — 密着系は「sleep」「rest」「comfort」と組み合わせると安全。本ガイドの 30 ポーズはすべて SFW 中立表現で書かれているのでそのままコピペが推奨。' },
+      { q: 'ControlNet OpenPose で 2 人骨格を制御する具体的手順は？', a: '手順: (1) 参考画像を用意（Pinterest「BL pose reference」「two men pose」検索 / 実写の友人 2 人並び写真でも可）、(2) Stable Diffusion WebUI の ControlNet タブで参考画像を読み込み、Preprocessor を `openpose_full` または `openpose`、Model を `control_v11p_sd15_openpose` に設定、(3) プロンプトは本ガイドのポーズワード + 構図ガイドの背景・服装を結合、(4) CFG Scale 7-9、Sampling Steps 25-30 で生成。**注意**: SDXL ベースなら ControlNet も SDXL 版（OpenPose SDXL）を使う。これで骨格コピー + プロンプトでの BL 表現味付けの最強コンボが成立します。' },
+      { q: 'ポーズ参考画像はどこから探すべきですか？', a: '**おすすめ順**: (1) **Pinterest** — 「BL pose reference」「two men reference」「shoujo manga pose」で日本語英語両方検索可。トレースして OK。(2) **Posemaniacs / Magic Poser** — 3D モデル人形を 2 体配置して任意のポーズを作れる無料ツール、ControlNet 入力に最適、(3) **PoseMy.art** — オンライン 3D ポーズエディタ、(4) **実写写真** — 友人 2 人並びの写真でも骨格情報として有効、(5) **既存の BL 漫画ページ** — 個人利用範囲ならトレース可能だが商用 NG。本ガイドの 30 ポーズは Pinterest 検索キーワードとしても使えるので、まずキーワード化して画像検索するのが近道。' },
+      { q: 'アクション ポーズ（走る / 飛ぶ）で顔崩れを防ぐには？', a: '動的ポーズは AI が顔のディテールに使うリソースを動きに割くため崩壊率が上がる。**対策**: (1) ネガティブに `bad face, distorted face, blurred face` を必須追加、(2) `(detailed face:1.3)` の重み付けを通常より高く（1.2 → 1.3）、(3) ADetailer 拡張で各キャラの顔を独立に再生成（A1111 標準機能）、(4) 動きの「瞬間」を指定 — `mid-step` `pose frozen in motion` のように静止画的に書くと顔がブレない、(5) 解像度を 768x768 以上にする。これらすべて入れて動的ポーズの顔崩壊が体感 60% → 15% に下がります。' },
+      { q: '静的 vs 動的ポーズの使い分けの目安は？', a: '**初心者なら静的ポーズから**入るのがおすすめ。AI 画像生成は「静止画 + 静的ポーズ」が最も成功率高い。順序: (1) 並ぶ・座る・見つめ合うなど**静的 BL ポーズで成功体験**を積む、(2) 慣れてきたら手をつなぐ・ハグなど**軽い接触ポーズ**にチャレンジ、(3) 最後にお姫様抱っこ・壁ドン・キスなど**接触強度の高いポーズ**へ、(4) 最終段階で「振り向く」「走る」など**動的ポーズ**。動的ポーズは ControlNet OpenPose 併用が必須です。各段階で崩壊率は約 2 倍ずつ上がるので、無理せず段階的に。' },
+      { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2boys, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `ChilloutMix`（注意: 一部 NSFW 寄り）、(5) **重み付け** — `(2boys:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
     ],
   },
 }
@@ -4075,6 +4467,45 @@ export default async function GuidePage({ params }: Props) {
                       if (paragraph.startsWith('```')) {
                         const code = paragraph.replace(/```\w*\n?/g, '').trim()
                         return <CodeBlock key={j} code={code} surface={`guide:${guide.slug}`} />
+                      }
+                      // Markdown table: starts with "|" and has a separator row "|---|..."
+                      // immediately after the header. Render as a real <table>.
+                      const trimmed = paragraph.trim()
+                      if (trimmed.startsWith('|') && /\n\|\s*-{3,}/.test(trimmed)) {
+                        const inlineMd = (s: string) =>
+                          s
+                            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/`(.+?)`/g, '<code class="px-1 py-0.5 bg-gray-100 text-red-600 rounded text-xs font-mono">$1</code>')
+                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>')
+                        const splitRow = (row: string) =>
+                          row.replace(/^\||\|$/g, '').split('|').map(c => c.trim())
+                        const rows = trimmed.split('\n').filter(r => r.trim().startsWith('|'))
+                        if (rows.length >= 2) {
+                          const headers = splitRow(rows[0])
+                          const body = rows.slice(2).map(splitRow)
+                          return (
+                            <div key={j} className="my-4 overflow-x-auto">
+                              <table className="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+                                <thead className="bg-gray-50 text-gray-700">
+                                  <tr>
+                                    {headers.map((h, k) => (
+                                      <th key={k} className="px-3 py-2 text-left font-semibold border-b border-gray-200" dangerouslySetInnerHTML={{ __html: inlineMd(h) }} />
+                                    ))}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {body.map((cells, r) => (
+                                    <tr key={r} className={r % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
+                                      {cells.map((c, k) => (
+                                        <td key={k} className="px-3 py-2 border-b border-gray-100 align-top" dangerouslySetInnerHTML={{ __html: inlineMd(c) }} />
+                                      ))}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          )
+                        }
                       }
                       return (
                         <p key={j} className="mb-4" dangerouslySetInnerHTML={{
