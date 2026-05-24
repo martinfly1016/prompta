@@ -2646,7 +2646,49 @@ giant hangar interior, low angle camera, dramatic backlight,
 その他に **VTuber アイドルデュオ / 壁ドン構図 / ハグシーン / RPG パーティ / 3 人組グループ / OC ペアテンプレート** など 7 シチュエーションも公開中、合計 15 件 → <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a>。`,
       },
       {
-        title: 'ポーズ別 — 身長差を強調する 5 つの定番構図',
+        title: '逆身長差カップル — 女性のほうが背が高いペアを描くプロンプト',
+        content: `「**逆身長差カップル**」（女性が男性より背が高いカップル）は SNS や pixiv で根強い人気ジャンルで、月間 1,900 件以上検索されています。ただし AI 画像生成では「**男性が高い**」がデフォルトの学習バイアスになっており、何も指示しないとほぼ確実に通常の身長差になってしまいます。意図的に明示する必要があります。
+
+**1. 王道 — 男女逆身長差カップル**
+
+\`\`\`
+1boy and 1girl, tall woman around 180cm, shorter man around 165cm,
+reverse height difference, taller woman than man,
+woman looking down slightly at boyfriend, casual modern outfits,
+full body shot, (height difference:1.3), (woman taller:1.3),
+romantic illustration
+\`\`\`
+
+**2. 女性アスリート × 小柄男性**
+
+\`\`\`
+1woman and 1man, tall athletic woman 178cm in sportswear long legs,
+shorter slim man 168cm casual outfit, woman embracing man's shoulder,
+walking together, full body shot, photorealistic style,
+(reverse height gap:1.3), (taller woman shorter man:1.3)
+\`\`\`
+
+**3. 姉さん女房 — 包容力ヒロイン**
+
+\`\`\`
+1boy and 1girl, mature taller woman 175cm elegant dress,
+younger looking shorter man 170cm slightly cute, soft expressions,
+woman patting man's head, indoor warm lighting,
+(reverse height difference:1.4), shoujo manga aesthetic
+\`\`\`
+
+**逆身長差を確実に出す 3 つのコツ**:
+
+1. **「reverse」「逆」を明示**: \`reverse height difference\`, \`taller woman shorter man\`, \`woman taller than man\` を **重み付け 1.3-1.4 で強調**
+2. **女性側に「tall / athletic / long-legged」**を集中: \`tall woman with long legs around 180cm\` のように身長と特徴を密に結びつける
+3. **男性側に「shorter / compact / slim」**を割当: \`shorter slim man around 165cm\`
+
+**ネガティブ推奨**: \`tall man taller than woman, traditional height pairing, man towering over woman\`
+
+このネガティブを入れないと、SD は学習バイアスから「男が高い」結果に戻りやすいので必須。`,
+      },
+      {
+        title: 'ポーズ別 — 身長差を強調する 6 つの定番構図',
         content: `同じカップルでも、ポーズによって身長差の見え方が劇的に変わります。
 
 **1. 並び立ち（最も定番）**
@@ -2682,6 +2724,19 @@ giant hangar interior, low angle camera, dramatic backlight,
 シンプルだが視線の上下で身長差を強烈に演出。
 
 \`shorter character looking up at taller one with soft expression, taller one looking down gently, close shot\`
+
+**6. キス — 身長差ならではの上下視線が交差する瞬間**
+
+身長差カップル定番のキスシーン。高い方が屈み、低い方が爪先立ちで見上げる視線の交差が物語性を生む。少女漫画・BL・百合いずれも頻出構図。
+
+\`\`\`
+2people kissing, tall character leaning down to kiss,
+shorter character on tiptoe looking up with eyes closed,
+close-up romantic shot, soft warm rim lighting,
+(height difference:1.3), shoujo manga kiss scene, intimate atmosphere
+\`\`\`
+
+**バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`
 
 **ポーズ × カメラアングルの組み合わせコツ**:
 
@@ -2813,6 +2868,65 @@ prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み
 - <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> — 体型・身長系
 - <a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> — コスプレ・キャラ再現
 - <a href="/prompts/clothing" class="text-sky-600 hover:underline">/prompts/clothing</a> — 服装組み合わせ`,
+      },
+      {
+        title: '全英語プロンプト一覧 — コピペ用クイック索引',
+        content: `本ガイドで紹介した全シチュエーションの**英語プロンプトをここに集約**しました。Stable Diffusion / Midjourney / DALL-E どのツールでもそのまま貼り付けて使えます。Midjourney の場合は末尾に \`--ar 9:16 --v 6\` を追加すると身長差が強調されます。
+
+**■ ベーステンプレート（汎用）**
+
+\`\`\`
+{tall character description}, around 185cm,
+{short character description}, around 155cm,
+(height difference:1.3), 2 people standing together,
+full body shot, sharp focus, (masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**■ シチュエーション別**
+
+**1. BL カップル**: \`2boys, tall handsome man 195cm, shorter cute man 165cm, height difference, standing side by side, soft expressions, modern casual outfits, cafe background, full body shot, (height difference:1.3), BL romance illustration\`
+
+**2. 百合カップル**: \`2girls, tall girl 178cm long dark hair, petite girl 155cm short pastel hair, height difference, taller one patting smaller one's head, school uniforms, afternoon window light, full body shot, (height difference:1.3), yuri illustration\`
+
+**3. 男女恋人**: \`1boy and 1girl, tall man 188cm, petite woman 160cm, height difference, holding hands, autumn city street, golden hour, full body shot, (height difference:1.3), photorealistic illustration\`
+
+**4. 逆身長差（女が高い）**: \`1boy and 1girl, tall woman 180cm, shorter man 165cm, reverse height difference, woman looking down at boyfriend, casual outfits, (woman taller:1.3), romantic illustration\`
+
+**5. 兄妹**: \`1boy and 1girl, tall older brother 178cm high school uniform, short younger sister 130cm elementary uniform, walking holding hands, cherry blossoms, (height difference:1.3), siblings\`
+
+**6. 親子**: \`1man and 1child, loving father 178cm, small daughter 110cm, walking through autumn park, holding hands, warm sunlight, (height difference:1.4), family bonding\`
+
+**7. ファンタジー**: \`1tall knight and 1small mage, massive armored knight 210cm cape, petite hooded mage 150cm staff, torch-lit dungeon, (height difference:1.4), (size difference:1.3), fantasy concept art\`
+
+**8. 先輩×後輩**: \`2girls, tall third-year senpai 180cm sailor uniform red ribbon, shorter first-year kohai 158cm same uniform blue ribbon, walking from school, golden hour, cherry trees, (height difference:1.3), school anime\`
+
+**9. メカ×パイロット**: \`1pilot and 1mecha robot, young pilot 160cm pilot suit, massive mecha 18 meters tall glossy white blue armor, giant hangar interior, low angle, dramatic backlight, (size difference:1.5), sci-fi anime\`
+
+**■ ポーズ別**
+
+**並び立ち**: \`standing side by side, full body shot, even spacing, looking forward\`
+**手をつなぐ**: \`holding hands, looking at each other, slight side angle, full body shot\`
+**ハグ**: \`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
+**壁ドン**: \`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, shoujo manga style\`
+**キス**: \`2people kissing, tall character leaning down, shorter character on tiptoe eyes closed, close-up romantic, soft warm lighting, (height difference:1.3), shoujo manga kiss\`
+**見上げる × 見下ろす**: \`shorter character looking up at taller one with soft expression, taller one looking down gently, close shot\`
+
+**■ 推奨ネガティブプロンプト（汎用）**
+
+\`\`\`
+same height, equal height, identical body proportions, same size,
+bad anatomy, bad hands, extra arms, fused bodies, conjoined twins,
+worst quality, low quality, blurry
+\`\`\`
+
+**■ 逆身長差専用ネガティブ**
+
+\`\`\`
+tall man taller than woman, traditional height pairing,
+man towering over woman
+\`\`\`
+
+これだけ揃えれば、ほぼすべての身長差シーンを SD / MJ / DALL-E で再現できます。リアルタイムでサイト内実行を試したい場合は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各プロンプトページから「🚀 ここで試す」を押してください（5 ポイント / 回、新規登録で 3 ポイント無料）。`,
       },
     ],
     faq: [

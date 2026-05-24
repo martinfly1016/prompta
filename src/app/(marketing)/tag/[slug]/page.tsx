@@ -9,9 +9,19 @@ import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/sc
 
 export const revalidate = 60
 
-// Category → canonical guide. Used to surface a "詳しい解説ガイド" CTA on tag pages
-// so prompt-seeking visitors who'd rather read context (~11% of /tag/身長差 sessions
-// already do this) get a clear path in addition to the inline prompts.
+// Tag-level guide override — checked before the category fallback. Use when a
+// specific tag has a more precisely-matched guide than its parent category's
+// default (e.g. 身長差/体格差 → dedicated pair-prompt guide, not the broader
+// body-type guide that absorbs every body-related query).
+const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
+  '身長差': { slug: 'height-difference-pair-prompt', title: '身長差プロンプト完全ガイド｜二人の身長差を確実に描く' },
+  '体格差': { slug: 'height-difference-pair-prompt', title: '身長差・体格差プロンプト完全ガイド' },
+}
+
+// Category → canonical guide fallback. Used to surface a "詳しい解説ガイド" CTA
+// on tag pages so prompt-seeking visitors who'd rather read context (~11% of
+// /tag/身長差 sessions already do this) get a clear path in addition to the
+// inline prompts.
 const CATEGORY_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'hairstyle': { slug: 'hairstyle-prompt-guide', title: '髪型プロンプトの書き方ガイド' },
   'cosplay':   { slug: 'cosplay-prompt-guide', title: 'コスプレプロンプトの書き方ガイド' },
@@ -68,7 +78,8 @@ export default async function TagPage({ params, searchParams }: Props) {
   const relatedTags = primaryCategory
     ? (await getPopularTagsByCategory(primaryCategory.slug, 8)).filter(t => t.slug !== tag).slice(0, 6)
     : []
-  const relatedGuide = primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined
+  const relatedGuide =
+    TAG_TO_GUIDE[tag] ?? (primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined)
 
   const tagUrl = `${SITE_CONFIG.url}/tag/${params.slug}`
   const collectionSchema = generateCollectionPageSchema(

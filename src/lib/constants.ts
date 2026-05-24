@@ -708,11 +708,11 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'height-difference-pair-prompt',
-    title: '身長差プロンプト完全ガイド｜AI イラストで二人の身長差を確実に描く方法',
+    title: '身長差カップルのAIプロンプト完全ガイド — イラスト・構図・ポーズで二人の身長差を確実に描く',
     description:
-      'Stable Diffusion・Midjourney・DALL-E で身長差のあるカップル・兄妹・ファンタジーペアを描くプロンプト完全ガイド。BL / 百合 / 男女 / 親子 / RPG パーティ / VTuber コラボ 14 シチュエーション別、ポーズ別パターン、SD 比例崩壊対策、ControlNet 活用法を実例つき 4500 字で解説。',
-    targetKeyword: '身長差 プロンプト',
-    monthlySearchVolume: 720,
+      '身長差カップルを Stable Diffusion・Midjourney・DALL-E で描く AI プロンプト完全ガイド。BL / 百合 / 男女 / 逆身長差（女が背高い）/ 兄妹 / 親子 / RPG / VTuber 16 シチュエーション、壁ドン・ハグ・キス・見上げる構図、SD 比例崩壊対策、ControlNet 活用法、全英語プロンプト一覧を実例つきで解説。',
+    targetKeyword: '身長差カップル',
+    monthlySearchVolume: 12100,
   },
 ]
 
