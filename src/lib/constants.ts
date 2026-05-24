@@ -714,6 +714,14 @@ export const GUIDES: Guide[] = [
     targetKeyword: '身長差カップル',
     monthlySearchVolume: 12100,
   },
+  {
+    slug: 'two-person-composition-prompt-guide',
+    title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド — 関係性別 30 構図テンプレート',
+    description:
+      'カップル・友達・兄弟・BL風・百合風・OC×推し など二人構図を AI で描く完全ガイド。並ぶ・手をつなぐ・ハグ・お姫様抱っこ・壁ドン・見上げる・キス・背中合わせ 8 ポーズ × 関係性別 30+ テンプレート。Stable Diffusion / Midjourney / DALL-E 対応、英語プロンプト一覧、ツール別注意点、よくある失敗対処法を実例つきで解説。',
+    targetKeyword: 'カップル ポーズ',
+    monthlySearchVolume: 1900,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -773,6 +781,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'height-difference-pair-prompt': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['body-type', 'anime', 'cosplay', 'clothing'],
+  },
+  'two-person-composition-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['anime', 'body-type', 'clothing', 'cosplay'],
   },
 }
 

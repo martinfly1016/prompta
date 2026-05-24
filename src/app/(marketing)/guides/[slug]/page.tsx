@@ -2918,6 +2918,7 @@ prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み
 
 **関連ガイド**:
 
+- <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">カップルポーズ・二人構図のAIプロンプト完全ガイド</a> — 身長差以外の二人構図（カップル / 友達 / BL風 / 百合風 / OC × 推し）の全パターン Hub
 - <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — 単体キャラの体型（curvy / muscular / slim 等）
 - <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎・重み付け・ControlNet
 - <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — キャラクター再現
@@ -2997,6 +2998,521 @@ man towering over woman
       { q: '3 人以上の身長バラバラ構図のコツは？', a: '3 人組以上は **(1) 各々の身長を明記、(2) 立ち位置を明記、(3) `character lineup` キーワード追加** が鉄則。例: `three characters in horizontal lineup, tall character (left, 188cm), medium character (middle, 168cm), short character (right, 152cm), even spacing, character design sheet style`。**着物・制服など全身が見える衣装**を揃えると身長差が視覚的に伝わりやすい。ControlNet OpenPose があれば 3 人骨格を一気に固定できるので失敗率激減。サンプル: <a href="/prompt/height-diff-trio-mixed-heights" class="text-sky-600 hover:underline">3 人組 — バラバラ身長グループ</a>。' },
       { q: 'キャラの顔だけ似て体格は変えたい場合は？', a: '**LoRA + 身長差プロンプト**の組み合わせがベスト。手順: (1) キャラ LoRA（顔特徴）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `height difference, tall version (a) and short version (b)` のように同キャラの 2 体型を明示、(3) 体型形容詞（`muscular`, `petite`, `slim`）を別々に割り当てる。**もう一つの方法**: img2img で既存キャラのフェイス画像をベースに、prompt で体格だけ変更（Denoising Strength 0.4-0.6 で顔保持）。ファンアート常套手段の「**身長差パロディ**」（推しキャラが小学生化する等）も同じ原理です。' },
       { q: 'BL / 百合カップル特有の身長差表現は？', a: 'BL / 百合カップルでは「**役割の視覚的記号化**」が重要です。BL なら「**高身長攻め × 低身長受け**」(`tall seme around 195cm, shorter uke around 165cm`) が定番。「攻め × 受け」を直接書くより `dominant tall partner` / `gentle shorter partner` のような英語表現のほうが安全（NSFW フィルター回避）。**百合** なら「**長身お姉さん × 小柄妹系**」(`tall onee-san type, petite imouto type`) の構図がファンアートで頻出。ポーズも BL は「壁ドン」「ハグ」「頭を撫でる」、百合は「お姫様抱っこ」「頭ぽんぽん」が定番。本ガイドでは <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">BL カップル</a> と <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">百合カップル</a> のテンプレを公開中、コピペで使えます。' },
+    ],
+  },
+  'two-person-composition-prompt-guide': {
+    sections: [
+      {
+        title: '二人構図プロンプトとは — AIで二人のキャラクターを自然に描く必須テクニック',
+        content: `**二人構図プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**2 人のキャラクターを 1 枚の絵に自然な関係性で配置する**」ための指示文です。
+
+カップルポーズ、友達 2 人、兄妹、BL 風二人構図、百合風二人構図、OC × 推しキャラ構図、ライバル対峙シーン — どんな関係性であれ、2 人を同じ画面に描く時は**単体キャラ生成とは別のテクニック**が必要になります。
+
+**こんな人におすすめ**:
+
+- 推しカップルの 2 人構図イラストを AI で量産したい
+- OC（オリキャラ）とキャラの関係性ビジュアルを作りたい
+- 漫画・同人誌の構図素材を AI で生成したい
+- ポーズ参考用に二人構図のバリエーションを集めたい
+- カップル写真風 AI イラストを作りたい
+
+**本ガイドで扱う 8 つの定番ポーズ**: 並び立ち / 手をつなぐ / ハグ / お姫様抱っこ / 壁ドン / 見上げる × 見下ろす / キス / 背中合わせ。
+
+**関係性 7 パターン**: カップル / 友達ペア / 兄弟姉妹 / 親子 / 漫画風二人構図（BL風 / 百合風）/ OC × 推しキャラ / ライバル対峙。
+
+全 30+ コピペテンプレートと英語プロンプト一覧で、すぐに使い始められます。**身長差プロンプト**を深く知りたい場合は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> も合わせてどうぞ。`,
+      },
+      {
+        title: '二人構図プロンプトを構成する 5 つの要素',
+        content: `効果的な二人構図プロンプトは以下 5 要素の組み合わせです：
+
+1. **人数指定（必須）** — \`2girls\` / \`2boys\` / \`1boy and 1girl\` / \`2 people\` / \`couple\` などで人数を明示
+2. **関係性** — \`couple\` / \`friends\` / \`siblings\` / \`rivals\` / \`lovers\` — 雰囲気を決定づける最重要キーワード
+3. **ポーズ・アクション** — \`holding hands\` / \`hugging\` / \`princess carry\` / \`kabe-don pose\` などの動作
+4. **視線** — \`looking at each other\` / \`looking up\` / \`eyes closed\` / \`gazing away\` — 感情を表現する
+5. **カメラアングル** — \`full body shot\` / \`close-up\` / \`low angle\` / \`from above\` / \`side view\`
+
+**順序ルール**: SD では前方トークンに強い重みが乗るので、**人数 → 関係性 → ポーズの順**で前半に置く。
+
+**基本テンプレート**:
+
+\`\`\`
+2 people, {relationship}, {pose}, {gaze description},
+{outfit / setting}, full body shot, (composition:1.2),
+(masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**例（カップル並び立ち）**:
+
+\`\`\`
+1boy and 1girl, romantic couple, standing side by side holding hands,
+looking at each other with soft smiles, casual modern outfits,
+city street at golden hour, full body shot,
+(romantic atmosphere:1.2), photorealistic illustration
+\`\`\`
+
+**例（友達 2 人 / 並び座り）**:
+
+\`\`\`
+2girls, best friends, sitting on park bench side by side laughing,
+looking at each other, casual summer outfits, sunny afternoon,
+medium shot, (friendly atmosphere:1.2), slice of life anime
+\`\`\``,
+      },
+      {
+        title: '関係性別 7 パターン — シチュエーション別コピペテンプレート',
+        content: `同じポーズでも「関係性」を変えるだけで全く違う絵になります。プロンプトでは関係性ワードを**明示しないと AI は単なる「2 人並び」になりがち**。
+
+**1. カップル（男女恋人）— 王道ロマンス**
+
+\`\`\`
+1boy and 1girl, romantic couple, holding hands while walking,
+soft loving expressions, casual date outfits, autumn city street,
+golden hour lighting, full body shot, (couple atmosphere:1.2),
+photorealistic illustration
+\`\`\`
+
+**2. 友達ペア — カジュアル日常**
+
+\`\`\`
+2girls, best friends, walking together laughing,
+matching casual outfits, sunny park, full body shot,
+(friendship atmosphere:1.2), slice of life anime
+\`\`\`
+
+**3. 兄弟姉妹 — 家族的な距離感**
+
+\`\`\`
+1boy and 1girl, older brother and younger sister, walking holding hands,
+brother in school uniform tall, sister in elementary uniform small,
+cherry blossoms, warm afternoon, full body shot,
+(sibling bond:1.2), family illustration
+\`\`\`
+
+**4. 漫画風二人構図（BL風 / 男性 2 人）— 構図素材**
+
+\`\`\`
+2boys, close friends with romantic tension,
+standing facing each other, soft eye contact,
+modern casual outfits, indoor warm lighting, medium shot,
+(emotional composition:1.2), manga illustration reference
+\`\`\`
+
+「BL」字面表現を直接使うより、\`close friends with romantic tension\` / \`emotional bond between two men\` のような中立表現の方が NSFW フィルターを回避できます。
+
+**5. 漫画風二人構図（百合風 / 女性 2 人）— 構図素材**
+
+\`\`\`
+2girls, deep bond between two girls,
+standing close together gentle smiles,
+school uniforms, afternoon sunlight, full body shot,
+(emotional composition:1.2), shoujo manga aesthetic
+\`\`\`
+
+**6. OC × 推しキャラ構図（夢絵風 / 自插ペア）— 構図参考**
+
+「自分（OC）が推しキャラと並ぶ」構図は、トレース素材としても活躍します。
+
+\`\`\`
+1original character and 1existing character pair,
+standing close together with natural distance,
+casual modern outfits, indoor setting, full body shot,
+(character pair composition:1.2), trace reference illustration
+\`\`\`
+
+LoRA で推しキャラの顔特徴を再現する場合: \`<lora:character-name:0.7>\` を追加すると、OC は新規生成 / 既存キャラは LoRA で固定の構成になります。
+
+**7. ライバル対峙 — 緊張感のある構図**
+
+\`\`\`
+2 characters facing each other in tense standoff,
+serious determined expressions, dynamic poses,
+dramatic lighting, contrast colors, medium shot,
+(tension atmosphere:1.3), shounen manga illustration
+\`\`\``,
+      },
+      {
+        title: 'ポーズ別 8 種 — 二人構図の定番プロンプト',
+        content: `**1. 並び立ち — 最も汎用的な構図**
+
+二人の関係性を素直に見せる王道。
+
+\`\`\`
+2 people standing side by side, full body shot,
+even spacing, both looking forward, neutral composition
+\`\`\`
+
+**2. 手をつなぐ — 親密さの定番**
+
+\`\`\`
+2 people holding hands, looking at each other with soft expressions,
+slight side angle, full body shot, (intimate gesture:1.2)
+\`\`\`
+
+**3. ハグ — 包み込む抱擁**
+
+\`\`\`
+2 people embracing, taller character embracing shorter from behind,
+shorter character resting head on taller's shoulder,
+close intimate shot, soft warm lighting, (hug pose:1.3)
+\`\`\`
+
+**4. お姫様抱っこ（月間 880 件検索）— ロマンチック頂点**
+
+少女漫画・BL・百合いずれも超定番ポーズ。男女・同性問わず映える。
+
+\`\`\`
+1 person princess carry, taller character holding lighter one
+in arms, lighter character with one arm around taller's neck,
+both looking at each other softly, full body shot,
+(princess carry pose:1.4), shoujo manga style
+\`\`\`
+
+**5. 壁ドン — 漫画的瞬間**
+
+\`\`\`
+kabe-don pose, taller character's hand on wall,
+shorter character with back against wall looking up flushed,
+low angle shot, dramatic lighting, (kabe-don pose:1.4),
+shoujo manga style
+\`\`\`
+
+**6. 見上げる × 見下ろす（月間 1,600 件検索）— 視線の物語性**
+
+身長差・体格差がなくても、視線の上下だけで関係性を表現できる強力構図。
+
+\`\`\`
+2 people facing each other, shorter character looking up at taller one
+with soft expression, taller one looking down gently,
+close shot, soft eye contact lighting,
+(looking up composition:1.3), emotional illustration
+\`\`\`
+
+「上を見上げる構図」「下から見上げる構図」も同類で、月間合計 1,000 件以上の検索需要があります。
+
+**7. キス（月間 1,300 件検索）— ロマンス頂点**
+
+\`\`\`
+2 people kissing, taller character leaning down,
+shorter character on tiptoe looking up with eyes closed,
+close-up romantic shot, soft warm rim lighting,
+(kiss scene:1.3), shoujo manga aesthetic
+\`\`\`
+
+**バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。
+
+**8. 背中合わせ — クール対等構図**
+
+ライバル / バディ / 兄弟構図に最適。
+
+\`\`\`
+2 characters standing back to back, arms crossed,
+serious cool expressions, dynamic poses, dramatic lighting,
+full body shot, (back to back pose:1.3), shounen anime style
+\`\`\``,
+      },
+      {
+        title: 'カメラアングル別 — 同じポーズを劇的に変える 5 つのアングル',
+        content: `**1. 正面構図（front view）**
+
+\`front view, both characters facing camera, even framing\`
+
+→ ポートレート・記念写真風。証明写真的にも使える。
+
+**2. 斜め前 45 度（three-quarter view）**
+
+\`three-quarter view, both characters slightly angled toward camera, dynamic composition\`
+
+→ 最も自然で、漫画・イラスト最頻出アングル。
+
+**3. ロー アングル（low angle）— 身長差・威圧感を強調**
+
+\`low angle shot, looking up at characters, emphasizing height and presence\`
+
+→ 高身長キャラがさらに大きく見える。BL「攻め」キャラの印象付けにも。
+
+**4. ハイアングル（high angle）— 見守る視点**
+
+\`high angle shot, looking down at characters, intimate scene framing\`
+
+→ お姫様抱っこ / キスシーンを上から見せる時に効果的。
+
+**5. 横顔・サイドビュー（side view / profile）**
+
+\`side view, profile shot, both characters in profile, looking at each other\`
+
+→ キス・対面構図に必須。横向きで顔崩壊リスクも下がる。
+
+**アングル × ポーズの組み合わせコツ**:
+
+| ポーズ | おすすめアングル | 理由 |
+|---|---|---|
+| 並び立ち | 正面 / 斜め前 | 全体感重視 |
+| 手をつなぐ | 斜め前 / サイド | 距離感が見える |
+| ハグ | サイド / クローズアップ | 表情と密着感 |
+| 壁ドン | ロー アングル | 高さ・威圧感の演出 |
+| キス | サイド / ハイ | 顔崩壊回避 + 関係性強調 |
+| お姫様抱っこ | サイド / 斜め前 | 抱える / 抱えられる構図の整合性 |
+| 見上げる | ロー / クローズアップ | 視線の上下を強調 |
+| 背中合わせ | 正面 / ロー | 対等感・カッコよさ |`,
+      },
+      {
+        title: 'シチュエーション別 — 背景・服装で関係性を強化する',
+        content: `同じポーズ × 関係性でも、背景・服装で印象は劇的に変わります。
+
+**学校シーン** — 制服 × 教室 / 校門 / 体育館
+
+\`\`\`
+2 students, school uniforms, classroom afternoon golden light,
+sunset through windows, slice of life anime aesthetic
+\`\`\`
+
+**街角シーン** — カジュアル × 都市背景
+
+\`\`\`
+casual modern outfits, autumn city street with falling leaves,
+shop windows, golden hour, urban romance illustration
+\`\`\`
+
+**自然シーン** — アウトドア × 季節感
+
+\`\`\`
+seasonal outdoor outfits, sakura park / autumn forest / summer beach / snowy forest,
+natural lighting, lifestyle photography illustration
+\`\`\`
+
+**室内シーン** — リラックス × インテリア
+
+\`\`\`
+casual home outfits, cozy living room with warm lamp light,
+soft textures, evening atmosphere, intimate slice of life
+\`\`\`
+
+**ファンタジーシーン** — 衣装 × 異世界背景
+
+\`\`\`
+fantasy armor and robes, ancient stone hall with torches,
+mysterious atmosphere, RPG concept art style
+\`\`\`
+
+**SF / サイバーパンク** — 未来衣装 × ネオン
+
+\`\`\`
+futuristic outfits with neon accents, cyberpunk city with rain reflections,
+holographic ads, dramatic backlight, sci-fi illustration
+\`\`\`
+
+**カップル写真風（カップル 写真 ポーズ 1,900 件需要）**
+
+\`\`\`
+romantic couple photoshoot style, professional photography composition,
+soft natural lighting, photorealistic style, candid moment capture
+\`\`\``,
+      },
+      {
+        title: '関連 cluster — 身長差・体格差・キャラクター詳細を深掘りする',
+        content: `二人構図は**他の prompt cluster と組み合わせる**ことで一気に表現力が増します。
+
+**身長差を加える** → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a>
+
+「2 人を同じ画面に描くだけ」から「**身長差・体格差まで意図的にコントロール**」したい場合の専門ガイド。BL / 百合 / 男女 / 逆身長差（女が高い）/ 筋肉×小柄 など 17 シチュエーション + 全英語プロンプト一覧。
+
+**体型を細かく指定する** → <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a>
+
+\`curvy\` / \`muscular\` / \`petite\` / \`slim\` など個別体型を 2 人それぞれに割り当てる時の参考。
+
+**キャラクター衣装を再現** → <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a>
+
+特定 IP キャラのコスプレ二人構図（推しカップル写真など）を作る時に。
+
+**アニメ風表現を強化** → <a href="/guides/anime-prompt-guide" class="text-sky-600 hover:underline">アニメ風プロンプトガイド</a>
+
+**服装の組み合わせ** → <a href="/prompts/clothing" class="text-sky-600 hover:underline">/prompts/clothing</a>
+
+**Stable Diffusion 基礎** → <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">SD プロンプト書き方ガイド</a> (ControlNet OpenPose で 2 人骨格を完全制御する方法も)
+
+**実例 prompt 集**: <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a>（15 件 / ペア構図中心）/ <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a>（体型差シリーズ）`,
+      },
+      {
+        title: 'ツール別の注意点 — SD / Midjourney / DALL-E でカップル構図を描き分ける',
+        content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
+
+- **強み**: \`2girls\` \`2boys\` などの danbooru タグで人数固定が確実、ControlNet OpenPose で 2 人骨格を完全制御可能、重み付けで関係性ワードを強調できる
+- **弱み**: 二人構図で顔・手の崩壊率が高い、ポーズが破綻しやすい
+- **対策**: ADetailer で各キャラの顔を独立に再生成、解像度を 768x768 以上、ControlNet 必須
+- **推奨**: anime 用 → Counterfeit / MeinaMix / AnythingV5、リアル系 → Realistic Vision
+
+**Midjourney（推奨度: ⭐⭐）**
+
+- **強み**: 構図センスが良い、narrative プロンプト（文章式指示）でも 2 人関係を理解、ロマンチック・芸術的描写が秀逸
+- **弱み**: 重み付け制御が SD ほど精密でない、ControlNet 相当なし
+- **コツ**: \`--ar 4:5\` または \`--ar 3:4\`（縦長気味）で 2 人を画面に収めやすい、\`--style raw\` でフォトリアル感
+
+**DALL-E 3 （推奨度: ⭐⭐）**
+
+- **強み**: 自然言語の理解力が高く、「優しく微笑む 2 人のカップル」のような日本語指示が効く、ChatGPT 経由で気軽に試せる
+- **弱み**: NSFW フィルター厳格、ファンアート（特定 IP）出にくい、構図制御は弱い
+- **コツ**: 「relative position」を明示（「one person on the left, the other on the right」など）
+
+**Gemini 2.5 Flash Image (Nano Banana)（推奨度: ⭐）**
+
+- **強み**: 既存写真の編集（カップル写真の雰囲気変更など）に強い
+- **弱み**: ゼロからの 2 人構図生成では関係性ワードを十分に解釈しないことが多い
+
+**おすすめワークフロー**:
+
+1. **本格的に二人構図を制御** → Stable Diffusion + ControlNet OpenPose（参考画像から骨格固定）
+2. **クオリティ重視 / カップル写真風** → Midjourney + \`--ar 4:5\`
+3. **自然言語で気軽に** → DALL-E 3（Bing Image Creator で無料）
+4. **既存写真を加工** → Gemini Nano Banana
+
+prompta.jp の二人構図 prompt 集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各 prompt 詳細ページから「🚀 ここで試す」で**サイト内で実行可能**（5 ポイント / 回、新規登録 3 ポイント無料）。`,
+      },
+      {
+        title: 'よくある失敗と対処法 — 二人構図特有の崩壊パターン',
+        content: `二人構図は単体生成の **5-10 倍崩壊しやすい**ジャンルです。よくある失敗 6 種と対処法。
+
+**問題 1: 顔が両方崩れる / 片方だけ顔が崩れる**
+
+二人構図では各キャラの顔を AI が描き分けるリソースが半分になる。
+
+- **対処**: \`(detailed face:1.2), (detailed eyes:1.2)\` を**両キャラ別個に**書く
+- **対処**: ADetailer 拡張で各キャラの顔を独立に再生成（A1111 標準機能）
+- **対処**: 解像度を 768x768 以上に上げる（512 では二人構図が壊滅）
+
+**問題 2: 手が崩壊する（指 6 本 / 融合 / 異常関節）**
+
+二人接触時（手をつなぐ / ハグ）に頻発。
+
+- **対処**: ネガティブに \`bad hands, extra fingers, missing fingers, fused fingers\` 必須
+- **対処**: \`mesh-hand-fix\` 拡張 / Hand Refiner ControlNet
+- **対処**: クローズアップ構図を避け、full body shot で手を画面の小さい部分に追い込む
+
+**問題 3: 体が融合する / 余分な腕・脚が生える**
+
+接触ポーズ（ハグ・お姫様抱っこ）で頻発。
+
+- **対処**: ネガティブに \`fused bodies, extra arms, extra legs, conjoined twins, merged figures\` 必須
+- **対処**: ControlNet OpenPose で 2 人骨格を別個に指定（参考画像を Pinterest 等から）
+- **対処**: Denoising Strength を 0.5-0.7 に下げ、骨格保持を優先
+
+**問題 4: 2 人がくっつきすぎ / 離れすぎ**
+
+- **対処**: 距離を明示。\`small gap between them\` / \`shoulders touching\` / \`close together but not touching\`
+- **対処**: ポーズ修飾語を追加。\`standing side by side with arms touching\`
+
+**問題 5: 視線が合わない / カメラ目線になる**
+
+- **対処**: \`looking at each other\` を**重み付け 1.2-1.3** で強調
+- **対処**: \`eyes locked on each other, mutual gaze\` のように複数表現で念押し
+- **対処**: ネガティブに \`looking at camera\` を入れる（外したい場合）
+
+**問題 6: 関係性が伝わらない（ただの 2 人並び）**
+
+- **対処**: 関係性ワード（\`couple\` / \`siblings\` / \`friends\` / \`rivals\`）を**前半に**配置
+- **対処**: 表情語（\`soft smiles\` / \`tense expressions\` / \`laughing\`）で感情を補強
+- **対処**: ポーズに関係性が現れる動作を選ぶ（手をつなぐ / 背中合わせ / 壁ドン）
+
+**汎用ネガティブプロンプト**（二人構図向け）:
+
+\`\`\`
+bad anatomy, bad hands, extra fingers, missing fingers, fused fingers,
+extra arms, extra legs, fused bodies, conjoined twins, merged figures,
+looking at camera, awkward pose, stiff pose,
+worst quality, low quality, blurry
+\`\`\``,
+      },
+      {
+        title: '全英語プロンプト一覧 — コピペ用クイック索引',
+        content: `本ガイドで紹介した全プロンプト（英語版）を 1 ヶ所に集約しました。Stable Diffusion / Midjourney / DALL-E どのツールでもそのまま貼り付けて使えます。
+
+**■ ベーステンプレート**
+
+\`\`\`
+2 people, {relationship}, {pose}, {gaze},
+{outfit / setting}, full body shot, (composition:1.2),
+(masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**■ 関係性別 7 パターン**
+
+**カップル**: \`1boy and 1girl, romantic couple, holding hands walking, soft loving expressions, casual date outfits, autumn city golden hour, full body shot, (couple atmosphere:1.2), photorealistic\`
+
+**友達ペア**: \`2girls, best friends, walking together laughing, matching casual outfits, sunny park, full body shot, (friendship atmosphere:1.2), slice of life anime\`
+
+**兄弟姉妹**: \`1boy and 1girl, older brother and younger sister walking holding hands, brother school uniform tall, sister elementary uniform small, cherry blossoms, full body shot, (sibling bond:1.2), family illustration\`
+
+**漫画風二人構図（男性 2 人）**: \`2boys, close friends with romantic tension, standing facing each other soft eye contact, modern casual outfits, indoor warm lighting, medium shot, (emotional composition:1.2), manga reference\`
+
+**漫画風二人構図（女性 2 人）**: \`2girls, deep bond between two girls, standing close gentle smiles, school uniforms, afternoon sunlight, full body shot, (emotional composition:1.2), shoujo aesthetic\`
+
+**OC × 推しキャラ**: \`1original character and 1existing character pair, standing close natural distance, casual modern outfits, indoor setting, full body shot, (character pair composition:1.2), trace reference\`
+
+**ライバル対峙**: \`2 characters facing each other tense standoff, serious determined expressions, dynamic poses, dramatic lighting, contrast colors, medium shot, (tension atmosphere:1.3), shounen manga\`
+
+**■ ポーズ別 8 種**
+
+**並び立ち**: \`2 people standing side by side, full body shot, even spacing, both looking forward\`
+
+**手をつなぐ**: \`2 people holding hands, looking at each other soft expressions, slight side angle, full body shot, (intimate gesture:1.2)\`
+
+**ハグ**: \`2 people embracing, taller embracing shorter from behind, shorter resting head on taller's shoulder, close intimate shot, soft warm lighting, (hug pose:1.3)\`
+
+**お姫様抱っこ**: \`1 person princess carry, taller character holding lighter one in arms, lighter character one arm around taller's neck, both looking at each other softly, full body shot, (princess carry pose:1.4), shoujo manga\`
+
+**壁ドン**: \`kabe-don pose, taller character's hand on wall, shorter against wall looking up flushed, low angle shot, dramatic lighting, (kabe-don pose:1.4), shoujo manga\`
+
+**見上げる × 見下ろす**: \`2 people facing each other, shorter looking up at taller with soft expression, taller looking down gently, close shot, soft eye contact lighting, (looking up composition:1.3)\`
+
+**キス**: \`2 people kissing, taller leaning down, shorter on tiptoe eyes closed, close-up romantic shot, soft warm rim lighting, (kiss scene:1.3), shoujo aesthetic\`
+
+**背中合わせ**: \`2 characters standing back to back, arms crossed, serious cool expressions, dynamic poses, dramatic lighting, full body shot, (back to back pose:1.3), shounen anime\`
+
+**■ 推奨ネガティブプロンプト（二人構図汎用）**
+
+\`\`\`
+bad anatomy, bad hands, extra fingers, missing fingers, fused fingers,
+extra arms, extra legs, fused bodies, conjoined twins, merged figures,
+looking at camera, awkward pose, stiff pose,
+worst quality, low quality, blurry
+\`\`\`
+
+これだけ揃えれば、ほぼすべての二人構図シーンを SD / MJ / DALL-E で再現できます。サイト内実行も可能（<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> 各 prompt の「🚀 ここで試す」、5 ポイント / 回）。`,
+      },
+      {
+        title: '関連 prompt / guide — 二人構図を極めるリソース',
+        content: `**深掘りガイド**:
+
+- <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a> — 二人構図の中でも身長差・体格差を意図的にコントロールする専門ガイド
+- <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — 個別キャラの体型（curvy / muscular / slim 等）
+- <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — 特定 IP キャラ衣装の再現
+- <a href="/guides/anime-prompt-guide" class="text-sky-600 hover:underline">アニメ風プロンプトガイド</a> — アニメスタイルの強化
+- <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎 + ControlNet 活用法
+
+**サンプル prompt 集**:
+
+- <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> — 15 件のペア構図 prompt（BL / 百合 / 男女 / ファンタジー）
+- <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> — 体型・身長系
+- <a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> — コスプレ・キャラ再現
+- <a href="/prompts/anime" class="text-sky-600 hover:underline">/prompts/anime</a> — アニメ風 prompt
+- <a href="/prompts/clothing" class="text-sky-600 hover:underline">/prompts/clothing</a> — 服装組み合わせ
+
+**ツール**:
+
+- <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">/tools/stable-diffusion</a> — SD prompt 一覧
+- <a href="/tools/midjourney" class="text-sky-600 hover:underline">/tools/midjourney</a> — Midjourney prompt 一覧
+- <a href="/tools/dall-e" class="text-sky-600 hover:underline">/tools/dall-e</a> — DALL-E prompt 一覧`,
+      },
+    ],
+    faq: [
+      { q: '構図 / ポーズ / アングル の違いは？', a: '**構図（コンポジション）**は画面全体の組み立て方（どこに何を配置するか）、**ポーズ**はキャラクターの体の動き（手をつなぐ・ハグなど）、**アングル**はカメラ位置（ロー・ハイ・サイド）です。プロンプトでは「構図ワード（composition）」「ポーズワード（pose / action）」「アングルワード（angle / shot）」を**別個に指定すると制御が効きやすい**。例: `(emotional composition:1.2), holding hands pose, three-quarter view angle`。3 つを混同せず分けて書くのが上達のコツです。' },
+      { q: '2 人がくっつきすぎ / 離れすぎる時の対処は？', a: '距離を明示するワードを追加してください。**くっつきすぎる場合**: `with small gap between them` / `standing close but not touching` / `slight distance between figures`。**離れすぎる場合**: `shoulders touching` / `bodies close together` / `arms in contact`。ネガティブにも対称ワードを追加（くっつきすぎ防止: `bodies overlapping, merged figures` / 離れすぎ防止: `wide gap between figures, distant figures`）。Stable Diffusion なら ControlNet OpenPose で 2 人骨格の位置を完全制御するのが最も確実です。' },
+      { q: '同性カップル（BL / 百合）の構図プロンプトはどう書く？', a: '**BL 構図**は `2boys, close friends with romantic tension, emotional bond between two men` のような中立表現の方が NSFW フィルターを回避しやすい。「BL」字面語を直接書くと DALL-E などでブロックされやすいので、`emotional composition` / `manga reference` / `shoujo aesthetic` のような言い換えがおすすめ。**百合構図**は `2girls, deep bond between two girls, gentle smiles` で十分。BL / 百合いずれも本ガイドの **8 ポーズ × 関係性別 7 パターン** がそのまま使えます。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト完全ガイド</a> の BL / 百合カップル section をご覧ください。' },
+      { q: '自分（OC）と推しキャラの二人構図を作りたい場合は？', a: '**LoRA + 二人構図プロンプト**の組み合わせがベスト。手順: (1) 推しキャラの LoRA（pixiv や CivitAI で配布されているもの）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `1original character and 1existing character pair` のように 2 種を明示、(3) OC 側の特徴を自然言語で詳細指定（髪色 / 目色 / 服装 / 体型）。**もう一つの方法**: img2img で「自分の写真 + 推しキャラ LoRA」を入力、Denoising Strength 0.4-0.6 で顔保持しつつイラスト化。トレース素材として使う場合は `trace reference illustration` をプロンプトに追加すると線画寄りに出ます。' },
+      { q: '顔・手の崩壊を防ぐベストプラクティスは？', a: '二人構図は単体生成の 5-10 倍崩壊しやすいので**対策を最初から仕込む**のが鉄則。**顔**: `(detailed face:1.2), (detailed eyes:1.2)` を両キャラ別個に書く + ADetailer 拡張で各キャラの顔を再生成 + 解像度 768x768 以上（512 では崩壊）。**手**: ネガティブに `bad hands, extra fingers, missing fingers, fused fingers` 必須 + Hand Refiner ControlNet 使用 + クローズアップを避け full body shot で手を画面の小さい部分に追い込む。**全身**: ネガティブに `fused bodies, extra arms, extra legs, conjoined twins, merged figures` 追加。これらすべて入れて初回成功率が 30% → 70% に上がります。' },
+      { q: 'Midjourney と Stable Diffusion でカップル構図表現の違いは？', a: '**Midjourney** は narrative（文章）style が得意で「two people walking together in autumn sunlight, romantic mood」のような自然な指示が効く。`--ar 4:5` または `--ar 3:4`（縦長気味）で 2 人を画面に収めやすい。`--style raw` でフォトリアル感が出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能なし。**Stable Diffusion** は重み付け `(holding hands:1.3)` で精密制御 + ControlNet OpenPose で 2 人骨格を完全固定 + danbooru タグ `2girls` `2boys` で人数固定が確実。**結論**: クオリティ重視・カップル写真風 → Midjourney、本格制御 → SD + ControlNet。' },
+      { q: 'ネガティブプロンプトの推奨は？', a: '二人構図向け汎用ネガティブの推奨セット: `bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra arms, extra legs, fused bodies, conjoined twins, merged figures, looking at camera, awkward pose, stiff pose, worst quality, low quality, blurry`。これに加えて目的別追加: **カメラ目線回避**: `looking at camera` / **特定ポーズ強制時の崩壊回避**: ポーズ別 NG ワード（キスシーンで顔崩れ → `distorted face, fused lips`、お姫様抱っこで腕崩壊 → `awkward arm position, broken arms`）。Stable Diffusion なら EasyNegative や bad-hands-5 のような **embedding ネガティブ**も併用すると効果絶大。' },
+      { q: '動的シーン（キス・ハグ）が固くなる / 不自然になる時の対処は？', a: '「動きを表現するワード」を**追加**してください。**キス**: `kissing in motion, gentle leaning forward, soft moment captured` / **ハグ**: `embracing with emotion, gentle squeeze, warm closeness` / **手をつなぐ**: `hands gently intertwined, natural finger interlock`。さらに **動作の質感**ワード（`tender` / `gentle` / `passionate` / `intimate`）を入れると感情が乗る。**カメラ設定**でも改善: `candid moment` / `lifestyle photography` / `documentary style` を加えると「ポーズ撮り」っぽさが消える。Midjourney なら `--style raw` も効果的です。' },
     ],
   },
 }
