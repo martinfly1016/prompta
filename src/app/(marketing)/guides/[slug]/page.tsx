@@ -7,6 +7,7 @@ import { getPromptsByTool } from '@/lib/data'
 import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { CodeBlock } from '@/components/ui/CodeBlock'
 
 export const revalidate = 60
 
@@ -4049,11 +4050,7 @@ export default async function GuidePage({ params }: Props) {
                     {section.content.split('\n\n').map((paragraph, j) => {
                       if (paragraph.startsWith('```')) {
                         const code = paragraph.replace(/```\w*\n?/g, '').trim()
-                        return (
-                          <pre key={j} className="my-4 p-4 bg-gray-900 text-gray-100 rounded-xl text-sm overflow-x-auto">
-                            <code>{code}</code>
-                          </pre>
-                        )
+                        return <CodeBlock key={j} code={code} surface={`guide:${guide.slug}`} />
                       }
                       return (
                         <p key={j} className="mb-4" dangerouslySetInnerHTML={{
