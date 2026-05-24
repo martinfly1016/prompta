@@ -2688,6 +2688,65 @@ woman patting man's head, indoor warm lighting,
 このネガティブを入れないと、SD は学習バイアスから「男が高い」結果に戻りやすいので必須。`,
       },
       {
+        title: '体格差プロンプト — 身長差だけでなく筋肉量・骨格・横幅で差を出す',
+        content: `**身長差**（height difference）と **体格差**（body size / build difference）は混同されがちですが別の概念です：
+
+- **身長差** = 縦方向の差（cm 単位の高さの違い）
+- **体格差** = 縦 + 横の差（筋肉量・骨太さ・横幅・全体ボリューム）
+
+例えば「**190cm の細身モデル × 165cm の細身女性**」は身長差はあるが体格差は小さい。逆に「**180cm の筋肉質ボディビルダー × 175cm の小柄細身女性**」は身長差わずか 5cm でも**体格差は劇的**になります。月間 **2,400 件** の体格差検索需要は、この後者のニーズです。
+
+**1. 筋肉質マッチョ × 小柄細身 — 体格差の王道**
+
+\`\`\`
+1man and 1woman, muscular bodybuilder man around 180cm broad shoulders thick arms,
+petite slim woman around 158cm narrow shoulders delicate frame,
+standing close together, dramatic body size contrast,
+full body shot, (body size difference:1.4), (muscle mass difference:1.3),
+photorealistic illustration
+\`\`\`
+
+**2. ぽっちゃり巨漢 × 細身美女 — ボリューム差**
+
+\`\`\`
+1man and 1woman, large heavy-set man 185cm with broad torso wide build,
+slender elegant woman 165cm slim figure long legs,
+walking side by side, romantic atmosphere, full body shot,
+(body volume contrast:1.4), (build difference:1.3), manga illustration
+\`\`\`
+
+**3. 騎士 × 魔法使い — ファンタジー的極端体格差**
+
+\`\`\`
+1massive armored knight and 1petite robed mage,
+knight 200cm bulky plate armor thick build,
+mage 150cm thin slender body inside oversized robe,
+standing in stone hall, torch lighting, (body size difference:1.5),
+(size contrast:1.4), fantasy concept art, full body shot
+\`\`\`
+
+**4. お兄さん × 妹 — 大人体格 × 子供体格**
+
+\`\`\`
+1adult man and 1child girl, well-built adult brother 180cm,
+small thin elementary school sister 130cm,
+walking together holding hands, autumn park,
+(adult body and child body contrast:1.4), full body shot,
+slice of life illustration
+\`\`\`
+
+**体格差を確実に出す 4 つのコツ**:
+
+1. **「**身長**」と「**体格**」を別キーワードで指定**: \`height difference\` と \`body size difference\` / \`build difference\` / \`muscle mass difference\` を**両方**入れる
+2. **筋肉量を形容詞で明示**: \`muscular\` / \`bulky\` / \`broad-shouldered\` vs \`slim\` / \`slender\` / \`petite frame\`
+3. **横幅を明示**: \`broad torso\` / \`wide build\` vs \`narrow shoulders\` / \`delicate frame\`
+4. **重み付けを身長差と分離**: \`(height difference:1.3), (body size difference:1.4)\` のように 2 つのトークンで重みを別個に乗せる
+
+**ネガティブ推奨**: \`same body type, identical builds, equal body sizes\`
+
+体格差まで描き分けると、ファンタジー / BL / 漫画的演出として一気にプロっぽい絵になります。サンプル: <a href="/prompt/old-man-giant-monster-bodytype-dark" class="text-sky-600 hover:underline">巨漢 × 小柄 ダーク構図</a> / <a href="/prompt/child-robot-bodytype-contrast-wideshot" class="text-sky-600 hover:underline">少女 × ロボット ワイドショット</a>。`,
+      },
+      {
         title: 'ポーズ別 — 身長差を強調する 6 つの定番構図',
         content: `同じカップルでも、ポーズによって身長差の見え方が劇的に変わります。
 
