@@ -104,3 +104,83 @@ export function eyeColorOptions(defaultValue: string): ParamOption[] {
 export function fabricColorOptions(suffix: string, defaultValue: string): ParamOption[] {
   return withDefault(fabricColors(suffix), defaultValue)
 }
+
+// ============================================================
+// Composition-focused options — added 2026-05-24 for BL pair prompts but
+// general enough to reuse on any "two-character composition" surface
+// (carries, hugs, romantic pair, etc.). Each accepts the actual phrase
+// the prompt currently uses as `defaultValue`; the helper makes sure
+// that exact string appears in the option list so the swap stays
+// reversible.
+// ============================================================
+
+const ART_STYLE_BASE: ParamOption[] = [
+  { value: 'anime illustration', label: 'アニメ' },
+  { value: 'slice-of-life anime illustration style', label: 'スライス・オブ・ライフ アニメ' },
+  { value: 'shoujo manga aesthetic', label: '少女漫画' },
+  { value: 'emotional shoujo manga aesthetic', label: '少女漫画（感情系）' },
+  { value: 'shounen anime illustration style', label: '少年漫画' },
+  { value: 'photorealistic illustration', label: 'フォトリアル' },
+  { value: 'fantasy concept art illustration', label: 'ファンタジー コンセプトアート' },
+  { value: 'manga illustration reference', label: '漫画リファレンス' },
+  { value: 'cinematic shoujo manga aesthetic', label: 'シネマ風少女漫画' },
+  { value: 'sophisticated adult BL aesthetic', label: '大人 BL' },
+  { value: 'romantic wedding aesthetic', label: 'ウェディング' },
+  { value: 'modern anime aesthetic', label: 'モダンアニメ' },
+  { value: 'mature adult BL aesthetic', label: '大人 BL（成熟）' },
+  { value: 'romantic summer aesthetic, traditional anime illustration style', label: '夏祭り和風' },
+  { value: 'melancholic youth BL aesthetic', label: '青春メランコリック' },
+  { value: 'dynamic music BL aesthetic', label: 'ミュージック BL' },
+  { value: 'dynamic athletic aesthetic with subtle emotional tension', label: 'スポーツ BL' },
+  { value: 'slice-of-life manga aesthetic', label: 'スライス・オブ・ライフ漫画' },
+]
+
+const LIGHTING_BASE: ParamOption[] = [
+  { value: 'warm indoor lighting', label: '温かい室内光' },
+  { value: 'soft natural light', label: '柔らかい自然光' },
+  { value: 'golden hour', label: 'ゴールデンアワー' },
+  { value: 'golden hour lighting', label: 'ゴールデンアワー（強）' },
+  { value: 'warm rim lighting', label: 'リムライト' },
+  { value: 'soft warm rim lighting from window behind them', label: '窓越しリムライト' },
+  { value: 'dramatic backlight', label: '劇的逆光' },
+  { value: 'dramatic backlight with lens flare', label: '逆光 + フレア' },
+  { value: 'bright clean lighting', label: '明るくクリア' },
+  { value: 'warm afternoon library light', label: '図書館・午後光' },
+  { value: 'warm torch lighting', label: '松明（暖色）' },
+  { value: 'warm evening lighting from a single floor lamp', label: 'フロアランプ夕方' },
+  { value: 'warm indoor evening lighting', label: '夜間室内（暖色）' },
+  { value: 'morning sunlight streaming through window', label: '朝の窓辺' },
+  { value: 'sunlight streaming through the cafe window', label: 'カフェ窓越し陽光' },
+  { value: 'afternoon sunlight through windows', label: '午後の窓辺' },
+  { value: 'wet street reflecting neon shop signs in pinks and blues', label: '雨の街ネオン' },
+  { value: 'stained glass window light casting colorful patterns', label: 'ステンドグラス' },
+  { value: 'dim subway interior lighting', label: '地下鉄薄暗' },
+  { value: 'mysterious blue magical light', label: '青い魔法光' },
+  { value: 'soft melancholic romantic atmosphere', label: 'メランコリー' },
+  { value: 'blinds casting striped lighting', label: 'ブラインド縞光' },
+  { value: 'blinds casting striped light across the scene', label: 'ブラインド縞光（強）' },
+  { value: 'soft warm rim lighting', label: 'リムライト（柔）' },
+]
+
+const EXPRESSION_BL_BASE: ParamOption[] = [
+  { value: 'soft expressions', label: '優しい表情' },
+  { value: 'gentle smiles', label: '優しい微笑み' },
+  { value: 'tender expressions', label: '優美な表情' },
+  { value: 'loving gentle expressions', label: '愛おしい表情' },
+  { value: 'soft warm expressions', label: '柔らかく温かな表情' },
+  { value: 'serious determined expressions', label: '真剣な決意表情' },
+  { value: 'gentle festival smiles', label: '祭りの微笑み' },
+  { value: 'soft loving gazes', label: '愛おしい眼差し' },
+  { value: 'mutually shy smiles', label: '照れた笑み' },
+  { value: 'calm composed expressions', label: '落ち着いた表情' },
+]
+
+export function artStyleOptions(defaultValue: string): ParamOption[] {
+  return withDefault(ART_STYLE_BASE, defaultValue, defaultValue)
+}
+export function lightingOptions(defaultValue: string): ParamOption[] {
+  return withDefault(LIGHTING_BASE, defaultValue, defaultValue)
+}
+export function blExpressionOptions(defaultValue: string): ParamOption[] {
+  return withDefault(EXPRESSION_BL_BASE, defaultValue, defaultValue)
+}
