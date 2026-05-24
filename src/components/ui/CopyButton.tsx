@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { trackPromptCopy } from '@/lib/track'
 
 interface CopyButtonProps {
@@ -11,6 +11,8 @@ interface CopyButtonProps {
   slug?: string
   category?: string | null
   tool?: string | null
+  // Where the copy was triggered. Tracked via GA4 'surface' param for funnel analysis.
+  surface?: string
 }
 
 export function CopyButton({
@@ -21,11 +23,15 @@ export function CopyButton({
   slug,
   category,
   tool,
+  surface,
 }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
-  async function handleCopy() {
-    trackPromptCopy(promptId, { slug, category, tool })
+  async function handleCopy(e?: MouseEvent) {
+    // Allow nesting inside a parent <Link> without navigating away.
+    e?.preventDefault()
+    e?.stopPropagation()
+    trackPromptCopy(promptId, { slug, category, tool, surface })
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)

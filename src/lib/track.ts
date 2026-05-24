@@ -6,6 +6,8 @@ type TrackMeta = {
   slug?: string
   category?: string | null
   tool?: string | null
+  // Where the user triggered the action ('detail', 'tag-card', 'category-card', etc.)
+  surface?: string
 }
 
 declare global {
@@ -23,6 +25,7 @@ function fireGtag(eventName: string, promptId: string | undefined, meta: TrackMe
       prompt_slug: meta.slug,
       prompt_category: meta.category ?? undefined,
       prompt_tool: meta.tool ?? undefined,
+      surface: meta.surface ?? undefined,
     })
   } catch {
     // ignore

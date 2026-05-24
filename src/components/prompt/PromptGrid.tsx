@@ -6,9 +6,18 @@ interface PromptGridProps {
   columns?: 2 | 3 | 4
   /** Number of leading cards whose images get priority (preloaded). */
   priorityCount?: number
+  /** Show inline prompt preview + copy button on each card (e.g. on /tag/[slug]). */
+  showInlinePrompt?: boolean
+  inlinePromptSurface?: string
 }
 
-export function PromptGrid({ prompts, columns = 4, priorityCount = 0 }: PromptGridProps) {
+export function PromptGrid({
+  prompts,
+  columns = 4,
+  priorityCount = 0,
+  showInlinePrompt = false,
+  inlinePromptSurface,
+}: PromptGridProps) {
   const gridCols = {
     2: 'grid-cols-1 sm:grid-cols-2',
     3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
@@ -27,7 +36,13 @@ export function PromptGrid({ prompts, columns = 4, priorityCount = 0 }: PromptGr
   return (
     <div className={`grid ${gridCols[columns]} gap-4 lg:gap-6`}>
       {prompts.map((prompt, i) => (
-        <PromptCard key={prompt.id} prompt={prompt} priority={i < priorityCount} />
+        <PromptCard
+          key={prompt.id}
+          prompt={prompt}
+          priority={i < priorityCount}
+          showInlinePrompt={showInlinePrompt}
+          inlinePromptSurface={inlinePromptSurface}
+        />
       ))}
     </div>
   )

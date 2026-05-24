@@ -2,10 +2,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { NormalizedPrompt } from '@/lib/data'
 import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
+import { CopyButton } from '@/components/ui/CopyButton'
 
 interface PromptCardProps {
   prompt: NormalizedPrompt
   priority?: boolean // true for above-fold images (first 4-8 cards)
+  // When true, render an inline prompt-text preview + copy button on the card.
+  // Used on /tag/[slug] where search intent ("身長差プロンプト") wants the prompt
+  // text itself, not a click-through to detail. surface label is forwarded to GA.
+  showInlinePrompt?: boolean
+  inlinePromptSurface?: string
 }
 
 const NEW_BADGE_WINDOW_MS = 7 * 24 * 60 * 60 * 1000
@@ -13,7 +19,12 @@ const HOT_MIN_VIEWS = 10
 const HOT_MIN_COPY_RATE = 0.2
 const STATS_MIN_VIEWS = 5
 
-export function PromptCard({ prompt, priority = false }: PromptCardProps) {
+export function PromptCard({
+  prompt,
+  priority = false,
+  showInlinePrompt = false,
+  inlinePromptSurface = 'card',
+}: PromptCardProps) {
   // Prefer the After sample on cards so a grid of photo-edit prompts doesn't
   // look identical (the Before would be the same source photo across many
   // prompts). Order: sampleAfterUrl > imageType='effect' > images[0] > text-only.
@@ -95,6 +106,30 @@ export function PromptCard({ prompt, priority = false }: PromptCardProps) {
         <p className="text-xs text-gray-500 line-clamp-2 mb-3">
           {prompt.description}
         </p>
+
+        {/* Inline prompt preview + copy — opt-in for surfaces where users want the
+            prompt text inline (e.g. tag pages serving prompt-seeking SERP queries). */}
+        {showInlinePrompt && (
+          <div className="mb-3 -mx-1">
+            <div className="rounded-lg bg-gray-50 border border-gray-200 p-2.5">
+              <p className="text-[11px] text-gray-700 font-mono leading-snug line-clamp-4 whitespace-pre-wrap break-words">
+                {prompt.content}
+              </p>
+            </div>
+            <div className="mt-2 flex justify-end">
+              <CopyButton
+                text={prompt.content}
+                variant="compact"
+                promptId={prompt.id}
+                slug={prompt.slug}
+                category={prompt.categorySlug}
+                tool={prompt.toolSlug}
+                surface={inlinePromptSurface}
+                className="!py-1 !px-2 !text-xs"
+              />
+            </div>
+          </div>
+        )}
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1 mb-3 mt-auto">

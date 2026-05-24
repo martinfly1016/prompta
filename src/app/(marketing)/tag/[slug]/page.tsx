@@ -9,6 +9,17 @@ import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/sc
 
 export const revalidate = 60
 
+// Category → canonical guide. Used to surface a "詳しい解説ガイド" CTA on tag pages
+// so prompt-seeking visitors who'd rather read context (~11% of /tag/身長差 sessions
+// already do this) get a clear path in addition to the inline prompts.
+const CATEGORY_TO_GUIDE: Record<string, { slug: string; title: string }> = {
+  'hairstyle': { slug: 'hairstyle-prompt-guide', title: '髪型プロンプトの書き方ガイド' },
+  'cosplay':   { slug: 'cosplay-prompt-guide', title: 'コスプレプロンプトの書き方ガイド' },
+  'anime':     { slug: 'anime-prompt-guide', title: 'アニメ風プロンプトの書き方ガイド' },
+  'body-type': { slug: 'body-type-prompt-guide', title: '体型・身長差プロンプトの書き方ガイド' },
+  'color':     { slug: 'color-prompt-guide', title: '色・カラープロンプトの書き方ガイド' },
+}
+
 interface Props {
   params: { slug: string }
   searchParams: { page?: string }
@@ -57,6 +68,7 @@ export default async function TagPage({ params, searchParams }: Props) {
   const relatedTags = primaryCategory
     ? (await getPopularTagsByCategory(primaryCategory.slug, 8)).filter(t => t.slug !== tag).slice(0, 6)
     : []
+  const relatedGuide = primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined
 
   const tagUrl = `${SITE_CONFIG.url}/tag/${params.slug}`
   const collectionSchema = generateCollectionPageSchema(
@@ -83,11 +95,33 @@ export default async function TagPage({ params, searchParams }: Props) {
       </div>
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
+          <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-2"># {tag}</h1>
             <p className="text-gray-500">「{tag}」タグが付いたプロンプト {total}件</p>
           </div>
-          <PromptGrid prompts={prompts} />
+
+          {relatedGuide && page === 1 && (
+            <Link
+              href={`/guides/${relatedGuide.slug}`}
+              className="group flex items-center gap-3 mb-6 p-4 bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-200 rounded-xl hover:border-sky-400 hover:shadow-md transition-all"
+            >
+              <span className="flex-shrink-0 text-2xl">📘</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide mb-0.5">解説ガイド</p>
+                <p className="text-sm font-bold text-gray-900 group-hover:text-sky-700 transition-colors truncate">
+                  {relatedGuide.title}
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5">プロンプトの書き方・使い方を詳しく解説（5分）</p>
+              </div>
+              <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          )}
+
+          <PromptGrid
+            prompts={prompts}
+            showInlinePrompt
+            inlinePromptSurface="tag-card"
+          />
           <Pagination currentPage={page} totalPages={totalPages} basePath={`/tag/${params.slug}`} />
         </div>
       </section>
