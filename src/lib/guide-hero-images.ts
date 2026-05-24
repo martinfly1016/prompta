@@ -403,5 +403,43 @@ export const GUIDE_HERO_IMAGES: Record<string, { url: string; alt: string }[]> =
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/height-diff/section-8-gallery-lCycfFrICJKIn05usQ25dF0Ro7o1x9.jpg",
       "alt": "prompta.jp 身長差プロンプト 15 件の作品例ギャラリー"
     }
+  ],
+  "bl-composition-prompt-guide": [
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-side-by-side-cafe-SMwrOhCYBW3zZo4YtvPHc32FLkrW5R.jpg",
+      "alt": "BL 構図プロンプト入門 — カフェで並び立つ男性 2 人サンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hand-holding-park-l1bIG7uokTFf4Vcti4ORsiDsZ6hZn9.jpg",
+      "alt": "BL 構図 5 要素 — 公園で手をつなぐ二人サンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-princess-carry-rescue-AzHs139eySpKmAWUl63XL7pYHk11Hz.jpg",
+      "alt": "BL ポーズ別 12 例 — お姫様抱っこサンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-business-suit-office-plfESjN3LcKClPA4pngbCZ6NVRueVR.jpg",
+      "alt": "BL シチュエーション別 — オフィス スーツ姿サンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-forehead-touch-private-HvQQhibG5tyAiryVjRNP3kxcPFRSL9.jpg",
+      "alt": "BL 中立表現で SFW のまま親密構図を出すサンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hug-from-behind-qS2cHNskdtQ1GjSIb0E30SYakOoZeV.jpg",
+      "alt": "BL SD / Midjourney / DALL-E ツール別の出しやすさサンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-back-to-back-rivals-4b2QkcPQxoyVOOyuMweOyTIAWyRBvn.jpg",
+      "alt": "BL 構図でよくある失敗と対処法サンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kiss-leaning-down-YGxnDQcVUSu7jZmQcadiG5mMJrRGmA.jpg",
+      "alt": "BL 全英語プロンプト一覧 — 屈んでキスサンプル"
+    },
+    {
+      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-fantasy-knight-mage-NyEmvteVhQvsvvngD40Y6AejjgVNxK.jpg",
+      "alt": "BL 関連ガイド・リソース — ファンタジー 騎士×魔法使いサンプル"
+    }
   ]
 }

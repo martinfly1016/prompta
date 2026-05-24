@@ -3564,6 +3564,8 @@ warm cafe interior, full body shot, three-quarter view,
 warm indoor lighting, (intimate composition:1.2), slice-of-life anime
 \`\`\`
 
+<a href="/prompt/bl-couple-side-by-side-cafe" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-side-by-side-cafe-SMwrOhCYBW3zZo4YtvPHc32FLkrW5R.jpg" alt="BL カフェ並び立ち 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-side-by-side-cafe" class="text-sky-600 hover:underline">BL カフェ並び立ち</a>`,
       },
       {
@@ -3579,6 +3581,8 @@ warm indoor lighting, full body shot, (intimate composition:1.2),
 slice-of-life anime
 \`\`\`
 
+<a href="/prompt/bl-couple-side-by-side-cafe" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-side-by-side-cafe-SMwrOhCYBW3zZo4YtvPHc32FLkrW5R.jpg" alt="BL カフェ並び立ち 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-side-by-side-cafe" class="text-sky-600 hover:underline">BL カフェ並び立ち</a>
 
 **2. 手をつなぐ — 公園散歩**
@@ -3589,6 +3593,8 @@ interlocked, deep emotional bond, soft warm expressions,
 falling autumn leaves, golden hour, side-angle full body shot,
 (hand holding:1.3), (intimate gesture:1.2), anime illustration
 \`\`\`
+
+<a href="/prompt/bl-couple-hand-holding-park" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hand-holding-park-l1bIG7uokTFf4Vcti4ORsiDsZ6hZn9.jpg" alt="BL 公園手つなぎ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-hand-holding-park" class="text-sky-600 hover:underline">BL 公園手つなぎ</a>
 
@@ -3601,6 +3607,8 @@ home outfits, warm indoor evening lighting, close intimate shot,
 (back hug pose:1.4), (intimate composition:1.3)
 \`\`\`
 
+<a href="/prompt/bl-couple-hug-from-behind" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hug-from-behind-qS2cHNskdtQ1GjSIb0E30SYakOoZeV.jpg" alt="BL 後ろからハグ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>
 
 **4. お姫様抱っこ — ファンタジー**
@@ -3611,6 +3619,8 @@ lighter character 165cm in arms, lighter with arm around taller's
 neck, both looking softly, fantasy castle hall warm torch light,
 (princess carry pose:1.4), (height difference:1.3), shoujo manga
 \`\`\`
+
+<a href="/prompt/bl-couple-princess-carry-rescue" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-princess-carry-rescue-AzHs139eySpKmAWUl63XL7pYHk11Hz.jpg" alt="BL お姫様抱っこ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-princess-carry-rescue" class="text-sky-600 hover:underline">BL お姫様抱っこ</a>
 
@@ -3623,6 +3633,8 @@ dark school uniforms, low camera angle, (kabe-don pose:1.4),
 (tension atmosphere:1.3), shoujo manga emotional
 \`\`\`
 
+<a href="/prompt/bl-couple-kabedon-school" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kabedon-school-OwIsUiLzzUi8D303vom3wNAprN6Ioa.jpg" alt="BL 学校壁ドン 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL 学校壁ドン</a>
 
 **6. キス — 屈むキス**
@@ -3633,6 +3645,8 @@ shorter 168cm on tiptoe with eyes closed, side-view profile shot,
 warm rim lighting from sunset window, (kiss scene:1.4),
 (height difference:1.3), shoujo manga aesthetic
 \`\`\`
+
+<a href="/prompt/bl-couple-kiss-leaning-down" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kiss-leaning-down-YGxnDQcVUSu7jZmQcadiG5mMJrRGmA.jpg" alt="BL 屈んでキス 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-kiss-leaning-down" class="text-sky-600 hover:underline">BL 屈んでキス</a>
 
@@ -3645,6 +3659,8 @@ down gently protective, close mid-shot slight low angle, library
 background, (looking up composition:1.4), emotional shoujo manga
 \`\`\`
 
+<a href="/prompt/bl-couple-looking-up-tension" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-looking-up-tension-HaZCDqTFpLHXU9T2np94Tk4we6SQrT.jpg" alt="BL 見上げる対面 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-looking-up-tension" class="text-sky-600 hover:underline">BL 見上げる対面</a>
 
 **8. 額をつける — 親密シーン**
@@ -3655,6 +3671,8 @@ expressions, hands on each other's shoulders, close intimate
 three-quarter shot, soft warm rim lighting from window,
 (forehead touch:1.4), (emotional intimacy:1.3), shoujo manga
 \`\`\`
+
+<a href="/prompt/bl-couple-forehead-touch-private" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-forehead-touch-private-HvQQhibG5tyAiryVjRNP3kxcPFRSL9.jpg" alt="BL 額をつける親密 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-forehead-touch-private" class="text-sky-600 hover:underline">BL 額をつける親密</a>
 
@@ -3685,6 +3703,8 @@ striped lighting, mature composed expressions, quiet emotional
 tension between them, sophisticated adult BL aesthetic
 \`\`\`
 
+<a href="/prompt/bl-couple-business-suit-office" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-business-suit-office-plfESjN3LcKClPA4pngbCZ6NVRueVR.jpg" alt="オフィス BL スーツ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">オフィス BL スーツ</a>
 
 **ファンタジー BL** — 中世 / 異世界
@@ -3695,6 +3715,8 @@ in robes / two warriors / royal and guard pair, ancient hall or
 forest, magical lighting, fantasy concept art illustration
 \`\`\`
 
+<a href="/prompt/bl-couple-fantasy-knight-mage" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-fantasy-knight-mage-NyEmvteVhQvsvvngD40Y6AejjgVNxK.jpg" alt="BL 騎士×魔法使い 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+
 → サンプル: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>
 
 **現代日常 BL** — カフェ / 自宅 / 街中
@@ -3704,6 +3726,8 @@ forest, magical lighting, fantasy concept art illustration
 city street, natural lighting, slice-of-life moment, soft
 intimate atmosphere, anime daily life aesthetic
 \`\`\`
+
+<a href="/prompt/bl-couple-shoulder-lean-cafe" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-shoulder-lean-cafe-KzbzWWAStDh4OxfMBAww3vIm5yLBeX.jpg" alt="カフェ肩寄り 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-shoulder-lean-cafe" class="text-sky-600 hover:underline">カフェ肩寄り</a>
 
