@@ -54,30 +54,38 @@ import { config as c48 } from './configs/elegant-dress-woman'
 import { config as c49 } from './configs/fantasy-swordswoman-confident'
 import { config as c50 } from './configs/formal-evening-gown-sx9u'
 import { config as c51 } from './configs/hatsune-miku-ink-wash-japanese'
-import { config as c52 } from './configs/impressionist-anime-fox-girl-fantasy'
-import { config as c53 } from './configs/large-flowers-coloring-page-seniors'
-import { config as c54 } from './configs/mandala-floral-coloring-page-adults'
-import { config as c55 } from './configs/monochrome-theme-14'
-import { config as c56 } from './configs/neon-futuristic-cityscape-aerial'
-import { config as c57 } from './configs/old-man-giant-baby-monster-bodytype'
-import { config as c58 } from './configs/red-cocktail-dress-elegant'
-import { config as c59 } from './configs/red-hair-business-suit-portrait'
-import { config as c60 } from './configs/rose-bouquet-coloring-page-adults'
-import { config as c61 } from './configs/sailor-uniform-pleated-skirt'
-import { config as c62 } from './configs/school-uniform-pleated-skirt'
-import { config as c63 } from './configs/sea-animals-coloring-page-kids'
-import { config as c64 } from './configs/slender-crop-top-elegant-confident'
-import { config as c65 } from './configs/slender-cropped-triangle-pose-grace'
-import { config as c66 } from './configs/slim-glamor-portrait-classic'
-import { config as c67 } from './configs/slim-pain-expression-glamor-tragic'
-import { config as c68 } from './configs/straight-long-black-hair-glossy'
-import { config as c69 } from './configs/twintail-blonde-sailor-outfit'
-import { config as c70 } from './configs/untied-necktie-uniform-girl'
-import { config as c71 } from './configs/vibrant-palette-8'
-import { config as c72 } from './configs/watercolor-anime-winter-scene'
-import { config as c73 } from './configs/white-cat-reading-cozy-nook'
-import { config as c74 } from './configs/white-hair-paladin-sword'
-import { config as c75 } from './configs/witch-library-grey-hair-elegant'
+import { config as c52 } from './configs/height-diff-bl-couple-tall-short'
+import { config as c53 } from './configs/height-diff-couple-kabedon-looking-up'
+import { config as c54 } from './configs/height-diff-fantasy-knight-mage'
+import { config as c55 } from './configs/height-diff-hetero-couple-classic'
+import { config as c56 } from './configs/height-diff-hug-tall-embracing-short'
+import { config as c57 } from './configs/height-diff-mecha-pilot-android'
+import { config as c58 } from './configs/height-diff-siblings-brother-sister'
+import { config as c59 } from './configs/height-diff-trio-mixed-heights'
+import { config as c60 } from './configs/impressionist-anime-fox-girl-fantasy'
+import { config as c61 } from './configs/large-flowers-coloring-page-seniors'
+import { config as c62 } from './configs/mandala-floral-coloring-page-adults'
+import { config as c63 } from './configs/monochrome-theme-14'
+import { config as c64 } from './configs/neon-futuristic-cityscape-aerial'
+import { config as c65 } from './configs/old-man-giant-baby-monster-bodytype'
+import { config as c66 } from './configs/red-cocktail-dress-elegant'
+import { config as c67 } from './configs/red-hair-business-suit-portrait'
+import { config as c68 } from './configs/rose-bouquet-coloring-page-adults'
+import { config as c69 } from './configs/sailor-uniform-pleated-skirt'
+import { config as c70 } from './configs/school-uniform-pleated-skirt'
+import { config as c71 } from './configs/sea-animals-coloring-page-kids'
+import { config as c72 } from './configs/slender-crop-top-elegant-confident'
+import { config as c73 } from './configs/slender-cropped-triangle-pose-grace'
+import { config as c74 } from './configs/slim-glamor-portrait-classic'
+import { config as c75 } from './configs/slim-pain-expression-glamor-tragic'
+import { config as c76 } from './configs/straight-long-black-hair-glossy'
+import { config as c77 } from './configs/twintail-blonde-sailor-outfit'
+import { config as c78 } from './configs/untied-necktie-uniform-girl'
+import { config as c79 } from './configs/vibrant-palette-8'
+import { config as c80 } from './configs/watercolor-anime-winter-scene'
+import { config as c81 } from './configs/white-cat-reading-cozy-nook'
+import { config as c82 } from './configs/white-hair-paladin-sword'
+import { config as c83 } from './configs/witch-library-grey-hair-elegant'
 
 export const ALL_CONFIGS: Record<string, PromptParamsConfig> = {
   'afro-tribal-artistic-hairstyle': c0,
@@ -132,28 +140,36 @@ export const ALL_CONFIGS: Record<string, PromptParamsConfig> = {
   'fantasy-swordswoman-confident': c49,
   'formal-evening-gown-sx9u': c50,
   'hatsune-miku-ink-wash-japanese': c51,
-  'impressionist-anime-fox-girl-fantasy': c52,
-  'large-flowers-coloring-page-seniors': c53,
-  'mandala-floral-coloring-page-adults': c54,
-  'monochrome-theme-14': c55,
-  'neon-futuristic-cityscape-aerial': c56,
-  'old-man-giant-baby-monster-bodytype': c57,
-  'red-cocktail-dress-elegant': c58,
-  'red-hair-business-suit-portrait': c59,
-  'rose-bouquet-coloring-page-adults': c60,
-  'sailor-uniform-pleated-skirt': c61,
-  'school-uniform-pleated-skirt': c62,
-  'sea-animals-coloring-page-kids': c63,
-  'slender-crop-top-elegant-confident': c64,
-  'slender-cropped-triangle-pose-grace': c65,
-  'slim-glamor-portrait-classic': c66,
-  'slim-pain-expression-glamor-tragic': c67,
-  'straight-long-black-hair-glossy': c68,
-  'twintail-blonde-sailor-outfit': c69,
-  'untied-necktie-uniform-girl': c70,
-  'vibrant-palette-8': c71,
-  'watercolor-anime-winter-scene': c72,
-  'white-cat-reading-cozy-nook': c73,
-  'white-hair-paladin-sword': c74,
-  'witch-library-grey-hair-elegant': c75,
+  'height-diff-bl-couple-tall-short': c52,
+  'height-diff-couple-kabedon-looking-up': c53,
+  'height-diff-fantasy-knight-mage': c54,
+  'height-diff-hetero-couple-classic': c55,
+  'height-diff-hug-tall-embracing-short': c56,
+  'height-diff-mecha-pilot-android': c57,
+  'height-diff-siblings-brother-sister': c58,
+  'height-diff-trio-mixed-heights': c59,
+  'impressionist-anime-fox-girl-fantasy': c60,
+  'large-flowers-coloring-page-seniors': c61,
+  'mandala-floral-coloring-page-adults': c62,
+  'monochrome-theme-14': c63,
+  'neon-futuristic-cityscape-aerial': c64,
+  'old-man-giant-baby-monster-bodytype': c65,
+  'red-cocktail-dress-elegant': c66,
+  'red-hair-business-suit-portrait': c67,
+  'rose-bouquet-coloring-page-adults': c68,
+  'sailor-uniform-pleated-skirt': c69,
+  'school-uniform-pleated-skirt': c70,
+  'sea-animals-coloring-page-kids': c71,
+  'slender-crop-top-elegant-confident': c72,
+  'slender-cropped-triangle-pose-grace': c73,
+  'slim-glamor-portrait-classic': c74,
+  'slim-pain-expression-glamor-tragic': c75,
+  'straight-long-black-hair-glossy': c76,
+  'twintail-blonde-sailor-outfit': c77,
+  'untied-necktie-uniform-girl': c78,
+  'vibrant-palette-8': c79,
+  'watercolor-anime-winter-scene': c80,
+  'white-cat-reading-cozy-nook': c81,
+  'white-hair-paladin-sword': c82,
+  'witch-library-grey-hair-elegant': c83,
 }
