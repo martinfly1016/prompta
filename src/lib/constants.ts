@@ -722,6 +722,14 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'カップル ポーズ',
     monthlySearchVolume: 1900,
   },
+  {
+    slug: 'bl-composition-prompt-guide',
+    title: 'BL カップル構図のAIプロンプト完全ガイド — 二人の関係性を 8 ポーズ × 12 シーンで描き分ける',
+    description:
+      'BL（男性 2 人）カップル構図を AI で描く完全ガイド。並び立ち・手をつなぐ・ハグ・お姫様抱っこ・壁ドン・見上げる・キス・額をつける 8 ポーズ × 学園 / カフェ / オフィス / ファンタジー 12 シチュエーション、Stable Diffusion / Midjourney / DALL-E 対応、NSFW フィルター回避の中立表現、全英語プロンプト一覧、実例サンプル画像つき。',
+    targetKeyword: 'bl 構図',
+    monthlySearchVolume: 8100,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -785,6 +793,10 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'two-person-composition-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['anime', 'body-type', 'clothing', 'cosplay'],
+  },
+  'bl-composition-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['anime', 'body-type', 'clothing'],
   },
 }
 

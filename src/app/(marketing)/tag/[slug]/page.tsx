@@ -16,6 +16,14 @@ export const revalidate = 60
 const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   '身長差': { slug: 'height-difference-pair-prompt', title: '身長差プロンプト完全ガイド｜二人の身長差を確実に描く' },
   '体格差': { slug: 'height-difference-pair-prompt', title: '身長差・体格差プロンプト完全ガイド' },
+  'BL': { slug: 'bl-composition-prompt-guide', title: 'BL カップル構図のAIプロンプト完全ガイド' },
+  '二人構図': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
+  'カップル': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
+  '壁ドン': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
+  'キス': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
+  'ハグ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
+  'お姫様抱っこ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜お姫様抱っこ・キス構図' },
+  '見上げる': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜見上げる構図' },
 }
 
 // Category → canonical guide fallback. Used to surface a "詳しい解説ガイド" CTA

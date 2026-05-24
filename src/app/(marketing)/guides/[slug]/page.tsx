@@ -3484,6 +3484,7 @@ worst quality, low quality, blurry
         content: `**深掘りガイド**:
 
 - <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a> — 二人構図の中でも身長差・体格差を意図的にコントロールする専門ガイド
+- <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL カップル構図のAIプロンプト完全ガイド</a> — 男性 2 人の構図に特化、12 件サンプル画像つき + NSFW 回避テクニック
 - <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — 個別キャラの体型（curvy / muscular / slim 等）
 - <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — 特定 IP キャラ衣装の再現
 - <a href="/guides/anime-prompt-guide" class="text-sky-600 hover:underline">アニメ風プロンプトガイド</a> — アニメスタイルの強化
@@ -3513,6 +3514,404 @@ worst quality, low quality, blurry
       { q: 'Midjourney と Stable Diffusion でカップル構図表現の違いは？', a: '**Midjourney** は narrative（文章）style が得意で「two people walking together in autumn sunlight, romantic mood」のような自然な指示が効く。`--ar 4:5` または `--ar 3:4`（縦長気味）で 2 人を画面に収めやすい。`--style raw` でフォトリアル感が出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能なし。**Stable Diffusion** は重み付け `(holding hands:1.3)` で精密制御 + ControlNet OpenPose で 2 人骨格を完全固定 + danbooru タグ `2girls` `2boys` で人数固定が確実。**結論**: クオリティ重視・カップル写真風 → Midjourney、本格制御 → SD + ControlNet。' },
       { q: 'ネガティブプロンプトの推奨は？', a: '二人構図向け汎用ネガティブの推奨セット: `bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra arms, extra legs, fused bodies, conjoined twins, merged figures, looking at camera, awkward pose, stiff pose, worst quality, low quality, blurry`。これに加えて目的別追加: **カメラ目線回避**: `looking at camera` / **特定ポーズ強制時の崩壊回避**: ポーズ別 NG ワード（キスシーンで顔崩れ → `distorted face, fused lips`、お姫様抱っこで腕崩壊 → `awkward arm position, broken arms`）。Stable Diffusion なら EasyNegative や bad-hands-5 のような **embedding ネガティブ**も併用すると効果絶大。' },
       { q: '動的シーン（キス・ハグ）が固くなる / 不自然になる時の対処は？', a: '「動きを表現するワード」を**追加**してください。**キス**: `kissing in motion, gentle leaning forward, soft moment captured` / **ハグ**: `embracing with emotion, gentle squeeze, warm closeness` / **手をつなぐ**: `hands gently intertwined, natural finger interlock`。さらに **動作の質感**ワード（`tender` / `gentle` / `passionate` / `intimate`）を入れると感情が乗る。**カメラ設定**でも改善: `candid moment` / `lifestyle photography` / `documentary style` を加えると「ポーズ撮り」っぽさが消える。Midjourney なら `--style raw` も効果的です。' },
+    ],
+  },
+  'bl-composition-prompt-guide': {
+    sections: [
+      {
+        title: 'BL 構図プロンプトとは — 男性 2 人のイラストを AI で描く時の必須技術',
+        content: `**BL 構図プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**男性 2 人の関係性ある二人構図**」を意図的に描かせる指示文です。
+
+BL イラストは「ただ男性 2 人を並べただけ」では成立しません。視線の交差、距離感、ポーズ、表情、シチュエーション — これらすべての要素を**プロンプトで明示**しないと、AI は単なる「友達 2 人」「同僚 2 人」を描いて関係性が伝わらない絵にしてしまいます。
+
+**こんな人におすすめ**:
+
+- 推し BL カップルのファンアートを AI で量産したい
+- BL 漫画・同人誌の構図参考素材を作りたい
+- オリキャラ BL ペアの設定資料を作りたい
+- BL イラストレーターとして AI を補助ツールに使いたい
+- 二次創作 BL コラージュ・グッズの下書きを作りたい
+
+**本ガイドで扱う 8 ポーズ × 12 シチュエーション** = 96 通りの BL 構図テンプレートを内包。すべてサイト内 SDXL 実例サンプルつき。
+
+実例 prompt 集は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> に 12 件公開、各ページの「🚀 ここで試す」からサイト内で実行可能（5 ポイント / 回、新規 3 ポイント無料）。`,
+      },
+      {
+        title: 'BL 構図プロンプトを構成する 5 要素',
+        content: `効果的な BL 構図プロンプトは以下 5 要素の組み合わせです：
+
+1. **人数指定（必須）** — \`2boys\` / \`1boy and 1boy\` / \`two male characters\` で**必ず男性 2 人**を明示
+2. **関係性ワード** — \`close friends with romantic tension\` / \`emotional bond between two men\` / \`intimate male pair\` — **「BL」字面語を直接使わない**のがコツ（NSFW フィルター回避）
+3. **ポーズ・接触** — \`standing close together\` / \`hand on shoulder\` / \`leaning down\` / \`embracing\` などで身体的距離を制御
+4. **視線** — \`looking at each other\` / \`gentle eye contact\` / \`looking up softly\` — 感情を伝える最強の要素
+5. **カメラアングル** — \`three-quarter view\` / \`low angle\` / \`close intimate shot\` — シーンの劇的さを調整
+
+**基本テンプレート**（コピペ用）:
+
+\`\`\`
+2boys, {relationship}, {pose}, {gaze description},
+{outfit / setting}, full body shot, (intimate composition:1.2),
+(masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+**実例（カフェで並び立ち）**:
+
+\`\`\`
+2boys, close friends with emotional bond, standing side by side,
+soft eye contact toward each other, casual modern outfits in earth tones,
+warm cafe interior, full body shot, three-quarter view,
+warm indoor lighting, (intimate composition:1.2), slice-of-life anime
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-side-by-side-cafe" class="text-sky-600 hover:underline">BL カフェ並び立ち</a>`,
+      },
+      {
+        title: 'ポーズ別 8 種 — コピペできる BL 構図プロンプト 12 例',
+        content: `すぐ使える BL 二人構図 12 件を 8 ポーズ別に整理。各サンプル画像は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> から確認できます。
+
+**1. 並び立ち — カフェシーン（基礎）**
+
+\`\`\`
+2boys, close friends with emotional bond, standing side by side
+in warm cafe interior, soft eye contact, casual modern outfits,
+warm indoor lighting, full body shot, (intimate composition:1.2),
+slice-of-life anime
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-side-by-side-cafe" class="text-sky-600 hover:underline">BL カフェ並び立ち</a>
+
+**2. 手をつなぐ — 公園散歩**
+
+\`\`\`
+2boys, walking through autumn park gently holding hands fingers
+interlocked, deep emotional bond, soft warm expressions,
+falling autumn leaves, golden hour, side-angle full body shot,
+(hand holding:1.3), (intimate gesture:1.2), anime illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-hand-holding-park" class="text-sky-600 hover:underline">BL 公園手つなぎ</a>
+
+**3. ハグ — 後ろからの抱きしめ**
+
+\`\`\`
+2boys, back-hug pose, taller character 185cm embracing shorter
+168cm from behind, shorter leaning back with closed eyes soft smile,
+home outfits, warm indoor evening lighting, close intimate shot,
+(back hug pose:1.4), (intimate composition:1.3)
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>
+
+**4. お姫様抱っこ — ファンタジー**
+
+\`\`\`
+2boys, princess carry pose, taller stronger character 190cm holding
+lighter character 165cm in arms, lighter with arm around taller's
+neck, both looking softly, fantasy castle hall warm torch light,
+(princess carry pose:1.4), (height difference:1.3), shoujo manga
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-princess-carry-rescue" class="text-sky-600 hover:underline">BL お姫様抱っこ</a>
+
+**5. 壁ドン — 学校廊下**
+
+\`\`\`
+2boys, kabe-don pose in sunlit school hallway, taller 185cm hand on
+wall above shorter 168cm's shoulder, shorter looking up flushed,
+dark school uniforms, low camera angle, (kabe-don pose:1.4),
+(tension atmosphere:1.3), shoujo manga emotional
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL 学校壁ドン</a>
+
+**6. キス — 屈むキス**
+
+\`\`\`
+2boys, romantic kiss scene, taller 188cm leaning down to kiss
+shorter 168cm on tiptoe with eyes closed, side-view profile shot,
+warm rim lighting from sunset window, (kiss scene:1.4),
+(height difference:1.3), shoujo manga aesthetic
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-kiss-leaning-down" class="text-sky-600 hover:underline">BL 屈んでキス</a>
+
+**7. 見上げる × 見下ろす — 視線対面**
+
+\`\`\`
+2boys, standing close facing each other, shorter 168cm looking up
+at taller 188cm with soft questioning expression, taller looking
+down gently protective, close mid-shot slight low angle, library
+background, (looking up composition:1.4), emotional shoujo manga
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-looking-up-tension" class="text-sky-600 hover:underline">BL 見上げる対面</a>
+
+**8. 額をつける — 親密シーン**
+
+\`\`\`
+2boys, foreheads gently touching, both eyes softly closed tender
+expressions, hands on each other's shoulders, close intimate
+three-quarter shot, soft warm rim lighting from window,
+(forehead touch:1.4), (emotional intimacy:1.3), shoujo manga
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-forehead-touch-private" class="text-sky-600 hover:underline">BL 額をつける親密</a>
+
+**応用シーン**:
+
+- **背中合わせ（ライバル感）** → <a href="/prompt/bl-couple-back-to-back-rivals" class="text-sky-600 hover:underline">BL バディ背中合わせ</a>
+- **肩寄り（カフェ日常）** → <a href="/prompt/bl-couple-shoulder-lean-cafe" class="text-sky-600 hover:underline">BL カフェ肩寄り</a>
+- **大人 BL（オフィス スーツ）** → <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィススーツ</a>
+- **ファンタジー（騎士×魔法使い）** → <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>`,
+      },
+      {
+        title: 'シチュエーション別 — 背景・服装で関係性を強化する',
+        content: `同じポーズでも、シチュエーション（背景・服装）を変えるだけで全く違う物語になります。
+
+**学園 BL** — 制服 × 教室 / 廊下 / 部活
+
+\`\`\`
+2boys in dark school uniforms, classroom or hallway setting,
+afternoon sunlight through windows, slice-of-life youth aesthetic,
+sakura petals optional, anime style
+\`\`\`
+
+**大人 BL（オフィス / スーツ）** — ビジネス系の落ち着いた緊張感
+
+\`\`\`
+2boys in business suits, modern office interior, blinds with
+striped lighting, mature composed expressions, quiet emotional
+tension between them, sophisticated adult BL aesthetic
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">オフィス BL スーツ</a>
+
+**ファンタジー BL** — 中世 / 異世界
+
+\`\`\`
+2boys in medieval fantasy setting, knight in plate armor + mage
+in robes / two warriors / royal and guard pair, ancient hall or
+forest, magical lighting, fantasy concept art illustration
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>
+
+**現代日常 BL** — カフェ / 自宅 / 街中
+
+\`\`\`
+2boys in casual modern outfits, warm cafe / cozy apartment /
+city street, natural lighting, slice-of-life moment, soft
+intimate atmosphere, anime daily life aesthetic
+\`\`\`
+
+→ サンプル: <a href="/prompt/bl-couple-shoulder-lean-cafe" class="text-sky-600 hover:underline">カフェ肩寄り</a>
+
+**サイバーパンク BL** — 未来都市 / ネオン
+
+\`\`\`
+2boys in futuristic outfits with neon accents, cyberpunk city
+with rain reflections, holographic ads, dramatic backlight,
+sci-fi BL illustration
+\`\`\`
+
+**ダーク BL** — 不穏 / ノワール
+
+\`\`\`
+2boys, mature serious atmosphere, dark interior with strong
+shadows, contrast lighting, noir aesthetic, mysterious tension
+between characters
+\`\`\``,
+      },
+      {
+        title: 'NSFW フィルター回避 — 中立表現で SFW のまま BL 構図を出す',
+        content: `Stable Diffusion / Midjourney / DALL-E はいずれも**安全フィルター**を持っており、「BL」「yaoi」「gay couple」「boys love」などの**直接的なジャンル名や明示的な恋愛表現は警告されたり結果が劣化**する場合があります。
+
+**回避策**: 関係性は**中立的な英語表現**で書く。
+
+| 避けたい表現 | 代替表現（推奨） |
+|---|---|
+| \`BL couple\` / \`yaoi\` | \`close friends with romantic tension\` / \`emotional bond between two men\` |
+| \`gay couple\` | \`intimate male pair\` / \`deeply bonded duo\` |
+| \`boyfriends\` | \`close companions\` / \`partners\` |
+| \`attracted to each other\` | \`with quiet emotional connection\` |
+| \`攻め × 受け\` | \`taller protective character + shorter gentle character\` |
+| \`top × bottom\` | \`dominant figure + softer figure\` |
+
+**ポイント**: ポーズや視線で関係性を表現すれば、明示語なしでも BL らしい絵が出ます。
+
+**実例**: 「kiss scene」だけだと NSFW 判定されやすいが、「**soft kiss with eyes closed, tender expression, shoujo manga aesthetic**」と書けば抒情シーンとして許容されることが多い。
+
+**SD（ローカル / NSFW モデル使用時）**: フィルター気にせず BL 用語を直接使える。ただし danbooru タグ \`yaoi\` は学習データ依存で結果が荒くなりがちなので、本ガイドの中立表現でも OK。
+
+**DALL-E 3 で注意**: 「2 boys kissing」のような直接表現は厳しい。「two close friends sharing a quiet moment with their foreheads touching」のような言い換えで通る場合が多い。
+
+**ネガティブプロンプト推奨**:
+
+\`\`\`
+explicit content, nudity, suggestive pose, worst quality, low quality
+\`\`\`
+
+これを入れておくと安全側に振れ、SFW で BL 構図を量産できます。`,
+      },
+      {
+        title: 'ツール別の BL 構図の出しやすさ — SD / Midjourney / DALL-E 比較',
+        content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
+
+- **強み**: \`2boys\` の danbooru タグで男性 2 人を確実に固定、ControlNet OpenPose で 2 人骨格を完全制御、重み付けで関係性ワードを強調可能、anime BL モデル（\`AnythingV5\` / \`Counterfeit\` / \`Anim4gine\`）が豊富
+- **弱み**: 二人構図で顔・手の崩壊率が高い、男性同士なのに女性化することがある（特に SDXL 系）
+- **対策**: \`2boys, male only, no women\` をプロンプトに明示 + ネガティブに \`1girl, woman, female\` 追加 + ADetailer で顔再生成 + 解像度 768x768 以上
+- **推奨モデル**: \`Anim4gine\` / \`MeinaMix\` / \`Counterfeit V3\` / \`Anything V5\` / SDXL なら \`Animagine XL\`
+
+**Midjourney（推奨度: ⭐⭐）**
+
+- **強み**: narrative プロンプト（文章）で関係性を理解、構図センス秀逸、フォトリアル BL も得意
+- **弱み**: 重み付け制御が SD ほど精密でない、ControlNet 相当なし、人数固定が緩い（2 人指定しても 1 人や 3 人になることがある）
+- **コツ**: \`--ar 4:5\` または \`--ar 3:4\` で 2 人を画面に収めやすい、\`--style raw\` でフォトリアル寄り、Niji 6 で anime BL に強い
+
+**DALL-E 3（推奨度: ⭐）**
+
+- **強み**: 自然言語の理解力が高く、「優しく見つめ合う 2 人の男性キャラクター」のような日本語指示が効く
+- **弱み**: BL コンテンツに対する安全フィルターが**最も厳格**、結果がアニメっぽくなりにくい、構図制御は弱い
+- **コツ**: 「close-up portrait of two male anime characters sharing a quiet moment」のように**穏やかな表現**から入る、ChatGPT 経由で「リテイク」しやすい
+
+**おすすめワークフロー**:
+
+1. **本格的に BL イラストを量産** → Stable Diffusion + anime BL モデル + ControlNet
+2. **クオリティ重視 / アート性** → Midjourney + Niji 6
+3. **気軽に試したい** → DALL-E 3（Bing Image Creator 無料）
+
+prompta.jp の BL 構図 12 prompt は **SDXL（fal.ai fast-sdxl）ベースで動作確認済み**、すべて 1024×1024 サンプル付き。<a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> 各ページの「🚀 ここで試す」でサイト内実行可能（5 ポイント / 回）。`,
+      },
+      {
+        title: 'よくある失敗と対処法 — BL 構図特有の崩壊パターン',
+        content: `BL 構図は **「男性 2 人」+「親密ポーズ」**という条件のため、二人構図の中でも特に崩壊しやすいジャンルです。
+
+**問題 1: 片方または両方が女性化してしまう（SDXL あるある）**
+
+- **対処**: \`2boys, male only, both characters are male, masculine features\` を**前半に**配置
+- **対処**: ネガティブに \`1girl, woman, female, feminine, breasts\` 必須
+- **対処**: 体型ワード（\`broad shoulders\`, \`flat chest\`, \`adam's apple\`）で性別を補強
+
+**問題 2: 顔が両方崩れる**
+
+- **対処**: \`(detailed face:1.2), (detailed eyes:1.2)\` を両キャラ別個に書く
+- **対処**: ADetailer で各キャラの顔を独立に再生成（A1111 拡張）
+- **対処**: 解像度 768x768 以上必須（512 では二人構図が壊滅）
+
+**問題 3: 手が崩壊（接触ポーズで頻発）**
+
+- **対処**: ネガティブに \`bad hands, extra fingers, missing fingers, fused fingers\` 必須
+- **対処**: Hand Refiner ControlNet 使用
+- **対処**: 手を画面の小さい部分に追い込む（full body shot 推奨）
+
+**問題 4: 体が融合する / 余分な腕・脚**
+
+- **対処**: ネガティブに \`fused bodies, extra arms, extra legs, conjoined twins, merged figures\` 必須
+- **対処**: ControlNet OpenPose で 2 人骨格を別個に指定（参考画像を Pinterest BL pose 等から）
+
+**問題 5: NSFW フィルターでブロックされる**
+
+- **対処**: 本ガイド「NSFW 回避」section の**中立表現**に置き換える
+- **対処**: ネガティブに \`explicit content, nudity, suggestive pose\` 追加
+- **対処**: シチュエーションを「日常」「カフェ」「学園」など穏やかなものから始める
+
+**問題 6: 関係性が伝わらない（ただの男性 2 人）**
+
+- **対処**: \`emotional bond\` / \`romantic tension\` / \`intimate composition\` を重み付け 1.2-1.3
+- **対処**: 視線・表情ワードを必ず入れる（\`looking at each other softly\`）
+- **対処**: 物理的距離を近く（\`standing close together\` / \`shoulders touching\`）
+
+**汎用ネガティブプロンプト（BL 構図向け）**:
+
+\`\`\`
+1girl, woman, female, feminine, breasts,
+bad anatomy, bad hands, extra fingers, missing fingers, fused fingers,
+extra arms, extra legs, fused bodies, conjoined twins, merged figures,
+explicit content, nudity, suggestive pose,
+looking at camera, awkward pose, stiff pose,
+worst quality, low quality, blurry
+\`\`\``,
+      },
+      {
+        title: '全英語プロンプト一覧 — 12 件コピペ用クイック索引',
+        content: `本ガイドで紹介した **12 件の BL 構図プロンプト（英語版）** を 1 ヶ所に集約。Stable Diffusion / Midjourney / DALL-E どのツールでもそのまま貼り付けて使えます。
+
+**■ 8 ポーズ別**
+
+**1. カフェ並び立ち**: \`2boys, close friends with emotional bond, standing side by side in warm cafe, soft eye contact, casual modern outfits, full body shot, three-quarter view, (intimate composition:1.2), slice-of-life anime\`
+
+**2. 公園手つなぎ**: \`2boys, walking through autumn park gently holding hands fingers interlocked, deep emotional bond, soft warm expressions, falling autumn leaves, golden hour, side-angle full body shot, (hand holding:1.3), (intimate gesture:1.2)\`
+
+**3. 後ろからハグ**: \`2boys, back-hug pose, taller 185cm embracing shorter 168cm from behind, shorter leaning back closed eyes soft smile, home outfits, warm indoor evening lighting, close intimate shot, (back hug pose:1.4), (intimate composition:1.3)\`
+
+**4. お姫様抱っこ**: \`2boys, princess carry, taller 190cm holding lighter 165cm in arms, lighter with arm around taller's neck, fantasy castle hall warm torch light, (princess carry pose:1.4), (height difference:1.3), shoujo manga\`
+
+**5. 学校壁ドン**: \`2boys, kabe-don pose in sunlit school hallway, taller 185cm hand on wall above shorter's shoulder, shorter looking up flushed, dark school uniforms, low camera angle, (kabe-don pose:1.4), (tension atmosphere:1.3)\`
+
+**6. 屈んでキス**: \`2boys, romantic kiss scene, taller 188cm leaning down to kiss shorter 168cm on tiptoe eyes closed, side-view profile, warm rim lighting from sunset window, (kiss scene:1.4), (height difference:1.3), shoujo manga\`
+
+**7. 見上げる対面**: \`2boys, standing close facing each other, shorter 168cm looking up at taller 188cm with soft questioning expression, taller looking down gently protective, close mid-shot, library background, (looking up composition:1.4)\`
+
+**8. 額をつける**: \`2boys, foreheads gently touching, both eyes softly closed tender expressions, hands on each other's shoulders, close intimate shot, soft warm rim lighting, (forehead touch:1.4), (emotional intimacy:1.3)\`
+
+**■ 応用 4 シーン**
+
+**9. 背中合わせ（ライバル）**: \`2boys, back to back arms crossed, serious cool determined expressions, similar heights, contrasting outfits (dark black/red + white/silver), dramatic backlight, (back to back pose:1.4), shounen anime\`
+
+**10. カフェ肩寄り**: \`2boys, sitting close at window cafe table, shorter 170cm leaning head softly on taller 185cm's shoulder, taller looking down soft smile, coffee cups, warm sunlight, medium close-up side angle, (shoulder lean pose:1.3)\`
+
+**11. オフィス スーツ**: \`2boys in business suits standing in modern office, one leaning against desk, other close in front, calm composed expressions quiet emotional tension, dark charcoal and navy suits, blinds striped lighting, (mature composition:1.3), (subtle tension:1.2)\`
+
+**12. 騎士×魔法使い**: \`2boys, medieval fantasy, tall armored knight 190cm protectively behind robed mage 168cm, knight in silver/blue plate armor with sword, mage in deep purple robes with grimoire, ancient stone hall blue magical light, (fantasy duo composition:1.3), (height difference:1.2)\`
+
+**■ 推奨ネガティブ（BL 構図汎用）**
+
+\`\`\`
+1girl, woman, female, feminine, breasts,
+bad anatomy, bad hands, extra fingers, missing fingers, fused fingers,
+extra arms, extra legs, fused bodies, conjoined twins, merged figures,
+explicit content, nudity, suggestive pose,
+looking at camera, awkward pose, stiff pose,
+worst quality, low quality, blurry
+\`\`\`
+
+これだけ揃えれば、ほぼすべての SFW BL シーンを SD / MJ / DALL-E で再現できます。サイト内実行は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> の各 prompt から「🚀 ここで試す」（5 ポイント / 回）。`,
+      },
+      {
+        title: '関連ガイド・リソース — BL 構図を極める道筋',
+        content: `**深掘りガイド**:
+
+- <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">カップルポーズ・二人構図のAIプロンプト完全ガイド</a> — 二人構図 cluster の hub。BL 以外の関係性（カップル / 友達 / 兄弟 / OC × 推し）の全パターン
+- <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルのAIプロンプト完全ガイド</a> — 身長差 / 体格差を意図的に出す方法（BL 攻め × 受けの体格差にも応用可）
+- <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — 特定 BL 作品のキャラ衣装再現
+- <a href="/guides/anime-prompt-guide" class="text-sky-600 hover:underline">アニメ風プロンプトガイド</a> — anime BL モデルの活用
+- <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎 + ControlNet + ADetailer
+
+**サンプル prompt 集**:
+
+- <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> — 本ガイドの 12 件、すべて SDXL サンプル付き
+- <a href="/tag/二人構図" class="text-sky-600 hover:underline">/tag/二人構図</a> — 二人構図系全体
+- <a href="/tag/カップル" class="text-sky-600 hover:underline">/tag/カップル</a> — カップル系全体
+- <a href="/tag/壁ドン" class="text-sky-600 hover:underline">/tag/壁ドン</a> — 壁ドン構図
+- <a href="/tag/キス" class="text-sky-600 hover:underline">/tag/キス</a> — キスシーン
+- <a href="/tag/お姫様抱っこ" class="text-sky-600 hover:underline">/tag/お姫様抱っこ</a> — お姫様抱っこ
+- <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> — 身長差カップル（BL を含む）
+
+**ツール**:
+
+- <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">/tools/stable-diffusion</a> — SD prompt 一覧
+- <a href="/tools/midjourney" class="text-sky-600 hover:underline">/tools/midjourney</a> — Midjourney prompt 一覧
+- <a href="/tools/dall-e" class="text-sky-600 hover:underline">/tools/dall-e</a> — DALL-E prompt 一覧`,
+      },
+    ],
+    faq: [
+      { q: 'BL 構図と一般的なカップル構図の違いは何ですか？', a: '**技術的にはほぼ同じ**ですが、**SDXL / DALL-E の安全フィルター**が「2 boys」「BL」「yaoi」など特定の組み合わせに反応しやすく、男性 2 人の親密構図は女性 2 人や男女より結果が崩れやすい傾向があります。具体的な違い: (1) 男性のままで描かれる確率を上げるため `2boys, male only, masculine features` を強調 + ネガティブに `1girl, woman` 追加が必要、(2) 「BL」「yaoi」字面を避けて中立的な関係性表現（`emotional bond between two men`）を使う、(3) anime BL モデル（`Anim4gine` / `Counterfeit` 等）を使うと出やすい。基本構図は <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図 hub guide</a> と共通。' },
+      { q: '「2boys」と「BL」をプロンプトに直接書く必要は？', a: '**`2boys` は強く推奨**（人数固定のため）、**`BL` は不要**（むしろ書かないほうが安全）。`2boys` は Stable Diffusion の anime モデルで danbooru タグとして学習されており、これがないと男性 1 人や男女になる確率が上がる。一方 `BL` `yaoi` `gay` のような直接ジャンル名は (1) DALL-E / SDXL safety filter で警告される、(2) 学習データのバイアスで NSFW 寄りに引っ張られる、というデメリットがあるので**中立表現**（`emotional bond between two men` 等）の方が SFW BL 構図が安定して出ます。' },
+      { q: 'NSFW フィルターでブロックされた時はどう対処しますか？', a: '**3 段階の対処法**: (1) **直接表現を中立表現に置換** — `kiss` → `gentle moment with foreheads touching`、`couple` → `close companions`、`BL` → `emotional male pair`。(2) **ネガティブを強化** — `explicit content, nudity, suggestive pose, intimate physical contact` を追加。(3) **ツールを変える** — DALL-E 3 で詰まったら Stable Diffusion（ローカル / fal.ai）に切り替える。SD はモデルや設定によりフィルター強度を選べる。prompta.jp の <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> 12 件は全て fal SDXL で safety filter ON のまま通った中立表現の実例なので、迷ったら本ガイドの英語テンプレをそのままコピーがおすすめ。' },
+      { q: '攻め × 受けを視覚的に表現するベストプラクティスは？', a: '「攻め」「受け」を直接書かず、**身長差・体格差・ポーズ・視線**で表現するのが SD でも DALL-E でも安全で効果的。**攻め役**の典型: `taller protective character around 185-195cm, broader shoulders, confident expression, leaning down or looking down gently`。**受け役**の典型: `shorter gentler character around 165-170cm, slimmer build, soft expression, looking up or being held`。**身長差を 15-25cm**に設定するとはっきり攻め受けが伝わる。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差カップルガイド</a> の「BL カップル」section をご覧ください。' },
+      { q: '大人 BL（オフィス・スーツ系）のプロンプトのコツは？', a: '大人 BL は **(1) 衣装の質感、(2) 表情の落ち着き、(3) 照明** が肝心。テンプレ: `2boys in tailored business suits, mature adult features around late 20s to 30s, modern office or upscale bar, charcoal/navy/black suits, blinds casting striped lighting, calm composed expressions with quiet emotional tension, sophisticated adult BL aesthetic, photorealistic or detailed anime illustration`。学園 BL とは別物 — 「mature」「adult」「composed」「sophisticated」をプロンプトに必ず入れる。実例: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィス スーツ姿</a>。' },
+      { q: 'ファンタジー BL（騎士×魔法使い等）構図の応用例は？', a: '中世ファンタジー世界観は **(1) 衣装で役割を明示、(2) 体格差で力関係を示す、(3) 背景で世界観を構築** がポイント。テンプレ: `2boys in medieval fantasy setting, tall armored knight 190cm in plate armor with sword + robed mage 168cm with grimoire / royal prince + loyal guard / paladin + dark sorcerer, ancient hall or magical forest, mysterious lighting, fantasy concept art illustration`。組み合わせ例: 騎士×魔法使い / 王子×護衛 / 聖騎士×闇魔法使い / 勇者×旅商人。実例: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>。' },
+      { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2boys` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（5 ポイント / 回）。' },
     ],
   },
 }
