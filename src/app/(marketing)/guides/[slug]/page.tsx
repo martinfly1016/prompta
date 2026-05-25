@@ -1225,41 +1225,339 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 
 **2. 衣装要素分解** — 例: \`twin teal hair, school uniform, black tie, detached sleeves\`。キャラ名を出さずに構成要素で描写する方式です。公開・販売する作品には圧倒的にこちらを推奨します。
 
-どちらの方式でも、**構成要素を分解して並べる**スキルは欠かせません。髪色・髪型・衣装のパーツ・小物・背景を「上から下へ」順に記述すると、AI が各要素を正確に組み立てやすくなります。`,
+どちらの方式でも、**構成要素を分解して並べる**スキルは欠かせません。髪色・髪型・衣装のパーツ・小物・背景を「上から下へ」順に記述すると、AI が各要素を正確に組み立てやすくなります。
+
+**本ガイドで扱う 5 つの定番ジャンル + 8 種のサブジャンル**:
+
+- 🎓 **セーラー服プロンプト** — 夏服 / 冬服 / 黒セーラー / 関東風 / 関西風 / ツインテール × セーラー
+- 🍵 **メイド服プロンプト** — 王道メイド / ヴィクトリアン / フレンチ / ゴシック / カフェ風
+- 🏫 **学校制服プロンプト** — ブレザー / 夏制服 / ダークアカデミア / 海外風 / 体操服
+- ⛩️ その他定番 8 種 — 巫女 / ナース / チア / 着物 / 魔女 / バニー / 甲冑 / ゴスロリ
+- 📸 衣装ディテール × 撮影 × ツール別 × 困った時の対処法
+
+各セクションでコピペ可能な英語プロンプトと、関連する <a href="/prompts/cosplay" class="text-sky-600 hover:underline">prompta.jp 公開 prompt</a>（サンプル画像つき）をリンクしています。`,
       },
       {
-        title: '定番コスチューム別の呪文テンプレート',
-        content: `AIモデルが学習データで頻繁に見ているため再現性が高い10種類の定番コスチュームと、それぞれのコピペ可能な呪文例です：
+        title: 'セーラー服プロンプト — 夏服 / 冬服 / 黒セーラー まで全パターン',
+        content: `**セーラー服プロンプト**は AI コスプレ生成で最も検索される定番ジャンルです。AI モデルは「sailor uniform」「serafuku」というワードを学習データで頻繁に見ているため再現性が高く、ディテール指定でバリエーションが豊富に出せます。
 
-**1. セーラー服（学校制服）**
-\`sailor uniform, sailor collar, pleated skirt, red ribbon, knee-high socks, loafers\`
+**1. 王道セーラー服 — 関東風白セーラー × 紺スカート**
 
-**2. メイド服**
-\`maid uniform, white apron, black dress, frilled headband, white stockings, mary janes\`
+\`\`\`
+1girl, sailor uniform, white sailor blouse, navy pleated skirt,
+red ribbon, sailor collar, knee-high white socks, brown loafers,
+school hallway, soft natural lighting, full body shot,
+(masterpiece:1.2), (best quality:1.4)
+\`\`\`
 
-**3. 巫女装束**
-\`miko costume, white haori, red hakama, shrine maiden, traditional japanese clothing\`
+→ サンプル: <a href="/prompt/sailor-uniform-pleated-skirt" class="text-sky-600 hover:underline">セーラー服 × プリーツスカート</a> / <a href="/prompt/blue-serafuku-school-uniform" class="text-sky-600 hover:underline">ブルーセーラー服</a>
 
-**4. ナース服**
-\`nurse uniform, white cap, white apron, pastel blue scrubs, stethoscope\`
+**2. 夏セーラー服 — 半袖白セーラー**
 
-**5. チアリーダー**
-\`cheerleader uniform, pleated cheer skirt, pom-poms, sneakers, ribbon ponytail\`
+\`\`\`
+1girl, summer sailor uniform, short sleeves white sailor blouse,
+navy pleated skirt, blue ribbon, sailor collar, knee-high socks,
+sunny school rooftop, blue sky, full body shot,
+(summer uniform:1.2), (white sailor:1.2)
+\`\`\`
 
-**6. 着物**
-\`kimono, obi, traditional japanese dress, wooden sandals, floral pattern\`
+**ネガティブ**: \`long sleeves, winter uniform, dark colors\`
 
-**7. 魔女**
-\`witch costume, pointy hat, black cloak, broomstick, fantasy\`
+**3. 冬セーラー服 — 長袖紺色**
 
-**8. バニーガール**
-\`bunny girl, bunny ears, black leotard, fishnet stockings, high heels\`
+\`\`\`
+1girl, winter sailor uniform, long sleeves navy sailor blouse,
+navy pleated skirt, white scarf, sailor collar, dark tights, boots,
+snowy school path, cold lighting, full body shot,
+(winter uniform:1.2), (long sleeves:1.2)
+\`\`\`
 
-**9. ファンタジー甲冑**
-\`fantasy armor, knight plate, cape, sword, metal gauntlets, fantasy\`
+**4. 黒セーラー服 — 関西風 / 個性派**
 
-**10. ゴシックロリータ**
-\`gothic lolita, black dress, lace trim, frilled skirt, ribbon choker\``,
+\`\`\`
+1girl, black sailor uniform, black sailor blouse with white collar,
+black pleated skirt, white ribbon, knee-high black socks, loafers,
+modern school courtyard, evening lighting, full body shot,
+(black sailor:1.3), gothic school aesthetic
+\`\`\`
+
+**5. ツインテール × セーラー服 — 王道アイドル組合せ**
+
+\`\`\`
+1girl, blonde twintails hair, sailor uniform, white sailor blouse,
+navy pleated skirt, red ribbon, knee-high socks, loafers,
+classroom window light, full body shot, soft anime illustration,
+(twintails:1.2), (sailor uniform:1.2)
+\`\`\`
+
+→ サンプル: <a href="/prompt/twintail-blonde-sailor-outfit" class="text-sky-600 hover:underline">ツインテール × ブロンドセーラー</a> / <a href="/prompt/blonde-long-hair-sailor-outfit" class="text-sky-600 hover:underline">ロングブロンド × セーラー</a>
+
+**6. 読書するセーラー服 — 落ち着いた構図**
+
+\`\`\`
+1girl, sailor uniform, sitting by window reading book,
+soft afternoon light streaming in, peaceful expression,
+white blouse navy skirt red ribbon, medium shot,
+(sailor uniform:1.2), shoujo manga aesthetic
+\`\`\`
+
+→ サンプル: <a href="/prompt/sailor-uniform-window-reading" class="text-sky-600 hover:underline">窓辺で読書するセーラー服</a>
+
+**セーラー服特有のコツ**:
+
+- **\`serafuku\`** = 日本語ローマ字でセーラー服を指定する Danbooru タグ。アニメ系モデルで特に効く
+- **色は 3 要素分けて指定**: 上着色 / スカート色 / リボン色 — 「navy sailor」だけだと AI が解釈ブレ
+- **\`sailor collar\`** を明示すると襟のセーラーカラーが安定描写
+- **\`pleated skirt\`** = プリーツスカート、必須キーワード（無いとフレアスカートになる）
+- 夏服 / 冬服は **\`short sleeves\`** / **\`long sleeves\`** を必ず明示
+- アニメ系モデル（NovelAI / Counterfeit）が最も得意。実写系（Realistic Vision）でも自然に出る
+
+**ネガティブプロンプト（汎用）**: \`fake wig, cheap cosplay, wrinkled clothes, mismatched uniform, bad anatomy\`
+
+全 8 件のセーラー服 prompt + サンプル画像は <a href="/tag/%E3%82%BB%E3%83%BC%E3%83%A9%E3%83%BC%E6%9C%8D" class="text-sky-600 hover:underline">/tag/セーラー服</a> で公開中。`,
+      },
+      {
+        title: 'メイド服プロンプト — 王道 / フレンチ / ヴィクトリアン / ゴシック全網羅',
+        content: `**メイド服プロンプト**は AI コスプレ生成の人気ジャンル 2 位。「maid」「maid uniform」「French maid」など複数の英単語で表現が異なり、ジャンル別にディテールが大きく変わります。
+
+**1. 王道メイド服 — 白黒クラシック**
+
+\`\`\`
+1girl, classic maid uniform, black knee-length dress,
+white apron with frills, white frilled headband, white stockings,
+black mary jane shoes, holding tea tray, victorian mansion interior,
+soft warm lighting, full body shot,
+(maid uniform:1.2), (frilled apron:1.2)
+\`\`\`
+
+→ サンプル: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白メイドコスプレ</a>
+
+**2. フレンチメイド — 短いスカート × セクシー系**
+
+\`\`\`
+1girl, French maid uniform, short black dress, white frilled apron,
+white lace headband, fishnet stockings, black high heels,
+duster in hand, modern apartment interior, glamorous lighting,
+(french maid:1.3), (short skirt:1.2), full body shot
+\`\`\`
+
+**3. ヴィクトリアンメイド — 長袖長スカート × クラシック**
+
+\`\`\`
+1girl, victorian maid uniform, long black dress reaching floor,
+long sleeves with white cuffs, white pinafore apron,
+elegant white bonnet headpiece, button-up boots,
+holding silver tea tray, victorian dining room,
+candlelight, (victorian maid:1.3), full body shot,
+period drama aesthetic
+\`\`\`
+
+**4. ゴシックメイド — 黒レース × 退廃的**
+
+\`\`\`
+1girl, gothic maid uniform, black lace dress with corset,
+black apron with red trim, gothic lolita headpiece,
+black thigh-high stockings, platform boots,
+dark mansion interior, dramatic side lighting,
+(gothic maid:1.3), (black lace:1.2), full body shot,
+dark aesthetic illustration
+\`\`\`
+
+**5. メイドカフェ風 — ピンクや水色のかわいい系**
+
+\`\`\`
+1girl, maid cafe uniform, pink and white dress, cute frilled apron,
+cat ear headband, knee-high white socks, pink mary jane shoes,
+heart-shaped apron pocket, cute pose with peace sign,
+maid cafe interior pink walls, bright lighting,
+(maid cafe:1.3), kawaii aesthetic, full body shot
+\`\`\`
+
+**6. メイド × 日常動作 — 掃除中のメイド**
+
+\`\`\`
+1girl, classic maid uniform, black dress white apron,
+holding broom and cleaning, kneeling pose,
+sunlight streaming through tall windows, dust particles in air,
+victorian mansion interior, slice of life,
+(maid uniform:1.2), full body shot, cel shading style
+\`\`\`
+
+→ サンプル: <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド・セルシェード</a>
+
+**メイド服特有のコツ**:
+
+- **基本 4 要素**: \`black dress\` + \`white apron\` + \`frilled headband\` + \`stockings\` で土台が完成
+- **ジャンル指定が最重要**: \`classic maid\` / \`french maid\` / \`victorian maid\` / \`gothic maid\` / \`maid cafe\` で印象が劇的に変化
+- **\`frilled\` \`frills\`** = フリル指定。AI のメイド服は基本フリルが少なく描かれがちなので強調必須
+- **ヘッドピース** = \`headband\` / \`bonnet\` / \`mob cap\` を選択（headband が一般的）
+- 短いスカート vs 長いスカート: フレンチは \`short skirt\`、ヴィクトリアンは \`long dress reaching floor\`
+- 小物: \`tea tray\` \`feather duster\` \`broom\` で「メイドらしさ」が引き立つ
+- アニメ系・実写系どちらも対応。**Realistic Vision** で実写コスプレ風、**Counterfeit / NovelAI** でアニメ風
+
+**ネガティブ（汎用）**: \`bad costume, mismatched colors, fake apron, plain dress, no frills, bad anatomy\`
+
+**ゴシックメイドの応用例**: <a href="/prompt/gothic-maiden-warrior-cosplay" class="text-sky-600 hover:underline">ゴシックメイデン × 戦士衣装</a> もメイド × ファンタジー融合の参考になります。`,
+      },
+      {
+        title: '学校制服プロンプト — ブレザー / 夏服 / ダークアカデミア / 海外風',
+        content: `**学校制服プロンプト**はセーラー服と並ぶ人気ジャンル。**ブレザー / セーラー服 / 体操服 / ダークアカデミア / 海外風 / 昭和レトロ**など多様なバリエーションが描けます。
+
+**1. ブレザー制服 — 王道日本の高校制服**
+
+\`\`\`
+1girl, school blazer uniform, navy blazer with school emblem,
+white blouse, red plaid tartan skirt pleated, school tie,
+knee-high white socks, brown loafers, school hallway,
+warm afternoon light, full body shot,
+(school blazer:1.2), (plaid skirt:1.2)
+\`\`\`
+
+→ サンプル: <a href="/prompt/school-uniform-pleated-skirt" class="text-sky-600 hover:underline">学校制服 × プリーツスカート</a>
+
+**2. 夏制服 — 半袖ブラウス × プリーツスカート**
+
+\`\`\`
+1girl, summer school uniform, short sleeves white blouse,
+gray pleated skirt, school tie, knee socks, loafers,
+sunny school courtyard, cherry blossoms,
+full body shot, (summer uniform:1.2),
+slice of life anime style
+\`\`\`
+
+→ サンプル: <a href="/prompt/school-uniform-freckles-joy" class="text-sky-600 hover:underline">制服 × 笑顔のそばかす少女</a>
+
+**3. ダークアカデミア制服 — 海外名門校風**
+
+\`\`\`
+1girl, dark academia school uniform, dark green blazer,
+white blouse, brown plaid skirt, brown knee-high socks,
+oxford shoes, holding leather-bound books,
+old library with tall shelves, golden hour through stained glass,
+(dark academia:1.3), full body shot, oil painting aesthetic
+\`\`\`
+
+→ サンプル: <a href="/prompt/dark-academia-school-uniform" class="text-sky-600 hover:underline">ダークアカデミア制服</a>
+
+**4. 海外風セーラー × ブレザー混合 — 英国系**
+
+\`\`\`
+1girl, british school uniform, navy blazer with red trim,
+white shirt with red tie, gray plaid skirt, knee-high socks,
+oxford shoes, school crest on blazer, autumn campus,
+full body shot, (british uniform:1.2),
+boarding school aesthetic
+\`\`\`
+
+**5. 体操服 — 学校体育用**
+
+\`\`\`
+1girl, school gym uniform, white t-shirt with school name,
+navy bloomers or red gym shorts, white sneakers,
+gym class background or athletic field,
+energetic pose, full body shot,
+(gym uniform:1.2), (athletic:1.2)
+\`\`\`
+
+**6. 制服 × ネクタイを解いた疲れた放課後**
+
+\`\`\`
+1girl, school uniform, untied loose necktie, partially unbuttoned blouse,
+slight messy hair, tired expression, sitting on classroom desk,
+sunset light through window, casual after-school atmosphere,
+(school uniform:1.2), shoujo manga style, medium shot
+\`\`\`
+
+→ サンプル: <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">解いたネクタイ × 制服</a>
+
+**学校制服特有のコツ**:
+
+- **ブレザー vs セーラー**: 「日本の私立高校」イメージなら \`school blazer\`、「中学・伝統校」なら \`sailor uniform\` を選ぶ
+- **\`plaid skirt\`** = タータンチェックスカート、ブレザー制服の定番
+- **色配色**: \`navy blazer\` + \`red plaid\` / \`gray blazer\` + \`green plaid\` など 2 色組合せが最も自然
+- **ネクタイ vs リボン**: \`school tie\` = ネクタイ、\`bow ribbon\` = リボン
+- **季節別**: 夏は \`short sleeves\` \`summer uniform\`、冬は \`long sleeves\` \`winter blazer\` \`scarf\`
+- 海外風は \`british uniform\` \`american prep school\` \`dark academia\` を併用すると雰囲気変わる
+
+**ネガティブ（汎用）**: \`casual clothes, no tie, no skirt, mismatched colors, bad uniform\`
+
+**さらに**: ポートレート系の制服プロンプトは <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a> / <a href="/prompt/pleated-miniskirt-cosplay-girl" class="text-sky-600 hover:underline">プリーツミニスカ × 制服</a> を参考に。
+
+全 8 件の学校制服 prompt + サンプル画像は <a href="/tag/%E5%88%B6%E6%9C%8D" class="text-sky-600 hover:underline">/tag/制服</a> で公開中、すべて「ここで試す」でサイト内実行可能。`,
+      },
+      {
+        title: 'その他定番コスチューム 8 選 — 巫女 / ナース / バニー / 着物まで',
+        content: `セーラー服 / メイド服 / 制服 以外の AI コスプレ定番 8 種類です。**学習データに豊富**なため、いずれも初心者向きで再現性が高いカテゴリ。
+
+**1. 巫女装束**
+\`\`\`
+1girl, miko costume, white haori, red hakama, shrine maiden,
+holding offering, traditional shrine, full body shot,
+(miko:1.2), traditional japanese style
+\`\`\`
+
+**2. ナース服**
+\`\`\`
+1girl, nurse uniform, white cap, white apron, pastel blue scrubs,
+stethoscope around neck, hospital corridor,
+(nurse uniform:1.2), full body shot
+\`\`\`
+
+**3. チアリーダー**
+\`\`\`
+1girl, cheerleader uniform, pleated cheer skirt, pom-poms,
+crop top, sneakers, ribbon ponytail, gym floor,
+energetic jumping pose, (cheerleader:1.2), full body shot
+\`\`\`
+
+**4. 着物**
+\`\`\`
+1woman, elegant kimono, floral pattern, wide obi,
+wooden geta sandals, traditional hairstyle with kanzashi,
+cherry blossom park, soft warm lighting,
+(kimono:1.2), traditional japanese woman style
+\`\`\`
+
+**5. 魔女コスチューム**
+\`\`\`
+1girl, witch costume, pointy black hat, black cloak with stars,
+broomstick in hand, gothic black dress, knee-high boots,
+moonlit forest, mysterious atmosphere,
+(witch:1.2), fantasy illustration
+\`\`\`
+
+**6. バニーガール**
+\`\`\`
+1woman, bunny girl costume, black leotard with bunny tail,
+black bunny ears headband, fishnet stockings, black high heels,
+casino lounge interior, glamorous lighting,
+(bunny girl:1.3), full body shot, photorealistic
+\`\`\`
+
+**7. ファンタジー甲冑**
+\`\`\`
+1woman, fantasy knight armor, silver plate armor,
+red cape, sword in hand, metal gauntlets,
+medieval castle courtyard, dramatic lighting,
+(fantasy armor:1.3), full body shot, concept art
+\`\`\`
+
+**8. ゴシックロリータ**
+\`\`\`
+1girl, gothic lolita dress, black dress with white lace,
+frilled petticoat, ribbon choker, knee-high stockings,
+mary jane shoes, victorian gothic aesthetic,
+(gothic lolita:1.3), full body shot
+\`\`\`
+
+**さらに参考になるコスプレサンプル**:
+
+- <a href="/prompt/alice-in-wonderland-cosplay" class="text-sky-600 hover:underline">不思議の国のアリス風コスプレ</a>
+- <a href="/prompt/warhammer-40k-chaos-witch-cosplay" class="text-sky-600 hover:underline">ウォーハンマー40K ケイオスウィッチ</a>
+- <a href="/prompt/dragon-princess-zelda-dress" class="text-sky-600 hover:underline">竜姫ゼルダ青目ドレス</a>
+- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫娘 × 夜の路地裏</a>
+
+→ <a href="/prompts/cosplay" class="text-sky-600 hover:underline">全てのコスプレプロンプト集</a>`,
       },
       {
         title: '衣装ディテールの書き分け方',
@@ -1273,11 +1571,12 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 - \`cotton\` — マットで柔らかい
 - \`leather\` — 硬質で重厚
 - \`lace\` — 透け感のある装飾
+- \`velvet\` — 起毛の高級感
 
 **色の色滲み（color bleed）対策**には BREAK 構文：
 \`white blouse BREAK navy pleated skirt BREAK red ribbon\`
 
-要素ごとにプロンプトを区切ることで、色が隣の要素へ滲む現象を防げます。`,
+要素ごとにプロンプトを区切ることで、色が隣の要素へ滲む現象を防げます。詳しくは <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">色プロンプト完全ガイド</a> を参照。`,
       },
       {
         title: '撮影・ポーズの指定で品質を上げる',
@@ -1304,63 +1603,186 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 \`1girl, sailor uniform, sailor collar, pleated skirt, knee-high socks, twin tails black hair, red ribbon, professional cosplay photo, studio lighting, medium shot, soft lighting, (masterpiece:1.2), best quality\``,
       },
       {
-        title: 'Stable Diffusion と NovelAI の使い分け',
-        content: `同じコスプレプロンプトでも、モデルによって仕上がりがまったく違います。
+        title: '困った時の対処法 — よくある衣装崩壊と修正法',
+        content: `コスプレプロンプトは初回生成で完璧に出ることは少なく、リトライ + プロンプト調整が必要です。よくある失敗パターンと対処法。
 
-**Stable Diffusion（実写風）**:
-おすすめモデル — ChilloutMix、AsianRealistic、BeautifulRealistic
-- 実写のコスプレ写真に近い仕上がり
-- 品質タグ: \`masterpiece, best quality, ultra detailed\`
-- ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, bad hands\`
+**問題 1: セーラー服が長袖で出てしまう / 制服が冬服化する**
 
-**Stable Diffusion（アニメ調）**:
-おすすめモデル — Anything V5、Counterfeit、MeinaMix
-- アニメ調イラスト寄り
-- 品質タグ: \`masterpiece, best quality, highres\`
-- ネガ: \`(worst quality, low quality:1.4), bad anatomy, extra fingers\`
+- **対処**: \`short sleeves\` \`summer uniform\` \`white sailor uniform\` を明示
+- **ネガティブ**: \`long sleeves, winter uniform, dark navy, scarf\`
+- **逆に冬服が欲しい時**: \`long sleeves, winter uniform, navy sailor, white scarf\` を強調
 
-**NovelAI**:
-- Artist タグを使って特定作家風の絵柄に誘導できる（例: \`artist:wlop, artist:kawacy\`）
-- 品質タグ: \`best quality, amazing quality, very aesthetic\`
-- 重み付けの書き方が SD とわずかに異なる（\`{{sailor uniform}}\` で強調可能）
+**問題 2: メイド服のエプロンが消える / 質素になる**
 
-**Midjourney**:
-- コスプレ写真は \`--style raw --ar 2:3\` が最適
-- 衣装描写より雰囲気が強く、細部精度は SD に劣る
+- **対処**: \`(white apron:1.3), (frilled apron:1.2), lace trim\` を強調
+- **対処**: \`classic maid\` \`victorian maid\` のジャンルキーワードを必ず併用（指定無しだと AI が「普通のドレス」を出しがち）
+- **ネガティブ**: \`plain dress, no apron, casual clothes\`
 
-自分の目的が「写真風コスプレ」なら SD の実写系、「イラスト調キャラ」なら NovelAI、「雰囲気重視のアート」なら Midjourney、と使い分けるのが基本戦略です。`,
+**問題 3: 学校制服が私服化する（ブレザーがジャケットに）**
+
+- **対処**: \`(school uniform:1.2), (school blazer:1.2), school tie\` を強調
+- **対処**: \`school emblem\` \`school crest\` で胸の校章を追加すると一気に制服らしくなる
+- **ネガティブ**: \`casual blazer, business suit, regular jacket, no tie\`
+
+**問題 4: 色滲み — リボンの色がスカートに広がる**
+
+- **対処**: BREAK 構文で要素分離 → \`white blouse BREAK navy pleated skirt BREAK red ribbon\`
+- **対処**: CutOff 拡張機能で色固定（target tokens: \`white, navy, red\`）
+- 詳しくは <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">色プロンプト完全ガイド</a> を参照
+
+**問題 5: 小物（刀・帽子・カチューシャ）が消える**
+
+- **対処**: 重み付けで主張 → \`(holding katana:1.3), (frilled headband:1.3)\`
+- **対処**: BREAK で小物を独立節に → \`maid uniform BREAK (white frilled headband:1.3)\`
+- **対処**: ControlNet OpenPose + 参照画像で持ち物を強制描画
+
+**問題 6: 表情が崩れる / 目がおかしい**
+
+- **対処**: \`(detailed face:1.2), (detailed eyes:1.2), perfect anatomy\` を追加
+- **対処**: ADetailer 拡張で顔だけ自動再生成
+- **対処**: 解像度を 768×768 以上に上げる
+
+**問題 7: アニメ系モデルなのにリアル風が混じる（顔だけ実写）**
+
+- **対処**: モデル切替を確認。Counterfeit / MeinaMix などアニメ専用へ
+- **対処**: \`anime style, illustration, flat shading, cel shading\` をポジティブに追加
+- **ネガティブ**: \`photorealistic, realistic skin, real photo\`
+
+**ControlNet 活用法（最も確実）**
+
+衣装の崩壊を防ぐ最強手法。手順:
+
+1. 参考にしたいコスプレ写真を用意（Pinterest / Cosplay Photo 検索）
+2. ControlNet で \`openpose_full\` + \`canny\` を 2 ユニット同時に有効化
+3. プロンプトに本ガイドのテンプレを使用、CFG Scale 7-9
+4. 生成 → 参考画像のポーズと衣装ラインが忠実に再現される`,
       },
       {
-        title: '✨ 関連プロンプト集 — コスプレ実例',
-        content: `本ガイドのコスプレ表現テクニックを使ったプロンプトです。アニメキャラ再現から学園もの・ファンタジーまで。
+        title: 'ツール別 — SD / NovelAI / Midjourney / DALL-E でのコスプレ表現',
+        content: `同じコスプレプロンプトでも、モデル / ツールによって仕上がりが全く違います。目的別の使い分け推奨。
 
-- [不思議の国のアリス風コスプレ](/prompt/alice-in-wonderland-cosplay)
-- [解かれたネクタイ制服](/prompt/untied-necktie-uniform-girl)
-- [学校制服プロンプト セーラー服コスプレ](/prompt/school-uniform-pleated-skirt)
-- [ウォーハンマー40K ケイオスウィッチ](/prompt/warhammer-40k-chaos-witch-cosplay)
-- [黒白メイド - コスプレプロンプト](/prompt/maid-costume-3d-render)
-- [ダークアカデミア学校制服](/prompt/dark-academia-school-uniform)
-- [竜姫ゼルダ青目ドレス](/prompt/dragon-princess-zelda-dress)
+**Stable Diffusion（実写風コスプレ）**（推奨度: ⭐⭐⭐）
 
-→ [全てのコスプレプロンプト](/prompts/cosplay)`,
+- 強み: 実写のコスプレ写真に最も近い仕上がり、ControlNet で参照画像活用可能、LoRA で特定衣装を完全再現
+- おすすめモデル: **ChilloutMix / Realistic Vision / BeautifulRealistic / Juggernaut XL**
+- 品質タグ: \`masterpiece, best quality, ultra detailed, professional photo\`
+- ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, fake wig, cheap cosplay\`
+
+**Stable Diffusion（アニメ調コスプレ）**（推奨度: ⭐⭐⭐）
+
+- 強み: アニメ調イラストのコスプレ表現、Danbooru タグ（\`serafuku\`, \`maid\`, \`pleated skirt\`）が機能
+- おすすめモデル: **Counterfeit V3 / MeinaMix / Anything V5 / NovelAI Animagine XL**
+- 品質タグ: \`masterpiece, best quality, highres, anime illustration\`
+- ネガ: \`(worst quality, low quality:1.4), bad anatomy, extra fingers, fused fingers\`
+
+**NovelAI**（推奨度: ⭐⭐⭐ アニメ用途）
+
+- 強み: アニメ専用に最適化、Danbooru タグが特に強力、artist タグで作家風絵柄誘導（\`artist:wlop, artist:kawacy\`）
+- 弱み: 実写コスプレは出ない
+- 重み付け書式: \`{sailor uniform}\` で 1.05 倍強調、\`{{sailor uniform}}\` で 1.10 倍
+
+**Midjourney**（推奨度: ⭐⭐）
+
+- 強み: 雰囲気重視のアート寄りコスプレ写真、構図のセンスが良い
+- 弱み: 細部精度は SD に劣る、重み付け制御が荒い
+- 工夫: \`--style raw --ar 2:3\` でコスプレ写真風に。\`--v 6\` で 2026 年最新版モデル
+
+**DALL-E 3 (ChatGPT 内)**（推奨度: ⭐⭐）
+
+- 強み: 自然な日本語指示が効く（「日本の高校のセーラー服を着た女子高生」）
+- 弱み: NSFW フィルター厳しめ、フレンチメイドなどセクシー系がブロックされやすい
+- 工夫: 「コスプレ写真の作品撮り風」のように**目的を文脈化**するとフィルター回避
+
+**Gemini 2.5 Flash Image (Nano Banana)**（推奨度: ⭐ 編集用途）
+
+- 強み: 既存写真の衣装変換（私服 → コスプレ衣装）に強い
+- 弱み: ゼロからの生成では衣装ディテール精度が低い
+
+**おすすめワークフロー**:
+
+1. **実写コスプレ風で本格的に** → Stable Diffusion + Realistic Vision + ControlNet
+2. **アニメイラスト調コスプレ** → NovelAI または SD + Counterfeit
+3. **クオリティ重視で気軽に** → Midjourney \`--style raw --ar 2:3\`
+4. **既存写真の衣装変換** → Gemini Nano Banana
+
+prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済み。<a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> の各 prompt ページから「🚀 ここで試す」を押せばサイト内で実行可能（5 ポイント / 回、新規登録で 3 ポイント無料）。`,
+      },
+      {
+        title: '✨ 関連プロンプト集 + 関連ガイド',
+        content: `本ガイドのコスプレテクニックを使った公開 prompt 一覧。すべてサンプル画像つきで、各ページ「ここで試す」からサイト内実行可能（5 ポイント / 回）。
+
+**セーラー服 / 制服系**:
+
+- <a href="/prompt/sailor-uniform-pleated-skirt" class="text-sky-600 hover:underline">セーラー服 × プリーツスカート</a>
+- <a href="/prompt/blue-serafuku-school-uniform" class="text-sky-600 hover:underline">ブルーセーラー服</a>
+- <a href="/prompt/twintail-blonde-sailor-outfit" class="text-sky-600 hover:underline">ツインテール × ブロンドセーラー</a>
+- <a href="/prompt/sailor-uniform-window-reading" class="text-sky-600 hover:underline">窓辺で読書するセーラー服</a>
+- <a href="/prompt/school-uniform-pleated-skirt" class="text-sky-600 hover:underline">学校制服 × プリーツスカート</a>
+- <a href="/prompt/dark-academia-school-uniform" class="text-sky-600 hover:underline">ダークアカデミア制服</a>
+- <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">解いたネクタイ × 制服</a>
+- <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a>
+
+**メイド系**:
+
+- <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白メイドコスプレ</a>
+- <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド・セルシェード</a>
+- <a href="/prompt/gothic-maiden-warrior-cosplay" class="text-sky-600 hover:underline">ゴシックメイデン × 戦士衣装</a>
+
+**ファンタジー / キャラ風**:
+
+- <a href="/prompt/alice-in-wonderland-cosplay" class="text-sky-600 hover:underline">不思議の国のアリス</a>
+- <a href="/prompt/warhammer-40k-chaos-witch-cosplay" class="text-sky-600 hover:underline">ウォーハンマー40K ケイオスウィッチ</a>
+- <a href="/prompt/dragon-princess-zelda-dress" class="text-sky-600 hover:underline">竜姫ゼルダ青目ドレス</a>
+- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫娘 × 夜の路地裏</a>
+
+**カテゴリ別一覧**:
+
+- <a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> — 全コスプレプロンプト
+- <a href="/tag/%E3%82%BB%E3%83%BC%E3%83%A9%E3%83%BC%E6%9C%8D" class="text-sky-600 hover:underline">/tag/セーラー服</a> — セーラー服専用
+- <a href="/tag/%E5%88%B6%E6%9C%8D" class="text-sky-600 hover:underline">/tag/制服</a> — 学校制服専用
+- <a href="/tag/%E3%83%A1%E3%82%A4%E3%83%89" class="text-sky-600 hover:underline">/tag/メイド</a> — メイド服専用
+
+**関連ガイド**:
+
+- <a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト完全ガイド</a> — 服装全般（コスプレ以外）
+- <a href="/guides/hairstyle-prompt-guide" class="text-sky-600 hover:underline">髪型プロンプト完全ガイド</a> — コスプレと組合せる髪型表現
+- <a href="/guides/body-type-prompt-guide" class="text-sky-600 hover:underline">体型プロンプト完全ガイド</a> — キャラ体型のコントロール
+- <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">色プロンプト完全ガイド</a> — 衣装の色滲み対策
+- <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎・ControlNet`,
       },
     ],
     faq: [
       {
         q: 'キャラ名を直接プロンプトに書いても問題ないですか？',
-        a: '個人利用（学習・研究・私的鑑賞）では問題ありませんが、公開・販売・商用利用する場合は著作権・パブリシティ権のリスクがあります。衣装要素を分解して描写する方法（例: セーラー服＋ツインテール＋水色髪）で、キャラの特徴を暗示する程度に留めるのが安全です。',
+        a: '個人利用（学習・研究・私的鑑賞）では問題ありませんが、公開・販売・商用利用する場合は著作権・パブリシティ権のリスクがあります。衣装要素を分解して描写する方法（例: セーラー服＋ツインテール＋水色髪）で、キャラの特徴を暗示する程度に留めるのが安全です。**コミッション販売**でも同様 — Etsy / Booth / Kickstarter は近年「AI 生成 + 既存 IP の表現」を理由に削除対応を強化しているため、要素分解アプローチが商用安全策です。',
       },
       {
         q: 'セーラー服が長袖で出てしまいます。夏服にするには？',
-        a: '「short sleeves」「summer uniform」「white sailor uniform」を明示的に追加してください。さらにネガティブプロンプトに「long sleeves, winter uniform, navy」を入れると確実です。逆に冬服（長袖紺色）にしたい場合は「long sleeves, navy sailor uniform, winter uniform」を指定します。',
+        a: '`short sleeves` `summer uniform` `white sailor uniform` を明示し、**ネガティブに `long sleeves, winter uniform, navy sailor, scarf`** を必ず入れる。AI のデフォルトは「冬服紺色 + 長袖」の傾向があるため、夏服を出すには両方向（ポジティブで夏要素強調 + ネガティブで冬要素排除）の指定が必要。色も明示するとさらに安定：`white blouse, navy pleated skirt, blue ribbon` で関東風夏服、`black sailor blouse, white collar` で関西黒セーラー。',
+      },
+      {
+        q: 'メイド服を AI が出してくれない / 普通のドレスになる',
+        a: '**3 つの原因** があります。（1）**ジャンル指定の欠如**: `maid uniform` だけだと「黒いドレス」と解釈される。`classic maid` `french maid` `victorian maid` を必ず併用。（2）**エプロンが消える**: `(white apron:1.3), (frilled apron:1.2), lace trim` で強調。AI のメイド服はエプロンが質素になりやすい。（3）**カチューシャ / ヘッドピース不足**: `frilled headband` `white mob cap` `lace bonnet` を追加。さらに `holding tea tray` `feather duster` などの小物を加えると「メイドらしさ」が引き立つ。アニメ系モデルなら `maid` Danbooru タグが最も強力。',
+      },
+      {
+        q: '制服とセーラー服の違いは？プロンプトでどう使い分ける？',
+        a: '**「制服」は包括ワード**で、ブレザー制服 / セーラー服 / 体操服など全てを含みます。プロンプトでは具体性を出したいので使い分けを推奨。**ブレザー制服**: `school blazer uniform, plaid skirt, school tie` — 私立高校・大学などモダンな雰囲気。**セーラー服**: `sailor uniform, sailor collar, pleated skirt, ribbon` — 伝統校・中学校・90 年代風。**両方含む英訳**: `Japanese high school uniform` で AI に判断を任せる手もあるが、結果がブレやすい。「日本の制服全般」を AI に伝えるなら `school uniform, Japanese style` が無難。',
+      },
+      {
+        q: '学校制服の年代別（昭和 / 平成 / 令和）バリエーションは？',
+        a: '日本の制服文化は時代で大きく変わります。**昭和（〜1989）**: `1970s school uniform, sailor uniform, long pleated skirt below knee, white socks` — 長めスカート + 白ソックス。**平成初期（1990s-2000s）**: `1990s school uniform, short pleated skirt, loose socks, blazer with tie` — ルーズソックス + 短いスカート（コギャル世代）。**平成後期〜令和**: `modern Japanese school uniform, blazer with pleated skirt, knee-high socks, neat appearance` — ブレザー主流、清潔感重視。**令和**: `modern school uniform with ribbon tie, tablet computer, contemporary Japanese student` — 多様性配慮・パンツスタイル選択肢も。年代キーワードを足すだけで雰囲気が一変します。',
       },
       {
         q: 'コスプレ写真をリアル写真風にするには？',
-        a: 'モデル選択が最重要です。ChilloutMix、BeautifulRealistic、Realistic Vision などの実写系 Stable Diffusion モデルを使い、プロンプトに「professional photography, 8K, photorealistic, skin detail, studio lighting」を追加します。Anime 系モデルでは原理的にリアル写真調は出ません。',
+        a: 'モデル選択が最重要です。**ChilloutMix / BeautifulRealistic / Realistic Vision / Juggernaut XL** などの実写系 Stable Diffusion モデルを使い、プロンプトに `professional cosplay photography, 8K, photorealistic, skin detail, studio lighting, ring light` を追加。**Anime 系モデルでは原理的にリアル写真調は出ません**。さらにリアル感を出すには：（1）`ring light` をライティングに含める（コスプレ撮影定番）、（2）`studio backdrop` で背景をシンプルに、（3）`canon 5d mark iv, 50mm f/1.4` のようなカメラ機材タグを追加、（4）解像度 1024×1536 以上で生成。**ADetailer** で顔だけ自動再生成するとプロ撮影品質に近づきます。',
       },
       {
-        q: '小物（刀・帽子・翼など）が消えてしまいます',
-        a: '重み付けで強制的に主張を強めます。例: 「(holding katana:1.3), (wings:1.3)」。それでも消える場合は小物単体の文を別の BREAK セクションに入れる（例: 「sailor uniform BREAK holding a red ribbon bag」）、または参照画像を ControlNet に入れるのが確実です。',
+        q: '小物（刀・帽子・翼・カチューシャなど）が消えてしまいます',
+        a: '**3 段階の対処**があります。（1）**重み付けで主張**: `(holding katana:1.3)` `(frilled headband:1.3)` `(angel wings:1.4)` — 1.3 程度が安全圏、1.5 以上は崩壊リスク。（2）**BREAK で独立節化**: `maid uniform BREAK (white frilled headband with lace:1.3)` のように小物を独立トークン群に分離。（3）**ControlNet OpenPose + reference image**: 持ち物がある参考画像を ControlNet に読み込ませて強制描画。さらに **ネガティブ**に `empty hands, missing accessory, no hat` を入れると消失を防げる。それでもダメな場合は **inpaint で後付け** が確実 — 小物部分だけ手動マスクして「(katana:1.4)」で塗り直す。',
+      },
+      {
+        q: 'ツインテール × セーラー服のような組合せがうまく描けません',
+        a: '**順序ルールが重要**: 髪型 → 衣装 → 小物の順で前半に置く。例: `1girl, twintails blonde hair, sailor uniform, white blouse, navy pleated skirt, red ribbon, knee-high socks` のように髪型を先頭近くに。**重み付け併用**: `(twintails:1.2)` で髪型を強調しつつ `(sailor uniform:1.2)` でセーラー服を確保 — 両方 1.2 程度の同等重みが綺麗。**髪色**との組合せ: ブロンド `blonde twintails`、黒 `black twintails`、ピンク `pink twintails`。アニメ系モデル（Counterfeit / NovelAI）が圧倒的に得意。サンプル: <a href="/prompt/twintail-blonde-sailor-outfit" class="text-sky-600 hover:underline">ツインテール × ブロンドセーラー</a> がそのままコピペ可能なテンプレです。',
       },
     ],
   },
@@ -2933,7 +3355,9 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 **本ガイドで扱う 14 シチュエーション**: BL カップル / 百合カップル / 男女カップル / 兄妹 / 親子 / 先輩後輩 / ファンタジー（騎士×魔法使い）/ RPG パーティ（戦士×ヒーラー）/ ビジネス同僚 / VTuber アイドル / 壁ドン構図 / ハグシーン / メカ×パイロット / 3 人組グループ。
 
-実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。`,
+実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
+
+**🚀 身長差・体格差プロンプトをそのままサイト内で実行できる「AI 画像生成ツール」も公開中**: 各 prompt 詳細ページの「ここで試す」ボタンから、Stable Diffusion / fal.ai SDXL ベースのプロンプト実行ツールが起動します（無料登録で 3 ポイント、1 回 5 ポイント）。ローカル環境構築不要・WebUI 不要で、コピペした身長差プロンプトをワンクリック実行 → 画像が手に入る AI ツールとして、本ガイド全プロンプトに対応しています。詳しくは <a href="/tools" class="text-sky-600 hover:underline">/tools</a> でツール一覧を確認できます。`,
       },
       {
         title: 'なぜ身長差を AI に明示しないと描けないのか — モデルのデフォルト挙動',

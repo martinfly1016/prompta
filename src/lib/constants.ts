@@ -645,8 +645,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'cosplay-prompt-guide',
-    title: 'コスプレプロンプトの書き方｜セーラー服・メイド服・ファンタジー衣装を再現する呪文',
-    description: 'AIイラストでコスプレを再現するプロンプト完全ガイド。セーラー服・メイド・ナース・巫女・ファンタジー衣装の呪文例と Stable Diffusion / NovelAI の使い分けを徹底解説。',
+    title: 'コスプレプロンプト完全ガイド｜セーラー服・メイド服・学校制服 + 8 衣装【コピペOK】',
+    description: 'AI コスプレプロンプト完全ガイド。セーラー服（夏服/冬服/黒）、メイド服（フレンチ/ヴィクトリアン/ゴシック）、学校制服（ブレザー/ダークアカデミア）+ 巫女・ナース・着物など 30+ コピペテンプレ。Stable Diffusion / NovelAI / Midjourney / DALL-E 使い分け解説。',
     targetKeyword: 'コスプレ プロンプト 書き方',
     monthlySearchVolume: 480,
   },
