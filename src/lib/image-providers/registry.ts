@@ -69,3 +69,76 @@ export function recommendForPrompt(args: {
   // Default: image generation (hairstyle, clothing, anime, creative, etc.)
   return { mode: 'image-gen', defaultProviderId: 'gemini-image' }
 }
+
+/**
+ * Anti-bias keyword patterns that fast-sdxl reliably fails on, regardless
+ * of negative_prompt / cfg_scale / weighting. These signal compositions
+ * that contradict the model's training distribution (reverse pairings,
+ * extreme contrast, strict character count, opposite-of-stereotype body
+ * types). Empirically validated against the 2026-05-27 体格差カップル
+ * batch where fast-sdxl scored 1/6 on first pass and 2/3 on retry, while
+ * gpt-image-1 scored 3/3 on the same hard subset.
+ *
+ * Detection is intentionally permissive (any single hit triggers): the
+ * 8x cost of gpt-image-1 over fast-sdxl ($0.04 vs $0.005) is far smaller
+ * than the cost of shipping a wrong image + unpublish + retry cycle.
+ */
+const ANTI_BIAS_PATTERNS: RegExp[] = [
+  // reverse-pairing keywords (height/body inversion of stereotype)
+  /\breverse\s+(?:height|body|size)\b/i,
+  /\b(?:woman|female)\s+taller\s+than\s+(?:man|male)\b/i,
+  /\btaller\s+(?:woman|female)\b.*\b(?:shorter|smaller|petite)\s+(?:man|male)\b/i,
+  // extreme female muscular dominance
+  /\bfemale\s+bodybuilder\b/i,
+  /\b(?:extremely\s+)?muscular\s+wom[ae]n\b/i,
+  /\bwoman\s+(?:much\s+)?more\s+muscular\s+than\s+(?:man|male)\b/i,
+  // strict count + dramatic body contrast (where SDXL drifts toward similar bodies)
+  /\b2girls\b.*\b(?:curvy|hourglass|voluptuous)\b.*\b(?:petite|flat|slim|delicate)\b/i,
+  /\b(?:dramatic|extreme)\s+(?:body|muscle)\s+(?:size|mass)\s+(?:difference|contrast)\b/i,
+  // explicit "female dominance" semantic
+  /\bfemale\s+dominance\b/i,
+]
+
+export interface PickImageProviderOpts {
+  /** The English prompt text being submitted to the image model. */
+  promptText: string
+  /** Force a specific provider (skips heuristics). For testing / one-offs. */
+  override?: ProviderId
+}
+
+/**
+ * Pick the best image provider for a given prompt at batch-generation
+ * time. Returns `fal-sdxl` for in-distribution prompts (cheap, fast) and
+ * escalates to `openai-image` (gpt-image-1) when anti-bias keywords are
+ * detected.
+ *
+ * Use this in `src/scripts/collect/_<batch>_*.ts` instead of hard-coding
+ * `FAL_ENDPOINT`. The 8x cost premium for the small fraction of
+ * anti-bias prompts is well worth the brief-match accuracy.
+ *
+ * @example
+ *   const { providerId, reason } = pickImageProvider({ promptText: p.content })
+ *   const buf = providerId === 'openai-image'
+ *     ? await callGptImage(p.naturalDescription)
+ *     : await callFalSdxl(p.content)
+ */
+export function pickImageProvider(opts: PickImageProviderOpts): {
+  providerId: ProviderId
+  reason: string
+} {
+  if (opts.override) {
+    return { providerId: opts.override, reason: `override=${opts.override}` }
+  }
+  const hits: string[] = []
+  for (const re of ANTI_BIAS_PATTERNS) {
+    const m = opts.promptText.match(re)
+    if (m) hits.push(m[0])
+  }
+  if (hits.length > 0) {
+    return {
+      providerId: 'openai-image',
+      reason: `anti-bias hits: ${hits.slice(0, 3).map((h) => JSON.stringify(h)).join(', ')}`,
+    }
+  }
+  return { providerId: 'fal-sdxl', reason: 'in-distribution, default' }
+}

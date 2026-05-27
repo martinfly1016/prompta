@@ -738,6 +738,58 @@ cd src/scripts/collect && cat /tmp/prompta-final.json | npx tsx write-prompts.ts
 读取 `/tmp/prompta-results.json`，统计 success/failure 数量。
 报告：成功写入数、失败数、各 slug。
 
+**🚨 重要 — 新規バッチ生成スクリプトでは `isPublished: false` を default に**:
+`download-images.ts` / `write-prompts.ts` 既存パイプライン経由ではなく、独立 batch script（`_<batch>_<date>.ts` 形式）で直接 `prisma.prompt.create` する場合、必ず `isPublished: false` で insert。理由は Phase 6.5 で詳述。
+
+### Phase 6.5: Visual QA Gate（2026-05-27 追加）
+
+**目的**: render 成功 ≠ brief 合致。fal SDXL は黒画像 / safety-bloced / 構図ミスでも `200 OK` で 50KB+ の画像を返してくるため、`enable_safety_checker=true` のレスポンス成功だけで publish すると低品質画像が線上ノイズになる。
+
+**核心ルール**: バッチ生成は `isPublished: false` で DB insert → agent が `Read` ツールで **画像を 1 件ずつ視覚審査** → PASS のみ手動 republish。
+
+**執行步驟**（独立 batch script 経由の新規生成、または source=text 系で画像 render が伴うケース）:
+
+1. **画像保存**: batch script は `seo/style-test-samples/output/<batch-name>/<slug>.{jpg,png}` に保存
+2. **逐張審査**: 全件について以下を判定
+   ```
+   Read seo/style-test-samples/output/<batch-name>/<slug>.{jpg,png}
+   ```
+   判定基準: PASS / MARGINAL / FAIL（brief 一致度 + 解剖学崩壊 + 構図適合性）
+3. **republish PASS のみ**:
+   ```ts
+   await prisma.prompt.update({ where: { slug }, data: { isPublished: true } })
+   ```
+4. **FAIL 件の retry**: 別 retry script で `gpt-image-1` に escalate して再生成（後述「モデル選定マトリックス」）
+5. Phase 8 report に PASS / MARGINAL / FAIL の内訳 + retry 結果を記載
+
+**モデル選定マトリックス**（Phase 1 で text → image を render する batch script を新規に書くとき）:
+
+| Prompt パターン | 推奨モデル | 単価 | 理由 |
+|---|---|---|---|
+| 標準日常構図（カフェ、学校、通勤、ジム、屋外）| `fal-ai/fast-sdxl` | $0.005 | 訓練分布内、コスト最優 |
+| 既存写真の編集（背景置換 / 髪色変更）| Gemini Nano Banana | $0.039 | 身份保持強 |
+| **反訓練偏差**: reverse, 極端 contrast, strict count, female dominance, male petite, 2girls-with-body-diff | `gpt-image-1` | $0.04 (8×) | fast-sdxl では brief を捕捉できない |
+| 中等難度（複雑構図だが anti-bias ではない）| `fal-ai/flux-dev` (PoC 待ち) | ~$0.025 | sdxl / gpt 中間 |
+
+**自動分流ヘルパー**: `src/lib/image-providers/registry.ts` の `pickImageProvider(promptText)` が anti-bias キーワードを正規表現で検出して `fal-sdxl` / `openai-image` を自動切替。新 batch script では:
+
+```ts
+import { pickImageProvider } from '../../lib/image-providers/registry'
+const { providerId, reason } = pickImageProvider({ promptText: p.content })
+console.log(`  📍 provider: ${providerId} (${reason})`)
+const buf = providerId === 'openai-image'
+  ? await callGptImage(p.naturalDescription)  // descriptive English, no danbooru weights
+  : await callFalSdxl(p.content, p.negative)  // SD tag-style, weight syntax OK
+```
+
+**OpenAI safety filter 注意**: `gpt-image-1` は `high school` + 体型形容詞（`large bust`, `voluptuous` 等）の組合せで `safety_violations=[sexual]` 拒否。書き換え戦略: `adult women` + `hourglass silhouette` のような中立シルエット表現に置換。
+
+**過去の参考実装**:
+- ✅ `_bodytype_diff_batch_2026_05_27.ts` (fast-sdxl 初回)
+- ✅ `_bodytype_diff_retry_2026_05_27.ts` (fast-sdxl heavier negative retry)
+- ✅ `_bodytype_diff_gpt_retry_2026_05_27.ts` (gpt-image-1 natural language retry — 3/3 PASS)
+- `scripts/_unpublish-bodytype-diff-fails.ts` / `scripts/_republish-bodytype-pass.ts` (unpublish + republish パターン例)
+
 ### Phase 7: 线上验证
 
 1. 等待 70 秒让 ISR 刷新：
