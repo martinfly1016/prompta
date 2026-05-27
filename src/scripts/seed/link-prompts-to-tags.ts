@@ -68,6 +68,34 @@ const RULES: TagRule[] = [
       'school-uniform-pleated-skirt',
     ],
   },
+  {
+    // 2026-05-27: /tag/体格差 currently has only 5 dark-fantasy "怪物×老人"
+    // prompts that mismatch the dominant 体格差 search intent (恋愛カップル /
+    // 攻め受け / 親子 / 戦士×魔法使い). GSC「体格差ツール」410 imp/月 pos 8.4
+    // CTR 0.49% confirms severe content-intent mismatch.
+    //
+    // Retag 8 height-diff + 6 BL prompts that are真正的 ペア体格差 to grow
+    // the tag from 5 → 19 and align with search intent.
+    slug: '体格差',
+    includeSlugs: [
+      // height-diff guide series — clear ペア体格差 (5/24 ship)
+      'height-diff-fantasy-knight-mage',         // 巨大装甲騎士 210cm × 小柄魔法使い 150cm
+      'height-diff-mecha-pilot-android',          // メカ 18m × パイロット 160cm（極端スケール）
+      'height-diff-siblings-brother-sister',      // 高校生兄 × 小学生妹（大人体 vs 子供体）
+      'height-diff-parent-child-hand-holding',    // 父 178cm × 娘 110cm
+      'height-diff-rpg-party-warrior-healer',     // 戦士 × ヒーラー（筋肉 vs 細身）
+      'height-diff-hug-tall-embracing-short',     // 高身長が小柄を包み込む
+      'height-diff-couple-kabedon-looking-up',    // 壁ドン構図（攻め受け体格差）
+      'height-diff-bl-couple-tall-short',         // BL 高身長攻め × 低身長受け
+      // BL guide series — clear 攻め × 受け 体格差 (5/24 ship)
+      'bl-couple-princess-carry-rescue',          // お姫様抱っこ（体格差必須）
+      'bl-couple-kabedon-school',                 // 壁ドン（高身長 × 小柄）
+      'bl-couple-kiss-leaning-down',              // 屈んでキス（体格差顕著）
+      'bl-couple-looking-up-tension',             // 見上げる × 見下ろす対面
+      'bl-couple-hug-from-behind',                // 後ろからハグ
+      'bl-couple-fantasy-knight-mage',            // BL 騎士 × 魔法使いペア
+    ],
+  },
 ]
 
 async function main() {
