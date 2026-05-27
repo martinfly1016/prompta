@@ -112,7 +112,7 @@ function parseOutput(raw: string): SeoOutput {
   return { seoTitle, seoDescription, seoIntro }
 }
 
-async function processTag(p: PrismaClient, slug: string, apiKey: string): Promise<{ slug: string; ok: boolean; introLen?: number; error?: string }> {
+export async function processTag(p: PrismaClient, slug: string, apiKey: string): Promise<{ slug: string; ok: boolean; introLen?: number; error?: string }> {
   const tag = await p.tag.findUnique({
     where: { slug },
     include: {
@@ -200,4 +200,6 @@ async function main() {
   await p.$disconnect()
 }
 
-main().catch(e => { console.error(e); process.exit(1) })
+if (require.main === module) {
+  main().catch(e => { console.error(e); process.exit(1) })
+}
