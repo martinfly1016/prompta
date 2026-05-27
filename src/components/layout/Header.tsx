@@ -151,7 +151,7 @@ function MobileNav() {
   return (
     <>
       <input type="checkbox" id="mobile-menu-toggle" className="peer hidden" />
-      <div className="md:hidden peer-checked:block hidden border-t border-gray-200 bg-white">
+      <div className="md:hidden peer-checked:block hidden border-t border-gray-200 bg-white max-h-[calc(100vh-4rem)] supports-[height:100dvh]:max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain">
         <div className="px-4 py-3 space-y-1">
           <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">AIツール</p>
           <Link href="/tools" className="block px-3 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
