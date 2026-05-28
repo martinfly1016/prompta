@@ -9,14 +9,54 @@ interface Props {
   emailEnabled: boolean
 }
 
+const DOMAIN_TYPOS: Record<string, string> = {
+  'gmail.con': 'gmail.com',
+  'gmail.co': 'gmail.com',
+  'gmial.com': 'gmail.com',
+  'gmai.com': 'gmail.com',
+  'gamil.com': 'gmail.com',
+  'gmal.com': 'gmail.com',
+  'gmail.cm': 'gmail.com',
+  'gmail.cmo': 'gmail.com',
+  'yahho.com': 'yahoo.com',
+  'yaho.com': 'yahoo.com',
+  'yahoo.con': 'yahoo.com',
+  'yahoo.co.jpp': 'yahoo.co.jp',
+  'yahoo.cp.jp': 'yahoo.co.jp',
+  'hotmail.con': 'hotmail.com',
+  'hotmal.com': 'hotmail.com',
+  'outlok.com': 'outlook.com',
+  'outlook.con': 'outlook.com',
+  'outllook.com': 'outlook.com',
+  'icloud.con': 'icloud.com',
+  'iclould.com': 'icloud.com',
+  'icloud.cm': 'icloud.com',
+}
+
+function detectEmailTypo(email: string): string | null {
+  const domain = email.split('@')[1]?.toLowerCase()
+  if (!domain) return null
+  const suggestion = DOMAIN_TYPOS[domain]
+  if (!suggestion) return null
+  return email.replace(/@.+$/, '@' + suggestion)
+}
+
 export function SignInForm({ callbackUrl, googleEnabled, emailEnabled }: Props) {
   const [email, setEmail] = useState('')
   const [pending, setPending] = useState(false)
   const [sent, setSent] = useState(false)
+  const [typoSuggestion, setTypoSuggestion] = useState<string | null>(null)
 
   async function handleEmail(e: React.FormEvent) {
     e.preventDefault()
     if (!email.trim()) return
+
+    const suggestion = detectEmailTypo(email.trim())
+    if (suggestion && !typoSuggestion) {
+      setTypoSuggestion(suggestion)
+      return
+    }
+    setTypoSuggestion(null)
     setPending(true)
     try {
       const res = await signIn('email', {
@@ -101,11 +141,33 @@ export function SignInForm({ callbackUrl, googleEnabled, emailEnabled }: Props) 
               required
               placeholder="example@gmail.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); setTypoSuggestion(null) }}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-sky-400 focus:ring-1 focus:ring-sky-400 outline-none text-sm"
               disabled={pending}
             />
           </label>
+          {typoSuggestion && (
+            <div className="px-4 py-3 bg-amber-50 border border-amber-200 rounded-lg text-sm">
+              <p className="text-amber-800 mb-2">
+                もしかして <strong>{typoSuggestion}</strong> ですか？
+              </p>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => { setEmail(typoSuggestion); setTypoSuggestion(null) }}
+                  className="px-3 py-1.5 bg-amber-600 text-white text-xs font-semibold rounded-lg hover:bg-amber-700 transition-colors"
+                >
+                  修正する
+                </button>
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 bg-white text-gray-600 text-xs font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+                >
+                  このまま送信
+                </button>
+              </div>
+            </div>
+          )}
           <button
             type="submit"
             disabled={pending || !email.trim()}
