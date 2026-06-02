@@ -710,7 +710,7 @@ export const GUIDES: Guide[] = [
     slug: 'height-difference-pair-prompt',
     title: '身長差プロンプトのやり方・作り方完全ガイド｜推しとの身長差・体格差をAIで描く',
     description:
-      '身長差プロンプトのやり方・作り方を解説。推しとの身長差、BL・百合・男女カップル、逆身長差、体格差を Stable Diffusion・Midjourney・DALL-E で描く英語プロンプト例、ポーズ、ControlNet、失敗対策まで実例つきで紹介。',
+      '身長差プロンプトのやり方・作り方を解説。推しとの身長差、BL・百合・男女カップル、逆身長差、体格差を Stable Diffusion・Midjourney・DALL-E で描く英語プロンプト例、身長差メーカー、ポーズ、ControlNet、失敗対策まで実例つきで紹介。',
     targetKeyword: '身長差 プロンプト',
     monthlySearchVolume: 12100,
   },

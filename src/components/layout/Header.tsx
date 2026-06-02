@@ -33,6 +33,17 @@ export function Header() {
                   </Link>
                   {/* Featured interactive tools */}
                   <Link
+                    href="/tools/height-difference-maker"
+                    className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-white border border-sky-100 hover:border-sky-300 hover:bg-sky-50 transition-all"
+                  >
+                    <span className="text-lg shrink-0">📏</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-sky-700 whitespace-nowrap">身長差メーカー</div>
+                      <div className="text-xs text-gray-500 whitespace-nowrap">推しとの身長差プロンプト</div>
+                    </div>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">NEW</span>
+                  </Link>
+                  <Link
                     href="/tools/personal-color-analysis"
                     className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 hover:border-sky-300 transition-all"
                   >
@@ -156,6 +167,14 @@ function MobileNav() {
           <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">AIツール</p>
           <Link href="/tools" className="block px-3 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
             すべてのツール
+          </Link>
+          <Link
+            href="/tools/height-difference-maker"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-white rounded-lg border border-sky-100"
+          >
+            <span>📏</span>
+            <span className="whitespace-nowrap">身長差メーカー</span>
+            <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
           </Link>
           <Link
             href="/tools/personal-color-analysis"

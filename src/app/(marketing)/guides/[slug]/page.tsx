@@ -3359,7 +3359,29 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**🚀 身長差・体格差プロンプトをそのままサイト内で実行できる「AI 画像生成ツール」も公開中**: 各 prompt 詳細ページの「ここで試す」ボタンから、Stable Diffusion / fal.ai SDXL ベースのプロンプト実行ツールが起動します（無料登録で 3 ポイント、1 回 5 ポイント）。ローカル環境構築不要・WebUI 不要で、コピペした身長差プロンプトをワンクリック実行 → 画像が手に入る AI ツールとして、本ガイド全プロンプトに対応しています。詳しくは <a href="/tools" class="text-sky-600 hover:underline">/tools</a> でツール一覧を確認できます。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。`,
+      },
+      {
+        title: '身長差メーカーで推しとの身長差プロンプトを作る',
+        content: `検索で増えている **「身長差メーカー」「体格差ツール」「推しとの身長差 AI」** の意図は、長い解説を読むより「自分のキャラ設定ですぐプロンプトを作りたい」というものです。
+
+Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> では、以下を選ぶだけでコピペ用の英語プロンプトを生成できます。
+
+| 入力 | 例 | プロンプトに入る要素 |
+|---|---|---|
+| モード | 身長差 / 体格差 / 逆身長差 / 3人構図 | height difference, body size difference, reverse height difference |
+| 身長 | 188cm × 158cm | around 188cm, around 158cm |
+| 関係性 | 推しカップル / BL / 百合 / 先輩後輩 | relationship context |
+| ポーズ | 見上げる / ハグ / 壁ドン / 並び立ち | looking up, embracing, kabe-don, side by side |
+| 画風 | anime / photorealistic / fantasy | style and rendering direction |
+
+**Stable Diffusion 向け**には、\`(height difference:1.35)\` のような重み付けと、\`same height, equal height, identical body proportions\` を含むネガティブプロンプトを同時に出力します。
+
+**Midjourney 向け**には、重み付け記法を外して \`--ar 9:16 --v 6 --style raw\` を付けた文章寄りプロンプトに変換します。
+
+**ChatGPT 画像生成向け**には、日本語で考えたキャラ設定を自然な英語指示に変換し、「片方が明らかに高い」「全身構図で差が見える」ことを明示します。
+
+まず生成器でベースを作り、うまく出ない場合だけ本ガイドの各セクションで \`ControlNet\`、\`ネガティブプロンプト\`、\`ポーズ別構図\` を調整するのが最短ルートです。`,
       },
       {
         title: 'なぜ身長差を AI に明示しないと描けないのか — モデルのデフォルト挙動',
@@ -3858,6 +3880,9 @@ man towering over woman
       },
     ],
     faq: [
+      { q: '身長差メーカーはありますか？', a: 'はい。Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズ・画風を選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを作成できます。体格差ツールとしても使え、`same height` や `equal height` を除外するネガティブプロンプトも自動生成します。' },
+      { q: '推しとの身長差 AI はどう作ればいいですか？', a: '最短は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で「推しカップル」を選び、高い人物・低い人物の特徴と身長を入力する方法です。生成されたプロンプトに、推しの髪型・服装・表情・関係性を追加すると、SNS で流行している「推しとの身長差」風の構図を作りやすくなります。' },
+      { q: 'ChatGPTで身長差プロンプトを作れますか？', a: '作れます。ChatGPT に「高い人物は188cm、低い人物は158cm、全身構図で明確な身長差が見える画像生成プロンプトを英語で作って」と依頼してください。ただし、Stable Diffusion 用なら `2 characters`, `(height difference:1.35)`, `same height` をネガティブに入れるなど、画像生成モデル向けの調整が必要です。Prompta の身長差メーカーはこの変換を自動で行います。' },
       { q: '「身長差」「体格差」「体型差」の違いは？プロンプトでの使い分けは？', a: '日本語の SNS / pixiv / X では **3 語ともほぼ同義**で使われており、AI 画像生成プロンプトとしてはどれを書いても同じ結果になります。ただし**ニュアンス**には微妙な違いがあります。**身長差 (height difference)**: 純粋に「背の高さ」の差を指す最も明確な語。英語プロンプトでは `height difference` が定訳。**体格差 (build / size difference)**: 身長 + 骨格 + 筋肉量を含む「体つき全体」の差。「巨大な騎士 × 小柄な魔法使い」「筋肉質 × ガリ細」のような構図に最適。英語では `size difference` `build difference`。**体型差 (body type difference)**: 体格差とほぼ同義だが、より「プロポーション・シルエット」寄り。「ぽっちゃり × スレンダー」「グラマラス × ボーイッシュ」のような対比に向く。英語では `body type contrast`。**実用結論**: 検索する時は好きな語で OK、本ガイドは 3 語すべてに対応しています。プロンプトを書く時は `height difference, size difference, body type contrast` の 3 つを並列で入れると最も確実に「2 人の差」が描かれます。' },
       { q: 'プロンプトに身長 cm を書いても効きますか？', a: '**Stable Diffusion / Midjourney は数値そのものを正確には理解しません**が、「188cm」「150cm」のような表記は AI が「大きい数字 = 高い、小さい数字 = 低い」という相対比較として処理してくれます。完全な精度は出ませんが、書かないより書いたほうが効果あり。**より確実な方法**は `tall around 185cm` のように形容詞 + 数値で挟むこと、または `tall and short` `dramatic height difference` のような明示的キーワードを併用することです。DALL-E 3 は自然言語の理解力が高いため、cm 表記の効きが比較的良いです。' },
       { q: '「2girls / 2boys」の指定は必須ですか？', a: 'Stable Diffusion（特にアニメ系モデル）では**ほぼ必須**です。danbooru タグで学習されているため、`2girls` `2boys` `1boy and 1girl` `3 characters` のような人数指定がないと、AI は「カップル」と書いても 1 人だけ描いたり、4 人描いたりと不安定。Midjourney と DALL-E 3 では自然言語で「two characters」「a couple」と書けば理解しますが、それでも明示したほうが安定します。' },

@@ -28,10 +28,34 @@ export default async function ToolsPage() {
           {/* Featured interactive tools */}
           <div className="mb-12">
             <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">インタラクティブ AI ツール</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <Link
+                href="/tools/height-difference-maker"
+                className="group block p-6 bg-white rounded-lg border border-sky-200 hover:border-sky-400 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="text-5xl shrink-0">📏</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
+                        身長差メーカー
+                      </h3>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                      推しとの身長差・体格差・逆身長差の AI 画像生成プロンプトを自動作成。SD / MJ / ChatGPT 対応。
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="px-2 py-0.5 bg-sky-50 rounded-full border border-sky-100 text-sky-700">無料</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">作成する →</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
               <Link
                 href="/tools/personal-color-analysis"
-                className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-2xl border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
+                className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-lg border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
               >
                 <div className="flex items-start gap-5">
                   <div className="text-5xl shrink-0">🎨</div>
@@ -54,7 +78,7 @@ export default async function ToolsPage() {
 
               <Link
                 href="/tools/hair-color-diagnosis"
-                className="group block p-6 bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 rounded-2xl border border-violet-100 hover:border-violet-300 hover:shadow-lg transition-all"
+                className="group block p-6 bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 rounded-lg border border-violet-100 hover:border-violet-300 hover:shadow-lg transition-all"
               >
                 <div className="flex items-start gap-5">
                   <div className="text-5xl shrink-0">💇</div>

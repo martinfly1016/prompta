@@ -35,6 +35,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Interactive AI tools (not the brand-tool catalog) — high priority for SEO
     {
+      url: `${BASE}/tools/height-difference-maker`,
+      lastModified: latestDate,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${BASE}/tools/personal-color-analysis`,
       lastModified: latestDate,
       changeFrequency: 'weekly',

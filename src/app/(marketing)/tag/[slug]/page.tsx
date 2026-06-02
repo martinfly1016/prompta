@@ -50,6 +50,21 @@ const TAG_GUIDE_CTA_COPY: Record<string, { label: string; description: string }>
   },
 }
 
+const TAG_TO_TOOL: Record<string, { href: string; label: string; title: string; description: string }> = {
+  '身長差': {
+    href: '/tools/height-difference-maker',
+    label: '身長差メーカー',
+    title: '推しとの身長差プロンプトを作成する',
+    description: '身長・関係性・ポーズを選ぶだけで、Stable Diffusion / Midjourney / ChatGPT 用の英語プロンプトを生成できます。',
+  },
+  '体格差': {
+    href: '/tools/height-difference-maker',
+    label: '体格差ツール',
+    title: '体格差構図プロンプトを作成する',
+    description: '筋肉量・肩幅・横幅の差を強調する体格差プロンプトとネガティブプロンプトを生成できます。',
+  },
+}
+
 interface Props {
   params: { slug: string }
   searchParams: { page?: string }
@@ -101,6 +116,7 @@ export default async function TagPage({ params, searchParams }: Props) {
   const relatedGuide =
     TAG_TO_GUIDE[tag] ?? (primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined)
   const guideCtaCopy = TAG_GUIDE_CTA_COPY[tag]
+  const relatedTool = TAG_TO_TOOL[tag]
 
   const tagUrl = `${SITE_CONFIG.url}/tag/${params.slug}`
   const collectionSchema = generateCollectionPageSchema(
@@ -146,6 +162,29 @@ export default async function TagPage({ params, searchParams }: Props) {
                 </p>
                 <p className="text-xs text-gray-600 mt-0.5">
                   {guideCtaCopy?.description ?? 'プロンプトの書き方・使い方を詳しく解説（5分）'}
+                </p>
+              </div>
+              <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          )}
+
+          {relatedTool && page === 1 && (
+            <Link
+              href={relatedTool.href}
+              className="group flex items-center gap-3 mb-6 p-4 bg-white border border-sky-200 rounded-lg hover:border-sky-400 hover:bg-sky-50 transition-colors"
+            >
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-sky-50 text-lg shrink-0">
+                📏
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide mb-0.5">
+                  {relatedTool.label}
+                </p>
+                <p className="text-sm font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
+                  {relatedTool.title}
+                </p>
+                <p className="text-xs text-gray-600 mt-0.5">
+                  {relatedTool.description}
                 </p>
               </div>
               <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>

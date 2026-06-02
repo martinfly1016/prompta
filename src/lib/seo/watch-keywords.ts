@@ -64,6 +64,10 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: '身長差プロンプト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Core head query; guide is canonical educational landing page' },
   { keyword: '身長差プロンプトとは', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Definition intent; guide title/intro/FAQ should own it' },
   { keyword: '推しとの身長差 ai プロンプト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Fan/OC intent with lower CTR; monitor snippet fit' },
+  { keyword: '身長差メーカー', cluster: 'height-difference-spike', targetPage: '/tools/height-difference-maker', discoveredAt: '2026-06-02', notes: 'Tool intent: 28d 1678 imp / CTR 0.42% / pos 8.89 before tool launch' },
+  { keyword: '体格差ツール', cluster: 'height-difference-spike', targetPage: '/tools/height-difference-maker', discoveredAt: '2026-06-02', notes: 'Tool intent: 28d 1161 imp / CTR 0.34% / pos 8.71 before tool launch; watch cannibalization' },
+  { keyword: '推しとの身長差', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Fan/social intent: 28d 642 imp / pos 10.13; guide now links to maker' },
+  { keyword: '身長差 chatgpt', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'ChatGPT image-generation wording; guide FAQ and maker ChatGPT mode added' },
 
   // ============================================================
   // head-ai: 5/12 ship 优化目标（持续追踪）
