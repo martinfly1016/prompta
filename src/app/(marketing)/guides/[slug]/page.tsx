@@ -3894,6 +3894,224 @@ man towering over woman
       { q: 'BL / 百合カップル特有の身長差表現は？', a: 'BL / 百合カップルでは「**役割の視覚的記号化**」が重要です。BL なら「**高身長攻め × 低身長受け**」(`tall seme around 195cm, shorter uke around 165cm`) が定番。「攻め × 受け」を直接書くより `dominant tall partner` / `gentle shorter partner` のような英語表現のほうが安全（NSFW フィルター回避）。**百合** なら「**長身お姉さん × 小柄妹系**」(`tall onee-san type, petite imouto type`) の構図がファンアートで頻出。ポーズも BL は「壁ドン」「ハグ」「頭を撫でる」、百合は「お姫様抱っこ」「頭ぽんぽん」が定番。本ガイドでは <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">BL カップル</a> と <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">百合カップル</a> のテンプレを公開中、コピペで使えます。' },
     ],
   },
+  'oshi-height-difference-ai-guide': {
+    sections: [
+      {
+        title: '推しとの身長差 AI は「身長差メーカー」から作るのが最短',
+        content: `**推しとの身長差 AI** は、推しキャラや OC ペアの身長差を AI 画像生成で再現する作り方です。検索意図は「解説を読む」よりも「自分の推し設定ですぐプロンプトを作る」に近いため、まず <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> でベースを作るのが最短です。
+
+おすすめ設定:
+
+| 入力 | 推奨 |
+|---|---|
+| モード | 身長差 |
+| 関係性 | 推しカップル / VTuber デュオ / 先輩後輩 |
+| ポーズ | 見上げる・見下ろす / 手をつなぐ / ハグ |
+| 画風 | anime illustration / shoujo manga style |
+| 背景 | school gate / cafe / idol stage |
+
+生成された英語プロンプトに、推しの髪型、服装、表情、関係性を追加すると「推しとの身長差」らしい絵になります。`,
+      },
+      {
+        title: 'コピペ用：推しカップル身長差プロンプト',
+        content: `Stable Diffusion 向けの基本形です。キャラ名や外見だけ差し替えて使えます。
+
+\`\`\`
+2 characters, favorite original character couple,
+tall partner around 188cm, long dark hair, calm expression, elegant outfit,
+petite partner around 158cm, short pastel hair, gentle smile, cute outfit,
+(height difference:1.35), (tall and short:1.25),
+shorter character looking up, taller character looking down gently,
+school gate at golden hour, anime illustration, full body shot,
+clear full-body proportions, (masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+same height, equal height, identical body proportions, same size,
+bad anatomy, bad hands, extra arms, fused bodies, cropped legs,
+worst quality, low quality, blurry
+\`\`\`
+
+Midjourney では重み付け括弧を外し、末尾に \`--ar 9:16 --v 6 --style raw\` を追加します。`,
+      },
+      {
+        title: 'ChatGPT で推しとの身長差プロンプトを作る指示文',
+        content: `ChatGPT 画像生成や DALL-E 系に渡す場合は、呪文タグよりも自然文で「差が見えること」を明示します。
+
+\`\`\`
+Create an image prompt for two favorite original characters.
+Character A is clearly taller, around 188cm, calm and protective.
+Character B is shorter, around 158cm, cute and gentle.
+Show a clear height difference in a full body composition.
+The shorter character is looking up and the taller character is looking down gently.
+Use anime illustration style with a warm school gate background.
+\`\`\`
+
+ポイントは **clearly taller**、**clear height difference**、**full body composition** を入れることです。顔アップだけでは身長差が伝わらないため、全身または膝上以上の構図を指定します。`,
+      },
+      {
+        title: '関連テンプレート',
+        content: `さらに細かく調整したい場合は、以下を使い分けてください。
+
+- <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> — 自分の推し設定で即生成
+- <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト完全ガイド</a> — ControlNet、逆身長差、失敗対策
+- <a href="/guides/height-difference-illustration-composition-guide" class="text-sky-600 hover:underline">身長差イラスト構図テンプレート</a> — ポーズ別の構図
+- <a href="/tag/身長差" class="text-sky-600 hover:underline">身長差プロンプト集</a> — 画像付き実例`,
+      },
+    ],
+    faq: [
+      { q: '推しとの身長差 AI は無料で作れますか？', a: 'はい。Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> は無料でプロンプトを作成できます。生成自体は Stable Diffusion、Midjourney、ChatGPT 画像生成など利用するツールの料金体系に従います。' },
+      { q: '推しキャラの名前を入れてもいいですか？', a: '個人利用の範囲では名前をメモとして入れても構いませんが、画像生成では外見特徴を具体的に書く方が安定します。髪型、服装、表情、色、身長差を明示してください。' },
+      { q: '夢絵風にするには？', a: '`romantic tension`, `gentle eye contact`, `holding hands`, `soft shoujo manga style` のような関係性と画風を追加します。身長差は `clear height difference` と `full body shot` を必ず入れてください。' },
+    ],
+  },
+  'body-size-difference-prompt-guide': {
+    sections: [
+      {
+        title: '体格差プロンプトとは',
+        content: `**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。
+
+すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> のモードを **体格差** に切り替えると、\`body size difference\`、\`build difference\`、\`broad shoulders versus narrow shoulders\` などを自動で追加できます。`,
+      },
+      {
+        title: 'コピペ用：筋肉質 × 小柄キャラ',
+        content: `体格差で最も安定するのは、肩幅と筋肉量を明確に分ける書き方です。
+
+\`\`\`
+2 characters, dramatic body size difference,
+muscular tall character around 190cm, broad shoulders, thick arms, strong torso,
+petite slim character around 158cm, narrow shoulders, delicate frame,
+standing side by side, clear full-body proportions,
+(body size difference:1.4), (build difference:1.35), muscle mass contrast,
+anime illustration, soft studio background, (masterpiece:1.2), (best quality:1.4)
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+same body type, identical builds, equal body sizes,
+same height, bad anatomy, fused bodies, extra arms, blurry
+\`\`\``,
+      },
+      {
+        title: 'BL・ファンタジー向け体格差テンプレート',
+        content: `**BL 体格差**
+
+\`\`\`
+2boys, protective taller partner with broad shoulders around 190cm,
+shorter gentle partner around 165cm with slim build,
+clear build difference, taller one embracing the shorter one,
+full body shot, shoujo manga style, (body size difference:1.35)
+\`\`\`
+
+**ファンタジー体格差**
+
+\`\`\`
+1 massive armored knight and 1 small mage,
+huge knight around 210cm, heavy armor, broad silhouette,
+petite mage around 150cm, slim robe, holding staff,
+dramatic size contrast, torch-lit dungeon, fantasy concept art,
+(size difference:1.45), full body shot
+\`\`\`
+
+身長差だけだと細身同士になりやすいので、\`broad shoulders\`、\`thick arms\`、\`heavy armor\`、\`narrow shoulders\` のように横幅を示す語を足します。`,
+      },
+      {
+        title: '体格差が出ない時の修正',
+        content: `失敗しやすい原因と修正:
+
+| 失敗 | 修正 |
+|---|---|
+| 2 人が同じ体型になる | ネガティブに \`same body type\` を追加 |
+| 身長差だけで横幅差がない | \`broad shoulders\` / \`narrow shoulders\` を追加 |
+| 筋肉質が出ない | \`muscular torso\` / \`thick arms\` を前半に置く |
+| 片方だけ単体化する | \`2 characters\` / \`full body shot\` を先頭に置く |
+
+より詳しい二人構図の安定化は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト完全ガイド</a> と <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図プロンプト完全ガイド</a> を参照してください。`,
+      },
+    ],
+    faq: [
+      { q: '体格差と身長差は同じですか？', a: '近いですが違います。身長差は背の高さ、体格差は肩幅・筋肉量・骨格・横幅を含む身体全体の差です。プロンプトでは `height difference` と `body size difference` を両方入れると安定します。' },
+      { q: '体格差ツールはありますか？', a: 'はい。<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> の「体格差」モードを使うと、体格差向けの英語プロンプトとネガティブプロンプトを自動生成できます。' },
+      { q: '体格差を強く出すキーワードは？', a: '`body size difference`, `build difference`, `broad shoulders`, `narrow shoulders`, `muscle mass contrast`, `dramatic size contrast` が有効です。' },
+    ],
+  },
+  'height-difference-illustration-composition-guide': {
+    sections: [
+      {
+        title: '身長差イラストは構図で決まる',
+        content: `**身長差イラスト** は、キーワードだけでなく構図が重要です。顔アップやバストアップでは差が伝わりにくいため、\`full body shot\`、\`side by side\`、\`looking up\`、\`looking down\` などを組み合わせます。
+
+まず <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長とポーズを選び、このページの構図テンプレートを追加すると安定します。`,
+      },
+      {
+        title: '構図テンプレート 6 種',
+        content: `**1. 並び立ち**
+
+\`\`\`
+standing side by side, full body shot, even spacing, clear height difference
+\`\`\`
+
+**2. 見上げる・見下ろす**
+
+\`\`\`
+shorter character looking up, taller character looking down gently, soft eye contact
+\`\`\`
+
+**3. 手をつなぐ**
+
+\`\`\`
+holding hands, walking together, side angle, full body composition
+\`\`\`
+
+**4. ハグ**
+
+\`\`\`
+tall character embracing the shorter one, shorter one resting head on taller character's chest
+\`\`\`
+
+**5. 壁ドン**
+
+\`\`\`
+kabe-don pose, taller character hand on wall, shorter character looking up, shoujo manga composition
+\`\`\`
+
+**6. 3人並び**
+
+\`\`\`
+three characters in horizontal lineup, tall character on the left, medium character in the middle, short character on the right, character design sheet
+\`\`\``,
+      },
+      {
+        title: '身長差が見えやすい画角',
+        content: `おすすめの画角:
+
+| 画角 | 使いどころ |
+|---|---|
+| full body shot | 身長差を最も確実に見せる |
+| knee-up shot | 表情と身長差の両立 |
+| low angle | 高い人物をより大きく見せる |
+| side angle | 見上げ・見下ろしを自然に見せる |
+| character lineup | 設定資料・3人構図向け |
+
+避けたい画角は \`close-up face\` と \`portrait crop\` です。顔だけになると身長差が消えるため、ネガティブに \`cropped legs\` を入れるのも有効です。`,
+      },
+      {
+        title: '関連ページ',
+        content: `- <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> — 構図を選んでプロンプト生成
+- <a href="/guides/oshi-height-difference-ai-guide" class="text-sky-600 hover:underline">推しとの身長差 AI の作り方</a> — 推しカップル向け
+- <a href="/guides/body-size-difference-prompt-guide" class="text-sky-600 hover:underline">体格差プロンプト集</a> — 筋肉量・肩幅の差
+- <a href="/tag/身長差" class="text-sky-600 hover:underline">身長差プロンプト実例</a> — 画像付きサンプル`,
+      },
+    ],
+    faq: [
+      { q: '身長差イラストで一番安定する構図は？', a: '`standing side by side, full body shot` が最も安定します。見上げ・ハグ・壁ドンは魅力的ですが、二人構図の崩れが増えるため、まず並び立ちで確認するのがおすすめです。' },
+      { q: '3人の身長差も作れますか？', a: 'はい。<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> の「3人構図」モードを使い、tall / medium / short の順番と立ち位置を明示してください。' },
+      { q: '身長差が消える原因は？', a: '顔アップ、人数指定不足、ネガティブ不足が主な原因です。`full body shot`, `2 characters`, `same height` negative を入れてください。' },
+    ],
+  },
   'two-person-composition-prompt-guide': {
     sections: [
       {

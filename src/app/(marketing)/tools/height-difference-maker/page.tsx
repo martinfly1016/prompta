@@ -132,6 +132,27 @@ export default function HeightDifferenceMakerPage() {
                 <p className="text-sm text-gray-600">推しとの身長差、体格差、逆身長差、ControlNet、失敗対策をまとめています。</p>
               </Link>
               <Link
+                href="/guides/oshi-height-difference-ai-guide"
+                className="block rounded-lg border border-gray-200 bg-white p-4 hover:border-sky-400 transition-colors"
+              >
+                <h3 className="text-base font-bold text-gray-900 mb-1">推しとの身長差 AI の作り方</h3>
+                <p className="text-sm text-gray-600">推しカップル、OC ペア、夢絵風の身長差プロンプトを短く作る方法。</p>
+              </Link>
+              <Link
+                href="/guides/body-size-difference-prompt-guide"
+                className="block rounded-lg border border-gray-200 bg-white p-4 hover:border-sky-400 transition-colors"
+              >
+                <h3 className="text-base font-bold text-gray-900 mb-1">体格差プロンプト集</h3>
+                <p className="text-sm text-gray-600">筋肉量、肩幅、骨格、横幅の差を出すコピペ例とネガティブ。</p>
+              </Link>
+              <Link
+                href="/guides/height-difference-illustration-composition-guide"
+                className="block rounded-lg border border-gray-200 bg-white p-4 hover:border-sky-400 transition-colors"
+              >
+                <h3 className="text-base font-bold text-gray-900 mb-1">身長差イラスト構図テンプレート</h3>
+                <p className="text-sm text-gray-600">見上げる、ハグ、壁ドン、3 人並びなど構図別テンプレート。</p>
+              </Link>
+              <Link
                 href="/tag/%E8%BA%AB%E9%95%B7%E5%B7%AE"
                 className="block rounded-lg border border-gray-200 bg-white p-4 hover:border-sky-400 transition-colors"
               >

@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Check, Copy, RefreshCw, Ruler, Users, Wand2 } from 'lucide-react'
+import { trackToolEvent } from '@/lib/track'
 
 type Mode = 'height' | 'body' | 'reverse' | 'trio'
 type OutputType = 'stable-diffusion' | 'midjourney' | 'chatgpt'
@@ -184,9 +185,37 @@ export function HeightDifferenceMaker() {
   const negativePrompt = useMemo(() => buildNegativePrompt(mode), [mode])
   const gap = Math.abs(heightA - heightB)
 
+  useEffect(() => {
+    trackToolEvent('height_difference_tool_view', {
+      tool: 'height-difference-maker',
+      surface: 'tool-page',
+    })
+  }, [])
+
+  const trackInteraction = (action: string, extra: Record<string, unknown> = {}) => {
+    trackToolEvent('height_difference_tool_click', {
+      tool: 'height-difference-maker',
+      surface: 'tool-page',
+      action,
+      mode,
+      output_type: outputType,
+      height_gap: gap,
+      ...extra,
+    })
+  }
+
   const copyText = async (kind: 'prompt' | 'negative', text: string) => {
     await navigator.clipboard.writeText(text)
     setCopied(kind)
+    trackToolEvent('height_difference_prompt_copy', {
+      tool: 'height-difference-maker',
+      surface: 'tool-page',
+      copy_kind: kind,
+      mode,
+      output_type: outputType,
+      height_gap: gap,
+      prompt_length: text.length,
+    })
     window.setTimeout(() => setCopied(null), 1600)
   }
 
@@ -197,6 +226,7 @@ export function HeightDifferenceMaker() {
     setDescriptionB(descriptionA)
     setHeightA(heightB)
     setHeightB(heightA)
+    trackInteraction('swap_characters')
   }
 
   return (
@@ -216,7 +246,10 @@ export function HeightDifferenceMaker() {
                   key={option.value}
                   type="button"
                   data-testid={`height-maker-mode-${option.value}`}
-                  onClick={() => setMode(option.value)}
+                  onClick={() => {
+                    setMode(option.value)
+                    trackInteraction('mode_change', { next_mode: option.value })
+                  }}
                   className={`min-h-[74px] rounded-lg border px-3 py-2 text-left transition-colors ${
                     mode === option.value
                       ? 'border-sky-500 bg-sky-50 text-sky-900'
@@ -310,7 +343,10 @@ export function HeightDifferenceMaker() {
               key={value}
               type="button"
               data-testid={`height-maker-output-${value}`}
-              onClick={() => setOutputType(value)}
+              onClick={() => {
+                setOutputType(value)
+                trackInteraction('output_change', { next_output_type: value })
+              }}
               className={`rounded-lg border px-2 py-2 text-sm font-semibold transition-colors ${
                 outputType === value
                   ? 'border-gray-900 bg-gray-900 text-white'

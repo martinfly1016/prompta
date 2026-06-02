@@ -68,6 +68,13 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: '体格差ツール', cluster: 'height-difference-spike', targetPage: '/tools/height-difference-maker', discoveredAt: '2026-06-02', notes: 'Tool intent: 28d 1161 imp / CTR 0.34% / pos 8.71 before tool launch; watch cannibalization' },
   { keyword: '推しとの身長差', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Fan/social intent: 28d 642 imp / pos 10.13; guide now links to maker' },
   { keyword: '身長差 chatgpt', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'ChatGPT image-generation wording; guide FAQ and maker ChatGPT mode added' },
+  { keyword: '推しとの身長差 ai', cluster: 'height-difference-spike', targetPage: '/guides/oshi-height-difference-ai-guide', discoveredAt: '2026-06-02', notes: 'P1 landing page for fan/social intent; should funnel to maker' },
+  { keyword: '身長差 ai', cluster: 'height-difference-spike', targetPage: '/tools/height-difference-maker', discoveredAt: '2026-06-02', notes: 'Broad tool intent; monitor whether tool or guide wins' },
+  { keyword: '身長差 イラスト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-illustration-composition-guide', monthlyVolume: 1900, discoveredAt: '2026-06-02', notes: 'P1 composition landing page; watch CTR and image-intent snippets' },
+  { keyword: 'カップル 身長差 プロンプト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Couple modifier; guide remains canonical' },
+  { keyword: '逆身長差', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Reverse height-difference mode supported in maker; may deserve standalone if impressions rise' },
+  { keyword: '3人 身長差 構図', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-illustration-composition-guide', discoveredAt: '2026-06-02', notes: 'Trio composition intent; maker has 3人構図 mode' },
+  { keyword: '体格差 プロンプト集', cluster: 'height-difference-spike', targetPage: '/guides/body-size-difference-prompt-guide', monthlyVolume: 2400, discoveredAt: '2026-06-02', notes: 'P1 body-size landing page; compare against existing height guide cannibalization' },
 
   // ============================================================
   // head-ai: 5/12 ship 优化目标（持续追踪）

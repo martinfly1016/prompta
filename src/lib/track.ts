@@ -96,6 +96,15 @@ export function trackPromptTry(
   fireDbIncrement('copy', promptId)
 }
 
+export function trackToolEvent(eventName: string, params: Record<string, unknown>) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  try {
+    window.gtag('event', eventName, params)
+  } catch {
+    // ignore
+  }
+}
+
 // --- Freemium tool paywall funnel events ---
 // 3-step funnel: paywall_view → paywall_purchase_click → checkout_started → (Stripe success)
 // Trigger labels distinguish how the user reached the paywall.

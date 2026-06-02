@@ -715,6 +715,30 @@ export const GUIDES: Guide[] = [
     monthlySearchVolume: 12100,
   },
   {
+    slug: 'oshi-height-difference-ai-guide',
+    title: '推しとの身長差 AI の作り方｜身長差メーカーで推しカップル画像プロンプトを作成',
+    description:
+      '推しとの身長差を AI 画像生成で作る方法。身長差メーカー、ChatGPT、Stable Diffusion、Midjourney 向けに、推しカップル・OC ペア・夢絵風構図の英語プロンプトをコピペ例つきで解説。',
+    targetKeyword: '推しとの身長差 AI',
+    monthlySearchVolume: 640,
+  },
+  {
+    slug: 'body-size-difference-prompt-guide',
+    title: '体格差プロンプト集｜筋肉量・肩幅・体型差をAI画像生成で描くコピペ例',
+    description:
+      '体格差プロンプトの書き方とコピペ例。筋肉質×小柄、巨漢×細身、BL 体格差、ファンタジー体格差を Stable Diffusion・Midjourney・ChatGPT 画像生成向けに解説。',
+    targetKeyword: '体格差 プロンプト',
+    monthlySearchVolume: 2400,
+  },
+  {
+    slug: 'height-difference-illustration-composition-guide',
+    title: '身長差イラスト構図テンプレート｜カップル・BL・百合・3人並びのAIプロンプト',
+    description:
+      '身長差イラストの構図テンプレート集。見上げる、見下ろす、ハグ、壁ドン、手つなぎ、3人並びを AI 画像生成プロンプトで再現する方法を紹介。',
+    targetKeyword: '身長差 イラスト',
+    monthlySearchVolume: 1900,
+  },
+  {
     slug: 'two-person-composition-prompt-guide',
     title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド — 関係性別 30 構図テンプレート',
     description:
@@ -795,6 +819,18 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
     categories: ['creative'],
   },
   'height-difference-pair-prompt': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['body-type', 'anime', 'cosplay', 'clothing'],
+  },
+  'oshi-height-difference-ai-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['body-type', 'anime', 'cosplay', 'clothing'],
+  },
+  'body-size-difference-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'dall-e'],
+    categories: ['body-type', 'anime', 'cosplay', 'clothing'],
+  },
+  'height-difference-illustration-composition-guide': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['body-type', 'anime', 'cosplay', 'clothing'],
   },

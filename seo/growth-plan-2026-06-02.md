@@ -198,3 +198,71 @@ SEMrush snapshot 显示该簇仍是最大中期机会：
 3. watch list 增加 P0 关键词。
 
 这组三项最贴近已经发生的需求，且可以直接验证：看 `身長差メーカー` / `体格差ツール` 的 CTR 和排名是否在 7〜14 天内改善。
+
+## P1 执行记录 — 2026-06-02
+
+在 P0 工具页上线后，继续把身長差 spike 变成可复制的增长闭环。
+
+### 1. GA4 事件
+
+`/tools/height-difference-maker` 增加客户端事件：
+
+- `height_difference_tool_view`
+- `height_difference_tool_click`
+- `height_difference_prompt_copy`
+
+后续观察重点：`height_difference_prompt_copy / height_difference_tool_view`。如果有流量后复制率低于 5%，优先把输出区位置前移或改 CTA。
+
+### 2. 近邻关键词落地页
+
+新增 3 个 guide landing page：
+
+- `/guides/oshi-height-difference-ai-guide` — `推しとの身長差 AI`
+- `/guides/body-size-difference-prompt-guide` — `体格差 プロンプト / 体格差 プロンプト集`
+- `/guides/height-difference-illustration-composition-guide` — `身長差 イラスト / 3人 身長差 構図`
+
+这些页面都强内链到 `/tools/height-difference-maker`，工具页也反向链接到这 3 个页面。
+
+### 3. Watch keywords 扩展
+
+新增追踪：
+
+- `推しとの身長差 ai`
+- `身長差 ai`
+- `身長差 イラスト`
+- `カップル 身長差 プロンプト`
+- `逆身長差`
+- `3人 身長差 構図`
+- `体格差 プロンプト集`
+
+### 4. 监控脚本
+
+新增低频脚本：
+
+```bash
+npx tsx src/scripts/data-analys/height-diff-growth-monitor.ts --days=7
+```
+
+脚本输出：
+
+- GSC query performance
+- GSC landing-page performance
+- GA4 page traffic
+- GA4 工具事件
+- URL Inspection baseline
+- GSC sitemap submit
+- 手动 Request Indexing 清单
+
+首次试跑结果（P1 新页面部署前）：
+
+- `/tools/height-difference-maker`: URL Inspection `PASS`, `Submitted and indexed`, last crawl `2026-06-02T09:52:05Z`。
+- `/guides/height-difference-pair-prompt`: 7d `834 clicks / 13,455 impressions / CTR 6.20% / pos 7.04`。
+- `身長差メーカー`: 7d `7 clicks / 1,678 impressions / CTR 0.42% / pos 8.89`，仍落到 guide，后续应观察是否转向 tool。
+- `推しとの身長差 ai`: 7d `1 click / 130 impressions / CTR 0.77% / pos 7.75`，现分配给新 landing page。
+- `体格差ツール`: 7d `0 clicks / 58 impressions / pos 9.72`，当前落到 `/guides/body-type-prompt-guide`，新 `body-size` 页 indexed 后需要看 cannibalization。
+
+### 5. 下次决策规则
+
+- `pos 6-15 + impressions 上升 + CTR < 1%`：改 title/meta 或补 FAQ snippet。
+- GSC winning page 与 `watch-keywords.ts` 目标页不一致：给目标页加更强内链。
+- 工具页有流量但复制率低：调整输出区和 CTA，而不是继续新增内容。
