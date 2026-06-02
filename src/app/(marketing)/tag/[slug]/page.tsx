@@ -14,7 +14,7 @@ export const revalidate = 60
 // default (e.g. 身長差/体格差 → dedicated pair-prompt guide, not the broader
 // body-type guide that absorbs every body-related query).
 const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
-  '身長差': { slug: 'height-difference-pair-prompt', title: '身長差プロンプト完全ガイド｜二人の身長差を確実に描く' },
+  '身長差': { slug: 'height-difference-pair-prompt', title: '身長差プロンプトのやり方・作り方完全ガイド' },
   '体格差': { slug: 'height-difference-pair-prompt', title: '身長差・体格差プロンプト完全ガイド' },
   'BL': { slug: 'bl-composition-prompt-guide', title: 'BL カップル構図のAIプロンプト完全ガイド' },
   'BL ポーズ': { slug: 'bl-pose-collection-guide', title: 'BL ポーズ集｜AIで再現する男性 2 人の定番 30 ポーズ完全ガイド' },
@@ -37,6 +37,17 @@ const CATEGORY_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'anime':     { slug: 'anime-prompt-guide', title: 'アニメ風プロンプトの書き方ガイド' },
   'body-type': { slug: 'body-type-prompt-guide', title: '体型・身長差プロンプトの書き方ガイド' },
   'color':     { slug: 'color-prompt-guide', title: '色・カラープロンプトの書き方ガイド' },
+}
+
+const TAG_GUIDE_CTA_COPY: Record<string, { label: string; description: string }> = {
+  '身長差': {
+    label: 'やり方・作り方を先に読む',
+    description: '推しとの身長差、BL・百合・男女カップル、逆身長差、体格差の英語プロンプト例をまとめています。',
+  },
+  '体格差': {
+    label: '体格差の出し方を先に読む',
+    description: '筋肉質 × 小柄、騎士 × 魔法使いなど、身長差と体格差を分けて指定するコツを解説しています。',
+  },
 }
 
 interface Props {
@@ -89,6 +100,7 @@ export default async function TagPage({ params, searchParams }: Props) {
     : []
   const relatedGuide =
     TAG_TO_GUIDE[tag] ?? (primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined)
+  const guideCtaCopy = TAG_GUIDE_CTA_COPY[tag]
 
   const tagUrl = `${SITE_CONFIG.url}/tag/${params.slug}`
   const collectionSchema = generateCollectionPageSchema(
@@ -123,15 +135,18 @@ export default async function TagPage({ params, searchParams }: Props) {
           {relatedGuide && page === 1 && (
             <Link
               href={`/guides/${relatedGuide.slug}`}
-              className="group flex items-center gap-3 mb-6 p-4 bg-gradient-to-r from-sky-50 to-indigo-50 border border-sky-200 rounded-xl hover:border-sky-400 hover:shadow-md transition-all"
+              className="group flex items-center gap-3 mb-6 p-4 bg-sky-50 border border-sky-200 rounded-lg hover:border-sky-400 hover:bg-sky-100 transition-colors"
             >
-              <span className="flex-shrink-0 text-2xl">📘</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide mb-0.5">解説ガイド</p>
+                <p className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide mb-0.5">
+                  {guideCtaCopy?.label ?? '解説ガイド'}
+                </p>
                 <p className="text-sm font-bold text-gray-900 group-hover:text-sky-700 transition-colors truncate">
                   {relatedGuide.title}
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">プロンプトの書き方・使い方を詳しく解説（5分）</p>
+                <p className="text-xs text-gray-600 mt-0.5">
+                  {guideCtaCopy?.description ?? 'プロンプトの書き方・使い方を詳しく解説（5分）'}
+                </p>
               </div>
               <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>
             </Link>

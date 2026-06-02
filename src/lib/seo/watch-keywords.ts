@@ -19,6 +19,7 @@
 
 export type WatchCluster =
   | 'top10-defense'      // already top-10, watch for regression
+  | 'height-difference-spike' // 2026-05 身長差 spike exact queries
   | 'head-ai'             // ai プロンプト / プロンプト 系（5/12 SEO ship 目标）
   | 'tools-hair'          // hair-color 工具长尾
   | 'tools-pc'            // personal-color 工具长尾
@@ -50,9 +51,19 @@ export const WATCH_KEYWORDS: WatchKeyword[] = [
   { keyword: 'コスプレ プロンプト', cluster: 'top10-defense', targetPage: '/prompts/cosplay', discoveredAt: '2026-04-16' },
   { keyword: '体型 プロンプト', cluster: 'top10-defense', targetPage: '/prompts/body-type', discoveredAt: '2026-04-16' },
   { keyword: 'アニメキャラ プロンプト', cluster: 'top10-defense', targetPage: '/prompts/anime', discoveredAt: '2026-04-16' },
-  { keyword: '身長差 プロンプト', cluster: 'top10-defense', targetPage: '/tag/身長差', discoveredAt: '2026-04-16' },
-  { keyword: '体格差 プロンプト', cluster: 'top10-defense', targetPage: '/tag/体格差', discoveredAt: '2026-04-16' },
+  { keyword: '身長差 プロンプト', cluster: 'top10-defense', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-04-16', notes: '2026-06-02: main target moved from tag gallery to dedicated guide after traffic spike analysis' },
+  { keyword: '体格差 プロンプト', cluster: 'top10-defense', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-04-16', notes: '2026-06-02: main target moved from tag gallery to dedicated guide' },
   { keyword: '画像生成ai プロンプト例 アニメ', cluster: 'top10-defense', targetPage: '/prompts/anime', discoveredAt: '2026-04-16' },
+
+  // ============================================================
+  // height-difference-spike: 2026-05-22~05-24 organic spike cluster.
+  // Monitor exact queries for CTR/rank regression after guide/title update.
+  // ============================================================
+  { keyword: '身長差プロンプトやり方', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Peak query: 715 clicks 2026-05-19~05-25; monitor top-1 retention and CTR normalization' },
+  { keyword: '身長差プロンプト作り方', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'High recent query after spike; title now includes 作り方' },
+  { keyword: '身長差プロンプト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Core head query; guide is canonical educational landing page' },
+  { keyword: '身長差プロンプトとは', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Definition intent; guide title/intro/FAQ should own it' },
+  { keyword: '推しとの身長差 ai プロンプト', cluster: 'height-difference-spike', targetPage: '/guides/height-difference-pair-prompt', discoveredAt: '2026-06-02', notes: 'Fan/OC intent with lower CTR; monitor snippet fit' },
 
   // ============================================================
   // head-ai: 5/12 ship 优化目标（持续追踪）
