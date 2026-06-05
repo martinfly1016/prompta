@@ -148,6 +148,12 @@ export const GUIDE_HERO_IMAGES: Record<string, { url: string; alt: string }[]> =
       "alt": "汎用ネガティブプロンプト - prompta.jp ガイド挿絵"
     }
   ],
+  "image-aspect-ratio-916-prompt-guide": [
+    {
+      "url": "/guides/image-aspect-ratio-916/example-comparison.svg",
+      "alt": "16:9画像を9:16に縦長化する比較例"
+    }
+  ],
   "hairstyle-prompt-guide": [
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/hairstyle-prompt-guide/section-0-QT0tm5EtT1xTuOpiZB9jRhJ90YMpLt.jpg",
