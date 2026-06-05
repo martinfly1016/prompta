@@ -1806,7 +1806,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 
 各カテゴリで 4-5 個のコピペ可能テンプレートを公開、合計 **20+ シチュエーション**。実例は <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> に公開中で、すべてサンプル画像つきです。
 
-2 人以上の **身長差・体格差カップル** を描きたい場合は、姉妹ガイドの <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> を参照してください。`,
+2 人以上の **身長差・体格差カップル** を描きたい場合は、姉妹ガイドの <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト作り方ガイド</a> を参照してください。すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長・関係性・ポーズを選ぶだけでコピペ用プロンプトを作れます。`,
       },
       {
         title: 'なぜ AI は体型を指定しないと「同じような体つき」しか描かないのか',
@@ -3340,7 +3340,7 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
   'height-difference-pair-prompt': {
     sections: [
       {
-        title: '身長差プロンプトとは — 2 人以上のキャラを描く時の必須スキル',
+        title: '身長差プロンプト作り方 — 2 人以上のキャラを描く時の必須スキル',
         content: `**身長差プロンプト**（別名: **体格差プロンプト** / **体型差プロンプト**）とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**身長や体格の異なる 2 人以上のキャラクターを同じ画面に描く**」ための呪文（指示文）です。
 
 日本語では「**身長差**」「**体格差**」「**体型差**」の 3 語がほぼ同じ意味で使われており（厳密な使い分けは [FAQ](#faq) 参照）、本ガイドはこの 3 語すべてに対応します。
@@ -3359,11 +3359,11 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。`,
       },
       {
-        title: '身長差メーカーで推しとの身長差プロンプトを作る',
-        content: `検索で増えている **「身長差メーカー」「体格差ツール」「推しとの身長差 AI」** の意図は、長い解説を読むより「自分のキャラ設定ですぐプロンプトを作りたい」というものです。
+        title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
+        content: `検索で増えている **「身長差プロンプト作り方」「身長差プロンプトやり方」「身長差メーカー」「体格差ツール」「推しとの身長差 AI」** の意図は、長い解説を読むより「自分のキャラ設定ですぐプロンプトを作りたい」というものです。
 
 Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> では、以下を選ぶだけでコピペ用の英語プロンプトを生成できます。
 
@@ -5440,6 +5440,218 @@ worst quality, low quality, blurry
       { q: 'アクション ポーズ（走る / 飛ぶ）で顔崩れを防ぐには？', a: '動的ポーズは AI が顔のディテールに使うリソースを動きに割くため崩壊率が上がる。**対策**: (1) ネガティブに `bad face, distorted face, blurred face` を必須追加、(2) `(detailed face:1.3)` の重み付けを通常より高く（1.2 → 1.3）、(3) ADetailer 拡張で各キャラの顔を独立に再生成（A1111 標準機能）、(4) 動きの「瞬間」を指定 — `mid-step` `pose frozen in motion` のように静止画的に書くと顔がブレない、(5) 解像度を 768x768 以上にする。これらすべて入れて動的ポーズの顔崩壊が体感 60% → 15% に下がります。' },
       { q: '静的 vs 動的ポーズの使い分けの目安は？', a: '**初心者なら静的ポーズから**入るのがおすすめ。AI 画像生成は「静止画 + 静的ポーズ」が最も成功率高い。順序: (1) 並ぶ・座る・見つめ合うなど**静的 BL ポーズで成功体験**を積む、(2) 慣れてきたら手をつなぐ・ハグなど**軽い接触ポーズ**にチャレンジ、(3) 最後にお姫様抱っこ・壁ドン・キスなど**接触強度の高いポーズ**へ、(4) 最終段階で「振り向く」「走る」など**動的ポーズ**。動的ポーズは ControlNet OpenPose 併用が必須です。各段階で崩壊率は約 2 倍ずつ上がるので、無理せず段階的に。' },
       { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2boys, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `ChilloutMix`（注意: 一部 NSFW 寄り）、(5) **重み付け** — `(2boys:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
+    ],
+  },
+  'image-to-video-ai-prompt-guide': {
+    sections: [
+      {
+        title: '画像から動画AIプロンプトとは',
+        content: `**画像から動画AIプロンプト**とは、1枚の静止画を Kling / Seedance / Runway / Pika / Gemini などの動画生成AIに読み込ませ、カメラ移動・人物の動き・料理の湯気・背景の揺れを自然に追加するための指示文です。
+
+X では「AI料理動画」「アニメ料理動画」「Storyboard to Video」の投稿が伸びており、SEMrush でも **画像から動画 AI** は JP 月間検索量 480、KD 21% と低競争の検索需要があります。
+
+Prompta ではこのテーマを **X Hot Prompt Test Batch** の第1候補として扱います。まずは guide とコピペ prompt を公開し、7-14日後に GSC で \`画像から動画 AI\`、\`AI料理動画 プロンプト\`、\`画像から動画 ai 無料\` の表示回数を確認します。`,
+      },
+      {
+        title: 'AI料理動画プロンプトの基本構造',
+        content: `AI料理動画は「完成画像を動かす」よりも、**料理工程の1瞬間を切り取った storyboard image を動かす**方が安定します。プロンプトは次の順番で書きます。
+
+| 要素 | 書く内容 | 例 |
+|---|---|---|
+| 主体 | 何を動かすか | a bowl of ramen, a frying pan, a chef's hands |
+| 動き | どこが動くか | steam rising, sauce bubbling, hands stirring |
+| カメラ | 視点と移動 | slow push-in, top-down shot, subtle handheld camera |
+| 時間 | 動画の長さ/テンポ | 5-second cinematic food video |
+| 禁止 | 崩したくない要素 | keep the original composition, no new objects |
+
+**基本テンプレート**
+
+\`\`\`
+Animate this image into a short cinematic food video.
+Keep the original composition, ingredients, plate, and background unchanged.
+Add subtle steam rising from the hot food, gentle sauce movement, and small highlights on the surface.
+Use a slow push-in camera movement, realistic lighting, shallow depth of field.
+No extra hands, no new ingredients, no text, no camera shake, no deformation.
+\`\`\`
+
+料理動画で重要なのは、動きを盛りすぎないことです。湯気・泡・手元・カメラの4つ以上を同時に強く動かすと破綻しやすくなります。`,
+      },
+      {
+        title: 'アニメ料理動画向けコピペプロンプト',
+        content: `アニメ風の料理動画は、実写よりも「質感」より「演出」を指定した方が伸びやすいです。X で反応が出やすいのは、湯気、きらめき、麺の揺れ、ソースの照りが見える短いループです。
+
+**ラーメン湯気ループ**
+
+\`\`\`
+Turn this anime ramen illustration into a 5-second looping video.
+Keep the character, bowl, table, and background exactly the same.
+Animate soft steam rising from the ramen, a slight shimmer on the soup surface, and tiny movement in the noodles.
+Add a very slow cinematic push-in, cozy warm lighting, gentle anime atmosphere.
+Do not change the face, do not add new objects, do not distort the bowl, no text.
+\`\`\`
+
+**フライパン調理シーン**
+
+\`\`\`
+Animate this cooking illustration into a short anime food video.
+Keep the original framing and character design unchanged.
+Add gentle sizzling motion in the frying pan, small oil highlights, subtle steam, and a slow side camera drift.
+The food should look hot and appetizing, with soft kitchen lighting.
+No extra fingers, no extra utensils, no melted objects, no subtitles.
+\`\`\`
+
+**スイーツ仕上げシーン**
+
+\`\`\`
+Create a short elegant dessert video from this image.
+Keep the cake, plate, hands, and background unchanged.
+Animate glossy cream highlights, tiny sparkle particles, and a slow close-up camera movement.
+Make it feel like a polished social media food clip.
+No new decorations, no text, no warped hands, no sudden cuts.
+\`\`\``,
+      },
+      {
+        title: '画像から動画AIで崩れやすい失敗と対策',
+        content: `画像から動画 AI は、プロンプトが抽象的すぎると「新しい物を足す」「顔が変わる」「皿や手が溶ける」失敗が起きます。
+
+| 失敗 | 原因 | 対策 |
+|---|---|---|
+| 顔が変わる | 動きの対象が人物全体になっている | \`keep the face unchanged\` を入れる |
+| 皿が歪む | 食べ物と皿を同時に大きく動かしている | 動きは湯気・表面だけに限定 |
+| 手が増える | 調理動作を強く指定しすぎ | \`no extra hands, no extra fingers\` を入れる |
+| 背景が変わる | カメラ移動が大きすぎる | \`subtle push-in\` に抑える |
+| 文字が出る | SNS動画風を強く指定 | \`no text, no subtitles, no logo\` を入れる |
+
+最初は **5秒以内 / 1カメラ / 2つの動きまで**に制限してください。AI動画は長くするほど破綻率が上がるため、短いループを複数作って選ぶ方が実用的です。`,
+      },
+      {
+        title: 'このテーマをPromptaでどう育てるか',
+        content: `このページは X で伸びた「AI料理動画プロンプト」を、検索需要のある **画像から動画 AI** に接続するためのテストページです。
+
+次に見る指標は以下です。
+
+| 期間 | 見る指標 | 判断 |
+|---|---|---|
+| 7日 | GSC impressions | \`画像から動画 AI\` 系 query が出るか |
+| 14日 | CTR / position | title が検索意図に合っているか |
+| 28日 | GA sessions / copy event | 実際に読まれ、コピーされるか |
+
+表示回数が出たら、次は \`画像から動画 AI 無料\`、\`AI料理動画 作り方\`、\`動画生成 AI プロンプト\` に分けて小さなページ群を追加します。`,
+      },
+    ],
+    faq: [
+      { q: '画像から動画AIプロンプトはどのツールで使えますか？', a: 'Kling、Seedance、Runway、Pika、Luma、Gemini などの image-to-video 系ツールで使えます。ツールによって長さやカメラ移動の指定方法は違いますが、`keep the original composition unchanged` と `subtle motion` は共通して有効です。' },
+      { q: 'AI料理動画を作る時の一番重要なコツは？', a: '動かす範囲を絞ることです。湯気、泡、ソース表面、カメラ移動のうち 1-2 個だけ指定すると安定します。人物の手や顔まで大きく動かすと破綻しやすくなります。' },
+      { q: '画像から動画 AI は無料で使えますか？', a: '多くの動画生成AIには無料枠がありますが、商用利用・ウォーターマーク・生成回数は各サービスで異なります。まずは短い 5 秒動画でプロンプトを検証し、良い結果が出たら有料枠で高解像度化するのがおすすめです。' },
+    ],
+  },
+  'image-aspect-ratio-916-prompt-guide': {
+    sections: [
+      {
+        title: '16:9を9:16にするプロンプトが必要な理由',
+        content: `X で伸びていた「16:9 を 9:16 にするプロンプト」は、横長画像を縦長にしたい時に **余計な背景が増える**、**主体が小さくなる**、**構図が別物になる** という痛みを解決するテーマです。
+
+SEMrush では \`16:9 9:16 プロンプト\` や \`縦長 画像生成 プロンプト\` の検索量はまだ確認できませんでした。つまりこれは、検索データより先に X で見えている新興ニーズです。
+
+Prompta ではこのページを「X 先行テーマ」のテストとして公開します。検索量がまだ 0 に見えても、GSC に query が出るかどうかを 7-14 日で確認します。`,
+      },
+      {
+        title: '横長画像を縦長化する基本プロンプト',
+        content: `横長画像を 9:16 にする時は、「縦長にして」だけでは不十分です。AI は足りない上下領域を勝手に作り、背景や人物の比率を変えがちです。
+
+**基本テンプレート**
+
+\`\`\`
+Convert this 16:9 image into a vertical 9:16 composition.
+Keep the main subject, pose, face, outfit, lighting, and visual style unchanged.
+Extend only the top and bottom areas naturally to fit a vertical smartphone format.
+Do not crop the subject, do not make the subject smaller, do not add new people or objects.
+Preserve the original background atmosphere and camera perspective.
+\`\`\`
+
+ポイントは **extend only the top and bottom areas** と **do not make the subject smaller** です。この2つを入れると、単なる背景追加ではなく「主体を保った縦長化」になりやすくなります。`,
+      },
+      {
+        title: 'ChatGPT画像生成・Gemini向けのコピペ例',
+        content: `ChatGPT画像生成や Gemini では、タグよりも自然な文章で「何を維持するか」「どこだけ変えるか」を明示します。
+
+**人物ポートレートを9:16にする**
+
+\`\`\`
+Please reframe this image from 16:9 to 9:16 for a vertical smartphone wallpaper.
+Keep the person exactly the same: face, hairstyle, outfit, expression, pose, and lighting.
+Extend the upper and lower background naturally without adding new people, text, logos, or props.
+The subject should remain large and centered, not zoomed out.
+\`\`\`
+
+**アニメイラストを縦長化する**
+
+\`\`\`
+Transform this horizontal anime illustration into a vertical 9:16 composition.
+Keep the character design, facial expression, colors, line art, and original atmosphere unchanged.
+Add natural background continuation above and below the character only.
+Do not change the pose, do not add extra limbs, do not add text, do not crop the head or feet.
+\`\`\`
+
+**商品画像を縦長SNS用にする**
+
+\`\`\`
+Create a 9:16 vertical social media version of this product image.
+Keep the product shape, color, label, and lighting unchanged.
+Extend the background cleanly above and below, leaving space for captions.
+Do not redesign the product, do not add new objects, no text, no logo changes.
+\`\`\``,
+      },
+      {
+        title: 'Midjourney・Stable Diffusion向けの考え方',
+        content: `Midjourney や Stable Diffusion では、画像編集というより **縦長構図を再生成する** 発想になります。元画像を参照しながら、構図とアスペクト比を明示します。
+
+| ツール | 書き方 |
+|---|---|
+| Midjourney | 参照画像 + \`--ar 9:16\` + \`same character, same pose, vertical composition\` |
+| Stable Diffusion | img2img + ControlNet Reference / IP-Adapter + 縦長解像度 |
+| ChatGPT / Gemini | 自然文で「上下だけ拡張」「主体を小さくしない」と指示 |
+
+**Midjourney 例**
+
+\`\`\`
+same character, same pose, same outfit, vertical smartphone composition,
+natural extension of the background above and below,
+keep the subject large and centered, no new characters, no text --ar 9:16
+\`\`\`
+
+**Stable Diffusion img2img 例**
+
+\`\`\`
+same character, same pose, same outfit, vertical 9:16 composition,
+full body kept in frame, background extended naturally,
+high quality anime illustration, consistent lighting
+\`\`\`
+
+Negative prompt:
+
+\`\`\`
+new character, extra person, text, logo, cropped head, cropped feet,
+tiny subject, changed face, changed outfit, distorted body, extra limbs
+\`\`\``,
+      },
+      {
+        title: 'このXテーマをどう検証するか',
+        content: `このページは SEMrush ではまだ量が見えない **X 先行テーマ** です。そのため、成功判定は検索量ではなく GSC の初期反応で行います。
+
+| 期間 | 成功シグナル | 次の動き |
+|---|---|---|
+| 7日 | \`16:9 9:16\` / \`縦長 画像生成\` 系 query が出る | title / FAQ を微調整 |
+| 14日 | impressions が 20 以上 | 関連 prompt を追加 |
+| 28日 | clicks が出る | 縦長化 prompt maker を検討 |
+
+もし 14 日で 0 impressions の場合、このテーマは検索化していない可能性が高いので、追加投資せず X/社内メモ側の観察リストに戻します。`,
+      },
+    ],
+    faq: [
+      { q: '16:9画像を9:16にすると、なぜ背景が勝手に増えますか？', a: 'AI は足りない上下領域を補完する時に、学習データから自然に見える背景や物体を追加しようとします。`extend only the top and bottom areas`、`do not add new objects`、`keep the subject large` を入れると、勝手な追加を抑えやすくなります。' },
+      { q: 'ChatGPT画像生成で9:16指定はできますか？', a: 'できます。ただし単に「9:16にして」だけだと主体が小さくなることがあります。スマホ壁紙や縦長SNS用など用途を明示し、顔・服装・ポーズを維持する条件を同時に書くのが安全です。' },
+      { q: 'Stable Diffusionではどう設定しますか？', a: 'img2img で縦長解像度を指定し、ControlNet Reference や IP-Adapter で元画像の特徴を保つ方法が安定します。プロンプト側では `same character, same pose, vertical 9:16 composition` を入れ、ネガティブに `changed face, tiny subject, cropped head` を追加してください。' },
     ],
   },
 }

@@ -700,6 +700,22 @@ export const GUIDES: Guide[] = [
     monthlySearchVolume: 1300,
   },
   {
+    slug: 'image-to-video-ai-prompt-guide',
+    title: '画像から動画AIプロンプト作り方｜料理動画・アニメ動画を生成するコピペ例',
+    description:
+      '画像から動画AIプロンプトの作り方を解説。AI料理動画、アニメ料理動画、Storyboard to Video、Kling・Seedance・Runway 向けに、静止画を自然に動かす英語プロンプト例と失敗対策を紹介。',
+    targetKeyword: '画像から動画 AI',
+    monthlySearchVolume: 480,
+  },
+  {
+    slug: 'image-aspect-ratio-916-prompt-guide',
+    title: '16:9を9:16にする画像生成プロンプト｜縦長化・余白追加を防ぐコピペ例',
+    description:
+      '16:9画像を9:16の縦長構図に変換する画像生成プロンプトの書き方。ChatGPT画像生成・Gemini・Midjourneyで、主体を保ったまま不要な背景追加を防ぐ指示文とコピペ例を紹介。',
+    targetKeyword: '16:9 9:16 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
     slug: 'ai-coloring-page-prompt',
     title: 'AI塗り絵プロンプト完全ガイド｜Stable Diffusion・DALL-E で線画ぬりえを無料生成',
     description: 'AI で大人向け・子供向けの塗り絵（ぬりえ）線画を無料生成するプロンプト完全ガイド。花・マンダラ・動物・風景のテンプレート、negative prompt、Stable Diffusion / DALL-E / Midjourney の使い分け、印刷向け解像度設定まで実例つきで解説。',
@@ -708,9 +724,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'height-difference-pair-prompt',
-    title: '身長差プロンプトのやり方・作り方完全ガイド｜推しとの身長差・体格差をAIで描く',
+    title: '身長差プロンプト作り方・やり方完全ガイド｜身長差メーカーでAI生成',
     description:
-      '身長差プロンプトのやり方・作り方を解説。推しとの身長差、BL・百合・男女カップル、逆身長差、体格差を Stable Diffusion・Midjourney・DALL-E で描く英語プロンプト例、身長差メーカー、ポーズ、ControlNet、失敗対策まで実例つきで紹介。',
+      '身長差プロンプトの作り方・やり方を解説。身長差メーカーで推しとの身長差、BL・百合・男女カップル、逆身長差、体格差を Stable Diffusion・Midjourney・ChatGPT画像生成向けに作る手順、英語プロンプト例、ControlNet、失敗対策まで紹介。',
     targetKeyword: '身長差 プロンプト',
     monthlySearchVolume: 12100,
   },
@@ -817,6 +833,14 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'ai-coloring-page-prompt': {
     tools: ['stable-diffusion', 'dall-e', 'midjourney'],
     categories: ['creative'],
+  },
+  'image-to-video-ai-prompt-guide': {
+    tools: ['gemini', 'dall-e', 'midjourney'],
+    categories: ['creative', 'camera', 'anime'],
+  },
+  'image-aspect-ratio-916-prompt-guide': {
+    tools: ['gemini', 'dall-e', 'midjourney'],
+    categories: ['creative', 'camera', 'anime'],
   },
   'height-difference-pair-prompt': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
