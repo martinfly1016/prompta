@@ -105,11 +105,11 @@ export const GUIDE_HERO_IMAGES: Record<string, { url: string; alt: string }[]> =
   "chatgpt-prompt-techniques": [
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/chatgpt-prompt-techniques/section-0-MeeI7uN5aErG0R8a7KJNLOeQohJoAQ.jpg",
-      "alt": "ChatGPTプロンプトの基本テクニック - prompta.jp ガイド挿絵"
+      "alt": "ChatGPTプロンプトは用途別に分けて使う - prompta.jp ガイド挿絵"
     },
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/chatgpt-prompt-techniques/section-1-Iu9jZeEmxJk6vN3kAeYwHYn2UgGlZD.jpg",
-      "alt": "高度なテクニック - prompta.jp ガイド挿絵"
+      "alt": "画像生成で使えるChatGPTプロンプト - prompta.jp ガイド挿絵"
     }
   ],
   "prompt-language-game": [

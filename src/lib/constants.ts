@@ -624,10 +624,10 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'chatgpt-prompt-techniques',
-    title: 'ChatGPT プロンプト術：効果的な質問の仕方',
-    description: 'ChatGPTから最高の回答を引き出すプロンプトテクニック。ロール設定、ステップバイステップ、Few-Shotなどの手法を解説。',
-    targetKeyword: 'chatgpt プロンプト コツ',
-    monthlySearchVolume: 2400,
+    title: 'ChatGPTプロンプト集｜画像生成・文章作成・SEOで使える無料テンプレート',
+    description: 'ChatGPTで使える実用プロンプトテンプレート集。画像生成、写真編集、SNS投稿、SEO記事、文章作成、プロンプト改善まで、用途別にコピペ例と変数の書き換え方を解説。',
+    targetKeyword: 'chatgpt プロンプト',
+    monthlySearchVolume: 1900,
   },
   {
     slug: 'negative-prompt-guide',
@@ -701,9 +701,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'image-to-video-ai-prompt-guide',
-    title: '画像から動画AIプロンプト作り方｜料理動画・アニメ動画を生成するコピペ例',
+    title: '画像から動画AIプロンプト作り方｜無料で試せる動画生成AIコピペ例',
     description:
-      '画像から動画AIプロンプトの作り方を解説。AI料理動画、アニメ料理動画、Storyboard to Video、Kling・Seedance・Runway 向けに、静止画を自然に動かす英語プロンプト例と失敗対策を紹介。',
+      '画像から動画AIプロンプトの作り方を解説。料理動画、アニメ動画、商品紹介、人物ポートレートをKling・Runway・Pika・Geminiなどで自然に動かすコピペ例、無料枠での試し方、失敗対策を紹介。',
     targetKeyword: '画像から動画 AI',
     monthlySearchVolume: 480,
   },

@@ -743,26 +743,153 @@ Midjourneyの特徴は、アーティスティックな解釈力にあります�
   'chatgpt-prompt-techniques': {
     sections: [
       {
-        title: 'ChatGPTプロンプトの基本テクニック',
-        content: `ChatGPTで効果的な結果を得るための基本テクニックを紹介します。
+        title: 'ChatGPTプロンプトは用途別に分けて使う',
+        content: `ChatGPTプロンプトは、1つの万能テンプレートを覚えるよりも、**用途ごとに型を分けて使う**方が実用的です。文章作成、画像生成、写真編集、SNS投稿、SEO、プロンプト改善では、必要な情報がまったく違います。
 
-**ロール設定**: 「あなたは○○の専門家です」と役割を与えることで、その分野に特化した回答を引き出せます。
+まずは次の表から、目的に近い型を選んでください。
 
-**ステップバイステップ指示**: 複雑なタスクを段階的に分解して指示することで、より正確な結果が得られます。
+| 用途 | 入れるべき情報 | 出力形式 |
+|---|---|---|
+| 画像生成 | 被写体、構図、画風、光、禁止要素 | 英語プロンプト |
+| 写真編集 | 残す要素、変える要素、変えない要素 | 編集指示文 |
+| 文章作成 | 読者、目的、トーン、文字数 | 見出し付き文章 |
+| SNS投稿 | 媒体、読者、感情、CTA | 投稿文案 |
+| SEO | キーワード、検索意図、構成 | H2/H3構成 |
+| プロンプト改善 | 元プロンプト、失敗内容、目標 | 改善版 + 理由 |
 
-**出力形式の指定**: 「箇条書きで」「表形式で」「JSON形式で」など、出力形式を明示することで、使いやすい結果を得られます。`,
+Prompta では、ChatGPTを「質問に答えるツール」ではなく、**画像生成・写真編集・プロンプト変換の作業台**として使う前提でテンプレートを整理します。`,
       },
       {
-        title: '高度なテクニック',
-        content: `**Few-Shot プロンプティング**: 期待する入出力の例を1-3個提示することで、AIの理解を助けます。
+        title: '画像生成で使えるChatGPTプロンプト',
+        content: `ChatGPT画像生成や DALL-E 系では、タグを並べるよりも「何を描くか」「どう見せるか」「何を避けるか」を自然文で指定すると安定します。
 
-**Chain of Thought**: 「ステップバイステップで考えてください」と指示することで、論理的な推論を促し、より正確な回答を引き出せます。
+**基本テンプレート**
 
-**制約付きプロンプト**: 文字数、トーン、フォーマットなどの制約を明確にすることで、期待通りの出力を得やすくなります。`,
+\`\`\`
+Create an image of [subject] in [style].
+Composition: [camera angle], [framing], [background].
+Lighting: [lighting style], [time of day], [mood].
+Details: [clothing], [colors], [materials], [facial expression].
+Avoid: text, logo, watermark, extra fingers, distorted face, unwanted objects.
+\`\`\`
+
+**アニメキャラクター例**
+
+\`\`\`
+Create a polished anime-style portrait of a young character standing in a quiet city street at dusk.
+Use a medium shot, soft rim lighting, gentle wind, detailed hair, clean line art, and warm cinematic colors.
+The character wears a navy school-style jacket and has a calm expression.
+Avoid text, logo, watermark, extra fingers, distorted eyes, and messy background details.
+\`\`\`
+
+**Prompta向けの使い方**
+
+ChatGPTで作った自然文プロンプトは、そのまま画像生成に使うだけでなく、Stable DiffusionやMidjourney向けに変換できます。人物・服装・髪型・構図を分解しておくと、後から別ツールへ移植しやすくなります。`,
+      },
+      {
+        title: '写真編集・画像修正で使えるテンプレート',
+        content: `写真編集では「変える内容」よりも、**変えない内容**を明示する方が重要です。顔、髪型、服装、ポーズ、背景のうち、保持する要素を先に書くと破綻が減ります。
+
+**基本テンプレート**
+
+\`\`\`
+Edit this image by changing only [target area].
+Keep the person, face, hairstyle, pose, clothing shape, lighting, and camera angle unchanged.
+Make the change look natural and realistic.
+Do not add new people, do not change the identity, do not alter the background, no text, no watermark.
+\`\`\`
+
+**髪色変更**
+
+\`\`\`
+Change only the hair color to soft ash brown.
+Keep the face, hairstyle, hair length, outfit, pose, background, and lighting exactly the same.
+The result should look like a realistic salon hair color simulation.
+No makeup changes, no face retouching, no background changes.
+\`\`\`
+
+**証明写真向け**
+
+\`\`\`
+Convert this portrait into a clean ID photo style.
+Keep the person's identity, facial features, hairstyle, and natural skin texture unchanged.
+Use even lighting, a plain light background, centered composition, and a neutral expression.
+Do not over-retouch the face, do not change age, no text, no logo.
+\`\`\`
+
+関連ツール: <a href="/tools/personal-color-analysis" class="text-sky-600 hover:underline">パーソナルカラー診断AI</a>、<a href="/tools/hair-color-diagnosis" class="text-sky-600 hover:underline">似合う髪色診断AI</a>`,
+      },
+      {
+        title: '文章作成・SEO・SNS投稿のテンプレート',
+        content: `文章系のChatGPTプロンプトは、読者・目的・出力形式を固定すると再利用しやすくなります。
+
+**SEO記事構成**
+
+\`\`\`
+あなたは日本語SEO編集者です。
+キーワード「[keyword]」で検索する読者の検索意図を整理し、記事構成を作ってください。
+条件:
+- H1を1つ、H2を6つ、各H2にH3を2-3個
+- 初心者が知りたい順に並べる
+- 商品比較ではなく、実用手順を中心にする
+- 最後にFAQを5つ作る
+\`\`\`
+
+**X投稿文**
+
+\`\`\`
+あなたはX向けのプロンプト紹介アカウントの編集者です。
+次のプロンプトを、保存されやすい投稿文にしてください。
+
+プロンプト: [prompt]
+読者: AI画像生成を試している日本語ユーザー
+条件:
+- 1行目で用途を明確にする
+- 手順は3つ以内
+- 便利さが伝わるが煽りすぎない
+- 最後に「コピペ用」を自然に入れる
+\`\`\`
+
+**文章校正**
+
+\`\`\`
+次の文章を、自然な日本語に校正してください。
+意味は変えず、冗長な表現を削り、読みやすい段落に分けてください。
+修正後に、直した理由を3点だけ説明してください。
+
+文章:
+[text]
+\`\`\``,
+      },
+      {
+        title: 'Stable Diffusion・Midjourney用に変換する',
+        content: `ChatGPTは、自然文を画像生成AI向けのプロンプトに変換する用途でも使えます。ポイントは、**描写要素を分解してから変換する**ことです。
+
+**変換テンプレート**
+
+\`\`\`
+次の日本語の画像イメージを、Stable DiffusionとMidjourneyで使える英語プロンプトに変換してください。
+
+入力:
+[日本語のイメージ]
+
+出力:
+1. Stable Diffusion prompt
+2. Stable Diffusion negative prompt
+3. Midjourney prompt
+4. 重要な要素の分解表（被写体 / 構図 / 服装 / 色 / 背景 / 光）
+
+条件:
+- Stable Diffusionはカンマ区切りのタグ形式
+- Midjourneyは自然な英語フレーズ
+- 人物の顔崩れ、手崩れ、文字混入を避けるnegativeも入れる
+\`\`\`
+
+この変換を使うと、ChatGPTで考えたアイデアを <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">Stable Diffusion</a> や <a href="/tools/midjourney" class="text-sky-600 hover:underline">Midjourney</a> のプロンプト集へ展開しやすくなります。`,
       },
       {
         title: '✨ 関連プロンプト集 — ChatGPT 実例',
-        content: `本ガイドの ChatGPT プロンプト技法を使った業務・学習・写真加工サンプル集。コピペで即時利用可。
+        content: `用途別にそのまま使える ChatGPT プロンプト実例です。画像生成・写真編集・文章作成を混ぜず、目的ごとに選んでください。
 
 - [実験レポート作成](/prompt/chatgpt-lab-report-writing)
 - [医師の白衣に着せ替え](/prompt/uniform-medical-doctor-white-coat)
@@ -776,7 +903,9 @@ Midjourneyの特徴は、アーティスティックな解釈力にあります�
       },
     ],
     faq: [
-      { q: 'ChatGPTとClaudeでプロンプトの書き方は違いますか？', a: '基本的なテクニックは共通ですが、各モデルの特性に合わせた調整が効果的です。Claudeは長文理解と分析に強く、ChatGPTは創造性とコード生成に強い傾向があります。' },
+      { q: 'ChatGPTプロンプトは日本語と英語どちらで書くべきですか？', a: '文章作成や要約は日本語で問題ありません。画像生成やStable Diffusion・Midjourneyへの変換では、最終出力を英語にすると再利用しやすくなります。' },
+      { q: 'ChatGPT画像生成のプロンプトで一番重要なことは？', a: '「何を変えないか」を明示することです。顔、髪型、服装、構図、背景など保持したい要素を書かないと、画像全体が別物になりやすくなります。' },
+      { q: 'ChatGPTとClaudeでプロンプトの書き方は違いますか？', a: '基本は共通です。Claudeは長文の整理や分析、ChatGPTは画像生成指示・コード生成・短い反復改善に使いやすい傾向があります。用途に応じて同じテンプレートを調整してください。' },
     ],
   },
   'prompt-language-game': {
@@ -5445,26 +5574,34 @@ worst quality, low quality, blurry
   'image-to-video-ai-prompt-guide': {
     sections: [
       {
-        title: '画像から動画AIプロンプトとは',
-        content: `**画像から動画AIプロンプト**とは、1枚の静止画を Kling / Seedance / Runway / Pika / Gemini などの動画生成AIに読み込ませ、カメラ移動・人物の動き・料理の湯気・背景の揺れを自然に追加するための指示文です。
+        title: '画像から動画AIプロンプトの基本型',
+        content: `画像から動画AIでは、「動画にして」だけでは意図通りに動きません。1枚の静止画を Kling / Runway / Pika / Luma / Gemini などに読み込ませる時は、**保持する要素**、**動かす要素**、**カメラ**、**禁止事項**を分けて書くと安定します。
 
-X では「AI料理動画」「アニメ料理動画」「Storyboard to Video」の投稿が伸びており、SEMrush でも **画像から動画 AI** は JP 月間検索量 480、KD 21% と低競争の検索需要があります。
+**基本テンプレート**
 
-Prompta ではこのテーマを **X Hot Prompt Test Batch** の第1候補として扱います。まずは guide とコピペ prompt を公開し、7-14日後に GSC で \`画像から動画 AI\`、\`AI料理動画 プロンプト\`、\`画像から動画 ai 無料\` の表示回数を確認します。`,
-      },
-      {
-        title: 'AI料理動画プロンプトの基本構造',
-        content: `AI料理動画は「完成画像を動かす」よりも、**料理工程の1瞬間を切り取った storyboard image を動かす**方が安定します。プロンプトは次の順番で書きます。
+\`\`\`
+Animate this image into a short [style] video.
+Keep the original subject, composition, identity, colors, lighting, and background unchanged.
+Animate only [motion target] with [motion intensity].
+Use [camera movement] for a [duration] second clip.
+Do not add new objects, do not change the face, do not distort hands, no text, no watermark.
+\`\`\`
 
 | 要素 | 書く内容 | 例 |
 |---|---|---|
-| 主体 | 何を動かすか | a bowl of ramen, a frying pan, a chef's hands |
-| 動き | どこが動くか | steam rising, sauce bubbling, hands stirring |
-| カメラ | 視点と移動 | slow push-in, top-down shot, subtle handheld camera |
-| 時間 | 動画の長さ/テンポ | 5-second cinematic food video |
-| 禁止 | 崩したくない要素 | keep the original composition, no new objects |
+| 保持 | 変えたくないもの | face, outfit, plate, background |
+| 動き | 動かす部分 | steam rising, hair moving, product rotating |
+| カメラ | 見せ方 | slow push-in, subtle pan, fixed camera |
+| 長さ | 破綻しにくい秒数 | 4-5 second loop |
+| 禁止 | 崩れ対策 | no new objects, no face change |
 
-**基本テンプレート**
+SEMrush では **画像から動画 AI** が JP 月間検索量 480 / KD 21、**画像から動画 ai 無料** が 590 / KD 27。大きなビッグワードではありませんが、Prompta の「コピペできるプロンプト」と相性が良い低競争テーマです。`,
+      },
+      {
+        title: 'まず使える3つのコピペ例',
+        content: `最初は長い動画を作ろうとせず、5秒以内の短いループから試してください。動きは1-2個に絞る方が、顔・手・背景が崩れにくくなります。
+
+**料理動画**
 
 \`\`\`
 Animate this image into a short cinematic food video.
@@ -5474,13 +5611,31 @@ Use a slow push-in camera movement, realistic lighting, shallow depth of field.
 No extra hands, no new ingredients, no text, no camera shake, no deformation.
 \`\`\`
 
-料理動画で重要なのは、動きを盛りすぎないことです。湯気・泡・手元・カメラの4つ以上を同時に強く動かすと破綻しやすくなります。`,
+**人物ポートレート**
+
+\`\`\`
+Turn this portrait into a subtle 5-second video.
+Keep the person's face, identity, hairstyle, outfit, pose, lighting, and background exactly the same.
+Add only gentle hair movement, soft blinking, and a very slow cinematic push-in.
+The motion should be natural and minimal.
+No face change, no extra people, no warped hands, no text, no logo.
+\`\`\`
+
+**商品紹介**
+
+\`\`\`
+Animate this product image into a clean short promotional video.
+Keep the product shape, label, colors, lighting, and background unchanged.
+Add a slow product turntable motion, soft shadow movement, and subtle highlight reflection.
+Use a fixed camera with polished studio lighting.
+No text, no logo changes, no extra props, no deformation.
+\`\`\``,
       },
       {
-        title: 'アニメ料理動画向けコピペプロンプト',
-        content: `アニメ風の料理動画は、実写よりも「質感」より「演出」を指定した方が伸びやすいです。X で反応が出やすいのは、湯気、きらめき、麺の揺れ、ソースの照りが見える短いループです。
+        title: 'AI料理動画・アニメ動画の作り方',
+        content: `X で反応が出やすいのは、湯気、きらめき、麺の揺れ、ソースの照りが見える短いループです。実写風は「リアルな物理」、アニメ風は「演出の気持ちよさ」を優先します。
 
-**ラーメン湯気ループ**
+**アニメラーメン湯気ループ**
 
 \`\`\`
 Turn this anime ramen illustration into a 5-second looping video.
@@ -5490,7 +5645,7 @@ Add a very slow cinematic push-in, cozy warm lighting, gentle anime atmosphere.
 Do not change the face, do not add new objects, do not distort the bowl, no text.
 \`\`\`
 
-**フライパン調理シーン**
+**調理工程の一瞬を動かす**
 
 \`\`\`
 Animate this cooking illustration into a short anime food video.
@@ -5500,14 +5655,14 @@ The food should look hot and appetizing, with soft kitchen lighting.
 No extra fingers, no extra utensils, no melted objects, no subtitles.
 \`\`\`
 
-**スイーツ仕上げシーン**
+**Storyboard to Video**
 
 \`\`\`
-Create a short elegant dessert video from this image.
-Keep the cake, plate, hands, and background unchanged.
-Animate glossy cream highlights, tiny sparkle particles, and a slow close-up camera movement.
-Make it feel like a polished social media food clip.
-No new decorations, no text, no warped hands, no sudden cuts.
+Animate this storyboard-style image as a short social media clip.
+Keep the original drawing style, character design, food, table, and camera angle unchanged.
+Add a gentle sequence feeling: steam rises, sauce glows slightly, and the camera slowly moves closer.
+The result should feel like a polished anime cooking moment.
+No new panels, no subtitles, no extra hands, no sudden scene cuts.
 \`\`\``,
       },
       {
@@ -5525,18 +5680,25 @@ No new decorations, no text, no warped hands, no sudden cuts.
 最初は **5秒以内 / 1カメラ / 2つの動きまで**に制限してください。AI動画は長くするほど破綻率が上がるため、短いループを複数作って選ぶ方が実用的です。`,
       },
       {
-        title: 'このテーマをPromptaでどう育てるか',
-        content: `このページは X で伸びた「AI料理動画プロンプト」を、検索需要のある **画像から動画 AI** に接続するためのテストページです。
+        title: 'ツール別の書き分け',
+        content: `画像から動画AIはツールごとに得意な動きが違います。同じプロンプトでも、強調する部分を変えると成功率が上がります。
 
-次に見る指標は以下です。
-
-| 期間 | 見る指標 | 判断 |
+| ツール | 向いている用途 | 書き方のコツ |
 |---|---|---|
-| 7日 | GSC impressions | \`画像から動画 AI\` 系 query が出るか |
-| 14日 | CTR / position | title が検索意図に合っているか |
-| 28日 | GA sessions / copy event | 実際に読まれ、コピーされるか |
+| Kling | 人物・カメラ移動 | 顔保持と動きの範囲を強く指定 |
+| Runway | 実写風・商品動画 | product / lighting / camera を具体化 |
+| Pika | SNS向け短尺 | loop, subtle motion, no scene cut を入れる |
+| Luma | カメラワーク | slow push-in / orbit / pan を明確にする |
+| Gemini | 画像理解を使った編集指示 | 日本語で意図を整理してから英語化 |
 
-表示回数が出たら、次は \`画像から動画 AI 無料\`、\`AI料理動画 作り方\`、\`動画生成 AI プロンプト\` に分けて小さなページ群を追加します。`,
+**無料枠で試す時の順番**
+
+1. 5秒以内の短い動画にする
+2. 動きは「湯気」「髪」「カメラ」など1-2個に絞る
+3. 良い結果が出たプロンプトだけ有料枠で高解像度化する
+4. 失敗したら、動きを増やすのではなく禁止項目を追加する
+
+横長画像をSNS用に縦長化したい場合は、<a href="/guides/image-aspect-ratio-916-prompt-guide" class="text-sky-600 hover:underline">16:9を9:16にする画像生成プロンプト</a>も併用してください。ChatGPTで下書きする場合は、<a href="/guides/chatgpt-prompt-techniques" class="text-sky-600 hover:underline">ChatGPTプロンプト集</a>で画像生成向けテンプレートを確認できます。`,
       },
     ],
     faq: [
