@@ -77,6 +77,18 @@ const nextConfig = {
   },
   headers: async () => {
     return [
+      // Static Next.js assets are required for rendering but are not search
+      // landing pages. Keep them crawlable, while explicitly telling search
+      // engines not to index the asset URLs themselves.
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex',
+          },
+        ],
+      },
       {
         source: '/:path*',
         headers: [
