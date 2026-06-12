@@ -5698,7 +5698,7 @@ The result should feel like a polished anime cooking moment.
 No new panels, no subtitles, no extra hands, no sudden scene cuts.
 \`\`\`
 
-「AI料理動画 プロンプト」で探すユーザーは、完成映像よりも**湯気・照り・シズル感**の再現を求めていることが多いので、`steam rising` `small oil highlights` `slow push-in` の3点を最初の定番として覚えておくと使い回しやすいです。`,
+「AI料理動画 プロンプト」で探すユーザーは、完成映像よりも**湯気・照り・シズル感**の再現を求めていることが多いので、\`steam rising\` \`small oil highlights\` \`slow push-in\` の3点を最初の定番として覚えておくと使い回しやすいです。`,
       },
       {
         title: '画像から動画 ai 無料で試す手順',
