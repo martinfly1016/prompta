@@ -116,6 +116,47 @@ function normalizeMockPrompt(p: MockPrompt): NormalizedPrompt {
   }
 }
 
+function normalizeMockGuide(g: typeof MOCK_GUIDES[number]): NormalizedGuide {
+  return {
+    slug: g.slug,
+    title: g.title,
+    description: g.description,
+    targetKeyword: g.targetKeyword,
+  }
+}
+
+function mergeGuides(
+  dbGuides: NormalizedGuide[],
+  mockGuides: typeof MOCK_GUIDES = MOCK_GUIDES,
+): NormalizedGuide[] {
+  const merged = new Map<string, NormalizedGuide>()
+  for (const guide of mockGuides) {
+    merged.set(guide.slug, normalizeMockGuide(guide))
+  }
+  for (const guide of dbGuides) {
+    merged.set(guide.slug, guide)
+  }
+  return Array.from(merged.values())
+}
+
+function mergeGuideSlugs(dbSlugs: string[], mockGuides: typeof MOCK_GUIDES = MOCK_GUIDES): string[] {
+  return Array.from(new Set([...dbSlugs, ...mockGuides.map(g => g.slug)]))
+}
+
+function mergeGuideDates(
+  dbGuides: { slug: string; updatedAt: Date }[],
+  mockGuides: typeof MOCK_GUIDES = MOCK_GUIDES,
+): { slug: string; updatedAt: Date }[] {
+  const merged = new Map<string, Date>()
+  for (const guide of mockGuides) {
+    merged.set(guide.slug, new Date())
+  }
+  for (const guide of dbGuides) {
+    merged.set(guide.slug, guide.updatedAt)
+  }
+  return Array.from(merged.entries()).map(([slug, updatedAt]) => ({ slug, updatedAt }))
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function normalizeDbPrompt(p: any): NormalizedPrompt {
   return {
@@ -389,20 +430,16 @@ export async function getGuides(): Promise<NormalizedGuide[]> {
   return tryDb(
     async () => {
       const guides = await dbGuides.getGuides()
-      return guides.map(g => ({
+      return mergeGuides(guides.map(g => ({
         slug: g.slug,
         title: g.title,
         description: g.description ?? '',
         content: g.content,
         targetKeyword: g.targetKeyword,
         createdAt: g.createdAt?.toISOString?.() ?? String(g.createdAt),
-      }))
+      })))
     },
-    () => MOCK_GUIDES.map(g => ({
-      slug: g.slug,
-      title: g.title,
-      description: g.description,
-    })),
+    () => MOCK_GUIDES.map(normalizeMockGuide),
   )
 }
 
@@ -429,7 +466,7 @@ export async function getGuideBySlug(slug: string): Promise<NormalizedGuide | nu
 
 export async function getGuideSlugs(): Promise<string[]> {
   return tryDb(
-    () => dbGuides.getGuideSlugs(),
+    async () => mergeGuideSlugs(await dbGuides.getGuideSlugs()),
     () => MOCK_GUIDES.map(g => g.slug),
   )
 }
@@ -531,7 +568,7 @@ export async function getLatestPromptDate(): Promise<Date> {
 
 export async function getGuideSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
   return tryDb(
-    () => dbGuides.getGuideSlugsWithDates(),
+    async () => mergeGuideDates(await dbGuides.getGuideSlugsWithDates()),
     () => MOCK_GUIDES.map(g => ({ slug: g.slug, updatedAt: new Date() })),
   )
 }

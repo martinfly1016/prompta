@@ -147,7 +147,7 @@ AIに何をしてほしいかを明確に伝えます。「要約してくださ
 - ChatGPTと統合して使えるDALL-Eは、対話的に画像を調整できる
 - Nano Banana（Gemini 2.5 Flash Image）は既存画像の編集に強く、写真加工系プロンプトと相性が良い
 
-Promptaでは、これら全ツールに対応した実用的なプロンプトを<a href="/prompts" class="text-sky-600 hover:underline">カテゴリ別に500+件公開</a>しています。`,
+Promptaでは、これら全ツールに対応した実用的なプロンプトを<a href="/prompts" class="text-sky-600 hover:underline">カテゴリ別に500+件公開</a>しています。画像の縦長化なら<a href="/guides/image-aspect-ratio-916-prompt-guide" class="text-sky-600 hover:underline">画像生成 9:16 プロンプト</a>、静止画を動かすなら<a href="/guides/image-to-video-ai-prompt-guide" class="text-sky-600 hover:underline">画像から動画 AI プロンプト</a>の実例も参照してください。`,
       },
       {
         title: 'プロンプト書き方のよくある失敗と改善方法',
@@ -784,7 +784,9 @@ Avoid text, logo, watermark, extra fingers, distorted eyes, and messy background
 
 **Prompta向けの使い方**
 
-ChatGPTで作った自然文プロンプトは、そのまま画像生成に使うだけでなく、Stable DiffusionやMidjourney向けに変換できます。人物・服装・髪型・構図を分解しておくと、後から別ツールへ移植しやすくなります。`,
+ChatGPTで作った自然文プロンプトは、そのまま画像生成に使うだけでなく、Stable DiffusionやMidjourney向けに変換できます。人物・服装・髪型・構図を分解しておくと、後から別ツールへ移植しやすくなります。
+
+縦長スマホ用に作り直したい時は、<a href="/guides/image-aspect-ratio-916-prompt-guide" class="text-sky-600 hover:underline">ChatGPT 画像 縦長 / 画像生成 9:16 の具体例</a>を併用してください。静止画から動画生成AIへ渡す下書きを作るなら、<a href="/guides/image-to-video-ai-prompt-guide" class="text-sky-600 hover:underline">画像から動画 AI プロンプト集</a>でそのまま使える motion 指示に変換できます。`,
       },
       {
         title: '写真編集・画像修正で使えるテンプレート',
@@ -885,7 +887,7 @@ Do not over-retouch the face, do not change age, no text, no logo.
 - 人物の顔崩れ、手崩れ、文字混入を避けるnegativeも入れる
 \`\`\`
 
-この変換を使うと、ChatGPTで考えたアイデアを <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">Stable Diffusion</a> や <a href="/tools/midjourney" class="text-sky-600 hover:underline">Midjourney</a> のプロンプト集へ展開しやすくなります。`,
+この変換を使うと、ChatGPTで考えたアイデアを <a href="/tools/stable-diffusion" class="text-sky-600 hover:underline">Stable Diffusion</a> や <a href="/tools/midjourney" class="text-sky-600 hover:underline">Midjourney</a> のプロンプト集へ展開しやすくなります。横長画像を縦長SNS向けに再構成したい時は、変換後の prompt に <a href="/guides/image-aspect-ratio-916-prompt-guide" class="text-sky-600 hover:underline">16:9を9:16にする画像生成プロンプト</a> の制約文を足すと安定します。`,
       },
       {
         title: '✨ 関連プロンプト集 — ChatGPT 実例',
@@ -5605,7 +5607,7 @@ worst quality, low quality, blurry
   'image-to-video-ai-prompt-guide': {
     sections: [
       {
-        title: '画像から動画AIプロンプトの基本型',
+        title: '画像から動画AI・動画生成AIプロンプトの基本型',
         content: `画像から動画AIでは、「動画にして」だけでは意図通りに動きません。1枚の静止画を Kling / Runway / Pika / Luma / Gemini などに読み込ませる時は、**保持する要素**、**動かす要素**、**カメラ**、**禁止事項**を分けて書くと安定します。
 
 **基本テンプレート**
@@ -5626,7 +5628,7 @@ Do not add new objects, do not change the face, do not distort hands, no text, n
 | 長さ | 破綻しにくい秒数 | 4-5 second loop |
 | 禁止 | 崩れ対策 | no new objects, no face change |
 
-SEMrush では **画像から動画 AI** が JP 月間検索量 480 / KD 21、**画像から動画 ai 無料** が 590 / KD 27。大きなビッグワードではありませんが、Prompta の「コピペできるプロンプト」と相性が良い低競争テーマです。`,
+SEMrush では **画像から動画 AI** が JP 月間検索量 480 / KD 21、**画像から動画 ai 無料** が 590 / KD 27。大きなビッグワードではありませんが、Prompta の「コピペできるプロンプト」と相性が良い低競争テーマです。検索ユーザーは「動画生成 AI プロンプト」「画像から動画 ai 無料」のように、ツール名よりも用途で探すケースが多いため、最初から無料枠・失敗回避・料理動画など具体シーンを入れておく方が刺さりやすくなります。`,
       },
       {
         title: 'まず使える3つのコピペ例',
@@ -5663,7 +5665,7 @@ No text, no logo changes, no extra props, no deformation.
 \`\`\``,
       },
       {
-        title: 'AI料理動画・アニメ動画の作り方',
+        title: 'AI料理動画プロンプト・アニメ動画プロンプトの作り方',
         content: `X で反応が出やすいのは、湯気、きらめき、麺の揺れ、ソースの照りが見える短いループです。実写風は「リアルな物理」、アニメ風は「演出の気持ちよさ」を優先します。
 
 **アニメラーメン湯気ループ**
@@ -5694,7 +5696,32 @@ Keep the original drawing style, character design, food, table, and camera angle
 Add a gentle sequence feeling: steam rises, sauce glows slightly, and the camera slowly moves closer.
 The result should feel like a polished anime cooking moment.
 No new panels, no subtitles, no extra hands, no sudden scene cuts.
-\`\`\``,
+\`\`\`
+
+「AI料理動画 プロンプト」で探すユーザーは、完成映像よりも**湯気・照り・シズル感**の再現を求めていることが多いので、`steam rising` `small oil highlights` `slow push-in` の3点を最初の定番として覚えておくと使い回しやすいです。`,
+      },
+      {
+        title: '画像から動画 ai 無料で試す手順',
+        content: `「画像から動画 ai 無料」で探している人は、いきなり高品質な長尺を求めるより、**無料枠で崩れない短尺を先に当てる**方が現実的です。
+
+**無料検証のおすすめ順**
+
+1. まず 4-5 秒の短い動画に限定する
+2. 動きは 1-2 個までに絞る
+3. \`keep the face unchanged\` \`do not add new objects\` を必ず入れる
+4. 同じ画像でカメラ違いを 2-3 本だけ比較する
+5. 当たりプロンプトだけ有料枠で高解像度化する
+
+**無料枠向けの汎用テンプレ**
+
+\`\`\`
+Animate this image into a short 4-second video.
+Keep the original subject, face, outfit, composition, and background unchanged.
+Add only subtle motion: gentle hair movement, soft blinking, and a slight camera push-in.
+Do not add new objects, do not change the face, no text, no watermark, no distortion.
+\`\`\`
+
+無料枠は試行回数が限られるので、最初から凝った演出を盛るより「短い / 動き少ない / 禁止多め」の方が成功率が高く、結果的にコスト効率が良くなります。`,
       },
       {
         title: '画像から動画AIで崩れやすい失敗と対策',
@@ -5746,10 +5773,10 @@ No new panels, no subtitles, no extra hands, no sudden scene cuts.
 
 SEMrush では \`16:9 9:16 プロンプト\` や \`縦長 画像生成 プロンプト\` の検索量はまだ確認できませんでした。つまりこれは、検索データより先に X で見えている新興ニーズです。
 
-Prompta ではこのページを「X 先行テーマ」のテストとして公開します。検索量がまだ 0 に見えても、GSC に query が出るかどうかを 7-14 日で確認します。`,
+Prompta ではこのページを「X 先行テーマ」のテストとして公開します。検索量がまだ 0 に見えても、GSC に query が出るかどうかを 7-14 日で確認します。実際の検索では \`縦長 画像生成\` \`画像生成 9:16\` \`ChatGPT 画像 縦長\` のように、用途寄りの表現で探されることも多いため、その言い換えも本文中で拾っていきます。`,
       },
       {
-        title: '横長画像を縦長化する基本プロンプト',
+        title: '縦長画像生成の基本プロンプト｜16:9から9:16へ変える',
         content: `横長画像を 9:16 にする時は、「縦長にして」だけでは不十分です。AI は足りない上下領域を勝手に作り、背景や人物の比率を変えがちです。
 
 **基本テンプレート**
@@ -5762,10 +5789,10 @@ Do not crop the subject, do not make the subject smaller, do not add new people 
 Preserve the original background atmosphere and camera perspective.
 \`\`\`
 
-ポイントは **extend only the top and bottom areas** と **do not make the subject smaller** です。この2つを入れると、単なる背景追加ではなく「主体を保った縦長化」になりやすくなります。`,
+ポイントは **extend only the top and bottom areas** と **do not make the subject smaller** です。この2つを入れると、単なる背景追加ではなく「主体を保った縦長化」になりやすくなります。`縦長 画像生成` で失敗しやすいのは、AI に「新しい縦長ポスターを作る」と誤解されるケースなので、**reframe / extend / keep unchanged** を同時に入れるのが重要です。`,
       },
       {
-        title: 'ChatGPT画像生成・Gemini向けのコピペ例',
+        title: 'ChatGPT画像生成・Gemini向けのコピペ例｜ChatGPT 画像 縦長',
         content: `ChatGPT画像生成や Gemini では、タグよりも自然な文章で「何を維持するか」「どこだけ変えるか」を明示します。
 
 **人物ポートレートを9:16にする**
@@ -5793,10 +5820,12 @@ Create a 9:16 vertical social media version of this product image.
 Keep the product shape, color, label, and lighting unchanged.
 Extend the background cleanly above and below, leaving space for captions.
 Do not redesign the product, do not add new objects, no text, no logo changes.
-\`\`\``,
+\`\`\`
+
+\`ChatGPT 画像 縦長\` の用途では、「スマホ壁紙」「Reels 用」「TikTok cover 用」など**出力先を1語足す**だけで、中央寄せや余白設計が安定しやすくなります。`,
       },
       {
-        title: 'Midjourney・Stable Diffusion向けの考え方',
+        title: 'Midjourney・Stable Diffusion向けの考え方｜画像生成 9:16',
         content: `Midjourney や Stable Diffusion では、画像編集というより **縦長構図を再生成する** 発想になります。元画像を参照しながら、構図とアスペクト比を明示します。
 
 | ツール | 書き方 |

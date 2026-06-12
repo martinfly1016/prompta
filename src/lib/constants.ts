@@ -707,17 +707,17 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'image-to-video-ai-prompt-guide',
-    title: '画像から動画AIプロンプト作り方｜無料で試せる動画生成AIコピペ例',
+    title: '画像から動画AIプロンプト作り方｜無料で試せる動画生成AIコピペ例・料理動画テンプレ',
     description:
-      '画像から動画AIプロンプトの作り方を解説。料理動画、アニメ動画、商品紹介、人物ポートレートをKling・Runway・Pika・Geminiなどで自然に動かすコピペ例、無料枠での試し方、失敗対策を紹介。',
+      '画像から動画AIプロンプトの作り方を解説。画像から動画 ai 無料で試す手順、AI料理動画プロンプト、動画生成AIプロンプトのコピペ例を、Kling・Runway・Pika・Gemini向けに紹介。',
     targetKeyword: '画像から動画 AI',
     monthlySearchVolume: 480,
   },
   {
     slug: 'image-aspect-ratio-916-prompt-guide',
-    title: '16:9を9:16にする画像生成プロンプト｜縦長化・余白追加を防ぐコピペ例',
+    title: '16:9を9:16にする画像生成プロンプト｜縦長画像生成・ChatGPT画像縦長のコピペ例',
     description:
-      '16:9画像を9:16の縦長構図に変換する画像生成プロンプトの書き方。ChatGPT画像生成・Gemini・Midjourneyで、主体を保ったまま不要な背景追加を防ぐ指示文とコピペ例を紹介。',
+      '16:9画像を9:16へ変換する画像生成プロンプトの書き方。縦長画像生成、画像生成 9:16、ChatGPT 画像 縦長の用途に向けて、主体を保ちながら余白追加を防ぐコピペ例を紹介。',
     targetKeyword: '16:9 9:16 プロンプト',
     monthlySearchVolume: 0,
   },
