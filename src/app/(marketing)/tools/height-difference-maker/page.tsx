@@ -5,14 +5,14 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { HeightDifferenceMaker } from '@/components/tools/HeightDifferenceMaker'
 
 export const metadata: Metadata = {
-  title: '身長差メーカー｜推しとの身長差AIプロンプトを無料作成・コピペ',
+  title: '身長差メーカー｜推しとの身長差AIプロンプト作り方・ChatGPT対応',
   description:
-    '身長差メーカーで推しとの身長差、体格差、逆身長差、3人構図のAI画像生成プロンプトを無料作成。Stable Diffusion・Midjourney・ChatGPT画像生成向けの英語プロンプトとネガティブプロンプトをコピペできます。',
+    '身長差メーカーで推しとの身長差、体格差、逆身長差、3人構図のAI画像生成プロンプトを無料作成。Stable Diffusion・Midjourney・ChatGPT画像生成向けに、身長差プロンプトの作り方と英語プロンプトをコピペできます。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/height-difference-maker`,
   },
   openGraph: {
-    title: '身長差メーカー｜推しとの身長差AIプロンプトを無料作成・コピペ',
+    title: '身長差メーカー｜推しとの身長差AIプロンプト作り方・ChatGPT対応',
     description:
       '身長・体格・関係性・ポーズを選ぶだけで、身長差プロンプトとネガティブプロンプトを無料で作成してコピペできます。',
     type: 'website',
@@ -39,6 +39,10 @@ const FAQ = [
   {
     q: '身長差メーカーとは何ですか？',
     a: '推しキャラやオリキャラの身長・体格・関係性・ポーズを選ぶだけで、Stable Diffusion・Midjourney・ChatGPT画像生成向けの英語プロンプトを無料作成してコピペできるツールです。',
+  },
+  {
+    q: '身長差プロンプトの作り方が分からなくても使えますか？',
+    a: '使えます。身長、関係性、ポーズ、画風を選ぶだけで「height difference」「tall and short」「full body shot」など必要な要素を自動で組み立てます。詳しく調整したい場合は身長差プロンプト完全ガイドも参照してください。',
   },
   {
     q: '体格差ツールとしても使えますか？',
@@ -85,11 +89,11 @@ export default function HeightDifferenceMakerPage() {
             <div className="max-w-3xl mb-6">
               <p className="text-sm font-semibold text-sky-700 mb-2">身長差・体格差プロンプト生成</p>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
-                身長差メーカー｜AIプロンプトを無料作成
+                身長差メーカー｜推しとの身長差プロンプトを無料作成
               </h1>
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 推しとの身長差、BL・百合・男女カップル、逆身長差、体格差、3 人並びの英語プロンプトを無料で作成できます。
-                Stable Diffusion・Midjourney・ChatGPT画像生成向けの身長差プロンプトとネガティブプロンプトを、そのままコピペできます。
+                Stable Diffusion・Midjourney・ChatGPT画像生成向けに、身長差プロンプトの作り方で必要な人数指定・身長差指定・ネガティブプロンプトを、そのままコピペできます。
               </p>
             </div>
 
@@ -107,7 +111,7 @@ export default function HeightDifferenceMakerPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
                 {
-                  title: '推しとの身長差',
+                  title: '推しとの身長差 AI',
                   body: '推しカップル、OC ペア、夢絵風の身長差プロンプトを、身長 cm と外見特徴から作成します。',
                 },
                 {
@@ -120,6 +124,37 @@ export default function HeightDifferenceMakerPage() {
                 },
               ].map((item) => (
                 <div key={item.title} className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                  <h3 className="text-sm font-bold text-gray-900 mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-8 bg-gray-50 border-t border-gray-100">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">検索意図別の使い分け</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                {
+                  title: '身長差メーカーを探している',
+                  body: 'まず上のフォームで身長差・体格差・逆身長差を選び、英語プロンプトとネガティブプロンプトを作成してください。',
+                },
+                {
+                  title: '身長差プロンプト作り方を知りたい',
+                  body: '人数指定、cm 指定、見上げる構図、ControlNet まで調整したい場合は、下の完全ガイドで失敗パターン別に確認できます。',
+                },
+                {
+                  title: 'ChatGPTで身長差画像を作りたい',
+                  body: '出力形式を ChatGPT 向けにし、タグではなく「全身が見える」「片方が明らかに高い」という自然文指示に変換します。',
+                },
+                {
+                  title: '推しとの身長差を作りたい',
+                  body: '関係性を推しカップルや OC ペアにし、髪型・服装・表情を追加すると、SNS で見かける推しとの身長差 AI に近づきます。',
+                },
+              ].map((item) => (
+                <div key={item.title} className="rounded-lg border border-gray-200 bg-white p-4">
                   <h3 className="text-sm font-bold text-gray-900 mb-2">{item.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
                 </div>

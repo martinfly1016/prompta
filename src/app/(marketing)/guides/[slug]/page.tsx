@@ -1367,6 +1367,21 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 各セクションでコピペ可能な英語プロンプトと、関連する <a href="/prompts/cosplay" class="text-sky-600 hover:underline">prompta.jp 公開 prompt</a>（サンプル画像つき）をリンクしています。`,
       },
       {
+        title: '目的別：コスプレプロンプトの探し方',
+        content: `コスプレ系の検索は「コスプレ プロンプト」だけでなく、具体的な衣装名で探されることが多いです。まず目的に近いテンプレートを選び、色・髪型・小物だけ差し替えると失敗が少なくなります。
+
+| 探している内容 | 使う英語キーワード | このページの該当テンプレ |
+|---|---|---|
+| コスプレ プロンプト | cosplay photo, detailed costume, studio lighting | 基本構造 + ツール別設定 |
+| セーラー服 プロンプト | sailor uniform, sailor collar, pleated skirt | セーラー服テンプレ |
+| メイド服 プロンプト | maid outfit, white apron, frilled headdress | メイド服テンプレ |
+| 制服 プロンプト | school uniform, blazer, pleated skirt, school tie | 学校制服テンプレ |
+| 和風コスプレ | miko costume, kimono, shrine maiden, hakama | その他定番 8 種 |
+| ファンタジー衣装 | fantasy armor, witch costume, gothic lolita | その他定番 8 種 |
+
+衣装名だけだと AI が省略しやすいので、**衣装名 + 必須パーツ + 撮影/画風**の 3 層で書くのが基本です。例: \`sailor uniform, sailor collar, pleated skirt, red ribbon, anime style\`。`,
+      },
+      {
         title: 'セーラー服プロンプト — 夏服 / 冬服 / 黒セーラー まで全パターン',
         content: `**セーラー服プロンプト**は AI コスプレ生成で最も検索される定番ジャンルです。AI モデルは「sailor uniform」「serafuku」というワードを学習データで頻繁に見ているため再現性が高く、ディテール指定でバリエーションが豊富に出せます。
 
@@ -3513,6 +3528,21 @@ Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:u
 まず生成器でベースを作り、うまく出ない場合だけ本ガイドの各セクションで \`ControlNet\`、\`ネガティブプロンプト\`、\`ポーズ別構図\` を調整するのが最短ルートです。`,
       },
       {
+        title: '検索意図別：身長差プロンプトとは / 作り方 / メーカー / ChatGPT',
+        content: `身長差まわりの検索は、同じように見えて目的が少しずつ違います。目的に合わせて読む場所を分けると、すぐ使えるプロンプトにたどり着きやすくなります。
+
+| 検索キーワード | 知りたいこと | まず見る場所 |
+|---|---|---|
+| 身長差プロンプトとは | 何を書くと身長差が出るのか | このページの基本構造 |
+| 身長差プロンプト作り方 / やり方 | 失敗しない書き方とコピペ例 | シチュエーション別テンプレ |
+| 身長差メーカー | 自分のキャラ設定ですぐ作りたい | <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> |
+| 推しとの身長差 AI | 推しカップル・OC ペアを作りたい | <a href="/guides/oshi-height-difference-ai-guide" class="text-sky-600 hover:underline">推しとの身長差 AI ガイド</a> |
+| ChatGPT 身長差プロンプト | ChatGPT画像生成 / DALL-E で自然文にしたい | 本ページの ChatGPT 例文 |
+| 体格差ツール / 体格差プロンプト | 肩幅・筋肉量・横幅の差を出したい | <a href="/guides/body-size-difference-prompt-guide" class="text-sky-600 hover:underline">体格差プロンプト集</a> |
+
+結論だけ言うと、**すぐ作るなら身長差メーカー、安定させるならこのガイド、推し設定を入れるなら推しとの身長差 AI ガイド**という使い分けです。`,
+      },
+      {
         title: 'なぜ身長差を AI に明示しないと描けないのか — モデルのデフォルト挙動',
         content: `Stable Diffusion / Midjourney / DALL-E に「**男女のカップルを描いて**」とだけ指示すると、ほとんどの場合**身長は同じ程度に揃えられて**しまいます。これは AI モデルが学習データの平均的な人物比例を覚えており、特に指定しないとそこに収束する性質があるためです。
 
@@ -4009,6 +4039,7 @@ man towering over woman
       },
     ],
     faq: [
+      { q: '身長差プロンプトとは何ですか？', a: '身長差プロンプトとは、AI画像生成で 2 人以上のキャラクターに明確な背の高さの差を出すための指示文です。基本は `2 people`, `height difference`, `tall and short`, `full body shot` を前半に置き、必要に応じて `same height` や `equal height` をネガティブプロンプトに入れます。' },
       { q: '身長差メーカーはありますか？', a: 'はい。Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズ・画風を選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを作成できます。体格差ツールとしても使え、`same height` や `equal height` を除外するネガティブプロンプトも自動生成します。' },
       { q: '推しとの身長差 AI はどう作ればいいですか？', a: '最短は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で「推しカップル」を選び、高い人物・低い人物の特徴と身長を入力する方法です。生成されたプロンプトに、推しの髪型・服装・表情・関係性を追加すると、SNS で流行している「推しとの身長差」風の構図を作りやすくなります。' },
       { q: 'ChatGPTで身長差プロンプトを作れますか？', a: '作れます。ChatGPT に「高い人物は188cm、低い人物は158cm、全身構図で明確な身長差が見える画像生成プロンプトを英語で作って」と依頼してください。ただし、Stable Diffusion 用なら `2 characters`, `(height difference:1.35)`, `same height` をネガティブに入れるなど、画像生成モデル向けの調整が必要です。Prompta の身長差メーカーはこの変換を自動で行います。' },
