@@ -5789,7 +5789,7 @@ Do not crop the subject, do not make the subject smaller, do not add new people 
 Preserve the original background atmosphere and camera perspective.
 \`\`\`
 
-ポイントは **extend only the top and bottom areas** と **do not make the subject smaller** です。この2つを入れると、単なる背景追加ではなく「主体を保った縦長化」になりやすくなります。`縦長 画像生成` で失敗しやすいのは、AI に「新しい縦長ポスターを作る」と誤解されるケースなので、**reframe / extend / keep unchanged** を同時に入れるのが重要です。`,
+ポイントは **extend only the top and bottom areas** と **do not make the subject smaller** です。この2つを入れると、単なる背景追加ではなく「主体を保った縦長化」になりやすくなります。\`縦長 画像生成\` で失敗しやすいのは、AI に「新しい縦長ポスターを作る」と誤解されるケースなので、**reframe / extend / keep unchanged** を同時に入れるのが重要です。`,
       },
       {
         title: 'ChatGPT画像生成・Gemini向けのコピペ例｜ChatGPT 画像 縦長',
