@@ -3,6 +3,7 @@ import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
+  refundCredits,
   spendCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
@@ -71,7 +72,8 @@ export async function POST(req: NextRequest) {
   }
 
   // 5/19 pricing: image gen = 5 credit (Gemini Flash Image ~$0.04 cost)
-  const spend = await spendCredits(eh, 5)
+  const SIM_COST = 5
+  const spend = await spendCredits(eh, SIM_COST)
   if (!spend.ok) {
     return NextResponse.json(
       { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
@@ -109,12 +111,7 @@ export async function POST(req: NextRequest) {
     })
   } catch (e: any) {
     await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
-    await prisma.paidCredits
-      .update({
-        where: { emailHash: eh },
-        data: { balance: { increment: 1 }, totalUsed: { decrement: 1 } },
-      })
-      .catch(() => {})
+    await refundCredits(eh, SIM_COST).catch(() => {})
     console.error('[hair-color/simulate] failed:', e?.message)
     return NextResponse.json(
       { error: 'simulation_failed', message: e?.message ?? 'unknown', refunded: true },

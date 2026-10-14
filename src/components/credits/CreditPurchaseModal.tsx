@@ -1,7 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { useEffect, useRef, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { trackPurchaseClick, type PaywallTool } from '@/lib/track'
+import { signInThenCheckout, startCreditCheckout } from '@/lib/start-checkout'
 
 interface Props {
   open: boolean
@@ -13,6 +15,10 @@ interface Props {
   /** Optional current expiration (ISO string). If set and a balance is
    *  shown, the modal renders the next-extension preview. */
   currentExpiresAt?: string | null
+  /** Funnel label for GA4. */
+  tool?: PaywallTool
+  /** After sign-in, continue straight into Checkout. */
+  autoStart?: boolean
 }
 
 function formatJpDate(d: Date): string {
@@ -29,7 +35,7 @@ function formatJpDate(d: Date): string {
  *   - /account TopUpCreditsButton
  *   - future surfaces that need to top up credits
  */
-export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, currentExpiresAt }: Props) {
+export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, currentExpiresAt, tool = 'prompt', autoStart = false }: Props) {
   const { status: authStatus } = useSession()
   const isSignedIn = authStatus === 'authenticated'
   const [pending, setPending] = useState(false)
@@ -50,33 +56,42 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
     }
   }, [open, onClose])
 
-  if (!open) return null
-
   async function handlePurchase() {
     setError(null)
     if (!isSignedIn) {
-      await signIn(undefined, { callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined })
+      trackPurchaseClick(tool, false)
+      signInThenCheckout(returnTo || window.location.pathname)
       return
     }
     setPending(true)
     try {
-      const r = await fetch(
-        `/api/checkout/personal-color?returnTo=${encodeURIComponent(returnTo)}`,
-        { method: 'POST' },
-      )
-      if (!r.ok) {
-        const body = await r.json().catch(() => ({}))
-        setError(`購入処理エラー: ${body?.error ?? r.status}`)
+      const result = await startCreditCheckout({
+        endpoint: `/api/checkout/personal-color?returnTo=${encodeURIComponent(returnTo)}`,
+        tool,
+      })
+      if (!result.ok) {
+        if (result.status === 401) {
+          signInThenCheckout(returnTo || window.location.pathname)
+          return
+        }
+        setError(`購入処理エラー: ${result.error}`)
         setPending(false)
-        return
       }
-      const { url } = await r.json()
-      if (url) window.location.href = url
     } catch (e: any) {
       setError(`通信エラー: ${e?.message ?? 'unknown'}`)
       setPending(false)
     }
   }
+
+  const autoStarted = useRef(false)
+  useEffect(() => {
+    if (!open || !autoStart || !isSignedIn || autoStarted.current) return
+    autoStarted.current = true
+    void handlePurchase()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, autoStart, isSignedIn])
+
+  if (!open) return null
 
   return (
     <div
@@ -87,6 +102,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
       aria-labelledby="purchase-modal-title"
     >
       <div
+        data-testid="paywall-modal"
         className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
@@ -220,6 +236,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
             </button>
             <button
               type="button"
+              data-testid="paywall-buy"
               onClick={handlePurchase}
               disabled={pending}
               className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 disabled:opacity-50 transition-colors shadow-sm"

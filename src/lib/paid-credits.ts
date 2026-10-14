@@ -9,6 +9,7 @@ import { cookies } from 'next/headers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { resolveWelcomeBonusCredits } from '@/lib/welcome-credits'
 
 export const CREDITS_COOKIE = 'prompta_credits'
 const COOKIE_SECRET = process.env.NEXTAUTH_SECRET || 'dev-fallback-do-not-use'
@@ -228,20 +229,101 @@ export async function grantCredits(
 //       verified emails, harder to fake than email magic link
 //   (c) Currently <20 registered users — abuse impact is low
 // If abuse detected: add email canonicalization here + IP rate limit.
-// Pricing baseline (2026-05-19): 15 welcome credits = 3 images OR 15 text runs
-// OR mixed. Matches the previous "3 free image trials" UX under the new
-// 5-credit-per-image pricing. Cost per new login = ~3 × $0.04 = $0.12 max.
-export const WELCOME_BONUS_CREDITS = 15
+// Pricing baseline (2026-05-19): default 15 welcome credits = 3 images OR 15 text
+// runs. WELCOME_BONUS_CREDITS overrides the amount; it is never allowed to
+// fall below one image run (see resolveWelcomeBonusCredits).
+export const WELCOME_BONUS_CREDITS = resolveWelcomeBonusCredits()
+
+type WelcomeWallet = {
+  welcomeBonusAt: Date | null
+  welcomeBonus: number
+  totalEarned: number
+  balance: number
+  expiresAt: Date | null
+}
+
+// The original gift was 3 credits. Image runs cost 5, so those wallets can
+// never finish one image try. Add the difference once, and only when the
+// wallet has never received anything besides that gift.
+async function topUpShortWelcomeGift(
+  email: string,
+  existing: WelcomeWallet,
+): Promise<{ granted: boolean; balance: number; expiresAt: Date | null } | null> {
+  const target = resolveWelcomeBonusCredits()
+  if (
+    !existing.welcomeBonusAt ||
+    existing.welcomeBonus <= 0 ||
+    existing.welcomeBonus >= target ||
+    existing.totalEarned !== existing.welcomeBonus
+  ) {
+    return null
+  }
+  const eh = emailHash(email)
+  const delta = target - existing.welcomeBonus
+  const topped = await prisma.paidCredits.updateMany({
+    where: {
+      emailHash: eh,
+      welcomeBonus: existing.welcomeBonus,
+      totalEarned: existing.welcomeBonus,
+    },
+    data: {
+      balance: { increment: delta },
+      totalEarned: { increment: delta },
+      welcomeBonus: target,
+      expiresAt: computeNewExpiresAt(),
+    },
+  })
+  if (topped.count === 0) return null
+  const row = await prisma.paidCredits.findUnique({
+    where: { emailHash: eh },
+    select: { balance: true, expiresAt: true },
+  })
+  return {
+    granted: true,
+    balance: row?.balance ?? existing.balance + delta,
+    expiresAt: row?.expiresAt ?? existing.expiresAt,
+  }
+}
+
+// Page views call this so a user who is already signed in gets the top-up
+// without waiting for the next NextAuth signIn event. It never creates a
+// new welcome grant.
+export async function ensureShortWelcomeTopUp(): Promise<void> {
+  const session = await getServerSession(authOptions).catch(() => null)
+  const email = session?.user?.email
+  if (!email) return
+  const existing = await prisma.paidCredits.findUnique({
+    where: { emailHash: emailHash(email) },
+    select: {
+      welcomeBonusAt: true,
+      welcomeBonus: true,
+      totalEarned: true,
+      balance: true,
+      expiresAt: true,
+    },
+  })
+  if (!existing) return
+  await topUpShortWelcomeGift(email, existing)
+}
 
 export async function grantWelcomeBonusIfEligible(
   email: string,
 ): Promise<{ granted: boolean; balance: number; expiresAt: Date | null }> {
   const eh = emailHash(email)
+  const target = resolveWelcomeBonusCredits()
   const existing = await prisma.paidCredits.findUnique({
     where: { emailHash: eh },
-    select: { welcomeBonusAt: true, balance: true, expiresAt: true },
+    select: {
+      welcomeBonusAt: true,
+      welcomeBonus: true,
+      totalEarned: true,
+      balance: true,
+      expiresAt: true,
+    },
   })
   if (existing?.welcomeBonusAt) {
+    const topped = await topUpShortWelcomeGift(email, existing)
+    if (topped) return topped
     return { granted: false, balance: existing.balance, expiresAt: existing.expiresAt }
   }
   const newExpiresAt = computeNewExpiresAt()
@@ -250,16 +332,16 @@ export async function grantWelcomeBonusIfEligible(
     create: {
       emailHash: eh,
       email,
-      balance: WELCOME_BONUS_CREDITS,
-      totalEarned: WELCOME_BONUS_CREDITS,
-      welcomeBonus: WELCOME_BONUS_CREDITS,
+      balance: target,
+      totalEarned: target,
+      welcomeBonus: target,
       welcomeBonusAt: new Date(),
       expiresAt: newExpiresAt,
     },
     update: {
-      balance: { increment: WELCOME_BONUS_CREDITS },
-      totalEarned: { increment: WELCOME_BONUS_CREDITS },
-      welcomeBonus: WELCOME_BONUS_CREDITS,
+      balance: { increment: target },
+      totalEarned: { increment: target },
+      welcomeBonus: target,
       welcomeBonusAt: new Date(),
       expiresAt: newExpiresAt,
     },

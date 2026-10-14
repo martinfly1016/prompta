@@ -109,7 +109,7 @@ export function trackToolEvent(eventName: string, params: Record<string, unknown
 // 3-step funnel: paywall_view → paywall_purchase_click → checkout_started → (Stripe success)
 // Trigger labels distinguish how the user reached the paywall.
 
-export type PaywallTool = 'hair-color' | 'personal-color'
+export type PaywallTool = 'hair-color' | 'personal-color' | 'prompt' | 'account'
 export type PaywallTrigger =
   | 'badge'             // exhausted-state badge click (preventive)
   | 'candidate_card'    // disabled candidate "ポイント不足" →购入
@@ -135,4 +135,89 @@ export function trackPurchaseClick(tool: PaywallTool, signedIn: boolean) {
 
 export function trackCheckoutStarted(tool: PaywallTool) {
   fireToolEvent('checkout_started', { tool })
+}
+
+const PACK_ITEM = {
+  item_id: 'credit-pack-150',
+  item_name: '150 credit pack',
+  price: 300,
+  quantity: 1,
+}
+
+// GA4 begin_checkout. Also emits the legacy checkout_started name so the
+// existing funnel report keeps working. Callers that are about to navigate
+// must use redirectAfterBeginCheckout so the hit is not dropped on unload.
+export function trackBeginCheckout(tool: string) {
+  const params = {
+    currency: 'JPY',
+    value: 300,
+    items: [PACK_ITEM],
+    tool,
+  }
+  fireToolEvent('begin_checkout', params)
+  fireToolEvent('checkout_started', { tool })
+}
+
+export function redirectAfterBeginCheckout(url: string, tool: string) {
+  if (typeof window === 'undefined') return
+  let left = false
+  const go = () => {
+    if (left) return
+    left = true
+    window.location.assign(url)
+  }
+  if (typeof window.gtag !== 'function') {
+    go()
+    return
+  }
+  try {
+    window.gtag('event', 'begin_checkout', {
+      currency: 'JPY',
+      value: 300,
+      items: [PACK_ITEM],
+      tool,
+      transport_type: 'beacon',
+      event_callback: go,
+      event_timeout: 1000,
+    })
+    window.gtag('event', 'checkout_started', {
+      tool,
+      transport_type: 'beacon',
+    })
+  } catch {
+    go()
+    return
+  }
+  window.setTimeout(go, 1200)
+}
+
+export function trackPurchase(p: {
+  transactionId: string
+  value: number
+  currency: string
+  credits: number
+  tool?: string
+}) {
+  if (!p.transactionId) return
+  const key = `purchase_tracked:${p.transactionId}`
+  try {
+    if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(key)) return
+    sessionStorage?.setItem(key, '1')
+  } catch {
+    // still fire once if storage is blocked
+  }
+  fireToolEvent('purchase', {
+    transaction_id: p.transactionId,
+    value: p.value,
+    currency: p.currency,
+    tool: p.tool,
+    items: [
+      {
+        item_id: 'credit-pack-150',
+        item_name: `${p.credits} credit pack`,
+        price: p.value,
+        quantity: 1,
+      },
+    ],
+  })
 }

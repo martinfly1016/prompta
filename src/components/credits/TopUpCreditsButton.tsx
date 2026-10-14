@@ -49,6 +49,7 @@ export function TopUpCreditsButton({
         returnTo={returnTo}
         currentBalance={currentBalance}
         currentExpiresAt={currentExpiresAt}
+        tool="account"
       />
     </>
   )

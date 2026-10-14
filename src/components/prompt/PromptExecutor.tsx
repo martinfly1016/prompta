@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { useSession, signIn } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import { trackPaywallView } from '@/lib/track'
+import { redirectToSignIn } from '@/lib/start-checkout'
 import { listProvidersForMode, recommendForPrompt } from '@/lib/image-providers/registry'
 import type { ExecuteMode, ImageProvider, ProviderId } from '@/lib/image-providers/types'
 import { CreditPurchaseModal } from '@/components/credits/CreditPurchaseModal'
@@ -124,6 +126,26 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
    */
   const [downloading, setDownloading] = useState(false)
   const [showPurchaseModal, setShowPurchaseModal] = useState(false)
+  const [resumeCheckout, setResumeCheckout] = useState(false)
+
+  function openPurchase(trigger: 'exhausted_pick' | 'exhausted_analyze' | 'badge') {
+    trackPaywallView('prompt', trigger)
+    setShowPurchaseModal(true)
+  }
+
+  const resumeStarted = useRef(false)
+  useEffect(() => {
+    if (!isSignedIn || resumeStarted.current) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('checkout') !== '1') return
+    resumeStarted.current = true
+    const u = new URL(window.location.href)
+    u.searchParams.delete('checkout')
+    window.history.replaceState({}, '', u.toString())
+    setResumeCheckout(true)
+    openPurchase('badge')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn])
 
   async function downloadResultImage() {
     if (!result || result.mode !== 'image' || !result.imageUrl) return
@@ -154,9 +176,13 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
     setResult(null)
 
     if (!isSignedIn) {
-      // Let user pick provider (Google OAuth or email magic link) via the
-      // custom sign-in page configured in NextAuth (`pages.signIn`).
-      await signIn(undefined, { callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined })
+      redirectToSignIn(window.location.pathname + window.location.search)
+      return
+    }
+
+    if (provider && balance !== null && balance < provider.credits) {
+      setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
+      openPurchase('exhausted_pick')
       return
     }
 
@@ -186,8 +212,9 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       if (!res.ok) {
         if (j.error === 'credits_exhausted') {
           setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
+          openPurchase('exhausted_analyze')
         } else if (j.error === 'login_required') {
-          await signIn(undefined, { callbackUrl: window.location.href })
+          redirectToSignIn(window.location.pathname + window.location.search)
         } else if (j.error === 'rate_limited') {
           setError('リクエストが多すぎます。少し時間を空けてから再試行してください。')
         } else if (j.error === 'provider_error') {
@@ -379,7 +406,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
             <div className="mt-2">
               <button
                 type="button"
-                onClick={() => setShowPurchaseModal(true)}
+                onClick={() => openPurchase('badge')}
                 className="inline-flex items-center gap-1 text-red-700 font-medium underline"
               >
                 💳 150 ポイントパックの詳細を見る
@@ -449,6 +476,8 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         returnTo={`/prompt/${prompt.slug}`}
         currentBalance={balance}
         currentExpiresAt={expiresAt}
+        tool="prompt"
+        autoStart={resumeCheckout}
       />
     </section>
   )

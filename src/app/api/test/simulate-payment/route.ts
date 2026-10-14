@@ -41,17 +41,22 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     )
   }
-  if (!Number.isFinite(credits) || credits < 1 || credits > 100) {
-    return NextResponse.json({ error: 'invalid_credits', allowed: '1..100' }, { status: 400 })
+  if (!Number.isFinite(credits) || credits < 1 || credits > 500) {
+    return NextResponse.json({ error: 'invalid_credits', allowed: '1..500' }, { status: 400 })
   }
 
   const eh = emailHash(email)
   const result = await grantCredits(email, credits)
+  const requestedId = String(body?.sessionId ?? '')
+  const sessionId =
+    requestedId.startsWith('cs_test_') && requestedId.length < 120
+      ? requestedId
+      : `cs_test_simulated_${Date.now()}`
   await prisma.stripePayment.create({
     data: {
       emailHash: eh,
       email,
-      sessionId: `cs_test_simulated_${Date.now()}`,
+      sessionId,
       amountJpy,
       creditsGranted: credits,
       status: 'paid',
@@ -62,6 +67,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     email,
+    sessionId,
     creditsGranted: credits,
     balance: result.balance,
     source: 'test-simulated',

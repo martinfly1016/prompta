@@ -20,6 +20,10 @@
 // @ts-nocheck
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { prisma } from '../../lib/prisma'
+import { emailHash, grantWelcomeBonusIfEligible } from '../../lib/paid-credits'
+import { resolveWelcomeBonusCredits } from '../../lib/welcome-credits'
+import { CREDIT_COSTS } from '../../lib/credit-costs'
 
 const BASE = process.env.E2E_BASE_URL || 'http://localhost:3000'
 const TIER = parseInt(process.argv.find(a => a.startsWith('--tier='))?.split('=')[1] ?? '1', 10)
@@ -70,6 +74,49 @@ async function api(path: string, init: RequestInit = {}): Promise<Response> {
 async function main() {
   console.log(`\n=== E2E Paid Flow — Tier ${TIER} ===`)
   console.log(`Account: ${EMAIL}\nBase: ${BASE}\n`)
+
+  await step('welcome bonus is configurable and covers one image try', async () => {
+    const prev = process.env.WELCOME_BONUS_CREDITS
+    process.env.WELCOME_BONUS_CREDITS = '3'
+    const floored = resolveWelcomeBonusCredits()
+    process.env.WELCOME_BONUS_CREDITS = '20'
+    const raised = resolveWelcomeBonusCredits()
+    if (prev == null) delete process.env.WELCOME_BONUS_CREDITS
+    else process.env.WELCOME_BONUS_CREDITS = prev
+    const def = resolveWelcomeBonusCredits()
+    if (floored < CREDIT_COSTS.image) throw new Error(`floor ${floored} < image cost`)
+    if (floored !== CREDIT_COSTS.image) throw new Error(`expected floor ${CREDIT_COSTS.image}, got ${floored}`)
+    if (raised !== 20) throw new Error(`expected 20, got ${raised}`)
+    if (def < CREDIT_COSTS.image) throw new Error(`default ${def} below one try`)
+    return { floored, raised, def }
+  })
+
+  await step('historical 3-credit gift is topped up to one full welcome grant', async () => {
+    const email = 'e2e-test+welcome-topup@prompta.jp'
+    const eh = emailHash(email)
+    await prisma.paidCredits.deleteMany({ where: { emailHash: eh } })
+    await prisma.paidCredits.create({
+      data: {
+        emailHash: eh,
+        email,
+        balance: 3,
+        totalEarned: 3,
+        welcomeBonus: 3,
+        welcomeBonusAt: new Date(),
+        expiresAt: new Date(Date.now() + 86_400_000),
+      },
+    })
+    const first = await grantWelcomeBonusIfEligible(email)
+    const target = resolveWelcomeBonusCredits()
+    if (first.balance < CREDIT_COSTS.image) {
+      throw new Error(`top-up balance ${first.balance} cannot afford an image try`)
+    }
+    if (first.balance !== target) throw new Error(`expected ${target}, got ${first.balance}`)
+    const second = await grantWelcomeBonusIfEligible(email)
+    if (second.granted) throw new Error('second sign-in granted again')
+    if (second.balance !== first.balance) throw new Error('balance changed on repeat')
+    return { balance: second.balance }
+  })
 
   // ---------- Setup ----------
   await step('seed: reset PaidCredits (set balance=0)', async () => {
@@ -179,6 +226,41 @@ async function main() {
 
   if (TIER === 3) {
     console.log('\n[T3 manual]: Open browser, go through Stripe checkout flow, then re-run with --tier=2 to verify DB state.')
+  }
+
+  await step('confirm: unknown session is not a purchase', async () => {
+    const res = await api('/api/checkout/confirm?session_id=cs_test_missing_e2e')
+    const body = await res.json()
+    if (body.confirmed !== false) throw new Error(`expected unconfirmed, got ${JSON.stringify(body)}`)
+    return body
+  })
+
+  await step('confirm: simulated payment for this login is confirmed', async () => {
+    const res = await api('/api/test/simulate-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: EMAIL, credits: 10, amountJpy: 300 }),
+    })
+    if (!res.ok) throw new Error(`simulate-payment ${res.status}: ${await res.text()}`)
+    const paid = await res.json()
+    const conf = await api(`/api/checkout/confirm?session_id=${encodeURIComponent(paid.sessionId)}`)
+    const body = await conf.json()
+    if (!body.confirmed || body.transactionId !== paid.sessionId) {
+      throw new Error(`confirm failed: ${JSON.stringify(body)}`)
+    }
+    return body
+  })
+
+  if ((process.env.STRIPE_SECRET_KEY || '').includes('stub')) {
+    await step('checkout stub returns a Stripe URL and does not charge', async () => {
+      const res = await api('/api/checkout/hair-color', { method: 'POST' })
+      if (!res.ok) throw new Error(`checkout ${res.status}: ${await res.text()}`)
+      const body = await res.json()
+      if (!String(body.url || '').startsWith('https://checkout.stripe.com/')) {
+        throw new Error(`expected stripe url, got ${body.url}`)
+      }
+      return { url: body.url }
+    })
   }
 
   // ---------- Summary ----------

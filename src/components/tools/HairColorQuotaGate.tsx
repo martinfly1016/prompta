@@ -2,13 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useSession, signIn } from 'next-auth/react'
-import {
-  trackPaywallView,
-  trackPurchaseClick,
-  trackCheckoutStarted,
-  type PaywallTrigger,
-} from '@/lib/track'
+import { useSession } from 'next-auth/react'
+import { trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
+import { redirectToSignIn, signInThenCheckout, startCreditCheckout } from '@/lib/start-checkout'
 
 const TOOL = 'hair-color' as const
 
@@ -27,6 +23,8 @@ interface QuotaState {
   canUse: boolean
   blockReason: 'none' | 'login_required' | 'credits_exhausted' | 'free_exhausted' | 'ip_exhausted'
   stripeEnabled?: boolean
+  welcomeCredits?: number
+  imageCreditCost?: number
 }
 
 interface HairCandidate {
@@ -208,20 +206,9 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
 
   useEffect(() => {
     refresh()
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search)
-      const purchase = params.get('purchase')
-      if (purchase === 'success') {
-        // Webhook + signed-in session combine to grant + reveal credits.
-        // No client-side claim needed.
-        setPurchaseBanner(t.purchaseSuccess)
-        cleanUrl()
-        refresh()
-      } else if (purchase === 'cancelled') {
-        setPurchaseBanner(t.purchaseCancelled)
-        cleanUrl()
-      }
-    }
+    const onCredits = () => refresh()
+    window.addEventListener('prompta:credits-updated', onCredits)
+    return () => window.removeEventListener('prompta:credits-updated', onCredits)
   }, [])
 
   // Refresh paid balance whenever the auth session flips signed-in/out
@@ -229,18 +216,25 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     refresh()
   }, [authStatus])
 
+  const resumeStarted = useRef(false)
+  useEffect(() => {
+    if (authStatus !== 'authenticated' || !state || resumeStarted.current) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('checkout') !== '1') return
+    resumeStarted.current = true
+    const u = new URL(window.location.href)
+    u.searchParams.delete('checkout')
+    window.history.replaceState({}, '', u.toString())
+    if (!state.stripeEnabled) return
+    void handlePurchase()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authStatus, state])
+
   function refresh() {
     fetch('/api/tools/hair-color/check')
       .then((r) => r.json())
       .then((s) => setState(s))
       .catch(() => {})
-  }
-
-  function cleanUrl() {
-    const u = new URL(window.location.href)
-    u.searchParams.delete('purchase')
-    u.searchParams.delete('session_id')
-    window.history.replaceState({}, '', u.toString())
   }
 
   async function handlePickFile() {
@@ -314,7 +308,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
 
   async function runSimulate(candidate: HairCandidate) {
     if (!originalFile) return
-    if (!state || (!state.canUse && state.paidCredits <= 0)) {
+    if (!state || state.paidCredits < SIM_COST) {
       openPaywall(setShowModal, 'exhausted_simulate')
       return
     }
@@ -345,42 +339,29 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     }
   }
 
-  // Sign-in-only path for the login_required modal variant: users who have
-  // never used the tool should be steered to "claim 3 free credits" rather
-  // than the Stripe checkout flow.
-  async function handleSignInFree() {
-    trackPurchaseClick(TOOL, false)
-    const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
-    signIn(undefined, { callbackUrl })
+  function handleSignInFree() {
+    redirectToSignIn(window.location.pathname)
   }
 
   async function handlePurchase() {
-    trackPurchaseClick(TOOL, isSignedIn)
     if (!isSignedIn) {
-      // Redirect to signIn with callback back to this tool page so the user
-      // lands here after authenticating and can immediately purchase.
-      const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
-      signIn(undefined, { callbackUrl })
+      trackPurchaseClick(TOOL, false)
+      signInThenCheckout(window.location.pathname)
       return
     }
     setPending(true)
     try {
-      const r = await fetch(`/api/checkout/hair-color?locale=${locale}`, { method: 'POST' })
-      if (r.status === 401) {
-        const callbackUrl = typeof window !== 'undefined' ? window.location.pathname : '/tools/hair-color-diagnosis'
-        signIn(undefined, { callbackUrl })
-        return
-      }
-      if (!r.ok) {
-        const err = await r.json().catch(() => ({}))
-        setPurchaseBanner(t.stripeError(err.error ?? 'config'))
+      const result = await startCreditCheckout({
+        endpoint: `/api/checkout/hair-color?locale=${locale}`,
+        tool: TOOL,
+      })
+      if (!result.ok) {
+        if (result.status === 401) {
+          signInThenCheckout(window.location.pathname)
+          return
+        }
+        setPurchaseBanner(t.stripeError(result.error))
         setPending(false)
-        return
-      }
-      const { url } = await r.json()
-      if (url) {
-        trackCheckoutStarted(TOOL)
-        window.location.href = url
       }
     } catch (e: any) {
       setPurchaseBanner(t.errNetwork(e?.message ?? ''))
@@ -394,6 +375,12 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   const exhausted = state?.canUse === false
   const loginRequired = state?.blockReason === 'login_required'
   const stripeReady = state?.stripeEnabled === true
+  const welcome = state?.welcomeCredits ?? WELCOME_CREDITS
+  const imageTries = Math.max(1, Math.floor(welcome / (state?.imageCreditCost ?? SIM_COST)))
+  const loginStatus = `ログインで ${welcome} ポイント獲得（無料）`
+  const loginTitle = `Google ログインで ${welcome} ポイント無料`
+  const loginDesc = `初回ログインで ${welcome} ポイント無料プレゼント（=画像生成 ${imageTries} 回 OR 文字実行 ${welcome} 回）。即時利用可能・パーソナルカラー診断ツールでも共通でお使いいただけます。`
+  const loginButton = `🔐 Google でサインイン（無料 ${welcome} ポイント）`
 
   return (
     <>
@@ -421,15 +408,18 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
         ) : loginRequired ? (
           <a
             href="/auth/signin"
+            data-testid="quota-status"
+            data-state="login"
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 transition-colors"
             aria-live="polite"
           >
             <span className="text-base">🔐</span>
-            <span className="font-semibold">{t.statusLoginRequired}</span>
+            <span className="font-semibold">{loginStatus}</span>
           </a>
         ) : exhausted && paidCredits === 0 ? (
           <button
             type="button"
+            data-testid="quota-exhausted"
             onClick={() => openPaywall(setShowModal, 'badge')}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 transition-colors"
             aria-live="polite"
@@ -440,6 +430,9 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
           </button>
         ) : (
           <div
+            data-testid="quota-status"
+            data-state="ready"
+            data-balance={paidCredits}
             className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
               remaining <= 1
                 ? 'bg-amber-50 text-amber-700 border-amber-200'
@@ -518,6 +511,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
           onClick={() => setShowModal(false)}
         >
           <div
+            data-testid="paywall-modal"
             className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl animate-fadein"
             onClick={(e) => e.stopPropagation()}
           >
@@ -525,14 +519,14 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
               <div className="text-5xl mb-3">{loginRequired ? '🎁' : '💇'}</div>
               <h3 className="text-lg font-bold text-gray-900 mb-1">
                 {loginRequired
-                  ? t.modalTitleLogin
+                  ? loginTitle
                   : state.blockReason === 'ip_exhausted'
                     ? t.modalTitleIp
                     : t.modalTitleFree}
               </h3>
               <p className="text-sm text-gray-600">
                 {loginRequired
-                  ? t.modalDescLogin
+                  ? loginDesc
                   : state.blockReason === 'ip_exhausted'
                     ? t.modalDescIp
                     : t.modalDescFree}
@@ -560,11 +554,12 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
               <div className="space-y-3">
                 <button
                   type="button"
+                  data-testid="paywall-signin-free"
                   onClick={handleSignInFree}
                   disabled={pending}
                   className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {t.signInFreeButton}
+                  {loginButton}
                 </button>
                 <p className="text-[11px] text-gray-500 text-center">
                   {t.signInFreeBenefit}
@@ -585,6 +580,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
             ) : isSignedIn ? (
               <button
                 type="button"
+                data-testid="paywall-buy"
                 onClick={handlePurchase}
                 disabled={pending}
                 className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
@@ -603,6 +599,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
                 </div>
                 <button
                   type="button"
+                  data-testid="paywall-signin-buy"
                   onClick={handlePurchase}
                   disabled={pending}
                   className="w-full px-5 py-3 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
@@ -669,7 +666,7 @@ function HairColorResult({
   t: Strings
 }) {
   const { diagnosis } = result
-  const canSpend = paidCredits > 0 || remainingFree > 0
+  const canSpend = paidCredits >= SIM_COST || remainingFree >= SIM_COST
   const showUpsell = paidCredits === 0 && remainingFree <= 1
 
   return (
