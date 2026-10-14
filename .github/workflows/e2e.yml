@@ -1,33 +1,22 @@
-name: E2E paid-flow
+name: CI
 
 on:
   push:
     branches: [main]
-    paths:
-      # Only run when paid-feature surfaces or tests change. Saves CI minutes
-      # on docs / collect / unrelated commits.
-      - 'src/app/(marketing)/tools/**'
-      - 'src/app/api/tools/**'
-      - 'src/app/api/webhooks/stripe/**'
-      - 'src/app/api/test/**'
-      - 'src/components/tools/**'
-      - 'src/lib/paid-credits.ts'
-      - 'src/lib/tool-quota.ts'
-      - 'src/lib/auth.ts'
-      - 'src/scripts/e2e/**'
-      - 'e2e/**'
-      - 'playwright.config.ts'
-      - 'package.json'
-      - 'prisma/schema.prisma'
-      - '.github/workflows/e2e.yml'
+    paths-ignore:
+      # Markdown-only changes (docs, skills, session notes) do not affect
+      # the running app. Any other file still runs the full workflow.
+      - '**/*.md'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**/*.md'
   workflow_dispatch:
 
 jobs:
-  paid-flow:
+  ci:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:16
@@ -62,9 +51,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
 
       - name: Install deps
         run: npm install --no-audit --no-fund --legacy-peer-deps
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
 
       - name: Prisma generate + push schema
         run: |
