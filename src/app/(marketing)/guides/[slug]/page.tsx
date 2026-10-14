@@ -1851,11 +1851,11 @@ mary jane shoes, victorian gothic aesthetic,
 3. **クオリティ重視で気軽に** → Midjourney \`--style raw --ar 2:3\`
 4. **既存写真の衣装変換** → Gemini Nano Banana
 
-prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済み。<a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> の各 prompt ページから「🚀 ここで試す」を押せばサイト内で実行可能（5 ポイント / 回、新規登録で 3 ポイント無料）。`,
+prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済み。<a href="/prompts/cosplay" class="text-sky-600 hover:underline">/prompts/cosplay</a> の各 prompt ページから「🚀 ここで試す」を押せばサイト内で実行可能（1 ポイント / 回、ログインで 3 回無料）。`,
       },
       {
         title: '✨ 関連プロンプト集 + 関連ガイド',
-        content: `本ガイドのコスプレテクニックを使った公開 prompt 一覧。すべてサンプル画像つきで、各ページ「ここで試す」からサイト内実行可能（5 ポイント / 回）。
+        content: `本ガイドのコスプレテクニックを使った公開 prompt 一覧。すべてサンプル画像つきで、各ページ「ここで試す」からサイト内実行可能（1 ポイント / 回）。
 
 **セーラー服 / 制服系**:
 
@@ -2381,7 +2381,7 @@ full body shot, slice of life illustration
 3. **クオリティ重視で気軽に** → Midjourney \`--style raw\`
 4. **既存写真の体型加工** → Gemini Nano Banana
 
-prompta.jp の体型プロンプト集は SDXL ベースで動作確認済み。<a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> の各 prompt ページから「🚀 ここで試す」を押せばサイト内で実行可能（5 ポイント / 回、新規登録で 3 ポイント無料）。`,
+prompta.jp の体型プロンプト集は SDXL ベースで動作確認済み。<a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> の各 prompt ページから「🚀 ここで試す」を押せばサイト内で実行可能（1 ポイント / 回、ログインで 3 回無料）。`,
       },
       {
         title: '全英語プロンプト一覧 — コピペ用クイック索引',
@@ -3032,7 +3032,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 2. 似合う髪色を 5 候補提案（安心の定番・トレンド・個性派のバランス）
 3. Gemini 2.5 Flash Image で **Before/After シミュレーション**を生成
 
-**Google ログインで 3 回無料**、写真は保存されません。実際の美容院に行く前のイメージトレーニングや、美容師さんへのオーダー時の参考画像として最適です。
+**ログインで 3 回無料（全ツール共通・1 回 1 ポイント）**、写真は保存されません。実際の美容院に行く前のイメージトレーニングや、美容師さんへのオーダー時の参考画像として最適です。
 
 より総合的に診断したい方は **[パーソナルカラー診断 AI](/tools/personal-color-analysis)** をご利用ください。髪色だけでなく服・口紅・アクセサリーまで含む 16 色のパレットを提案します。各シーズン詳細ガイドも参考に: [スプリング](/tools/personal-color-analysis/spring) / [サマー](/tools/personal-color-analysis/summer) / [オータム](/tools/personal-color-analysis/autumn) / [ウィンター](/tools/personal-color-analysis/winter)。
 
@@ -3043,7 +3043,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       { q: 'パーソナルカラーと似合う髪色の関係は何ですか？', a: 'パーソナルカラーは肌のアンダートーン（暖み／青み）・瞳・髪の質感・全体のコントラストから 4 シーズン（春・夏・秋・冬）に分類する手法です。各シーズンに「似合う色の世界」があり、髪色もその世界に属する色が肌の透明感を最大限に引き出します。例えば春タイプは「黄み × 明るい」髪色（ライトブラウン・ハニーゴールド）、冬タイプは「青み × 強い」髪色（ジェットブラック・ワインレッド）が映えます。' },
       { q: 'イエベ・ブルベの違いは？', a: 'イエベ（イエローベース）は黄み寄りの肌で春・秋タイプが該当、ブルベ（ブルーベース）は青み寄りの肌で夏・冬タイプが該当します。簡易判定は (1) ゴールドのアクセサリーが似合えばイエベ、シルバーが似合えばブルベ。(2) 手首の血管が緑がかればイエベ、青や紫ならブルベ。(3) 焼けるとすぐ赤くなるならブルベ、小麦色になるならイエベ。ただし精度は中程度なので、AI 写真診断や専門家によるドレーピング診断と組み合わせるのがおすすめ。' },
       { q: 'ブリーチが必要な髪色はどれですか？', a: '春タイプの「ストロベリーブロンド」、夏タイプの「ラベンダーアッシュ」「グレージュ」、冬タイプの「プラチナホワイト」はブリーチが必要（特にプラチナは 3-4 回）。一方、各シーズンの王道カラー（ライトブラウン・アッシュブラウン・チョコレートブラウン・ジェットブラック）はブリーチ不要です。ブリーチ回数が増えるほど髪のダメージは大きくなるため、ダメージケアと費用も考慮してください。' },
-      { q: 'AI で似合う髪色を試せますか？', a: 'はい。当サイトの「似合う髪色診断 AI」では写真 1 枚で 4 シーズン判定 + 似合う髪色 5 候補 + Before/After シミュレーション画像を Gemini 2.5 Flash Image で自動生成します。Google ログインで 3 回無料、写真は保存されません。実際の美容院予約前のイメージトレーニングに最適です。本格的なパーソナルカラー全体判定をしたい方は「パーソナルカラー診断 AI」も併用できます（ポイント共通）。' },
+      { q: 'AI で似合う髪色を試せますか？', a: 'はい。当サイトの「似合う髪色診断 AI」では写真 1 枚で 4 シーズン判定 + 似合う髪色 5 候補 + Before/After シミュレーション画像を Gemini 2.5 Flash Image で自動生成します。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）、写真は保存されません。実際の美容院予約前のイメージトレーニングに最適です。本格的なパーソナルカラー全体判定をしたい方は「パーソナルカラー診断 AI」も併用できます（ポイント共通）。' },
       { q: '美容師さんへのオーダー方法は？', a: '効果的なオーダー文の構造は (1) 自分のパーソナルカラー判定結果（例: ブルベ夏）、(2) 希望の髪色名（例: アッシュブラウン）、(3) ハイライトの有無、(4) ブリーチを希望するか、(5) ダメージ予算、の 5 点。AI 診断ツールの Before/After 画像を見せると意図がさらに正確に伝わります。「夏タイプなので青み寄りで黄ばまない色味、ブリーチなしでアッシュブラウン希望、ハイライトはお任せ」のようにシンプルに伝えるのが理想です。' },
       { q: '同じパーソナルカラーでもイメージが違うのは？', a: '4 シーズンの中でも「ライト・ブライト・ディープ・ソフト」などのサブタイプがあり（例: ライトスプリング、ブライトスプリング、ライトサマー、ディープオータム）、同じ春タイプでもライト寄りなら淡いライトブラウン、ブライト寄りならハッキリしたコーラルブラウンが映えます。AI 診断では最も近い 4 シーズンに分類しますが、より細かいタイプ判定は専門家の対面診断が確実です。' },
     ],
@@ -3152,7 +3152,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 **5. 白黒写真カラー化**:
 \`Convert the uploaded black and white photo to natural color, with realistic, period-accurate skin tones, clothing colors appropriate for the 1950s era, and natural film grain preserved. Lock identity, pose, face proportions, clothing shape, hair shape, and grain texture exactly as the source. Do not regenerate the photo from scratch — only add color to existing pixels.\`
 
-これらは**当サイトの [/prompts/photo-edit](/prompts/photo-edit) で多数の実例とサンプル画像を公開**しています。「自分の写真でやってみたい」方は当サイトの [パーソナルカラー診断 AI](/tools/personal-color-analysis) や [似合う髪色診断 AI](/tools/hair-color-diagnosis) で**Google ログインで 3 回無料**ですぐに試せます。`,
+これらは**当サイトの [/prompts/photo-edit](/prompts/photo-edit) で多数の実例とサンプル画像を公開**しています。「自分の写真でやってみたい」方は当サイトの [パーソナルカラー診断 AI](/tools/personal-color-analysis) や [似合う髪色診断 AI](/tools/hair-color-diagnosis) で**ログインで 3 回無料（全ツール共通・1 回 1 ポイント）**ですぐに試せます。`,
       },
       {
         title: '学習・教育プロンプト集 — 10 例文',
@@ -3931,7 +3931,7 @@ close-up romantic shot, soft warm rim lighting,
 2. **クオリティ重視 / ファンアート** → Midjourney
 3. **自然言語で気軽に試したい** → DALL-E 3（Bing Image Creator で無料）
 
-prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> から該当 prompt の「ここで試す」を押せばサイト内で実行可能（5 ポイント / 回）。`,
+prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> から該当 prompt の「ここで試す」を押せばサイト内で実行可能（1 ポイント / 回）。`,
       },
       {
         title: '作品例 — prompta.jp で即試せる 15 件',
@@ -4037,7 +4037,7 @@ tall man taller than woman, traditional height pairing,
 man towering over woman
 \`\`\`
 
-これだけ揃えれば、ほぼすべての身長差シーンを SD / MJ / DALL-E で再現できます。リアルタイムでサイト内実行を試したい場合は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各プロンプトページから「🚀 ここで試す」を押してください（5 ポイント / 回、新規登録で 3 ポイント無料）。`,
+これだけ揃えれば、ほぼすべての身長差シーンを SD / MJ / DALL-E で再現できます。リアルタイムでサイト内実行を試したい場合は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各プロンプトページから「🚀 ここで試す」を押してください（1 ポイント / 回、ログインで 3 回無料）。`,
       },
     ],
     faq: [
@@ -4640,7 +4640,7 @@ soft natural lighting, photorealistic style, candid moment capture
 3. **自然言語で気軽に** → DALL-E 3（Bing Image Creator で無料）
 4. **既存写真を加工** → Gemini Nano Banana
 
-prompta.jp の二人構図 prompt 集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各 prompt 詳細ページから「🚀 ここで試す」で**サイト内で実行可能**（5 ポイント / 回、新規登録 3 ポイント無料）。`,
+prompta.jp の二人構図 prompt 集は SDXL ベースで動作確認済み。<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> の各 prompt 詳細ページから「🚀 ここで試す」で**サイト内で実行可能**（1 ポイント / 回、ログインで 3 回無料）。`,
       },
       {
         title: 'よくある失敗と対処法 — 二人構図特有の崩壊パターン',
@@ -4751,7 +4751,7 @@ looking at camera, awkward pose, stiff pose,
 worst quality, low quality, blurry
 \`\`\`
 
-これだけ揃えれば、ほぼすべての二人構図シーンを SD / MJ / DALL-E で再現できます。サイト内実行も可能（<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> 各 prompt の「🚀 ここで試す」、5 ポイント / 回）。`,
+これだけ揃えれば、ほぼすべての二人構図シーンを SD / MJ / DALL-E で再現できます。サイト内実行も可能（<a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> 各 prompt の「🚀 ここで試す」、1 ポイント / 回）。`,
       },
       {
         title: '関連 prompt / guide — 二人構図を極めるリソース',
@@ -4808,7 +4808,7 @@ BL イラストは「ただ男性 2 人を並べただけ」では成立しま�
 
 **本ガイドで扱う 8 ポーズ × 12 シチュエーション** = 96 通りの BL 構図テンプレートを内包。すべてサイト内 SDXL 実例サンプルつき。
 
-実例 prompt 集は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> に 12 件公開、各ページの「🚀 ここで試す」からサイト内で実行可能（5 ポイント / 回、新規 3 ポイント無料）。`,
+実例 prompt 集は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> に 12 件公開、各ページの「🚀 ここで試す」からサイト内で実行可能（1 ポイント / 回、ログインで 3 回無料）。`,
       },
       {
         title: 'BL 構図プロンプトを構成する 5 要素',
@@ -5078,7 +5078,7 @@ explicit content, nudity, suggestive pose, worst quality, low quality
 2. **クオリティ重視 / アート性** → Midjourney + Niji 6
 3. **気軽に試したい** → DALL-E 3（Bing Image Creator 無料）
 
-prompta.jp の BL 構図 12 prompt は **SDXL（fal.ai fast-sdxl）ベースで動作確認済み**、すべて 1024×1024 サンプル付き。<a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> 各ページの「🚀 ここで試す」でサイト内実行可能（5 ポイント / 回）。`,
+prompta.jp の BL 構図 12 prompt は **SDXL（fal.ai fast-sdxl）ベースで動作確認済み**、すべて 1024×1024 サンプル付き。<a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> 各ページの「🚀 ここで試す」でサイト内実行可能（1 ポイント / 回）。`,
       },
       {
         title: 'よくある失敗と対処法 — BL 構図特有の崩壊パターン',
@@ -5173,7 +5173,7 @@ looking at camera, awkward pose, stiff pose,
 worst quality, low quality, blurry
 \`\`\`
 
-これだけ揃えれば、ほぼすべての SFW BL シーンを SD / MJ / DALL-E で再現できます。サイト内実行は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> の各 prompt から「🚀 ここで試す」（5 ポイント / 回）。`,
+これだけ揃えれば、ほぼすべての SFW BL シーンを SD / MJ / DALL-E で再現できます。サイト内実行は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> の各 prompt から「🚀 ここで試す」（1 ポイント / 回）。`,
       },
       {
         title: '関連ガイド・リソース — BL 構図を極める道筋',
@@ -5210,7 +5210,7 @@ worst quality, low quality, blurry
       { q: '攻め × 受けを視覚的に表現するベストプラクティスは？', a: '「攻め」「受け」を直接書かず、**身長差・体格差・ポーズ・視線**で表現するのが SD でも DALL-E でも安全で効果的。**攻め役**の典型: `taller protective character around 185-195cm, broader shoulders, confident expression, leaning down or looking down gently`。**受け役**の典型: `shorter gentler character around 165-170cm, slimmer build, soft expression, looking up or being held`。**身長差を 15-25cm**に設定するとはっきり攻め受けが伝わる。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差カップルガイド</a> の「BL カップル」section をご覧ください。' },
       { q: '大人 BL（オフィス・スーツ系）のプロンプトのコツは？', a: '大人 BL は **(1) 衣装の質感、(2) 表情の落ち着き、(3) 照明** が肝心。テンプレ: `2boys in tailored business suits, mature adult features around late 20s to 30s, modern office or upscale bar, charcoal/navy/black suits, blinds casting striped lighting, calm composed expressions with quiet emotional tension, sophisticated adult BL aesthetic, photorealistic or detailed anime illustration`。学園 BL とは別物 — 「mature」「adult」「composed」「sophisticated」をプロンプトに必ず入れる。実例: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィス スーツ姿</a>。' },
       { q: 'ファンタジー BL（騎士×魔法使い等）構図の応用例は？', a: '中世ファンタジー世界観は **(1) 衣装で役割を明示、(2) 体格差で力関係を示す、(3) 背景で世界観を構築** がポイント。テンプレ: `2boys in medieval fantasy setting, tall armored knight 190cm in plate armor with sword + robed mage 168cm with grimoire / royal prince + loyal guard / paladin + dark sorcerer, ancient hall or magical forest, mysterious lighting, fantasy concept art illustration`。組み合わせ例: 騎士×魔法使い / 王子×護衛 / 聖騎士×闇魔法使い / 勇者×旅商人。実例: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>。' },
-      { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2boys` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（5 ポイント / 回）。' },
+      { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2boys` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（1 ポイント / 回）。' },
     ],
   },
   'bl-pose-collection-guide': {
@@ -5244,7 +5244,7 @@ worst quality, low quality, blurry
 - **手の動き**（手繋ぎ / 頬撫で / 髪撫で）4 種
 - **視線パターン**（見上げる / 見つめ合う / 目を逸らす）3 種
 
-実例 BL prompt 22 件は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> で「ここで試す」可能（5 ポイント / 回）。`,
+実例 BL prompt 22 件は <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> で「ここで試す」可能（1 ポイント / 回）。`,
       },
       {
         title: 'BL ポーズプロンプトを構成する 4 要素',

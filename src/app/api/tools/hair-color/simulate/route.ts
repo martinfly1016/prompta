@@ -3,16 +3,16 @@ import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getPaidBalance,
   getOwnerEmailHash,
-  refundCredits,
   spendCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { simulateHairColor } from '@/lib/hair-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
-import { insufficientPointsEvent, pointsSpentEvent } from '@/lib/ga-events'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
+import { insufficientPointsEvent, pointsSpentEvent, toolResultEvent } from '@/lib/ga-events'
 import { enqueueGaEvents } from '@/lib/ga-queue'
 import { validateImageBuffer } from '@/lib/image-validation'
-import { saveGenerationOutput } from '@/lib/generation-output'
+import { completeGeneration, reconcileStaleGenerations, refundPendingGeneration, startGeneration } from '@/lib/generation-output'
 
 const TOOL = 'hair-color'
 const MAX_BYTES = 8 * 1024 * 1024
@@ -73,36 +73,41 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // 5/19 pricing: image gen = 5 credit (Gemini Flash Image ~$0.04 cost)
-  const SIM_COST = 5
-  const spend = await spendCredits(eh, SIM_COST)
+  await reconcileStaleGenerations(eh)
+  const cost = POINTS_PER_RUN
+  const spend = await spendCredits(eh, cost)
   if (!spend.ok) {
     const paidCredits = await getPaidBalance(eh)
-    const ga = [insufficientPointsEvent(TOOL, SIM_COST, paidCredits)]
+    const ga = [insufficientPointsEvent(TOOL, cost, paidCredits)]
     await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits, needed: SIM_COST, stripeEnabled, ga },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits, needed: cost, stripeEnabled, ga },
       { status: 429 },
     )
   }
 
   const usage = await prisma.toolUsage.create({
-    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh, creditsConsumed: 5 },
+    data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh, creditsConsumed: cost },
     select: { id: true },
+  })
+  const genId = await startGeneration({
+    emailHash: eh,
+    tool: TOOL,
+    creditsUsed: cost,
+    inputParams: JSON.stringify({ hex, nameJa, nameEn }),
   })
 
   try {
     const sim = await simulateHairColor(buf, file.type, hex, nameJa, nameEn)
     const paidCredits = await getPaidBalance(eh)
-    // Phase 2: persist generated simulation image + chosen color metadata.
-    await saveGenerationOutput({
-      emailHash: eh,
-      tool: TOOL,
-      inputParams: JSON.stringify({ hex, nameJa, nameEn }),
+    await completeGeneration(genId, {
       outputJson: JSON.stringify({ hex, nameJa, nameEn }),
       image: { buffer: Buffer.from(sim.imageBase64, 'base64'), mimeType: sim.mimeType },
     }).catch(e => console.error('[hair-color/simulate] save failed:', (e as Error).message))
-    const ga = [pointsSpentEvent(TOOL, SIM_COST, paidCredits)]
+    const ga = [
+      pointsSpentEvent(TOOL, cost, paidCredits),
+      toolResultEvent(TOOL, 'success', cost),
+    ]
     await enqueueGaEvents(ga)
     return NextResponse.json({
       ok: true,
@@ -119,10 +124,15 @@ export async function POST(req: NextRequest) {
     })
   } catch (e: any) {
     await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
-    await refundCredits(eh, SIM_COST).catch(() => {})
+    await refundPendingGeneration(genId, eh, e?.message ?? 'simulation_failed').catch((err) => {
+      console.error('[hair-color/simulate] refund failed:', (err as Error).message)
+    })
+    const paidCredits = await getPaidBalance(eh)
+    const ga = [toolResultEvent(TOOL, 'failure', cost)]
+    await enqueueGaEvents(ga)
     console.error('[hair-color/simulate] failed:', e?.message)
     return NextResponse.json(
-      { error: 'simulation_failed', message: e?.message ?? 'unknown', refunded: true },
+      { error: 'simulation_failed', message: e?.message ?? 'unknown', refunded: true, paidCredits, ga },
       { status: 500 },
     )
   }

@@ -7,8 +7,7 @@
  * Add a new provider by:
  *   1. Drop a file `src/lib/image-providers/<id>.ts` exporting `provider: ImageProvider`.
  *   2. Register in `registry.ts`.
- * Per pricing baseline (2026-05-19), all Tier-1 image providers charge
- * 5 credits per generation; text providers charge 1 credit.
+ * Every provider charges POINTS_PER_RUN (see credit-costs.ts).
  */
 
 export type ProviderId = 'gemini-image' | 'openai-image' | 'gemini-text' | 'fal-sdxl'
@@ -49,7 +48,7 @@ export interface ImageProvider {
   iconUrl?: string
   /** Supported execute modes. */
   modes: ExecuteMode[]
-  /** Credit cost per call (1 for text, 5 for image, 10 for HD image). */
+  /** Credit cost per call. Always POINTS_PER_RUN. */
   credits: number
   /** Approximate cost in USD per call (for daily-report margin tracking). */
   costUsd: number

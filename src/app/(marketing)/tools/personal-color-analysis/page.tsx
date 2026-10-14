@@ -3,11 +3,12 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { PersonalColorQuotaGate } from '@/components/tools/PersonalColorQuotaGate'
+import { PersonalColorSamples } from '@/components/tools/PersonalColorSamples'
 
 export const metadata: Metadata = {
-  title: 'パーソナルカラー診断 写真 AI — Google ログインで 3 回無料',
+  title: 'パーソナルカラー診断 写真 AI',
   description:
-    '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット + 似合う髪色・口紅・服装の提案。Gemini 2.5 Flash 搭載、Google ログインで 3 回無料。',
+    '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット + 似合う髪色・口紅・服装の提案。Gemini 2.5 Flash 搭載、ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/personal-color-analysis`,
     languages: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'パーソナルカラー診断 写真 AI — Google ログインで 3 回無料',
+    title: 'パーソナルカラー診断 写真 AI',
     description:
       '写真をアップロードするだけで AI がパーソナルカラーを診断。4シーズン判定 + 16色おすすめパレット。',
     type: 'website',
@@ -69,12 +70,6 @@ const MOCK_RESULT = {
     { hex: '#8B4513', reason: '深い茶色は重く見えコントラストが強すぎる' },
   ],
 }
-
-const SAMPLE_PHOTOS = [
-  { src: '/og-default.png', label: 'サンプル 1' },
-  { src: '/og-default.png', label: 'サンプル 2' },
-  { src: '/og-default.png', label: 'サンプル 3' },
-]
 
 const FAQ = [
   {
@@ -199,11 +194,11 @@ export default function PersonalColorAnalysisPage() {
             パーソナルカラー<span className="text-sky-600">診断 AI</span>
           </h1>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-5">
-            写真をアップロードするだけで、AI が4シーズン分類 + 似合う16色を診断。Google ログインで 3 回無料・数秒で結果。
+            写真をアップロードするだけで、AI が4シーズン分類 + 似合う16色を診断。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。結果まで約 20〜60 秒。
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ Google ログインで 3 回無料
+              ✓ ログインで 3 回無料（全ツール共通・1 回 1 ポイント）
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ 写真は保存しません
@@ -236,25 +231,7 @@ export default function PersonalColorAnalysisPage() {
             <PersonalColorQuotaGate />
           </div>
 
-          {/* Sample photos */}
-          <div className="mt-6">
-            <p className="text-xs text-gray-500 mb-3 text-center">
-              または、サンプル写真で結果を確認
-            </p>
-            <div className="flex justify-center gap-3 flex-wrap">
-              {SAMPLE_PHOTOS.map((s, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className="w-20 h-20 rounded-lg border-2 border-gray-200 hover:border-sky-400 bg-gray-100 overflow-hidden transition-all"
-                  title={s.label}
-                  disabled
-                >
-                  <span className="block text-xs text-gray-400 pt-7">{s.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+          <PersonalColorSamples />
         </div>
       </section>
 
@@ -271,7 +248,7 @@ export default function PersonalColorAnalysisPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { n: 1, title: '写真をアップロード', desc: '自然光・正面・素顔の写真がベスト', icon: '📷' },
-              { n: 2, title: 'AI が分析', desc: '肌・瞳・髪のトーンを Gemini が解析（5-15秒）', icon: '🤖' },
+              { n: 2, title: 'AI が分析', desc: '肌・瞳・髪のトーンを Gemini が解析（約 20〜60 秒）', icon: '🤖' },
               { n: 3, title: '結果を確認', desc: '4シーズン + 推奨16色 + 化粧・髪・服のヒント', icon: '🎨' },
             ].map((s) => (
               <div key={s.n} className="bg-white rounded-xl p-6 border border-gray-200">

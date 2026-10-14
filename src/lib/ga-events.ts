@@ -44,6 +44,14 @@ export function welcomeBonusEvent(amount: number, isTopup: boolean): GaEvent {
   })
 }
 
+export function toolResultEvent(
+  tool: string,
+  status: 'success' | 'failure',
+  amount: number,
+): GaEvent {
+  return makeGaEvent('tool_result', { tool, status, amount })
+}
+
 export function parseGaCookie(raw: string | undefined | null): GaEvent[] {
   if (!raw) return []
   try {

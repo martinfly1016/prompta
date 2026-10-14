@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createCreditPackCheckout } from '@/lib/create-credit-checkout'
 
-// Creates a Stripe Checkout session for the 150-credit pack purchase.
+// Creates a Stripe Checkout session for a validated point pack.
 // Returns the hosted Checkout URL — frontend redirects to it.
 //
 // When the user is signed in, we lock the customer email to their session

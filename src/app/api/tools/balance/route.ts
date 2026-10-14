@@ -3,6 +3,7 @@ import { ensureShortWelcomeTopUp, getCreditsState, getOwnerEmailHash } from '@/l
 import { welcomeBonusEvent } from '@/lib/ga-events'
 import { enqueueGaEvents } from '@/lib/ga-queue'
 import { stripeCheckoutReady } from '@/lib/stripe'
+import { reconcileStaleGenerations } from '@/lib/generation-output'
 
 /**
  * GET /api/tools/balance — universal credit balance lookup.
@@ -13,6 +14,7 @@ export async function GET() {
   const ga = topup?.granted ? [welcomeBonusEvent(topup.amount, true)] : []
   await enqueueGaEvents(ga)
   const eh = await getOwnerEmailHash()
+  if (eh) await reconcileStaleGenerations(eh)
   const { balance, expiresAt } = await getCreditsState(eh)
   return NextResponse.json({
     balance,

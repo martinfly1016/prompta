@@ -8,6 +8,7 @@ import { redirectToSignIn } from '@/lib/start-checkout'
 import { listProvidersForMode, recommendForPrompt } from '@/lib/image-providers/registry'
 import type { ExecuteMode, ImageProvider, ProviderId } from '@/lib/image-providers/types'
 import { CreditPurchaseModal } from '@/components/credits/CreditPurchaseModal'
+import { WELCOME_COPY_JA } from '@/lib/credit-costs'
 
 interface PromptShape {
   slug: string
@@ -128,6 +129,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
   const [downloading, setDownloading] = useState(false)
   const [showPurchaseModal, setShowPurchaseModal] = useState(false)
   const [resumeCheckout, setResumeCheckout] = useState(false)
+  const [resumePackId, setResumePackId] = useState<string | null>(null)
 
   function openPurchase(trigger: 'exhausted_pick' | 'exhausted_analyze' | 'badge') {
     trackPaywallView('prompt', trigger)
@@ -141,7 +143,9 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
     if (params.get('checkout') !== '1') return
     resumeStarted.current = true
     const u = new URL(window.location.href)
+    setResumePackId(params.get('pack'))
     u.searchParams.delete('checkout')
+    u.searchParams.delete('pack')
     window.history.replaceState({}, '', u.toString())
     setResumeCheckout(true)
     openPurchase('badge')
@@ -184,7 +188,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
 
     if (provider && balance !== null && balance < provider.credits) {
       trackInsufficientPoints('prompt', provider.credits, balance)
-      setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
+      setError('ポイントが足りません。ポイントパックをご購入ください。')
       openPurchase('exhausted_pick')
       return
     }
@@ -215,7 +219,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       flushConfirmedGaEvents(j?.ga)
       if (!res.ok) {
         if (j.error === 'credits_exhausted') {
-          setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
+          setError('ポイントが足りません。ポイントパックをご購入ください。')
           openPurchase('exhausted_analyze')
         } else if (j.error === 'login_required') {
           redirectToSignIn(window.location.pathname + window.location.search)
@@ -373,7 +377,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
           {running ? (
             <>
               <span className="animate-spin inline-block w-4 h-4 border-2 border-gray-900 border-t-transparent rounded-full" />
-              生成中…（{mode === 'text' ? '5-15' : '15-30'}秒）
+              生成中…（{mode === 'text' ? '5-20' : '20-60'}秒）
             </>
           ) : isSignedIn ? (
             <>🚀 生成を開始</>
@@ -399,7 +403,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
 
       {!isSignedIn && (
         <p className="mt-3 text-xs text-gray-600">
-          ※ 実行にはサインインが必要です（Google または メールリンク、初回 15 ポイント無料プレゼント）
+          ※ 実行にはサインインが必要です（{WELCOME_COPY_JA}）
         </p>
       )}
 
@@ -413,7 +417,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
                 onClick={() => openPurchase('badge')}
                 className="inline-flex items-center gap-1 text-red-700 font-medium underline"
               >
-                💳 150 ポイントパックの詳細を見る
+                💳 ポイントパックの詳細を見る
               </button>
             </div>
           )}
@@ -482,6 +486,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         currentExpiresAt={expiresAt}
         tool="prompt"
         autoStart={resumeCheckout}
+        initialPackId={resumePackId}
       />
     </section>
   )

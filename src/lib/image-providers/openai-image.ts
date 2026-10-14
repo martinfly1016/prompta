@@ -1,7 +1,14 @@
 import type { ImageProvider, ProviderCallOpts, ProviderResult } from './types'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
 
 const MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1'
 const ENDPOINT = 'https://api.openai.com/v1/images/generations'
+
+// gpt-image-1 bills much more at "high". Production never sends that tier.
+export function gptImageQuality(): 'low' | 'medium' {
+  const raw = (process.env.OPENAI_IMAGE_QUALITY || 'medium').trim().toLowerCase()
+  return raw === 'low' ? 'low' : 'medium'
+}
 
 function getApiKey(): string {
   const k = process.env.OPENAI_API_KEY || process.env.chatgpt_api_key
@@ -43,6 +50,7 @@ async function call(opts: ProviderCallOpts): Promise<ProviderResult> {
       model: MODEL,
       prompt,
       size: mapAspect(opts.aspectRatio),
+      quality: gptImageQuality(),
       n: 1,
     }),
   })
@@ -72,7 +80,7 @@ export const provider: ImageProvider = {
   icon: '💬',
   iconUrl: 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64',
   modes: ['image-gen'],
-  credits: 5,
+  credits: POINTS_PER_RUN,
   costUsd: 0.04,
   call,
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { trackPurchase } from '@/lib/track'
+import { trackCheckoutReturn, trackPurchase } from '@/lib/track'
 
 // Owns the Stripe return URL. `?purchase=success` is not treated as a
 // purchase until /api/checkout/confirm says the session is paid.
@@ -17,6 +17,7 @@ export function CheckoutReturnHandler() {
     let cancelled = false
 
     async function run() {
+      trackCheckoutReturn(purchase === 'cancelled' ? 'cancelled' : 'success')
       if (purchase === 'cancelled') {
         if (!cancelled) setBanner('購入がキャンセルされました')
         clean()
@@ -36,7 +37,8 @@ export function CheckoutReturnHandler() {
             transactionId: data.transactionId || sessionId,
             value: Number(data.value ?? 0),
             currency: data.currency || 'JPY',
-            credits: Number(data.credits ?? 150),
+            credits: Number(data.credits ?? 0),
+            packId: typeof data.packId === 'string' ? data.packId : undefined,
           })
           setBanner('🎉 ポイントが追加されました')
           window.dispatchEvent(new CustomEvent('prompta:credits-updated'))

@@ -4,12 +4,8 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { getPaidBalance } from '@/lib/paid-credits'
 import { fulfillPaidCheckout } from '@/lib/checkout-fulfill'
-import {
-  stripe,
-  stripeEnabled,
-  isCheckoutTestStub,
-  CREDITS_PER_PACK,
-} from '@/lib/stripe'
+import { stripe, stripeEnabled, isCheckoutTestStub } from '@/lib/stripe'
+import { resolvePaidPack } from '@/lib/credit-costs'
 
 // Read-only confirmation for the success redirect. Grants credits only
 // after Stripe says the session is paid (same idempotent lock as the
@@ -69,12 +65,15 @@ export async function GET(req: NextRequest) {
     if (!payer || payer !== sessionEmail) {
       return NextResponse.json({ confirmed: false, reason: 'email_mismatch' })
     }
-    const credits = Number(session.metadata?.credits ?? CREDITS_PER_PACK) || CREDITS_PER_PACK
+    const resolved = resolvePaidPack(session.metadata?.packId, session.amount_total)
+    if (!resolved.ok) {
+      return NextResponse.json({ confirmed: false, reason: resolved.reason })
+    }
     const result = await fulfillPaidCheckout({
       sessionId: session.id,
       email: payer,
-      credits,
-      amountJpy: session.amount_total ?? 0,
+      credits: resolved.pack.points,
+      amountJpy: session.amount_total ?? resolved.pack.priceJpy,
       paymentIntent: typeof session.payment_intent === 'string' ? session.payment_intent : null,
       eventType: 'checkout.session.confirmed',
     })
@@ -84,6 +83,7 @@ export async function GET(req: NextRequest) {
       value: session.amount_total ?? 0,
       currency: (session.currency || 'jpy').toUpperCase(),
       credits: result.credits,
+      packId: resolved.pack.id,
       balance: result.balance,
       alreadyProcessed: result.alreadyProcessed,
     })

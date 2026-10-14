@@ -1,4 +1,5 @@
 import type { ImageProvider, ProviderCallOpts, ProviderResult } from './types'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
 
 const MODEL =
   process.env.GEMINI_PAID_IMAGE_MODEL ||
@@ -58,7 +59,7 @@ export const provider: ImageProvider = {
   icon: '✨',
   iconUrl: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64',
   modes: ['image-gen', 'image-edit'],
-  credits: 5,
+  credits: POINTS_PER_RUN,
   costUsd: 0.039,
   call,
 }

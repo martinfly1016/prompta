@@ -85,7 +85,7 @@ test.describe('paid flow @hair-color', () => {
     const status = page.getByTestId('quota-status')
     await expect(status).toBeVisible({ timeout: 15_000 })
     await expect(status).toHaveAttribute('data-state', 'login')
-    await expect(status).toContainText(/ログインで \d+ ポイント獲得/)
+    await expect(status).toContainText(/ログインで 3 回無料/)
   })
 
   test('logged in with credits shows the balance chip', async ({ page, request }) => {
@@ -110,10 +110,18 @@ test.describe('paid flow @hair-color', () => {
     await page.getByTestId('quota-exhausted').click()
     const modal = page.getByTestId('paywall-modal')
     await expect(modal).toBeVisible()
-    await expect(modal).toContainText('150 ポイント')
+    await expect(modal).toContainText('Prompta 70ポイント')
+    await expect(modal).toContainText('おすすめ')
     await page.getByTestId('paywall-buy').click()
     await expect.poll(() => gaEvents.slice()).toContain('begin_checkout')
     expect(gaEvents).not.toContain('purchase')
+    const checkoutParams = await page.evaluate(() => {
+      const dl = (window as Window & { dataLayer?: Array<{ 1?: string; 2?: { value?: number; pack_id?: string } }> }).dataLayer || []
+      const hit = [...dl].reverse().find((entry) => entry && entry[1] === 'begin_checkout')
+      return hit?.[2] || null
+    })
+    expect(checkoutParams?.value).toBe(980)
+    expect(checkoutParams?.pack_id).toBe('pack-70')
     await page.waitForURL(/checkout\.stripe\.com/, { timeout: 15_000 })
   })
 
@@ -161,6 +169,27 @@ test.describe('paid flow @hair-color', () => {
     await page.goto('/tools/personal-color-analysis')
     await expect(page.getByTestId('quota-status')).toHaveAttribute('data-balance', '5', { timeout: 15_000 })
   })
+})
+
+test('sample buttons show a result without login or points', async ({ page }) => {
+  await page.context().clearCookies()
+  await page.goto('/tools/personal-color-analysis')
+  await page.getByTestId('sample-button').first().click()
+  const result = page.getByTestId('sample-result')
+  await expect(result).toBeVisible()
+  await expect(result).toContainText('サマー')
+})
+
+test('cancel return records a page_view', async ({ page }) => {
+  await installGtag(page)
+  await page.goto('/tools/hair-color-diagnosis?purchase=cancelled')
+  await expect.poll(async () => eventNames(page)).toContain('page_view')
+  const params = await page.evaluate(() => {
+    const dl = (window as Window & { dataLayer?: Array<{ 1?: string; 2?: { checkout_return?: string } }> }).dataLayer || []
+    const hit = [...dl].reverse().find((entry) => entry && entry[1] === 'page_view')
+    return hit?.[2] || null
+  })
+  expect(params?.checkout_return).toBe('cancelled')
 })
 
 test('login click stays separate from purchase click', async ({ page }) => {

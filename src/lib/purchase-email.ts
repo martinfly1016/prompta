@@ -1,5 +1,6 @@
 import { sendEmail } from '@/lib/agentmail'
 import { SITE_CONFIG } from '@/lib/constants'
+import { packDisplayName, POINTS_PER_RUN } from '@/lib/credit-costs'
 
 export async function sendPurchaseEmail(p: {
   email: string
@@ -13,18 +14,19 @@ export async function sendPurchaseEmail(p: {
   const hairColorUrl = `${SITE_CONFIG.url}/tools/hair-color-diagnosis`
   const signinUrl = `${SITE_CONFIG.url}/auth/signin`
   const expiresLabel = `${p.expiresAt.getFullYear()} 年 ${p.expiresAt.getMonth() + 1} 月 ${p.expiresAt.getDate()} 日`
+  const productName = packDisplayName(p.creditsGranted, p.amountJpy)
   const subject = `【prompta.jp】ご購入ありがとうございます — ${p.creditsGranted} ポイント追加`
   const text = `prompta.jp をご利用いただきありがとうございます。
 
 ご購入が完了しました：
-  - 商品: 全ツール共通 150 ポイントパック
+  - 商品: ${productName}
   - 金額: ¥${p.amountJpy.toLocaleString()}
   - 追加ポイント: ${p.creditsGranted}
   - 現在の残高: ${p.balance}
   - ポイント有効期限: ${expiresLabel}まで
   - 注文 ID: ${p.sessionId}
 
-※ 画像生成 1 回 = 5 ポイント ／ 文字実行 1 回 = 1 ポイント消費
+※ すべての実行は 1 回 ${POINTS_PER_RUN} ポイントです。
 
 ポイントは以下のツール + 全 180 プロンプトで共通でご利用いただけます：
 
@@ -49,8 +51,8 @@ ${SITE_CONFIG.url}
 
   <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;margin-bottom:20px">
     <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">ご注文内容</p>
-    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">全ツール共通 150 ポイントパック</p>
-    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">全ツール・全 180 プロンプト共通利用可（画像 1 回 = 5 / 文字 1 回 = 1 ポイント）</p>
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">${productName}</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">全ツール共通（1 回 ${POINTS_PER_RUN} ポイント・有効期限 12 ヶ月）</p>
     <table style="width:100%;font-size:14px;border-collapse:collapse">
       <tr><td style="padding:6px 0;color:#6b7280">金額</td><td style="padding:6px 0;text-align:right;font-weight:600">¥${p.amountJpy.toLocaleString()}</td></tr>
       <tr><td style="padding:6px 0;color:#6b7280">追加ポイント</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted}</td></tr>

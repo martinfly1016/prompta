@@ -119,6 +119,7 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
     'insufficient_points',
     'sign_up',
     'welcome_bonus_granted',
+    'tool_result',
   ]
 
   // Aggregate counts by eventName. No tool/trigger split until custom

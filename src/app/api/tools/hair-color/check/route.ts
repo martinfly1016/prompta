@@ -6,6 +6,7 @@ import { enqueueGaEvents } from '@/lib/ga-queue'
 import { stripeCheckoutReady } from '@/lib/stripe'
 import { CREDIT_COSTS } from '@/lib/credit-costs'
 import { resolveWelcomeBonusCredits } from '@/lib/welcome-credits'
+import { reconcileStaleGenerations } from '@/lib/generation-output'
 
 // Phase 0 (2026-05-11) — credit-only model. No more anonymous free quota.
 export async function GET(_req: NextRequest) {
@@ -14,6 +15,7 @@ export async function GET(_req: NextRequest) {
   const ga = topup?.granted ? [welcomeBonusEvent(topup.amount, true)] : []
   await enqueueGaEvents(ga)
   const eh = await getOwnerEmailHash()
+  if (eh) await reconcileStaleGenerations(eh)
   const balance = await getPaidBalance(eh)
   const canUse = !!eh && balance > 0
   const blockReason: 'none' | 'login_required' | 'credits_exhausted' = !eh

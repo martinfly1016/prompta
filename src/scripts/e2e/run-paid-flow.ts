@@ -23,7 +23,9 @@ import path from 'node:path'
 import { prisma } from '../../lib/prisma'
 import { emailHash, grantWelcomeBonusIfEligible } from '../../lib/paid-credits'
 import { resolveWelcomeBonusCredits } from '../../lib/welcome-credits'
-import { CREDIT_COSTS } from '../../lib/credit-costs'
+import { getPointPack, POINTS_PER_RUN, recommendedPack, WELCOME_POINTS } from '../../lib/credit-costs'
+import { refundPendingGeneration, startGeneration } from '../../lib/generation-output'
+import { gptImageQuality } from '../../lib/image-providers/openai-image'
 
 const BASE = process.env.E2E_BASE_URL || 'http://localhost:3000'
 const TIER = parseInt(process.argv.find(a => a.startsWith('--tier='))?.split('=')[1] ?? '1', 10)
@@ -75,49 +77,99 @@ async function main() {
   console.log(`\n=== E2E Paid Flow — Tier ${TIER} ===`)
   console.log(`Account: ${EMAIL}\nBase: ${BASE}\n`)
 
-  await step('welcome bonus is configurable and covers one image try', async () => {
-    const prev = process.env.WELCOME_BONUS_CREDITS
-    process.env.WELCOME_BONUS_CREDITS = '3'
-    const floored = resolveWelcomeBonusCredits()
+  await step('packs, welcome constant, and image quality cap', async () => {
+    const small = getPointPack('pack-20')
+    const large = getPointPack('pack-70')
+    if (!small || small.points !== 20 || small.priceJpy !== 300 || small.name !== 'Prompta 20ポイント') {
+      throw new Error(`pack-20 mismatch ${JSON.stringify(small)}`)
+    }
+    if (!large || large.points !== 70 || large.priceJpy !== 980 || large.name !== 'Prompta 70ポイント' || !large.recommended) {
+      throw new Error(`pack-70 mismatch ${JSON.stringify(large)}`)
+    }
+    if (recommendedPack().id !== 'pack-70') throw new Error('recommended pack changed')
+    if (getPointPack('pack-150')) throw new Error('legacy pack id must not resolve')
+    if (POINTS_PER_RUN !== 1 || WELCOME_POINTS !== 3) throw new Error('cost/welcome drifted')
+    const prevWelcome = process.env.WELCOME_BONUS_CREDITS
     process.env.WELCOME_BONUS_CREDITS = '20'
-    const raised = resolveWelcomeBonusCredits()
-    if (prev == null) delete process.env.WELCOME_BONUS_CREDITS
-    else process.env.WELCOME_BONUS_CREDITS = prev
-    const def = resolveWelcomeBonusCredits()
-    if (floored < CREDIT_COSTS.image) throw new Error(`floor ${floored} < image cost`)
-    if (floored !== CREDIT_COSTS.image) throw new Error(`expected floor ${CREDIT_COSTS.image}, got ${floored}`)
-    if (raised !== 20) throw new Error(`expected 20, got ${raised}`)
-    if (def < CREDIT_COSTS.image) throw new Error(`default ${def} below one try`)
-    return { floored, raised, def }
+    if (resolveWelcomeBonusCredits() !== WELCOME_POINTS) throw new Error('env override must be ignored')
+    if (prevWelcome == null) delete process.env.WELCOME_BONUS_CREDITS
+    else process.env.WELCOME_BONUS_CREDITS = prevWelcome
+    const prevQ = process.env.OPENAI_IMAGE_QUALITY
+    process.env.OPENAI_IMAGE_QUALITY = 'high'
+    if (gptImageQuality() !== 'medium') throw new Error('high quality leaked')
+    process.env.OPENAI_IMAGE_QUALITY = 'LOW'
+    if (gptImageQuality() !== 'low') throw new Error('low quality not accepted')
+    process.env.OPENAI_IMAGE_QUALITY = 'auto'
+    if (gptImageQuality() !== 'medium') throw new Error('unknown quality leaked')
+    if (prevQ == null) delete process.env.OPENAI_IMAGE_QUALITY
+    else process.env.OPENAI_IMAGE_QUALITY = prevQ
+    return { welcome: WELCOME_POINTS, recommended: 'pack-70' }
   })
 
-  await step('historical 3-credit gift is topped up to one full welcome grant', async () => {
-    const email = 'e2e-test+welcome-topup@prompta.jp'
+  await step('existing welcome wallets are not rewritten', async () => {
+    async function untouched(email: string, balance: number) {
+      const eh = emailHash(email)
+      await prisma.paidCredits.deleteMany({ where: { emailHash: eh } })
+      await prisma.paidCredits.create({
+        data: {
+          emailHash: eh,
+          email,
+          balance,
+          totalEarned: balance,
+          welcomeBonus: balance,
+          welcomeBonusAt: new Date(),
+          expiresAt: new Date(Date.now() + 86_400_000),
+        },
+      })
+      const again = await grantWelcomeBonusIfEligible(email)
+      if (again.granted) throw new Error(`${email} was granted again`)
+      if (again.balance !== balance) throw new Error(`${email} balance ${again.balance} != ${balance}`)
+    }
+    await untouched('e2e-test+welcome-3@prompta.jp', 3)
+    await untouched('e2e-test+welcome-15@prompta.jp', 15)
+    const freshEmail = 'e2e-test+welcome-new@prompta.jp'
+    const freshHash = emailHash(freshEmail)
+    await prisma.paidCredits.deleteMany({ where: { emailHash: freshHash } })
+    const first = await grantWelcomeBonusIfEligible(freshEmail)
+    if (!first.granted || first.balance !== WELCOME_POINTS || first.amount !== WELCOME_POINTS) {
+      throw new Error(`new grant ${JSON.stringify(first)}`)
+    }
+    const second = await grantWelcomeBonusIfEligible(freshEmail)
+    if (second.granted || second.balance !== WELCOME_POINTS) throw new Error('repeat grant changed the wallet')
+    return { fresh: first.balance }
+  })
+
+  await step('failed generation refunds once and records refunded', async () => {
+    const email = 'e2e-test+refund@prompta.jp'
     const eh = emailHash(email)
+    await prisma.generationOutput.deleteMany({ where: { emailHash: eh } })
     await prisma.paidCredits.deleteMany({ where: { emailHash: eh } })
     await prisma.paidCredits.create({
       data: {
         emailHash: eh,
         email,
-        balance: 3,
-        totalEarned: 3,
-        welcomeBonus: 3,
-        welcomeBonusAt: new Date(),
+        balance: 4,
+        totalEarned: 5,
+        totalUsed: 1,
         expiresAt: new Date(Date.now() + 86_400_000),
       },
     })
-    const first = await grantWelcomeBonusIfEligible(email)
-    const target = resolveWelcomeBonusCredits()
-    if (first.balance < CREDIT_COSTS.image) {
-      throw new Error(`top-up balance ${first.balance} cannot afford an image try`)
+    const id = await startGeneration({ emailHash: eh, tool: 'personal-color', creditsUsed: 1 })
+    await prisma.paidCredits.update({
+      where: { emailHash: eh },
+      data: { balance: { decrement: 1 }, totalUsed: { increment: 1 } },
+    })
+    const ok = await refundPendingGeneration(id, eh, 'e2e failure')
+    if (!ok) throw new Error('refund did not claim the pending row')
+    const again = await refundPendingGeneration(id, eh, 'e2e failure')
+    if (again) throw new Error('second refund succeeded')
+    const row = await prisma.paidCredits.findUnique({ where: { emailHash: eh } })
+    if (row?.balance !== 4 || row?.totalUsed !== 1) {
+      throw new Error(`wallet after refund balance=${row?.balance} used=${row?.totalUsed}`)
     }
-    if (first.balance !== target) throw new Error(`expected ${target}, got ${first.balance}`)
-    if (first.isTopup !== true) throw new Error('historical gift should be a top-up')
-    if (first.amount !== target - 3) throw new Error(`expected amount ${target - 3}, got ${first.amount}`)
-    const second = await grantWelcomeBonusIfEligible(email)
-    if (second.granted) throw new Error('second sign-in granted again')
-    if (second.balance !== first.balance) throw new Error('balance changed on repeat')
-    return { balance: second.balance }
+    const gen = await prisma.generationOutput.findUnique({ where: { id } })
+    if (gen?.status !== 'refunded') throw new Error(`status ${gen?.status}`)
+    return { id, status: gen.status }
   })
 
   // ---------- Setup ----------
@@ -282,13 +334,18 @@ async function main() {
 
   if ((process.env.STRIPE_SECRET_KEY || '').includes('stub')) {
     await step('checkout stub returns a Stripe URL and does not charge', async () => {
-      const res = await api('/api/checkout/hair-color', { method: 'POST' })
+      const res = await api('/api/checkout/hair-color?pack=pack-20', { method: 'POST' })
       if (!res.ok) throw new Error(`checkout ${res.status}: ${await res.text()}`)
       const body = await res.json()
       if (!String(body.url || '').startsWith('https://checkout.stripe.com/')) {
         throw new Error(`expected stripe url, got ${body.url}`)
       }
-      return { url: body.url }
+      if (body.packId !== 'pack-20' || body.credits !== 20 || body.value !== 300) {
+        throw new Error(`stub pack mismatch ${JSON.stringify(body)}`)
+      }
+      const bad = await api('/api/checkout/hair-color?pack=nope', { method: 'POST' })
+      if (bad.status !== 400) throw new Error(`unknown pack status ${bad.status}`)
+      return { url: body.url, packId: body.packId }
     })
   }
 

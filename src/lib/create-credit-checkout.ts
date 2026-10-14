@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
-import {
-  stripe,
-  stripeCheckoutReady,
-  isCheckoutTestStub,
-  STRIPE_PRICE_ID,
-  CREDITS_PER_PACK,
-} from '@/lib/stripe'
+import { stripe, stripeCheckoutReady, isCheckoutTestStub } from '@/lib/stripe'
+import { creditPackPriceData, getPointPack } from '@/lib/credit-costs'
 import { SITE_CONFIG } from '@/lib/constants'
 import { authOptions } from '@/lib/auth'
 
@@ -32,6 +27,11 @@ export async function createCreditPackCheckout(
     )
   }
 
+  const pack = getPointPack(req.nextUrl.searchParams.get('pack'))
+  if (!pack) {
+    return NextResponse.json({ error: 'unknown_pack' }, { status: 400 })
+  }
+
   const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
   const rawReturn = req.nextUrl.searchParams.get('returnTo') ?? ''
   const returnPath = RETURN_RE.test(rawReturn)
@@ -48,15 +48,15 @@ export async function createCreditPackCheckout(
       url: `https://checkout.stripe.com/c/pay/${sessionId}`,
       sessionId,
       testMode: true,
+      packId: pack.id,
+      value: pack.priceJpy,
+      credits: pack.points,
     })
   }
 
-  if (!stripe || !STRIPE_PRICE_ID.startsWith('price_')) {
+  if (!stripe) {
     return NextResponse.json(
-      {
-        error: 'invalid_price_id',
-        configured: false,
-      },
+      { error: 'Stripe is not configured', configured: false },
       { status: 503 },
     )
   }
@@ -64,10 +64,12 @@ export async function createCreditPackCheckout(
   try {
     const checkout = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: [{ price: STRIPE_PRICE_ID, quantity: 1 }],
+      // Inline product data so Checkout shows the pack we advertise.
+      // A dashboard Price named 「10回パック」 is intentionally not used.
+      // The statement descriptor / account display name ("bytead") is a
+      // Stripe account setting and cannot be overridden here.
+      line_items: [{ price_data: creditPackPriceData(pack), quantity: 1 }],
       payment_method_types: ['card'],
-      // Do not send `currency` next to a Price. Stripe rejects the call when
-      // the two disagree, and the Price already fixes the charge currency.
       locale,
       customer_email: sessionEmail,
       success_url: `${SITE_CONFIG.url}${returnPath}?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
@@ -75,7 +77,8 @@ export async function createCreditPackCheckout(
       payment_intent_data: { receipt_email: sessionEmail },
       metadata: {
         product: opts.product,
-        credits: String(CREDITS_PER_PACK),
+        packId: pack.id,
+        credits: String(pack.points),
         sessionEmail,
       },
     })

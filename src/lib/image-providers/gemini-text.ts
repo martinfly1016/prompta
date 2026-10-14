@@ -1,4 +1,5 @@
 import type { ImageProvider, ProviderCallOpts, ProviderResult } from './types'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
 
 const MODEL = process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`
@@ -40,7 +41,7 @@ export const provider: ImageProvider = {
   icon: '📝',
   iconUrl: 'https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64',
   modes: ['text'],
-  credits: 1,
+  credits: POINTS_PER_RUN,
   costUsd: 0.003,
   call,
 }

@@ -166,7 +166,7 @@ async function groupB() {
     )
   }
 
-  // B2 — Gemini image 5 credit
+  // B2 — Gemini image 1 point
   await seedCredits(TEST_EMAIL_IMG, 10)
   const imgCookies = await loginAs(TEST_EMAIL_IMG)
   {
@@ -181,13 +181,13 @@ async function groupB() {
     const balanceAfter = await getBalance(imgCookies)
     record(
       'B2',
-      'Gemini image execute spends 5 credit',
-      r.status === 200 && balanceAfter === 5 && r.body?.imageUrl?.startsWith('https://'),
+      'Gemini image execute spends 1 point',
+      r.status === 200 && balanceAfter === 9 && r.body?.imageUrl?.startsWith('https://'),
       `status=${r.status} balanceAfter=${balanceAfter} imageUrl=${r.body?.imageUrl?.slice(0, 60)}...`,
     )
   }
 
-  // B3 — OpenAI image 5 credit
+  // B3 — OpenAI image 1 point
   await seedCredits(TEST_EMAIL_IMG, 10)
   const imgCookies2 = await loginAs(TEST_EMAIL_IMG)
   {
@@ -202,14 +202,14 @@ async function groupB() {
     const balanceAfter = await getBalance(imgCookies2)
     record(
       'B3',
-      'OpenAI image execute spends 5 credit',
-      r.status === 200 && balanceAfter === 5 && r.body?.imageUrl?.startsWith('https://'),
+      'OpenAI image execute spends 1 point',
+      r.status === 200 && balanceAfter === 9 && r.body?.imageUrl?.startsWith('https://'),
       `status=${r.status} balanceAfter=${balanceAfter} imageUrl=${r.body?.imageUrl?.slice(0, 60)}...`,
     )
   }
 
-  // B4 — image but insufficient credits (have 3, need 5) → 402
-  await seedCredits(TEST_EMAIL_IMG, 3)
+  // B4 — image with 0 points → 402
+  await seedCredits(TEST_EMAIL_IMG, 0)
   const imgCookies3 = await loginAs(TEST_EMAIL_IMG)
   {
     const r = await http('POST', '/api/prompt/execute', {
@@ -223,8 +223,8 @@ async function groupB() {
     const balanceAfter = await getBalance(imgCookies3)
     record(
       'B4',
-      'image with 3 credit (need 5) → 402 + balance unchanged',
-      r.status === 402 && balanceAfter === 3,
+      'image with 0 points → 402 + balance unchanged',
+      r.status === 402 && balanceAfter === 0,
       `status=${r.status} balanceAfter=${balanceAfter}`,
     )
   }

@@ -1,4 +1,5 @@
 import { GA_COOKIE, parseGaCookie, type GaEvent } from '@/lib/ga-events'
+import { getPointPack, type PointPack } from '@/lib/credit-costs'
 
 // Client-side tracking helpers: fire GA4 event + increment DB counter.
 // Both calls are fire-and-forget; failures are silently swallowed so they never
@@ -213,28 +214,35 @@ export function trackCheckoutStarted(tool: PaywallTool) {
   fireToolEvent('checkout_started', { tool })
 }
 
-const PACK_ITEM = {
-  item_id: 'credit-pack-150',
-  item_name: '150 credit pack',
-  price: 300,
-  quantity: 1,
+function packItem(pack: PointPack) {
+  return {
+    item_id: pack.id,
+    item_name: pack.name,
+    price: pack.priceJpy,
+    quantity: 1,
+  }
+}
+
+function checkoutParams(tool: string, pack: PointPack) {
+  return {
+    currency: 'JPY',
+    value: pack.priceJpy,
+    pack_id: pack.id,
+    items: [packItem(pack)],
+    tool,
+  }
 }
 
 // GA4 begin_checkout. Also emits the legacy checkout_started name so the
 // existing funnel report keeps working. Callers that are about to navigate
 // must use redirectAfterBeginCheckout so the hit is not dropped on unload.
-export function trackBeginCheckout(tool: string) {
-  const params = {
-    currency: 'JPY',
-    value: 300,
-    items: [PACK_ITEM],
-    tool,
-  }
+export function trackBeginCheckout(tool: string, pack: PointPack) {
+  const params = checkoutParams(tool, pack)
   fireToolEvent('begin_checkout', params)
-  fireToolEvent('checkout_started', { tool })
+  fireToolEvent('checkout_started', { tool, pack_id: pack.id, value: pack.priceJpy })
 }
 
-export function redirectAfterBeginCheckout(url: string, tool: string) {
+export function redirectAfterBeginCheckout(url: string, tool: string, pack: PointPack) {
   if (typeof window === 'undefined') return
   let left = false
   const go = () => {
@@ -248,16 +256,15 @@ export function redirectAfterBeginCheckout(url: string, tool: string) {
   }
   try {
     window.gtag('event', 'begin_checkout', {
-      currency: 'JPY',
-      value: 300,
-      items: [PACK_ITEM],
-      tool,
+      ...checkoutParams(tool, pack),
       transport_type: 'beacon',
       event_callback: go,
       event_timeout: 1000,
     })
     window.gtag('event', 'checkout_started', {
       tool,
+      pack_id: pack.id,
+      value: pack.priceJpy,
       transport_type: 'beacon',
     })
   } catch {
@@ -267,11 +274,35 @@ export function redirectAfterBeginCheckout(url: string, tool: string) {
   window.setTimeout(go, 1200)
 }
 
+// Explicit page_view for Stripe's full-page return. The success handler
+// removes ?purchase= before gtag's automatic hit may run, so the return
+// would otherwise look like a normal tool pageview. Deduped per URL.
+// `purchase` itself is still trackPurchase, and only after server confirm.
+export function trackCheckoutReturn(kind: 'success' | 'cancelled') {
+  if (typeof window === 'undefined') return
+  const pageLocation = window.location.href
+  const key = `checkout_return_view:${kind}:${pageLocation}`
+  try {
+    if (typeof sessionStorage !== 'undefined') {
+      if (sessionStorage.getItem(key)) return
+      sessionStorage.setItem(key, '1')
+    }
+  } catch {
+    // still fire once if storage is blocked
+  }
+  fireBeacon('page_view', {
+    page_location: pageLocation,
+    page_title: typeof document !== 'undefined' ? document.title : '',
+    checkout_return: kind,
+  })
+}
+
 export function trackPurchase(p: {
   transactionId: string
   value: number
   currency: string
   credits: number
+  packId?: string
   tool?: string
 }) {
   if (!p.transactionId) return
@@ -284,15 +315,17 @@ export function trackPurchase(p: {
   }
   const value = Number(p.value)
   const currency = (p.currency || 'JPY').toUpperCase()
+  const pack = getPointPack(p.packId)
   fireBeacon('purchase', {
     transaction_id: p.transactionId,
     value: Number.isFinite(value) ? value : 0,
     currency,
+    pack_id: pack?.id ?? p.packId ?? '',
     tool: p.tool,
     items: [
       {
-        item_id: 'credit-pack-150',
-        item_name: `${p.credits} credit pack`,
+        item_id: pack?.id ?? 'credit-pack',
+        item_name: pack?.name ?? `${p.credits}ポイント`,
         price: Number.isFinite(value) ? value : 0,
         quantity: 1,
       },

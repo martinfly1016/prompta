@@ -64,7 +64,7 @@ if (emailMagicLinkEnabled) {
       from: FROM_EMAIL,
       maxAge: 60 * 60, // 1h link validity
       async sendVerificationRequest({ identifier, url }) {
-        const subject = '【prompta.jp】サインインリンク'
+        const subject = '【prompta.jp】ログインリンク（1時間有効）'
         const text = `prompta.jp にサインインするには、以下のリンクをクリックしてください：
 
 ${url}

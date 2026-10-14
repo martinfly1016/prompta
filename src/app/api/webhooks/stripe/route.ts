@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe, stripeEnabled, STRIPE_WEBHOOK_SECRET, CREDITS_PER_PACK } from '@/lib/stripe'
+import { stripe, stripeEnabled, STRIPE_WEBHOOK_SECRET } from '@/lib/stripe'
+import { resolvePaidPack } from '@/lib/credit-costs'
 import { fulfillPaidCheckout } from '@/lib/checkout-fulfill'
 import type Stripe from 'stripe'
 
@@ -27,8 +28,13 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session
     const sessionId = session.id
     const email = session.customer_details?.email || session.customer_email || null
-    const credits = Number(session.metadata?.credits ?? CREDITS_PER_PACK) || CREDITS_PER_PACK
     const amountJpy = session.amount_total ?? 0
+    const resolved = resolvePaidPack(session.metadata?.packId, session.amount_total)
+    if (!resolved.ok) {
+      console.error(`[stripe webhook] ${sessionId}: ${resolved.reason}`)
+      return NextResponse.json({ received: true, skipped: resolved.reason })
+    }
+    const credits = resolved.pack.points
 
     if (!email) {
       console.error('[stripe webhook] no email on session', sessionId)
