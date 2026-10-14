@@ -313,7 +313,7 @@ export async function POST(request: Request) {
 # https://vercel.com/martinfly1016/prompta/settings/environment-variables
 
 # 添加/验证以下变量:
-DATABASE_URL=postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB
 NEXTAUTH_SECRET=<生成的 32 字节密钥>
 NEXTAUTH_URL=https://prompta-jfpq4405s-martinfly1016s-projects.vercel.app
 BLOB_READ_WRITE_TOKEN=<从 Vercel Blob Storage 获取>

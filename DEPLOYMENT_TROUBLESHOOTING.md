@@ -236,7 +236,7 @@ If standard deployment isn't working, consider:
 From local terminal with production DATABASE_URL:
 
 ```bash
-DATABASE_URL="postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway" \
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB" \
   npx prisma migrate deploy
 ```
 

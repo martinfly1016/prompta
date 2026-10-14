@@ -89,7 +89,7 @@ openssl rand -base64 32
 
 输出示例:
 ```
-aB3kL9pM2xQ7vW5cY8dE6fG4hJ1iO0kLmN9oP
+<openssl rand -base64 32 的输出>
 ```
 
 复制此值到 Vercel 环境变量。

@@ -6,9 +6,7 @@ export const revalidate = 0
 export async function GET() {
   try {
     const timestamp = new Date().toISOString()
-    const dbUrl = process.env.DATABASE_URL
-    const dbUrlSet = !!dbUrl
-    const dbUrlPreview = dbUrl ? `${dbUrl.substring(0, 30)}...` : 'NOT SET'
+    const dbUrlSet = !!process.env.DATABASE_URL
 
     return NextResponse.json({
       status: 'ok',
@@ -21,14 +19,10 @@ export async function GET() {
       },
       database: {
         hasDbUrl: dbUrlSet,
-        dbUrlPrefix: dbUrlPreview,
-        dbUrlLength: dbUrl?.length || 0,
       },
       auth: {
         hasAuthSecret: !!process.env.NEXTAUTH_SECRET,
-        authSecretLength: process.env.NEXTAUTH_SECRET?.length || 0,
         hasAuthUrl: !!process.env.NEXTAUTH_URL,
-        authUrl: process.env.NEXTAUTH_URL || 'NOT SET',
       },
       diagnostic: {
         allEnvVarsLoaded: !!(dbUrlSet && process.env.NEXTAUTH_SECRET && process.env.NEXTAUTH_URL),
