@@ -17,8 +17,8 @@ export default function Pagination({
 
   function pageHref(page: number) {
     if (page === 1) return basePath
-    const sep = basePath.includes('?') ? '&' : '?'
-    return `${basePath}${sep}page=${page}`
+    const normalized = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath
+    return `${normalized}/page/${page}`
   }
 
   return (

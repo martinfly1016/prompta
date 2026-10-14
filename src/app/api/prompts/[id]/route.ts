@@ -1,9 +1,37 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { isCuid } from '@/lib/slug'
+import { withPrivateCache } from '@/lib/http-cache'
+import { revalidatePromptContent, type PromptCacheTarget } from '@/lib/revalidate-public'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
+
+function privateJson<T>(body: T, init?: { status?: number }) {
+  return withPrivateCache(NextResponse.json(body, init))
+}
+
+const promptCacheSelect = {
+  slug: true,
+  category: { select: { slug: true } },
+  tool: { select: { slug: true } },
+  tags: { select: { slug: true } },
+} as const
+
+function toCacheTarget(row: {
+  slug: string | null
+  category: { slug: string } | null
+  tool: { slug: string } | null
+  tags: { slug: string }[]
+} | null): PromptCacheTarget | null {
+  if (!row) return null
+  return {
+    slug: row.slug,
+    categorySlug: row.category?.slug,
+    toolSlug: row.tool?.slug,
+    tagSlugs: row.tags.map(tag => tag.slug),
+  }
+}
 
 export async function GET(
   _request: NextRequest,
@@ -74,15 +102,15 @@ export async function GET(
     }
 
     if (!prompt) {
-      return NextResponse.json(
+      return privateJson(
         { error: 'プロンプトが見つかりません' },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(prompt)
+    return privateJson(prompt)
   } catch (error) {
-    return NextResponse.json(
+    return privateJson(
       { error: 'プロンプト取得に失敗しました' },
       { status: 500 }
     )
@@ -101,8 +129,13 @@ export async function PUT(
 
     const session = await getServerSession(authOptions)
     if (!session) {
-      return NextResponse.json({ error: '認証が必要です' }, { status: 401 })
+      return privateJson({ error: '認証が必要です' }, { status: 401 })
     }
+
+    const previous = await prisma.prompt.findUnique({
+      where: { id: params.id },
+      select: promptCacheSelect,
+    })
 
     const body = await request.json()
     const { title, description, content, categoryId, isPublished, isFeatured, images, tags } = body
@@ -229,14 +262,30 @@ export async function PUT(
       data: updateData,
       include: {
         category: true,
+        tool: true,
+        tags: true,
         images: { orderBy: { order: 'asc' } },
       },
     })
 
-    return NextResponse.json(prompt)
+    try {
+      revalidatePromptContent([
+        toCacheTarget(previous),
+        {
+          slug: prompt.slug,
+          categorySlug: prompt.category?.slug,
+          toolSlug: prompt.tool?.slug,
+          tagSlugs: prompt.tags?.map(tag => tag.slug),
+        },
+      ].filter((target): target is PromptCacheTarget => target !== null))
+    } catch (revalidateError) {
+      console.error('[revalidate] prompt update:', revalidateError)
+    }
+
+    return privateJson(prompt)
   } catch (error) {
     console.error('Failed to update prompt:', error)
-    return NextResponse.json(
+    return privateJson(
       { error: 'プロンプト更新に失敗しました' },
       { status: 500 }
     )
@@ -255,13 +304,26 @@ export async function DELETE(
 
     const session = await getServerSession(authOptions)
     if (!session) {
-      return NextResponse.json({ error: '認証が必要です' }, { status: 401 })
+      return privateJson({ error: '認証が必要です' }, { status: 401 })
     }
 
+    const previous = await prisma.prompt.findUnique({
+      where: { id: params.id },
+      select: promptCacheSelect,
+    })
+
     await prisma.prompt.delete({ where: { id: params.id } })
-    return NextResponse.json({ success: true })
+
+    try {
+      const target = toCacheTarget(previous)
+      revalidatePromptContent(target ?? {})
+    } catch (revalidateError) {
+      console.error('[revalidate] prompt delete:', revalidateError)
+    }
+
+    return privateJson({ success: true })
   } catch (error) {
-    return NextResponse.json(
+    return privateJson(
       { error: 'プロンプト削除に失敗しました' },
       { status: 500 }
     )

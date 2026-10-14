@@ -7,23 +7,18 @@ import { getToolBySlug, getToolSlugs, getPromptsByToolPaginated, getTools, getCa
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
-
-interface Props {
-  params: { tool: string }
-  searchParams: { page?: string }
-}
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export async function generateStaticParams() {
   const slugs = await getToolSlugs()
   return slugs.map(tool => ({ tool }))
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const tool = await getToolBySlug(params.tool)
+export async function toolMetadata(toolSlug: string, page: number): Promise<Metadata> {
+  const tool = await getToolBySlug(toolSlug)
   if (!tool) return {}
-  const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
   const extended = getToolPageContent(tool.slug)
   const defaultTitle = `${tool.name}プロンプト集【無料・コピペOK】— ${tool.nameJa}向けAIプロンプト${suffix}`
@@ -45,16 +40,19 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   }
 }
 
-export default async function ToolPage({ params, searchParams }: Props) {
-  const page = Math.max(1, Number(searchParams.page) || 1)
+export async function generateMetadata({ params }: { params: { tool: string } }): Promise<Metadata> {
+  return toolMetadata(params.tool, 1)
+}
 
+export async function ToolListing({ tool: toolSlug, page }: { tool: string; page: number }) {
   const [tool, { prompts, total, totalPages }, allTools, categories] = await Promise.all([
-    getToolBySlug(params.tool),
-    getPromptsByToolPaginated(params.tool, page),
+    getToolBySlug(toolSlug),
+    getPromptsByToolPaginated(toolSlug, page),
     getTools(),
     getCategories(),
   ])
   if (!tool) notFound()
+  if (page > Math.max(totalPages, 1)) notFound()
 
   const toolCategories = categories.filter(cat => prompts.some(p => p.categorySlug === cat.slug))
 
@@ -244,4 +242,8 @@ export default async function ToolPage({ params, searchParams }: Props) {
       </section>
     </>
   )
+}
+
+export default function ToolPage({ params }: { params: { tool: string } }) {
+  return <ToolListing tool={params.tool} page={1} />
 }

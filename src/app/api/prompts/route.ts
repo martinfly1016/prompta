@@ -2,8 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { withPrivateCache, withPublicCache } from '@/lib/http-cache'
+import { revalidatePromptContent } from '@/lib/revalidate-public'
 
 export const revalidate = 3600 // Cache for 1 hour
+
+function publicJson<T>(body: T, init?: { status?: number }) {
+  return withPublicCache(NextResponse.json(body, init))
+}
+
+function privateJson<T>(body: T, init?: { status?: number }) {
+  return withPrivateCache(NextResponse.json(body, init))
+}
 
 // GET /api/prompts - Public endpoint, shows only published prompts
 export async function GET(request: NextRequest) {
@@ -18,7 +28,7 @@ export async function GET(request: NextRequest) {
 
     if (!dbUrl) {
       console.error('❌ DATABASE_URL is NOT configured!')
-      return NextResponse.json(
+      return publicJson(
         {
           error: 'プロンプト取得に失敗しました',
           reason: 'DATABASE_URL not configured',
@@ -70,7 +80,7 @@ export async function GET(request: NextRequest) {
     console.log('✅ Prompts fetched successfully:', prompts.length, 'records, total:', total)
     console.log('=== END: GET /api/prompts (SUCCESS) ===')
 
-    return NextResponse.json({
+    return publicJson({
       prompts: promptsWithTags,
       pagination: {
         page,
@@ -91,7 +101,7 @@ export async function GET(request: NextRequest) {
     console.error('Full Error:', JSON.stringify(error, null, 2))
     console.error('=== END: GET /api/prompts (ERROR) ===')
 
-    return NextResponse.json(
+    return publicJson(
       {
         error: 'プロンプト取得に失敗しました',
         errorName,
@@ -114,7 +124,7 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return NextResponse.json(
+      return privateJson(
         { error: '認証が必要です' },
         { status: 401 }
       )
@@ -124,14 +134,14 @@ export async function POST(request: NextRequest) {
     const { title, description, content, categoryId, author, isPublished, images, tags } = body
 
     if (!title || !description || !content || !categoryId) {
-      return NextResponse.json(
+      return privateJson(
         { error: '必須項目が不足しています' },
         { status: 400 }
       )
     }
 
     if (!images || images.length === 0) {
-      return NextResponse.json(
+      return privateJson(
         { error: '少なくとも1枚の画像が必要です' },
         { status: 400 }
       )
@@ -142,7 +152,7 @@ export async function POST(request: NextRequest) {
     const originalImages = images.filter((img: any) => img.imageType === 'original')
 
     if (effectImages.length === 0) {
-      return NextResponse.json(
+      return privateJson(
         { error: 'エフェクト画像が必要です' },
         { status: 400 }
       )
@@ -214,10 +224,19 @@ export async function POST(request: NextRequest) {
     // Include tags from database
     const promptWithTags = { ...completedPrompt, tags: completedPrompt?.tagsJson || [] }
 
-    return NextResponse.json(promptWithTags, { status: 201 })
+    try {
+      revalidatePromptContent({
+        slug: completedPrompt?.slug,
+        categorySlug: completedPrompt?.category?.slug,
+      })
+    } catch (revalidateError) {
+      console.error('[revalidate] prompt create:', revalidateError)
+    }
+
+    return privateJson(promptWithTags, { status: 201 })
   } catch (error) {
     console.error('Failed to create prompt:', error)
-    return NextResponse.json(
+    return privateJson(
       { error: 'プロンプト作成に失敗しました' },
       { status: 500 }
     )

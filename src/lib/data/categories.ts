@@ -20,6 +20,17 @@ export const getCategoryBySlug = cache(async (slug: string) => {
   })
 })
 
+export const countPublishedByCategory = cache(async () => {
+  const rows = await prisma.category.findMany({
+    where: { isActive: true },
+    select: {
+      slug: true,
+      _count: { select: { prompts: { where: { isPublished: true } } } },
+    },
+  })
+  return rows.map(row => ({ slug: row.slug, count: row._count.prompts }))
+})
+
 export const getCategorySlugs = cache(async () => {
   const categories = await prisma.category.findMany({
     where: { isActive: true },

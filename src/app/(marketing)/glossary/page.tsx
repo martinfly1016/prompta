@@ -3,8 +3,9 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG, TOOLS } from '@/lib/constants'
 import { getGlossaryGrouped, termToId, GLOSSARY_TERMS } from '@/lib/glossary-data'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 3600
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 export const metadata: Metadata = {
   title: 'AI用語集 — 生成AI・プロンプト用語辞典',

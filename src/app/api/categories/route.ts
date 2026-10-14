@@ -4,8 +4,18 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/utils'
+import { withPrivateCache, withPublicCache } from '@/lib/http-cache'
+import { revalidateCategoryContent } from '@/lib/revalidate-public'
 
 export const revalidate = 3600 // Cache for 1 hour
+
+function publicJson<T>(body: T, init?: { status?: number }) {
+  return withPublicCache(NextResponse.json(body, init))
+}
+
+function privateJson<T>(body: T, init?: { status?: number }) {
+  return withPrivateCache(NextResponse.json(body, init))
+}
 
 export async function GET() {
   try {
@@ -20,7 +30,7 @@ export async function GET() {
 
     if (!dbUrl) {
       console.error('❌ DATABASE_URL is NOT configured!')
-      return NextResponse.json(
+      return publicJson(
         {
           error: 'カテゴリ取得に失敗しました',
           reason: 'DATABASE_URL not configured',
@@ -50,7 +60,7 @@ export async function GET() {
 
     console.log('✅ Categories fetched successfully:', categories.length, 'records')
     console.log('=== END: GET /api/categories (SUCCESS) ===')
-    return NextResponse.json(categories)
+    return publicJson(categories)
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error)
     const errorCode = (error as any)?.code || 'UNKNOWN'
@@ -63,7 +73,7 @@ export async function GET() {
     console.error('Full Error:', JSON.stringify(error, null, 2))
     console.error('=== END: GET /api/categories (ERROR) ===')
 
-    return NextResponse.json(
+    return publicJson(
       {
         error: 'カテゴリ取得に失敗しました',
         errorName,
@@ -84,14 +94,14 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) {
-      return NextResponse.json({ error: '認証が必要です' }, { status: 401 })
+      return privateJson({ error: '認証が必要です' }, { status: 401 })
     }
 
     const body = await request.json()
     const { name, description, icon } = body
 
     if (!name) {
-      return NextResponse.json(
+      return privateJson(
         { error: 'カテゴリ名は必須です' },
         { status: 400 }
       )
@@ -106,9 +116,15 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json(category, { status: 201 })
+    try {
+      revalidateCategoryContent(category.slug)
+    } catch (revalidateError) {
+      console.error('[revalidate] category create:', revalidateError)
+    }
+
+    return privateJson(category, { status: 201 })
   } catch (error) {
-    return NextResponse.json(
+    return privateJson(
       { error: 'カテゴリ作成に失敗しました' },
       { status: 500 }
     )

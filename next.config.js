@@ -41,6 +41,16 @@ const nextConfig = {
       },
       // Legacy route
       { source: '/all-prompts', destination: '/prompts', permanent: true },
+      // Query-string pagination used to force these routes dynamic (searchParams).
+      // Keep the indexed URLs working with a 301 onto path pagination, which can be ISR'd.
+      { source: '/prompts', has: [{ type: 'query', key: 'page', value: '1' }], destination: '/prompts', permanent: true },
+      { source: '/prompts', has: [{ type: 'query', key: 'page', value: '(?<page>\\d+)' }], destination: '/prompts/page/:page', permanent: true },
+      { source: '/prompts/:category', has: [{ type: 'query', key: 'page', value: '1' }], destination: '/prompts/:category', permanent: true },
+      { source: '/prompts/:category', has: [{ type: 'query', key: 'page', value: '(?<page>\\d+)' }], destination: '/prompts/:category/page/:page', permanent: true },
+      { source: '/tools/:tool', has: [{ type: 'query', key: 'page', value: '1' }], destination: '/tools/:tool', permanent: true },
+      { source: '/tools/:tool', has: [{ type: 'query', key: 'page', value: '(?<page>\\d+)' }], destination: '/tools/:tool/page/:page', permanent: true },
+      { source: '/tag/:slug', has: [{ type: 'query', key: 'page', value: '1' }], destination: '/tag/:slug', permanent: true },
+      { source: '/tag/:slug', has: [{ type: 'query', key: 'page', value: '(?<page>\\d+)' }], destination: '/tag/:slug/page/:page', permanent: true },
       // High-impression dead slugs → closest live match
       { source: '/prompt/sailor-uniform-school-cosplay', destination: '/prompt/sailor-uniform-pleated-skirt', permanent: true },
       { source: '/prompt/elegant-dress-woman-nlds', destination: '/prompt/elegant-dress-woman', permanent: true },

@@ -8,8 +8,9 @@ import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 interface Props {
   params: { slug: string }

@@ -181,6 +181,10 @@ export const getPromptSlugsWithDates = cache(async () => {
   return prompts.filter((p): p is { slug: string; updatedAt: Date } => p.slug !== null)
 })
 
+export const countPublishedPrompts = cache(async () => {
+  return prisma.prompt.count({ where: { isPublished: true } })
+})
+
 export const getLatestPromptDate = cache(async () => {
   const result = await prisma.prompt.findFirst({
     where: { isPublished: true },

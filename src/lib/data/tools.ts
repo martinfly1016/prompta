@@ -23,6 +23,17 @@ export const getToolBySlug = cache(async (slug: string) => {
   })
 })
 
+export const countPublishedByTool = cache(async () => {
+  const rows = await prisma.tool.findMany({
+    where: { isActive: true },
+    select: {
+      slug: true,
+      _count: { select: { prompts: { where: { isPublished: true } } } },
+    },
+  })
+  return rows.map(row => ({ slug: row.slug, count: row._count.prompts }))
+})
+
 export const getToolSlugs = cache(async () => {
   const tools = await prisma.tool.findMany({
     where: { isActive: true },

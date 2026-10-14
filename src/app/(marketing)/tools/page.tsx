@@ -3,6 +3,9 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { getTools } from '@/lib/data'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
+
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export const metadata: Metadata = {
   title: 'AIツール一覧 — 対応AI画像生成・テキスト生成ツール',
