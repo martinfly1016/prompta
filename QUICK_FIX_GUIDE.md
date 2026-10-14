@@ -31,7 +31,7 @@
 
 ```
 DATABASE_URL
-值: postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway
+值: postgresql://USER:PASSWORD@HOST:PORT/DB
 来源: 从 Railway 复制
 
 NEXTAUTH_SECRET
@@ -56,7 +56,7 @@ openssl rand -base64 32
 
 输出示例:
 ```
-aB3kL9pM2xQ7vW5cY8dE6fG4hJ1iO0kLmN9oP3qR4sT5uV
+<openssl rand -base64 32 的输出>
 ```
 
 复制这个值到 Vercel 的 NEXTAUTH_SECRET。

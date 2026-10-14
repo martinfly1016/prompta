@@ -23,15 +23,9 @@ export async function GET() {
     return NextResponse.json({
       debug: {
         DATABASE_URL_SET: !!dbUrl,
-        DATABASE_URL_PREVIEW: dbUrl
-          ? `${dbUrl.substring(0, 30)}...${dbUrl.substring(dbUrl.length - 10)}`
-          : 'NOT SET',
         NEXTAUTH_SECRET_SET: !!nextAuthSecret,
-        NEXTAUTH_URL: nextAuthUrl,
+        NEXTAUTH_URL_SET: !!nextAuthUrl,
         BLOB_READ_WRITE_TOKEN_SET: !!blobToken,
-        BLOB_READ_WRITE_TOKEN_PREVIEW: blobToken
-          ? `${blobToken.substring(0, 20)}...${blobToken.substring(blobToken.length - 5)}`
-          : 'NOT SET',
         NODE_ENV: nodeEnv,
         VERCEL_ENV: vercelEnv,
         timestamp: new Date().toISOString(),

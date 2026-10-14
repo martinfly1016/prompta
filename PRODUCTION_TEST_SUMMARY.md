@@ -218,11 +218,7 @@ GET /api/prompts?limit=6
 
 **诊断方法**:
 ```bash
-# 检查 Vercel 环境变量
-curl -H "Authorization: Bearer VERCEL_TOKEN" \
-  https://api.vercel.com/v9/projects/prompta/env
-
-# 或访问仪表板
+# 在 Vercel 仪表板查看环境变量。不要把 API token 写进仓库。
 # https://vercel.com/martinfly1016/prompta/settings/environment-variables
 ```
 
@@ -268,7 +264,7 @@ cat src/lib/auth.ts
 
 ```bash
 # 在 Vercel 仪表板中设置:
-DATABASE_URL=postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DB
 NEXTAUTH_SECRET=<生成的 32 字节密钥>
 NEXTAUTH_URL=https://prompta-jfpq4405s-martinfly1016s-projects.vercel.app
 BLOB_READ_WRITE_TOKEN=<从 Vercel Blob 获取>

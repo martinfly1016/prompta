@@ -259,7 +259,7 @@ curl http://localhost:3000/api/categories
 3. 重新添加 DATABASE_URL
    ```
    Name: DATABASE_URL
-   Value: postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway
+   Value: postgresql://USER:PASSWORD@HOST:PORT/DB
    Scope: Production
    ```
 4. 保存

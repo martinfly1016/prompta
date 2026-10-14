@@ -1,0 +1,29 @@
+title = "prompta working-tree secret scan"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Placeholders, local/CI fixtures, and generated lockfiles"
+paths = [
+  '''(^|/)node_modules/''',
+  '''(^|/)\.next/''',
+  '''(^|/)package-lock\.json$''',
+  '''(^|/)tsconfig\.tsbuildinfo$''',
+  '''(^|/)\.env\.example$''',
+]
+regexes = [
+  # Content slug in a `key:` field (collect script), not an API key.
+  '''^section-6-troubleshooting$''',
+  '''postgresql://USER:PASSWORD@''',
+  '''postgresql://user:password@127\.0\.0\.1''',
+  '''postgresql://user:password@localhost''',
+  '''postgresql://postgres:postgres@localhost''',
+  '''postgresql://postgres@127\.0\.0\.1''',
+  '''vercel_blob_rw_ci_stub''',
+  '''sk_test_ci_stub''',
+  '''whsec_ci_stub''',
+  '''ci-test-secret-do-not-use''',
+  '''build-time-placeholder-not-a-secret''',
+  '''ci_stub_not_used_in_e2e''',
+]

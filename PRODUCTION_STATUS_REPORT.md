@@ -93,7 +93,7 @@ WHERE table_name = 'prompt_image';
 
 ```bash
 # 使用 Railway 的 PostgreSQL 连接执行迁移
-DATABASE_URL="postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway" \
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB" \
 npx prisma migrate deploy
 
 # 或者使用 Prisma Studio 检查
@@ -287,7 +287,7 @@ NextAuth API:       ✅ 200
 
 ```bash
 # 方案 1: 本地执行 (推荐)
-DATABASE_URL="postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway" npx prisma migrate deploy
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB" npx prisma migrate deploy
 
 # 方案 2: 通过 Vercel CLI
 vercel env pull
@@ -322,7 +322,7 @@ npx prisma migrate resolve --applied <migration_name>
 DATABASE_URL="postgresql://..." npm run db:studio
 
 # 或直接连接
-psql postgresql://postgres:...@interchange.proxy.rlwy.net:15624/railway
+psql postgresql://USER:PASSWORD@HOST:PORT/DB
 
 # 在 psql 中:
 \l                    -- 列出数据库

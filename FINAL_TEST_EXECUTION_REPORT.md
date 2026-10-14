@@ -31,7 +31,7 @@
 **解决方案**: 显式设置环境变量启动开发服务器
 
 ```bash
-DATABASE_URL="postgresql://postgres:mjKbrVldxszwnbiVFRcBNNNzeGQjziqk@interchange.proxy.rlwy.net:15624/railway" npm run dev
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB" npm run dev
 ```
 
 **验证结果**: ✅ 成功
