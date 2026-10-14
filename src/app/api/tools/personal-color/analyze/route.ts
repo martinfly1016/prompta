@@ -8,6 +8,8 @@ import {
 import { prisma } from '@/lib/prisma'
 import { analyzePersonalColor } from '@/lib/personal-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
+import { insufficientPointsEvent, pointsSpentEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
 import { validateImageBuffer } from '@/lib/image-validation'
 import { saveGenerationOutput } from '@/lib/generation-output'
 
@@ -72,8 +74,11 @@ export async function POST(req: NextRequest) {
 
   const spend = await spendOneCredit(eh)
   if (!spend.ok) {
+    const paidCredits = await getPaidBalance(eh)
+    const ga = [insufficientPointsEvent(TOOL, 1, paidCredits)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits, needed: 1, stripeEnabled, ga },
       { status: 429 },
     )
   }
@@ -94,11 +99,14 @@ export async function POST(req: NextRequest) {
       tool: TOOL,
       outputJson: JSON.stringify(result),
     }).catch(e => console.error('[personal-color/analyze] save failed:', (e as Error).message))
+    const ga = [pointsSpentEvent(TOOL, 1, paidCredits)]
+    await enqueueGaEvents(ga)
     return NextResponse.json({
       ok: true,
       result,
       source: 'paid',
       quota: { paidCredits, canUse: paidCredits > 0, stripeEnabled },
+      ga,
     })
   } catch (e: any) {
     // 4. Refund on failure

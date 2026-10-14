@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useSession } from 'next-auth/react'
-import { trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
+import { flushConfirmedGaEvents, trackInsufficientPoints, trackLoginClick, trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
 import { signInThenCheckout, startCreditCheckout, redirectToSignIn } from '@/lib/start-checkout'
 
 const TOOL = 'personal-color' as const
@@ -25,6 +25,8 @@ interface QuotaState {
   stripeEnabled?: boolean
   welcomeCredits?: number
   imageCreditCost?: number
+  textCreditCost?: number
+  ga?: { id: string; name: string; params: Record<string, string | number | boolean> }[]
 }
 
 interface RecommendedColor {
@@ -290,7 +292,10 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   function refresh() {
     fetch('/api/tools/personal-color/check')
       .then((r) => r.json())
-      .then((s) => setState(s))
+      .then((s) => {
+        setState(s)
+        flushConfirmedGaEvents(s?.ga)
+      })
       .catch(() => {})
   }
 
@@ -303,6 +308,9 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
       // "acquire new users" vs. "re-monetize existing users" funnels.
       const trigger: PaywallTrigger =
         state.blockReason === 'login_required' ? 'login_required' : 'exhausted_pick'
+      if (state.blockReason !== 'login_required') {
+        trackInsufficientPoints(TOOL, state.textCreditCost ?? 1, state.paidCredits ?? 0)
+      }
       openPaywall(setShowModal, trigger)
       return
     }
@@ -339,6 +347,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         body: form,
       })
       const data = await r.json()
+      flushConfirmedGaEvents(data?.ga)
       if (!r.ok) {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
@@ -372,6 +381,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   // Login-required modal: claim the welcome grant. This is not a purchase,
   // so it must not count as paywall_purchase_click.
   function handleSignInFree() {
+    trackLoginClick('paywall_free')
     redirectToSignIn(window.location.pathname)
   }
 
@@ -454,6 +464,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         ) : loginRequired ? (
           <a
             href="/auth/signin"
+            onClick={() => trackLoginClick('quota_status')}
             data-testid="quota-status"
             data-state="login"
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 transition-colors"
@@ -516,6 +527,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         <>
           <button
             type="button"
+            data-testid="tool-pick"
             onClick={handlePickFile}
             disabled={!state || pending}
             className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"

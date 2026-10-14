@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
+import { trackLoginClick } from '@/lib/track'
 
 interface Props {
   callbackUrl: string
@@ -57,6 +58,7 @@ export function SignInForm({ callbackUrl, googleEnabled, emailEnabled }: Props) 
       return
     }
     setTypoSuggestion(null)
+    trackLoginClick('signin_email')
     setPending(true)
     try {
       const res = await signIn('email', {
@@ -97,7 +99,10 @@ export function SignInForm({ callbackUrl, googleEnabled, emailEnabled }: Props) 
       {googleEnabled && (
         <button
           type="button"
-          onClick={() => signIn('google', { callbackUrl })}
+          onClick={() => {
+            trackLoginClick('signin_google')
+            void signIn('google', { callbackUrl })
+          }}
           className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all shadow-sm"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">

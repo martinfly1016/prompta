@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 import { ensureShortWelcomeTopUp, getCreditsState, getOwnerEmailHash } from '@/lib/paid-credits'
+import { welcomeBonusEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
 import { stripeCheckoutReady } from '@/lib/stripe'
 
 /**
@@ -7,7 +9,9 @@ import { stripeCheckoutReady } from '@/lib/stripe'
  * Tool-agnostic; used by PromptExecutor and future shared widgets.
  */
 export async function GET() {
-  await ensureShortWelcomeTopUp()
+  const topup = await ensureShortWelcomeTopUp()
+  const ga = topup?.granted ? [welcomeBonusEvent(topup.amount, true)] : []
+  await enqueueGaEvents(ga)
   const eh = await getOwnerEmailHash()
   const { balance, expiresAt } = await getCreditsState(eh)
   return NextResponse.json({
@@ -16,5 +20,6 @@ export async function GET() {
     canUse: !!eh && balance > 0,
     signedIn: !!eh,
     stripeEnabled: stripeCheckoutReady(),
+    ga,
   })
 }

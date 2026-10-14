@@ -2,6 +2,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SessionProviderWrapper } from '@/components/layout/SessionProviderWrapper'
 import { CheckoutReturnHandler } from '@/components/credits/CheckoutReturnHandler'
+import { GaEventFlush } from '@/components/analytics/GaEventFlush'
 
 export default function MarketingLayout({
   children,
@@ -11,6 +12,7 @@ export default function MarketingLayout({
   return (
     <SessionProviderWrapper>
       <Header />
+      <GaEventFlush />
       <CheckoutReturnHandler />
       <main className="min-h-screen">{children}</main>
       <Footer />

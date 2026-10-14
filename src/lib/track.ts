@@ -1,3 +1,5 @@
+import { GA_COOKIE, parseGaCookie, type GaEvent } from '@/lib/ga-events'
+
 // Client-side tracking helpers: fire GA4 event + increment DB counter.
 // Both calls are fire-and-forget; failures are silently swallowed so they never
 // block the user-facing action (copy / open).
@@ -14,6 +16,7 @@ declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gtag?: (...args: any[]) => void
+    dataLayer?: unknown[]
   }
 }
 
@@ -125,12 +128,85 @@ function fireToolEvent(eventName: string, params: Record<string, unknown>) {
   try { window.gtag('event', eventName, params) } catch {}
 }
 
+// Beacon so the hit survives the navigation that often follows a click.
+function fireBeacon(eventName: string, params: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  const payload = { ...params, transport_type: 'beacon' }
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, payload)
+      return
+    }
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push(['event', eventName, payload])
+  } catch {
+    // ignore
+  }
+}
+
+const sentGaIds = new Set<string>()
+
+function claimGaId(id: string): boolean {
+  if (sentGaIds.has(id)) return false
+  sentGaIds.add(id)
+  const key = `ga_sent:${id}`
+  try {
+    if (typeof sessionStorage !== 'undefined') {
+      if (sessionStorage.getItem(key)) return false
+      sessionStorage.setItem(key, '1')
+    }
+  } catch {
+    // storage blocked — the in-memory set still dedupes this page
+  }
+  return true
+}
+
+function readGaCookie(): GaEvent[] {
+  if (typeof document === 'undefined') return []
+  const part = document.cookie.split('; ').find((row) => row.startsWith(`${GA_COOKIE}=`))
+  if (!part) return []
+  return parseGaCookie(part.slice(GA_COOKIE.length + 1))
+}
+
+function clearGaCookie() {
+  if (typeof document === 'undefined') return
+  document.cookie = `${GA_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`
+}
+
+function emitGaEvents(events: GaEvent[]) {
+  for (const event of events) {
+    if (!event?.id || !event.name || !claimGaId(event.id)) continue
+    fireBeacon(event.name, event.params)
+  }
+}
+
+// Fire events the server already committed (response `ga` and/or the
+// redirect cookie). Deduped by id so a reload does not double-count.
+export function flushConfirmedGaEvents(extra?: GaEvent[] | null) {
+  const queued = readGaCookie()
+  emitGaEvents([...(extra || []), ...queued])
+  clearGaCookie()
+}
+
+// Signed-in UI blocked an action using a balance the server just reported.
+// This is not a purchase click.
+export function trackInsufficientPoints(tool: string, needed: number, balance: number) {
+  fireBeacon('insufficient_points', { tool, needed, balance })
+}
+
+// A control whose only job is to start sign-in. Never use this for a buy button.
+export function trackLoginClick(surface: string) {
+  fireBeacon('login_click', { surface })
+}
+
 export function trackPaywallView(tool: PaywallTool, trigger: PaywallTrigger) {
   fireToolEvent('paywall_view', { tool, trigger })
 }
 
+// Real purchase intent only: the buy button, including "sign in to buy".
+// Login-for-free and header login use trackLoginClick instead.
 export function trackPurchaseClick(tool: PaywallTool, signedIn: boolean) {
-  fireToolEvent('paywall_purchase_click', { tool, signed_in: signedIn })
+  fireBeacon('paywall_purchase_click', { tool, signed_in: signedIn })
 }
 
 export function trackCheckoutStarted(tool: PaywallTool) {
@@ -206,16 +282,18 @@ export function trackPurchase(p: {
   } catch {
     // still fire once if storage is blocked
   }
-  fireToolEvent('purchase', {
+  const value = Number(p.value)
+  const currency = (p.currency || 'JPY').toUpperCase()
+  fireBeacon('purchase', {
     transaction_id: p.transactionId,
-    value: p.value,
-    currency: p.currency,
+    value: Number.isFinite(value) ? value : 0,
+    currency,
     tool: p.tool,
     items: [
       {
         item_id: 'credit-pack-150',
         item_name: `${p.credits} credit pack`,
-        price: p.value,
+        price: Number.isFinite(value) ? value : 0,
         quantity: 1,
       },
     ],

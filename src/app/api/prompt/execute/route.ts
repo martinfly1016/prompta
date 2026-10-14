@@ -33,11 +33,14 @@ import { put } from '@vercel/blob'
 import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getOwnerEmailHash,
+  getPaidBalance,
   spendCredits,
   refundCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { stripeEnabled } from '@/lib/stripe'
+import { insufficientPointsEvent, pointsSpentEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
 import { getProvider } from '@/lib/image-providers/registry'
 import type { ProviderId } from '@/lib/image-providers/types'
 
@@ -155,8 +158,11 @@ export async function POST(req: NextRequest) {
   const cost = provider.credits
   const spend = await spendCredits(eh, cost)
   if (!spend.ok) {
+    const balance = await getPaidBalance(eh)
+    const ga = [insufficientPointsEvent('prompt', cost, balance)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', balance: 0, stripeEnabled },
+      { error: 'credits_exhausted', balance, needed: cost, stripeEnabled, ga },
       { status: 402 },
     )
   }
@@ -253,6 +259,8 @@ export async function POST(req: NextRequest) {
     cacheSet(cacheKey, result, spend.balance)
   }
 
-  return NextResponse.json({ ...result, balance: spend.balance })
+  const ga = [pointsSpentEvent('prompt', cost, spend.balance)]
+  await enqueueGaEvents(ga)
+  return NextResponse.json({ ...result, balance: spend.balance, ga })
 }
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useSession } from 'next-auth/react'
-import { trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
+import { flushConfirmedGaEvents, trackInsufficientPoints, trackLoginClick, trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
 import { redirectToSignIn, signInThenCheckout, startCreditCheckout } from '@/lib/start-checkout'
 
 const TOOL = 'hair-color' as const
@@ -25,6 +25,8 @@ interface QuotaState {
   stripeEnabled?: boolean
   welcomeCredits?: number
   imageCreditCost?: number
+  textCreditCost?: number
+  ga?: { id: string; name: string; params: Record<string, string | number | boolean> }[]
 }
 
 interface HairCandidate {
@@ -233,7 +235,10 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   function refresh() {
     fetch('/api/tools/hair-color/check')
       .then((r) => r.json())
-      .then((s) => setState(s))
+      .then((s) => {
+        setState(s)
+        flushConfirmedGaEvents(s?.ga)
+      })
       .catch(() => {})
   }
 
@@ -242,6 +247,9 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
     if (!state.canUse) {
       const trigger: PaywallTrigger =
         state.blockReason === 'login_required' ? 'login_required' : 'exhausted_pick'
+      if (state.blockReason !== 'login_required') {
+        trackInsufficientPoints(TOOL, state.textCreditCost ?? 1, state.paidCredits ?? 0)
+      }
       openPaywall(setShowModal, trigger)
       return
     }
@@ -277,6 +285,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
       setPhase('analyzing')
       const r = await fetch('/api/tools/hair-color/analyze', { method: 'POST', body: form })
       const data = await r.json()
+      flushConfirmedGaEvents(data?.ga)
       if (!r.ok) {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
@@ -309,6 +318,9 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   async function runSimulate(candidate: HairCandidate) {
     if (!originalFile) return
     if (!state || state.paidCredits < SIM_COST) {
+      if (state && state.blockReason !== 'login_required') {
+        trackInsufficientPoints(TOOL, SIM_COST, state.paidCredits ?? 0)
+      }
       openPaywall(setShowModal, 'exhausted_simulate')
       return
     }
@@ -322,6 +334,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
       form.append('nameEn', candidate.nameEn)
       const r = await fetch('/api/tools/hair-color/simulate', { method: 'POST', body: form })
       const data = await r.json()
+      flushConfirmedGaEvents(data?.ga)
       if (!r.ok) {
         if (r.status === 429) {
           openPaywall(setShowModal, 'exhausted_429')
@@ -340,6 +353,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
   }
 
   function handleSignInFree() {
+    trackLoginClick('paywall_free')
     redirectToSignIn(window.location.pathname)
   }
 
@@ -408,6 +422,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
         ) : loginRequired ? (
           <a
             href="/auth/signin"
+            onClick={() => trackLoginClick('quota_status')}
             data-testid="quota-status"
             data-state="login"
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 transition-colors"
@@ -470,6 +485,7 @@ export function HairColorQuotaGate({ locale = 'ja' }: HairColorQuotaGateProps = 
         <>
           <button
             type="button"
+            data-testid="tool-pick"
             onClick={handlePickFile}
             disabled={!state || pending}
             className="inline-flex items-center gap-2 px-6 py-3 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"

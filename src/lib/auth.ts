@@ -135,7 +135,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   events: {
-    async signIn({ user }) {
+    async signIn({ user, account, isNewUser }) {
       try {
         if (user?.id) {
           await prisma.user.update({
@@ -148,11 +148,24 @@ export const authOptions: NextAuthOptions = {
       }
       // Phase 0 (2026-05-11) — grant welcome bonus credits on every sign-in,
       // but idempotent (welcomeBonusAt gate prevents repeat grants).
+      // sign_up and welcome_bonus_granted are queued here because this runs
+      // inside the OAuth redirect, before the browser can fire gtag.
       try {
+        const { signUpEvent, welcomeBonusEvent } = await import('@/lib/ga-events')
+        const { enqueueGaEvents } = await import('@/lib/ga-queue')
+        const events = []
+        const method = account?.provider
+        if (isNewUser && method && method !== 'credentials') {
+          events.push(signUpEvent(method))
+        }
         if (user?.email) {
           const { grantWelcomeBonusIfEligible } = await import('@/lib/paid-credits')
-          await grantWelcomeBonusIfEligible(user.email)
+          const result = await grantWelcomeBonusIfEligible(user.email)
+          if (result.granted && result.amount > 0) {
+            events.push(welcomeBonusEvent(result.amount, result.isTopup))
+          }
         }
+        await enqueueGaEvents(events)
       } catch (e) {
         console.error('[auth] welcome bonus grant failed:', (e as Error)?.message)
       }

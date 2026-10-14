@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
-import { getOwnerEmailHash, spendOneCredit } from '@/lib/paid-credits'
+import { getOwnerEmailHash, getPaidBalance, spendOneCredit } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { stripeEnabled } from '@/lib/stripe'
+import { insufficientPointsEvent, pointsSpentEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
 
 const TOOL = 'hair-color'
 
@@ -23,8 +25,11 @@ export async function POST(req: NextRequest) {
 
   const result = await spendOneCredit(eh)
   if (!result.ok) {
+    const paidCredits = await getPaidBalance(eh)
+    const ga = [insufficientPointsEvent(TOOL, 1, paidCredits)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits, needed: 1, stripeEnabled, ga },
       { status: 429 },
     )
   }
@@ -32,11 +37,14 @@ export async function POST(req: NextRequest) {
   await prisma.toolUsage.create({
     data: { anonId, ipHash, tool: TOOL, type: 'paid', emailHash: eh },
   })
+  const ga = [pointsSpentEvent(TOOL, 1, result.balance)]
+  await enqueueGaEvents(ga)
   return NextResponse.json({
     paidCredits: result.balance,
     canUse: result.balance > 0,
     blockReason: 'none' as const,
     source: 'paid',
     stripeEnabled,
+    ga,
   })
 }

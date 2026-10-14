@@ -248,7 +248,7 @@ type WelcomeWallet = {
 async function topUpShortWelcomeGift(
   email: string,
   existing: WelcomeWallet,
-): Promise<{ granted: boolean; balance: number; expiresAt: Date | null } | null> {
+): Promise<{ granted: boolean; amount: number; balance: number; expiresAt: Date | null } | null> {
   const target = resolveWelcomeBonusCredits()
   if (
     !existing.welcomeBonusAt ||
@@ -280,6 +280,7 @@ async function topUpShortWelcomeGift(
   })
   return {
     granted: true,
+    amount: delta,
     balance: row?.balance ?? existing.balance + delta,
     expiresAt: row?.expiresAt ?? existing.expiresAt,
   }
@@ -288,10 +289,14 @@ async function topUpShortWelcomeGift(
 // Page views call this so a user who is already signed in gets the top-up
 // without waiting for the next NextAuth signIn event. It never creates a
 // new welcome grant.
-export async function ensureShortWelcomeTopUp(): Promise<void> {
+export async function ensureShortWelcomeTopUp(): Promise<{
+  granted: boolean
+  amount: number
+  isTopup: boolean
+} | null> {
   const session = await getServerSession(authOptions).catch(() => null)
   const email = session?.user?.email
-  if (!email) return
+  if (!email) return null
   const existing = await prisma.paidCredits.findUnique({
     where: { emailHash: emailHash(email) },
     select: {
@@ -302,13 +307,21 @@ export async function ensureShortWelcomeTopUp(): Promise<void> {
       expiresAt: true,
     },
   })
-  if (!existing) return
-  await topUpShortWelcomeGift(email, existing)
+  if (!existing) return null
+  const topped = await topUpShortWelcomeGift(email, existing)
+  if (!topped?.granted) return null
+  return { granted: true, amount: topped.amount, isTopup: true }
 }
 
 export async function grantWelcomeBonusIfEligible(
   email: string,
-): Promise<{ granted: boolean; balance: number; expiresAt: Date | null }> {
+): Promise<{
+  granted: boolean
+  amount: number
+  isTopup: boolean
+  balance: number
+  expiresAt: Date | null
+}> {
   const eh = emailHash(email)
   const target = resolveWelcomeBonusCredits()
   const existing = await prisma.paidCredits.findUnique({
@@ -323,8 +336,8 @@ export async function grantWelcomeBonusIfEligible(
   })
   if (existing?.welcomeBonusAt) {
     const topped = await topUpShortWelcomeGift(email, existing)
-    if (topped) return topped
-    return { granted: false, balance: existing.balance, expiresAt: existing.expiresAt }
+    if (topped) return { ...topped, isTopup: true }
+    return { granted: false, amount: 0, isTopup: false, balance: existing.balance, expiresAt: existing.expiresAt }
   }
   const newExpiresAt = computeNewExpiresAt()
   const row = await prisma.paidCredits.upsert({
@@ -347,5 +360,5 @@ export async function grantWelcomeBonusIfEligible(
     },
     select: { balance: true, expiresAt: true },
   })
-  return { granted: true, balance: row.balance, expiresAt: row.expiresAt }
+  return { granted: true, amount: target, isTopup: false, balance: row.balance, expiresAt: row.expiresAt }
 }

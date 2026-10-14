@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
+import { trackLoginClick } from '@/lib/track'
 
 export function HeaderAuthMenu() {
   const { data: session, status } = useSession()
@@ -36,6 +37,7 @@ export function HeaderAuthMenu() {
     return (
       <Link
         href="/auth/signin"
+        onClick={() => trackLoginClick('header')}
         className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-sky-600 rounded-lg hover:bg-sky-50 transition-colors"
       >
         ログイン

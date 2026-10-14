@@ -111,9 +111,14 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
   const eventNames = [
     'paywall_view',
     'paywall_purchase_click',
+    'login_click',
     'checkout_started',
     'begin_checkout',
     'purchase',
+    'points_spent',
+    'insufficient_points',
+    'sign_up',
+    'welcome_bonus_granted',
   ]
 
   // Aggregate counts by eventName. No tool/trigger split until custom
@@ -137,9 +142,14 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
   const counts: Record<string, number> = {
     paywall_view: 0,
     paywall_purchase_click: 0,
+    login_click: 0,
     checkout_started: 0,
     begin_checkout: 0,
     purchase: 0,
+    points_spent: 0,
+    insufficient_points: 0,
+    sign_up: 0,
+    welcome_bonus_granted: 0,
   }
   for (const row of totalsResp.data.rows || []) {
     const evt = row.dimensionValues?.[0]?.value || ''
@@ -189,9 +199,14 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
     aggregate: {
       paywall_view: view,
       paywall_purchase_click: click,
+      login_click: counts['login_click'] || 0,
       begin_checkout: counts['begin_checkout'] || 0,
       checkout_started: counts['checkout_started'] || 0,
       purchase,
+      points_spent: counts['points_spent'] || 0,
+      insufficient_points: counts['insufficient_points'] || 0,
+      sign_up: counts['sign_up'] || 0,
+      welcome_bonus_granted: counts['welcome_bonus_granted'] || 0,
       conversion: {
         view_to_click: view > 0 ? +(click / view * 100).toFixed(1) : null,
         click_to_checkout: click > 0 ? +(checkout / click * 100).toFixed(1) : null,

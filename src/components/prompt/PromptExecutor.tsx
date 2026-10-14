@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { trackPaywallView } from '@/lib/track'
+import { flushConfirmedGaEvents, trackInsufficientPoints, trackLoginClick, trackPaywallView } from '@/lib/track'
 import { redirectToSignIn } from '@/lib/start-checkout'
 import { listProvidersForMode, recommendForPrompt } from '@/lib/image-providers/registry'
 import type { ExecuteMode, ImageProvider, ProviderId } from '@/lib/image-providers/types'
@@ -68,6 +68,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
       .then((j) => {
         if (typeof j?.balance === 'number') setBalance(j.balance)
         if (typeof j?.expiresAt === 'string') setExpiresAt(j.expiresAt)
+        flushConfirmedGaEvents(j?.ga)
       })
       .catch(() => {})
   }, [isSignedIn])
@@ -176,11 +177,13 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
     setResult(null)
 
     if (!isSignedIn) {
+      trackLoginClick('prompt_execute')
       redirectToSignIn(window.location.pathname + window.location.search)
       return
     }
 
     if (provider && balance !== null && balance < provider.credits) {
+      trackInsufficientPoints('prompt', provider.credits, balance)
       setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')
       openPurchase('exhausted_pick')
       return
@@ -209,6 +212,7 @@ export function PromptExecutor({ prompt, getCurrentContent }: Props) {
         }),
       })
       const j = await res.json()
+      flushConfirmedGaEvents(j?.ga)
       if (!res.ok) {
         if (j.error === 'credits_exhausted') {
           setError('ポイントが足りません。150 ポイントパック ¥300 をご購入ください。')

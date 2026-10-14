@@ -8,6 +8,8 @@ import {
 import { prisma } from '@/lib/prisma'
 import { diagnoseHairColor, simulateHairColor } from '@/lib/hair-color-ai'
 import { stripeEnabled } from '@/lib/stripe'
+import { insufficientPointsEvent, pointsSpentEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
 import { validateImageBuffer } from '@/lib/image-validation'
 import { saveGenerationOutput } from '@/lib/generation-output'
 
@@ -65,8 +67,11 @@ export async function POST(req: NextRequest) {
 
   const spend = await spendOneCredit(eh)
   if (!spend.ok) {
+    const paidCredits = await getPaidBalance(eh)
+    const ga = [insufficientPointsEvent(TOOL, 1, paidCredits)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits: 0, stripeEnabled },
+      { error: 'credits_exhausted', blockReason: 'credits_exhausted', paidCredits, needed: 1, stripeEnabled, ga },
       { status: 429 },
     )
   }
@@ -130,11 +135,14 @@ export async function POST(req: NextRequest) {
         ? { buffer: imageBuf, mimeType: previewSimulation.mimeType }
         : undefined,
     }).catch(e => console.error('[hair-color/analyze] save failed:', (e as Error).message))
+    const ga = [pointsSpentEvent(TOOL, 1, paidCredits)]
+    await enqueueGaEvents(ga)
     return NextResponse.json({
       ok: true,
       result: { diagnosis, previewSimulation },
       source: 'paid',
       quota: { paidCredits, canUse: paidCredits > 0, stripeEnabled },
+      ga,
     })
   } catch (e: any) {
     await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})

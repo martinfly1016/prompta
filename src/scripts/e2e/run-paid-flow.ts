@@ -112,6 +112,8 @@ async function main() {
       throw new Error(`top-up balance ${first.balance} cannot afford an image try`)
     }
     if (first.balance !== target) throw new Error(`expected ${target}, got ${first.balance}`)
+    if (first.isTopup !== true) throw new Error('historical gift should be a top-up')
+    if (first.amount !== target - 3) throw new Error(`expected amount ${target - 3}, got ${first.amount}`)
     const second = await grantWelcomeBonusIfEligible(email)
     if (second.granted) throw new Error('second sign-in granted again')
     if (second.balance !== first.balance) throw new Error('balance changed on repeat')
@@ -159,6 +161,18 @@ async function main() {
       throw new Error(`expected credits_exhausted, got ${body.blockReason}: ${JSON.stringify(body)}`)
     }
     return body
+  })
+
+  await step('T1: confirmed insufficient_points when a 1-point spend is rejected', async () => {
+    const res = await api('/api/tools/hair-color/consume', { method: 'POST' })
+    if (res.status !== 429) throw new Error(`expected 429, got ${res.status}: ${await res.text()}`)
+    const body = await res.json()
+    const ev = (body.ga || []).find((e) => e.name === 'insufficient_points')
+    if (!ev) throw new Error(`missing insufficient_points: ${JSON.stringify(body)}`)
+    if (ev.params?.tool !== 'hair-color' || ev.params?.needed !== 1 || ev.params?.balance !== 0) {
+      throw new Error(`bad params: ${JSON.stringify(ev.params)}`)
+    }
+    return ev.params
   })
 
   if (img) {
@@ -222,6 +236,21 @@ async function main() {
     } else {
       console.log('  ⊘ T2: /analyze cross-tool checks SKIPPED (no fixture image)')
     }
+
+    await step('T2: confirmed points_spent after a delivered 1-point action', async () => {
+      const res = await api('/api/tools/hair-color/consume', { method: 'POST' })
+      if (res.status !== 200) throw new Error(`expected 200, got ${res.status}: ${await res.text()}`)
+      const body = await res.json()
+      const ev = (body.ga || []).find((e) => e.name === 'points_spent')
+      if (!ev) throw new Error(`missing points_spent: ${JSON.stringify(body)}`)
+      if (ev.params?.tool !== 'hair-color' || ev.params?.amount !== 1) {
+        throw new Error(`bad params: ${JSON.stringify(ev.params)}`)
+      }
+      if (ev.params.balance_after !== body.paidCredits) {
+        throw new Error(`balance_after ${ev.params.balance_after} != paidCredits ${body.paidCredits}`)
+      }
+      return ev.params
+    })
   }
 
   if (TIER === 3) {
