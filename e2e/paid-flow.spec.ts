@@ -37,28 +37,37 @@ async function testLogin(page: Page) {
   expect(res.ok()).toBeTruthy()
 }
 
+/** Status chip rendered by QuotaGate. Scoped so page-wide 「無料」 copy cannot match. */
+function statusChip(page: Page) {
+  return page.locator('[aria-live="polite"]')
+}
+
 test.describe('paid flow @hair-color', () => {
   test('un-logged-in user sees login-required CTA in QuotaGate', async ({ page }) => {
     await page.context().clearCookies()
     await page.goto('/tools/hair-color-diagnosis')
-    // The QuotaGate renders one of: login-required / free-X / exhausted / paid-N
-    await expect(page.locator('text=/ログイン.*獲得|無料/')).toBeVisible({ timeout: 15_000 })
+    await expect(statusChip(page)).toContainText(/ログインで \d+ ポイント獲得/, { timeout: 15_000 })
   })
 
-  test('logged in with 3 credits → status chip shows 残り 3', async ({ page, request }) => {
+  test('logged in with 3 credits → status chip shows 保有ポイント 3', async ({ page, request }) => {
     await seedCredits(request, 3)
     await testLogin(page)
     await page.goto('/tools/hair-color-diagnosis')
-    await expect(page.locator('text=/クレジット残り\\s*3|保有クレジット.*3/')).toBeVisible({ timeout: 15_000 })
+    const chip = statusChip(page)
+    await expect(chip).toContainText('保有ポイント', { timeout: 15_000 })
+    await expect(chip.locator('strong')).toHaveText('3')
   })
 
   test('exhausted (balance=0) → paywall modal copy visible', async ({ page, request }) => {
     await seedCredits(request, 0)
     await testLogin(page)
     await page.goto('/tools/hair-color-diagnosis')
-    await expect(page.locator('text=/クレジットを使い切|10 回パックを購入/').first()).toBeVisible({ timeout: 15_000 })
-    // Verify all-tool-shared copy is present (Phase 0 model)
-    await expect(page.locator('text=/全ツール共通|共通でご利用/').first()).toBeVisible()
+    const chip = statusChip(page)
+    await expect(chip).toContainText('ポイントを使い切りました', { timeout: 15_000 })
+    await chip.click()
+    await expect(page.getByRole('heading', { name: 'ポイント不足' })).toBeVisible()
+    await expect(page.getByText('全ツール共通')).toBeVisible()
+    await expect(page.getByText('150 ポイントパック').first()).toBeVisible()
   })
 
   test('after simulated payment → balance refilled, chip shows 10', async ({ page, request }) => {
@@ -73,16 +82,18 @@ test.describe('paid flow @hair-color', () => {
     const body = await pay.json()
     expect(body.balance).toBeGreaterThanOrEqual(10)
     await page.goto('/tools/hair-color-diagnosis')
-    await expect(page.locator('text=/保有クレジット.*10|クレジット残り\\s*10/').first()).toBeVisible({ timeout: 15_000 })
+    const chip = statusChip(page)
+    await expect(chip).toContainText('保有ポイント', { timeout: 15_000 })
+    await expect(chip.locator('strong')).toHaveText(String(body.balance))
   })
 
   test('shared credit pool — personal-color and hair-color show same balance', async ({ page, request }) => {
     await seedCredits(request, 5)
     await testLogin(page)
     await page.goto('/tools/hair-color-diagnosis')
-    await expect(page.locator('text=/5/').first()).toBeVisible({ timeout: 15_000 })
+    await expect(statusChip(page).locator('strong')).toHaveText('5', { timeout: 15_000 })
     await page.goto('/tools/personal-color-analysis')
-    await expect(page.locator('text=/5/').first()).toBeVisible({ timeout: 15_000 })
+    await expect(statusChip(page).locator('strong')).toHaveText('5', { timeout: 15_000 })
   })
 })
 
