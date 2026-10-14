@@ -26,6 +26,17 @@ export const getTagSlugs = cache(async () => {
   return tags.map(t => t.slug)
 })
 
+export const countPublishedByApprovedTag = cache(async () => {
+  const rows = await prisma.tag.findMany({
+    where: { isApproved: true },
+    select: {
+      slug: true,
+      _count: { select: { prompts: { where: { isPublished: true } } } },
+    },
+  })
+  return rows.map(row => ({ slug: row.slug, count: row._count.prompts }))
+})
+
 export const getApprovedTagSlugs = cache(async () => {
   const tags = await prisma.tag.findMany({
     where: { isApproved: true },

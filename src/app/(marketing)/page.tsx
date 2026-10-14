@@ -4,8 +4,9 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { getTools, getCategories, getFeaturedPrompts, getLatestPrompts, getGuides } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { generateOrganizationSchema, generateFaqSchema } from '@/lib/schema'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export const metadata: Metadata = {
   title: 'AIプロンプト一覧｜コピペで使える500+のプロンプト集 - Prompta',

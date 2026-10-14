@@ -29,7 +29,7 @@ export default function CategoriesPage() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('/api/categories')
+      const res = await fetch('/api/admin/categories', { cache: 'no-store' })
       const data = await res.json()
       setCategories(data)
     } catch (error) {

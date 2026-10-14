@@ -2,6 +2,9 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SessionProviderWrapper } from '@/components/layout/SessionProviderWrapper'
 
+// Login state and the header credit balance are client-only (HeaderAuthMenu).
+// This layout must not call cookies(), headers(), or getServerSession — that
+// would opt every public page out of static/ISR rendering.
 export default function MarketingLayout({
   children,
 }: {

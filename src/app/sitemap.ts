@@ -7,10 +7,12 @@ import {
   getApprovedTagSlugsWithDates,
   getLatestPromptDate,
 } from '@/lib/data'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
 // Revalidate hourly so DB-driven URL additions (new Guide/Tag/Prompt rows)
 // surface in sitemap.xml without waiting for the next Vercel deploy.
-export const revalidate = 3600
+// Admin edits also call revalidatePath('/sitemap.xml').
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 const BASE = 'https://www.prompta.jp'
 
