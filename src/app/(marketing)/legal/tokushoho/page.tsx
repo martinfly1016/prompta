@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
+import { CONTACT_EMAIL } from '@/lib/email'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -10,7 +11,6 @@ export const metadata: Metadata = {
 }
 
 const EFFECTIVE_DATE = '2026-05-09'
-const CONTACT_EMAIL = 'prompta.jp@gmail.com'
 
 export default function TokushohoPage() {
   return (

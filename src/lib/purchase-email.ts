@@ -1,4 +1,4 @@
-import { sendEmail } from '@/lib/agentmail'
+import { sendEmail } from '@/lib/email'
 import { SITE_CONFIG } from '@/lib/constants'
 import { packDisplayName, POINTS_PER_RUN } from '@/lib/credit-costs'
 
