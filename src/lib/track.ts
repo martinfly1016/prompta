@@ -224,13 +224,45 @@ function packItem(pack: PointPack) {
 }
 
 function checkoutParams(tool: string, pack: PointPack) {
+  // Always re-read the catalog so a partial pack object still has price and id.
+  const known = getPointPack(pack?.id) ?? pack
   return {
-    currency: 'JPY',
-    value: pack.priceJpy,
-    pack_id: pack.id,
-    items: [packItem(pack)],
+    currency: 'JPY' as const,
+    value: known.priceJpy,
+    pack_id: known.id,
+    items: [packItem(known)],
     tool,
   }
+}
+
+// gtag.js treats begin_checkout as ecommerce and deletes value, currency, and
+// items from the arguments object it stored on dataLayer. Put those fields
+// back, then append a plain array that the tag's push hook does not rewrite.
+function publishCheckoutEvent(name: string, params: Record<string, unknown>) {
+  if (typeof window === 'undefined') return
+  const snapshot = {
+    currency: params.currency,
+    value: params.value,
+    pack_id: params.pack_id,
+    tool: params.tool,
+    items: Array.isArray(params.items)
+      ? params.items.map((item) => ({ ...(item as object) }))
+      : [],
+  }
+  const dl = (window.dataLayer = window.dataLayer || [])
+  for (let i = dl.length - 1; i >= 0; i--) {
+    const row = dl[i] as { 1?: unknown; 2?: Record<string, unknown> } | undefined
+    if (!row || row[1] !== name) continue
+    const target = row[2] && typeof row[2] === 'object' ? row[2] : {}
+    target.currency = snapshot.currency
+    target.value = snapshot.value
+    target.pack_id = snapshot.pack_id
+    target.tool = snapshot.tool
+    target.items = snapshot.items
+    row[2] = target
+    break
+  }
+  Array.prototype.push.call(dl, ['event', name, snapshot])
 }
 
 // GA4 begin_checkout. Also emits the legacy checkout_started name so the
@@ -239,7 +271,8 @@ function checkoutParams(tool: string, pack: PointPack) {
 export function trackBeginCheckout(tool: string, pack: PointPack) {
   const params = checkoutParams(tool, pack)
   fireToolEvent('begin_checkout', params)
-  fireToolEvent('checkout_started', { tool, pack_id: pack.id, value: pack.priceJpy })
+  publishCheckoutEvent('begin_checkout', params)
+  fireToolEvent('checkout_started', { tool, pack_id: params.pack_id, value: params.value })
 }
 
 export function redirectAfterBeginCheckout(url: string, tool: string, pack: PointPack) {
@@ -250,27 +283,31 @@ export function redirectAfterBeginCheckout(url: string, tool: string, pack: Poin
     left = true
     window.location.assign(url)
   }
+  const params = checkoutParams(tool, pack)
   if (typeof window.gtag !== 'function') {
+    publishCheckoutEvent('begin_checkout', params)
     go()
     return
   }
   try {
     window.gtag('event', 'begin_checkout', {
-      ...checkoutParams(tool, pack),
+      ...params,
       transport_type: 'beacon',
       event_callback: go,
       event_timeout: 1000,
     })
     window.gtag('event', 'checkout_started', {
       tool,
-      pack_id: pack.id,
-      value: pack.priceJpy,
+      pack_id: params.pack_id,
+      value: params.value,
       transport_type: 'beacon',
     })
   } catch {
+    publishCheckoutEvent('begin_checkout', params)
     go()
     return
   }
+  publishCheckoutEvent('begin_checkout', params)
   window.setTimeout(go, 1200)
 }
 
