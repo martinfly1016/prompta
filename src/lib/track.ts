@@ -290,11 +290,12 @@ export function redirectAfterBeginCheckout(url: string, tool: string, pack: Poin
     return
   }
   try {
+    // Do not pass event_callback. The real gtag invokes it in the same turn
+    // as dataLayer.push and leaves the page before readers can see the hit.
+    // transport_type beacon plus the delayed navigation keeps the hit.
     window.gtag('event', 'begin_checkout', {
       ...params,
       transport_type: 'beacon',
-      event_callback: go,
-      event_timeout: 1000,
     })
     window.gtag('event', 'checkout_started', {
       tool,
