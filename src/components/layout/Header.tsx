@@ -1,7 +1,9 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { TOOLS, CATEGORIES, SITE_CONFIG } from '@/lib/constants'
 import { SearchBar } from './SearchBar'
 import { HeaderAuthMenu } from './HeaderAuthMenu'
+import { MobileMenu } from './MobileMenu'
 
 export function Header() {
   return (
@@ -136,99 +138,29 @@ export function Header() {
           <div className="flex items-center gap-2 sm:gap-3">
             <SearchBar />
             <HeaderAuthMenu />
-            {/* Mobile menu button */}
-            <MobileMenuButton />
+            {/* useSearchParams() must sit under Suspense so the marketing layout stays static. */}
+            <Suspense fallback={<MobileMenuFallback />}>
+              <MobileMenu />
+            </Suspense>
           </div>
         </div>
       </div>
-
-      {/* Mobile Navigation */}
-      <MobileNav />
     </header>
   )
 }
 
-function MobileMenuButton() {
+function MobileMenuFallback() {
   return (
-    <label htmlFor="mobile-menu-toggle" className="md:hidden p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
-      <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <button
+      type="button"
+      className="md:hidden p-2 rounded-lg"
+      aria-label="メニューを開く"
+      aria-hidden="true"
+      tabIndex={-1}
+    >
+      <svg className="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
       </svg>
-    </label>
-  )
-}
-
-function MobileNav() {
-  return (
-    <>
-      <input type="checkbox" id="mobile-menu-toggle" className="peer hidden" />
-      <div className="md:hidden peer-checked:block hidden border-t border-gray-200 bg-white max-h-[calc(100vh-4rem)] supports-[height:100dvh]:max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain">
-        <div className="px-4 py-3 space-y-1">
-          <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">AIツール</p>
-          <Link href="/tools" className="block px-3 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
-            すべてのツール
-          </Link>
-          <Link
-            href="/tools/height-difference-maker"
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-white rounded-lg border border-sky-100"
-          >
-            <span>📏</span>
-            <span className="whitespace-nowrap">身長差メーカー</span>
-            <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
-          </Link>
-          <Link
-            href="/tools/personal-color-analysis"
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-100"
-          >
-            <span>🎨</span>
-            <span className="whitespace-nowrap">パーソナルカラー診断</span>
-          </Link>
-          <Link
-            href="/tools/hair-color-diagnosis"
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-violet-700 bg-gradient-to-r from-violet-50 to-purple-50 rounded-lg border border-violet-100"
-          >
-            <span>💇</span>
-            <span className="whitespace-nowrap">似合う髪色診断</span>
-            <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
-          </Link>
-          {TOOLS.map(tool => (
-            <Link
-              key={tool.slug}
-              href={`/tools/${tool.slug}`}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-sky-50 rounded-lg"
-            >
-              <span>{tool.icon}</span>
-              <span>{tool.name}</span>
-            </Link>
-          ))}
-
-          <div className="border-t border-gray-100 my-2" />
-
-          <p className="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">カテゴリ</p>
-          <Link href="/prompts" className="block px-3 py-2 text-sm font-medium text-sky-600 hover:bg-sky-50 rounded-lg">
-            すべてのプロンプト
-          </Link>
-          {CATEGORIES.map(cat => (
-            <Link
-              key={cat.slug}
-              href={`/prompts/${cat.slug}`}
-              className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-sky-50 rounded-lg"
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.name}</span>
-            </Link>
-          ))}
-
-          <div className="border-t border-gray-100 my-2" />
-
-          <Link href="/guides" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-sky-50 rounded-lg">
-            📚 ガイド
-          </Link>
-          <Link href="/glossary" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-sky-50 rounded-lg">
-            📖 用語集
-          </Link>
-        </div>
-      </div>
-    </>
+    </button>
   )
 }
