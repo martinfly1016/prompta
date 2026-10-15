@@ -1,20 +1,17 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { SITE_CONFIG } from '@/lib/constants'
 import { getTools, getCategories, getAllPromptsPaginated } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema } from '@/lib/schema'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_LIST_SECONDS
 
-interface Props {
-  searchParams: { page?: string }
-}
-
-export function generateMetadata({ searchParams }: Props): Metadata {
-  const page = Number(searchParams.page) || 1
+export function allPromptsMetadata(page: number): Metadata {
   const suffix = page > 1 ? ` — ページ${page}` : ''
   return {
     title: `全プロンプト一覧 — AIプロンプト集${suffix}`,
@@ -24,14 +21,18 @@ export function generateMetadata({ searchParams }: Props): Metadata {
   }
 }
 
-export default async function AllPromptsPage({ searchParams }: Props) {
-  const page = Math.max(1, Number(searchParams.page) || 1)
+export function generateMetadata(): Metadata {
+  return allPromptsMetadata(1)
+}
 
+export async function AllPromptsListing({ page }: { page: number }) {
   const [tools, categories, { prompts, total, totalPages }] = await Promise.all([
     getTools(),
     getCategories(),
     getAllPromptsPaginated(page),
   ])
+
+  if (page > Math.max(totalPages, 1)) notFound()
 
   const schema = generateCollectionPageSchema('全プロンプト一覧', 'すべてのAIプロンプトコレクション', `${SITE_CONFIG.url}/prompts`, total)
 
@@ -75,4 +76,8 @@ export default async function AllPromptsPage({ searchParams }: Props) {
       </section>
     </>
   )
+}
+
+export default function AllPromptsPage() {
+  return <AllPromptsListing page={1} />
 }

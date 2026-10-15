@@ -4,6 +4,9 @@ import { SessionProviderWrapper } from '@/components/layout/SessionProviderWrapp
 import { CheckoutReturnHandler } from '@/components/credits/CheckoutReturnHandler'
 import { GaEventFlush } from '@/components/analytics/GaEventFlush'
 
+// Login state and the header credit balance are client-only (HeaderAuthMenu).
+// This layout must not call cookies(), headers(), or getServerSession — that
+// would opt every public page out of static/ISR rendering.
 export default function MarketingLayout({
   children,
 }: {

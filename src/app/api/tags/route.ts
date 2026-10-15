@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { withPublicCache } from '@/lib/http-cache'
 
 export const revalidate = 3600 // Cache for 1 hour
+
+function publicJson<T>(body: T, init?: { status?: number }) {
+  return withPublicCache(NextResponse.json(body, init))
+}
 
 // Helper function to slugify tag names (supports Japanese and other languages)
 function slugify(text: string): string {
@@ -65,13 +70,13 @@ export async function GET(request: NextRequest) {
       tags.sort((a, b) => b.count - a.count)
     }
 
-    return NextResponse.json({
+    return publicJson({
       tags,
       total: tags.length,
     })
   } catch (error) {
     console.error('Failed to fetch tags:', error)
-    return NextResponse.json(
+    return publicJson(
       { error: 'タグ取得に失敗しました' },
       { status: 500 }
     )

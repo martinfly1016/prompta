@@ -27,11 +27,41 @@ import {
 } from '@/lib/mock-data'
 import type { MockPrompt } from '@/lib/mock-data'
 
+import { unstable_cache } from 'next/cache'
+import {
+  CACHE_TAG_CATEGORIES,
+  CACHE_TAG_PROMPTS,
+  CACHE_TAG_TAGS,
+  PROMPTS_PER_PAGE,
+  REVALIDATE_DETAIL_SECONDS,
+  REVALIDATE_LIST_SECONDS,
+} from '@/lib/cache-policy'
 import * as dbTools from './tools'
 import * as dbCategories from './categories'
 import * as dbPrompts from './prompts'
 import * as dbTags from './tags'
 import * as dbGuides from './guides'
+
+interface CacheOpts {
+  key: string[]
+  tags: readonly string[]
+  revalidate: number
+}
+
+const LIST_CACHE = {
+  tags: [CACHE_TAG_PROMPTS],
+  revalidate: REVALIDATE_LIST_SECONDS,
+} as const
+
+const CATEGORY_CACHE = {
+  tags: [CACHE_TAG_CATEGORIES, CACHE_TAG_PROMPTS],
+  revalidate: REVALIDATE_LIST_SECONDS,
+} as const
+
+const TAG_CACHE = {
+  tags: [CACHE_TAG_TAGS, CACHE_TAG_PROMPTS],
+  revalidate: REVALIDATE_LIST_SECONDS,
+} as const
 
 // ---------- helpers ----------
 
@@ -185,13 +215,22 @@ function normalizeDbPrompt(p: any): NormalizedPrompt {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function tryDb<T>(dbFn: () => Promise<T>, fallback: () => T): Promise<T> {
+async function tryDb<T>(dbFn: () => Promise<T>, fallback: () => T, cacheOpts?: CacheOpts): Promise<T> {
   try {
-    return await dbFn()
+    if (!cacheOpts) return await dbFn()
+    return await unstable_cache(dbFn, cacheOpts.key, {
+      tags: [...cacheOpts.tags],
+      revalidate: cacheOpts.revalidate,
+    })()
   } catch (err) {
     console.error('[tryDb] DB call failed, using fallback:', err)
     return fallback()
   }
+}
+
+function extraPageNumbers(total: number, perPage: number): string[] {
+  const totalPages = Math.max(0, Math.ceil(total / perPage))
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => String(index + 2))
 }
 
 // ---------- public API ----------
@@ -211,6 +250,7 @@ export async function getTools(): Promise<NormalizedTool[]> {
       }))
     },
     () => MOCK_TOOLS.map(t => ({ ...t, promptCount: mockToolCounts()[t.slug] ?? 0 })),
+    { key: ['tools'], ...LIST_CACHE },
   )
 }
 
@@ -234,6 +274,7 @@ export async function getToolBySlug(slug: string): Promise<NormalizedTool | null
       if (!t) return null
       return { ...t, promptCount: mockToolCounts()[slug] ?? 0 }
     },
+    { key: ['tool', slug], ...LIST_CACHE },
   )
 }
 
@@ -241,6 +282,7 @@ export async function getToolSlugs(): Promise<string[]> {
   return tryDb(
     () => dbTools.getToolSlugs(),
     () => MOCK_TOOLS.map(t => t.slug),
+    { key: ['tool-slugs'], ...LIST_CACHE },
   )
 }
 
@@ -258,6 +300,7 @@ export async function getCategories(): Promise<NormalizedCategory[]> {
       }))
     },
     () => MOCK_CATEGORIES.map(c => ({ ...c, promptCount: mockCategoryCounts()[c.slug] ?? 0 })),
+    { key: ['categories'], ...CATEGORY_CACHE },
   )
 }
 
@@ -280,6 +323,7 @@ export async function getCategoryBySlug(slug: string): Promise<NormalizedCategor
       if (!c) return null
       return { ...c, promptCount: mockCategoryCounts()[slug] ?? 0 }
     },
+    { key: ['category', slug], ...CATEGORY_CACHE },
   )
 }
 
@@ -287,6 +331,7 @@ export async function getCategorySlugs(): Promise<string[]> {
   return tryDb(
     () => dbCategories.getCategorySlugs(),
     () => MOCK_CATEGORIES.map(c => c.slug),
+    { key: ['category-slugs'], ...CATEGORY_CACHE },
   )
 }
 
@@ -294,6 +339,7 @@ export async function getFeaturedPrompts(limit = 12): Promise<NormalizedPrompt[]
   return tryDb(
     async () => (await dbPrompts.getFeaturedPrompts(limit)).map(normalizeDbPrompt),
     () => mockGetFeatured().slice(0, limit).map(normalizeMockPrompt),
+    { key: ['featured-prompts', String(limit)], ...LIST_CACHE },
   )
 }
 
@@ -301,6 +347,7 @@ export async function getLatestPrompts(limit = 8): Promise<NormalizedPrompt[]> {
   return tryDb(
     async () => (await dbPrompts.getLatestPrompts(limit)).map(normalizeDbPrompt),
     () => mockGetLatest(limit).map(normalizeMockPrompt),
+    { key: ['latest-prompts', String(limit)], ...LIST_CACHE },
   )
 }
 
@@ -308,6 +355,7 @@ export async function getPromptsByTool(toolSlug: string): Promise<NormalizedProm
   return tryDb(
     async () => (await dbPrompts.getPromptsByTool(toolSlug)).map(normalizeDbPrompt),
     () => mockGetByTool(toolSlug).map(normalizeMockPrompt),
+    { key: ['prompts-by-tool', toolSlug], ...LIST_CACHE },
   )
 }
 
@@ -315,6 +363,7 @@ export async function getPromptsByCategory(catSlug: string): Promise<NormalizedP
   return tryDb(
     async () => (await dbPrompts.getPromptsByCategory(catSlug)).map(normalizeDbPrompt),
     () => mockGetByCategory(catSlug).map(normalizeMockPrompt),
+    { key: ['prompts-by-category', catSlug], ...LIST_CACHE },
   )
 }
 
@@ -328,6 +377,11 @@ export async function getPromptBySlug(slug: string): Promise<NormalizedPrompt | 
       const p = mockGetPromptBySlug(slug)
       return p ? normalizeMockPrompt(p) : null
     },
+    {
+      key: ['prompt-by-slug', slug],
+      tags: [CACHE_TAG_PROMPTS, `prompt:${slug}`],
+      revalidate: REVALIDATE_DETAIL_SECONDS,
+    },
   )
 }
 
@@ -338,6 +392,7 @@ export async function getRelatedPrompts(prompt: NormalizedPrompt, limit = 4): Pr
       const mock = mockGetPromptBySlug(prompt.slug)
       return mock ? mockGetRelated(mock, limit).map(normalizeMockPrompt) : []
     },
+    { key: ['related-prompts', prompt.id, String(limit)], ...LIST_CACHE },
   )
 }
 
@@ -345,6 +400,7 @@ export async function getPromptsByTag(tag: string): Promise<NormalizedPrompt[]> 
   return tryDb(
     async () => (await dbPrompts.getPromptsByTag(tag)).map(normalizeDbPrompt),
     () => mockGetByTag(tag).map(normalizeMockPrompt),
+    { key: ['prompts-by-tag', tag], ...TAG_CACHE },
   )
 }
 
@@ -352,6 +408,7 @@ export async function getAllPrompts(): Promise<NormalizedPrompt[]> {
   return tryDb(
     async () => (await dbPrompts.getAllPrompts()).map(normalizeDbPrompt),
     () => MOCK_PROMPTS.map(normalizeMockPrompt),
+    { key: ['all-prompts'], ...LIST_CACHE },
   )
 }
 
@@ -374,6 +431,7 @@ export async function getPromptsByCategoryPaginated(catSlug: string, page = 1, p
       const start = (page - 1) * perPage
       return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
     },
+    { key: ['prompts-category-page', catSlug, String(page), String(perPage)], ...LIST_CACHE },
   )
 }
 
@@ -388,6 +446,7 @@ export async function getPromptsByToolPaginated(toolSlug: string, page = 1, perP
       const start = (page - 1) * perPage
       return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
     },
+    { key: ['prompts-tool-page', toolSlug, String(page), String(perPage)], ...LIST_CACHE },
   )
 }
 
@@ -402,6 +461,7 @@ export async function getAllPromptsPaginated(page = 1, perPage = 12): Promise<Pa
       const start = (page - 1) * perPage
       return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
     },
+    { key: ['prompts-all-page', String(page), String(perPage)], ...LIST_CACHE },
   )
 }
 
@@ -416,6 +476,7 @@ export async function getPromptsByTagPaginated(tag: string, page = 1, perPage = 
       const start = (page - 1) * perPage
       return { prompts: all.slice(start, start + perPage), total: all.length, totalPages: Math.ceil(all.length / perPage) }
     },
+    { key: ['prompts-tag-page', tag, String(page), String(perPage)], ...TAG_CACHE },
   )
 }
 
@@ -423,6 +484,7 @@ export async function getPromptSlugs(): Promise<string[]> {
   return tryDb(
     () => dbPrompts.getPromptSlugs(),
     () => MOCK_PROMPTS.map(p => p.slug),
+    { key: ['prompt-slugs'], ...LIST_CACHE },
   )
 }
 
@@ -440,6 +502,7 @@ export async function getGuides(): Promise<NormalizedGuide[]> {
       })))
     },
     () => MOCK_GUIDES.map(normalizeMockGuide),
+    { key: ['guides'], ...LIST_CACHE },
   )
 }
 
@@ -461,6 +524,11 @@ export async function getGuideBySlug(slug: string): Promise<NormalizedGuide | nu
       if (!g) return null
       return { slug: g.slug, title: g.title, description: g.description }
     },
+    {
+      key: ['guide', slug],
+      tags: [CACHE_TAG_PROMPTS],
+      revalidate: REVALIDATE_DETAIL_SECONDS,
+    },
   )
 }
 
@@ -468,6 +536,7 @@ export async function getGuideSlugs(): Promise<string[]> {
   return tryDb(
     async () => mergeGuideSlugs(await dbGuides.getGuideSlugs()),
     () => MOCK_GUIDES.map(g => g.slug),
+    { key: ['guide-slugs'], ...LIST_CACHE },
   )
 }
 
@@ -479,6 +548,7 @@ export async function getTagSlugs(): Promise<string[]> {
       MOCK_PROMPTS.forEach(p => p.tags.forEach(t => allTags.add(t)))
       return Array.from(allTags)
     },
+    { key: ['tag-slugs'], ...TAG_CACHE },
   )
 }
 
@@ -490,6 +560,7 @@ export async function getApprovedTagSlugs(): Promise<string[]> {
       MOCK_PROMPTS.forEach(p => p.tags.forEach(t => allTags.add(t)))
       return Array.from(allTags)
     },
+    { key: ['approved-tag-slugs'], ...TAG_CACHE },
   )
 }
 
@@ -497,6 +568,7 @@ export async function getTagBySlug(slug: string) {
   return tryDb(
     () => dbTags.getTagBySlug(slug),
     () => null,
+    { key: ['tag', slug], ...TAG_CACHE },
   )
 }
 
@@ -529,6 +601,7 @@ export async function getPrimaryCategoryForTag(
       }
     },
     () => null,
+    { key: ['tag-primary-category', tagSlug], ...TAG_CACHE },
   )
 }
 
@@ -547,53 +620,125 @@ export async function getPopularTagsByCategory(
       }))
     },
     () => [],
+    { key: ['popular-tags', categorySlug, String(limit)], ...TAG_CACHE },
   )
 }
 
 // ---------- Sitemap helpers (with timestamps) ----------
 
 export async function getPromptSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
-  return tryDb(
+  const rows = await tryDb(
     () => dbPrompts.getPromptSlugsWithDates(),
     () => MOCK_PROMPTS.map(p => ({ slug: p.slug, updatedAt: new Date(p.updatedAt) })),
+    { key: ['prompt-slugs-dates'], ...LIST_CACHE },
   )
+  return rows.map(row => ({ slug: row.slug, updatedAt: new Date(row.updatedAt) }))
 }
 
 export async function getLatestPromptDate(): Promise<Date> {
-  return tryDb(
+  const value = await tryDb(
     () => dbPrompts.getLatestPromptDate(),
     () => new Date(),
+    { key: ['latest-prompt-date'], ...LIST_CACHE },
   )
+  return new Date(value)
 }
 
 export async function getGuideSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
-  return tryDb(
+  const rows = await tryDb(
     async () => mergeGuideDates(await dbGuides.getGuideSlugsWithDates()),
     () => MOCK_GUIDES.map(g => ({ slug: g.slug, updatedAt: new Date() })),
+    { key: ['guide-slugs-dates'], ...LIST_CACHE },
   )
+  return rows.map(row => ({ slug: row.slug, updatedAt: new Date(row.updatedAt) }))
 }
 
 export async function getApprovedTagSlugsWithDates(): Promise<{ slug: string; updatedAt: Date }[]> {
-  return tryDb(
+  const rows = await tryDb(
     () => dbTags.getApprovedTagSlugsWithDates(),
     () => {
       const allTags = new Set<string>()
       MOCK_PROMPTS.forEach(p => p.tags.forEach(t => allTags.add(t)))
       return Array.from(allTags).map(t => ({ slug: t, updatedAt: new Date() }))
     },
+    { key: ['approved-tag-slugs-dates'], ...TAG_CACHE },
   )
+  return rows.map(row => ({ slug: row.slug, updatedAt: new Date(row.updatedAt) }))
 }
 
 export async function getToolSlugsWithLatestDate(): Promise<{ slug: string; lastModified: Date | null }[]> {
-  return tryDb(
+  const rows = await tryDb(
     () => dbTools.getToolSlugsWithLatestDate(),
     () => MOCK_TOOLS.map(t => ({ slug: t.slug, lastModified: new Date() })),
+    { key: ['tool-slugs-dates'], ...LIST_CACHE },
   )
+  return rows.map(row => ({
+    slug: row.slug,
+    lastModified: row.lastModified ? new Date(row.lastModified) : null,
+  }))
 }
 
 export async function getCategorySlugsWithLatestDate(): Promise<{ slug: string; lastModified: Date | null }[]> {
-  return tryDb(
+  const rows = await tryDb(
     () => dbCategories.getCategorySlugsWithLatestDate(),
     () => MOCK_CATEGORIES.map(c => ({ slug: c.slug, lastModified: new Date() })),
+    { key: ['category-slugs-dates'], ...CATEGORY_CACHE },
+  )
+  return rows.map(row => ({
+    slug: row.slug,
+    lastModified: row.lastModified ? new Date(row.lastModified) : null,
+  }))
+}
+
+function mockTagCounts(): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const prompt of MOCK_PROMPTS) {
+    for (const tag of prompt.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1)
+  }
+  return counts
+}
+
+/** Page numbers after the first, for ISR of path-based pagination. One DB round-trip. */
+export async function getAllPromptsExtraPages(perPage = PROMPTS_PER_PAGE): Promise<{ page: string }[]> {
+  const pages = await tryDb(
+    async () => extraPageNumbers(await dbPrompts.countPublishedPrompts(), perPage),
+    () => extraPageNumbers(MOCK_PROMPTS.length, perPage),
+    { key: ['extra-pages-all', String(perPage)], ...LIST_CACHE },
+  )
+  return pages.map(page => ({ page }))
+}
+
+export async function getCategoryExtraPages(perPage = PROMPTS_PER_PAGE): Promise<{ category: string; page: string }[]> {
+  const rows = await tryDb(
+    () => dbCategories.countPublishedByCategory(),
+    () => MOCK_CATEGORIES.map(category => ({
+      slug: category.slug,
+      count: MOCK_PROMPTS.filter(prompt => prompt.categorySlug === category.slug).length,
+    })),
+    { key: ['extra-pages-category', String(perPage)], ...CATEGORY_CACHE },
+  )
+  return rows.flatMap(row => extraPageNumbers(row.count, perPage).map(page => ({ category: row.slug, page })))
+}
+
+export async function getToolExtraPages(perPage = PROMPTS_PER_PAGE): Promise<{ tool: string; page: string }[]> {
+  const rows = await tryDb(
+    () => dbTools.countPublishedByTool(),
+    () => MOCK_TOOLS.map(tool => ({
+      slug: tool.slug,
+      count: MOCK_PROMPTS.filter(prompt => prompt.toolSlug === tool.slug).length,
+    })),
+    { key: ['extra-pages-tool', String(perPage)], ...LIST_CACHE },
+  )
+  return rows.flatMap(row => extraPageNumbers(row.count, perPage).map(page => ({ tool: row.slug, page })))
+}
+
+export async function getTagExtraPages(perPage = PROMPTS_PER_PAGE): Promise<{ slug: string; page: string }[]> {
+  const rows = await tryDb(
+    () => dbTags.countPublishedByApprovedTag(),
+    () => Array.from(mockTagCounts().entries()).map(([slug, count]) => ({ slug, count })),
+    { key: ['extra-pages-tag', String(perPage)], ...TAG_CACHE },
+  )
+  return rows.flatMap(row =>
+    extraPageNumbers(row.count, perPage).map(page => ({ slug: encodeURIComponent(row.slug), page })),
   )
 }

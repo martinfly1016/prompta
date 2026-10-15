@@ -1,11 +1,17 @@
 import { notFound } from 'next/navigation'
-import { getPromptBySlug } from '@/lib/data'
+import { getPromptBySlug, getPromptSlugs } from '@/lib/data'
 import { SITE_CONFIG } from '@/lib/constants'
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 interface Props {
   params: { slug: string }
+}
+
+export async function generateStaticParams() {
+  const slugs = await getPromptSlugs()
+  return slugs.map(slug => ({ slug }))
 }
 
 export default async function EmbedPromptPage({ params }: Props) {

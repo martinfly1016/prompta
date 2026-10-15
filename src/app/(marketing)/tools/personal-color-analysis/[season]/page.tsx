@@ -5,7 +5,9 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { SITE_CONFIG } from '@/lib/constants'
 import { SEASONS, SEASON_SLUGS, type SeasonSlug } from '@/lib/seo/personal-color-seasons'
 
-export const revalidate = 86400 // 1 day — content is static
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
+
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 export function generateStaticParams() {
   return SEASON_SLUGS.map((season) => ({ season }))

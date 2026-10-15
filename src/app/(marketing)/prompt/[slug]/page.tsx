@@ -13,8 +13,9 @@ import { EmbedButton } from '@/components/ui/EmbedButton'
 import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
 import { PromptInteractive } from '@/components/prompt/PromptInteractive'
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 interface Props { params: { slug: string } }
 

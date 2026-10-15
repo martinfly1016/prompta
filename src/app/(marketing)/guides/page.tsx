@@ -3,8 +3,9 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { getGuides } from '@/lib/data'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export const metadata: Metadata = {
   title: 'AIプロンプトガイド — 使い方・書き方完全ガイド',

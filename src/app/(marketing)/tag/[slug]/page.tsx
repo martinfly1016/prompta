@@ -6,8 +6,10 @@ import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/schema'
+import { notFound } from 'next/navigation'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 // Tag-level guide override — checked before the category fallback. Use when a
 // specific tag has a more precisely-matched guide than its parent category's
@@ -65,19 +67,13 @@ const TAG_TO_TOOL: Record<string, { href: string; label: string; title: string; 
   },
 }
 
-interface Props {
-  params: { slug: string }
-  searchParams: { page?: string }
-}
-
 export async function generateStaticParams() {
   const slugs = await getApprovedTagSlugs()
   return slugs.map(slug => ({ slug: encodeURIComponent(slug) }))
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const tag = decodeURIComponent(params.slug)
-  const page = Number(searchParams.page) || 1
+export async function tagMetadata(rawSlug: string, page: number): Promise<Metadata> {
+  const tag = decodeURIComponent(rawSlug)
   const suffix = page > 1 ? ` — ページ${page}` : ''
 
   const tagData = await getTagBySlug(tag)
@@ -96,18 +92,22 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    alternates: { canonical: `${SITE_CONFIG.url}/tag/${params.slug}${page > 1 ? `?page=${page}` : ''}` },
+    alternates: { canonical: `${SITE_CONFIG.url}/tag/${encodeURIComponent(tag)}${page > 1 ? `/page/${page}` : ''}` },
     ...(!isApproved && { robots: { index: false, follow: true } }),
   }
 }
 
-export default async function TagPage({ params, searchParams }: Props) {
-  const tag = decodeURIComponent(params.slug)
-  const page = Math.max(1, Number(searchParams.page) || 1)
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  return tagMetadata(params.slug, 1)
+}
+
+export async function TagListing({ slug: rawSlug, page }: { slug: string; page: number }) {
+  const tag = decodeURIComponent(rawSlug)
   const [tagData, { prompts, total, totalPages }] = await Promise.all([
     getTagBySlug(tag),
     getPromptsByTagPaginated(tag, page),
   ])
+  if (page > Math.max(totalPages, 1)) notFound()
 
   const primaryCategory = tagData ? await getPrimaryCategoryForTag(tag) : null
   const relatedTags = primaryCategory
@@ -118,7 +118,7 @@ export default async function TagPage({ params, searchParams }: Props) {
   const guideCtaCopy = TAG_GUIDE_CTA_COPY[tag]
   const relatedTool = TAG_TO_TOOL[tag]
 
-  const tagUrl = `${SITE_CONFIG.url}/tag/${params.slug}`
+  const tagUrl = `${SITE_CONFIG.url}/tag/${encodeURIComponent(tag)}`
   const collectionSchema = generateCollectionPageSchema(
     `「${tag}」プロンプト一覧`,
     tagData?.seoDescription ?? `「${tag}」関連のAIプロンプト集`,
@@ -129,7 +129,7 @@ export default async function TagPage({ params, searchParams }: Props) {
     [
       { name: 'ホーム', url: '/' },
       { name: '全プロンプト', url: '/prompts' },
-      { name: `# ${tag}`, url: `/tag/${params.slug}` },
+      { name: `# ${tag}`, url: `/tag/${encodeURIComponent(tag)}` },
     ],
     SITE_CONFIG.url,
   )
@@ -139,7 +139,7 @@ export default async function TagPage({ params, searchParams }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Breadcrumbs items={[{ name: '全プロンプト', href: '/prompts' }, { name: `# ${tag}`, href: `/tag/${params.slug}` }]} />
+        <Breadcrumbs items={[{ name: '全プロンプト', href: '/prompts' }, { name: `# ${tag}`, href: `/tag/${encodeURIComponent(tag)}` }]} />
       </div>
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -196,7 +196,7 @@ export default async function TagPage({ params, searchParams }: Props) {
             showInlinePrompt
             inlinePromptSurface="tag-card"
           />
-          <Pagination currentPage={page} totalPages={totalPages} basePath={`/tag/${params.slug}`} />
+          <Pagination currentPage={page} totalPages={totalPages} basePath={`/tag/${encodeURIComponent(tag)}`} />
         </div>
       </section>
 
@@ -247,4 +247,8 @@ export default async function TagPage({ params, searchParams }: Props) {
       )}
     </>
   )
+}
+
+export default function TagPage({ params }: { params: { slug: string } }) {
+  return <TagListing slug={params.slug} page={1} />
 }

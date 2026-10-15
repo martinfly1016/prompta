@@ -1,7 +1,8 @@
 import { getLatestPrompts, getGuides } from '@/lib/data'
 import { SITE_CONFIG } from '@/lib/constants'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 3600 // refresh hourly like sitemap
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export async function GET() {
   const [prompts, guides] = await Promise.all([

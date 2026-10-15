@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { withPublicCache } from '@/lib/http-cache'
 
 export const revalidate = 3600 // Cache for 1 hour
+
+function publicJson<T>(body: T, init?: { status?: number }) {
+  return withPublicCache(NextResponse.json(body, init))
+}
 
 /**
  * GET /api/prompts/related
@@ -18,7 +23,7 @@ export async function GET(request: NextRequest) {
     const tags = tagsParam ? tagsParam.split(',').filter(Boolean) : []
 
     if (!excludeId || !categorySlug) {
-      return NextResponse.json(
+      return publicJson(
         { error: 'Missing required parameters: excludeId and category' },
         { status: 400 }
       )
@@ -99,12 +104,12 @@ export async function GET(request: NextRequest) {
       sortedPrompts.push(...additionalPrompts)
     }
 
-    return NextResponse.json({
+    return publicJson({
       prompts: sortedPrompts,
     })
   } catch (error) {
     console.error('Failed to fetch related prompts:', error)
-    return NextResponse.json(
+    return publicJson(
       { error: '関連プロンプトの取得に失敗しました' },
       { status: 500 }
     )

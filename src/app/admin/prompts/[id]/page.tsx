@@ -61,7 +61,7 @@ export default function EditPromptPage() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('/api/categories')
+      const res = await fetch('/api/admin/categories', { cache: 'no-store' })
       const data = await res.json()
       setCategories(data)
       if (data.length > 0 && !categoryId) {
@@ -74,7 +74,7 @@ export default function EditPromptPage() {
 
   const fetchPrompt = async () => {
     try {
-      const res = await fetch(`/api/prompts/${id}`)
+      const res = await fetch(`/api/prompts/${id}`, { cache: 'no-store' })
       const data = await res.json()
       setTitle(data.title)
       setDescription(data.description)

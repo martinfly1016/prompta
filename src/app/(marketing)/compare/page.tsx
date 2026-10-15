@@ -3,8 +3,9 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { TOOL_COMPARISONS, getComparisonsByType, getFeatureKeys } from '@/lib/comparison-data'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
+import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 3600
+export const revalidate = REVALIDATE_DETAIL_SECONDS
 
 export const metadata: Metadata = {
   title: 'AIツール比較 — Stable Diffusion vs Midjourney vs DALL-E / ChatGPT vs Claude vs Gemini',

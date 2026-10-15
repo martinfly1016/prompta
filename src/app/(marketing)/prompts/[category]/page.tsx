@@ -7,25 +7,22 @@ import { PromptGrid } from '@/components/prompt/PromptGrid'
 import Pagination from '@/components/Pagination'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema, generateFaqSchema } from '@/lib/schema'
+import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
-export const revalidate = 60
+const IMAGE_CATEGORIES = new Set(['hairstyle', 'clothing', 'cosplay', 'anime', 'color', 'costume', 'body-type', 'camera'])
 
-interface Props {
-  params: { category: string }
-  searchParams: { page?: string }
-}
+export const revalidate = REVALIDATE_LIST_SECONDS
 
 export async function generateStaticParams() {
   const slugs = await getCategorySlugs()
   return slugs.map(category => ({ category }))
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const cat = await getCategoryBySlug(params.category)
+export async function categoryMetadata(categorySlug: string, page: number): Promise<Metadata> {
+  const cat = await getCategoryBySlug(categorySlug)
   if (!cat) return {}
-  const page = Number(searchParams.page) || 1
   const suffix = page > 1 ? ` — ページ${page}` : ''
-  const { total } = await getPromptsByCategoryPaginated(params.category, page)
+  const { total } = await getPromptsByCategoryPaginated(categorySlug, page)
   const countLabel = page === 1 && total > 0 ? `${total}選` : ''
   const isImage = IMAGE_CATEGORIES.has(cat.slug)
   const toolList = isImage ? 'Stable Diffusion・Midjourney・DALL-E' : 'ChatGPT・Claude・Gemini'
@@ -56,19 +53,20 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   }
 }
 
-const IMAGE_CATEGORIES = new Set(['hairstyle', 'clothing', 'cosplay', 'anime', 'color', 'costume', 'body-type', 'camera'])
+export async function generateMetadata({ params }: { params: { category: string } }): Promise<Metadata> {
+  return categoryMetadata(params.category, 1)
+}
 
-export default async function CategoryPage({ params, searchParams }: Props) {
-  const page = Math.max(1, Number(searchParams.page) || 1)
-
+export async function CategoryListing({ category: categorySlug, page }: { category: string; page: number }) {
   const [category, { prompts, total, totalPages }, tools, allCategories, popularTags] = await Promise.all([
-    getCategoryBySlug(params.category),
-    getPromptsByCategoryPaginated(params.category, page),
+    getCategoryBySlug(categorySlug),
+    getPromptsByCategoryPaginated(categorySlug, page),
     getTools(),
     getCategories(),
-    getPopularTagsByCategory(params.category, 6),
+    getPopularTagsByCategory(categorySlug, 6),
   ])
   if (!category) notFound()
+  if (page > Math.max(totalPages, 1)) notFound()
 
   const categoryTools = tools.filter(tool => prompts.some(p => p.toolSlug === tool.slug))
   const seoOverride = CATEGORY_SEO_OVERRIDES[category.slug]
@@ -245,4 +243,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       </section>
     </>
   )
+}
+
+export default function CategoryPage({ params }: { params: { category: string } }) {
+  return <CategoryListing category={params.category} page={1} />
 }

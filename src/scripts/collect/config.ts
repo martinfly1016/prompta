@@ -30,7 +30,11 @@ export const VALIDATION_CONFIG = {
 
 export const REVALIDATION_PATHS = [
   '/',
-  '/all-prompts',
+  '/prompts',
+  '/tools',
+  '/guides',
+  '/sitemap.xml',
+  '/feed.xml',
 ] as const
 
 // ==================== Helper Functions ====================
