@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
-import { FROM_EMAIL } from '@/lib/agentmail'
+import { CONTACT_EMAIL } from '@/lib/email'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -10,8 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_CONFIG.url}/legal/terms` },
 }
 
-const EFFECTIVE_DATE = '2026-05-05'
-const CONTACT_EMAIL = FROM_EMAIL
+const EFFECTIVE_DATE = '2026-10-15'
 
 export default function TermsPage() {
   return (
@@ -119,7 +118,7 @@ export default function TermsPage() {
             </p>
             <ul className="list-disc pl-6 space-y-2 mt-3">
               <li>システムメンテナンス・障害対応</li>
-              <li>第三者サービス（Stripe、Google、AgentMail 等）の障害または仕様変更</li>
+              <li>第三者サービス（Stripe、Google、Resend 等）の障害または仕様変更</li>
               <li>その他、運営上必要と判断した場合</li>
             </ul>
             <p className="mt-3">

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
-import { FROM_EMAIL } from '@/lib/agentmail'
+import { CONTACT_EMAIL } from '@/lib/email'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -10,8 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_CONFIG.url}/legal/privacy` },
 }
 
-const EFFECTIVE_DATE = '2026-05-05'
-const CONTACT_EMAIL = FROM_EMAIL
+const EFFECTIVE_DATE = '2026-10-15'
 
 export default function PrivacyPage() {
   return (
@@ -96,8 +95,8 @@ export default function PrivacyPage() {
                     <td className="px-3 py-2">メールアドレス、購入額、取引 ID</td>
                   </tr>
                   <tr>
-                    <td className="px-3 py-2">AgentMail</td>
-                    <td className="px-3 py-2">取引メール送信（サインイン・復元リンク）</td>
+                    <td className="px-3 py-2">Resend</td>
+                    <td className="px-3 py-2">取引メール送信（サインインリンク・購入確認）</td>
                     <td className="px-3 py-2">送信先メールアドレス、メール本文</td>
                   </tr>
                   <tr>

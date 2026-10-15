@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
+import { emailEnabled } from '@/lib/email'
 import { SignInForm } from './SignInForm'
 
 export const metadata: Metadata = {
@@ -17,7 +18,6 @@ export default function SignInPage({ searchParams }: PageProps) {
   const callbackUrl = searchParams.callbackUrl || '/'
   const error = searchParams.error
   const googleEnabled = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET)
-  const emailEnabled = Boolean(process.env.AGENTMAIL_API_KEY)
 
   return (
     <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-12">

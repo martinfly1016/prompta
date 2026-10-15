@@ -6,13 +6,13 @@ import GoogleProvider from 'next-auth/providers/google'
 import EmailProvider from 'next-auth/providers/email'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { sendEmail, FROM_EMAIL } from '@/lib/agentmail'
+import { sendEmail, EMAIL_FROM, emailEnabled } from '@/lib/email'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const googleEnabled = Boolean(
   process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET,
 )
-const emailMagicLinkEnabled = Boolean(process.env.AGENTMAIL_API_KEY)
+const emailMagicLinkEnabled = emailEnabled
 
 const providers: any[] = [
   // Existing admin auth — keeps working unchanged
@@ -61,10 +61,10 @@ if (emailMagicLinkEnabled) {
       // server config is unused since we override sendVerificationRequest,
       // but the provider requires it to be defined
       server: { host: 'unused', port: 587, auth: { user: 'unused', pass: 'unused' } },
-      from: FROM_EMAIL,
+      from: EMAIL_FROM,
       maxAge: 60 * 60, // 1h link validity
       async sendVerificationRequest({ identifier, url }) {
-        const subject = '【prompta.jp】ログインリンク（1時間有効）'
+        const subject = 'Prompta ログインリンク（1時間有効）'
         const text = `prompta.jp にサインインするには、以下のリンクをクリックしてください：
 
 ${url}

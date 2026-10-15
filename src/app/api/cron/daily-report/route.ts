@@ -8,7 +8,7 @@
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { buildDailyReport } from '@/lib/daily-report'
-import { sendEmail } from '@/lib/agentmail'
+import { sendEmail } from '@/lib/email'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
