@@ -1,7 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { signIn, useSession } from 'next-auth/react'
+import { useEffect, useRef, useState } from 'react'
+import { useSession } from 'next-auth/react'
+import { trackPurchaseClick, type PaywallTool } from '@/lib/track'
+import { signInThenCheckout, startCreditCheckout } from '@/lib/start-checkout'
+import { getPointPack, POINTS_PER_RUN, recommendedPack, type PointPack } from '@/lib/credit-costs'
+import { PointPackList } from '@/components/credits/PointPackList'
 
 interface Props {
   open: boolean
@@ -13,6 +17,12 @@ interface Props {
   /** Optional current expiration (ISO string). If set and a balance is
    *  shown, the modal renders the next-extension preview. */
   currentExpiresAt?: string | null
+  /** Funnel label for GA4. */
+  tool?: PaywallTool
+  /** After sign-in, continue straight into Checkout. */
+  autoStart?: boolean
+  /** Pack chosen before a sign-in redirect (`?pack=`). */
+  initialPackId?: string | null
 }
 
 function formatJpDate(d: Date): string {
@@ -20,20 +30,16 @@ function formatJpDate(d: Date): string {
 }
 
 /**
- * Shared "review before checkout" modal. Surfaces pack contents (150 credits
- * / ¥300 / what 150 credits buy) so users see what they're paying for BEFORE
- * being redirected to the external Stripe page.
- *
- * Used by:
- *   - PromptExecutor (credit-exhausted error path)
- *   - /account TopUpCreditsButton
- *   - future surfaces that need to top up credits
+ * Shared review-before-checkout modal. The selected pack's name and price
+ * are the same strings sent to Stripe as the line item.
  */
-export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, currentExpiresAt }: Props) {
+export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, currentExpiresAt, tool = 'prompt', autoStart = false, initialPackId = null }: Props) {
   const { status: authStatus } = useSession()
   const isSignedIn = authStatus === 'authenticated'
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const selectedPack: PointPack = getPointPack(selectedId) ?? getPointPack(initialPackId) ?? recommendedPack()
 
   // Lock body scroll while modal is open + close on Escape
   useEffect(() => {
@@ -50,33 +56,44 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
     }
   }, [open, onClose])
 
-  if (!open) return null
-
   async function handlePurchase() {
     setError(null)
+    const pack = selectedPack
     if (!isSignedIn) {
-      await signIn(undefined, { callbackUrl: typeof window !== 'undefined' ? window.location.href : undefined })
+      trackPurchaseClick(tool, false)
+      signInThenCheckout(returnTo || window.location.pathname, pack.id)
       return
     }
     setPending(true)
     try {
-      const r = await fetch(
-        `/api/checkout/personal-color?returnTo=${encodeURIComponent(returnTo)}`,
-        { method: 'POST' },
-      )
-      if (!r.ok) {
-        const body = await r.json().catch(() => ({}))
-        setError(`購入処理エラー: ${body?.error ?? r.status}`)
+      const result = await startCreditCheckout({
+        endpoint: `/api/checkout/personal-color?returnTo=${encodeURIComponent(returnTo)}`,
+        tool,
+        pack,
+      })
+      if (!result.ok) {
+        if (result.status === 401) {
+          signInThenCheckout(returnTo || window.location.pathname, pack.id)
+          return
+        }
+        setError(`購入処理エラー: ${result.error}`)
         setPending(false)
-        return
       }
-      const { url } = await r.json()
-      if (url) window.location.href = url
     } catch (e: any) {
       setError(`通信エラー: ${e?.message ?? 'unknown'}`)
       setPending(false)
     }
   }
+
+  const autoStarted = useRef(false)
+  useEffect(() => {
+    if (!open || !autoStart || !isSignedIn || autoStarted.current) return
+    autoStarted.current = true
+    void handlePurchase()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, autoStart, isSignedIn])
+
+  if (!open) return null
 
   return (
     <div
@@ -87,6 +104,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
       aria-labelledby="purchase-modal-title"
     >
       <div
+        data-testid="paywall-modal"
         className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
@@ -95,10 +113,10 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 id="purchase-modal-title" className="text-lg font-bold text-gray-900">
-                💎 150 ポイントパック
+                ポイントを追加
               </h2>
               <p className="mt-1 text-sm text-gray-600">
-                全ツール・全 180 プロンプト共通で使えるポイント
+                全ツール共通・1 回 {POINTS_PER_RUN} ポイント・有効期限 12 ヶ月
               </p>
             </div>
             <button
@@ -116,51 +134,22 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
 
         {/* Body */}
         <div className="p-6">
-          <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-4xl font-bold text-gray-900">¥300</span>
-            <span className="text-sm text-gray-500">税込・買い切り</span>
+          <div className="mb-4">
+            <PointPackList selectedId={selectedPack.id} onSelect={(pack) => setSelectedId(pack.id)} />
           </div>
 
           <div className="space-y-2 mb-5 text-sm text-gray-700">
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span><strong className="text-gray-900">150 ポイント</strong> 即時付与</span>
+              <span><strong className="text-gray-900">{selectedPack.name}</strong>（¥{selectedPack.priceJpy.toLocaleString()}・税込）</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>画像生成 <strong className="text-gray-900">30 回</strong>（5 ポイント/回）</span>
+              <span>診断・画像・文字とも <strong className="text-gray-900">1 回 1 ポイント</strong></span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>文字実行 <strong className="text-gray-900">150 回</strong>（1 ポイント/回）</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span className="inline-flex flex-wrap items-center gap-1">
-                <span>世界最先端の AI モデル</span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=64"
-                  alt=""
-                  width={14}
-                  height={14}
-                  className="inline-block rounded-sm"
-                />
-                <span>Gemini、</span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64"
-                  alt=""
-                  width={14}
-                  height={14}
-                  className="inline-block rounded-sm"
-                />
-                <span>ChatGPT などをサイト内で利用可能</span>
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-emerald-600 font-bold shrink-0">✓</span>
-              <span>ポイント有効期限は <strong className="text-gray-900">12 ヶ月</strong>。アカウント（メール）に紐づきデバイス間で同期</span>
+              <span>有効期限は購入から <strong className="text-gray-900">12 ヶ月</strong>。アカウントに紐づきデバイス間で同期</span>
             </div>
           </div>
 
@@ -168,7 +157,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
             <div className="mb-4 px-3 py-2 rounded-lg bg-sky-50 border border-sky-100 text-xs text-sky-800 space-y-1">
               <div>
                 現在の残高: <strong>{currentBalance}</strong> ポイント → 購入後:{' '}
-                <strong>{currentBalance + 150}</strong> ポイント
+                <strong>{currentBalance + selectedPack.points}</strong> ポイント
               </div>
               <div className="text-sky-700/80">
                 {currentExpiresAt && currentBalance > 0 ? (
@@ -220,6 +209,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
             </button>
             <button
               type="button"
+              data-testid="paywall-buy"
               onClick={handlePurchase}
               disabled={pending}
               className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-semibold hover:bg-sky-700 disabled:opacity-50 transition-colors shadow-sm"
@@ -230,7 +220,7 @@ export function CreditPurchaseModal({ open, onClose, returnTo, currentBalance, c
                   処理中…
                 </>
               ) : (
-                <>💳 Stripe で購入する</>
+                <>💳 {selectedPack.name}を購入</>
               )}
             </button>
           </div>

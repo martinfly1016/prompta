@@ -1,87 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-import {
-  stripe,
-  stripeEnabled,
-  STRIPE_PRICE_ID,
-  CREDITS_PER_PACK,
-} from '@/lib/stripe'
-import { SITE_CONFIG } from '@/lib/constants'
-import { authOptions } from '@/lib/auth'
+import { NextRequest } from 'next/server'
+import { createCreditPackCheckout } from '@/lib/create-credit-checkout'
 
-// Creates a Stripe Checkout session for the 150-credit pack purchase.
+// Creates a Stripe Checkout session for a validated point pack.
 // Returns the hosted Checkout URL — frontend redirects to it.
 //
 // When the user is signed in, we lock the customer email to their session
-// email. Without this, Stripe Link can auto-fill a different email from a
-// saved wallet (observed in production: a user paid while logged in as
-// gmail.com but Link used a previously-saved byte-ad.com email, so credits
-// landed on the wrong account).
+// email so Stripe Link cannot attach the payment to a different address.
 export async function POST(req: NextRequest) {
-  if (!stripeEnabled || !stripe || !STRIPE_PRICE_ID) {
-    return NextResponse.json(
-      { error: 'Stripe is not configured', configured: false },
-      { status: 503 },
-    )
-  }
-
-  const session = await getServerSession(authOptions).catch(() => null)
-  const sessionEmail = session?.user?.email
-
-  // Sign-in is now required to purchase: paid credits are tied to the
-  // NextAuth session email rather than a browser cookie. Returning 401
-  // lets the wizard redirect to /auth/signin with a callback back here.
-  if (!sessionEmail) {
-    return NextResponse.json(
-      { error: 'auth_required', signInUrl: '/auth/signin' },
-      { status: 401 },
-    )
-  }
-
-  // Locale routing — anonymous EN visitors should land back on /en/... and
-  // see Stripe's English Checkout. Default to Japanese for backward compat.
-  const locale = req.nextUrl.searchParams.get('locale') === 'en' ? 'en' : 'ja'
-  // returnTo lets callers (e.g. PromptExecutor on a prompt detail page)
-  // redirect users back to where they were instead of always landing on
-  // the personal-color tool. Allow-list of paths to prevent open redirect.
-  const rawReturn = req.nextUrl.searchParams.get('returnTo') ?? ''
-  const allowedReturn =
-    /^\/(prompt|prompts|account|tools|guides|tag|en)(\/.*)?$/.test(rawReturn)
-  const returnPath = allowedReturn
-    ? rawReturn
-    : locale === 'en'
-      ? '/en/tools/personal-color-analysis'
-      : '/tools/personal-color-analysis'
-
-  try {
-    const checkout = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      line_items: [{ price: STRIPE_PRICE_ID, quantity: 1 }],
-      payment_method_types: ['card'],
-      currency: 'jpy',
-      locale,
-      // When signed in: pin the email so Link/saved-wallet cannot override it.
-      // When anonymous: let Stripe collect (and create) the email at checkout.
-      customer_email: sessionEmail,
-      success_url: `${SITE_CONFIG.url}${returnPath}?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_CONFIG.url}${returnPath}?purchase=cancelled`,
-      // Stripe-built-in automatic receipt with PDF invoice link.
-      // For signed-in users, force Stripe to send to the locked email; for
-      // anonymous users we pass the same email at webhook time once Stripe
-      // collects it.
-      payment_intent_data: { receipt_email: sessionEmail },
-      metadata: {
-        product: 'personal-color-pack',
-        credits: String(CREDITS_PER_PACK),
-        sessionEmail,
-      },
-    })
-    return NextResponse.json({ url: checkout.url })
-  } catch (e: any) {
-    console.error('[checkout] error:', e?.message)
-    return NextResponse.json(
-      { error: e?.message ?? 'Failed to create session' },
-      { status: 500 },
-    )
-  }
+  return createCreditPackCheckout(req, {
+    defaultReturnJa: '/tools/personal-color-analysis',
+    defaultReturnEn: '/en/tools/personal-color-analysis',
+    product: 'personal-color-pack',
+  })
 }

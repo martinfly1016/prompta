@@ -1,0 +1,99 @@
+import { sendEmail } from '@/lib/agentmail'
+import { SITE_CONFIG } from '@/lib/constants'
+import { packDisplayName, POINTS_PER_RUN } from '@/lib/credit-costs'
+
+export async function sendPurchaseEmail(p: {
+  email: string
+  creditsGranted: number
+  balance: number
+  expiresAt: Date
+  amountJpy: number
+  sessionId: string
+}) {
+  const personalColorUrl = `${SITE_CONFIG.url}/tools/personal-color-analysis`
+  const hairColorUrl = `${SITE_CONFIG.url}/tools/hair-color-diagnosis`
+  const signinUrl = `${SITE_CONFIG.url}/auth/signin`
+  const expiresLabel = `${p.expiresAt.getFullYear()} 年 ${p.expiresAt.getMonth() + 1} 月 ${p.expiresAt.getDate()} 日`
+  const productName = packDisplayName(p.creditsGranted, p.amountJpy)
+  const subject = `【prompta.jp】ご購入ありがとうございます — ${p.creditsGranted} ポイント追加`
+  const text = `prompta.jp をご利用いただきありがとうございます。
+
+ご購入が完了しました：
+  - 商品: ${productName}
+  - 金額: ¥${p.amountJpy.toLocaleString()}
+  - 追加ポイント: ${p.creditsGranted}
+  - 現在の残高: ${p.balance}
+  - ポイント有効期限: ${expiresLabel}まで
+  - 注文 ID: ${p.sessionId}
+
+※ すべての実行は 1 回 ${POINTS_PER_RUN} ポイントです。
+
+ポイントは以下のツール + 全 180 プロンプトで共通でご利用いただけます：
+
+▼ パーソナルカラー診断 AI（4 シーズン + 16 色パレット）
+${personalColorUrl}
+
+▼ 似合う髪色診断 AI（5 候補 + Before/After シミュレーション）
+${hairColorUrl}
+
+▼ 別のデバイス・別のブラウザで使う場合
+このメールアドレス（${p.email}）で Google サインイン または「メールでサインインリンクを送る」を使うと、ポイントが自動的に表示されます：
+${signinUrl}
+
+※ このメールは受領証ではありません。Stripe からの正式な領収書（PDF 添付）は別途送信されます。
+
+prompta.jp
+${SITE_CONFIG.url}
+`
+  const html = `<div style="font-family:system-ui,-apple-system,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#1f2937">
+  <h2 style="color:#0284c7;margin:0 0 8px;font-size:22px">ご購入ありがとうございます 🎉</h2>
+  <p style="margin:0 0 24px;color:#6b7280;font-size:14px">prompta.jp をご利用いただきありがとうございます。</p>
+
+  <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;margin-bottom:20px">
+    <p style="margin:0 0 4px;font-size:12px;color:#0369a1;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">ご注文内容</p>
+    <p style="margin:0 0 4px;font-size:18px;font-weight:700;color:#0c4a6e">${productName}</p>
+    <p style="margin:0 0 16px;font-size:12px;color:#0369a1">全ツール共通（1 回 ${POINTS_PER_RUN} ポイント・有効期限 12 ヶ月）</p>
+    <table style="width:100%;font-size:14px;border-collapse:collapse">
+      <tr><td style="padding:6px 0;color:#6b7280">金額</td><td style="padding:6px 0;text-align:right;font-weight:600">¥${p.amountJpy.toLocaleString()}</td></tr>
+      <tr><td style="padding:6px 0;color:#6b7280">追加ポイント</td><td style="padding:6px 0;text-align:right;font-weight:600">+${p.creditsGranted}</td></tr>
+      <tr style="border-top:1px solid #e0f2fe"><td style="padding:6px 0;color:#6b7280">現在の残高</td><td style="padding:6px 0;text-align:right;font-weight:700;color:#0284c7">💎 ${p.balance}</td></tr>
+      <tr><td style="padding:6px 0;color:#6b7280">有効期限</td><td style="padding:6px 0;text-align:right;font-weight:600">${expiresLabel} まで</td></tr>
+    </table>
+  </div>
+
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:20px 0;border-collapse:separate">
+    <tr>
+      <td style="padding:0 0 10px 0">
+        <a href="${personalColorUrl}" style="display:block;background:#0284c7;color:#fff;padding:14px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;text-align:center;line-height:1.4">
+          🎨 パーソナルカラー診断<br><span style="font-size:12px;opacity:0.85;font-weight:400">4 シーズン + 16 色パレット</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="${hairColorUrl}" style="display:block;background:#7c3aed;color:#fff;padding:14px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;text-align:center;line-height:1.4">
+          💇 似合う髪色診断<br><span style="font-size:12px;opacity:0.85;font-weight:400">5 候補 + Before/After シミュレーション</span>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:14px 16px;margin:24px 0">
+    <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#92400e">📌 重要：ポイントの紐付け</p>
+    <p style="margin:0;font-size:13px;color:#78350f;line-height:1.6">
+      ポイントは <strong>${p.email}</strong> に紐付けられています。
+      別のデバイス・別のブラウザから利用する場合、このメールアドレスで Google サインインまたはメールリンクサインインを使うと自動的に表示されます。
+    </p>
+    <p style="margin:8px 0 0">
+      <a href="${signinUrl}" style="font-size:12px;color:#0284c7;text-decoration:underline">サインインページへ →</a>
+    </p>
+  </div>
+
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
+
+  <p style="margin:0 0 4px;font-size:11px;color:#9ca3af">注文 ID: ${p.sessionId}</p>
+  <p style="margin:0 0 8px;font-size:11px;color:#9ca3af">Stripe からの正式な領収書（PDF）は別途送信されます。</p>
+  <p style="margin:0;font-size:12px;color:#9ca3af"><a href="${SITE_CONFIG.url}" style="color:#9ca3af">prompta.jp</a></p>
+</div>`
+  await sendEmail({ to: p.email, subject, text, html })
+}

@@ -9,9 +9,25 @@ on:
       - 'src/app/(marketing)/tools/**'
       - 'src/app/api/tools/**'
       - 'src/app/api/webhooks/stripe/**'
+      - 'src/app/api/checkout/**'
       - 'src/app/api/test/**'
       - 'src/components/tools/**'
+      - 'src/components/credits/**'
+      - 'src/components/prompt/**'
       - 'src/lib/paid-credits.ts'
+      - 'src/lib/stripe.ts'
+      - 'src/lib/track.ts'
+      - 'src/lib/welcome-credits.ts'
+      - 'src/lib/credit-costs.ts'
+      - 'src/lib/create-credit-checkout.ts'
+      - 'src/lib/checkout-fulfill.ts'
+      - 'src/lib/start-checkout.ts'
+      - 'src/lib/ga-events.ts'
+      - 'src/lib/ga-queue.ts'
+      - 'src/components/analytics/**'
+      - 'src/components/layout/**'
+      - 'src/app/(marketing)/auth/**'
+      - 'src/app/(marketing)/layout.tsx'
       - 'src/lib/tool-quota.ts'
       - 'src/lib/auth.ts'
       - 'src/scripts/e2e/**'
@@ -112,12 +128,6 @@ jobs:
         run: npm run e2e:api -- --tier=2
 
       - name: Run Playwright UI tests
-        # UI specs use text regex matchers that are sensitive to copy
-        # changes. API smoke above is the must-pass gate; UI failures
-        # surface in the report artifact for inspection but don't block
-        # the workflow. Flip back to required once we add data-testid
-        # hooks to QuotaGate / Account UI.
-        continue-on-error: true
         env:
           E2E_BASE_URL: http://localhost:3000
         run: npm run e2e

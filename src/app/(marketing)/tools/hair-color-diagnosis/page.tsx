@@ -7,7 +7,7 @@ import { HairColorQuotaGate } from '@/components/tools/HairColorQuotaGate'
 export const metadata: Metadata = {
   title: '似合う髪色診断 AI — 写真からヘアカラー提案 + Before/After',
   description:
-    '自分に似合う髪色が分からない？写真 1 枚で AI が髪色 5 候補を自動提案し、Gemini 2.5 Flash Image で Before/After を生成。従来の髪色シミュレーターと違い、パーソナルカラー・瞳・肌色から判定する AI 髪色診断です。Google ログインで 3 回無料。',
+    '自分に似合う髪色が分からない？写真 1 枚で AI が髪色 5 候補を自動提案し、Gemini 2.5 Flash Image で Before/After を生成。従来の髪色シミュレーターと違い、パーソナルカラー・瞳・肌色から判定する AI 髪色診断です。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/hair-color-diagnosis`,
   },
@@ -70,15 +70,15 @@ const FAQ = [
   },
   {
     q: 'Before / After のシミュレーション画像はどう作られますか？',
-    a: 'Google の最新画像編集モデル「Gemini 2.5 Flash Image（通称 Nano Banana）」が、アップロードされた写真の髪部分のみを指定したカラーに置き換えます。顔・服装・背景・髪型（長さ・カット）はすべて元のまま保持します。生成には 15-25 秒ほどかかります。',
+    a: 'Google の最新画像編集モデル「Gemini 2.5 Flash Image（通称 Nano Banana）」が、アップロードされた写真の髪部分のみを指定したカラーに置き換えます。顔・服装・背景・髪型（長さ・カット）はすべて元のまま保持します。生成には 20〜60 秒ほどかかります。',
   },
   {
     q: '料金はどうなっていますか？',
-    a: '初回ログインで 15 ポイント無料プレゼント（=画像生成 3 回 OR 文字実行 15 回）。それ以上は ¥300 / 150 ポイントパックを Stripe で購入できます。ポイントは「パーソナルカラー診断」を含む全ツール・全 180 プロンプトで共通利用可能。画像生成 1 回 = 5 ポイント消費、判定・診断（テキスト出力）= 1 ポイント消費。',
+    a: 'ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。それ以上は Prompta 20ポイント（¥300）または Prompta 70ポイント（¥980・おすすめ）を Stripe で購入できます。ポイントは全ツール共通で、有効期限は 12 ヶ月です。',
   },
   {
     q: '別の候補もシミュレーションできますか？',
-    a: 'はい、5 候補それぞれに「この色を試す」ボタンがあります。タップするとその色で Before/After を再生成します。1 タップ＝ 5 ポイント消費です。',
+    a: 'はい、5 候補それぞれに「この色を試す」ボタンがあります。タップするとその色で Before/After を再生成します。1 タップ＝ 1 ポイント消費です。',
   },
   {
     q: '写真の撮り方のコツは？',
@@ -131,7 +131,7 @@ const TOOL_LD = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'JPY',
-    description: 'ログインで 15 ポイント無料 + ¥300/150 ポイントパック',
+    description: 'ログインで 3 回無料。追加は ¥300 / 20ポイント または ¥980 / 70ポイント',
   },
   aggregateRating: undefined,
 }
@@ -195,7 +195,7 @@ export default function HairColorDiagnosisPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ Google ログインで 3 回無料
+              ✓ ログインで 3 回無料（全ツール共通・1 回 1 ポイント）
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ 写真は保存しません
@@ -430,7 +430,7 @@ export default function HairColorDiagnosisPage() {
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">所要時間</td>
                   <td className="px-4 py-3 text-xs text-gray-600">数分（手動で何度も試す）</td>
-                  <td className="px-4 py-3 text-xs text-gray-700">15-25 秒で 5 候補 + Before/After 1 枚</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">約 20〜60 秒で 5 候補 + Before/After 1 枚</td>
                 </tr>
               </tbody>
             </table>

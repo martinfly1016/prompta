@@ -76,6 +76,7 @@ async function generateOpenAI(prompt: string, apiKey: string): Promise<Buffer | 
       model: OPENAI_MODEL,
       prompt,
       size: '1024x1024',
+      quality: 'medium',
       n: 1,
     }),
   })

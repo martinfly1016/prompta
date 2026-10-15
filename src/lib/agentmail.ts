@@ -6,6 +6,12 @@ const AGENTMAIL_API = 'https://api.agentmail.to/v0'
 // Single source of truth for the inbox address — used both as the
 // AgentMail API path segment and as the user-facing "From" / contact email
 // across auth, privacy, terms.
+// The From address IS the AgentMail inbox. Set AGENTMAIL_INBOX_ID to a
+// verified domain address (for example noreply@prompta.jp). The random
+// *.agentmail.to fallback looks like spam; it is only a last resort when
+// the env var is missing. Display name is the inbox's display name in the
+// AgentMail dashboard — the send API does not accept a separate From header.
+export const FROM_NAME = 'prompta.jp'
 export const FROM_EMAIL = process.env.AGENTMAIL_INBOX_ID || 'terribleassignment338@agentmail.to'
 const INBOX_ID = FROM_EMAIL
 

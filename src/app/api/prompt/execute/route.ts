@@ -33,11 +33,15 @@ import { put } from '@vercel/blob'
 import { ensureAnonId, extractClientIp, hashIp } from '@/lib/tool-quota'
 import {
   getOwnerEmailHash,
+  getPaidBalance,
   spendCredits,
-  refundCredits,
 } from '@/lib/paid-credits'
 import { prisma } from '@/lib/prisma'
 import { stripeEnabled } from '@/lib/stripe'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
+import { insufficientPointsEvent, pointsSpentEvent, toolResultEvent } from '@/lib/ga-events'
+import { enqueueGaEvents } from '@/lib/ga-queue'
+import { completeGeneration, reconcileStaleGenerations, refundPendingGeneration, startGeneration } from '@/lib/generation-output'
 import { getProvider } from '@/lib/image-providers/registry'
 import type { ProviderId } from '@/lib/image-providers/types'
 
@@ -152,14 +156,25 @@ export async function POST(req: NextRequest) {
   }
 
   // 5. Spend credits (race-safe via updateMany WHERE balance >= n)
-  const cost = provider.credits
+  await reconcileStaleGenerations(eh)
+  const cost = POINTS_PER_RUN
   const spend = await spendCredits(eh, cost)
   if (!spend.ok) {
+    const balance = await getPaidBalance(eh)
+    const ga = [insufficientPointsEvent('prompt', cost, balance)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'credits_exhausted', balance: 0, stripeEnabled },
+      { error: 'credits_exhausted', balance, needed: cost, stripeEnabled, ga },
       { status: 402 },
     )
   }
+
+  const genId = await startGeneration({
+    emailHash: eh,
+    tool: TOOL,
+    creditsUsed: cost,
+    promptSlug: body.promptSlug,
+  })
 
   // 6. Provider call (refund on failure)
   let result: { mode: 'text' | 'image'; text?: string; imageUrl?: string }
@@ -200,13 +215,13 @@ export async function POST(req: NextRequest) {
       throw new Error('Provider returned empty result')
     }
   } catch (e: any) {
-    // Refund: restores balance + decrements totalUsed (the spend never
-    // delivered). Doesn't bump totalEarned (no purchase) or lastPurchase.
-    await refundCredits(eh, cost).catch((err) => {
-      console.error('[prompt-execute] refund failed:', err.message)
+    await refundPendingGeneration(genId, eh, e?.message ?? 'provider_error').catch((err) => {
+      console.error('[prompt-execute] refund failed:', (err as Error).message)
     })
+    const ga = [toolResultEvent('prompt', 'failure', cost)]
+    await enqueueGaEvents(ga)
     return NextResponse.json(
-      { error: 'provider_error', message: e.message?.slice(0, 200) || 'unknown' },
+      { error: 'provider_error', message: e.message?.slice(0, 200) || 'unknown', ga },
       { status: 500 },
     )
   }
@@ -225,34 +240,25 @@ export async function POST(req: NextRequest) {
     })
     .catch((e) => console.error('[prompt-execute] toolUsage log failed:', e.message))
 
-  // 7b. Persist image output to /account gallery (image mode only; text
-  // outputs are short-lived by design and don't need a gallery row).
-  if (result.mode === 'image' && result.imageUrl) {
-    await prisma.generationOutput
-      .create({
-        data: {
-          emailHash: eh,
-          tool: TOOL,
-          promptSlug: body.promptSlug,
-          outputBlobUrl: result.imageUrl,
-          creditsUsed: cost,
-          status: 'completed',
-          outputJson: JSON.stringify({
-            providerId: body.providerId,
-            contentSnippet: body.content.slice(0, 200),
-          }),
-        },
-      })
-      .catch((e) =>
-        console.error('[prompt-execute] generation log failed:', e.message),
-      )
-  }
+  await completeGeneration(genId, {
+    outputBlobUrl: result.mode === 'image' ? result.imageUrl ?? null : null,
+    outputJson: JSON.stringify({
+      mode: result.mode,
+      providerId: body.providerId,
+      contentSnippet: body.content.slice(0, 200),
+    }),
+  }).catch((e) => console.error('[prompt-execute] generation log failed:', (e as Error).message))
 
   // 8. Cache (image only)
   if (result.mode === 'image' && !body.sourceImage) {
     cacheSet(cacheKey, result, spend.balance)
   }
 
-  return NextResponse.json({ ...result, balance: spend.balance })
+  const ga = [
+    pointsSpentEvent('prompt', cost, spend.balance),
+    toolResultEvent('prompt', 'success', cost),
+  ]
+  await enqueueGaEvents(ga)
+  return NextResponse.json({ ...result, balance: spend.balance, ga })
 }
 

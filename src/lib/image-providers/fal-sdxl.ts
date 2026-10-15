@@ -1,4 +1,5 @@
 import type { ImageProvider, ProviderCallOpts, ProviderResult } from './types'
+import { POINTS_PER_RUN } from '@/lib/credit-costs'
 
 // fal.ai endpoint. Default model is fast-sdxl (~$0.005/image, ~2-3s).
 // Override via FAL_SD_MODEL env if you want flux/dev or a different variant.
@@ -109,7 +110,7 @@ export const provider: ImageProvider = {
   // stability.ai owns the SD brand — use their favicon for visual association
   iconUrl: 'https://www.google.com/s2/favicons?domain=stability.ai&sz=64',
   modes: ['image-gen'],
-  credits: 5,
+  credits: POINTS_PER_RUN,
   // fal-ai/fast-sdxl is ~$0.005/image; bumped to 0.008 to cover bandwidth
   // overhead from the buffer download + Vercel Blob upload.
   costUsd: 0.008,

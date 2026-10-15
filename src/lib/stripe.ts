@@ -8,24 +8,23 @@ export const stripe = stripeEnabled
   ? new Stripe(SECRET_KEY)
   : null
 
-export const STRIPE_PRICE_ID = process.env.STRIPE_PRICE_ID || ''
+export const STRIPE_PRICE_ID = (process.env.STRIPE_PRICE_ID || '').trim()
 export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || ''
 
-// Pricing baseline (2026-05-19): ¥300 / 150 credit
-// - 1 credit = ¥2 nominal value
-// - 文字 prompt 実行 = 1 credit (Gemini 2.5 Flash text, ~$0.005 cost, ~60% margin)
-// - 画像 prompt 実行 = 5 credit (Gemini Flash Image / GPT Image 1.5, ~$0.04 cost, ~30% net margin)
-// - 高品質 / 動画 reserved at 10 / 20 credit (not yet enabled)
-export const CREDITS_PER_PACK = 150
-export const PACK_PRICE_JPY = 300
+export { CREDIT_COSTS, type CreditCostKey } from '@/lib/credit-costs'
 
-// Credit cost per execution type. Single source of truth — used by
-// hair-color, personal-color, and the future PromptExecutor.
-export const CREDIT_COSTS = {
-  text: 1,       // text-out via Gemini Flash text (or Vision-to-text)
-  image: 5,      // image-out via Gemini Flash Image / OpenAI GPT Image 1.5
-  image_hd: 10,  // reserved: GPT Image 1 High / SD Ultra
-  video: 20,    // reserved: future video models
-} as const
+// CI and local e2e use a non-calling stub key. Production never sets
+// ENABLE_TEST_AUTH, so this cannot mint a fake Checkout URL there.
+export function isCheckoutTestStub(): boolean {
+  return (
+    process.env.ENABLE_TEST_AUTH === 'true' &&
+    (process.env.STRIPE_SECRET_KEY || '').includes('stub')
+  )
+}
 
-export type CreditCostKey = keyof typeof CREDIT_COSTS
+// Checkout builds the product inline (price_data). A pre-made Price id is
+// not required — the old Price was named 「パーソナルカラー診断 10回パック」.
+export function stripeCheckoutReady(): boolean {
+  if (isCheckoutTestStub()) return true
+  return stripeEnabled
+}

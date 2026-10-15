@@ -92,7 +92,8 @@ async function main() {
 }
 
 /**
- * Paywall funnel: paywall_view → paywall_purchase_click → checkout_started.
+ * Paywall funnel: paywall_view → paywall_purchase_click → begin_checkout → purchase.
+ * checkout_started is the legacy name kept alongside begin_checkout.
  * Outputs eventName aggregate counts. Per-tool / per-trigger breakdown
  * requires `tool` and `trigger` to be registered as event-scoped Custom
  * Dimensions in GA4 admin (Property → Custom definitions). After registration
@@ -107,7 +108,19 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
   const fmt = (d: Date) => d.toISOString().split('T')[0]
   const dateRange = { startDate: fmt(startDate), endDate: fmt(endDate) }
 
-  const eventNames = ['paywall_view', 'paywall_purchase_click', 'checkout_started']
+  const eventNames = [
+    'paywall_view',
+    'paywall_purchase_click',
+    'login_click',
+    'checkout_started',
+    'begin_checkout',
+    'purchase',
+    'points_spent',
+    'insufficient_points',
+    'sign_up',
+    'welcome_bonus_granted',
+    'tool_result',
+  ]
 
   // Aggregate counts by eventName. No tool/trigger split until custom
   // dimensions are registered; consumer falls back to the event name only.
@@ -127,7 +140,18 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
     },
   })
 
-  const counts: Record<string, number> = { paywall_view: 0, paywall_purchase_click: 0, checkout_started: 0 }
+  const counts: Record<string, number> = {
+    paywall_view: 0,
+    paywall_purchase_click: 0,
+    login_click: 0,
+    checkout_started: 0,
+    begin_checkout: 0,
+    purchase: 0,
+    points_spent: 0,
+    insufficient_points: 0,
+    sign_up: 0,
+    welcome_bonus_granted: 0,
+  }
   for (const row of totalsResp.data.rows || []) {
     const evt = row.dimensionValues?.[0]?.value || ''
     const c = parseInt(row.metricValues?.[0]?.value ?? '0', 10)
@@ -169,16 +193,25 @@ async function runToolFunnel(analyticsdata, days: number, toolFilter?: string) {
 
   const view = counts['paywall_view'] || 0
   const click = counts['paywall_purchase_click'] || 0
-  const checkout = counts['checkout_started'] || 0
+  const checkout = counts['begin_checkout'] || counts['checkout_started'] || 0
+  const purchase = counts['purchase'] || 0
   console.log(JSON.stringify({
     range: dateRange,
     aggregate: {
       paywall_view: view,
       paywall_purchase_click: click,
-      checkout_started: checkout,
+      login_click: counts['login_click'] || 0,
+      begin_checkout: counts['begin_checkout'] || 0,
+      checkout_started: counts['checkout_started'] || 0,
+      purchase,
+      points_spent: counts['points_spent'] || 0,
+      insufficient_points: counts['insufficient_points'] || 0,
+      sign_up: counts['sign_up'] || 0,
+      welcome_bonus_granted: counts['welcome_bonus_granted'] || 0,
       conversion: {
         view_to_click: view > 0 ? +(click / view * 100).toFixed(1) : null,
         click_to_checkout: click > 0 ? +(checkout / click * 100).toFixed(1) : null,
+        checkout_to_purchase: checkout > 0 ? +(purchase / checkout * 100).toFixed(1) : null,
       },
     },
     perToolBreakdown,

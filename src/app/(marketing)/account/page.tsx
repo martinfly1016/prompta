@@ -92,7 +92,7 @@ export default async function AccountPage() {
           <span className="text-lg text-gray-500">ポイント</span>
         </div>
         <p className="text-xs text-gray-500 mb-3">
-          画像生成 1 回 = 5 ポイント ／ 文字実行 1 回 = 1 ポイント
+          すべての実行は 1 回 1 ポイント（診断・画像・文字）
         </p>
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-5">
           <span>累計獲得 <strong className="text-gray-900">{totalEarned}</strong></span>

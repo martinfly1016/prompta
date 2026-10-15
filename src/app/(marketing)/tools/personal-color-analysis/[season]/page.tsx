@@ -22,7 +22,7 @@ export async function generateMetadata({
   const s = SEASONS[season as SeasonSlug]
   if (!s) return {}
   const title = `パーソナルカラー ${s.nameJaShort} (${s.nameJa}) 完全ガイド — 似合う色・髪色・メイク`
-  const description = `${s.nameJa}タイプの特徴・似合う 12 色・避けたい色・メイク・髪色を完全解説。自分が ${s.nameJaShort} かどうかは写真 AI 診断で 30 秒判定（Google ログインで 3 回無料）。`
+  const description = `${s.nameJa}タイプの特徴・似合う 12 色・避けたい色・メイク・髪色を完全解説。自分が ${s.nameJaShort} かどうかは写真 AI 診断で約 20〜60 秒（ログインで 3 回無料（全ツール共通・1 回 1 ポイント））。`
   return {
     title,
     description,
@@ -106,7 +106,7 @@ export default async function SeasonPage({
               あなたは本当に {s.nameJaShort}タイプですか？
             </h2>
             <p className="text-sm text-gray-600 mb-5">
-              写真 1 枚で AI が 4 シーズンを自動判定（Google ログインで 3 回無料）。
+              写真 1 枚で AI が 4 シーズンを自動判定（ログインで 3 回無料（全ツール共通・1 回 1 ポイント））。
               {s.nameJaShort}以外の可能性も含めて、あなたに最適なシーズンを 30 秒で確認できます。
             </p>
             <Link

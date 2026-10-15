@@ -7,7 +7,7 @@ const PAGE_PATH = '/en/tools/personal-color-analysis'
 const JA_PATH = '/tools/personal-color-analysis'
 const TITLE = 'Personal Color Analysis AI — Find Your Season From a Photo (Free)'
 const DESCRIPTION =
-  'Free AI personal color analysis. Upload a selfie and discover your season — Spring, Summer, Autumn or Winter — with a 12-color palette tailored to your undertone, contrast, and features. Powered by Google Gemini Vision. No signup, no app install.'
+  'AI personal color analysis. Upload a selfie and discover your season — Spring, Summer, Autumn or Winter — with a 12-color palette tailored to your undertone, contrast, and features. Powered by Google Gemini Vision. Sign in for 3 free runs.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: TITLE,
     description:
-      'Find your season with AI — free, no signup. Spring / Summer / Autumn / Winter + a 12-color palette.',
+      'Find your season with AI. Sign in for 3 free runs. Spring / Summer / Autumn / Winter + a 12-color palette.',
   },
 }
 
@@ -94,7 +94,7 @@ const FAQ = [
   },
   {
     q: 'Is this really free? What happens after the free uses?',
-    a: 'Sign in to get 15 free credits (= 3 image runs OR 15 text runs). After that, a 150-credit pack costs ¥300 (~$2 USD) via Stripe — credits never expire, are tied to one email so you can recover them on any device, and shared across all tools + 180+ prompts. Image generation costs 5 credits; text/vision analysis costs 1 credit.',
+    a: 'Sign in for 3 free runs (all tools, 1 point each). After that, buy Prompta 20 points for ¥300 or Prompta 70 points for ¥980 (recommended) via Stripe. Points last 12 months, stay on one email, and work across every tool. Every run costs 1 point.',
   },
   {
     q: 'How do you handle my photo?',
@@ -178,7 +178,7 @@ export default function PersonalColorAnalysisEnPage() {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'JPY',
-      description: 'Sign in for 15 free credits; ¥300 for a 150-credit pack',
+      description: 'Sign in for 3 free runs; ¥300 for 20 points or ¥980 for 70 points',
     },
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -230,12 +230,12 @@ export default function PersonalColorAnalysisEnPage() {
             undertone and contrast.
           </p>
           <p className="text-xs sm:text-sm text-gray-500 max-w-2xl mx-auto mb-5">
-            Free up to 3 analyses per day · no signup · result in ~20 seconds ·
+            Sign in for 3 free runs · 1 point each · about 20–60 seconds ·
             powered by <span className="font-medium">Google Gemini 2.5 Flash</span>
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ Free, no signup
+              ✓ Sign in for 3 free runs
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
               ✓ Photos deleted after analysis
@@ -328,7 +328,7 @@ export default function PersonalColorAnalysisEnPage() {
               {
                 n: 2,
                 title: 'AI reads your tones',
-                desc: 'Gemini analyzes your skin, eyes, and hair (~20 seconds).',
+                desc: 'Gemini analyzes your skin, eyes, and hair (about 20–60 seconds).',
                 icon: '🤖',
               },
               {

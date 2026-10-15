@@ -9,6 +9,7 @@ import { cookies } from 'next/headers'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { resolveWelcomeBonusCredits } from '@/lib/welcome-credits'
 
 export const CREDITS_COOKIE = 'prompta_credits'
 const COOKIE_SECRET = process.env.NEXTAUTH_SECRET || 'dev-fallback-do-not-use'
@@ -157,9 +158,9 @@ export async function refundCredits(eh: string, n: number): Promise<void> {
 /**
  * Spend N credits atomically. Race-safe: only succeeds if balance >= n.
  * Used by:
- *   - hair-color simulate (5 credit, image gen)
+ *   - hair-color simulate (1 point)
  *   - hair-color analyze / personal-color analyze (1 credit, vision-to-text)
- *   - prompt-execute (1 credit text / 5 credit image / 10 credit hd)
+ *   - prompt-execute (1 point)
  * Refund via `grantCredits(email, n)` if downstream API call fails.
  */
 export async function spendCredits(
@@ -228,21 +229,44 @@ export async function grantCredits(
 //       verified emails, harder to fake than email magic link
 //   (c) Currently <20 registered users — abuse impact is low
 // If abuse detected: add email canonicalization here + IP rate limit.
-// Pricing baseline (2026-05-19): 15 welcome credits = 3 images OR 15 text runs
-// OR mixed. Matches the previous "3 free image trials" UX under the new
-// 5-credit-per-image pricing. Cost per new login = ~3 × $0.04 = $0.12 max.
-export const WELCOME_BONUS_CREDITS = 15
+// New accounts receive WELCOME_POINTS (see credit-costs.ts). Wallets that
+// already have welcomeBonusAt are left untouched — including historical
+// 15-point and 3-point gifts.
+export const WELCOME_BONUS_CREDITS = resolveWelcomeBonusCredits()
+
+// Previously this topped a short gift up to the current welcome amount.
+// That rewrote existing balances. It is now a no-op.
+export async function ensureShortWelcomeTopUp(): Promise<{
+  granted: boolean
+  amount: number
+  isTopup: boolean
+} | null> {
+  return null
+}
 
 export async function grantWelcomeBonusIfEligible(
   email: string,
-): Promise<{ granted: boolean; balance: number; expiresAt: Date | null }> {
+): Promise<{
+  granted: boolean
+  amount: number
+  isTopup: boolean
+  balance: number
+  expiresAt: Date | null
+}> {
   const eh = emailHash(email)
+  const target = resolveWelcomeBonusCredits()
   const existing = await prisma.paidCredits.findUnique({
     where: { emailHash: eh },
-    select: { welcomeBonusAt: true, balance: true, expiresAt: true },
+    select: {
+      welcomeBonusAt: true,
+      welcomeBonus: true,
+      totalEarned: true,
+      balance: true,
+      expiresAt: true,
+    },
   })
   if (existing?.welcomeBonusAt) {
-    return { granted: false, balance: existing.balance, expiresAt: existing.expiresAt }
+    return { granted: false, amount: 0, isTopup: false, balance: existing.balance, expiresAt: existing.expiresAt }
   }
   const newExpiresAt = computeNewExpiresAt()
   const row = await prisma.paidCredits.upsert({
@@ -250,20 +274,20 @@ export async function grantWelcomeBonusIfEligible(
     create: {
       emailHash: eh,
       email,
-      balance: WELCOME_BONUS_CREDITS,
-      totalEarned: WELCOME_BONUS_CREDITS,
-      welcomeBonus: WELCOME_BONUS_CREDITS,
+      balance: target,
+      totalEarned: target,
+      welcomeBonus: target,
       welcomeBonusAt: new Date(),
       expiresAt: newExpiresAt,
     },
     update: {
-      balance: { increment: WELCOME_BONUS_CREDITS },
-      totalEarned: { increment: WELCOME_BONUS_CREDITS },
-      welcomeBonus: WELCOME_BONUS_CREDITS,
+      balance: { increment: target },
+      totalEarned: { increment: target },
+      welcomeBonus: target,
       welcomeBonusAt: new Date(),
       expiresAt: newExpiresAt,
     },
     select: { balance: true, expiresAt: true },
   })
-  return { granted: true, balance: row.balance, expiresAt: row.expiresAt }
+  return { granted: true, amount: target, isTopup: false, balance: row.balance, expiresAt: row.expiresAt }
 }

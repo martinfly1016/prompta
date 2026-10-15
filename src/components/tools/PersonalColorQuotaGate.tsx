@@ -2,13 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useSession, signIn } from 'next-auth/react'
-import {
-  trackPaywallView,
-  trackPurchaseClick,
-  trackCheckoutStarted,
-  type PaywallTrigger,
-} from '@/lib/track'
+import { useSession } from 'next-auth/react'
+import { flushConfirmedGaEvents, trackInsufficientPoints, trackLoginClick, trackPaywallView, trackPurchaseClick, type PaywallTrigger } from '@/lib/track'
+import { signInThenCheckout, startCreditCheckout, redirectToSignIn } from '@/lib/start-checkout'
+import { getPointPack, POINTS_PER_RUN, recommendedPack, WELCOME_COPY_EN, WELCOME_COPY_JA, type PointPack } from '@/lib/credit-costs'
+import { PointPackList } from '@/components/credits/PointPackList'
+import { useRunClock } from '@/lib/use-run-clock'
 
 const TOOL = 'personal-color' as const
 
@@ -27,6 +26,10 @@ interface QuotaState {
   canUse: boolean
   blockReason: 'none' | 'login_required' | 'credits_exhausted' | 'free_exhausted' | 'ip_exhausted'
   stripeEnabled?: boolean
+  welcomeCredits?: number
+  imageCreditCost?: number
+  textCreditCost?: number
+  ga?: { id: string; name: string; params: Record<string, string | number | boolean> }[]
 }
 
 interface RecommendedColor {
@@ -49,12 +52,6 @@ interface AnalysisResult {
   confidence: number
 }
 
-// Phase 0 (2026-05-11) — credit-only. Pricing rebased 5/19: 150 credit / ¥300.
-// Welcome bonus = 15 credit on first login (= 3 image gens OR 15 text runs).
-// Matches the original "3 free trials" UX under the new 5-credit pricing.
-const WELCOME_CREDITS = 15
-const PRICE_LABEL = '¥300 / 150 ポイント'
-const PRICE_LABEL_EN = '¥300 / 150 credits'
 const MAX_BYTES = 8 * 1024 * 1024
 const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' } as const
 
@@ -73,7 +70,7 @@ const STRINGS = {
       accessory: { icon: '💍', title: 'アクセサリー' },
     },
     statusChecking: '利用状況を確認中…',
-    statusLoginRequired: `ログインで ${WELCOME_CREDITS} ポイント獲得（無料）`,
+    statusLoginRequired: WELCOME_COPY_JA,
     statusFree: (n: number) => `ポイント残り ${n}`,
     statusExhausted: 'ポイントを使い切りました',
     statusPaidPrefix: '保有ポイント：',
@@ -88,16 +85,16 @@ const STRINGS = {
     errAnalyze: (m: string) => `診断エラー: ${m}`,
     modalTitleFree: 'ポイント不足',
     modalTitleIp: 'ポイント不足',
-    modalTitleLogin: `Google ログインで ${WELCOME_CREDITS} ポイント無料`,
-    modalDescFree: 'ポイントを使い切りました。続けてご利用いただく場合は 150 ポイントパック ¥300 をご購入ください。ポイントは全ツール共通でご利用いただけます。',
-    modalDescIp: 'ポイントを使い切りました。続けてご利用いただく場合は 150 ポイントパック ¥300 をご購入ください。',
-    modalDescLogin: `初回ログインで ${WELCOME_CREDITS} ポイント無料プレゼント（=画像生成 3 回 OR 文字実行 15 回）。即時利用可能・別ツールでも共通でお使いいただけます。`,
-    signInFreeButton: `🔐 Google でサインイン（無料 ${WELCOME_CREDITS} ポイント）`,
+    modalTitleLogin: WELCOME_COPY_JA,
+    modalDescFree: 'ポイントを使い切りました。続けて使う場合はポイントパックをご購入ください。全ツール共通・1 回 1 ポイント、有効期限は 12 ヶ月です。',
+    modalDescIp: 'ポイントを使い切りました。続けて使う場合はポイントパックをご購入ください。',
+    modalDescLogin: WELCOME_COPY_JA,
+    signInFreeButton: `🔐 サインイン（${WELCOME_COPY_JA}）`,
     signInFreeBenefit: 'メールアドレスは結果保存・別端末同期に使用されます。スパムは送りません。',
-    pricePackTitle: '150 ポイントパック',
-    priceFeatures: ['画像生成 30 回 OR 文字実行 150 回', '全ツール・全プロンプト共通', 'Stripe 決済（VISA/Master/AMEX/JCB）', '即時利用、有効期限 12 ヶ月'],
+    pricePackTitle: 'ポイントパック',
+    priceFeatures: ['全ツール共通・1 回 1 ポイント', '有効期限 12 ヶ月', 'Stripe 決済（VISA/Master/AMEX/JCB）', 'おすすめは 70 ポイント（¥980）'],
     purchasing: '処理中…',
-    purchaseButton: (price: string) => `💳 150 ポイントパックを購入（${price}）`,
+    purchaseButton: (price: string) => `💳 ポイントパックを購入（${price}）`,
     stripeComingTitle: 'Stripe 決済は近日公開',
     stripeNote: '※ 決済機能は Stripe 接入中。しばらくお待ちください。',
     signInRequired: '購入にはサインインが必要です',
@@ -106,7 +103,7 @@ const STRINGS = {
     signInBenefit: '別デバイスでも同じメールでサインインすればポイント同期',
     closeButton: '閉じる',
     purchaseCancelled: '購入がキャンセルされました',
-    purchaseSuccess: '🎉 150 ポイントが追加されました！',
+    purchaseSuccess: '🎉 ポイントが追加されました！',
     recoveredSuccess: (balance: string | null) => `🎉 ポイントを復元しました${balance ? `（残り ${balance}）` : ''}`,
     recoverExpired: '復元リンクの有効期限が切れています。フォームから再送信してください。',
     recoverInvalid: '復元リンクが無効です。再度メールをご確認ください。',
@@ -114,7 +111,7 @@ const STRINGS = {
     stripeError: (err: string) => `Stripe 接続エラー: ${err}`,
     uploadingHeading: '📤 アップロード中…',
     uploadingDetail: '画像をサーバーに送信しています',
-    elapsedFmt: (sec: number) => `${sec}秒経過 / 約 15-25秒`,
+    elapsedFmt: (sec: number) => `${sec}秒経過 / 約 20-60秒`,
     uploadingShort: '送信中',
     analyzeSteps: [
       { icon: '📸', text: '写真を解析しています…', detail: '画像の品質と顔の位置を確認' },
@@ -132,10 +129,10 @@ const STRINGS = {
     avoidColors: '避けたい色',
     uploadedAlt: 'アップロード写真',
     enResultNote: '',
-    ctaExhaustedTrigger: '→ 続けて使う（150 ポイント ¥300）',
+    ctaExhaustedTrigger: '→ 続けて使う',
     upsellBannerHeading: 'もう一人診断する？',
     upsellBannerBody: 'ポイント切れの場合は ',
-    upsellBannerLink: '150 ポイント ¥300 パック',
+    upsellBannerLink: 'ポイントパック',
     upsellBannerSuffix: 'で続行できます',
   },
   en: {
@@ -149,7 +146,7 @@ const STRINGS = {
       accessory: { icon: '💍', title: 'Accessory metals' },
     },
     statusChecking: 'Checking usage…',
-    statusLoginRequired: `Sign in to get ${WELCOME_CREDITS} free credits`,
+    statusLoginRequired: WELCOME_COPY_EN,
     statusFree: (n: number) => `${n} credits left`,
     statusExhausted: 'Out of credits',
     statusPaidPrefix: 'Credits: ',
@@ -164,16 +161,16 @@ const STRINGS = {
     errAnalyze: (m: string) => `Analysis error: ${m}`,
     modalTitleFree: 'Out of credits',
     modalTitleIp: 'Out of credits',
-    modalTitleLogin: `Sign in for ${WELCOME_CREDITS} free credits`,
-    modalDescFree: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going — shared across all tools and prompts.',
-    modalDescIp: 'You have used all your credits. Grab the 150-credit pack (¥300) to keep going.',
-    modalDescLogin: `Sign in to get ${WELCOME_CREDITS} free credits — that's 3 image runs OR 15 text runs across all our AI tools and 180+ prompts.`,
-    signInFreeButton: `🔐 Sign in with Google (${WELCOME_CREDITS} free credits)`,
+    modalTitleLogin: WELCOME_COPY_EN,
+    modalDescFree: 'You have used all your points. Buy a point pack to keep going. Every tool costs 1 point, and points last 12 months.',
+    modalDescIp: 'You have used all your points. Buy a point pack to keep going.',
+    modalDescLogin: WELCOME_COPY_EN,
+    signInFreeButton: `🔐 Sign in (${WELCOME_COPY_EN})`,
     signInFreeBenefit: 'Email is used to save results and sync across devices. No spam.',
-    pricePackTitle: '150-credit pack',
-    priceFeatures: ['30 image generations OR 150 text runs (mix freely)', 'Shared with all tools and 180+ prompts', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Instant access, never expires'],
+    pricePackTitle: 'Point packs',
+    priceFeatures: ['All tools, 1 point per run', 'Valid for 12 months', 'Stripe checkout (VISA / Master / AMEX / JCB)', 'Recommended: 70 points (¥980)'],
     purchasing: 'Processing…',
-    purchaseButton: (price: string) => `💳 Buy 150-credit pack (${price})`,
+    purchaseButton: (price: string) => `💳 Buy points (${price})`,
     stripeComingTitle: 'Stripe checkout coming soon',
     stripeNote: '※ Stripe integration in progress. Please check back soon.',
     signInRequired: 'Sign in required to purchase',
@@ -182,7 +179,7 @@ const STRINGS = {
     signInBenefit: 'Sign in with the same email on another device to sync credits',
     closeButton: 'Close',
     purchaseCancelled: 'Purchase was cancelled',
-    purchaseSuccess: '🎉 150 credits added!',
+    purchaseSuccess: '🎉 Points added!',
     recoveredSuccess: (balance: string | null) => `🎉 Credits restored${balance ? ` (${balance} left)` : ''}`,
     recoverExpired: 'Recovery link expired. Please request a new one from the form.',
     recoverInvalid: 'Recovery link invalid. Please check your email again.',
@@ -190,7 +187,7 @@ const STRINGS = {
     stripeError: (err: string) => `Stripe error: ${err}`,
     uploadingHeading: '📤 Uploading…',
     uploadingDetail: 'Sending the image to our server',
-    elapsedFmt: (sec: number) => `${sec}s elapsed / ~15-25s total`,
+    elapsedFmt: (sec: number) => `${sec}s elapsed / about 20-60s`,
     uploadingShort: 'Uploading',
     analyzeSteps: [
       { icon: '📸', text: 'Reading your photo…', detail: 'Checking image quality and face position' },
@@ -209,10 +206,10 @@ const STRINGS = {
     uploadedAlt: 'Your uploaded photo',
     enResultNote:
       '🌐 Note: AI-generated descriptions and color names are currently in Japanese. Full English output rolls out in the next update — the seasonal label, palette HEX codes, and badges are universal.',
-    ctaExhaustedTrigger: '→ Continue (150 credits ¥300)',
+    ctaExhaustedTrigger: '→ Continue',
     upsellBannerHeading: 'Diagnose another person?',
-    upsellBannerBody: 'If credits run out, the ',
-    upsellBannerLink: '150-credit ¥300 pack',
+    upsellBannerBody: 'If you run out of points, a ',
+    upsellBannerLink: 'point pack',
     upsellBannerSuffix: ' lets you keep going.',
   },
 } as const
@@ -233,8 +230,10 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [elapsedSec, setElapsedSec] = useState(0)
+  const [runId, setRunId] = useState(0)
+  const elapsedSec = useRunClock(phase === 'analyzing' || phase === 'uploading', runId)
   const [stepIndex, setStepIndex] = useState(0)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
   const [purchaseBanner, setPurchaseBanner] = useState<string | null>(null)
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -246,38 +245,19 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
     setPortalTarget(document.getElementById('personal-color-result-portal'))
   }, [])
 
-  // Tick elapsed seconds + cycle the step message during analyze
   useEffect(() => {
     if (phase !== 'analyzing') {
-      setElapsedSec(0)
       setStepIndex(0)
       return
     }
-    const t0 = Date.now()
-    const tick = setInterval(() => {
-      const sec = Math.floor((Date.now() - t0) / 1000)
-      setElapsedSec(sec)
-      setStepIndex(Math.min(Math.floor(sec / 4), ANALYZE_STEPS.length - 1))
-    }, 500)
-    return () => clearInterval(tick)
-  }, [phase])
+    setStepIndex(Math.min(Math.floor(elapsedSec / 4), ANALYZE_STEPS.length - 1))
+  }, [phase, elapsedSec, ANALYZE_STEPS.length])
 
   useEffect(() => {
     refresh()
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search)
-      const purchase = params.get('purchase')
-      if (purchase === 'success') {
-        // Webhook + signed-in session combine to grant + reveal credits.
-        // No client-side claim step needed.
-        setPurchaseBanner(t.purchaseSuccess)
-        cleanUrl()
-        refresh()
-      } else if (purchase === 'cancelled') {
-        setPurchaseBanner(t.purchaseCancelled)
-        cleanUrl()
-      }
-    }
+    const onCredits = () => refresh()
+    window.addEventListener('prompta:credits-updated', onCredits)
+    return () => window.removeEventListener('prompta:credits-updated', onCredits)
   }, [])
 
   // Refresh credit balance whenever auth session flips signed-in/out
@@ -285,18 +265,32 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
     refresh()
   }, [authStatus])
 
+  const resumeStarted = useRef(false)
+  useEffect(() => {
+    if (authStatus !== 'authenticated' || !state || resumeStarted.current) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('checkout') !== '1') return
+    resumeStarted.current = true
+    const pack = getPointPack(params.get('pack')) ?? recommendedPack()
+    setSelectedId(pack.id)
+    const u = new URL(window.location.href)
+    u.searchParams.delete('checkout')
+    u.searchParams.delete('pack')
+    window.history.replaceState({}, '', u.toString())
+    if (!state.stripeEnabled) return
+    void handlePurchase(pack)
+    // handlePurchase closes over the latest signed-in session.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authStatus, state])
+
   function refresh() {
     fetch('/api/tools/personal-color/check')
       .then((r) => r.json())
-      .then((s) => setState(s))
+      .then((s) => {
+        setState(s)
+        flushConfirmedGaEvents(s?.ga)
+      })
       .catch(() => {})
-  }
-
-  function cleanUrl() {
-    const u = new URL(window.location.href)
-    u.searchParams.delete('purchase')
-    u.searchParams.delete('session_id')
-    window.history.replaceState({}, '', u.toString())
   }
 
   async function handlePickFile() {
@@ -308,6 +302,9 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
       // "acquire new users" vs. "re-monetize existing users" funnels.
       const trigger: PaywallTrigger =
         state.blockReason === 'login_required' ? 'login_required' : 'exhausted_pick'
+      if (state.blockReason !== 'login_required') {
+        trackInsufficientPoints(TOOL, state.textCreditCost ?? 1, state.paidCredits ?? 0)
+      }
       openPaywall(setShowModal, trigger)
       return
     }
@@ -333,6 +330,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   }
 
   async function runAnalyze(file: File) {
+    setRunId((n) => n + 1)
     setPending(true)
     setPhase('uploading')
     try {
@@ -344,6 +342,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         body: form,
       })
       const data = await r.json()
+      flushConfirmedGaEvents(data?.ga)
       if (!r.ok) {
         if (r.status === 429) {
           setState((s) => (s ? { ...s, ...data, canUse: false } : data))
@@ -374,51 +373,34 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
     }
   }
 
-  // Sign-in-only path for the login_required modal variant: users who have
-  // never used the tool should be steered to "claim 3 free credits" rather
-  // than the Stripe checkout flow. Fires purchase_click so the funnel still
-  // captures the intent, but the callback URL goes back to the tool page so
-  // the user lands with welcomeBonus credits ready to consume.
-  async function handleSignInFree() {
-    trackPurchaseClick(TOOL, false)
-    const callbackUrl =
-      typeof window !== 'undefined'
-        ? window.location.pathname
-        : '/tools/personal-color-analysis'
-    signIn(undefined, { callbackUrl })
+  // Login-required modal: claim the welcome grant. This is not a purchase,
+  // so it must not count as paywall_purchase_click.
+  function handleSignInFree() {
+    trackLoginClick('paywall_free')
+    redirectToSignIn(window.location.pathname)
   }
 
-  async function handlePurchase() {
-    trackPurchaseClick(TOOL, isSignedIn)
+  async function handlePurchase(packOverride?: PointPack) {
+    const pack = packOverride?.id ? packOverride : (getPointPack(selectedId) ?? recommendedPack())
     if (!isSignedIn) {
-      const callbackUrl =
-        typeof window !== 'undefined'
-          ? window.location.pathname
-          : '/tools/personal-color-analysis'
-      signIn(undefined, { callbackUrl })
+      trackPurchaseClick(TOOL, false)
+      signInThenCheckout(window.location.pathname, pack.id)
       return
     }
     setPending(true)
     try {
-      const r = await fetch(`/api/checkout/personal-color?locale=${locale}`, { method: 'POST' })
-      if (r.status === 401) {
-        const callbackUrl =
-          typeof window !== 'undefined'
-            ? window.location.pathname
-            : '/tools/personal-color-analysis'
-        signIn(undefined, { callbackUrl })
-        return
-      }
-      if (!r.ok) {
-        const err = await r.json().catch(() => ({}))
-        setPurchaseBanner(t.stripeError(err.error ?? 'config'))
+      const result = await startCreditCheckout({
+        endpoint: `/api/checkout/personal-color?locale=${locale}`,
+        tool: TOOL,
+        pack,
+      })
+      if (!result.ok) {
+        if (result.status === 401) {
+          signInThenCheckout(window.location.pathname, pack.id)
+          return
+        }
+        setPurchaseBanner(t.stripeError(result.error))
         setPending(false)
-        return
-      }
-      const { url } = await r.json()
-      if (url) {
-        trackCheckoutStarted(TOOL)
-        window.location.href = url
       }
     } catch (e: any) {
       setPurchaseBanner(t.errNetwork(e?.message ?? ''))
@@ -433,6 +415,15 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
   const exhausted = state?.canUse === false
   const loginRequired = state?.blockReason === 'login_required'
   const stripeReady = state?.stripeEnabled === true
+  const selectedPack = getPointPack(selectedId) ?? recommendedPack()
+  const buyLabel =
+    locale === 'en'
+      ? `💳 Buy ${selectedPack.name} (¥${selectedPack.priceJpy.toLocaleString()})`
+      : `💳 ${selectedPack.name}を購入（¥${selectedPack.priceJpy.toLocaleString()}）`
+  const loginStatus = locale === 'en' ? WELCOME_COPY_EN : WELCOME_COPY_JA
+  const loginTitle = loginStatus
+  const loginDesc = loginStatus
+  const loginButton = locale === 'en' ? `🔐 Sign in (${WELCOME_COPY_EN})` : `🔐 サインイン（${WELCOME_COPY_JA}）`
 
   return (
     <>
@@ -461,15 +452,19 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         ) : loginRequired ? (
           <a
             href="/auth/signin"
+            onClick={() => trackLoginClick('quota_status')}
+            data-testid="quota-status"
+            data-state="login"
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 transition-colors"
             aria-live="polite"
           >
             <span className="text-base">🔐</span>
-            <span className="font-semibold">{t.statusLoginRequired}</span>
+            <span className="font-semibold">{loginStatus}</span>
           </a>
         ) : exhausted && paidCredits === 0 ? (
           <button
             type="button"
+            data-testid="quota-exhausted"
             onClick={() => openPaywall(setShowModal, 'badge')}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 transition-colors"
             aria-live="polite"
@@ -480,6 +475,9 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
           </button>
         ) : (
           <div
+            data-testid="quota-status"
+            data-state="ready"
+            data-balance={paidCredits}
             className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium ${
               remaining <= 1
                 ? 'bg-amber-50 text-amber-700 border-amber-200'
@@ -496,6 +494,14 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
           </div>
         )}
       </div>
+
+      {state && !loginRequired && (
+        <p data-testid="next-run" className="text-center text-[11px] text-gray-500 -mt-2 mb-3">
+          {locale === 'en'
+            ? `Next run costs ${POINTS_PER_RUN} point (${paidCredits} left)`
+            : `次の実行は ${POINTS_PER_RUN} ポイント（残り ${paidCredits} 回）`}
+        </p>
+      )}
 
       <input
         ref={fileInputRef}
@@ -517,6 +523,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
         <>
           <button
             type="button"
+            data-testid="tool-pick"
             onClick={handlePickFile}
             disabled={!state || pending}
             className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white text-sm font-medium rounded-lg hover:bg-sky-700 shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
@@ -556,6 +563,7 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
           onClick={() => setShowModal(false)}
         >
           <div
+            data-testid="paywall-modal"
             className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl animate-fadein"
             onClick={(e) => e.stopPropagation()}
           >
@@ -563,14 +571,14 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
               <div className="text-5xl mb-3">{loginRequired ? '🎁' : '🎨'}</div>
               <h3 className="text-lg font-bold text-gray-900 mb-1">
                 {loginRequired
-                  ? t.modalTitleLogin
+                  ? loginTitle
                   : state.blockReason === 'ip_exhausted'
                     ? t.modalTitleIp
                     : t.modalTitleFree}
               </h3>
               <p className="text-sm text-gray-600">
                 {loginRequired
-                  ? t.modalDescLogin
+                  ? loginDesc
                   : state.blockReason === 'ip_exhausted'
                     ? t.modalDescIp
                     : t.modalDescFree}
@@ -581,12 +589,9 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
                 login_required users haven't tried the tool yet, so showing
                 a ¥300 price tag would derail their first impression. */}
             {!loginRequired && (
-              <div className="bg-gradient-to-br from-sky-50 to-blue-50 rounded-xl p-5 border border-sky-100 mb-4">
-                <div className="flex items-baseline justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-900">{t.pricePackTitle}</span>
-                  <span className="text-xl font-bold text-sky-700">{locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL}</span>
-                </div>
-                <ul className="text-xs text-gray-600 space-y-1">
+              <div className="mb-4">
+                <PointPackList selectedId={selectedPack.id} onSelect={(pack) => setSelectedId(pack.id)} />
+                <ul className="mt-3 text-xs text-gray-600 space-y-1">
                   {t.priceFeatures.map((f, i) => (
                     <li key={i}>✓ {f}</li>
                   ))}
@@ -598,11 +603,12 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
               <div className="space-y-3">
                 <button
                   type="button"
+                  data-testid="paywall-signin-free"
                   onClick={handleSignInFree}
                   disabled={pending}
                   className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {t.signInFreeButton}
+                  {loginButton}
                 </button>
                 <p className="text-[11px] text-gray-500 text-center">
                   {t.signInFreeBenefit}
@@ -616,18 +622,19 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
                   title={t.stripeComingTitle}
                   className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {t.purchaseButton(locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL)}
+                  {buyLabel}
                 </button>
                 <p className="mt-2 text-[11px] text-gray-400 text-center">{t.stripeNote}</p>
               </>
             ) : isSignedIn ? (
               <button
                 type="button"
-                onClick={handlePurchase}
+                data-testid="paywall-buy"
+                onClick={() => void handlePurchase()}
                 disabled={pending}
                 className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {pending ? t.purchasing : t.purchaseButton(locale === 'en' ? PRICE_LABEL_EN : PRICE_LABEL)}
+                {pending ? t.purchasing : buyLabel}
               </button>
             ) : (
               <div className="space-y-3">
@@ -641,7 +648,8 @@ export function PersonalColorQuotaGate({ locale = 'ja' }: PersonalColorQuotaGate
                 </div>
                 <button
                   type="button"
-                  onClick={handlePurchase}
+                  data-testid="paywall-signin-buy"
+                  onClick={() => void handlePurchase()}
                   disabled={pending}
                   className="w-full px-5 py-3 bg-sky-600 text-white text-sm font-semibold rounded-lg hover:bg-sky-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                 >
@@ -886,7 +894,7 @@ function AnalyzingOverlay({
   const step = t.analyzeSteps[stepIndex] ?? t.analyzeSteps[0]
   // Estimate progress as a function of elapsed time, capped at 95%
   // (the last 5% is reserved for "result is being rendered")
-  const ESTIMATED_TOTAL = 22
+  const ESTIMATED_TOTAL = 45
   const progressPct =
     phase === 'uploading' ? 8 : Math.min(95, 10 + (elapsedSec / ESTIMATED_TOTAL) * 85)
 
