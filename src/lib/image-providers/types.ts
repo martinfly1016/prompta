@@ -24,6 +24,14 @@ export interface ProviderCallOpts {
     base64: string
     mimeType: string
   }
+  /**
+   * Extra reference photos, sent after sourceImage in array order.
+   * Used by the height-difference simulator (one or two character photos).
+   */
+  referenceImages?: Array<{
+    base64: string
+    mimeType: string
+  }>
   /** Hint for output aspect — providers may ignore. */
   aspectRatio?: '1:1' | '4:3' | '3:4' | '16:9' | '9:16'
 }

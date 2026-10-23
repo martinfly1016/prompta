@@ -12,13 +12,18 @@ async function call(opts: ProviderCallOpts): Promise<ProviderResult> {
   const apiKey = process.env.GOOGLE_AI_API_KEY || process.env.GEMINI_API_KEY
   if (!apiKey) throw new Error('Missing GOOGLE_AI_API_KEY')
 
-  // Build content parts: prompt text + optional source image (image-edit mode)
+  // Prompt text, then sourceImage, then referenceImages — order is part of the prompt contract.
   const parts: any[] = [{ text: opts.prompt }]
-  if (opts.sourceImage) {
+  const images = [
+    ...(opts.sourceImage ? [opts.sourceImage] : []),
+    ...(opts.referenceImages ?? []),
+  ]
+  for (const image of images) {
+    if (!image?.base64) continue
     parts.push({
       inline_data: {
-        mime_type: opts.sourceImage.mimeType,
-        data: opts.sourceImage.base64,
+        mime_type: image.mimeType,
+        data: image.base64,
       },
     })
   }
