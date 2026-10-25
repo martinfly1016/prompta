@@ -8,7 +8,7 @@
     "build": "prisma generate && next build",
     "start": "node scripts/migrate.js && next start",
     "postinstall": "prisma generate",
-    "lint": "next lint",
+    "lint": "eslint .",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:seed": "node -r ts-node/register prisma/seed.ts",

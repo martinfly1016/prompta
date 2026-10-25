@@ -4,14 +4,24 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { HeightDifferenceSimulator } from '@/components/tools/HeightDifferenceSimulator'
 
+const PAGE_TITLE = '身長差シミュレーター｜体格差の構図を確認して写真から生成'
+const PAGE_DESCRIPTION =
+  '二人の身長・体型・ポーズを動かして体格差と身長差の構図を確認し、確定した設定のまま写真からAI画像を生成します。推しカップル、見上げる構図、壁ドンに対応。'
+
 export const metadata: Metadata = {
-  title: '身長差シミュレーター｜構図を確認してから写真で生成',
-  description:
-    '二人の身長・体型・ポーズを動かして身長差の構図を確認し、確定した設定のまま写真からAI画像を生成する試作ツールです。',
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/height-difference-maker/simulate`,
   },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    type: 'website',
+    locale: 'ja_JP',
+    url: `${SITE_CONFIG.url}/tools/height-difference-maker/simulate`,
+  },
 }
 
 export default function HeightDifferenceSimulatorPage() {
@@ -30,7 +40,7 @@ export default function HeightDifferenceSimulatorPage() {
       <section className="bg-gray-50 border-t border-gray-100 py-8 lg:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-6">
-            <p className="text-sm font-semibold text-sky-700 mb-2">試作 · 構図を見てから生成</p>
+            <p className="text-sm font-semibold text-sky-700 mb-2">体格差・身長差の構図を見てから生成</p>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
               身長差シミュレーター
             </h1>
@@ -44,10 +54,10 @@ export default function HeightDifferenceSimulatorPage() {
 
       <section className="bg-white border-t border-gray-100 py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">この試作で実在するもの</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">プレビューと生成について</h2>
           <ul className="list-disc pl-5 space-y-2 text-sm text-gray-700 leading-relaxed">
             <li>プレビューは SVG のシルエットです。アップロードした顔はプレビューには出ません。</li>
-            <li>確定後の生成は、髪色シミュレーションと同じ Gemini 画像 API と共通ポイントです。1回1ポイント。ログインすると全ツール共通で3回分が付きます。</li>
+            <li>確定後の生成は、髪色シミュレーションと同じ Nano Banana 2.1 画像 API と共通ポイントです。1回1ポイント。ログインすると全ツール共通で3回分が付きます。</li>
             <li>写真は1枚でも2枚でも送れます。無い方の人物は見た目メモから生成します。</li>
             <li>写真と生成結果はブラウザの応答にだけ返します。公開プロンプト集や公開ストレージには保存しません。</li>
             <li>身長の cm・差・ポーズは生成指示に固定します。モデルがセンチを完全に守るとは限りません。</li>

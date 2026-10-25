@@ -48,8 +48,7 @@ export function HeightDifferenceSimulator() {
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<ResultImage | null>(null)
   const [showPurchase, setShowPurchase] = useState(false)
-  const photosRef = useRef({ photoA, photoB })
-  photosRef.current = { photoA, photoB }
+  const photosRef = useRef<{ photoA: LocalPhoto | null; photoB: LocalPhoto | null }>({ photoA: null, photoB: null })
 
   const active = locked ?? settings
   const layout = useMemo(() => layoutStage(active), [active])
@@ -72,6 +71,10 @@ export function HeightDifferenceSimulator() {
       })
       .catch(() => {})
   }, [isSignedIn])
+
+  useEffect(() => {
+    photosRef.current = { photoA, photoB }
+  }, [photoA, photoB])
 
   useEffect(() => {
     return () => {
@@ -381,6 +384,8 @@ export function HeightDifferenceSimulator() {
 
           {resultUrl && (
             <div className="space-y-3">
+              {/* data: URLs from the generation response are not served by the image optimizer */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={resultUrl} alt="身長差を反映した生成結果" className="max-h-[640px] w-auto rounded-lg border border-gray-200" />
               <a
                 href={resultUrl}
@@ -622,7 +627,7 @@ function CharacterCard({
             type="button"
             aria-pressed={character.bodyType === option.id}
             onClick={() => onBody(option.id)}
-            className={`rounded-md border px-1 py-1 text-[11px] font-semibold ${
+            className={`min-w-0 rounded-md border px-1 py-1 text-[11px] font-semibold leading-tight ${
               character.bodyType === option.id
                 ? 'border-sky-500 bg-sky-50 text-sky-900'
                 : 'border-gray-200 bg-white text-gray-600'
@@ -719,6 +724,8 @@ function PhotoSlot({
       <p className="text-xs text-gray-500 mb-2">{hint}</p>
       {photo ? (
         <div className="space-y-2">
+          {/* blob: previews stay in this tab and are not passed through the image optimizer */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photo.url} alt="" className="h-36 w-full object-cover rounded-md border border-gray-200" />
           <button type="button" onClick={onClear} className="text-sm font-medium text-rose-700">写真を外す</button>
         </div>

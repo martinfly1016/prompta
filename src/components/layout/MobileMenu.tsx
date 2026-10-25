@@ -88,7 +88,6 @@ export function MobileMenu() {
               >
                 <span>🧍</span>
                 <span className="whitespace-nowrap">身長差シミュレーター</span>
-                <span className="ml-auto text-[10px] font-bold text-sky-700 bg-white px-1.5 py-0.5 rounded">試作</span>
               </Link>
               <Link
                 href="/tools/personal-color-analysis"

@@ -67,7 +67,6 @@ export default async function ToolsPage() {
                       <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
                         身長差シミュレーター
                       </h3>
-                      <span className="text-[10px] font-bold text-sky-800 bg-white px-2 py-0.5 rounded-full border border-sky-200">試作</span>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed mb-3">
                       二人の身長と体型を動かして並びを確認してから、写真を添付して画像生成。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。

@@ -54,7 +54,6 @@ export function Header() {
                       <div className="font-semibold text-sky-700 whitespace-nowrap">身長差シミュレーター</div>
                       <div className="text-xs text-gray-500 whitespace-nowrap">構図を見てから写真生成</div>
                     </div>
-                    <span className="text-[10px] font-bold text-sky-700 bg-white px-1.5 py-0.5 rounded shrink-0">試作</span>
                   </Link>
                   <Link
                     href="/tools/personal-color-analysis"

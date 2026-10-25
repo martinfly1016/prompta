@@ -42,6 +42,17 @@ const settingsSchema = z.object({
 export const runtime = 'nodejs'
 export const maxDuration = 60
 
+// 1x1 PNG. Only returned when ENABLE_TEST_AUTH requests a mock success.
+const MOCK_PNG =
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='
+
+function testProviderMode(raw: FormDataEntryValue | null): 'mock-success' | 'force-error' | null {
+  if (process.env.ENABLE_TEST_AUTH !== 'true') return null
+  const value = String(raw ?? '')
+  if (value === 'mock-success' || value === 'force-error') return value
+  return null
+}
+
 function mimeForFormat(format: 'jpeg' | 'png' | 'webp'): string {
   if (format === 'jpeg') return 'image/jpeg'
   if (format === 'png') return 'image/png'
@@ -79,8 +90,10 @@ export async function POST(req: NextRequest) {
   let imageA: { base64: string; mimeType: string } | null = null
   let imageB: { base64: string; mimeType: string } | null = null
   let settings: SimulatorSettings
+  let testMode: 'mock-success' | 'force-error' | null = null
   try {
     const form = await req.formData()
+    testMode = testProviderMode(form.get('e2e'))
     const photoA = await readPhoto(form.get('imageA'))
     if (!photoA.ok) return NextResponse.json(photoA.body, { status: photoA.status })
     const photoB = await readPhoto(form.get('imageB'))
@@ -97,6 +110,14 @@ export async function POST(req: NextRequest) {
   }
 
   if (!imageA && !imageB) {
+    return NextResponse.json({ error: 'no_image' }, { status: 400 })
+  }
+  // Shared provider order is sourceImage, then referenceImages. That matches
+  // the prompt's attachment list: Character A, then Character B. A single
+  // photo is the source so a one-person upload still edits from that image.
+  const sourceImage = imageA ?? imageB
+  const referenceImages = imageA && imageB ? [imageB] : undefined
+  if (!sourceImage) {
     return NextResponse.json({ error: 'no_image' }, { status: 400 })
   }
 
@@ -135,31 +156,52 @@ export async function POST(req: NextRequest) {
     hasPhotoA: !!imageA,
     hasPhotoB: !!imageB,
   })
-  const referenceImages = [imageA, imageB].filter((image): image is { base64: string; mimeType: string } => !!image)
 
-  const genId = await startGeneration({
-    emailHash: eh,
-    tool: TOOL,
-    creditsUsed: cost,
-    inputParams: JSON.stringify({
-      heightA: settings.characterA.heightCm,
-      heightB: settings.characterB.heightCm,
-      bodyA: settings.characterA.bodyType,
-      bodyB: settings.characterB.bodyType,
-      pose: settings.pose,
-      framing: settings.framing,
-      style: settings.style,
-      scene: settings.scene,
-      relationship: settings.relationship,
-      hasPhotoA: !!imageA,
-      hasPhotoB: !!imageB,
-    }),
-  })
+  let genId: string
+  try {
+    genId = await startGeneration({
+      emailHash: eh,
+      tool: TOOL,
+      creditsUsed: cost,
+      inputParams: JSON.stringify({
+        heightA: settings.characterA.heightCm,
+        heightB: settings.characterB.heightCm,
+        bodyA: settings.characterA.bodyType,
+        bodyB: settings.characterB.bodyType,
+        pose: settings.pose,
+        framing: settings.framing,
+        style: settings.style,
+        scene: settings.scene,
+        relationship: settings.relationship,
+        hasPhotoA: !!imageA,
+        hasPhotoB: !!imageB,
+      }),
+    })
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'start_failed'
+    await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
+    await prisma.paidCredits.update({
+      where: { emailHash: eh },
+      data: { balance: { increment: cost }, totalUsed: { decrement: cost } },
+    }).catch((refundError) => {
+      console.error('[height-difference] pre-call refund failed:', (refundError as Error).message)
+    })
+    console.error('[height-difference] start failed:', message.slice(0, 300))
+    return NextResponse.json(
+      { error: 'generation_failed', refunded: true },
+      { status: 500 },
+    )
+  }
 
   try {
-    const provider = getProvider('gemini-image')
-    if (!provider) throw new Error('provider_missing')
-    const out = await provider.call({ prompt, referenceImages })
+    if (testMode === 'force-error') throw new Error('E2E_FORCE_PROVIDER_ERROR')
+    const out = testMode === 'mock-success'
+      ? { image: { base64: MOCK_PNG, mimeType: 'image/png' as const } }
+      : await (async () => {
+          const provider = getProvider('gemini-image')
+          if (!provider) throw new Error('provider_missing')
+          return provider.call({ prompt, sourceImage, referenceImages })
+        })()
     if (!out.image?.base64) throw new Error('Provider returned empty result')
 
     const paidCredits = await getPaidBalance(eh)
@@ -194,15 +236,16 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'generation_failed'
     await prisma.toolUsage.delete({ where: { id: usage.id } }).catch(() => {})
-    await refundPendingGeneration(genId, eh, message).catch((refundError) => {
+    const refunded = await refundPendingGeneration(genId, eh, message).catch((refundError) => {
       console.error('[height-difference] refund failed:', (refundError as Error).message)
+      return false
     })
     const paidCredits = await getPaidBalance(eh)
     const ga = [toolResultEvent(TOOL, 'failure', cost)]
     await enqueueGaEvents(ga)
     console.error('[height-difference] failed:', message.slice(0, 300))
     return NextResponse.json(
-      { error: 'generation_failed', message: message.slice(0, 200), refunded: true, paidCredits, ga },
+      { error: 'generation_failed', refunded, paidCredits, ga },
       { status: 500 },
     )
   }
