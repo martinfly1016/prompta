@@ -1,6 +1,7 @@
 import { getLatestPrompts, getGuides } from '@/lib/data'
 import { SITE_CONFIG } from '@/lib/constants'
 import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
+import { isPromptIndexable } from '@/lib/seo/indexing-policy'
 
 export const revalidate = REVALIDATE_LIST_SECONDS
 
@@ -11,7 +12,7 @@ export async function GET() {
   ])
 
   const items = [
-    ...prompts.map(p => ({
+    ...prompts.filter(p => isPromptIndexable(p.slug)).map(p => ({
       title: p.title,
       link: `${SITE_CONFIG.url}/prompt/${p.slug}`,
       description: p.description,

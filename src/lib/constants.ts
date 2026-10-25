@@ -201,9 +201,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・学校制服・和風・ファンタジー衣装まで、Stable Diffusion・NovelAI・Midjourney で使える呪文を画像付きで紹介。',
   },
   'clothing': {
-    seoTitle: '服装プロンプト集【無料・コピペOK】女性・制服・メイド服・白無垢｜AI画像生成',
-    seoH1: '服装プロンプト集｜女性キャラの制服・メイド服・白無垢・コスプレ衣装',
-    seoDescription: '女性キャラの服装・衣装プロンプトをコピペで使える無料例文集。制服・メイド服・白無垢・ビジネススーツ・ファンタジー衣装・カジュアル・コスプレ服装を Stable Diffusion・Midjourney・NovelAI 向けに画像付きで解説。',
+    seoTitle: '服装プロンプト集【制服・メイド服コピペ】',
+    seoH1: '服装プロンプト集｜制服・メイド服・ワンピース・スーツ',
+    seoDescription: '服装プロンプトのコピペ集。制服、メイド服、ワンピース、スーツを Stable Diffusion と Midjourney 向けの英語タグで紹介。成人向けの服装指定が中心です。',
   },
   'body-type': {
     seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
@@ -616,8 +616,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'stable-diffusion-prompt-guide',
-    title: 'Stable Diffusion プロンプト 書き方ガイド【呪文・コピペOK】｜品質タグ・構図・ネガティブ実例',
-    description: 'Stable Diffusion で美しい画像を生成するプロンプト書き方の完全ガイド。品質タグ、構図、スタイル指定、ネガティブプロンプト、BREAK・LoRA 連携まで、コピペで使える呪文と実例を画像付きで徹底解説。初心者の基礎から応用テクニックまで。',
+    title: 'Stable Diffusionプロンプト書き方【コピペOK】',
+    description: 'Stable Diffusion プロンプトの書き方。品質タグ、構図、ネガティブプロンプト、BREAK と LoRA まで、コピペできる英語の呪文と実例で解説します。',
     targetKeyword: 'stable diffusion プロンプト 書き方',
     monthlySearchVolume: 3600,
   },
@@ -637,8 +637,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'negative-prompt-guide',
-    title: 'ネガティブプロンプト完全ガイド',
-    description: 'AI画像生成におけるネガティブプロンプトの使い方と効果。品質向上のための必須テクニック。',
+    title: 'ネガティブプロンプトテンプレ【NovelAI・SD】',
+    description: 'ネガティブプロンプトのコピペテンプレ。Stable Diffusion と NovelAI で、品質・手・顔の崩れを避ける書き方と、入れすぎないときの削り方を解説します。',
     targetKeyword: 'ネガティブプロンプト',
     monthlySearchVolume: 6600,
   },
@@ -658,8 +658,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'hairstyle-prompt-guide',
-    title: '髪型プロンプトの書き方｜ロング・ショート・ツインテール・髪色グラデーションの完全ガイド',
-    description: 'AI画像生成で髪型を自在にコントロールするプロンプト完全ガイド。20種類の定番ヘアスタイル、髪色指定、グラデーション・インナーカラー、髪飾りの呪文例を徹底解説。',
+    title: '髪型プロンプト【ツインテール・コピペOK】',
+    description: '髪型プロンプトの書き方。ツインテール、ロング、ボブ、髪色を英語タグでコピペできます。Stable Diffusion と Midjourney 向けの指定例と、髪が溶けるときの対処もまとめています。',
     targetKeyword: '髪型 プロンプト 書き方',
     monthlySearchVolume: 2400,
   },
@@ -672,8 +672,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'body-type-prompt-guide',
-    title: '体型・身長差プロンプト 完全ガイド【コピペOK】｜Stable Diffusion スレンダー・筋肉質・ぽっちゃり・体格差',
-    description: 'Stable Diffusion で体型・身長差・体格差を自在にコントロールするプロンプト完全ガイド。スレンダー・アスレチック・ぽっちゃり・小柄・高身長・身長差の指定方法と重み付けテクニックを画像付きで解説。コピペで再現可能。',
+    title: '体型プロンプトの書き方【コピペOK・英語付き】',
+    description: '体型プロンプトの英語タグをコピペで紹介。スレンダー、筋肉質、ぽっちゃり、小柄、高身長を Stable Diffusion と Midjourney 向けに、ネガティブプロンプトつきで解説します。',
     targetKeyword: '体型 プロンプト 書き方',
     monthlySearchVolume: 390,
   },
@@ -784,6 +784,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'bl ポーズ',
     monthlySearchVolume: 1900,
   },
+  {
+    slug: 'stable-diffusion-expression-prompt',
+    title: 'Stable Diffusion表情プロンプト【コピペOK】',
+    description: 'Stable Diffusion で表情を指定する英語タグ集。笑顔、怒り、悲しみ、照れ、驚きを表にまとめ、重み付けとネガティブプロンプトも解説します。',
+    targetKeyword: 'stable diffusion 表情 プロンプト',
+    monthlySearchVolume: 2400,
+  },
+  {
+    slug: 'low-angle-prompt-guide',
+    title: '下からのアングルプロンプト【コピペOK】',
+    description: '下からのアングルとカメラアングルの英語プロンプト。from below、俯瞰、正面、横、後ろをコピペ表で整理。服の写り込みを避けるネガティブ例つき。',
+    targetKeyword: '下からのアングル プロンプト',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'stable-diffusion-pose-prompt',
+    title: 'Stable Diffusionポーズプロンプト【コピペ】',
+    description: 'Stable Diffusion のポーズプロンプト。立つ、座る、歩く、腕の位置を英語タグでコピペ。崩れにくい書き方とネガティブプロンプトを解説します。',
+    targetKeyword: 'stable diffusion ポーズ プロンプト',
+    monthlySearchVolume: 1600,
+  },
+  {
+    slug: 'background-prompt-guide',
+    title: '背景プロンプト一覧【場所別・コピペOK】',
+    description: '背景プロンプトの場所別一覧。室内、屋外、単色、時間帯の英語タグをコピペでき、人物なしの背景だけを描くときの書き方も紹介します。',
+    targetKeyword: '背景 プロンプト',
+    monthlySearchVolume: 1300,
+  },
+  {
+    slug: 'age-prompt-guide',
+    title: '年齢プロンプトの書き方【大人・コピペOK】',
+    description: '大人の年齢プロンプトの書き方。20代から高齢まで、years old と mature、elderly の使い分けをコピペ例で解説。未成年の表現は扱っていません。',
+    targetKeyword: '年齢 プロンプト',
+    monthlySearchVolume: 1300,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -875,6 +910,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'bl-pose-collection-guide': {
     tools: ['stable-diffusion', 'midjourney', 'dall-e'],
     categories: ['anime', 'body-type', 'clothing'],
+  },
+  'stable-diffusion-expression-prompt': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'camera'],
+  },
+  'low-angle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera'],
+  },
+  'stable-diffusion-pose-prompt': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type', 'anime', 'camera'],
+  },
+  'background-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera', 'color'],
+  },
+  'age-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
   },
 }
 

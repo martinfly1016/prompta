@@ -14,6 +14,7 @@ import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
 import { PromptInteractive } from '@/components/prompt/PromptInteractive'
 import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
+import { isPromptIndexable } from '@/lib/seo/indexing-policy'
 
 export const revalidate = REVALIDATE_DETAIL_SECONDS
 
@@ -30,10 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!prompt) return {}
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(prompt.title)}${prompt.toolSlug ? `&tool=${prompt.toolSlug}` : ''}${prompt.categoryName ? `&category=${encodeURIComponent(prompt.categoryName)}` : ''}`
   const title = `${prompt.title}【コピペOK】`
+  const indexable = isPromptIndexable(prompt.slug)
   return {
     title,
     description: prompt.description,
     alternates: { canonical: `${SITE_CONFIG.url}/prompt/${prompt.slug}` },
+    ...(!indexable && { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }),
     openGraph: {
       title,
       description: prompt.description,

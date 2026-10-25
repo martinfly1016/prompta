@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import { notFound } from 'next/navigation'
 import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
+import { isTagIndexable } from '@/lib/seo/indexing-policy'
 
 export const revalidate = REVALIDATE_LIST_SECONDS
 
@@ -27,6 +28,11 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'ハグ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
   'お姫様抱っこ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜お姫様抱っこ・キス構図' },
   '見上げる': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜見上げる構図' },
+  'ローアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  'カメラアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  '俯瞰': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  '背景': { slug: 'background-prompt-guide', title: '背景プロンプト一覧【場所別・コピペOK】' },
+  '表情変更': { slug: 'stable-diffusion-expression-prompt', title: 'Stable Diffusion表情プロンプト【コピペOK】' },
 }
 
 // Category → canonical guide fallback. Used to surface a "詳しい解説ガイド" CTA
@@ -78,6 +84,7 @@ export async function tagMetadata(rawSlug: string, page: number): Promise<Metada
 
   const tagData = await getTagBySlug(tag)
   const isApproved = tagData?.isApproved ?? false
+  const indexable = isTagIndexable(tag, isApproved)
 
   const defaultTitle = `「${tag}」プロンプト一覧【無料・コピペOK】${suffix}`
   const defaultDescription = `「${tag}」関連のAIプロンプト集。Stable Diffusion・Midjourney・ChatGPT・Claude・DALL-E対応。コピペでそのまま使えるサンプルを多数掲載しています。`
@@ -93,7 +100,7 @@ export async function tagMetadata(rawSlug: string, page: number): Promise<Metada
     title,
     description,
     alternates: { canonical: `${SITE_CONFIG.url}/tag/${encodeURIComponent(tag)}${page > 1 ? `/page/${page}` : ''}` },
-    ...(!isApproved && { robots: { index: false, follow: true } }),
+    ...(!indexable && { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }),
   }
 }
 

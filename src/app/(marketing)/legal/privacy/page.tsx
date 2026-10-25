@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_CONFIG.url}/legal/privacy` },
 }
 
-const EFFECTIVE_DATE = '2026-10-15'
+const EFFECTIVE_DATE = '2026-10-25'
 
 export default function PrivacyPage() {
   return (
@@ -63,6 +63,8 @@ export default function PrivacyPage() {
               <li>有料ポイントの発行・利用・復元</li>
               <li>サービスに関するお知らせ・サインインリンクの送信</li>
               <li>サービス改善のための統計分析（個人を特定しない形）</li>
+              <li>アクセス状況の計測（Google アナリティクス）</li>
+              <li>第三者配信による広告の表示（Google AdSense を利用する場合）</li>
               <li>法令遵守および紛争対応</li>
             </ul>
           </section>
@@ -84,9 +86,9 @@ export default function PrivacyPage() {
                 <tbody className="divide-y divide-gray-100">
                   <tr>
                     <td className="px-3 py-2">Google LLC</td>
-                    <td className="px-3 py-2">OAuth サインイン / Gemini API 解析 / Analytics 4</td>
+                    <td className="px-3 py-2">OAuth サインイン / Gemini API 解析 / アナリティクス / 広告配信（AdSense）</td>
                     <td className="px-3 py-2">
-                      OAuth: 認可情報；Gemini: アップロード写真；GA: 匿名利用ログ
+                      OAuth: 認可情報；Gemini: アップロード写真；アナリティクスと広告: Cookie とそれに紐づく利用情報
                     </td>
                   </tr>
                   <tr>
@@ -165,37 +167,95 @@ export default function PrivacyPage() {
                 <strong>必須 Cookie</strong>：サインインセッション、無料利用枠の管理、購入ポイントの紐付け（無効化するとサービスを利用できません）
               </li>
               <li>
-                <strong>分析 Cookie</strong>：Google Analytics 4 による匿名アクセス分析
+                <strong>分析 Cookie</strong>：Google アナリティクス 4 によるアクセス分析。個人を特定しない形で、閲覧ページ、参照元、おおよその地域、端末の種類を計測します。
+              </li>
+              <li>
+                <strong>広告 Cookie</strong>：Google AdSense などの第三者配信事業者が、広告の配信と効果測定、および興味・関心に応じた広告のために使用する Cookie です。
               </li>
             </ul>
             <p className="mt-3">
-              ブラウザの設定で Cookie を無効化できますが、サインインや購入ポイントの利用ができなくなる場合があります。
+              ブラウザの設定で Cookie を無効化できますが、サインインや購入ポイントの利用ができなくなる場合があります。広告 Cookie と分析 Cookie は、下の各項の手順で無効にできます。
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">8. セキュリティ</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">8. Google アナリティクス</h2>
+            <p>
+              当サイトは、サイトの利用状況を把握するために Google アナリティクス 4 を使用します。Google アナリティクスは Cookie を使用してトラフィックデータを収集します。収集されるデータは、個人を特定しない統計として扱います。
+            </p>
+            <p className="mt-3">
+              このデータの取り扱いは Google のプライバシーポリシーに従います。
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-3">
+              <li>
+                <a href="https://policies.google.com/privacy" className="text-sky-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google プライバシーポリシー
+                </a>
+              </li>
+              <li>
+                <a href="https://tools.google.com/dlpage/gaoptout" className="text-sky-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google アナリティクス オプトアウト アドオン
+                </a>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">9. 広告配信（Google AdSense）</h2>
+            <p>
+              当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、ユーザーの興味に応じた広告を表示するために Cookie を使用することがあります。
+            </p>
+            <p className="mt-3">
+              Google を含む第三者配信事業者は、Cookie を使用して、当サイトや他のウェブサイトへの過去のアクセス情報に基づいて広告を配信します。
+            </p>
+            <p className="mt-3">
+              ユーザーは、次のページからパーソナライズ広告を無効にできます。
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-3">
+              <li>
+                <a href="https://adssettings.google.com/" className="text-sky-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google 広告設定（adssettings.google.com）
+                </a>
+              </li>
+              <li>
+                <a href="https://policies.google.com/technologies/ads" className="text-sky-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google の広告に関するポリシー（Cookie の説明）
+                </a>
+              </li>
+              <li>
+                <a href="https://policies.google.com/privacy" className="text-sky-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google プライバシーポリシー
+                </a>
+              </li>
+            </ul>
+            <p className="mt-3">
+              パーソナライズ広告を無効にしても、広告そのものが表示されなくなるわけではありません。興味・関心に基づかない広告に切り替わります。
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">10. セキュリティ</h2>
             <p>
               当サイトは、個人情報の漏洩・滅失・毀損を防止するため、合理的な安全管理措置を講じます。具体的には、HTTPS による通信暗号化、パスワードのハッシュ化、API キーの暗号化保存、最小権限原則によるアクセス制御を実施しています。
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">9. 子どものプライバシー</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">11. 子どものプライバシー</h2>
             <p>
               当サイトは 13 歳未満を対象としていません。13 歳未満のユーザーから個人情報を取得したことが判明した場合、速やかに削除します。
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">10. 本ポリシーの改定</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">12. 本ポリシーの改定</h2>
             <p>
               本ポリシーは、法令の変更やサービスの内容変更に応じて改定する場合があります。重要な変更がある場合は、サイト上で通知します。本ポリシーの最終更新日は本ページの上部に記載しています。
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">11. お問い合わせ</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">13. お問い合わせ</h2>
             <p>
               本プライバシーポリシーに関するご質問は、以下までご連絡ください。
             </p>
@@ -203,6 +263,10 @@ export default function PrivacyPage() {
               <strong>運営者</strong>：prompta.jp
               <br />
               <strong>連絡先</strong>：
+              <a href="/contact" className="text-sky-600 hover:underline">
+                お問い合わせページ
+              </a>
+              {' '}または{' '}
               <a href={`mailto:${CONTACT_EMAIL}`} className="text-sky-600 hover:underline">
                 {CONTACT_EMAIL}
               </a>
