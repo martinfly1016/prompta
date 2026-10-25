@@ -29,7 +29,9 @@ const GENERATE_CONTENT_MODELS = new Set([
   'gemini-3-pro-image-preview',
 ])
 
-const IMAGE_SIZES = new Set(['512', '1K', '2K', '4K'])
+// Nano Banana 2.1 accepts 1K, 2K, and 4K. 512px (0.5K) is Gemini 3.1 Flash
+// Image only and is rejected on 2.1. Lowercase "1k" is also rejected.
+const IMAGE_SIZES = new Set(['1K', '2K', '4K'])
 
 export type GeminiImageTransport = 'interactions' | 'generateContent'
 
@@ -90,6 +92,10 @@ interface ImageBlock {
   mimeType?: string
 }
 
+function imageData(block: ImageBlock & { inline_data?: { data?: string; mime_type?: string }; inlineData?: { data?: string; mimeType?: string } }): string | undefined {
+  return block.data || block.inline_data?.data || block.inlineData?.data
+}
+
 export function extractInteractionImage(json: unknown): ImageBlock | null {
   if (!json || typeof json !== 'object') return null
   const body = json as {
@@ -97,16 +103,46 @@ export function extractInteractionImage(json: unknown): ImageBlock | null {
     steps?: Array<{ content?: unknown }>
   }
   const blocks: ImageBlock[] = []
-  if (body.output_image?.data || body.output_image?.uri) blocks.push(body.output_image)
+  const push = (block: ImageBlock & { inline_data?: { data?: string; mime_type?: string }; inlineData?: { data?: string; mimeType?: string } }) => {
+    const data = imageData(block)
+    if (!data && !block.uri) return
+    blocks.push({
+      data,
+      uri: block.uri,
+      mime_type: block.mime_type || block.inline_data?.mime_type || block.mimeType || block.inlineData?.mimeType,
+    })
+  }
+  if (body.output_image) push(body.output_image)
   for (const step of body.steps ?? []) {
     if (!Array.isArray(step?.content)) continue
     for (const block of step.content) {
       if (!block || typeof block !== 'object') continue
       const image = block as ImageBlock & { type?: string }
-      if (image.type === 'image' && (image.data || image.uri)) blocks.push(image)
+      if (image.type === 'image') push(image)
     }
   }
   return blocks.length > 0 ? blocks[blocks.length - 1] : null
+}
+
+const LOG_LIMIT = 500
+
+/** Redacts long base64 blobs so an unexpected body can be logged safely. */
+export function summarizeGeminiPayload(json: unknown): string {
+  let text: string
+  try {
+    text = JSON.stringify(json, (key, value) => {
+      if (typeof value === 'string' && value.length > 80 && (key === 'data' || key === 'uri')) {
+        return `${value.slice(0, 16)}…(${value.length} chars)`
+      }
+      if (typeof value === 'string' && value.length > 240) {
+        return `${value.slice(0, 80)}…(${value.length} chars)`
+      }
+      return value
+    }) ?? 'null'
+  } catch {
+    text = String(json)
+  }
+  return text.length > LOG_LIMIT ? `${text.slice(0, LOG_LIMIT)}…` : text
 }
 
 function allowedImageUri(uri: string): boolean {
@@ -145,9 +181,12 @@ async function callInteractions(opts: ProviderCallOpts, model: string): Promise<
     input.push({ type: 'image', data: image.base64, mime_type: image.mimeType })
   }
 
-  // Image-only output. Edits omit image_size / aspect_ratio unless the caller
-  // asked for one, so the model keeps the source photo's framing.
-  const responseFormat: Record<string, string> = { type: 'image', delivery: 'inline' }
+  // Docs: response_format is { type, aspect_ratio?, image_size? }. Do not send
+  // `delivery` — the API returns 400 "Image delivery mode is not supported"
+  // for both "inline" and "uri". Bytes come back inline by default.
+  // Edits omit image_size / aspect_ratio unless the caller asked for one,
+  // so the model keeps the source photo's framing.
+  const responseFormat: Record<string, string> = { type: 'image' }
   if (opts.aspectRatio) responseFormat.aspect_ratio = opts.aspectRatio
   if (images.length === 0) responseFormat.image_size = textToImageSize()
 
@@ -179,7 +218,9 @@ async function callInteractions(opts: ProviderCallOpts, model: string): Promise<
   }
   const block = extractInteractionImage(json)
   if (!block) {
-    throw new Error(`Gemini returned no image. Status: ${status || 'unknown'}`)
+    const summary = summarizeGeminiPayload(json)
+    console.error('[gemini-image] unexpected interaction response', summary)
+    throw new Error(`Gemini returned no image. Status: ${status || 'unknown'}. Body: ${summary}`)
   }
   return imageFromBlock(block)
 }
