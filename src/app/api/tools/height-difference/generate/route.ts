@@ -12,6 +12,7 @@ import { completeGeneration, reconcileStaleGenerations, refundPendingGeneration,
 import { getProvider } from '@/lib/image-providers/registry'
 import {
   buildGenerationPrompt,
+  providerImageInputs,
   type SimulatorSettings,
 } from '@/lib/height-difference/simulator'
 
@@ -112,11 +113,7 @@ export async function POST(req: NextRequest) {
   if (!imageA && !imageB) {
     return NextResponse.json({ error: 'no_image' }, { status: 400 })
   }
-  // Shared provider order is sourceImage, then referenceImages. That matches
-  // the prompt's attachment list: Character A, then Character B. A single
-  // photo is the source so a one-person upload still edits from that image.
-  const sourceImage = imageA ?? imageB
-  const referenceImages = imageA && imageB ? [imageB] : undefined
+  const { sourceImage, referenceImages } = providerImageInputs(imageA, imageB)
   if (!sourceImage) {
     return NextResponse.json({ error: 'no_image' }, { status: 400 })
   }

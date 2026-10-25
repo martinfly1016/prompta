@@ -365,6 +365,25 @@ function appearanceLine(character: CharacterSettings, who: 'A' | 'B', hasPhoto: 
   return `No photo for Character ${who}. Invent ${character.label} from this description only: ${note || 'an original character with no specific real-person likeness'}.`
 }
 
+export interface ProviderPhoto {
+  base64: string
+  mimeType: string
+}
+
+/**
+ * Photos for the shared image provider. sourceImage is sent first, then
+ * referenceImages. Character A is the source when present; Character B follows
+ * only when both photos exist. A lone Character B photo is still the source.
+ */
+export function providerImageInputs(
+  imageA: ProviderPhoto | null,
+  imageB: ProviderPhoto | null,
+): { sourceImage?: ProviderPhoto; referenceImages?: ProviderPhoto[] } {
+  const sourceImage = imageA ?? imageB ?? undefined
+  const referenceImages = imageA && imageB ? [imageB] : undefined
+  return { sourceImage, referenceImages }
+}
+
 export function buildGenerationPrompt(
   settings: SimulatorSettings,
   photos: { hasPhotoA: boolean; hasPhotoB: boolean },

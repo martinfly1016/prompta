@@ -4,6 +4,7 @@ import {
   buildGenerationPrompt,
   defaultSettings,
   layoutStage,
+  providerImageInputs,
   type SimulatorSettings,
 } from './simulator'
 
@@ -52,6 +53,15 @@ test('waist framing crops above the floor', () => {
   const waist = layoutStage(withPose('side-by-side', 'waist'))
   assert.ok(waist.frame.y + waist.frame.h < full.frame.y + full.frame.h)
   assert.ok(waist.frame.y + waist.frame.h < waist.floorY)
+})
+
+test('provider inputs put character A first and character B as the reference', () => {
+  const a = { base64: 'a', mimeType: 'image/jpeg' }
+  const b = { base64: 'b', mimeType: 'image/png' }
+  assert.deepEqual(providerImageInputs(a, b), { sourceImage: a, referenceImages: [b] })
+  assert.deepEqual(providerImageInputs(a, null), { sourceImage: a, referenceImages: undefined })
+  assert.deepEqual(providerImageInputs(null, b), { sourceImage: b, referenceImages: undefined })
+  assert.deepEqual(providerImageInputs(null, null), { sourceImage: undefined, referenceImages: undefined })
 })
 
 test('generation prompt locks centimeters, pose, and which photo is attached', () => {
