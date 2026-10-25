@@ -7,14 +7,14 @@ import { HairColorQuotaGate } from '@/components/tools/HairColorQuotaGate'
 export const metadata: Metadata = {
   title: '似合う髪色診断 AI — 写真からヘアカラー提案 + Before/After',
   description:
-    '自分に似合う髪色が分からない？写真 1 枚で AI が髪色 5 候補を自動提案し、Gemini 2.5 Flash Image で Before/After を生成。従来の髪色シミュレーターと違い、パーソナルカラー・瞳・肌色から判定する AI 髪色診断です。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。',
+    '自分に似合う髪色が分からない？写真 1 枚で AI が髪色 5 候補を自動提案し、Nano Banana 2.1 で Before/After を生成。従来の髪色シミュレーターと違い、パーソナルカラー・瞳・肌色から判定する AI 髪色診断です。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/hair-color-diagnosis`,
   },
   openGraph: {
     title: '似合う髪色診断 AI — 写真からヘアカラー提案 + Before/After',
     description:
-      '写真をアップロードするだけで AI があなたに似合う髪色を 5 つ提案し、Gemini 2.5 Flash Image で Before/After を生成。',
+      '写真をアップロードするだけで AI があなたに似合う髪色を 5 つ提案し、Nano Banana 2.1 で Before/After を生成。',
     type: 'website',
     locale: 'ja_JP',
   },
@@ -70,7 +70,7 @@ const FAQ = [
   },
   {
     q: 'Before / After のシミュレーション画像はどう作られますか？',
-    a: 'Google の最新画像編集モデル「Gemini 2.5 Flash Image（通称 Nano Banana）」が、アップロードされた写真の髪部分のみを指定したカラーに置き換えます。顔・服装・背景・髪型（長さ・カット）はすべて元のまま保持します。生成には 20〜60 秒ほどかかります。',
+    a: 'Google の画像編集モデル「Nano Banana 2.1」が、アップロードされた写真の髪部分のみを指定したカラーに置き換えます。顔・服装・背景・髪型（長さ・カット）はすべて元のまま保持します。生成には 20〜60 秒ほどかかります。',
   },
   {
     q: '料金はどうなっていますか？',
@@ -94,7 +94,7 @@ const FAQ = [
   },
   {
     q: '髪色 AI 診断と普通の髪色シミュレーターは何が違いますか？',
-    a: '従来の髪色シミュレーターは「自分で色を選んでプレビュー」する受動的なツールです。本ツールは AI が肌色・瞳・パーソナルカラーから「あなたに似合う色」を自動判定し、その候補で Before/After を生成する点が大きく違います。色選びに迷う方ほど効果を実感しやすく、サロン来店前のイメージトレーニングとして特に好評です。Gemini 2.5 Flash Image 搭載で実際に染めたような写実的なシミュレーションが可能です。',
+    a: '従来の髪色シミュレーターは「自分で色を選んでプレビュー」する受動的なツールです。本ツールは AI が肌色・瞳・パーソナルカラーから「あなたに似合う色」を自動判定し、その候補で Before/After を生成する点が大きく違います。色選びに迷う方ほど効果を実感しやすく、サロン来店前のイメージトレーニングとして特に好評です。Nano Banana 2.1 搭載で実際に染めたような写実的なシミュレーションが可能です。',
   },
   {
     q: '自分に似合う髪色を見つけるコツは何ですか？',
@@ -190,8 +190,8 @@ export default function HairColorDiagnosisPage() {
             </span>
           </h1>
           <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-5">
-            写真をアップロードするだけで、AI があなたのパーソナルカラーに合う髪色を 5 つ提案し、Gemini 2.5 Flash
-            Image が実際に染めたらどう見えるかを Before/After でシミュレーションします。
+            写真をアップロードするだけで、AI があなたのパーソナルカラーに合う髪色を 5 つ提案し、Nano Banana 2.1
+            が実際に染めたらどう見えるかを Before/After でシミュレーションします。
           </p>
           <div className="flex flex-wrap justify-center gap-2 text-xs">
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
@@ -201,7 +201,7 @@ export default function HairColorDiagnosisPage() {
               ✓ 写真は保存しません
             </span>
             <span className="px-3 py-1 bg-white rounded-full border border-gray-200 text-gray-700">
-              ✓ Gemini 2.5 Flash Image 搭載
+              ✓ Nano Banana 2.1 搭載
             </span>
           </div>
         </div>
@@ -420,7 +420,7 @@ export default function HairColorDiagnosisPage() {
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">プレビュー精度</td>
                   <td className="px-4 py-3 text-xs text-gray-600">色置換のみ（不自然なエッジ）</td>
-                  <td className="px-4 py-3 text-xs text-gray-700">Gemini 2.5 Flash Image による写実的な仕上がり</td>
+                  <td className="px-4 py-3 text-xs text-gray-700">Nano Banana 2.1 による写実的な仕上がり</td>
                 </tr>
                 <tr>
                   <td className="px-4 py-3 font-medium text-gray-900">パーソナル要素</td>
