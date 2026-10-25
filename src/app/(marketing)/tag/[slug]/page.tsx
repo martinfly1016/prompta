@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import { notFound } from 'next/navigation'
 import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
+import { isTagIndexable } from '@/lib/seo/indexing-policy'
 
 export const revalidate = REVALIDATE_LIST_SECONDS
 
@@ -23,10 +24,46 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   '二人構図': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
   'カップル': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
   '壁ドン': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
-  'キス': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
-  'ハグ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
+  'キス': { slug: 'kiss-prompt-guide', title: 'キスプロンプト集｜キス顔・頬キス・キス待ちの英語呪文【コピペOK】' },
+  'ハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
+  'バックハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
+  '抱き合う': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
+  '後ろから抱きつく': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
+  '暗い': { slug: 'dark-room-prompt-guide', title: '暗い部屋プロンプト｜薄暗い室内・夜の照明の英語呪文【コピペOK】' },
+  '低身長': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
+  '小柄': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
   'お姫様抱っこ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜お姫様抱っこ・キス構図' },
   '見上げる': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜見上げる構図' },
+  'ローアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  'カメラアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  '俯瞰': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  '背景': { slug: 'background-prompt-guide', title: '背景プロンプト一覧【場所別・コピペOK】' },
+  '表情変更': { slug: 'stable-diffusion-expression-prompt', title: 'Stable Diffusion表情プロンプト【コピペOK】' },
+}
+
+const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description: string }> = {
+  'カップル': {
+    slug: 'hug-prompt-guide',
+    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    description: '抱き合う、バックハグ、後ろから抱きつくときの腕の位置を英語タグでまとめています。',
+  },
+  '二人構図': {
+    slug: 'hug-prompt-guide',
+    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    description: '抱き合う、バックハグ、後ろから抱きつくときの腕の位置を英語タグでまとめています。',
+  },
+  'BL': {
+    slug: 'hug-prompt-guide',
+    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    description: '後ろから抱きつく構図と、腕を回す位置の英語タグです。',
+  },
+}
+
+const TAG_META_OVERRIDE: Record<string, { title: string; description: string }> = {
+  'セーラー服': {
+    title: 'セーラー服プロンプト集｜スカーフ・夏服・冬服【コピペOK】',
+    description: 'セーラー服プロンプト集。スカーフ、夏服の半袖、冬服の長袖、黒セーラーを英語タグでコピペできます。',
+  },
 }
 
 // Category → canonical guide fallback. Used to surface a "詳しい解説ガイド" CTA
@@ -78,22 +115,28 @@ export async function tagMetadata(rawSlug: string, page: number): Promise<Metada
 
   const tagData = await getTagBySlug(tag)
   const isApproved = tagData?.isApproved ?? false
+  const indexable = isTagIndexable(tag, isApproved)
 
+  const override = TAG_META_OVERRIDE[tag]
   const defaultTitle = `「${tag}」プロンプト一覧【無料・コピペOK】${suffix}`
   const defaultDescription = `「${tag}」関連のAIプロンプト集。Stable Diffusion・Midjourney・ChatGPT・Claude・DALL-E対応。コピペでそのまま使えるサンプルを多数掲載しています。`
 
-  const title = tagData?.seoTitle
-    ? `${tagData.seoTitle}${suffix}`
-    : defaultTitle
-  const description = page === 1 && tagData?.seoDescription
-    ? tagData.seoDescription
-    : defaultDescription
+  const title = override
+    ? `${override.title}${suffix}`
+    : tagData?.seoTitle
+      ? `${tagData.seoTitle}${suffix}`
+      : defaultTitle
+  const description = page === 1 && override
+    ? override.description
+    : page === 1 && tagData?.seoDescription
+      ? tagData.seoDescription
+      : defaultDescription
 
   return {
     title,
     description,
     alternates: { canonical: `${SITE_CONFIG.url}/tag/${encodeURIComponent(tag)}${page > 1 ? `/page/${page}` : ''}` },
-    ...(!isApproved && { robots: { index: false, follow: true } }),
+    ...(!indexable && { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }),
   }
 }
 
@@ -115,6 +158,7 @@ export async function TagListing({ slug: rawSlug, page }: { slug: string; page: 
     : []
   const relatedGuide =
     TAG_TO_GUIDE[tag] ?? (primaryCategory ? CATEGORY_TO_GUIDE[primaryCategory.slug] : undefined)
+  const alsoGuide = TAG_ALSO_GUIDES[tag]
   const guideCtaCopy = TAG_GUIDE_CTA_COPY[tag]
   const relatedTool = TAG_TO_TOOL[tag]
 
@@ -162,6 +206,26 @@ export async function TagListing({ slug: rawSlug, page }: { slug: string; page: 
                 </p>
                 <p className="text-xs text-gray-600 mt-0.5">
                   {guideCtaCopy?.description ?? 'プロンプトの書き方・使い方を詳しく解説（5分）'}
+                </p>
+              </div>
+              <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          )}
+
+          {alsoGuide && page === 1 && alsoGuide.slug !== relatedGuide?.slug && (
+            <Link
+              href={`/guides/${alsoGuide.slug}`}
+              className="group flex items-center gap-3 mb-6 p-4 bg-white border border-sky-200 rounded-lg hover:border-sky-400 hover:bg-sky-50 transition-colors"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-semibold text-sky-700 uppercase tracking-wide mb-0.5">
+                  関連ガイド
+                </p>
+                <p className="text-sm font-bold text-gray-900 group-hover:text-sky-700 transition-colors truncate">
+                  {alsoGuide.title}
+                </p>
+                <p className="text-xs text-gray-600 mt-0.5">
+                  {alsoGuide.description}
                 </p>
               </div>
               <span className="flex-shrink-0 text-sky-600 group-hover:translate-x-0.5 transition-transform">→</span>

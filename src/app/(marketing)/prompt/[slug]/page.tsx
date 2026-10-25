@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
+import { GUIDES, SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
 import { getPromptBySlug, getPromptSlugs, getRelatedPrompts, getApprovedTagSlugs } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { PromptViewTracker } from '@/components/prompt/PromptViewTracker'
@@ -14,6 +14,7 @@ import { getPromptParamsConfig } from '@/lib/prompt-params/registry'
 import { getVerifiedTools, TOOL_BADGE_META } from '@/lib/verified-tools'
 import { PromptInteractive } from '@/components/prompt/PromptInteractive'
 import { REVALIDATE_DETAIL_SECONDS } from '@/lib/cache-policy'
+import { isPromptIndexable } from '@/lib/seo/indexing-policy'
 
 export const revalidate = REVALIDATE_DETAIL_SECONDS
 
@@ -30,10 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!prompt) return {}
   const ogImage = `${SITE_CONFIG.url}/api/og?title=${encodeURIComponent(prompt.title)}${prompt.toolSlug ? `&tool=${prompt.toolSlug}` : ''}${prompt.categoryName ? `&category=${encodeURIComponent(prompt.categoryName)}` : ''}`
   const title = `${prompt.title}【コピペOK】`
+  const indexable = isPromptIndexable(prompt.slug)
   return {
     title,
     description: prompt.description,
     alternates: { canonical: `${SITE_CONFIG.url}/prompt/${prompt.slug}` },
+    ...(!indexable && { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }),
     openGraph: {
       title,
       description: prompt.description,
@@ -47,6 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [ogImage],
     },
   }
+}
+
+const PROMPT_GUIDE_PINS: Record<string, string[]> = {
+  'bl-couple-hug-from-behind': ['hug-prompt-guide'],
 }
 
 export default async function PromptDetailPage({ params }: Props) {
@@ -73,7 +80,10 @@ export default async function PromptDetailPage({ params }: Props) {
   // Find relevant guides based on the prompt's tool and category
   const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
   const categoryGuides = prompt.categorySlug ? getGuidesForCategory(prompt.categorySlug) : []
-  const relevantGuides = [...new Map([...toolGuides, ...categoryGuides].map(g => [g.slug, g])).values()].slice(0, 3)
+  const pinnedGuides = (PROMPT_GUIDE_PINS[prompt.slug] ?? [])
+    .map(guideSlug => GUIDES.find(g => g.slug === guideSlug))
+    .filter((g): g is (typeof GUIDES)[number] => Boolean(g))
+  const relevantGuides = [...new Map([...pinnedGuides, ...toolGuides, ...categoryGuides].map(g => [g.slug, g])).values()].slice(0, 3)
 
   const schema = generatePromptSchema(
     { id: prompt.slug, title: prompt.title, description: prompt.description, content: prompt.content, category: prompt.categoryName ? { name: prompt.categoryName } : undefined, createdAt: prompt.createdAt, updatedAt: prompt.updatedAt },

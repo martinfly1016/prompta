@@ -98,9 +98,19 @@ export function Footer() {
             </ul>
 
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-3 mt-6">
-              お問い合わせ
+              運営
             </h3>
             <ul className="space-y-2.5">
+              <li>
+                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  運営者情報
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  お問い合わせ
+                </Link>
+              </li>
               <li>
                 <a
                   href={`mailto:${SITE_CONFIG.email}`}
@@ -160,6 +170,12 @@ export function Footer() {
             © {new Date().getFullYear()} {SITE_CONFIG.nameEn}. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-end">
+            <Link href="/about" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+              運営者情報
+            </Link>
+            <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+              お問い合わせ
+            </Link>
             <Link href="/legal/terms" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
               利用規約
             </Link>

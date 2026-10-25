@@ -5,6 +5,8 @@ import { GUIDES, TOOLS, SITE_CONFIG, getRelatedGuides, GUIDE_RELATIONS } from '@
 import { generateHowToSchema } from '@/lib/schema'
 import { getPromptsByTool } from '@/lib/data'
 import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
+import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
+import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -49,6 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Guide content store — static content for each guide
 const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: string }>, faq: Array<{ q: string; a: string }> }> = {
+  ...SEO_BATCH_GUIDE_CONTENT,
+  ...SEO_BATCH_2_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -682,6 +686,11 @@ prompta.jp の <a href="/prompts/camera" class="text-sky-600 hover:underline">/p
 - <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">カラープロンプトガイド</a> — 色彩設計
 - <a href="/guides/negative-prompt-guide" class="text-sky-600 hover:underline">ネガティブプロンプトガイド</a> — 品質改善の必須テクニック
 - <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — キャラクター再現
+- <a href="/guides/stable-diffusion-expression-prompt" class="text-sky-600 hover:underline">表情プロンプト</a> — 笑顔・怒り・涙の英語タグ
+- <a href="/guides/stable-diffusion-pose-prompt" class="text-sky-600 hover:underline">ポーズプロンプト</a> — 立つ・座る・腕の位置
+- <a href="/guides/low-angle-prompt-guide" class="text-sky-600 hover:underline">下からのアングルプロンプト</a> — カメラ位置
+- <a href="/guides/background-prompt-guide" class="text-sky-600 hover:underline">背景プロンプト</a> — 場所・単色背景
+- <a href="/guides/age-prompt-guide" class="text-sky-600 hover:underline">年齢プロンプト</a> — 大人の世代指定
 
 **他ツールとの使い分け：**
 
@@ -1271,7 +1280,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 - \`looking up\` — 上目遣い
 - \`closed eyes\` — 瞑想的・安らか
 
-NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のように重み付けすると微妙なニュアンスが出ます。`,
+NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のように重み付けすると微妙なニュアンスが出ます。タグの一覧とネガティブは <a href="/guides/stable-diffusion-expression-prompt" class="text-sky-600 hover:underline">Stable Diffusion 表情プロンプト</a> にまとめています。`,
       },
       {
         title: 'アニメ系モデル選び — 目的別おすすめ',
@@ -1479,7 +1488,7 @@ soft warm lighting, full body shot,
 
 → サンプル: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白メイドコスプレ</a>
 
-**2. フレンチメイド — 短いスカート × セクシー系**
+**2. フレンチメイド — フリル多めのクラシック**
 
 \`\`\`
 1girl, French maid uniform, short black dress, white frilled apron,
@@ -1837,7 +1846,7 @@ mary jane shoes, victorian gothic aesthetic,
 **DALL-E 3 (ChatGPT 内)**（推奨度: ⭐⭐）
 
 - 強み: 自然な日本語指示が効く（「日本の高校のセーラー服を着た女子高生」）
-- 弱み: NSFW フィルター厳しめ、フレンチメイドなどセクシー系がブロックされやすい
+- 弱み: NSFW フィルター厳しめ、フリルの多い衣装がブロックされやすい
 - 工夫: 「コスプレ写真の作品撮り風」のように**目的を文脈化**するとフィルター回避
 
 **Gemini 2.5 Flash Image (Nano Banana)**（推奨度: ⭐ 編集用途）
@@ -2286,6 +2295,7 @@ full body shot, slice of life illustration
 - 数値 (\`170cm\`) は AI が**相対比較として処理**する（大きい数字 = 高い、小さい数字 = 低い）。**形容詞 + 数値**の組み合わせ（\`tall around 185cm\`）が最も効く
 - **\`towering\` \`leggy\` \`long-legged\`** で高身長を強調
 - **\`petite\` \`small frame\` \`short stature\`** で小柄を強調
+- 一人の大人を低身長・小柄に描くタグ（子ども向けタグは使わない）は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a>
 - 2 人以上の身長差・体格差は専用ガイドが必要 → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> で 8 シチュエーション + 6 ポーズ + 15 サンプル公開中
 
 **ネガティブ（小柄→高身長変換防止）**: \`tall, towering, long legs, leggy\`
@@ -2461,7 +2471,9 @@ worst quality, low quality, blurry, jpeg artifacts
 - <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> — 2 人以上の体格差・身長差専門
 - <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図プロンプト完全ガイド</a> — カップル / 友達 / BL風 / 百合風など二人構図全パターン
 - <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎・重み付け・ControlNet
-- <a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト完全ガイド</a> — 体型に合う服装の組み合わせ`,
+- <a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト完全ガイド</a> — 体型に合う服装の組み合わせ
+- <a href="/guides/stable-diffusion-pose-prompt" class="text-sky-600 hover:underline">ポーズプロンプト</a> — 立つ・座る・腕の位置
+- <a href="/guides/age-prompt-guide" class="text-sky-600 hover:underline">年齢プロンプト</a> — 20歳以上の世代指定`,
       },
     ],
     faq: [
@@ -3506,7 +3518,7 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
       },
       {
         title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
@@ -3820,6 +3832,8 @@ slice of life illustration
 
 \`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
 
+腕の位置まで指定するときは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグ・バックハグプロンプト</a> を見てください。
+
 → サンプル: <a href="/prompt/height-diff-hug-tall-embracing-short" class="text-sky-600 hover:underline">height-diff-hug-tall-embracing-short</a>
 
 **4. 壁ドン（見上げる視点）**
@@ -3847,7 +3861,7 @@ close-up romantic shot, soft warm rim lighting,
 (height difference:1.3), shoujo manga kiss scene, intimate atmosphere
 \`\`\`
 
-**バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`
+**バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`。頬・額・手・キス待ちのタグは <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> にまとめています。
 
 **ポーズ × カメラアングルの組み合わせコツ**:
 
@@ -4432,6 +4446,8 @@ shorter character resting head on taller's shoulder,
 close intimate shot, soft warm lighting, (hug pose:1.3)
 \`\`\`
 
+腕の高さとバックハグは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグ・バックハグプロンプト</a> にまとめています。
+
 **4. お姫様抱っこ（月間 880 件検索）— ロマンチック頂点**
 
 少女漫画・BL・百合いずれも超定番ポーズ。男女・同性問わず映える。
@@ -4474,7 +4490,7 @@ close-up romantic shot, soft warm rim lighting,
 (kiss scene:1.3), shoujo manga aesthetic
 \`\`\`
 
-**バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。
+**バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。頬・額・手・キス待ちのタグ一覧は <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> です。
 
 **8. 背中合わせ — クール対等構図**
 
@@ -4883,7 +4899,7 @@ home outfits, warm indoor evening lighting, close intimate shot,
 
 <a href="/prompt/bl-couple-hug-from-behind" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hug-from-behind-qS2cHNskdtQ1GjSIb0E30SYakOoZeV.jpg" alt="BL 後ろからハグ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
-→ サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>
+→ サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>。腕の位置とバックハグのタグは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグプロンプト</a> です。
 
 **4. お姫様抱っこ — ファンタジー**
 
