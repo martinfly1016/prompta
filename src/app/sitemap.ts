@@ -44,6 +44,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
     {
+      url: `${BASE}/tools/height-difference-maker/simulate`,
+      lastModified: latestDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE}/tools/personal-color-analysis`,
       lastModified: latestDate,
       changeFrequency: 'weekly',

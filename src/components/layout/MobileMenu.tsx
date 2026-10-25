@@ -83,6 +83,13 @@ export function MobileMenu() {
                 <span className="ml-auto text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">NEW</span>
               </Link>
               <Link
+                href="/tools/height-difference-maker/simulate"
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-sky-50 rounded-lg border border-sky-100"
+              >
+                <span>🧍</span>
+                <span className="whitespace-nowrap">身長差シミュレーター</span>
+              </Link>
+              <Link
                 href="/tools/personal-color-analysis"
                 className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-sky-700 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg border border-sky-100"
               >

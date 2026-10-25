@@ -46,6 +46,16 @@ export function Header() {
                     <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">NEW</span>
                   </Link>
                   <Link
+                    href="/tools/height-difference-maker/simulate"
+                    className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-sky-50 border border-sky-100 hover:border-sky-300 transition-all"
+                  >
+                    <span className="text-lg shrink-0">🧍</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-semibold text-sky-700 whitespace-nowrap">身長差シミュレーター</div>
+                      <div className="text-xs text-gray-500 whitespace-nowrap">構図を見てから写真生成</div>
+                    </div>
+                  </Link>
+                  <Link
                     href="/tools/personal-color-analysis"
                     className="flex items-center gap-3 mx-2 mb-1 px-3 py-2.5 text-sm rounded-lg bg-gradient-to-r from-sky-50 to-blue-50 border border-sky-100 hover:border-sky-300 transition-all"
                   >

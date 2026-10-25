@@ -57,6 +57,29 @@ export default async function ToolsPage() {
               </Link>
 
               <Link
+                href="/tools/height-difference-maker/simulate"
+                className="group block p-6 bg-sky-50 rounded-lg border border-sky-200 hover:border-sky-400 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="text-5xl shrink-0">🧍</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-sky-700 transition-colors">
+                        身長差シミュレーター
+                      </h3>
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                      二人の身長と体型を動かして並びを確認してから、写真を添付して画像生成。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <span className="px-2 py-0.5 bg-white rounded-full border border-sky-100 text-sky-700">構図プレビュー</span>
+                      <span className="ml-auto inline-flex items-center gap-1 text-sky-600 font-medium">試す →</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              <Link
                 href="/tools/personal-color-analysis"
                 className="group block p-6 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 rounded-lg border border-sky-100 hover:border-sky-300 hover:shadow-lg transition-all"
               >

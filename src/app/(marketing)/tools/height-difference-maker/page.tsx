@@ -99,6 +99,14 @@ export default function HeightDifferenceMakerPage() {
               </p>
             </div>
 
+            <Link
+              href="/tools/height-difference-maker/simulate"
+              className="mb-6 flex flex-col gap-1 rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 hover:border-sky-400 sm:flex-row sm:items-center sm:gap-3"
+            >
+              <span className="text-sm font-semibold text-sky-950">身長差シミュレーター</span>
+              <span className="text-sm text-sky-900">二人の身長と体型を動かして構図を確認してから、写真で画像生成できます。</span>
+            </Link>
+
             <HeightDifferenceMaker />
           </div>
         </section>
