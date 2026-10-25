@@ -5,6 +5,7 @@ import { GUIDES, TOOLS, SITE_CONFIG, getRelatedGuides, GUIDE_RELATIONS } from '@
 import { generateHowToSchema } from '@/lib/schema'
 import { getPromptsByTool } from '@/lib/data'
 import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
+import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -49,6 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Guide content store — static content for each guide
 const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: string }>, faq: Array<{ q: string; a: string }> }> = {
+  ...SEO_BATCH_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -682,6 +684,11 @@ prompta.jp の <a href="/prompts/camera" class="text-sky-600 hover:underline">/p
 - <a href="/guides/color-prompt-guide" class="text-sky-600 hover:underline">カラープロンプトガイド</a> — 色彩設計
 - <a href="/guides/negative-prompt-guide" class="text-sky-600 hover:underline">ネガティブプロンプトガイド</a> — 品質改善の必須テクニック
 - <a href="/guides/cosplay-prompt-guide" class="text-sky-600 hover:underline">コスプレプロンプトガイド</a> — キャラクター再現
+- <a href="/guides/stable-diffusion-expression-prompt" class="text-sky-600 hover:underline">表情プロンプト</a> — 笑顔・怒り・涙の英語タグ
+- <a href="/guides/stable-diffusion-pose-prompt" class="text-sky-600 hover:underline">ポーズプロンプト</a> — 立つ・座る・腕の位置
+- <a href="/guides/low-angle-prompt-guide" class="text-sky-600 hover:underline">下からのアングルプロンプト</a> — カメラ位置
+- <a href="/guides/background-prompt-guide" class="text-sky-600 hover:underline">背景プロンプト</a> — 場所・単色背景
+- <a href="/guides/age-prompt-guide" class="text-sky-600 hover:underline">年齢プロンプト</a> — 大人の世代指定
 
 **他ツールとの使い分け：**
 
@@ -1271,7 +1278,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 - \`looking up\` — 上目遣い
 - \`closed eyes\` — 瞑想的・安らか
 
-NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のように重み付けすると微妙なニュアンスが出ます。`,
+NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のように重み付けすると微妙なニュアンスが出ます。タグの一覧とネガティブは <a href="/guides/stable-diffusion-expression-prompt" class="text-sky-600 hover:underline">Stable Diffusion 表情プロンプト</a> にまとめています。`,
       },
       {
         title: 'アニメ系モデル選び — 目的別おすすめ',
@@ -1479,7 +1486,7 @@ soft warm lighting, full body shot,
 
 → サンプル: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白メイドコスプレ</a>
 
-**2. フレンチメイド — 短いスカート × セクシー系**
+**2. フレンチメイド — フリル多めのクラシック**
 
 \`\`\`
 1girl, French maid uniform, short black dress, white frilled apron,
@@ -1837,7 +1844,7 @@ mary jane shoes, victorian gothic aesthetic,
 **DALL-E 3 (ChatGPT 内)**（推奨度: ⭐⭐）
 
 - 強み: 自然な日本語指示が効く（「日本の高校のセーラー服を着た女子高生」）
-- 弱み: NSFW フィルター厳しめ、フレンチメイドなどセクシー系がブロックされやすい
+- 弱み: NSFW フィルター厳しめ、フリルの多い衣装がブロックされやすい
 - 工夫: 「コスプレ写真の作品撮り風」のように**目的を文脈化**するとフィルター回避
 
 **Gemini 2.5 Flash Image (Nano Banana)**（推奨度: ⭐ 編集用途）
@@ -2461,7 +2468,9 @@ worst quality, low quality, blurry, jpeg artifacts
 - <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> — 2 人以上の体格差・身長差専門
 - <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図プロンプト完全ガイド</a> — カップル / 友達 / BL風 / 百合風など二人構図全パターン
 - <a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a> — SDXL 基礎・重み付け・ControlNet
-- <a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト完全ガイド</a> — 体型に合う服装の組み合わせ`,
+- <a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト完全ガイド</a> — 体型に合う服装の組み合わせ
+- <a href="/guides/stable-diffusion-pose-prompt" class="text-sky-600 hover:underline">ポーズプロンプト</a> — 立つ・座る・腕の位置
+- <a href="/guides/age-prompt-guide" class="text-sky-600 hover:underline">年齢プロンプト</a> — 20歳以上の世代指定`,
       },
     ],
     faq: [

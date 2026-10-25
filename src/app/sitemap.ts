@@ -8,6 +8,7 @@ import {
   getLatestPromptDate,
 } from '@/lib/data'
 import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
+import { isPromptIndexable, isSitemapPathAllowed, isTagIndexable } from '@/lib/seo/indexing-policy'
 
 // Revalidate hourly so DB-driven URL additions (new Guide/Tag/Prompt rows)
 // surface in sitemap.xml without waiting for the next Vercel deploy.
@@ -101,6 +102,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
 
+    // Operator pages required before advertising
+    { url: `${BASE}/about`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${BASE}/contact`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.4 },
+
     // Legal pages
     { url: `${BASE}/legal/privacy`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/legal/terms`, lastModified: latestDate, changeFrequency: 'yearly', priority: 0.3 },
@@ -130,16 +135,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
 
-    // Tag pages (approved only) — use their own updatedAt
-    ...tags.map(t => ({
+    // Tag pages — approved and indexable. noindex tags stay in the DB.
+    ...tags.filter(t => isTagIndexable(t.slug, true)).map(t => ({
       url: `${BASE}/tag/${encodeURIComponent(t.slug)}`,
       lastModified: t.updatedAt,
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     })),
 
-    // Prompt detail pages — use their own updatedAt
-    ...prompts.map(p => ({
+    // Prompt detail pages — skip noindex slugs. Rows stay published.
+    ...prompts.filter(p => isPromptIndexable(p.slug)).map(p => ({
       url: `${BASE}/prompt/${p.slug}`,
       lastModified: p.updatedAt,
       changeFrequency: 'monthly' as const,
@@ -147,5 +152,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ]
 
-  return routes
+  return routes.filter(route => {
+    const pathname = route.url.startsWith(BASE) ? route.url.slice(BASE.length) : route.url
+    return isSitemapPathAllowed(pathname)
+  })
 }
