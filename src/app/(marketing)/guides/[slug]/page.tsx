@@ -6,6 +6,7 @@ import { generateHowToSchema } from '@/lib/schema'
 import { getPromptsByTool } from '@/lib/data'
 import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
 import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
+import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -51,6 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // Guide content store — static content for each guide
 const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: string }>, faq: Array<{ q: string; a: string }> }> = {
   ...SEO_BATCH_GUIDE_CONTENT,
+  ...SEO_BATCH_2_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -2293,6 +2295,7 @@ full body shot, slice of life illustration
 - 数値 (\`170cm\`) は AI が**相対比較として処理**する（大きい数字 = 高い、小さい数字 = 低い）。**形容詞 + 数値**の組み合わせ（\`tall around 185cm\`）が最も効く
 - **\`towering\` \`leggy\` \`long-legged\`** で高身長を強調
 - **\`petite\` \`small frame\` \`short stature\`** で小柄を強調
+- 一人の大人を低身長・小柄に描くタグ（子ども向けタグは使わない）は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a>
 - 2 人以上の身長差・体格差は専用ガイドが必要 → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> で 8 シチュエーション + 6 ポーズ + 15 サンプル公開中
 
 **ネガティブ（小柄→高身長変換防止）**: \`tall, towering, long legs, leggy\`
@@ -3515,7 +3518,7 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
       },
       {
         title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
@@ -3829,6 +3832,8 @@ slice of life illustration
 
 \`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
 
+腕の位置まで指定するときは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグ・バックハグプロンプト</a> を見てください。
+
 → サンプル: <a href="/prompt/height-diff-hug-tall-embracing-short" class="text-sky-600 hover:underline">height-diff-hug-tall-embracing-short</a>
 
 **4. 壁ドン（見上げる視点）**
@@ -3856,7 +3861,7 @@ close-up romantic shot, soft warm rim lighting,
 (height difference:1.3), shoujo manga kiss scene, intimate atmosphere
 \`\`\`
 
-**バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`
+**バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`。頬・額・手・キス待ちのタグは <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> にまとめています。
 
 **ポーズ × カメラアングルの組み合わせコツ**:
 
@@ -4441,6 +4446,8 @@ shorter character resting head on taller's shoulder,
 close intimate shot, soft warm lighting, (hug pose:1.3)
 \`\`\`
 
+腕の高さとバックハグは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグ・バックハグプロンプト</a> にまとめています。
+
 **4. お姫様抱っこ（月間 880 件検索）— ロマンチック頂点**
 
 少女漫画・BL・百合いずれも超定番ポーズ。男女・同性問わず映える。
@@ -4483,7 +4490,7 @@ close-up romantic shot, soft warm rim lighting,
 (kiss scene:1.3), shoujo manga aesthetic
 \`\`\`
 
-**バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。
+**バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。頬・額・手・キス待ちのタグ一覧は <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> です。
 
 **8. 背中合わせ — クール対等構図**
 
@@ -4892,7 +4899,7 @@ home outfits, warm indoor evening lighting, close intimate shot,
 
 <a href="/prompt/bl-couple-hug-from-behind" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-hug-from-behind-qS2cHNskdtQ1GjSIb0E30SYakOoZeV.jpg" alt="BL 後ろからハグ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
-→ サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>
+→ サンプル: <a href="/prompt/bl-couple-hug-from-behind" class="text-sky-600 hover:underline">BL 後ろからハグ</a>。腕の位置とバックハグのタグは <a href="/guides/hug-prompt-guide" class="text-sky-600 hover:underline">ハグプロンプト</a> です。
 
 **4. お姫様抱っこ — ファンタジー**
 

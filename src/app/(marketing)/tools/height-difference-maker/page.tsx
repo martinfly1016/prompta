@@ -4,17 +4,19 @@ import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { HeightDifferenceMaker } from '@/components/tools/HeightDifferenceMaker'
 
+const TOOL_TITLE = '体格差シミュレーション・身長差メーカー｜推しの体格差AI画像'
+
 export const metadata: Metadata = {
-  title: '身長差メーカー｜推しとの身長差AIプロンプト作り方・ChatGPT対応',
+  title: TOOL_TITLE,
   description:
-    '身長差メーカーで推しとの身長差、体格差、逆身長差、3人構図のAI画像生成プロンプトを無料作成。Stable Diffusion・Midjourney・ChatGPT画像生成向けに、身長差プロンプトの作り方と英語プロンプトをコピペできます。',
+    '体格差シミュレーションと身長差メーカー。推しとの身長差、体格差、逆身長差、3人構図のAI画像生成プロンプトを無料作成。Stable Diffusion・Midjourney・ChatGPT画像生成向けにコピペできます。',
   alternates: {
     canonical: `${SITE_CONFIG.url}/tools/height-difference-maker`,
   },
   openGraph: {
-    title: '身長差メーカー｜推しとの身長差AIプロンプト作り方・ChatGPT対応',
+    title: TOOL_TITLE,
     description:
-      '身長・体格・関係性・ポーズを選ぶだけで、身長差プロンプトとネガティブプロンプトを無料で作成してコピペできます。',
+      '身長・体格・関係性・ポーズを選ぶだけで、体格差シミュレーション用の英語プロンプトとネガティブプロンプトを無料で作成してコピペできます。',
     type: 'website',
     locale: 'ja_JP',
   },
@@ -87,9 +89,9 @@ export default function HeightDifferenceMakerPage() {
         <section className="py-8 lg:py-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-6">
-              <p className="text-sm font-semibold text-sky-700 mb-2">身長差・体格差プロンプト生成</p>
+              <p className="text-sm font-semibold text-sky-700 mb-2">体格差シミュレーション・身長差メーカー</p>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
-                身長差メーカー｜推しとの身長差プロンプトを無料作成
+                体格差シミュレーション・身長差メーカー
               </h1>
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 推しとの身長差、BL・百合・男女カップル、逆身長差、体格差、3 人並びの英語プロンプトを無料で作成できます。

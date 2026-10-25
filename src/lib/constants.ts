@@ -651,9 +651,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'cosplay-prompt-guide',
-    title: 'コスプレプロンプト完全ガイド｜セーラー服・メイド服・学校制服 + 8 衣装【コピペOK】',
-    description: 'AI コスプレプロンプト完全ガイド。セーラー服（夏服/冬服/黒）、メイド服（フレンチ/ヴィクトリアン/ゴシック）、学校制服（ブレザー/ダークアカデミア）+ 巫女・ナース・着物など 30+ コピペテンプレ。Stable Diffusion / NovelAI / Midjourney / DALL-E 使い分け解説。',
-    targetKeyword: 'コスプレ プロンプト 書き方',
+    title: 'コスプレプロンプト集｜メイド服・巫女・ナース【コピペOK】',
+    description: 'コスプレプロンプト集。メイド服、巫女装束、ナース服に加え、セーラー服の夏服・冬服や学校制服を英語タグでコピペできます。Stable Diffusion・NovelAI・Midjourney 向け。',
+    targetKeyword: 'コスプレ プロンプト',
     monthlySearchVolume: 480,
   },
   {
@@ -819,6 +819,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '年齢 プロンプト',
     monthlySearchVolume: 1300,
   },
+  {
+    slug: 'short-height-petite-prompt',
+    title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】',
+    description: '大人の低身長・小柄キャラを描く英語プロンプト。petite と構図、成人であることの書き方、子ども向けタグを入れないネガティブを解説します。',
+    targetKeyword: '低身長 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'kiss-prompt-guide',
+    title: 'キスプロンプト集｜キス顔・頬キス・キス待ちの英語呪文【コピペOK】',
+    description: '大人のロマンチックなキスプロンプト。頬・額・手・結婚式・キス待ちの顔・POV の英語タグと、顔が溶けない書き方を解説します。',
+    targetKeyword: 'キス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'hug-prompt-guide',
+    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    description: 'ハグ、抱き合う、バックハグ、後ろから抱きつく英語プロンプト。腕の位置、カップル・友人・大人の家族の書き方とネガティブを解説します。',
+    targetKeyword: 'ハグ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'dark-room-prompt-guide',
+    title: '暗い部屋プロンプト｜薄暗い室内・夜の照明の英語呪文【コピペOK】',
+    description: '暗い部屋・薄暗い部屋・暗い雰囲気の英語プロンプト。光源を一つに決めて、黒つぶれと濁った色を避ける書き方を解説します。',
+    targetKeyword: '暗い部屋 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'illustrious-prompt-guide',
+    title: 'Illustriousプロンプトの書き方｜順番・品質タグ・テンプレ',
+    description: 'Illustrious XL のプロンプトの書き方。公開モデルカードに基づく品質タグ、Danbooru タグと自然言語、ネガティブ、絵師タグの注意、テンプレを解説します。',
+    targetKeyword: 'illustrious プロンプト',
+    monthlySearchVolume: 4400,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -930,6 +965,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'age-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['anime', 'body-type'],
+  },
+  'short-height-petite-prompt': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type'],
+  },
+  'kiss-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime'],
+  },
+  'hug-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
+  },
+  'dark-room-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera', 'color'],
+  },
+  'illustrious-prompt-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['anime'],
   },
 }
 
