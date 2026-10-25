@@ -7,6 +7,7 @@ import {
   geminiImageTransport,
   generateGeminiImage,
   resolveGeminiImageModel,
+  summarizeGeminiPayload,
 } from './gemini-image'
 import {
   DEFAULT_OPENAI_IMAGE_MODEL,
@@ -83,9 +84,9 @@ describe('gemini image model', () => {
     const body = JSON.parse(String(calls[0].init.body))
     assert.equal(body.model, 'gemini-nano-banana-2.1')
     assert.equal(body.store, false)
+    assert.equal(body.response_format.delivery, undefined)
     assert.deepEqual(body.response_format, {
       type: 'image',
-      delivery: 'inline',
       image_size: '1K',
     })
     assert.equal(body.input.length, 1)
@@ -106,6 +107,21 @@ describe('gemini image model', () => {
     assert.equal(body.input[2].mime_type, 'image/png')
     assert.equal(body.response_format.aspect_ratio, '3:4')
     assert.equal(body.response_format.image_size, undefined)
+    assert.equal(body.response_format.delivery, undefined)
+  })
+
+  it('rejects 512, which Nano Banana 2.1 does not support', async () => {
+    process.env.GEMINI_IMAGE_SIZE = '512'
+    await assert.rejects(
+      () => generateGeminiImage({ prompt: 'a red square on white' }),
+      /GEMINI_IMAGE_SIZE/,
+    )
+    assert.equal(calls.length, 0)
+    process.env.GEMINI_IMAGE_SIZE = '0.5K'
+    await assert.rejects(
+      () => generateGeminiImage({ prompt: 'a red square on white' }),
+      /GEMINI_IMAGE_SIZE/,
+    )
   })
 
   it('keeps generateContent for a legacy rollback model', async () => {
@@ -136,7 +152,46 @@ describe('gemini image model', () => {
       })?.data,
       'abc',
     )
+    assert.equal(
+      extractInteractionImage({
+        status: 'completed',
+        steps: [
+          {
+            type: 'model_output',
+            content: [{ type: 'image', data: TINY_PNG, mime_type: 'image/png' }],
+          },
+        ],
+      })?.mime_type,
+      'image/png',
+    )
     assert.equal(extractInteractionImage({ status: 'completed', steps: [] }), null)
+  })
+
+  it('logs a truncated body when the interaction shape has no image', async () => {
+    const logged: string[] = []
+    const original = console.error
+    console.error = (...args: unknown[]) => {
+      logged.push(args.map((part) => String(part)).join(' '))
+    }
+    const huge = 'A'.repeat(2000)
+    globalThis.fetch = (async () =>
+      jsonResponse({
+        status: 'completed',
+        steps: [{ type: 'model_output', content: [{ type: 'text', text: 'no image', data: huge }] }],
+      })) as typeof fetch
+    try {
+      await assert.rejects(
+        () => generateGeminiImage({ prompt: 'a red square on white' }),
+        /Gemini returned no image/,
+      )
+    } finally {
+      console.error = original
+    }
+    const summary = logged.join('\n')
+    assert.match(summary, /unexpected interaction response/)
+    assert.match(summary, /no image/)
+    assert.ok(summary.length < huge.length)
+    assert.match(summarizeGeminiPayload({ data: huge }), /chars\)/)
   })
 })
 
@@ -194,6 +249,6 @@ describe('hair color simulation', () => {
     assert.equal(body.model, 'gemini-nano-banana-2.1')
     assert.equal(body.input[1].type, 'image')
     assert.equal(body.input[1].mime_type, 'image/jpeg')
-    assert.equal(body.response_format.image_size, undefined)
+    assert.deepEqual(body.response_format, { type: 'image' })
   })
 })
