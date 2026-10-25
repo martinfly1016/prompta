@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
+import { GUIDES, SITE_CONFIG, getGuidesForTool, getGuidesForCategory } from '@/lib/constants'
 import { getPromptBySlug, getPromptSlugs, getRelatedPrompts, getApprovedTagSlugs } from '@/lib/data'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { PromptViewTracker } from '@/components/prompt/PromptViewTracker'
@@ -52,6 +52,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+const PROMPT_GUIDE_PINS: Record<string, string[]> = {
+  'bl-couple-hug-from-behind': ['hug-prompt-guide'],
+}
+
 export default async function PromptDetailPage({ params }: Props) {
   const resolvedParams = await params
   const slug = decodeURIComponent(resolvedParams.slug)
@@ -76,7 +80,10 @@ export default async function PromptDetailPage({ params }: Props) {
   // Find relevant guides based on the prompt's tool and category
   const toolGuides = prompt.toolSlug ? getGuidesForTool(prompt.toolSlug) : []
   const categoryGuides = prompt.categorySlug ? getGuidesForCategory(prompt.categorySlug) : []
-  const relevantGuides = [...new Map([...toolGuides, ...categoryGuides].map(g => [g.slug, g])).values()].slice(0, 3)
+  const pinnedGuides = (PROMPT_GUIDE_PINS[prompt.slug] ?? [])
+    .map(guideSlug => GUIDES.find(g => g.slug === guideSlug))
+    .filter((g): g is (typeof GUIDES)[number] => Boolean(g))
+  const relevantGuides = [...new Map([...pinnedGuides, ...toolGuides, ...categoryGuides].map(g => [g.slug, g])).values()].slice(0, 3)
 
   const schema = generatePromptSchema(
     { id: prompt.slug, title: prompt.title, description: prompt.description, content: prompt.content, category: prompt.categoryName ? { name: prompt.categoryName } : undefined, createdAt: prompt.createdAt, updatedAt: prompt.updatedAt },

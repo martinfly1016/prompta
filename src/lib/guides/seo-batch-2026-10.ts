@@ -490,7 +490,7 @@ long neck, twisted neck, extra knees
 
 人物のうしろに背景を付ける場合と、背景だけを描く場合ではネガティブが違います。写真から背景を消す・置き換える作業は生成とは別で、[背景削除](/prompt/background-removal-transparent-png) と [スタジオ背景への置き換え](/prompt/background-replace-studio-neutral) が写真加工側の実例です。
 
-色の指定そのものは [色プロンプト](/guides/color-prompt-guide)、タグの一覧は [背景](/tag/背景) です。`,
+色の指定そのものは [色プロンプト](/guides/color-prompt-guide)、タグの一覧は [背景](/tag/背景) です。室内を暗くする光源と、黒く潰さない書き方は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に分けてあります。`,
       },
       {
         title: '単色・スタジオ・ぼかし',
@@ -651,7 +651,7 @@ ${NEGATIVE_FACE}, extra people, crowd, cluttered background
 
 アニメ系モデルは何も書かないと若い顔に寄ります。大人を描きたいときは、年齢を人物の直後に置き、幼く見せる単語をネガティブに入れます。数値はモデルが厳密な年齢として守るわけではなく、「若い大人」「中年」「高齢」の方向を示すために使います。
 
-体格そのものは [体型プロンプト](/guides/body-type-prompt-guide)、顔の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt) です。高齢の公開作例は [50年の経年](/prompt/age-progression-elderly-50years) と [絵を描く高齢の男性](/prompt/colorful-paint-thoughtful-elderly-man) です。`,
+体格そのものは [体型プロンプト](/guides/body-type-prompt-guide)、大人の低身長は [低身長・小柄プロンプト](/guides/short-height-petite-prompt)、顔の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt) です。高齢の公開作例は [50年の経年](/prompt/age-progression-elderly-50years) と [絵を描く高齢の男性](/prompt/colorful-paint-thoughtful-elderly-man) です。`,
       },
       {
         title: '数字と世代の単語',
