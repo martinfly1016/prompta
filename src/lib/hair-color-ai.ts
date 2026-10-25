@@ -1,35 +1,19 @@
-// Gemini Vision wrapper for 似合う髪色診断 + Gemini 2.5 Flash Image hair recolor.
+// Gemini Vision wrapper for 似合う髪色診断 + Nano Banana 2.1 hair recolor.
 //
 // Two stages:
 //   1. diagnoseHairColor(buf, mime) — Vision call returns 5 candidate hair
 //      colors with hex + Japanese name + reason + category (safe/trend/bold).
 //   2. simulateHairColor(buf, mime, hex, nameJa) — Image edit call returns
-//      a PNG of the same person with only the hair color changed. R7-compliant
+//      the same person with only the hair color changed. R7-compliant
 //      preserve clause + R5 negative + R3 output spec + R4 quality anchor.
+//
+// Image edits go through the shared Gemini provider (Interactions API,
+// gemini-nano-banana-2.1 by default). Diagnosis stays on the text model.
+
+import { generateGeminiImage } from '@/lib/image-providers/gemini-image'
 
 const TEXT_MODEL = process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash'
-// Default: gemini-3.1-flash-image-preview (a.k.a. "Nano Banana 2"),
-// the sweet-spot variant — $0.067/call at 1K, ~58% gross margin per
-// credit. Visual quality is on par with the $0.134 Pro tier (verified
-// 2026-05-11 A/B/C test on tied-back hair) at 50% of Pro's cost.
-//
-// Why NB2 over Flash ($0.039) for paid tools:
-//   - Old prompt + Flash = catastrophic structure drift → 1:8 conversion
-//     baseline is biased by buggy result quality
-//   - New TASK/STRICT INVARIANT prompt + NB2 produces pixel-faithful
-//     output → quality issue removed → conversion should improve
-//   - Welcome-bonus economics: 1:5 break-even is plausible post-fix
-//   - Long-term: repeat purchases run at 58% margin (no welcome cost)
-//
-// Content production (collect / style-test-live) stays on the cheap
-// Flash via GEMINI_IMAGE_MODEL — that's high-volume internal cost, not
-// user-facing revenue. See memory: reference_gemini_image_models.md.
-const IMAGE_MODEL =
-  process.env.GEMINI_PAID_IMAGE_MODEL ||
-  process.env.GEMINI_IMAGE_MODEL ||
-  'gemini-3.1-flash-image-preview'
 const TEXT_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${TEXT_MODEL}:generateContent`
-const IMAGE_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:generateContent`
 
 const DIAGNOSE_PROMPT = `You are a professional Japanese hair colorist (ヘアカラーリスト) with deep training in personal color theory (4-season + undertone) and current Japanese hair trends.
 
@@ -226,7 +210,7 @@ Photorealistic. Original resolution.`
 
 export interface HairSimulationResult {
   imageBase64: string
-  mimeType: 'image/png'
+  mimeType: string
   promptUsed: string
 }
 
@@ -237,49 +221,15 @@ export async function simulateHairColor(
   nameJa: string,
   nameEn: string,
 ): Promise<HairSimulationResult> {
-  const apiKey = process.env.GOOGLE_AI_API_KEY || process.env.GEMINI_API_KEY
-  if (!apiKey) throw new Error('Missing GOOGLE_AI_API_KEY')
-
   const prompt = buildRecolorPrompt(hex, nameJa, nameEn)
-
-  const body = {
-    contents: [
-      {
-        parts: [
-          { text: prompt },
-          { inline_data: { mime_type: mimeType, data: imageBuffer.toString('base64') } },
-        ],
-      },
-    ],
-    generationConfig: { responseModalities: ['IMAGE'] },
-  }
-
-  const res = await fetch(`${IMAGE_ENDPOINT}?key=${apiKey}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+  const out = await generateGeminiImage({
+    prompt,
+    sourceImage: { base64: imageBuffer.toString('base64'), mimeType },
   })
-
-  if (!res.ok) {
-    const txt = await res.text()
-    throw new Error(`Gemini Image ${res.status}: ${txt.slice(0, 300)}`)
-  }
-
-  const json: any = await res.json()
-  const parts = json?.candidates?.[0]?.content?.parts ?? []
-  const imgPart = parts.find(
-    (p: any) => p?.inline_data?.data || p?.inlineData?.data,
-  )
-  const b64: string | undefined =
-    imgPart?.inline_data?.data ?? imgPart?.inlineData?.data
-  if (!b64) {
-    const textPart = parts.find((p: any) => p?.text)?.text ?? ''
-    throw new Error(`No image returned from Gemini. Text: ${textPart.slice(0, 200)}`)
-  }
-
+  if (!out.image?.base64) throw new Error('No image returned from Gemini')
   return {
-    imageBase64: b64,
-    mimeType: 'image/png',
+    imageBase64: out.image.base64,
+    mimeType: out.image.mimeType || 'image/png',
     promptUsed: prompt,
   }
 }
