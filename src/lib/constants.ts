@@ -299,7 +299,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
     faqs: [
       { question: '女性向け髪型プロンプトのおすすめは？', answer: 'ロング系（long hair, very long hair, waist-length hair）、ツインテール系（twin tails, low twin tails）、ボブ・ショート系（short bob, pixie cut）、アップスタイル（ponytail, bun, double bun）の 4 グループを覚えておくと、ほぼすべての女性キャラ髪型がカバーできます。「1girl, [長さ], [スタイル], [色], [質感]」の順で書くと AI の解釈が安定します。' },
       { question: '髪型プロンプトは ChatGPT でも使えますか？', answer: 'ChatGPT 自体は画像生成ができませんが、DALL-E 3（ChatGPT の画像生成機能）や Gemini 2.5 Flash Image、Midjourney、Stable Diffusion で使えます。本ページの英語プロンプトはすべて Stable Diffusion・NovelAI 用の構文ですが、DALL-E に渡す場合は自然な英文章に書き換えると認識率が上がります（例: "A girl with long wavy blonde hair tied in a ponytail"）。' },
-      { question: '自分に似合う髪型・髪色を AI で試せますか？', answer: 'はい。当サイトの「似合う髪色診断 AI」では、写真 1 枚で AI があなたのパーソナルカラーに合う髪色を 5 候補提案し、Gemini 2.5 Flash Image で Before/After シミュレーション画像を生成します。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）、写真は保存されません。' },
+      { question: '自分に似合う髪型・髪色を AI で試せますか？', answer: 'はい。当サイトの「似合う髪色診断 AI」では、写真 1 枚で AI があなたのパーソナルカラーに合う髪色を 5 候補提案し、Nano Banana 2.1 で Before/After シミュレーション画像を生成します。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）、写真は保存されません。' },
       { question: '前髪・もみあげ・後れ毛の細かい指定方法は？', answer: '前髪は「blunt bangs（ぱっつん）」「side-swept bangs（流し前髪）」「curtain bangs（センター分け）」「hime cut（姫カット）」など。もみあげは「sideburns, short sideburns」、後れ毛は「stray hair, hair strands」と書きます。これらは省略されがちなので (blunt bangs:1.2) のように重み付けすると確実です。' },
       { question: '髪色プロンプトと色滲み対策は？', answer: '基本色は blonde / brunette / black hair / red hair / silver hair / blue hair / pink hair。グラデーションは「gradient hair, pink to blue」、メッシュは「streaked hair, blonde with pink highlights」。複数キャラや服色と髪色が混ざる「color bleeding」を防ぐには BREAK 構文（「red hair BREAK blue dress」）または CutOff 拡張機能で領域固定が有効です。' },
       { question: 'ロング・ボブ・ショートの違いを画像で比較したい', answer: '本ページの 50+ 例文を順番にコピペして、同じプロンプトの「[hair length]」部分だけ差し替えると、AI の挙動が比較できます。Stable Diffusion・NovelAI ともにシードを固定（seed: 12345）すると、長さ以外を完全一致させて比較画像が作れます。' },
@@ -1113,9 +1113,9 @@ export const TOOL_PAGE_CONTENT: Record<string, ToolPageContent> = {
       { question: 'Gemini 2.5 Pro / Flash / Flash Image (Nano Banana) の違いは？', answer: '2.5 Pro は最大1Mトークン対応で長文分析・複雑な推論に最強、API コストは高め。2.5 Flash は速度とコストのバランス重視で日常業務に最適、ChatGPT API より安価。2.5 Flash Image（Nano Banana）は画像編集特化モデルで、写真加工・合成タスクが得意。用途に応じて使い分けます。' },
       { question: 'Geminiは日本語のプロンプトに対応していますか？', answer: 'はい、Gemini は日本語に完全対応しています。敬語・ビジネス用語も自然に扱え、ChatGPT・Claudeと同等の日本語品質です。マルチモーダル機能（画像内のテキスト読み取りなど）も日本語OCRに強く、Google翻訳の血統が活きています。' },
       { question: 'GeminiとChatGPT・Claudeの使い分けは？', answer: '画像・動画・音声を含むマルチモーダルタスクと、超長文（書籍・大量資料）の分析はGeminiが最強。創造的ライティングと対話型UIはChatGPTが優位、長文の精緻な要約・分析と倫理的応答はClaudeが優位です。Googleサービスとの統合が必要ならGemini一択になります。' },
-      { question: 'Nano Banana（Gemini 2.5 Flash Image）で写真加工するには？', answer: '元写真と「○○を××に変更、その他要素は完全保持」という保持要素明示プロンプトを組み合わせます。Promptaでは似合う髪色診断・パーソナルカラー診断・背景置換などNano Banana活用ツールを<a href="/tools/hair-color-diagnosis" class="text-sky-600 hover:underline">無料公開中</a>で、コピペ不要で写真をアップロードするだけで試せます。' },
+      { question: 'Nano Banana 2.1 で写真加工するには？', answer: '元写真と「○○を××に変更、その他要素は完全保持」という保持要素明示プロンプトを組み合わせます。Promptaでは似合う髪色診断・パーソナルカラー診断・背景置換など Nano Banana 2.1 活用ツールを<a href="/tools/hair-color-diagnosis" class="text-sky-600 hover:underline">無料公開中</a>で、コピペ不要で写真をアップロードするだけで試せます。' },
       { question: 'Geminiのプロンプトは無料で使えますか？', answer: 'Promptaに掲載しているGeminiプロンプトはすべて無料でコピー・利用可能です。Gemini本体の利用は、無料版（gemini.google.com）と有料版（Gemini Advanced / AI Pro / Vertex AI API）が選べます。商用利用時の規約はGoogle側の利用規約に従ってください。' },
-      { question: 'GeminiのAPIで業務自動化するには？', answer: 'Google AI Studio または Vertex AI 経由で API キーを取得し、generateContent エンドポイントに JSON でプロンプトを送ります。Promptaでも Gemini 2.5 Flash Image API を使った写真加工ツール（パーソナルカラー診断・似合う髪色診断）を運用しており、プロンプトテンプレートを工夫することで安定した品質を実現しています。' },
+      { question: 'GeminiのAPIで業務自動化するには？', answer: 'Google AI Studio または Vertex AI 経由で API キーを取得し、プロンプトを JSON で送ります。画像生成の現行モデルは Interactions API の Nano Banana 2.1 です。Promptaでもこの API を使った写真加工ツール（パーソナルカラー診断・似合う髪色診断）を運用しており、プロンプトテンプレートを工夫することで安定した品質を実現しています。' },
     ],
   },
 }

@@ -77,11 +77,12 @@ export function recommendForPrompt(args: {
  * extreme contrast, strict character count, opposite-of-stereotype body
  * types). Empirically validated against the 2026-05-27 体格差カップル
  * batch where fast-sdxl scored 1/6 on first pass and 2/3 on retry, while
- * gpt-image-1 scored 3/3 on the same hard subset.
+ * gpt-image-1 scored 3/3 on the same hard subset (that model was shut
+ * down 2026-10-23; the openai-image provider now calls gpt-image-2.5-flare).
  *
- * Detection is intentionally permissive (any single hit triggers): the
- * 8x cost of gpt-image-1 over fast-sdxl ($0.04 vs $0.005) is far smaller
- * than the cost of shipping a wrong image + unpublish + retry cycle.
+ * Detection is intentionally permissive (any single hit triggers): flare at
+ * medium 1024 (~$0.014) vs fast-sdxl (~$0.005) is still cheaper than
+ * shipping a wrong image + unpublish + retry cycle.
  */
 const ANTI_BIAS_PATTERNS: RegExp[] = [
   // reverse-pairing keywords (height/body inversion of stereotype)
@@ -109,7 +110,7 @@ export interface PickImageProviderOpts {
 /**
  * Pick the best image provider for a given prompt at batch-generation
  * time. Returns `fal-sdxl` for in-distribution prompts (cheap, fast) and
- * escalates to `openai-image` (gpt-image-1) when anti-bias keywords are
+ * escalates to `openai-image` (gpt-image-2.5-flare) when anti-bias keywords are
  * detected.
  *
  * Use this in `src/scripts/collect/_<batch>_*.ts` instead of hard-coding

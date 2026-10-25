@@ -93,7 +93,7 @@ export default async function ToolsPage() {
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">NEW</span>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed mb-3">
-                      写真からヘアカラー 5 提案 + Before/After シミュレーション画像。Gemini 2.5 Flash Image、ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。
+                      写真からヘアカラー 5 提案 + Before/After シミュレーション画像。Nano Banana 2.1、ログインで 3 回無料（全ツール共通・1 回 1 ポイント）。
                     </p>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
                       <span className="px-2 py-0.5 bg-white rounded-full border border-gray-200 text-gray-700">Before/After 付き</span>

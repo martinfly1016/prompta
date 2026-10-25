@@ -1,4 +1,4 @@
-// Single-image edit via Google Gemini 2.5 Flash Image (Nano Banana).
+// Single-image edit via the shared Gemini image provider (Nano Banana 2.1).
 // Usage:
 //   npx tsx src/scripts/style-test-live/render.ts \
 //     --source=path/to/input.jpg \
@@ -6,12 +6,11 @@
 //     --out=path/to/output.png
 //
 // Env: GOOGLE_AI_API_KEY (or GEMINI_API_KEY) required.
+// Model: GEMINI_PAID_IMAGE_MODEL || GEMINI_IMAGE_MODEL || gemini-nano-banana-2.1
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-
-const MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+import { generateGeminiImage } from "../../lib/image-providers/gemini-image";
 
 type Args = { source: string; prompt: string; out: string };
 
@@ -36,38 +35,14 @@ function mimeFromExt(p: string): string {
 }
 
 export async function renderEdit(args: Args, apiKey: string): Promise<{ outPath: string; bytes: number }> {
+  if (!apiKey) throw new Error("Missing GOOGLE_AI_API_KEY (or GEMINI_API_KEY) env var.");
   const buf = fs.readFileSync(args.source);
-  const body = {
-    contents: [
-      {
-        parts: [
-          { text: args.prompt },
-          { inline_data: { mime_type: mimeFromExt(args.source), data: buf.toString("base64") } },
-        ],
-      },
-    ],
-    generationConfig: { responseModalities: ["IMAGE"] },
-  };
-
-  const res = await fetch(`${ENDPOINT}?key=${apiKey}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
+  const out = await generateGeminiImage({
+    prompt: args.prompt,
+    sourceImage: { base64: buf.toString("base64"), mimeType: mimeFromExt(args.source) },
   });
-
-  if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`Gemini API ${res.status}: ${txt.slice(0, 500)}`);
-  }
-
-  const json: any = await res.json();
-  const parts = json?.candidates?.[0]?.content?.parts ?? [];
-  const imgPart = parts.find((p: any) => p?.inline_data?.data || p?.inlineData?.data);
-  const b64: string | undefined = imgPart?.inline_data?.data ?? imgPart?.inlineData?.data;
-  if (!b64) {
-    const textPart = parts.find((p: any) => p?.text)?.text ?? "";
-    throw new Error(`No image returned. Text: ${textPart.slice(0, 300)}`);
-  }
+  const b64 = out.image?.base64;
+  if (!b64) throw new Error("No image returned.");
   fs.mkdirSync(path.dirname(args.out), { recursive: true });
   const outBuf = Buffer.from(b64, "base64");
   fs.writeFileSync(args.out, outBuf);

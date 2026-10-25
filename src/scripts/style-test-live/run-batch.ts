@@ -1,5 +1,5 @@
 // Batch runner: pull photo-edit prompts from DB, render against mapped source photos
-// via Gemini 2.5 Flash Image, write Before/After to seo/style-test-samples/output/,
+// via the shared Gemini image provider, write Before/After to seo/style-test-samples/output/,
 // emit a Markdown report.
 //
 // Usage:
@@ -28,6 +28,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { renderEdit } from "./render";
+import { resolveGeminiImageModel } from "../../lib/image-providers/gemini-image";
 
 const ROOT = process.cwd();
 
@@ -187,7 +188,7 @@ function renderReport(
   lines.push(`# Style-Test-Live 报告 — photo-edit 真实渲染`);
   lines.push("");
   lines.push(`> 渲染日期：${today}`);
-  lines.push(`> 模型：${process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image"}`);
+  lines.push(`> 模型：${resolveGeminiImageModel()}`);
   lines.push(`> 输出目录：${args.out}`);
   lines.push(`> 渲染条数：${results.length}（成功 ${ok.length} / 失败 ${fail.length}）`);
   lines.push("");
