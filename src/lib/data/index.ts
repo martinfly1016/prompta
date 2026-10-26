@@ -591,13 +591,11 @@ export async function getTagBySlug(slug: string) {
       // A successful query returns null when the tag does not exist. This
       // fallback runs only when the query throws. Treating that as
       // "unapproved" makes the tag page 200 + noindex, which a CDN can cache.
-      // Fail the request instead. Static generation against the local
-      // placeholder database still has to finish, so that phase keeps the
-      // empty fallback.
-      const databaseUrl = process.env.DATABASE_URL ?? ''
-      const building = process.env.NEXT_PHASE === 'phase-production-build'
-      const localDatabase = !databaseUrl || /localhost|127\.0\.0\.1/.test(databaseUrl)
-      if (building && localDatabase) return null
+      // Fail the request at runtime and during ISR instead.
+      // `next build` must still finish when DATABASE_URL is missing or points
+      // at an unreachable host (preview included). Those tag pages stay empty
+      // here and fill in later via ISR.
+      if (process.env.NEXT_PHASE === 'phase-production-build') return null
       throw new Error('Tag lookup failed')
     },
     { key: ['tag', slug], ...TAG_CACHE },
