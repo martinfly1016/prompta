@@ -93,6 +93,15 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
               <h1 className="text-3xl font-bold text-gray-900">{h1Text}</h1>
             </div>
             <p className="text-gray-600 leading-relaxed mb-4">{category.description}</p>
+            {category.slug === 'body-type' && (
+              <p className="text-sm text-gray-700 mb-4">
+                筋肉質・マッチョの段階と部位タグは{' '}
+                <Link href="/guides/muscular-prompt-guide" className="text-sky-600 hover:underline">
+                  筋肉質・マッチョプロンプト
+                </Link>
+                に分けています。このページはスレンダー、大柄、男性の体型、小柄の作例です。
+              </p>
+            )}
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center px-3 py-1 bg-sky-50 text-sky-700 text-sm font-medium rounded-full">{total} プロンプト</span>
               {categoryTools.map(tool => (

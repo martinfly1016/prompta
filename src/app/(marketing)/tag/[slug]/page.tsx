@@ -23,7 +23,7 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'BL ポーズ': { slug: 'bl-pose-collection-guide', title: 'BL ポーズ集｜AIで再現する男性 2 人の定番 30 ポーズ完全ガイド' },
   '二人構図': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
   'カップル': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
-  '壁ドン': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜壁ドン・キス・ハグ構図' },
+  '壁ドン': { slug: 'kabedon-prompt-guide', title: '壁ドンプロンプト｜身長差・視点別の英語呪文【コピペOK】' },
   'キス': { slug: 'kiss-prompt-guide', title: 'キスプロンプト集｜キス顔・頬キス・キス待ちの英語呪文【コピペOK】' },
   'ハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
   'バックハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
@@ -36,12 +36,22 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   '見上げる': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜見上げる構図' },
   'ローアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
   'カメラアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
-  '俯瞰': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
+  '俯瞰': { slug: 'high-angle-prompt-guide', title: '見下ろす構図・俯瞰プロンプト｜上からのアングル【コピペOK】' },
+  '金髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
+  '黒髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
+  '赤髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
+  '銀髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
+  'マルチカラー': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
   '背景': { slug: 'background-prompt-guide', title: '背景プロンプト一覧【場所別・コピペOK】' },
   '表情変更': { slug: 'stable-diffusion-expression-prompt', title: 'Stable Diffusion表情プロンプト【コピペOK】' },
 }
 
 const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description: string }> = {
+  '俯瞰': {
+    slug: 'low-angle-prompt-guide',
+    title: '下からのアングルプロンプト【コピペOK】',
+    description: '下から見上げる構図です。見下ろす構図とはカメラの向きが逆になります。',
+  },
   'カップル': {
     slug: 'hug-prompt-guide',
     title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
@@ -109,8 +119,24 @@ export async function generateStaticParams() {
   return slugs.map(slug => ({ slug: encodeURIComponent(slug) }))
 }
 
+/** Decode once or twice. A double-encoded param would otherwise miss the tag and noindex the real URL. */
+export function decodeTagSlug(raw: string): string {
+  let value = raw
+  for (let i = 0; i < 2; i++) {
+    if (!/%[0-9A-Fa-f]{2}/.test(value)) break
+    try {
+      const next = decodeURIComponent(value)
+      if (next === value) break
+      value = next
+    } catch {
+      break
+    }
+  }
+  return value
+}
+
 export async function tagMetadata(rawSlug: string, page: number): Promise<Metadata> {
-  const tag = decodeURIComponent(rawSlug)
+  const tag = decodeTagSlug(rawSlug)
   const suffix = page > 1 ? ` — ページ${page}` : ''
 
   const tagData = await getTagBySlug(tag)
@@ -145,7 +171,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export async function TagListing({ slug: rawSlug, page }: { slug: string; page: number }) {
-  const tag = decodeURIComponent(rawSlug)
+  const tag = decodeTagSlug(rawSlug)
   const [tagData, { prompts, total, totalPages }] = await Promise.all([
     getTagBySlug(tag),
     getPromptsByTagPaginated(tag, page),

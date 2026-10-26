@@ -21,6 +21,9 @@ export interface GuideArticle {
 
 const NEGATIVE_FACE = 'bad anatomy, bad hands, extra fingers, missing fingers, deformed face, asymmetric eyes, extra eyes, cross-eyed, blurry, lowres, text, watermark, signature'
 
+/** Age-safety terms used in guide negatives. Adult examples only. */
+export const NEGATIVE_AGE = 'child, kid, toddler, baby, loli, shota, teen, underage, baby face'
+
 export const SEO_BATCH_GUIDE_CONTENT: Record<string, GuideArticle> = {
   'stable-diffusion-expression-prompt': {
     sections: [
@@ -245,7 +248,7 @@ ${NEGATIVE_FACE}, extra face, multiple heads
       },
       {
         title: '上から・正面・横・後ろ',
-        content: `上下だけでなく、回り込む角度も単語が分かれています。\`from above\` は人物を見下ろすカメラ、\`bird's-eye view\` はほぼ真上です。
+        content: `上下だけでなく、回り込む角度も単語が分かれています。\`from above\` は人物を見下ろすカメラ、\`bird's-eye view\` はほぼ真上です。見下ろす構図と俯瞰の調整は [見下ろす構図・俯瞰プロンプト](/guides/high-angle-prompt-guide) に分けてあります。
 
 | 英語タグ | 意味 |
 |---|---|
@@ -357,7 +360,7 @@ bad anatomy, extra legs, distorted face, long neck, huge chin
 
 ここにあるのは服を着た状態で使える姿勢です。開脚や体の強調を目的にしたポーズは入れていません。手は最も崩れやすいので、ネガティブと一緒に使ってください。
 
-体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、カメラは [アングルプロンプト](/guides/low-angle-prompt-guide) です。`,
+体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。`,
       },
       {
         title: '立つ・座る・寝転ぶ',
@@ -582,7 +585,7 @@ long neck, twisted neck, extra knees
 | window light | 窓光 |
 | backlighting | 逆光 |
 
-夕焼けのタグは [夕焼け](/tag/夕焼け) です。`,
+夕焼けのタグは [夕焼け](/tag/夕焼け) です。屋上や街を上から見せるときは、場所タグに [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) の \`from above\` や \`aerial view\` を足します。`,
       },
       {
         title: '背景だけを描く',

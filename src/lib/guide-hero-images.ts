@@ -3,7 +3,7 @@
 //
 // Schema: GUIDE_HERO_IMAGES[guide-slug][section-index] = { url, alt }
 
-export const GUIDE_HERO_IMAGES: Record<string, { url: string; alt: string }[]> = {
+export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | null)[]> = {
   "what-is-prompt": [
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/what-is-prompt/section-0-2J4uIasqhGYixezrw9JI2DqGyjvY18.jpg",
@@ -251,6 +251,8 @@ export const GUIDE_HERO_IMAGES: Record<string, { url: string; alt: string }[]> =
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-1-gczFqjveks5VhfngGPvCdvd3VDPZDM.jpg",
       "alt": "色名プロンプト — 基本色から微妙なニュアンスまで - prompta.jp ガイド挿絵"
     },
+    // New「色合い・色調」section has no hero. Keep later images on their sections.
+    null,
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-2-oQ7WV7o77xj0XRKI44jtKZVE6k4ikz.jpg",
       "alt": "CutOff 拡張機能で部分色指定をマスターする - prompta.jp ガイド挿絵"
