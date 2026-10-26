@@ -206,9 +206,9 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: '服装プロンプトのコピペ集。制服、メイド服、ワンピース、スーツを Stable Diffusion と Midjourney 向けの英語タグで紹介。成人向けの服装指定が中心です。',
   },
   'body-type': {
-    seoTitle: '体型プロンプト集【Stable Diffusion 呪文・コピペOK】｜スレンダー・筋肉質・ぽっちゃり・身長指定',
-    seoH1: '体型プロンプト集｜スレンダー・筋肉質・小柄・高身長を画像付きで比較',
-    seoDescription: 'スレンダー・アスレチック・ぽっちゃり・小柄・高身長など体型プロンプトを多数紹介。Stable Diffusion・NovelAI 対応の呪文とネガティブプロンプト、ControlNet 連携まで徹底解説。',
+    seoTitle: '体型プロンプト集｜スレンダー・大柄・男性体型【コピペOK】',
+    seoH1: '体型プロンプト集｜スレンダー・大柄・男性体型・小柄',
+    seoDescription: '体型プロンプトの作例集。スレンダー・細身・大柄・男性の体型・小柄を Stable Diffusion・NovelAI 向けの英語呪文と画像でコピペ。筋肉質・マッチョは専用ガイドで詳しく解説。',
   },
   'color': {
     seoTitle: '色プロンプト集【無料・コピペOK】髪色・服色・背景色の指定例｜Stable Diffusion 118色',
@@ -679,8 +679,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'color-prompt-guide',
-    title: '色プロンプト完全ガイド｜CutOff・BREAK で色滲みを防ぐ Stable Diffusion テクニック',
-    description: 'AI画像生成での色指定を完全マスター。118色の色名、CutOff拡張、BREAKコマンド、cinematic color grading まで、色滲み防止テクニックを徹底解説。',
+    title: '色プロンプト一覧｜色指定・色合いの英語呪文【コピペOK】',
+    description: '色プロンプトの英語一覧。色指定の基本、色合い・色調（パステル・くすみ・セピア）、クリーム色などの色名と、色が服や背景に滲むときの BREAK・CutOff 対策をコピペ例で解説。',
     targetKeyword: '色 プロンプト 色指定',
     monthlySearchVolume: 320,
   },
@@ -754,9 +754,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'height-difference-illustration-composition-guide',
-    title: '身長差イラスト構図テンプレート｜カップル・BL・百合・3人並びのAIプロンプト',
+    title: '身長差イラストの構図｜カップル・キス・ハグのAIプロンプト',
     description:
-      '身長差イラストの構図テンプレート集。見上げる、見下ろす、ハグ、壁ドン、手つなぎ、3人並びを AI 画像生成プロンプトで再現する方法を紹介。',
+      '身長差イラストの構図テンプレート。見上げる・見下ろす・キス・ハグ・壁ドン・3人並びを、カップル・BL・百合のAI画像プロンプトでコピペ再現。身長差メーカーへのリンク付き。',
     targetKeyword: '身長差 イラスト',
     monthlySearchVolume: 1900,
   },
@@ -853,6 +853,34 @@ export const GUIDES: Guide[] = [
     description: 'Illustrious XL のプロンプトの書き方。公開モデルカードに基づく品質タグ、Danbooru タグと自然言語、ネガティブ、絵師タグの注意、テンプレを解説します。',
     targetKeyword: 'illustrious プロンプト',
     monthlySearchVolume: 4400,
+  },
+  {
+    slug: 'hair-color-prompt-guide',
+    title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】',
+    description: '髪色プロンプトの英語タグ一覧。金髪・銀髪・黒髪などの単色から、メッシュ・インナーカラー・グラデーション・ツートンの書き方、髪の色が服や目に移る色滲みの防ぎ方までコピペ例で解説。',
+    targetKeyword: '髪色 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'muscular-prompt-guide',
+    title: '筋肉質・マッチョプロンプト｜細マッチョの英語呪文【コピペOK】',
+    description: '筋肉質・マッチョの英語プロンプトを強さ別に整理。toned・athletic・muscular・bodybuilder の違い、細マッチョ、女性の筋肉質、肩や腕など部位タグを服を着たコピペ例で解説。',
+    targetKeyword: '筋肉質 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'high-angle-prompt-guide',
+    title: '見下ろす構図・俯瞰プロンプト｜上からのアングル【コピペOK】',
+    description: '上から見下ろす構図・俯瞰の英語プロンプト。from above・high angle・bird\'s-eye view・top-down の違い、やや俯瞰から真俯瞰までの調整、頭が大きくなる崩れの直し方をコピペ例で解説。',
+    targetKeyword: '見下ろす構図 プロンプト',
+    monthlySearchVolume: 1000,
+  },
+  {
+    slug: 'kabedon-prompt-guide',
+    title: '壁ドンプロンプト｜身長差・視点別の英語呪文【コピペOK】',
+    description: '壁ドンの英語プロンプト。kabedon と hand on wall の書き方、する側・される側の指定、身長差や一人称視点（POV）の構図、手と壁が崩れないコツを大人キャラのコピペ例で解説。',
+    targetKeyword: '壁ドン プロンプト',
+    monthlySearchVolume: 0,
   },
 ]
 
@@ -985,6 +1013,22 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'illustrious-prompt-guide': {
     tools: ['stable-diffusion'],
     categories: ['anime'],
+  },
+  'hair-color-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'color'],
+  },
+  'muscular-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type'],
+  },
+  'high-angle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera'],
+  },
+  'kabedon-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
   },
 }
 

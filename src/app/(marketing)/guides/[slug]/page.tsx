@@ -7,6 +7,7 @@ import { getPromptsByTool } from '@/lib/data'
 import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
 import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
 import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
+import { SEO_BATCH_3_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-c'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -53,6 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: string }>, faq: Array<{ q: string; a: string }> }> = {
   ...SEO_BATCH_GUIDE_CONTENT,
   ...SEO_BATCH_2_GUIDE_CONTENT,
+  ...SEO_BATCH_3_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1139,7 +1141,9 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 \`streaked hair, black with pink highlights\`
 \`highlighted hair, blonde with caramel streaks\`
 
-**色滲み防止**: 髪色が服に移る場合は BREAK 構文で分離: \`(pink gradient hair:1.2) BREAK (white dress:1.2)\`。CutOff 拡張で「pink:hair」と固定するのも有効です。`,
+**色滲み防止**: 髪色が服に移る場合は BREAK 構文で分離: \`(pink gradient hair:1.2) BREAK (white dress:1.2)\`。CutOff 拡張で「pink:hair」と固定するのも有効です。
+
+髪色だけを詳しく見るなら <a href="/guides/hair-color-prompt-guide" class="text-sky-600 hover:underline">髪色プロンプト一覧</a>（メッシュ、インナーカラー、グラデーション、ツートン）です。`,
       },
       {
         title: '髪の動き・質感表現で画像のクオリティを上げる',
@@ -2082,7 +2086,7 @@ walking through park, autumn leaves, golden hour,
       },
       {
         title: '筋肉質・アスレチック体型のコピペテンプレ集',
-        content: `筋肉質キャラはファンタジーの戦士・スポーツヒーロー・ボディビルダー風グラビアで需要が高いカテゴリ。**強度が「athletic（引き締まった）」→「muscular（明確に筋肉質）」→「bodybuilder（極端）」**と段階的に上がります。
+        content: `筋肉質キャラはファンタジーの戦士・スポーツヒーローで使う体型です。**強度が「athletic（引き締まった）」→「muscular（明確に筋肉質）」→「bodybuilder（極端）」**と段階的に上がります。服を着た状態での段階、細マッチョ、部位タグは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> にまとめています。
 
 **1. 男性 × ファンタジー戦士 — ヘビーマッチョ**
 
@@ -2547,7 +2551,31 @@ worst quality, low quality, blurry, jpeg artifacts
 - 朱色 → \`vermillion\` で朱赤
 - 鶯色 → \`olive green, warm\` で暖かい緑
 
-色の精度を上げるには「color」を挟むのがコツ: \`azalea color hair\` のように書くと AI が色として認識しやすくなります。`,
+色の精度を上げるには「color」を挟むのがコツ: \`azalea color hair\` のように書くと AI が色として認識しやすくなります。髪に載せる色の一覧は <a href="/guides/hair-color-prompt-guide" class="text-sky-600 hover:underline">髪色プロンプト一覧</a> です。`,
+      },
+      {
+        title: '色合い・色調（トーン）のプロンプト',
+        content: `色名とは別に、画面全体の調子を先に置くと、パステルやくすみが一枚の絵に揃いやすくなります。個別の \`red dress\` より前に、トーンを一つだけ書いてください。
+
+| 日本語 | 英語タグ | 出やすい印象 |
+|---|---|---|
+| パステル | pastel colors | 薄く、彩度が下がる |
+| くすみ・ミュート | muted colors | 灰が混ざった落ち着いた色 |
+| ビビッド | vivid colors | 彩度が高い |
+| モノクロ | monochrome | 白黒に寄る |
+| セピア | sepia | 古い写真の茶色 |
+| 暖色 | warm colors | 赤・橙・黄が勝つ |
+| 寒色 | cool colors | 青・紫が勝つ |
+| クリーム色 | cream, ivory | 白に黄みが入る。\`beige\` より色名として安定しやすい |
+
+**クリーム色の服**
+
+\`\`\`
+1 adult woman, cream blouse, ivory skirt, muted colors,
+soft daylight, upper body, simple background
+\`\`\`
+
+トーンを二つ同時に強くすると、パステルなのにビビッド、のように打ち消し合います。一つに決めてから、服や髪の色名を足してください。人物を描くときはネガティブに \`child, kid, teen, underage, loli, shota\` を入れてください。`,
       },
       {
         title: 'CutOff 拡張機能で部分色指定をマスターする',
@@ -2953,7 +2981,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 - **イエベ（暖み肌）** × **深い瞳** → オータム（秋）— こっくりブラウン系が映える
 - **ブルベ（青み肌）** × **強いコントラスト瞳** → ウィンター（冬）— 真っ黒・赤系が映える
 
-逆に「似合わない色」を選ぶと、髪色が浮いて見えたり顔色が悪く見えたり、せっかく染めても垢抜けない原因になります。本ガイドでは 4 シーズン別の推奨髪色とその理由、美容師さんへのオーダー方法、AI 診断ツールの活用法までを完全解説します。`,
+逆に「似合わない色」を選ぶと、髪色が浮いて見えたり顔色が悪く見えたり、せっかく染めても垢抜けない原因になります。本ガイドでは 4 シーズン別の推奨髪色とその理由、美容師さんへのオーダー方法、AI 診断ツールの活用法までを完全解説します。英語タグへの落とし方は <a href="/guides/hair-color-prompt-guide" class="text-sky-600 hover:underline">髪色プロンプト一覧</a> です。`,
       },
       {
         title: 'スプリング（春）タイプに似合う髪色 5 選',
@@ -3842,7 +3870,7 @@ slice of life illustration
 
 \`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, shoujo manga style\`
 
-→ サンプル: <a href="/prompt/height-diff-couple-kabedon-looking-up" class="text-sky-600 hover:underline">height-diff-couple-kabedon-looking-up</a>
+→ サンプル: <a href="/prompt/height-diff-couple-kabedon-looking-up" class="text-sky-600 hover:underline">height-diff-couple-kabedon-looking-up</a>。手と壁の書き分けは <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドンプロンプト</a> です。
 
 **5. 見上げる × 見下ろす（対面）**
 
@@ -4148,7 +4176,7 @@ Use anime illustration style with a warm school gate background.
     sections: [
       {
         title: '体格差プロンプトとは',
-        content: `**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。
+        content: `**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
 
 すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> のモードを **体格差** に切り替えると、\`body size difference\`、\`build difference\`、\`broad shoulders versus narrow shoulders\` などを自動で追加できます。`,
       },
@@ -4221,7 +4249,7 @@ dramatic size contrast, torch-lit dungeon, fantasy concept art,
         title: '身長差イラストは構図で決まる',
         content: `**身長差イラスト** は、キーワードだけでなく構図が重要です。顔アップやバストアップでは差が伝わりにくいため、\`full body shot\`、\`side by side\`、\`looking up\`、\`looking down\` などを組み合わせます。
 
-まず <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長とポーズを選び、このページの構図テンプレートを追加すると安定します。`,
+まず <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長とポーズを選び、このページの構図テンプレートを追加すると安定します。上から見下ろす画角は <a href="/guides/high-angle-prompt-guide" class="text-sky-600 hover:underline">見下ろす構図・俯瞰プロンプト</a>、壁に手をつくポーズは <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドンプロンプト</a> です。`,
       },
       {
         title: '構図テンプレート 6 種',
@@ -4255,6 +4283,8 @@ tall character embracing the shorter one, shorter one resting head on taller cha
 kabe-don pose, taller character hand on wall, shorter character looking up, shoujo manga composition
 \`\`\`
 
+手と壁の書き方は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドンプロンプト</a> です。
+
 **6. 3人並び**
 
 \`\`\`
@@ -4269,7 +4299,8 @@ three characters in horizontal lineup, tall character on the left, medium charac
 |---|---|
 | full body shot | 身長差を最も確実に見せる |
 | knee-up shot | 表情と身長差の両立 |
-| low angle | 高い人物をより大きく見せる |
+| low angle | 高い人物をより大きく見せる。詳細は <a href="/guides/low-angle-prompt-guide" class="text-sky-600 hover:underline">下からのアングル</a> |
+| from above | 二人を上から見る。<a href="/guides/high-angle-prompt-guide" class="text-sky-600 hover:underline">見下ろす構図</a> |
 | side angle | 見上げ・見下ろしを自然に見せる |
 | character lineup | 設定資料・3人構図向け |
 
@@ -4467,6 +4498,8 @@ shorter character with back against wall looking up flushed,
 low angle shot, dramatic lighting, (kabe-don pose:1.4),
 shoujo manga style
 \`\`\`
+
+手の位置と壁の指定は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドン専用ガイド</a> です。
 
 **6. 見上げる × 見下ろす（月間 1,600 件検索）— 視線の物語性**
 
@@ -4925,7 +4958,7 @@ dark school uniforms, low camera angle, (kabe-don pose:1.4),
 
 <a href="/prompt/bl-couple-kabedon-school" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kabedon-school-OwIsUiLzzUi8D303vom3wNAprN6Ioa.jpg" alt="BL 学校壁ドン 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
-→ サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL 学校壁ドン</a>
+→ サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL 学校壁ドン</a>。オフィスや室内での書き方は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドン専用ガイド</a> です。
 
 **6. キス — 屈むキス**
 

@@ -155,6 +155,11 @@ function normalizeMockGuide(g: typeof MOCK_GUIDES[number]): NormalizedGuide {
   }
 }
 
+const GUIDE_COPY_WINS = [
+  'color-prompt-guide',
+  'height-difference-illustration-composition-guide',
+] as const
+
 function mergeGuides(
   dbGuides: NormalizedGuide[],
   mockGuides: typeof MOCK_GUIDES = MOCK_GUIDES,
@@ -165,6 +170,21 @@ function mergeGuides(
   }
   for (const guide of dbGuides) {
     merged.set(guide.slug, guide)
+  }
+  // Detail pages read GUIDES directly. This merge is the /guides index (and
+  // the homepage). A database row replaces the whole constant, so a retitle
+  // in code would not show on the index. These slugs were retitled in GUIDES;
+  // keep the index title on that string even when a row still has the old one.
+  for (const slug of GUIDE_COPY_WINS) {
+    const fromCode = mockGuides.find(guide => guide.slug === slug)
+    const current = merged.get(slug)
+    if (!fromCode || !current) continue
+    merged.set(slug, {
+      ...current,
+      title: fromCode.title,
+      description: fromCode.description,
+      targetKeyword: fromCode.targetKeyword,
+    })
   }
   return Array.from(merged.values())
 }
@@ -567,7 +587,17 @@ export async function getApprovedTagSlugs(): Promise<string[]> {
 export async function getTagBySlug(slug: string) {
   return tryDb(
     () => dbTags.getTagBySlug(slug),
-    () => null,
+    () => {
+      // A successful query returns null when the tag does not exist. This
+      // fallback runs only when the query throws. Treating that as
+      // "unapproved" makes the tag page 200 + noindex, which a CDN can cache.
+      // Fail the request at runtime and during ISR instead.
+      // `next build` must still finish when DATABASE_URL is missing or points
+      // at an unreachable host (preview included). Those tag pages stay empty
+      // here and fill in later via ISR.
+      if (process.env.NEXT_PHASE === 'phase-production-build') return null
+      throw new Error('Tag lookup failed')
+    },
     { key: ['tag', slug], ...TAG_CACHE },
   )
 }

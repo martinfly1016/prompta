@@ -84,7 +84,7 @@ cm の数字（例: 150cm）は、モデルが実寸として守るとは限り�
 
 一人で伝わらないときは、もう一人の大人を高く置きます。その書き方は [身長差プロンプト](/guides/height-difference-pair-prompt) です。数値とポーズをフォームで組み立てるなら [身長差メーカー](/tools/height-difference-maker) を使ってください。
 
-見下ろしを強くしすぎると、低身長ではなく広角のパースになります。\`from above\` は弱く、\`full body\` を主にしてください。アングルの単語は [下からのアングル](/guides/low-angle-prompt-guide) にまとめてあります。低身長の確認にはローアングルは向きません。`,
+見下ろしを強くしすぎると、低身長ではなく広角のパースになります。\`from above\` は弱く、\`full body\` を主にしてください。アングルの単語は [下からのアングル](/guides/low-angle-prompt-guide) と [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) にまとめてあります。低身長の確認にはローアングルは向きません。`,
       },
       {
         title: '体型と組み合わせる',
@@ -221,7 +221,7 @@ ${NEGATIVE_CHILD}, chibi, school uniform
 | tiptoe | つま先立ち。背が届かない側に足す |
 | height difference | 身長差。つま先立ちと一緒に使う |
 
-背が届かないキスは、低い側に \`tiptoe\`、高い側がかがむことを一文で書きます。差そのものの調整は [身長差メーカー](/tools/height-difference-maker) です。
+背が届かないキスは、低い側に \`tiptoe\`、高い側がかがむことを一文で書きます。差そのものの調整は [身長差メーカー](/tools/height-difference-maker) です。壁に手をついて顔を近づける構図は [壁ドンプロンプト](/guides/kabedon-prompt-guide) に分けてあります。
 
 このページでは使わないタグ: \`french kiss\`、舌、唾液、首へのキス。閉じたロマンチックなキスにしたいときは、これらをネガティブに入れます。`,
       },
@@ -352,7 +352,7 @@ ${NEGATIVE_CHILD}, french kiss, tongue, saliva, open mouth
 
 このページは服を着た大人のハグです。カップル、友人、大人の家族（大人のきょうだい、大人の親子）を扱います。未成年の見た目はネガティブに回します。
 
-二人の構図全般は [カップルポーズ](/guides/two-person-composition-prompt-guide)、後ろからの作例は [BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind)、ポーズの基礎は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。タグの一覧は [ハグ](/tag/ハグ) です。`,
+二人の構図全般は [カップルポーズ](/guides/two-person-composition-prompt-guide)、後ろからの作例は [BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind)、ポーズの基礎は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。壁に手をつく近い距離は [壁ドンプロンプト](/guides/kabedon-prompt-guide)、タグの一覧は [ハグ](/tag/ハグ) です。`,
       },
       {
         title: 'ハグの種類',
