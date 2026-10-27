@@ -245,6 +245,8 @@ portrait, looking at viewer, plain background
 upper body, city street, overcast
 \`\`\`
 
+毛先やメッシュをツインテールに載せる書き方は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。
+
 ネガティブ（共通）:
 
 \`\`\`
@@ -800,7 +802,7 @@ from side, upper body, looking at each other, blush,
 library, quiet daylight
 \`\`\`
 
-近い距離のほかの型は [ハグ](/guides/hug-prompt-guide) と [キス](/guides/kiss-prompt-guide) です。壁ドンの例にキスは重ねていません。`,
+近い距離のほかの型は [ハグ](/guides/hug-prompt-guide) と [キス](/guides/kiss-prompt-guide) です。足が浮くお姫様抱っこは [お姫様抱っこプロンプト](/guides/princess-carry-prompt-guide) です。壁ドンの例にキスは重ねていません。`,
       },
       {
         title: '場所と表情',

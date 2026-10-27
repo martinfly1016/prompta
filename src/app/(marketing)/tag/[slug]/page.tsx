@@ -32,7 +32,8 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   '暗い': { slug: 'dark-room-prompt-guide', title: '暗い部屋プロンプト｜薄暗い室内・夜の照明の英語呪文【コピペOK】' },
   '低身長': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
   '小柄': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
-  'お姫様抱っこ': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜お姫様抱っこ・キス構図' },
+  'お姫様抱っこ': { slug: 'princess-carry-prompt-guide', title: 'お姫様抱っこプロンプト｜英語呪文と崩れ対策【コピペOK】' },
+  'ぽっちゃり': { slug: 'plump-body-prompt-guide', title: 'ぽっちゃりプロンプト｜ふくよか体型の英語呪文【コピペOK】' },
   '見上げる': { slug: 'two-person-composition-prompt-guide', title: '二人構図プロンプト完全ガイド｜見上げる構図' },
   'ローアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
   'カメラアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
@@ -58,9 +59,14 @@ const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description
     description: '抱き合う、バックハグ、後ろから抱きつくときの腕の位置を英語タグでまとめています。',
   },
   '二人構図': {
+    slug: 'hand-holding-prompt-guide',
+    title: '恋人繋ぎプロンプト｜手をつなぐ英語呪文【コピペOK】',
+    description: '恋人繋ぎ・手をつなぐときの指の位置と、指が増えるときの直し方を英語タグでまとめています。',
+  },
+  'お姫様抱っこ': {
     slug: 'hug-prompt-guide',
     title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
-    description: '抱き合う、バックハグ、後ろから抱きつくときの腕の位置を英語タグでまとめています。',
+    description: '抱きしめる・バックハグはこちら。',
   },
   'BL': {
     slug: 'hug-prompt-guide',
@@ -73,6 +79,10 @@ const TAG_META_OVERRIDE: Record<string, { title: string; description: string }> 
   'セーラー服': {
     title: 'セーラー服プロンプト集｜スカーフ・夏服・冬服【コピペOK】',
     description: 'セーラー服プロンプト集。スカーフ、夏服の半袖、冬服の長袖、黒セーラーを英語タグでコピペできます。',
+  },
+  '証明写真': {
+    title: '証明写真プロンプト｜ChatGPT・Gemini用【コピペOK】',
+    description: '証明写真をAIで作るプロンプト集。ChatGPT・Geminiに自撮りを渡して、履歴書・パスポート・マイナンバー・在留カード規格に近づける背景色やサイズ、服装の指示文をコピペで使えます。仕上がりが提出できるかは、発行元の指定で確認してください。',
   },
 }
 

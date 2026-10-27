@@ -8,6 +8,7 @@ import { GUIDE_HERO_IMAGES } from '@/lib/guide-hero-images'
 import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
 import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
 import { SEO_BATCH_3_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-c'
+import { SEO_BATCH_4_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-d'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -55,6 +56,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_GUIDE_CONTENT,
   ...SEO_BATCH_2_GUIDE_CONTENT,
   ...SEO_BATCH_3_GUIDE_CONTENT,
+  ...SEO_BATCH_4_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1114,6 +1116,10 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 17. \`twin tails, twintails\` — ツインテール
 18. \`low twin tails\` — 低めツインテ
 
+成人を描くときは \`adult woman\` とブラウスなど大人の服を一緒に書きます。例: \`1 adult woman, black hair, low twintails, hair ribbon, white blouse, cafe, upper body\`
+
+<a href="/guides/twintail-prompt-guide" class="text-sky-600 hover:underline">ツインテールの種類・位置・長さ → ツインテールプロンプト</a>
+
 **その他人気**:
 19. \`braid, french braid\` — 三つ編み
 20. \`hime cut\` — 姫カット（前髪ぱっつん＋サイド長め）`,
@@ -1229,13 +1235,13 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         title: 'アニメプロンプトの基本 — キャラクター設計の 4 要素',
         content: `アニメ風 AI イラストを生成するプロンプトは、以下の 4 要素を順番に記述するのが基本です：
 
-**1. 人物指定**: \`1girl\` / \`1boy\` / \`2girls\`（人数と性別）
-**2. 外見特徴**: 髪色・髪型・目の色・体型（例: \`long silver hair, blue eyes, slender\`）
-**3. 服装・装備**: 制服・ファンタジー・カジュアルなど（例: \`school uniform, pleated skirt\`）
-**4. ポーズ・背景**: 構図と場面（例: \`sitting on window sill, sunset background\`）
+**1. 人物指定**: 成人の人数（例: \`1 adult woman\` / \`1 adult man\`）
+**2. 外見特徴**: 髪色・髪型・目の色・体型（例: \`long silver hair, blue eyes\`）
+**3. 服装・装備**: 大人の服・ファンタジー・カジュアルなど（例: \`white blouse, navy skirt\`）
+**4. ポーズ・背景**: 構図と場面（例: \`standing on a city street, sunset\`）
 
 この 4 要素を組み合わせた基本テンプレート：
-\`1girl, long silver hair, blue eyes, school uniform, sitting on window sill, sunset background, anime style, masterpiece, best quality\`
+\`1 adult woman, long silver hair, blue eyes, white blouse, navy skirt, standing on a city street, sunset, anime style, masterpiece, best quality\`
 
 最後に品質タグ（\`masterpiece, best quality, ultra detailed\`）を追加し、ネガティブに \`(worst quality, low quality:1.4), bad anatomy, bad hands\` を入れるのが定石です。`,
       },
@@ -1312,8 +1318,8 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
         title: 'アニメキャラ設計の実践テンプレート 5 選',
         content: `すぐに使える実践的なアニメキャラクタープロンプトです：
 
-**1. 学園もの主人公（女子）**:
-\`1girl, brown hair, ponytail, brown eyes, school uniform, white blouse, navy pleated skirt, standing in classroom, cherry blossoms outside window, anime style, masterpiece, best quality\`
+**1. 街角の主人公（成人の女性）**:
+\`1 adult woman, brown hair, ponytail, brown eyes, white blouse, navy skirt, standing on a city street, sunset, anime style, masterpiece, best quality\`
 
 **2. ファンタジー魔法使い**:
 \`1girl, long silver hair, purple eyes, mage robe, glowing staff, floating runes, magical aura, dark fantasy, castle background, detailed, anime style\`
@@ -1328,6 +1334,28 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 \`1girl, red hair, twin tails, dynamic pose, sword slash, action lines, dramatic angle, battle scene, fire effects, (anime style:1.2), masterpiece\`
 
 各テンプレートの構成は「人物 → 外見 → 服装 → ポーズ → 背景 → スタイル → 品質」の順です。要素を差し替えるだけで無限のバリエーションが作れます。`,
+      },
+      {
+        title: 'ChatGPT 画像生成でアニメ風にするプロンプト例',
+        content: `ChatGPT や Gemini の画像生成は、タグの並びより自然文の方が安定します。成人、髪型、服、場所、画風を一つの文にしてください。
+
+**日本語**
+
+\`\`\`
+成人の女性。銀髪のロング、青い目、白いブラウスと紺のスカート。
+夕暮れの街角に立ち、カメラを見て穏やかに微笑む。
+アニメ風、セル画の塗り、清潔な線。
+\`\`\`
+
+**英語**
+
+\`\`\`
+An adult woman with long silver hair and blue eyes, wearing a white blouse and a navy skirt,
+standing on a city street at sunset, looking at the camera with a gentle smile.
+Anime style, cel shading, clean line art.
+\`\`\`
+
+Stable Diffusion や NovelAI では、上のテンプレートの英語タグに戻してください。Midjourney の niji では、英語の文のうしろに \`--niji\` を足せます。`,
       },
       {
         title: '✨ 関連プロンプト集 — アニメイラスト実例',
@@ -2197,11 +2225,13 @@ full body shot
         title: 'ぽっちゃり・プラスサイズ体型のコピペテンプレ集',
         content: `ぽっちゃり〜プラスサイズは AI のデフォルトと最も乖離している体型カテゴリ。**重み付けを 1.3-1.4 まで上げないと出ない**ことが多く、リアル系モデルの選択が成功率を大きく左右します。
 
+ぽっちゃり体型を詳しく → <a href="/guides/plump-body-prompt-guide" class="text-sky-600 hover:underline">ぽっちゃりプロンプト</a>
+
 **1. ぽっちゃり × かわいい — 丸顔ガーリー**
 
 \`\`\`
-1girl, chubby body, round face, soft body, cute pudgy cheeks,
-oversized sweater, knee-high socks, sitting on bed,
+1 adult woman, chubby body, round face, soft body, cute pudgy cheeks,
+oversized sweater, long skirt, sitting on a sofa,
 warm room lighting, (chubby:1.3), (soft body:1.2),
 slice of life illustration, full body shot
 \`\`\`
@@ -2209,7 +2239,7 @@ slice of life illustration, full body shot
 **2. プラスサイズ × ファッションモデル — パリの街角**
 
 \`\`\`
-1woman, plus-size body, curvy figure, thick thighs, wide hips,
+1woman, plus-size body, curvy figure,
 stylish black coat, confident walking pose, Paris street,
 golden hour lighting, professional fashion photography,
 (plus-size:1.3), (curvy:1.2), full body shot
@@ -2227,21 +2257,11 @@ modern office background, professional lighting,
 full body shot
 \`\`\`
 
-**4. ぽっちゃり × ビーチ — リゾート**
-
-\`\`\`
-1woman, plus-size curvy body, soft belly, wide hips, thick thighs,
-floral swimsuit, beach background, sunny day,
-confident smile, walking on sand,
-(plus-size:1.3), (curvy:1.3), photorealistic style,
-full body shot
-\`\`\`
-
 **ぽっちゃり特有のコツ**:
 
 - **言葉の使い分け**: \`chubby\` = 小太りの可愛さ、\`plump\` = ふっくら、\`plus-size\` = ファッション的な大きめ
 - **\`fat\` は品質が下がるため非推奨**。代わりに \`curvy\` \`plump\` \`plus-size\` を組み合わせる
-- リアル系モデル（**Realistic Vision / Juggernaut XL / Lustify**）の方が圧倒的に対応しやすい
+- リアル系モデル（**Realistic Vision / Juggernaut XL**）の方が圧倒的に対応しやすい
 - アニメ系モデルは痩せバイアスが極端に強いため \`(chubby:1.5)\` でも痩せて描かれる
 - 服装は **\`oversized\`** \`flowing dress\` \`baggy hoodie\` で自然なドレープが映える
 
@@ -2364,7 +2384,7 @@ full body shot, slice of life illustration
 
 - 強み: \`(curvy:1.3)\` のような**重み付けが精密に効く**、ControlNet で実写参照可能、LoRA で特定体型を完全再現
 - 弱み: 全身ショットで手・脚が崩れやすい、アニメ系モデルは痩せバイアス極端
-- 推奨モデル: リアル系体型なら **Realistic Vision / Juggernaut XL / Lustify**、アニメなら **Counterfeit / MeinaMix**
+- 推奨モデル: リアル系体型なら **Realistic Vision / Juggernaut XL**、アニメなら **Counterfeit / MeinaMix**
 
 **Midjourney**（推奨度: ⭐⭐）
 
@@ -2437,9 +2457,9 @@ prompta.jp の体型プロンプト集は SDXL ベースで動作確認済み。
 
 **■ ぽっちゃり系**
 
-**かわいい**: \`1girl, chubby body, round face, soft body, cute pudgy cheeks, oversized sweater, knee-high socks, sitting on bed, warm room lighting, (chubby:1.3), (soft body:1.2), slice of life\`
+**かわいい**: \`1 adult woman, chubby body, round face, soft body, cute pudgy cheeks, oversized sweater, long skirt, sitting on a sofa, warm room lighting, (chubby:1.3), (soft body:1.2), slice of life\`
 
-**ファッション**: \`1woman, plus-size body, curvy figure, thick thighs, wide hips, stylish black coat, confident walking pose, Paris street, golden hour, (plus-size:1.3), (curvy:1.2), fashion photography\`
+**ファッション**: \`1woman, plus-size body, curvy figure, stylish black coat, confident walking pose, Paris street, golden hour, (plus-size:1.3), (curvy:1.2), fashion photography\`
 
 **ビジネス**: \`1woman, plump body, soft figure, plus-size build, stylish blazer, pencil skirt, confident pose, modern office, (plump:1.3), (plus-size:1.2), business photography\`
 
@@ -2491,7 +2511,7 @@ worst quality, low quality, blurry, jpeg artifacts
       },
       {
         q: 'ぽっちゃり / カーヴィ をどうしても描いてくれません',
-        a: 'AI モデルの**痩せバイアスが最も強い領域**で、上級テクが必要です。（1）**リアル系モデル限定**: アニメ系モデルでは原理的に難しい。Realistic Vision / Juggernaut XL / Lustify を使う。（2）**重み付けを 1.4 まで**: `(plus-size:1.4)` `(chubby:1.4)` まで攻める。（3）**部位の 3 点セット**: `curvy, thick thighs, wide hips, hourglass figure` のように複数ワードで囲む。（4）**LoRA の活用**: CivitAI に `Plus Size Body LoRA` `Chubby Body LoRA` `Thick Thighs LoRA` などの専用 LoRA があり、`<lora:plus-size:0.7>` で確実に出せる。（5）**ネガティブで対立語を厳禁**: `skinny, slim, slender, thin, anorexic, flat body, bony` を必ず入れる。',
+        a: 'AI モデルの**痩せバイアスが最も強い領域**で、上級テクが必要です。（1）**リアル系モデル限定**: アニメ系モデルでは原理的に難しい。Realistic Vision / Juggernaut XL を使う。（2）**重み付けを 1.4 まで**: `(plus-size:1.4)` `(chubby:1.4)` まで攻める。（3）**部位の 3 点セット**: `curvy, thick thighs, wide hips, hourglass figure` のように複数ワードで囲む。（4）**LoRA の活用**: CivitAI に `Plus Size Body LoRA` `Chubby Body LoRA` `Thick Thighs LoRA` などの専用 LoRA があり、`<lora:plus-size:0.7>` で確実に出せる。（5）**ネガティブで対立語を厳禁**: `skinny, slim, slender, thin, anorexic, flat body, bony` を必ず入れる。',
       },
       {
         q: 'スレンダーと slim / slender / thin / skinny の使い分けは？',
@@ -4469,6 +4489,8 @@ even spacing, both looking forward, neutral composition
 slight side angle, full body shot, (intimate gesture:1.2)
 \`\`\`
 
+恋人繋ぎを詳しく → <a href="/guides/hand-holding-prompt-guide" class="text-sky-600 hover:underline">恋人繋ぎ・手をつなぐプロンプト</a>
+
 **3. ハグ — 包み込む抱擁**
 
 \`\`\`
@@ -4489,6 +4511,8 @@ in arms, lighter character with one arm around taller's neck,
 both looking at each other softly, full body shot,
 (princess carry pose:1.4), shoujo manga style
 \`\`\`
+
+お姫様抱っこを詳しく → <a href="/guides/princess-carry-prompt-guide" class="text-sky-600 hover:underline">お姫様抱っこプロンプト</a>
 
 **5. 壁ドン — 漫画的瞬間**
 
