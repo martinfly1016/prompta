@@ -665,8 +665,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'anime-prompt-guide',
-    title: 'アニメプロンプトの書き方｜キャラクター設計・画風・表情指定の完全ガイド',
-    description: 'AIでアニメ風イラストを生成するプロンプト完全ガイド。キャラクター設計、90s/modern/ジブリ風の画風指定、表情描写、Anything V5/Counterfeit/niji 5 モデルの使い分けを徹底解説。',
+    title: 'アニメ風プロンプト例｜画風・キャラ指定【ChatGPT対応】',
+    description: 'アニメ風イラストのAIプロンプト例をコピペで紹介。ChatGPT画像生成・Stable Diffusion・Midjourney(niji)向けに、アニメキャラの設計、画風・年代の指定、表情の書き方、アニメ調モデルの選び方を解説。',
     targetKeyword: 'アニメ プロンプト 書き方',
     monthlySearchVolume: 260,
   },
@@ -882,6 +882,34 @@ export const GUIDES: Guide[] = [
     targetKeyword: '壁ドン プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'princess-carry-prompt-guide',
+    title: 'お姫様抱っこプロンプト｜英語呪文と崩れ対策【コピペOK】',
+    description: 'お姫様抱っこのAIプロンプトを英語タグでコピペ。princess carry の基本形、身長差・BL・結婚式・ファンタジーの作例、腕や脚が崩れるときのネガティブと直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'お姫様抱っこ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'hand-holding-prompt-guide',
+    title: '恋人繋ぎプロンプト｜手をつなぐ英語呪文【コピペOK】',
+    description: '恋人繋ぎ（恋人つなぎ）・手をつなぐAIプロンプトを英語タグでコピペ。holding hands と interlocked fingers の違い、並んで歩く・主観視点（POV）・身長差の作例、指が増える・手が溶けるときのネガティブと直し方を解説。',
+    targetKeyword: '恋人繋ぎ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'twintail-prompt-guide',
+    title: 'ツインテールプロンプト｜種類・位置・長さの英語【コピペOK】',
+    description: 'ツインテールのAIプロンプトを英語タグでコピペ。高い・低い位置、長い・短い、三つ編み・縦ロール・ツーサイドアップなどの種類一覧、リボンやシュシュの髪飾り、髪が溶けるときの直し方を Stable Diffusion・NovelAI 向けに解説。',
+    targetKeyword: 'ツインテール プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'plump-body-prompt-guide',
+    title: 'ぽっちゃりプロンプト｜ふくよか体型の英語呪文【コピペOK】',
+    description: 'ぽっちゃり・ふくよか体型のAIプロンプトを英語タグでコピペ。plump・chubby・plus-size の強さの違い、丸顔や服のシルエットで表す書き方、男性・女性・ファッション・日常シーンの作例と、細く戻るときの直し方を解説。',
+    targetKeyword: 'ぽっちゃり プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1029,6 +1057,22 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'kabedon-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['anime', 'body-type'],
+  },
+  'princess-carry-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
+  },
+  'hand-holding-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
+  },
+  'twintail-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle'],
+  },
+  'plump-body-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type'],
   },
 }
 

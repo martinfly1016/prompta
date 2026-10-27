@@ -377,7 +377,7 @@ ${NEGATIVE_CHILD}, french kiss, tongue, saliva, open mouth
 | sitting | 座って | ソファと書くと場所が決まる |
 | princess carry | お姫様抱っこ | ハグではない。混同しやすいので同時に強くしない |
 
-お姫様抱っこの構図は [カップルポーズ](/guides/two-person-composition-prompt-guide) にあります。このページの例は、足が地面かソファにあるハグに限っています。`,
+お姫様抱っこの構図は [カップルポーズ](/guides/two-person-composition-prompt-guide) にあります。足が地面から離れる書き方は [お姫様抱っこプロンプト](/guides/princess-carry-prompt-guide)、指を絡める恋人繋ぎは [恋人繋ぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide) です。このページの例は、足が地面かソファにあるハグに限っています。`,
       },
       {
         title: '腕を回す位置',
