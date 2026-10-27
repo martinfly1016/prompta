@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
+import { googleAnalyticsBootstrapScript, isProductionVercelEnv } from '@/lib/ga-config'
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ['latin'],
@@ -75,21 +76,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // VERCEL_ENV wins when both are set, so a preview deployment cannot be
+  // flipped on by a shared NEXT_PUBLIC_VERCEL_ENV=production.
+  const enableAnalytics = isProductionVercelEnv(
+    process.env.VERCEL_ENV,
+    process.env.NEXT_PUBLIC_VERCEL_ENV,
+  )
   return (
     <html lang="ja" className={notoSansJP.variable}>
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-76RGV3H6S2"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-76RGV3H6S2');
-          `}
-        </Script>
+        {enableAnalytics ? (
+          <Script id="google-analytics" strategy="afterInteractive">
+            {googleAnalyticsBootstrapScript()}
+          </Script>
+        ) : null}
       </head>
       <body>
         {children}

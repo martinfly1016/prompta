@@ -1,4 +1,5 @@
-import { test, expect, type APIRequestContext } from '@playwright/test'
+import type { APIRequestContext } from '@playwright/test'
+import { expect, test } from './fixtures'
 import sharp from 'sharp'
 
 const EMAIL = 'e2e-test+height-diff@prompta.jp'
