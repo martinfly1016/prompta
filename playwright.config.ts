@@ -14,6 +14,9 @@ const BASE_URL = process.env.E2E_BASE_URL || `http://localhost:${PORT}`
 //
 // In CI: the workflow boots dev with ENABLE_TEST_AUTH=true, waits for
 // http://localhost:3000 to respond, then runs playwright test.
+//
+// Specs import ./e2e/fixtures, which aborts every request to
+// *.googletagmanager.com and *.google-analytics.com.
 export default defineConfig({
   testDir: './e2e',
   timeout: 60_000,

@@ -1,4 +1,5 @@
-import { test, expect, type Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
+import { expect, test } from './fixtures'
 
 // iPhone-sized viewport. The marketing header drawer is `md:hidden`
 // (Tailwind's 768px breakpoint), so the desktop project viewport would

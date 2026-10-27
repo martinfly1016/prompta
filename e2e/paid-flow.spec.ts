@@ -3,10 +3,11 @@
  *
  * Uses test-only login / seed / simulate-payment. Does not call Stripe
  * and does not complete a payment. begin_checkout is asserted from the
- * dataLayer; purchase is asserted only after /api/checkout/confirm
- * accepts a simulated paid session.
+ * dataLayer. A simulated cs_test_ session still confirms and grants
+ * points, but must not emit a GA purchase.
  */
-import { test, expect, type Page, type APIRequestContext } from '@playwright/test'
+import type { APIRequestContext, Page } from '@playwright/test'
+import { expect, test } from './fixtures'
 
 const EMAIL = 'e2e-test+ui@prompta.jp'
 
@@ -125,7 +126,7 @@ test.describe('paid flow @hair-color', () => {
     await page.waitForURL(/checkout\.stripe\.com/, { timeout: 15_000 })
   })
 
-  test('purchase fires only after the server confirms the session', async ({ page, request }) => {
+  test('confirmed test session grants points without a GA purchase', async ({ page, request }) => {
     await seedCredits(request, 0)
     await testLogin(page)
     await installGtag(page)
@@ -149,14 +150,10 @@ test.describe('paid flow @hair-color', () => {
     await expect(page.getByTestId('purchase-banner')).toContainText('ポイントが追加されました', {
       timeout: 15_000,
     })
-    await expect.poll(async () => eventNames(page)).toContain('purchase')
-    const purchaseParams = await page.evaluate(() => {
-      const dl = (window as Window & { dataLayer?: Array<{ 1?: string; 2?: { value?: number; currency?: string } }> }).dataLayer || []
-      const hit = [...dl].reverse().find((entry) => entry && entry[1] === 'purchase')
-      return hit?.[2] || null
-    })
-    expect(purchaseParams?.currency).toBe('JPY')
-    expect(purchaseParams?.value).toBe(300)
+    // Confirm still runs. The purchase hit is dropped because the session
+    // id is cs_test_* and the hostname is not a production domain.
+    await expect.poll(async () => eventNames(page)).toContain('page_view')
+    expect(await eventNames(page)).not.toContain('purchase')
     const status = page.getByTestId('quota-status')
     await expect(status).toHaveAttribute('data-balance', '150')
   })

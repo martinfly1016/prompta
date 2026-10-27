@@ -1,5 +1,6 @@
 import { GA_COOKIE, parseGaCookie, type GaEvent } from '@/lib/ga-events'
 import { getPointPack, type PointPack } from '@/lib/credit-costs'
+import { shouldSendPurchase } from '@/lib/ga-config'
 
 // Client-side tracking helpers: fire GA4 event + increment DB counter.
 // Both calls are fire-and-forget; failures are silently swallowed so they never
@@ -21,19 +22,23 @@ declare global {
   }
 }
 
-function fireGtag(eventName: string, promptId: string | undefined, meta: TrackMeta) {
+function callGtag(eventName: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
   try {
-    window.gtag('event', eventName, {
-      prompt_id: promptId,
-      prompt_slug: meta.slug,
-      prompt_category: meta.category ?? undefined,
-      prompt_tool: meta.tool ?? undefined,
-      surface: meta.surface ?? undefined,
-    })
+    window.gtag('event', eventName, params)
   } catch {
-    // ignore
+    // ignore — tracking must never break the action that triggered it
   }
+}
+
+function fireGtag(eventName: string, promptId: string | undefined, meta: TrackMeta) {
+  callGtag(eventName, {
+    prompt_id: promptId,
+    prompt_slug: meta.slug,
+    prompt_category: meta.category ?? undefined,
+    prompt_tool: meta.tool ?? undefined,
+    surface: meta.surface ?? undefined,
+  })
 }
 
 function fireDbIncrement(path: 'view' | 'copy', promptId: string | undefined) {
@@ -75,19 +80,14 @@ export function trackParamChange(
   value: string,
   meta: TrackMeta,
 ) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  try {
-    window.gtag('event', 'prompt_param_changed', {
-      prompt_id: promptId,
-      prompt_slug: meta.slug,
-      prompt_category: meta.category ?? undefined,
-      prompt_tool: meta.tool ?? undefined,
-      param_id: paramId,
-      param_value: value,
-    })
-  } catch {
-    // ignore
-  }
+  callGtag('prompt_param_changed', {
+    prompt_id: promptId,
+    prompt_slug: meta.slug,
+    prompt_category: meta.category ?? undefined,
+    prompt_tool: meta.tool ?? undefined,
+    param_id: paramId,
+    param_value: value,
+  })
 }
 
 export function trackPromptTry(
@@ -101,12 +101,7 @@ export function trackPromptTry(
 }
 
 export function trackToolEvent(eventName: string, params: Record<string, unknown>) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  try {
-    window.gtag('event', eventName, params)
-  } catch {
-    // ignore
-  }
+  callGtag(eventName, params)
 }
 
 // --- Freemium tool paywall funnel events ---
@@ -125,24 +120,14 @@ export type PaywallTrigger =
   | 'exhausted_429'     // backend 429 from /simulate endpoint
 
 function fireToolEvent(eventName: string, params: Record<string, unknown>) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
-  try { window.gtag('event', eventName, params) } catch {}
+  callGtag(eventName, params)
 }
 
 // Beacon so the hit survives the navigation that often follows a click.
+// Absent gtag is a no-op: do not queue on dataLayer, or a tag that loads
+// later could flush localhost / preview / E2E hits.
 function fireBeacon(eventName: string, params: Record<string, unknown>) {
-  if (typeof window === 'undefined') return
-  const payload = { ...params, transport_type: 'beacon' }
-  try {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, payload)
-      return
-    }
-    window.dataLayer = window.dataLayer || []
-    window.dataLayer.push(['event', eventName, payload])
-  } catch {
-    // ignore
-  }
+  callGtag(eventName, { ...params, transport_type: 'beacon' })
 }
 
 const sentGaIds = new Set<string>()
@@ -239,7 +224,7 @@ function checkoutParams(tool: string, pack: PointPack) {
 // items from the arguments object it stored on dataLayer. Put those fields
 // back, then append a plain array that the tag's push hook does not rewrite.
 function publishCheckoutEvent(name: string, params: Record<string, unknown>) {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
   const snapshot = {
     currency: params.currency,
     value: params.value,
@@ -343,7 +328,10 @@ export function trackPurchase(p: {
   packId?: string
   tool?: string
 }) {
-  if (!p.transactionId) return
+  // Live purchases on the production hosts only. cs_test_* (Playwright
+  // simulate-payment) and any other hostname return before the dedupe write.
+  const hostname = typeof window === 'undefined' ? undefined : window.location.hostname
+  if (!shouldSendPurchase(p.transactionId, hostname)) return
   const key = `purchase_tracked:${p.transactionId}`
   try {
     if (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(key)) return
