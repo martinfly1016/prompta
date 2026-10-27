@@ -782,7 +782,7 @@ const buf = providerId === 'openai-image'
   : await callFalSdxl(p.content, p.negative)  // SD tag-style, weight syntax OK
 ```
 
-**OpenAI safety filter 注意**: `gpt-image-1` は `high school` + 体型形容詞（`large bust`, `voluptuous` 等）の組合せで `safety_violations=[sexual]` 拒否。書き換え戦略: `adult women` + `hourglass silhouette` のような中立シルエット表現に置換。
+**OpenAI safety filter 注意**: `gpt-image-1` は `high school` や、胸・腰・太ももを強調する体型形容詞（`large bust`, `voluptuous`, `thick thighs`, `wide hips`, `pinup` 等）で `safety_violations=[sexual]` 拒否になる。書き換えは `adult woman` / `adult man`（20歳以上）に、`curvy`, `plus-size`, `healthy build`, `broad shoulders` と日常着（ニット、コート、デニム）を組み合わせる。部位の強調語と10代の年齢は入れない。
 
 **過去の参考実装**:
 - ✅ `_bodytype_diff_batch_2026_05_27.ts` (fast-sdxl 初回)
