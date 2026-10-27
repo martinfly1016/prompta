@@ -454,18 +454,18 @@ prompta.jp で公開している Stable Diffusion プロンプトは <a href="/t
 
 - \`long legs\` — 脚長
 - \`short legs\` — 脚短め
-- \`wide hips\` — ヒップ広め
-- \`narrow waist\` — 細いウエスト
+- \`healthy build\` — 健康的な体格
+- \`soft silhouette\` — やわらかいシルエット
 - \`broad shoulders\` — 肩幅広い
-- \`small frame\` — 小柄なフレーム
+- \`small frame\` — 小柄なフレーム（成人とセットで書く）
 
 **身長・年代の表現：**
 
-- \`adult woman\` / \`adult man\` — 成人
-- \`teenager\` / \`young adult\` — 10 代後半-20 代前半
-- \`young woman in her twenties\` — 20 代
-- \`mature woman\` — 落ち着いた大人
-- 注：年齢表現は明確な英語表現を使用、未成年扱いになる曖昧表現は避ける
+- \`adult woman\` / \`adult man\` — 成人（20歳以上）
+- \`young adult\` / \`adult in her twenties\` — 20代
+- \`adult in her thirties\` — 30代
+- \`mature adult\` — 落ち着いた大人
+- 注：年齢は20代から書く。child、teenager、10代に見える語はポジティブに置かない
 
 **人種・国籍（モデル特性として）：**
 
@@ -1980,17 +1980,19 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
         title: '体型プロンプトとは — AIキャラの体つきを自由に描き分ける必須スキル',
         content: `**体型プロンプト**とは、Stable Diffusion・Midjourney・DALL-E・NovelAI などの AI 画像生成ツールで「**キャラクターの体格・骨格・筋肉量・身長などの体つき**」を意図的にコントロールするための呪文（指示文）です。
 
-何も指定せずに「a beautiful girl」「handsome man」とだけ書くと、AI は学習データの平均値 — つまり「**やや痩せ型でモデル体型の若い人物**」 — に収束します。スレンダー / カーヴィ / 筋肉質 / ぽっちゃり / 小柄 / 高身長 など多様な体型を描き分けるには、明示的なキーワード指定が必須です。
+何も指定せずに「an adult woman」「an adult man」とだけ書くと、AI は学習データの平均値 — つまり「**やや痩せ型でモデル体型の若い大人**」 — に収束します。スレンダー / カーヴィ / 筋肉質 / ぽっちゃり / 小柄 / 高身長 など多様な体型を描き分けるには、明示的なキーワード指定が必須です。
+
+このガイドの作例はすべて **20歳以上の大人** です。人数は \`1 adult woman\` または \`1 adult man\` と書き、10代・child・teenager は使いません。
 
 **こんな人におすすめ**:
 
 - オリキャラ（OC）の体型を設定資料通りに描きたい
 - カーヴィ・ぽっちゃり・筋肉質などプラスサイズ体型を AI で表現したい
-- ファンタジー戦士・アスリート・アイドル体型など役割別に体型を描き分けたい
-- 同人誌・ファンアート用に多様な体型のキャラ素材を量産したい
-- 写真風グラビア / モデル撮影風イラストの体型コントロールをしたい
+- ファンタジー戦士・アスリートなど役割別に体型を描き分けたい
+- 同人誌・ファンアート用に多様な体型の大人キャラ素材を量産したい
+- ファッション誌・日常スナップの体型コントロールをしたい
 
-**本ガイドで扱う 5 つの体型カテゴリ**: スレンダー・細身 / 筋肉質・アスレチック / カーヴィ・グラマラス / ぽっちゃり・プラスサイズ / 小柄 × 高身長軸。
+**本ガイドで扱う 5 つの体型カテゴリ**: スレンダー・細身 / 筋肉質・アスレチック / カーヴィ / ぽっちゃり・プラスサイズ / 小柄 × 高身長軸。
 
 各カテゴリで 4-5 個のコピペ可能テンプレートを公開、合計 **20+ シチュエーション**。実例は <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> に公開中で、すべてサンプル画像つきです。
 
@@ -2002,19 +2004,19 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 
 - **女性キャラ**: 痩せ型〜細身、165-170cm 想定、ファッションモデル比例
 - **男性キャラ**: 細身〜やや筋肉質、175-180cm 想定、若い顔
-- **アニメ系モデル**: 「9 頭身美少女」傾向が極端に強く、ぽっちゃりや筋肉質が出にくい
+- **アニメ系モデル**: 細身の若い成人に寄りやすく、ぽっちゃりや筋肉質が出にくい
 
 この**学習バイアス**を覆すには、最低でも以下 3 要素を明示する必要があります：
 
 1. **体格キーワード**: \`slender\` / \`muscular\` / \`curvy\` / \`chubby\` / \`plus-size\` を **重み付け 1.2-1.3 で強調**
-2. **体の特徴を分解**: \`broad shoulders\` / \`wide hips\` / \`thick thighs\` / \`narrow waist\` のように**部位ごと**に形容詞を割当
+2. **体の特徴を分解**: \`broad shoulders\` / \`healthy build\` / \`soft silhouette\` / \`long legs\` のように**全体の体格**で形容詞を割当
 3. **対立する痩せ系ワードをネガティブで除外**: \`skinny, anorexic, slim\` などを明示的にネガティブへ
 
 **基本テンプレート**（汎用）:
 
 \`\`\`
-1{girl|boy|woman|man}, {体型キーワード}, {身長キーワード},
-{体の部位特徴 1}, {体の部位特徴 2}, {ポーズ}, {服装},
+1 adult {woman|man}, {体型キーワード}, {身長キーワード},
+{体の部位特徴 1}, {体の部位特徴 2}, {ポーズ}, {日常の服装},
 ({体型キーワード}:1.3), full body shot, (masterpiece:1.2), (best quality:1.4)
 \`\`\`
 
@@ -2022,7 +2024,8 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 
 \`\`\`
 deformed body, bad anatomy, distorted proportions,
-extra limbs, fused fingers, worst quality, low quality
+extra limbs, fused fingers, worst quality, low quality,
+child, teenager, underage
 \`\`\`
 
 この骨組みに各体型のキーワードを差し替えていくのが本ガイドのアプローチです。`,
@@ -2033,16 +2036,16 @@ extra limbs, fused fingers, worst quality, low quality
 
 1. **体格軸（必須）** — \`slender\` / \`athletic\` / \`muscular\` / \`curvy\` / \`chubby\` / \`plus-size\`
 2. **身長軸** — \`tall\` / \`short\` / \`petite\` / \`towering\` / \`average height\`
-3. **部位形容詞** — \`narrow waist\` / \`wide hips\` / \`broad shoulders\` / \`long legs\` / \`thick thighs\` / \`flat chest\` / \`large bust\`
-4. **筋肉・骨格量** — \`toned body\` / \`bulky build\` / \`delicate frame\` / \`bony\` / \`well-built\`
-5. **年齢感** — \`youthful\` / \`mature\` / \`elderly\`（数値より形容詞が安定）
+3. **部位形容詞** — \`broad shoulders\` / \`long legs\` / \`healthy build\` / \`soft silhouette\` / \`narrow shoulders\` / \`plus-size build\`
+4. **筋肉・骨格量** — \`toned body\` / \`bulky build\` / \`delicate frame\` / \`well-built\`
+5. **年齢感** — \`young adult\` / \`adult in her twenties\` / \`adult in her thirties\` / \`mature adult\` / \`elderly\`（20歳以上。数値より形容詞が安定）
 6. **ポーズ・カメラ** — \`full body shot\` / \`contrapposto\` / \`side profile\` / \`from above\` — 体型を見せる構図
 
 **順序ルール**: SD では前方のトークンに強い重みが乗るので、**体格軸キーワードは必ず最前列**に置く。例:
 
 \`\`\`
-1woman, (curvy:1.3), thick thighs, wide hips, narrow waist,
-red form-fitting dress, hand on hip, contrapposto pose,
+1 adult woman, (curvy:1.3), healthy build, soft silhouette, broad shoulders,
+knit sweater, wide-leg jeans, standing, hand in pocket,
 full body shot, (best quality:1.4)
 \`\`\`
 
@@ -2053,8 +2056,8 @@ full body shot, (best quality:1.4)
 | 細身 | \`slim\` / \`slender\` | 弱〜中 | \`skinny\` は骨ばった印象、自然さは \`slender\` |
 | 筋肉質 | \`athletic\` → \`muscular\` → \`bodybuilder\` | 弱→強 | 女性は \`athletic\` 推奨、\`bodybuilder\` は極端 |
 | ぽっちゃり | \`chubby\` → \`plump\` → \`plus-size\` | 弱→中→ファッション | \`fat\` は品質が下がる |
-| グラマー | \`curvy\` / \`voluptuous\` / \`hourglass figure\` | 中〜強 | \`hourglass\` は腰のくびれ強調 |
-| 小柄 | \`petite\` / \`small frame\` | 中 | \`tiny\` は子供っぽくなる |
+| グラマー | \`curvy\` / \`healthy build\` / \`plus-size\` | 中 | 曲線は日常の服の形で出す。胸や腰の部位語は使わない |
+| 小柄 | \`petite\` / \`small frame\` | 中 | 必ず \`adult\` とセット。\`tiny\` は子供っぽくなる |
 | 高身長 | \`tall\` / \`towering\` / \`leggy\` | 中〜強 | 数値 (190cm) より形容詞が確実 |
 
 この感度表を基準に、後半セクションのテンプレートをカスタマイズしてください。`,
@@ -2066,7 +2069,7 @@ full body shot, (best quality:1.4)
 **1. スレンダー × エレガント — ロングドレスでラインを出す**
 
 \`\`\`
-1woman, slender body, slim waist, long legs, delicate frame,
+1 adult woman, slender body, slim waist, long legs, delicate frame,
 elegant evening dress, hand on hip, side profile,
 soft warm lighting, (slender:1.2), full body shot,
 photorealistic illustration, (masterpiece:1.2)
@@ -2074,19 +2077,19 @@ photorealistic illustration, (masterpiece:1.2)
 
 → サンプル: <a href="/prompt/slender-crop-top-elegant-confident" class="text-sky-600 hover:underline">スレンダー × クロップトップ</a> / <a href="/prompt/slender-brown-hair-full-length" class="text-sky-600 hover:underline">スレンダー × ロングブラウンヘア</a>
 
-**2. スレンダー × アイドル系 — 小柄かわいい**
+**2. スレンダー × カジュアル — 小柄な大人**
 
 \`\`\`
-1girl, slim petite body, small frame, cute face, slender figure,
-oversized hoodie, sneakers, sitting on bench,
-afternoon light, (slim:1.2), idol photo style, full body shot
+1 adult woman, slim petite body, small frame, slender figure,
+oversized hoodie, jeans, sneakers, sitting on a bench,
+afternoon light, (slim:1.2), casual photo style, full body shot
 \`\`\`
 
-**3. スレンダー × モデル — 高身長レギンス**
+**3. スレンダー × モデル — 高身長のセットアップ**
 
 \`\`\`
-1woman, tall slender model, long legs, leggy, narrow shoulders,
-high-waisted leggings, crop top, mirror selfie pose,
+1 adult woman, tall slender model, long legs, narrow shoulders,
+high-waisted trousers, blouse, standing pose,
 studio lighting, (model proportions:1.3), full body shot,
 fashion editorial style
 \`\`\`
@@ -2096,7 +2099,7 @@ fashion editorial style
 **4. スレンダー × ナチュラル — カジュアル日常**
 
 \`\`\`
-1girl, slender body, slim waist, casual white t-shirt, jeans,
+1 adult woman, slender body, slim waist, casual white t-shirt, jeans,
 walking through park, autumn leaves, golden hour,
 (slender:1.2), candid photography style, full body shot
 \`\`\`
@@ -2108,7 +2111,7 @@ walking through park, autumn leaves, golden hour,
 - 重み付けは \`(slender:1.2)\` 〜 \`(slim:1.3)\` 程度が安全圏。1.4 超は骨と皮になる
 - アニメ系モデル（Anything V5 / Counterfeit など）はデフォルトが極端に細いため、\`(slender:0.9)\` でちょうど良い場合あり
 - リアル系（Realistic Vision / ChilloutMix）は **\`(slender:1.2-1.3)\`** で素直に効く
-- 服装は **\`form-fitting\`** \`tight\` \`bodycon\` で体のラインを強調するのがプロの常套手段
+- 服装は **\`knit sweater\`** \`blouse\` \`straight jeans\` \`wool coat\` など日常着で、体格が服の形に出るようにする
 
 **ネガティブプロンプト**: \`chubby, overweight, thick body, muscular, plus-size, fat, broad shoulders\``,
       },
@@ -2119,7 +2122,7 @@ walking through park, autumn leaves, golden hour,
 **1. 男性 × ファンタジー戦士 — ヘビーマッチョ**
 
 \`\`\`
-1man, muscular warrior, broad shoulders, six-pack abs, bulging biceps,
+1 adult man, muscular warrior, broad shoulders, six-pack abs, bulging biceps,
 heavy plate armor, power stance, sword in hand,
 torch-lit medieval hall, dramatic lighting,
 (muscular:1.3), (bulky build:1.2), full body shot,
@@ -2131,8 +2134,8 @@ fantasy concept art, (masterpiece:1.3)
 **2. 女性 × 引き締まった体型 — ジムアスリート**
 
 \`\`\`
-1woman, athletic build, toned body, visible abs, muscular arms,
-fit physique, sports bra, gym leggings, weightlifting pose,
+1 adult woman, athletic build, toned body, muscular arms,
+fit physique, athletic t-shirt, track pants, weightlifting pose,
 modern gym interior, professional sports photography,
 (athletic:1.2), (toned:1.2), full body shot
 \`\`\`
@@ -2142,7 +2145,7 @@ modern gym interior, professional sports photography,
 **3. 男性 × スポーツ選手 — ランナー体型**
 
 \`\`\`
-1man, lean muscular runner, defined calves, broad shoulders,
+1 adult man, lean muscular runner, defined calves, broad shoulders,
 running shorts, tank top, mid-stride pose, outdoor track,
 sunset lighting, (athletic:1.3), action photography style,
 full body shot, (best quality:1.4)
@@ -2151,7 +2154,7 @@ full body shot, (best quality:1.4)
 **4. 女性 × 戦士 — レザーアーマーの剣士**
 
 \`\`\`
-1woman, muscular warrior, lean toned body, defined arms,
+1 adult woman, muscular warrior, lean toned body, defined arms,
 leather armor, sword in hand, power stance, arms crossed,
 dramatic side lighting, (muscular:1.2), (athletic:1.2),
 fantasy illustration, full body shot
@@ -2167,59 +2170,59 @@ fantasy illustration, full body shot
 **ネガティブプロンプト**: \`skinny, slender, weak frame, soft body, chubby\``,
       },
       {
-        title: 'カーヴィ・グラマラス体型のコピペテンプレ集',
-        content: `カーヴィ（くびれと曲線が強調された体型）は欧米グラビア・ファッション・コスプレで人気のカテゴリ。AI のデフォルトは**ストレート気味のスレンダー**なので、明示的に \`hourglass\` \`curvy\` で形を作る必要があります。
+        title: 'カーヴィ体型のコピペテンプレ集',
+        content: `カーヴィ（曲線のある体型）は、ファッションと日常スナップで使うカテゴリです。人物は成人です。AI のデフォルトは**ストレート気味のスレンダー**なので、\`curvy\` \`healthy build\` \`plus-size\` で全体のシルエットを指定します。胸・腰・太ももの部位語は使わず、ニット、デニム、コート、ワンピースなど日常着で形を出します。
 
-**1. カーヴィ × ジムウェア — ピンクトレーニング**
+**1. カーヴィ × スポーツ — スウェット**
 
 \`\`\`
-1woman, curvy body, hourglass figure, narrow waist, wide hips,
-thick thighs, pink sports bra, pink leggings, gym pose,
+1 adult woman, curvy body, healthy build, soft silhouette, broad shoulders,
+grey sweatshirt, jogger pants, sneakers, standing in a gym,
 mirror background, studio lighting,
-(curvy:1.3), (hourglass figure:1.2), full body shot,
+(curvy:1.3), (healthy build:1.2), full body shot,
 photorealistic style
 \`\`\`
 
 → サンプル: <a href="/prompt/curvy-pink-gym-simple-background" class="text-sky-600 hover:underline">ピンクジムウェア × カーヴィボディ</a>
 
-**2. カーヴィ × イブニングドレス — グラマー**
+**2. カーヴィ × ワンピース — 街のスナップ**
 
 \`\`\`
-1woman, voluptuous curvy body, hourglass figure, large bust,
-narrow waist, wide hips, elegant red mermaid dress,
-side profile pose, hand on hip, glamorous lighting,
-(curvy:1.3), (voluptuous:1.2), full body shot,
+1 adult woman, curvy body, healthy build, soft rounded silhouette,
+navy midi dress, cardigan, loafers, city sidewalk,
+standing, three-quarter view, daylight,
+(curvy:1.3), (healthy build:1.2), full body shot,
 fashion editorial style
 \`\`\`
 
-**3. カーヴィ × カジュアル — タイトジーンズ**
+**3. カーヴィ × カジュアル — ニットとデニム**
 
 \`\`\`
-1woman, curvy figure, thick thighs, wide hips, narrow waist,
-high-waisted skinny jeans, crop top, urban street,
+1 adult woman, curvy figure, healthy build, broad shoulders,
+oversized knit, straight jeans, sneakers, urban street,
 walking pose, (curvy:1.3), photorealistic illustration,
 full body shot
 \`\`\`
 
-**4. カーヴィ × ピンナップ — クラシック**
+**4. カーヴィ × コート — 秋の日常**
 
 \`\`\`
-1woman, classic pinup body, hourglass curves, large bust,
-narrow waist, polka dot dress, retro hairstyle,
-50s glamour pose, soft warm lighting,
-(curvy:1.3), (hourglass figure:1.2), pinup illustration,
-full body shot
+1 adult woman, curvy body, plus-size build, healthy build,
+wool coat, scarf, wide-leg trousers, boots,
+autumn street, walking, soft daylight,
+(curvy:1.3), (plus-size:1.2), full body shot,
+lifestyle photography
 \`\`\`
 
 **カーヴィ特有のコツ**:
 
-- **\`hourglass figure\`** = 砂時計型のくびれ。最重要キーワード
-- **\`thick thighs\`** \`wide hips\` \`narrow waist\` の 3 点セットで「曲線」を作る
-- **\`voluptuous\`** = グラマラスでフルボリューム。\`curvy\` と併用で強度アップ
+- **\`curvy\`** = 曲線のある全体シルエット。最重要キーワード
+- **\`healthy build\`** \`broad shoulders\` \`soft silhouette\` で、服の上から体格を示す
+- **\`plus-size\`** = ファッション的な大きめ。\`curvy\` と併用できる
 - アニメ系モデルではほぼ効かない。**リアル系モデル（Realistic Vision / Juggernaut XL）**を使う
-- 服装は \`form-fitting\` \`bodycon dress\` \`pencil skirt\` \`high-waisted\` で曲線を強調
+- 服装は \`knit sweater\` \`midi dress\` \`wool coat\` \`straight jeans\` など日常着
 
-**ネガティブプロンプト**: \`flat body, straight figure, slim hips, narrow hips, skinny, boyish figure\``,
+**ネガティブプロンプト**: \`flat body, straight figure, skinny, very slim build\``,
       },
       {
         title: 'ぽっちゃり・プラスサイズ体型のコピペテンプレ集',
@@ -2227,19 +2230,19 @@ full body shot
 
 ぽっちゃり体型を詳しく → <a href="/guides/plump-body-prompt-guide" class="text-sky-600 hover:underline">ぽっちゃりプロンプト</a>
 
-**1. ぽっちゃり × かわいい — 丸顔ガーリー**
+**1. ぽっちゃり × 日常 — 丸顔のニット**
 
 \`\`\`
-1 adult woman, chubby body, round face, soft body, cute pudgy cheeks,
+1 adult woman, chubby body, round face, kind smile,
 oversized sweater, long skirt, sitting on a sofa,
-warm room lighting, (chubby:1.3), (soft body:1.2),
+warm room lighting, (chubby:1.3),
 slice of life illustration, full body shot
 \`\`\`
 
 **2. プラスサイズ × ファッションモデル — パリの街角**
 
 \`\`\`
-1woman, plus-size body, curvy figure,
+1 adult woman, plus-size body, curvy figure,
 stylish black coat, confident walking pose, Paris street,
 golden hour lighting, professional fashion photography,
 (plus-size:1.3), (curvy:1.2), full body shot
@@ -2250,7 +2253,7 @@ golden hour lighting, professional fashion photography,
 **3. ぽっちゃり × ビジネス — オフィスシーン**
 
 \`\`\`
-1woman, plump body, soft figure, plus-size build,
+1 adult woman, plump body, soft figure, plus-size build,
 stylish blazer, pencil skirt, confident pose,
 modern office background, professional lighting,
 (plump:1.3), (plus-size:1.2), business photography style,
@@ -2273,21 +2276,21 @@ full body shot
         title: '小柄・高身長軸 + 体格差・身長差テンプレ',
         content: `「**体型**」は体格だけでなく**身長軸**でも変わります。同じスレンダーでも 150cm の小柄と 180cm の高身長ではキャラ印象が全く違います。
 
-**1. 小柄 × かわいい — petite アイドル**
+**1. 小柄 × 大人 — short adult**
 
 \`\`\`
-1girl, petite body, small frame, short height around 150cm,
-delicate frame, slim figure, oversized sweater dress,
-sitting on stairs, legs dangling, looking up,
-(petite:1.3), warm light, idol photo style, full body shot
+1 adult woman, young adult, petite body, small frame, short height around 150cm,
+delicate adult frame, slim figure, oversized sweater, jeans,
+standing on a city sidewalk, (petite:1.3), (adult:1.2),
+casual photo style, full body shot
 \`\`\`
 
 **2. 高身長 × モデル — towering elegance**
 
 \`\`\`
-1woman, tall slender model, towering height around 180cm,
-long legs, leggy, narrow shoulders, high-waisted pants,
-crop top, fashion runway pose,
+1 adult woman, tall slender model, towering height around 180cm,
+long legs, narrow shoulders, high-waisted trousers,
+blouse, fashion runway pose,
 (tall:1.2), (long legs:1.3), editorial photography style,
 full body shot
 \`\`\`
@@ -2295,20 +2298,20 @@ full body shot
 **3. 体格差 — 巨漢 × 小柄ペア**
 
 \`\`\`
-1massive man and 1petite woman, bulky muscular man 195cm,
+1 adult man and 1 adult woman, bulky muscular man 195cm,
 small slim woman 155cm, dramatic size contrast,
 standing close together, full body shot,
 (body size difference:1.4), (height difference:1.3),
 photorealistic illustration
 \`\`\`
 
-→ サンプル: <a href="/prompt/old-man-giant-monster-bodytype-dark" class="text-sky-600 hover:underline">巨漢 × 小柄 ダーク構図</a> / <a href="/prompt/child-robot-bodytype-contrast-wideshot" class="text-sky-600 hover:underline">少女 × ロボット ワイドショット</a>
+→ サンプル: <a href="/prompt/old-man-giant-monster-bodytype-dark" class="text-sky-600 hover:underline">巨漢 × 小柄 ダーク構図</a> / <a href="/prompt/child-robot-bodytype-contrast-wideshot" class="text-sky-600 hover:underline">体格差ワイドショット</a>
 
 **4. 細身 × ガッシリ — 兄弟体格差**
 
 \`\`\`
-2boys, taller well-built older brother 185cm broad shoulders,
-shorter slim younger brother 168cm slender frame,
+2 adult men, taller well-built older brother 185cm broad shoulders,
+shorter slim younger adult brother 168cm slender frame,
 standing side by side, casual outfits,
 (body size contrast:1.3), (height difference:1.2),
 full body shot, slice of life illustration
@@ -2318,7 +2321,7 @@ full body shot, slice of life illustration
 
 - 数値 (\`170cm\`) は AI が**相対比較として処理**する（大きい数字 = 高い、小さい数字 = 低い）。**形容詞 + 数値**の組み合わせ（\`tall around 185cm\`）が最も効く
 - **\`towering\` \`leggy\` \`long-legged\`** で高身長を強調
-- **\`petite\` \`small frame\` \`short stature\`** で小柄を強調
+- **\`petite\` \`small frame\` \`short adult\`** で小柄を強調。年齢は下げない
 - 一人の大人を低身長・小柄に描くタグ（子ども向けタグは使わない）は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a>
 - 2 人以上の身長差・体格差は専用ガイドが必要 → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> で 8 シチュエーション + 6 ポーズ + 15 サンプル公開中
 
@@ -2336,7 +2339,7 @@ full body shot, slice of life illustration
 - **対処**: 重み付けを \`(curvy:1.3)\` → \`(curvy:1.4)\` まで段階的に上げる
 - **対処**: ネガティブに \`skinny, slim, thin, slender, flat body\` を追加
 - **対処**: **リアル系モデル**（Realistic Vision / Juggernaut XL）に切替
-- **対処**: 部位形容詞を併用 — \`curvy\` 単独ではなく \`curvy, thick thighs, wide hips, hourglass figure\` のように **3-4 ワードで囲む**
+- **対処**: 部位形容詞を併用 — \`curvy\` 単独ではなく \`curvy, healthy build, broad shoulders, plus-size\` のように **3-4 ワードで囲む**
 
 **問題 2: 体型が極端になりすぎる（ぽっちゃり指定で巨体化）**
 
@@ -2364,14 +2367,14 @@ full body shot, slice of life illustration
 
 **問題 6: 服装と体型がミスマッチ（細身指定なのにダボダボ服）**
 
-- **対処**: 服装も体型に合わせて指定。\`form-fitting dress\` \`bodycon\` \`tight\` で体型を強調
-- **対処**: 体型と服装を BREAK で分離: \`(curvy:1.3), hourglass figure BREAK red bodycon dress\`
+- **対処**: 服装も体型に合わせて指定。\`knit sweater\` \`midi dress\` \`wool coat\` \`straight jeans\` で日常着のシルエットを出す
+- **対処**: 体型と服装を BREAK で分離: \`(curvy:1.3), healthy build BREAK wool coat, midi dress\`
 
 **ControlNet 活用法（最も確実）**
 
 体型の崩壊を**ほぼ完全に防ぐ**には、**ControlNet OpenPose + Depth** の併用が最強。手順:
 
-1. 目標の体型に近い**実写写真**を用意（カーヴィならグラビア写真、筋肉質ならボディビルダー写真）
+1. 目標の体型に近い**実写写真**を用意（カーヴィなら日常着のファッション写真、筋肉質ならスポーツウェアを着た写真）
 2. ControlNet で \`openpose_full\` + \`depth\` を 2 ユニット同時に有効化
 3. プロンプトに本ガイドのテンプレを使用、CFG Scale 7-9
 4. 生成 → 参考画像の骨格・体型が忠実に再現される
@@ -2388,21 +2391,21 @@ full body shot, slice of life illustration
 
 **Midjourney**（推奨度: ⭐⭐）
 
-- 強み: 自然言語の理解が高い、「a curvy woman with thick thighs」のような口語的指示が効く
+- 強み: 自然言語の理解が高い、「an adult woman with a curvy healthy build, wearing a knit sweater and jeans」のような口語的指示が効く
 - 弱み: 重み付け制御が SD ほど精密でない、ControlNet 相当機能なし
 - 工夫: **\`--style raw\`** を付けると Midjourney の自動補正が抑制され、体型指定が素直に反映される。\`--ar 9:16\` で全身ショットがきれいに出る
 
 **DALL-E 3 (ChatGPT 内)**（推奨度: ⭐⭐）
 
 - 強み: 自然な日本語指示が効く。「ぽっちゃりした女性、プラスサイズモデル風」のような指示でも理解
-- 弱み: NSFW フィルターが厳しめ、グラマー系・ボディコン系の依頼がブロックされやすい
-- 工夫: 「ファッション雑誌のプロフェッショナル撮影風」のように**目的を文脈化**するとフィルターを通りやすい
+- 弱み: 性的な表現や、体の部位を強調する依頼はブロックされやすい
+- 工夫: 「成人がニットとデニムで街を歩く、ファッション誌のスナップ」のように、年齢・日常着・場所を同じ文に書く
 
 **NovelAI**（推奨度: ⭐⭐⭐ アニメ用途）
 
-- 強み: アニメ専用に最適化、\`flat chest\` \`large breasts\` \`huge breasts\` などの体型タグが danbooru ベースで安定
+- 強み: アニメ専用に最適化。\`curvy\` \`plump\` \`plus-size\` \`athletic\` のような全体の体格タグが安定する
 - 弱み: リアル系体型表現は不可
-- 工夫: 強度はタグの**繰り返し**で調整 \`curvy, curvy, hourglass figure\`
+- 工夫: 強度はタグの**繰り返し**で調整 \`curvy, curvy, healthy build\`
 
 **Gemini 2.5 Flash Image (Nano Banana)**（推奨度: ⭐ 編集用途）
 
@@ -2425,56 +2428,59 @@ prompta.jp の体型プロンプト集は SDXL ベースで動作確認済み。
 **■ ベーステンプレート（汎用）**
 
 \`\`\`
-1{girl|boy|woman|man}, {体型キーワード}, {身長キーワード},
-{部位特徴 1}, {部位特徴 2}, {ポーズ}, {服装},
+1 adult {woman|man}, {体型キーワード}, {身長キーワード},
+{部位特徴 1}, {部位特徴 2}, {ポーズ}, {日常の服装},
 ({体型キーワード}:1.3), full body shot,
 (masterpiece:1.2), (best quality:1.4)
 \`\`\`
 
 **■ スレンダー系**
 
-**エレガント**: \`1woman, slender body, slim waist, long legs, delicate frame, elegant evening dress, hand on hip, side profile, soft warm lighting, (slender:1.2), full body shot\`
+**エレガント**: \`1 adult woman, slender body, slim waist, long legs, delicate frame, elegant evening dress, hand on hip, side profile, soft warm lighting, (slender:1.2), full body shot\`
 
-**アイドル**: \`1girl, slim petite body, small frame, cute face, slender figure, oversized hoodie, sneakers, sitting on bench, afternoon light, (slim:1.2), idol photo style\`
+**カジュアル**: \`1 adult woman, slim petite body, small frame, slender figure, oversized hoodie, jeans, sneakers, sitting on a bench, afternoon light, (slim:1.2), casual photo style\`
 
-**モデル**: \`1woman, tall slender model, long legs, leggy, narrow shoulders, high-waisted leggings, crop top, mirror selfie pose, studio lighting, (model proportions:1.3), fashion editorial\`
+**モデル**: \`1 adult woman, tall slender model, long legs, narrow shoulders, high-waisted trousers, blouse, standing pose, studio lighting, (model proportions:1.3), fashion editorial\`
 
 **■ 筋肉質系**
 
-**男性戦士**: \`1man, muscular warrior, broad shoulders, six-pack abs, bulging biceps, heavy plate armor, power stance, sword in hand, torch-lit medieval hall, (muscular:1.3), (bulky build:1.2), fantasy concept art\`
+**男性戦士**: \`1 adult man, muscular warrior, broad shoulders, six-pack abs, bulging biceps, heavy plate armor, power stance, sword in hand, torch-lit medieval hall, (muscular:1.3), (bulky build:1.2), fantasy concept art\`
 
-**女性アスリート**: \`1woman, athletic build, toned body, visible abs, muscular arms, fit physique, sports bra, gym leggings, weightlifting pose, modern gym interior, (athletic:1.2), (toned:1.2)\`
+**女性アスリート**: \`1 adult woman, athletic build, toned body, muscular arms, fit physique, athletic t-shirt, track pants, weightlifting pose, modern gym interior, (athletic:1.2), (toned:1.2)\`
 
-**ランナー**: \`1man, lean muscular runner, defined calves, broad shoulders, running shorts, tank top, mid-stride pose, outdoor track, sunset lighting, (athletic:1.3), action photography\`
+**ランナー**: \`1 adult man, lean muscular runner, defined calves, broad shoulders, running shorts, tank top, mid-stride pose, outdoor track, sunset lighting, (athletic:1.3), action photography\`
 
 **■ カーヴィ系**
 
-**ジムウェア**: \`1woman, curvy body, hourglass figure, narrow waist, wide hips, thick thighs, pink sports bra, pink leggings, gym pose, studio lighting, (curvy:1.3), (hourglass figure:1.2)\`
+**スウェット**: \`1 adult woman, curvy body, healthy build, soft silhouette, broad shoulders, grey sweatshirt, jogger pants, sneakers, standing in a gym, studio lighting, (curvy:1.3), (healthy build:1.2)\`
 
-**ドレス**: \`1woman, voluptuous curvy body, hourglass figure, large bust, narrow waist, wide hips, elegant red mermaid dress, side profile, hand on hip, glamorous lighting, (curvy:1.3), (voluptuous:1.2)\`
+**ワンピース**: \`1 adult woman, curvy body, healthy build, soft rounded silhouette, navy midi dress, cardigan, loafers, city sidewalk, standing, daylight, (curvy:1.3), (healthy build:1.2)\`
 
-**ピンナップ**: \`1woman, classic pinup body, hourglass curves, large bust, narrow waist, polka dot dress, retro hairstyle, 50s glamour pose, (curvy:1.3), (hourglass figure:1.2), pinup illustration\`
+**ニット**: \`1 adult woman, curvy figure, healthy build, broad shoulders, oversized knit, straight jeans, sneakers, urban street, walking pose, (curvy:1.3)\`
+
+**コート**: \`1 adult woman, curvy body, plus-size build, healthy build, wool coat, scarf, wide-leg trousers, boots, autumn street, walking, (curvy:1.3), (plus-size:1.2)\`
 
 **■ ぽっちゃり系**
 
-**かわいい**: \`1 adult woman, chubby body, round face, soft body, cute pudgy cheeks, oversized sweater, long skirt, sitting on a sofa, warm room lighting, (chubby:1.3), (soft body:1.2), slice of life\`
+**日常**: \`1 adult woman, chubby body, round face, kind smile, oversized sweater, long skirt, sitting on a sofa, warm room lighting, (chubby:1.3), slice of life\`
 
-**ファッション**: \`1woman, plus-size body, curvy figure, stylish black coat, confident walking pose, Paris street, golden hour, (plus-size:1.3), (curvy:1.2), fashion photography\`
+**ファッション**: \`1 adult woman, plus-size body, curvy figure, stylish black coat, confident walking pose, Paris street, golden hour, (plus-size:1.3), (curvy:1.2), fashion photography\`
 
-**ビジネス**: \`1woman, plump body, soft figure, plus-size build, stylish blazer, pencil skirt, confident pose, modern office, (plump:1.3), (plus-size:1.2), business photography\`
+**ビジネス**: \`1 adult woman, plump body, soft figure, plus-size build, stylish blazer, pencil skirt, confident pose, modern office, (plump:1.3), (plus-size:1.2), business photography\`
 
 **■ 身長軸**
 
-**小柄**: \`1girl, petite body, small frame, short height around 150cm, delicate frame, oversized sweater dress, sitting on stairs, looking up, (petite:1.3), idol photo style\`
+**小柄**: \`1 adult woman, young adult, petite body, small frame, short height around 150cm, delicate adult frame, oversized sweater, jeans, standing on a city sidewalk, (petite:1.3), (adult:1.2)\`
 
-**高身長**: \`1woman, tall slender model, towering height around 180cm, long legs, leggy, high-waisted pants, crop top, runway pose, (tall:1.2), (long legs:1.3), editorial photography\`
+**高身長**: \`1 adult woman, tall slender model, towering height around 180cm, long legs, narrow shoulders, high-waisted trousers, blouse, runway pose, (tall:1.2), (long legs:1.3), editorial photography\`
 
 **■ 推奨ネガティブプロンプト（汎用）**
 
 \`\`\`
 deformed body, bad anatomy, distorted proportions,
 extra limbs, fused fingers, missing limbs,
-worst quality, low quality, blurry, jpeg artifacts
+worst quality, low quality, blurry, jpeg artifacts,
+child, teenager, underage
 \`\`\`
 
 **■ カテゴリ別追加ネガティブ**
@@ -2483,7 +2489,7 @@ worst quality, low quality, blurry, jpeg artifacts
 |---|---|
 | スレンダー固定 | \`chubby, overweight, muscular, plus-size\` |
 | 筋肉質固定 | \`skinny, slender, soft body, weak frame\` |
-| カーヴィ固定 | \`flat body, straight figure, slim hips, boyish figure\` |
+| カーヴィ固定 | \`flat body, straight figure, very slim build, skinny\` |
 | ぽっちゃり固定 | \`skinny, slim, underweight, slender, bony\` |
 | 小柄固定 | \`tall, towering, long legs, leggy\` |
 | 高身長固定 | \`petite, short, tiny, small frame\` |
@@ -2502,8 +2508,8 @@ worst quality, low quality, blurry, jpeg artifacts
     ],
     faq: [
       {
-        q: '体型を数値（170cm、50kg、B85 など）で指定できますか？',
-        a: 'Stable Diffusion / Midjourney は **数値そのものを厳密には理解しません**。ただし「188cm」「150cm」のような表記は AI が「**大きい数字 = 高い、小さい数字 = 低い**」という相対比較として処理します。完全な精度は出ませんが、書かないより書いたほうが効果あり。**より確実な方法**は `tall around 185cm` のように形容詞 + 数値で挟むこと、または `tall and short` `dramatic height difference` のような明示的キーワードを併用すること。**体重・スリーサイズの数値**はほぼ機能しないため、`thick thighs` `narrow waist` `large bust` のような**部位形容詞**で表現してください。DALL-E 3 は自然言語の理解力が高いため、cm 表記の効きが比較的良いです。',
+        q: '体型を数値（170cm、60kg など）で指定できますか？',
+        a: 'Stable Diffusion / Midjourney は **数値そのものを厳密には理解しません**。ただし「188cm」「150cm」のような表記は AI が「**大きい数字 = 高い、小さい数字 = 低い**」という相対比較として処理します。完全な精度は出ませんが、書かないより書いたほうが効果あり。**より確実な方法**は `tall around 185cm` のように形容詞 + 数値で挟むこと、または `tall and short` `dramatic height difference` のような明示的キーワードを併用すること。**体重の数値**はほぼ機能しないため、`curvy` `plus-size` `healthy build` `broad shoulders` のような**全体の体格**で表現してください。人物は `adult` と書き、20歳以上にします。DALL-E 3 は自然言語の理解力が高いため、cm 表記の効きが比較的良いです。',
       },
       {
         q: '体型指定したのに反映されません。やり方が知りたい',
@@ -2511,27 +2517,27 @@ worst quality, low quality, blurry, jpeg artifacts
       },
       {
         q: 'ぽっちゃり / カーヴィ をどうしても描いてくれません',
-        a: 'AI モデルの**痩せバイアスが最も強い領域**で、上級テクが必要です。（1）**リアル系モデル限定**: アニメ系モデルでは原理的に難しい。Realistic Vision / Juggernaut XL を使う。（2）**重み付けを 1.4 まで**: `(plus-size:1.4)` `(chubby:1.4)` まで攻める。（3）**部位の 3 点セット**: `curvy, thick thighs, wide hips, hourglass figure` のように複数ワードで囲む。（4）**LoRA の活用**: CivitAI に `Plus Size Body LoRA` `Chubby Body LoRA` `Thick Thighs LoRA` などの専用 LoRA があり、`<lora:plus-size:0.7>` で確実に出せる。（5）**ネガティブで対立語を厳禁**: `skinny, slim, slender, thin, anorexic, flat body, bony` を必ず入れる。',
+        a: 'AI モデルの**痩せバイアスが最も強い領域**で、上級テクが必要です。（1）**リアル系モデル限定**: アニメ系モデルでは原理的に難しい。Realistic Vision / Juggernaut XL を使う。（2）**重み付けを 1.4 まで**: `(plus-size:1.4)` `(chubby:1.4)` まで攻める。（3）**体格の 3 点セット**: `curvy, healthy build, broad shoulders, plus-size` のように複数ワードで囲む。（4）**LoRA の活用**: CivitAI に `Plus Size Body LoRA` `Chubby Body LoRA` などの専用 LoRA があり、`<lora:plus-size:0.7>` でぽっちゃり体型を出せます。胸や太ももを強調する LoRA は使いません。（5）**ネガティブで対立語を厳禁**: `skinny, slim, slender, thin, anorexic, flat body, bony` を必ず入れる。人物は `1 adult woman` または `1 adult man` です。',
       },
       {
         q: 'スレンダーと slim / slender / thin / skinny の使い分けは？',
-        a: '**ニュアンスの差を覚えると AI 出力が劇的に変わります**：`slender` = 上品な細さ、モデル体型のニュアンス（推奨）。`slim` = 健康的な細さ、日常的な細身（推奨）。`thin` = 中立的な「薄い」、文脈次第。`skinny` = 痩せすぎ・骨ばった印象、不健康そうに描かれることが多い。`petite` = 小柄 + 細身（背の低さも含む）。`lean` = 引き締まった細さ（筋肉的）。**推奨**: 自然な細身は `slender` または `slim`、モデル体型は `slender, model proportions`、アイドル系は `slim petite`。`skinny` は意図的に痩せすぎを描きたい時以外は避けてください。',
+        a: '**ニュアンスの差を覚えると AI 出力が劇的に変わります**：`slender` = 上品な細さ、モデル体型のニュアンス（推奨）。`slim` = 健康的な細さ、日常的な細身（推奨）。`thin` = 中立的な「薄い」、文脈次第。`skinny` = 痩せすぎ・骨ばった印象、不健康そうに描かれることが多い。`petite` = 小柄 + 細身（背の低さも含む）。`lean` = 引き締まった細さ（筋肉的）。**推奨**: 自然な細身は `slender` または `slim`、モデル体型は `slender, model proportions`、小柄な大人は `adult, slim petite`。`skinny` は意図的に痩せすぎを描きたい時以外は避けてください。`petite` は必ず `adult` とセットで書き、年齢は下げません。',
       },
       {
         q: '女性キャラに筋肉質を出したいけど男っぽくなってしまう',
-        a: '**強度を 1 段落とす + 女性らしさのワードを併記**が解決策です。（1）`(muscular:1.3)` を `(athletic:1.2)` または `(toned:1.2)` に置き換える。`muscular` は強すぎる印象が出やすい。（2）女性らしさを保持するワードを併記：`feminine features, soft face, long hair, slim waist, delicate features`。（3）`toned body` `fit physique` `defined abs` のように**控えめな筋肉表現**を選ぶ。（4）服装でも調整：`sports bra` `gym leggings` で運動感を出すと「ボディビルダー」ではなく「アスリート」になる。（5）リアル系モデルなら `Realistic Vision` が女性らしさと筋肉のバランスを取りやすい。サンプル: <a href="/prompt/athletic-jiu-jitsu-girl-muscles" class="text-sky-600 hover:underline">格闘技女性 × 強い腹筋</a> が良い参考例です。',
+        a: '**強度を 1 段落とす + 成人の顔立ちを併記**が解決策です。（1）`(muscular:1.3)` を `(athletic:1.2)` または `(toned:1.2)` に置き換える。`muscular` は強すぎる印象が出やすい。（2）`1 adult woman, long hair, soft face` を併記する。（3）`toned body` `fit physique` のように**控えめな筋肉表現**を選ぶ。（4）服装は `athletic t-shirt, track pants` のように運動着で覆う。（5）リアル系モデルなら `Realistic Vision` がバランスを取りやすい。サンプル: <a href="/prompt/athletic-jiu-jitsu-girl-muscles" class="text-sky-600 hover:underline">格闘技女性 × 強い腹筋</a> が参考例です。',
       },
       {
         q: '体型キーワードの重み付けは何が安全圏ですか？',
-        a: '**経験則として `(キーワード:1.2)` 〜 `(キーワード:1.3)` が安全圏**です。1.4 以上は崩壊リスクが上がり、1.5 以上は明確に画像が壊れます。**体型別の推奨範囲**：スレンダー系 `(slender:1.1-1.2)`（デフォルトに近いため軽め）／ 筋肉質 `(muscular:1.2-1.3)`（女性 1.2、男性 1.3）／ カーヴィ `(curvy:1.2-1.3)` + `(hourglass figure:1.2)` の併用が効果大 ／ ぽっちゃり `(chubby:1.3-1.4)`（AI のデフォルトから最も離れるため強めに）／ 身長系 `(tall:1.2)` `(petite:1.2)` が標準。**強度を上げるより部位ワードを増やす**方が崩壊しにくく自然な結果になります。',
+        a: '**経験則として `(キーワード:1.2)` 〜 `(キーワード:1.3)` が安全圏**です。1.4 以上は崩壊リスクが上がり、1.5 以上は明確に画像が壊れます。**体型別の推奨範囲**：スレンダー系 `(slender:1.1-1.2)`（デフォルトに近いため軽め）／ 筋肉質 `(muscular:1.2-1.3)`（女性 1.2、男性 1.3）／ カーヴィ `(curvy:1.2-1.3)` + `(healthy build:1.2)` の併用が効果大 ／ ぽっちゃり `(chubby:1.3-1.4)`（AI のデフォルトから最も離れるため強めに）／ 身長系 `(tall:1.2)` `(petite:1.2)` が標準。**強度を上げるより、健康的な体格と日常着の語を増やす**方が崩壊しにくく自然な結果になります。',
       },
       {
         q: 'LoRA との併用で「顔は推しキャラ、体型だけ変えたい」場合は？',
-        a: '**LoRA の影響度を下げて体型ワードを優先**する設計が定石。（1）キャラ LoRA は `<lora:character-name:0.6>` まで影響度を下げる（通常 0.7-0.8 → 0.5-0.6）。（2）体型ワードは強めに：`(curvy:1.3), (hourglass figure:1.2), thick thighs, wide hips`。（3）顔は LoRA に任せて、体は体型ワード + 部位形容詞で構成。（4）`<lora:character:0.5>, beautiful face` で顔を弱く固定しつつ、体型は別軸で制御。（5）**ADetailer の inpaint_only モード**で顔だけ後から LoRA で再生成する手法も有効。**もう一つの方法**: img2img で既存キャラの顔写真をベースに、prompt で体型だけ変更（Denoising Strength 0.5-0.6 で顔保持）。',
+        a: '**LoRA の影響度を下げて体型ワードを優先**する設計が定石。（1）キャラ LoRA は `<lora:character-name:0.6>` まで影響度を下げる（通常 0.7-0.8 → 0.5-0.6）。（2）体型ワードは強めに：`(curvy:1.3), (healthy build:1.2), broad shoulders, plus-size`。日常着（ニット、コート、デニム）を同じプロンプトに書く。（3）顔は LoRA に任せて、体は体格ワードで構成。（4）`<lora:character:0.5>, adult face` で顔を弱く固定しつつ、体型は別軸で制御。（5）**ADetailer の inpaint_only モード**で顔だけ後から LoRA で再生成する手法も有効。**もう一つの方法**: img2img で既存キャラの顔写真をベースに、prompt で体型だけ変更（Denoising Strength 0.5-0.6 で顔保持）。',
       },
       {
         q: 'Midjourney と Stable Diffusion で体型表現の違いは？',
-        a: '**Midjourney** は自然言語の理解が高く、「a curvy woman with thick thighs in a red dress」のような口語的指示が効く。`--style raw` を付けると自動補正が抑制され体型指定が素直に反映される。`--ar 9:16` で全身ショットがきれいに出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当機能なし。**Stable Diffusion** は `(curvy:1.3)` で精密制御可能、ControlNet で実写参照、LoRA で特定体型を完全再現できる。danbooru タグ `flat chest` `large breasts` などアニメ系で安定。**結論**: クオリティ重視・気軽に試したい → Midjourney `--style raw`、本格的に体型をコントロール（特にカーヴィ / ぽっちゃり）→ Stable Diffusion + Realistic Vision + LoRA。**Gemini Nano Banana** は既存写真の体型編集（痩せ→カーヴィなど）に強いので、ツール選択は目的次第です。',
+        a: '**Midjourney** は自然言語の理解が高く、「an adult woman with a curvy healthy build, in a knit sweater and jeans」のような口語的指示が効く。`--style raw` を付けると自動補正が抑制され体型指定が素直に反映される。`--ar 9:16` で全身ショットがきれいに出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当機能なし。**Stable Diffusion** は `(curvy:1.3)` で精密制御可能、ControlNet で実写参照、LoRA で特定体型を再現できる。全体の体格タグ `curvy` `plump` `plus-size` `athletic` が安定する。**結論**: クオリティ重視・気軽に試したい → Midjourney `--style raw`、本格的に体型をコントロール（特にカーヴィ / ぽっちゃり）→ Stable Diffusion + Realistic Vision + LoRA。**Gemini Nano Banana** は既存写真の体型編集（細身→カーヴィなど）に強いので、ツール選択は目的次第です。',
       },
     ],
   },
@@ -3856,7 +3862,7 @@ slice of life illustration
 
 **ネガティブ推奨**: \`same body type, identical builds, equal body sizes\`
 
-体格差まで描き分けると、ファンタジー / BL / 漫画的演出として一気にプロっぽい絵になります。サンプル: <a href="/prompt/old-man-giant-monster-bodytype-dark" class="text-sky-600 hover:underline">巨漢 × 小柄 ダーク構図</a> / <a href="/prompt/child-robot-bodytype-contrast-wideshot" class="text-sky-600 hover:underline">少女 × ロボット ワイドショット</a>。`,
+体格差まで描き分けると、ファンタジー / BL / 漫画的演出として一気にプロっぽい絵になります。サンプル: <a href="/prompt/old-man-giant-monster-bodytype-dark" class="text-sky-600 hover:underline">巨漢 × 小柄 ダーク構図</a> / <a href="/prompt/child-robot-bodytype-contrast-wideshot" class="text-sky-600 hover:underline">体格差ワイドショット</a>。`,
       },
       {
         title: 'ポーズ別 — 身長差を強調する 6 つの定番構図',

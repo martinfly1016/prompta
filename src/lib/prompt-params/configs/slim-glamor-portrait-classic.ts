@@ -23,7 +23,7 @@ export const config: PromptParamsConfig = {
       options: [
         { value: 'thin muscular midriff', label: '細身・引き締まった腹部' },
         { value: 'athletic toned figure', label: 'アスリート体型' },
-        { value: 'curvy hourglass figure', label: '砂時計型' },
+        { value: 'curvy healthy build', label: 'カーヴィ・健康的な体格' },
         { value: 'slender willowy figure', label: 'スレンダー' },
         { value: 'soft elegant figure', label: 'ソフトエレガント' },
       ],
