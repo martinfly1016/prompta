@@ -18,7 +18,7 @@ export const SEO_BATCH_5_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 \`maid uniform\`、\`maid dress\` は、衣装だと伝えたいときの自然な英語です。公式タグとしてこのページでは断定しません。土台は \`maid\` と、エプロンと、カチューシャです。
 
-登場人物は大人のスタッフだけにします。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。学生服の場面、短い丈、網の靴下、太ももまでの靴下は使いません。それらを避ける語は、各作例のネガティブに入れます。
+登場人物は大人のスタッフだけにします。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。学生服の場面と短い丈は使いません。それらを避ける語は、各作例のネガティブに入れます。
 
 コスプレ全般は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。髪は [髪型プロンプト](/guides/hairstyle-prompt-guide)、二つに分けた髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。
 
@@ -34,7 +34,7 @@ holding a tea tray, mansion parlor, full body, standing
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 公開作例は [黒白のメイド衣装](/prompt/maid-costume-3d-render) です。`,
@@ -67,7 +67,7 @@ holding a tea tray, dining room, full body, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 **メイドカフェ風（パステル、膝丈）**
@@ -82,7 +82,7 @@ holding a tea tray, cafe interior, full body, smile
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\``,
       },
       {
@@ -94,7 +94,7 @@ school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
 | カチューシャ | \`maid headdress\` | タグとして書く。フリルのヘッドバンドは自然な英語 |
 | エプロン | \`apron\`, \`maid apron\`, \`frilled apron\` | 白い平面のエプロンだけなら \`apron\`。フリルは \`frilled apron\` |
 | 袖 | \`long sleeves\` | 半袖にしたいときは、このタグを外してから自然な英語で半袖と書く |
-| 襟 | 自然な英語で、首元のフリル、と書く | 英語の首輪タグは使わない |
+| 襟 | 自然な英語で、首元のフリル、と書く | ドレスの襟元。フリルはエプロンと分ける |
 | リボン | \`ribbon\` | 髪や腰。アクセサリー全般は [アクセサリープロンプト](/guides/accessory-prompt-guide) |
 | 丈 | \`long skirt\` | 膝丈は自然な英語で \`knee-length skirt\` |
 | 靴 | \`mary janes\`, \`boots\` | タグとして書いてよい |
@@ -136,7 +136,7 @@ holding a tea tray, parlor, afternoon light, full body, from side
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 **カフェでの接客**
@@ -155,7 +155,7 @@ holding a broom, standing, sunlit hallway, full body
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 公開作例は [掃除中のメイド](/prompt/maid-cleaning-cel-shade-style) です。
@@ -173,7 +173,7 @@ standing beside a bookshelf, holding a book, mansion library, full body
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 **和風の旅館**
@@ -187,7 +187,7 @@ long skirt, standing, wooden corridor, full body, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 和風の名前として \`wa maid\` を自然な英語で足してもよいです。効かなければ外し、\`kimono\` と \`apron\` と \`maid headdress\` を残します。`,
@@ -210,7 +210,7 @@ mansion hallway, full body, standing
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 **執事とメイドが並ぶ**
@@ -226,7 +226,7 @@ standing side by side, mansion parlor, full body, from side
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\``,
       },
       {
@@ -257,7 +257,7 @@ school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
 4. 重みは \`(frilled apron:1.2)\` から一つ。1.4 を超えるとフリルが布全体に広がります。
 5. それでも猫耳になるときは、ネガティブに耳のアクセサリーを足すより、頭のタグを \`maid headdress\` だけに減らします。
 
-ネガティブの共通行は、各作例のブロックです。手と体の語に加え、学生服、短い丈、網の靴下、太ももまでの靴下、首輪、引き紐を除外します。品質タグの削り方は [ネガティブプロンプト](/guides/negative-prompt-guide) です。
+ネガティブの共通行は、各作例のブロックです。手と体の語に加え、学生服と短い丈を除外します。品質タグの削り方は [ネガティブプロンプト](/guides/negative-prompt-guide) です。
 
 フリルが溶けて模様になるときは、\`frilled apron\` を残してレースの語を外します。エプロンがドレスと同じ色に染まるときは、\`white apron, black dress\` と色を名詞に付けてください。`,
       },
@@ -283,7 +283,7 @@ She is an adult staff member, standing in a mansion parlor and holding a tea tra
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, fishnet, thigh-high stockings, collar, leash
+school uniform, short skirt
 \`\`\`
 
 ChatGPT や Gemini の画像生成にネガティブ欄が無いときは、同じ文に「成人だけ。丈は長い。学生服にはしない」と足します。Midjourney では重みの括弧を外し、末尾に \`--ar 2:3\` を一つ足す程度にしてください。`,
@@ -804,7 +804,7 @@ Midjourney 向けのパラメータは [Midjourneyプロンプト](/guides/midjo
 
 全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。
 
-人物は成人です。耳以外の体へのピアス、首輪、引き紐は使いません。除外する英語は各作例のネガティブに入れます。
+人物は成人です。ピアスは耳だけにします。首輪のような小物は扱いません。
 
 **金のネックレス、上半身**
 
@@ -817,7 +817,7 @@ white blouse, simple background, soft daylight, looking at viewer
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\`
 
 公開作例は [金のネックレス](/prompt/gold-necklace-vintage-6) です。タグの一覧は [ネックレス](/tag/ネックレス)、[ジュエリー](/tag/ジュエリー)、[アクセサリー](/tag/アクセサリー) です。`,
@@ -850,12 +850,12 @@ black dress, long sleeves, simple background, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\``,
       },
       {
         title: 'チョーカー',
-        content: `\`choker\` は首に沿う細い飾りです。ファッションの範囲だけにします。首輪や、それを引く紐の書き方は使いません。
+        content: `\`choker\` は首に沿う細い飾りです。ファッションの範囲だけにします。
 
 | 種類 | 書き方 |
 |---|---|
@@ -876,7 +876,7 @@ white blouse, long sleeves, simple background, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\`
 
 メイド服の首元と一緒に書くときは [メイド服プロンプト](/guides/maid-outfit-prompt-guide) のエプロンを先に決め、首の飾りは \`choker\` か \`ribbon\` の一方だけ足します。`,
@@ -898,7 +898,7 @@ gold earrings, white blouse, simple background, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\`
 
 \`earrings\` と \`hoop earrings\` を両方強くしすぎると、耳に輪が二組できます。形は一つにしてください。`,
@@ -925,7 +925,7 @@ simple background, soft daylight, detailed fingers
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, extra fingers, missing fingers, collar, leash
+school uniform, short skirt, extra fingers, missing fingers
 \`\`\`
 
 ブレスレットは同じ構図で \`bracelet\` に替えます。指輪と時計とブレスレットを一度に強くすると、手首で金属がつながります。`,
@@ -953,7 +953,7 @@ white blouse, simple background, soft daylight, looking at viewer
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\`
 
 ブローチは \`brooch\` を胸の位置の文と一緒に、ネックレスを外した状態で試します。両方要るときも、重みは片方だけです。`,
@@ -996,7 +996,7 @@ white blouse, plain background, soft daylight
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, full body, collar, leash
+school uniform, short skirt, full body
 \`\`\`
 
 消したいときは、ポジティブから飾りを全部外し、ネガティブに \`jewelry, necklace, earrings\` を入れます。
@@ -1011,7 +1011,7 @@ school uniform, short skirt, full body, collar, leash
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, jewelry, necklace, earrings, collar, leash
+school uniform, short skirt, jewelry, necklace, earrings
 \`\`\``,
       },
       {
@@ -1033,7 +1033,7 @@ Soft daylight. The necklace is clearly visible. She is an adult.
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, collar, leash
+school uniform, short skirt
 \`\`\`
 
 **人のいない商品**
@@ -1055,7 +1055,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
     ],
     faq: [
       { q: 'ネックレスを書いても描かれません', a: '`full body` を外し、`portrait` か `upper body` か `close-up` にします。`gold necklace` のように素材を付け、服は無地にしてください。重みは `(necklace:1.2)` から一つです。' },
-      { q: 'チョーカーと首輪はどう違いますか？', a: 'このページでは `choker` だけを使います。首に巻いて引く書き方はしません。ネガティブ側でその系統を除外し、リボンにするときは `ribbon` を一つだけ足してください。' },
+      { q: 'チョーカーとネックレスは同時に書けますか？', a: '同じ強さにすると首元で一本に融合します。`choker` か `necklace` の一方にしてください。リボンにするときは `ribbon` を一つだけ足します。' },
       { q: 'ピアスはどこに指定できますか？', a: '耳だけです。基本タグは `earrings` で、フープやスタッドは自然な英語で形を一つ足します。体や舌には使いません。耳が髪で隠れるときは、髪を耳より後ろにまとめてください。' },
       { q: 'アクセサリーを消すには？', a: 'ポジティブから `necklace` や `earrings` を消し、ネガティブに `jewelry, necklace, earrings` を入れます。一部だけ残すときは、消したい種類だけをネガティブに回してください。' },
       { q: '商品写真風にするには？', a: '人を書かず、`product photo`、布、光、中央、を自然な英語で指定します。ネガティブに人物を入れ、石と金属は一組だけにしてください。' },

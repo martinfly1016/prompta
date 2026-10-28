@@ -1526,7 +1526,7 @@ holding a tea tray, mansion parlor, full body
 
 \`\`\`
 child, kid, toddler, baby, loli, shota, teen, underage, baby face,
-bad anatomy, bad hands, extra fingers, short skirt, fishnet, thigh-high stockings
+bad anatomy, bad hands, extra fingers, short skirt
 \`\`\`
 
 **2. ヴィクトリアン — 床までの長いドレス**
@@ -1541,7 +1541,7 @@ holding a tea tray, dining room, full body, soft daylight
 
 \`\`\`
 child, kid, toddler, baby, loli, shota, teen, underage, baby face,
-bad anatomy, bad hands, extra fingers, short skirt, fishnet, thigh-high stockings
+bad anatomy, bad hands, extra fingers, short skirt
 \`\`\`
 
 作例: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白のメイド衣装</a> / <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド</a>`,
