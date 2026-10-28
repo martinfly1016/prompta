@@ -328,13 +328,13 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, stockings, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
       { question: '色違いの服装で色滲み（color bleeding）を防ぐには？', answer: '複数の色を指定すると Stable Diffusion では色が混ざってしまうことがあります。「red dress BREAK blue jacket」のように BREAK で分割するか、CutOff 拡張機能で「red:dress || blue:jacket」と領域ごとに色を固定すると安定します。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」がさらに確実です。' },
       { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現（セーラー服・メイド服・ナース服）、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・制服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
-      { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '「medieval armor, knight plate, chainmail」が騎士系、「mage robe, wizard hat, magical staff」が魔法使い系、「elf tunic, leather boots, archer quiver」がエルフ系、「dark sorceress dress, gothic ornaments」が女魔法使い系。Stable Diffusion なら ChilloutMix・RealisticVision、Midjourney なら「--style raw --ar 2:3」がファンタジー衣装の写実度を上げます。' },
+      { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '「medieval armor, knight plate, chainmail」が騎士系、「mage robe, wizard hat, magical staff」が魔法使い系、「elf tunic, leather boots, archer quiver」がエルフ系、「dark sorceress dress, gothic ornaments」が女魔法使い系。Stable Diffusion なら Realistic Vision・Juggernaut XL、Midjourney なら「--style raw --ar 2:3」がファンタジー衣装の写実度を上げます。' },
     ],
   },
 
   'cosplay': {
     intro:
-      'コスプレプロンプトは、特定のアニメ・ゲーム・歴史上のキャラクターの衣装やルックを再現するための専門的なプロンプト技術です。Stable Diffusionでは作品名や役名を直接入れる方法（例: 「miku hatsune cosplay」）と、衣装の構成要素を分解して記述する方法（例: 「twin teal hair, school uniform, tie」）の2通りがあり、後者の方が著作権リスクを避けつつ「それっぽい」画像を生成できます。\n「コスプレ プロンプト」「セーラー服 プロンプト」「メイド服 プロンプト」「制服 プロンプト」で探している場合は、衣装名だけでなく sailor collar、white apron、pleated skirt、school tie のような必須パーツまで入れるのが重要です。\nコスプレ特有の課題として、衣装のディテール再現と人物の自然さの両立があります。「cosplay photo, professional photography, studio lighting」といった撮影系キーワードを併用することで、実際のコスプレ写真に近いリアリティが得られます。Midjourneyでは「--ar 2:3 --style raw」が人物コスプレ写真に最適です。\n\n【定番コスプレ10選の呪文例】AIモデルが学習データで頻繁に見ているため再現性が高い定番コスチュームは、「sailor uniform（セーラー服）」「maid uniform（メイド服）」「school uniform（制服）」「miko costume（巫女装束）」「nurse outfit（ナース服）」「kimono（着物）」「cheerleader uniform（チアリーダー）」「witch costume（魔女コスチューム）」「bunny girl（バニーガール）」「fantasy armor（ファンタジー甲冑）」の10種類。これらをベースに色・素材・小物を追加するだけで、少ない指示でも安定した結果が得られます。\n\n【Stable Diffusion と NovelAI の使い分け】Stable Diffusionはリアル寄りの実写コスプレ写真が得意で、ChilloutMix や AsianRealistic 系モデルは実写風コスプレ、Anything V5 や Counterfeit 系はアニメ調に最適です。一方 NovelAI は Artist タグを積極活用することで、特定作家の絵柄でコスプレキャラを描けるのが特徴。どちらもベースプロンプトは共通ですが、品質タグ（SD: masterpiece, best quality / NovelAI: best quality, amazing quality）とネガティブプロンプトの書式がモデルごとに微妙に異なる点に注意してください。\n\n【呪文の重み付けテクニック】コスプレの衣装要素は複数併記すると AI が省略する傾向があるため、重要パーツに「(sailor collar:1.2), (pleated skirt:1.3), (knee-high socks:1.1)」のように重みを散らすのがコツです。1.4 を超えると画像全体が崩壊しやすいので、1.1〜1.3 の範囲に収めるのが安全圏。さらに BREAK 構文を使うと「[上着]BREAK[下]BREAK[足元]」と要素を分離でき、色の干渉（color bleeding）も防げます。',
+      'コスプレプロンプトは、特定のアニメ・ゲーム・歴史上のキャラクターの衣装やルックを再現するための専門的なプロンプト技術です。Stable Diffusionでは作品名や役名を直接入れる方法（例: 「miku hatsune cosplay」）と、衣装の構成要素を分解して記述する方法（例: 「twin teal hair, school uniform, tie」）の2通りがあり、後者の方が著作権リスクを避けつつ「それっぽい」画像を生成できます。\n「コスプレ プロンプト」「セーラー服 プロンプト」「メイド服 プロンプト」「制服 プロンプト」で探している場合は、衣装名だけでなく sailor collar、white apron、pleated skirt、school tie のような必須パーツまで入れるのが重要です。\nコスプレ特有の課題として、衣装のディテール再現と人物の自然さの両立があります。「cosplay photo, professional photography, studio lighting」といった撮影系キーワードを併用することで、実際のコスプレ写真に近いリアリティが得られます。Midjourneyでは「--ar 2:3 --style raw」が人物コスプレ写真に最適です。\n\n【定番コスプレ10選の呪文例】AIモデルが学習データで頻繁に見ているため再現性が高い定番コスチュームは、「sailor uniform（セーラー服）」「maid uniform（メイド服）」「school uniform（制服）」「miko costume（巫女装束）」「nurse outfit（ナース服）」「kimono（着物）」「cheerleader uniform（チアリーダー）」「witch costume（魔女コスチューム）」「bunny girl（バニーガール）」「fantasy armor（ファンタジー甲冑）」の10種類。これらをベースに色・素材・小物を追加するだけで、少ない指示でも安定した結果が得られます。\n\n【Stable Diffusion と NovelAI の使い分け】Stable Diffusionはリアル寄りの実写コスプレ写真が得意で、Realistic Vision や Juggernaut XL 系モデルは実写風コスプレ、Anything V5 や Counterfeit 系はアニメ調に最適です。一方 NovelAI は Artist タグを積極活用することで、特定作家の絵柄でコスプレキャラを描けるのが特徴。どちらもベースプロンプトは共通ですが、品質タグ（SD: masterpiece, best quality / NovelAI: best quality, amazing quality）とネガティブプロンプトの書式がモデルごとに微妙に異なる点に注意してください。\n\n【呪文の重み付けテクニック】コスプレの衣装要素は複数併記すると AI が省略する傾向があるため、重要パーツに「(sailor collar:1.2), (pleated skirt:1.3), (knee-high socks:1.1)」のように重みを散らすのがコツです。1.4 を超えると画像全体が崩壊しやすいので、1.1〜1.3 の範囲に収めるのが安全圏。さらに BREAK 構文を使うと「[上着]BREAK[下]BREAK[足元]」と要素を分離でき、色の干渉（color bleeding）も防げます。',
     useCases: [
       'コスプレ衣装のデザイン案出し',
       'イベントポスター・告知画像の作成',
@@ -350,7 +350,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
     faqs: [
       { question: 'AI コスプレプロンプトとは何ですか？', answer: 'AI 画像生成で特定のキャラクターやコスチュームのルックを再現するための呪文（プロンプト）です。Stable Diffusion・Midjourney・NovelAI で「sailor uniform（セーラー服）」「maid outfit（メイド服）」「miko costume（巫女装束）」のような英語キーワードをカンマ区切りで組み合わせて記述します。' },
       { question: 'キャラクター名を直接書いても大丈夫ですか？', answer: '著作権リスクがあるためお勧めしません。「miku hatsune cosplay」のように作品名・キャラ名を直接入れる方法もありますが、衣装の構成要素を分解して記述する方が安全かつ汎用的です。例: 「twin teal hair, school uniform, tie, headphones」のように特徴を分解すれば「それっぽい」コスプレ画像が得られます。' },
-      { question: 'Stable Diffusion と NovelAI、どちらがコスプレに向いていますか？', answer: 'リアル系の実写コスプレ写真は Stable Diffusion（ChilloutMix・BeautifulRealistic 系モデル）が、アニメ調のコスプレイラストは NovelAI または Anything V5 / Counterfeit / niji 5 が得意です。Midjourney は「--ar 2:3 --style raw」で人物コスプレ写真に最適化できます。' },
+      { question: 'Stable Diffusion と NovelAI、どちらがコスプレに向いていますか？', answer: 'リアル系の実写コスプレ写真は Stable Diffusion（Realistic Vision・Juggernaut XL 系モデル）が、アニメ調のコスプレイラストは NovelAI または Anything V5 / Counterfeit / niji 5 が得意です。Midjourney は「--ar 2:3 --style raw」で人物コスプレ写真に最適化できます。' },
       { question: 'コスプレ衣装のディテールが消えないようにするには？', answer: '重要パーツに「(sailor collar:1.2), (pleated skirt:1.3), (knee-high socks:1.1)」のように重み付け（1.1〜1.3 範囲）を散らすのがコツです。それでも消える場合は BREAK 構文で「[上着] BREAK [下] BREAK [足元]」と要素を分離します。1.4 を超えると画像全体が崩壊するので注意してください。' },
       { question: 'コスプレ写真の品質を上げる呪文は？', answer: '「professional cosplay photo, studio lighting, DSLR camera, sharp focus, detailed costume」を品質タグとして併用すると、プロカメラマンが撮影したような仕上がりになります。ネガティブに「low quality cosplay, fake wig, bad anatomy, blurry」を必ず入れてください。' },
       { question: '武器や小物（剣・刀・銃など）はどう指定しますか？', answer: '「holding [item]」と明示すると認識率が大幅に上がります。例: 「holding katana, samurai armor」「holding magical staff, wizard robe」。さらに（holding:1.2, katana:1.3）のような重み付けや、ControlNet（OpenPose）でポーズを固定するのも有効です。' },
@@ -430,7 +430,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'body-type': {
     intro:
-      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。\n\n【身長系の呪文テクニック】身長は「tall」「short」だけでは AI に伝わりにくいため、「tall adult, long legs」や「short adult, small frame」のように身体的特徴を成人とセットで記述するのがコツです。2 人構図で身長差を出したいときは「height difference, tall man and short woman, looking down at her」のように関係性をセットで書くと安定します。数値指定（170cm など）は Stable Diffusion では機能しないため、相対的な形容詞で表現してください。\n\n【体格系（スレンダー/アスリート/ぽっちゃり）の使い分け】痩せ型は「slim, slender, thin」のうち「slender」が最もバランスの取れた細身表現で、「skinny」は骨ばった印象が強くなります。アスリート体型は「athletic build, toned body, muscular arms」、ぽっちゃり系は「chubby, plump, plus-size, healthy build」が定番。重み付けは (slender:1.2) 程度で十分で、1.4 を超えると体が崩壊しやすいので注意してください。\n\n【年齢感は20代から】このカテゴリの人物はすべて20歳以上の大人です。10代や、child、teenager、youthful は使いません。20代→「young adult, adult, healthy build, athletic」、30代→「adult in their thirties, curvy, healthy build」、40代以上→「mature adult, broader frame, soft silhouette」。小柄にしたいときも年齢は下げず、「short adult, small frame」と成人をセットで書きます。\n\n【ポーズ連携テクニック】体型とポーズはセットで指定すると説得力が増します。スレンダー体型×「elegant pose, hand on hip, walking」、筋肉質×「power stance, arms crossed」、小柄な大人×「short adult, standing, hands at sides」のように、体型の特性を活かすポーズを選ぶのがプロのテクニックです。\n\n【モデル別の体型挙動】リアル系モデル（ChilloutMix, BeautifulRealistic）はデフォルトが標準〜やや細身で、体型指定への反応が素直です。アニメ系モデル（Anything V5, Counterfeit）はデフォルトが極端に細身のため、「curvy」「muscular」の効きが弱く、重み付けを 1.3 以上に上げる必要があります。NovelAI では Artist タグとの相性もあるため、体型が安定しないときはモデルやArtistを変えてみるのも有効な手段です。',
+      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。\n\n【身長系の呪文テクニック】身長は「tall」「short」だけでは AI に伝わりにくいため、「tall adult, long legs」や「short adult, small frame」のように身体的特徴を成人とセットで記述するのがコツです。2 人構図で身長差を出したいときは「height difference, tall man and short woman, looking down at her」のように関係性をセットで書くと安定します。数値指定（170cm など）は Stable Diffusion では機能しないため、相対的な形容詞で表現してください。\n\n【体格系（スレンダー/アスリート/ぽっちゃり）の使い分け】痩せ型は「slim, slender, thin」のうち「slender」が最もバランスの取れた細身表現で、「skinny」は骨ばった印象が強くなります。アスリート体型は「athletic build, toned body, muscular arms」、ぽっちゃり系は「chubby, plump, plus-size, healthy build」が定番。重み付けは (slender:1.2) 程度で十分で、1.4 を超えると体が崩壊しやすいので注意してください。\n\n【年齢感は20代から】このカテゴリの人物はすべて20歳以上の大人です。10代や、child、teenager、youthful は使いません。20代→「young adult, adult, healthy build, athletic」、30代→「adult in their thirties, curvy, healthy build」、40代以上→「mature adult, broader frame, soft silhouette」。小柄にしたいときも年齢は下げず、「short adult, small frame」と成人をセットで書きます。\n\n【ポーズ連携テクニック】体型とポーズはセットで指定すると説得力が増します。スレンダー体型×「elegant pose, hand on hip, walking」、筋肉質×「power stance, arms crossed」、小柄な大人×「short adult, standing, hands at sides」のように、体型の特性を活かすポーズを選ぶのがプロのテクニックです。\n\n【モデル別の体型挙動】リアル系モデル（Realistic Vision, Juggernaut XL）はデフォルトが標準〜やや細身で、体型指定への反応が素直です。アニメ系モデル（Anything V5, Counterfeit）はデフォルトが極端に細身のため、「curvy」「muscular」の効きが弱く、重み付けを 1.3 以上に上げる必要があります。NovelAI では Artist タグとの相性もあるため、体型が安定しないときはモデルやArtistを変えてみるのも有効な手段です。',
     useCases: [
       'キャラクターの基本デザイン設計',
       'ファッション撮影・ポートレート風の生成',
@@ -467,7 +467,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
     faqs: [
       { question: 'カメラアングル・構図プロンプトの基本指定方法は？', answer: '基本は「[アングル], [距離], [構図]」の 3 要素。アングルは「low angle（ローアングル）」「high angle（ハイアングル）」「bird-eye view（俯瞰）」「dutch angle（傾き）」。距離は「close-up（クローズアップ）」「medium shot（ミディアム）」「full body（全身）」「wide shot（広角）」。構図は「rule of thirds（三分割法）」「centered composition（中央構図）」「leading lines（リーディングライン）」を組み合わせます。' },
       { question: 'ライティングプロンプトの種類と使い分けは？', answer: '主要なライティングは ① natural light（自然光）、② studio lighting（スタジオライティング）、③ rim lighting（リムライト・逆光）、④ cinematic lighting（映画的照明）、⑤ golden hour（ゴールデンアワー）、⑥ blue hour（青の時間）、⑦ neon lighting（ネオン）、⑧ candlelight（キャンドルライト）。シネマティックさを出すには「dramatic lighting, depth of field, volumetric light」を組み合わせるのが定番です。' },
-      { question: 'シネマティックな写真風プロンプトを作るには？', answer: '「cinematic photography, film grain, anamorphic lens, dramatic lighting, depth of field, 35mm film, kodak portra」を組み合わせると映画ワンシーン風の質感になります。Midjourney は「--ar 2:3 --style raw --stylize 250」、Stable Diffusion は ChilloutMix・RealisticVision 系モデルが向いています。「cinematic color grading, teal and orange」で映画的なカラーグレーディングも可能。' },
+      { question: 'シネマティックな写真風プロンプトを作るには？', answer: '「cinematic photography, film grain, anamorphic lens, dramatic lighting, depth of field, 35mm film, kodak portra」を組み合わせると映画ワンシーン風の質感になります。Midjourney は「--ar 2:3 --style raw --stylize 250」、Stable Diffusion は Realistic Vision・Juggernaut XL 系モデルが向いています。「cinematic color grading, teal and orange」で映画的なカラーグレーディングも可能。' },
       { question: '俯瞰・ローアングルなど特殊アングルが反映されない', answer: '重み付けを上げてください。「(low angle:1.3)」「(bird-eye view:1.4)」のように 1.3 以上の強調が必要です。それでも反映されない場合は ControlNet（OpenPose・Depth）で参照画像のカメラ位置を物理固定するのが確実。Midjourney は「--ar 9:16」（縦長）でローアングル感が出やすく、「--ar 16:9」（横長）で俯瞰感が強調されます。' },
       { question: '実機材名（Sony・Canon・35mm レンズ）を書く効果は？', answer: 'Midjourney では実機材名が非常に強力で、「Sony A7 IV, 50mm f/1.4 lens, ISO 200」と書くだけで一気にプロカメラマン風になります。Stable Diffusion でも一定の効果があり、「shot on Canon EOS R5, 85mm portrait lens, shallow depth of field」のように具体化すると質感が向上。逆に DALL-E 3 では機材名はあまり効かないため、ライティング・構図の言葉で代替してください。' },
       { question: 'ポートレート写真のおすすめプロンプトは？', answer: '基本テンプレート: 「professional portrait photography, soft natural light from the side, shallow depth of field, blurred background, [被写体]、85mm lens, eye-level angle, sharp focus on eyes」。ビジネス用途なら「LinkedIn profile photo, neutral background, formal lighting」、芸術系なら「fine art portrait, dramatic chiaroscuro lighting」、ファッション系なら「Vogue editorial photography, dramatic pose」を組み合わせます。' },
@@ -738,10 +738,10 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'oshi-height-difference-ai-guide',
-    title: '推しとの身長差 AI の作り方｜身長差メーカーで推しカップル画像プロンプトを作成',
+    title: '推しとの身長差のやり方｜AIで作るプロンプト・テンプレ',
     description:
-      '推しとの身長差を AI 画像生成で作る方法。身長差メーカー、ChatGPT、Stable Diffusion、Midjourney 向けに、推しカップル・OC ペア・夢絵風構図の英語プロンプトをコピペ例つきで解説。',
-    targetKeyword: '推しとの身長差 AI',
+      '推しとの身長差をAIで作るやり方。身長差メーカーと ChatGPT・Stable Diffusion・Midjourney 用のコピペテンプレで、推しカップルや OC ペアの身長差画像を作る手順と失敗しないコツを解説。',
+    targetKeyword: '推しとの身長差',
     monthlySearchVolume: 640,
   },
   {
@@ -910,6 +910,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'ぽっちゃり プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'maid-outfit-prompt-guide',
+    title: 'メイド服プロンプト｜種類別の英語呪文【コピペOK】',
+    description: 'メイド服のAIプロンプトを英語タグでコピペ。クラシック・ヴィクトリアン・和風・ゴシック・メイドカフェ風の種類一覧、カチューシャやエプロンなどパーツ別タグ、執事との二人構図、崩れ対策を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'メイド服 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'tall-height-prompt-guide',
+    title: '高身長プロンプト｜背が高い大人キャラの英語呪文【コピペOK】',
+    description: '高身長・背が高い・長身キャラのAIプロンプトを英語でコピペ。tall と tall stature の違い、全身構図と比較対象で背の高さを見せるコツ、男女別・服装別の作例、脚だけ伸びるときの直し方を Stable Diffusion・NovelAI・Midjourney 向けに解説。',
+    targetKeyword: '高身長 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'quality-tags-prompt-guide',
+    title: '品質タグ一覧｜モデル別の書き方と順番【コピペOK】',
+    description: '品質タグ（masterpiece, best quality など）の一覧とモデル別の書き方。Stable Diffusion・SDXL・Illustrious・Pony・NovelAI の推奨タグ、前に置くか後ろに置くか、ネガティブ側の品質タグ、入れすぎで崩れるときの直し方をコピペ例で解説。',
+    targetKeyword: '品質タグ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'accessory-prompt-guide',
+    title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】',
+    description: 'ネックレス・イヤリング・指輪・ブレスレット・髪飾りのAIプロンプトを英語でコピペ。種類・素材・モチーフ別の一覧、小さなアクセサリーを描き込ませる構図、アクセサリーを消すネガティブを Stable Diffusion・NovelAI・Midjourney 向けに解説。',
+    targetKeyword: 'ネックレス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'suit-lab-coat-prompt-guide',
+    title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】',
+    description: 'スーツ・白衣のAIプロンプトを英語でコピペ。ビジネススーツ（男性・女性）、スリーピース、パンツスーツ、医師・研究者の白衣、スクラブの作例と、ネクタイや襟が崩れるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '白衣 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1073,6 +1108,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'plump-body-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['body-type'],
+  },
+  'maid-outfit-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'tall-height-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type'],
+  },
+  'quality-tags-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime'],
+  },
+  'accessory-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'color'],
+  },
+  'suit-lab-coat-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
   },
 }
 

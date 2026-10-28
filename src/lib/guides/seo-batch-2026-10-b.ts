@@ -19,7 +19,7 @@ export const SEO_BATCH_2_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 身長は比較がないと絵に出ません。一人が画面の中央に立っているだけだと、モデルは平均的な脚の長さに戻します。\`petite\` を入れたうえで、全身を入れ、ドアやカウンターなど高さの分かるものを一緒に置いてください。
 
-二人の差を描く場合は [身長差プロンプト](/guides/height-difference-pair-prompt) と [身長差メーカー](/tools/height-difference-maker) です。体型全般の単語は [体型プロンプト](/guides/body-type-prompt-guide)、世代の単語は [年齢プロンプト](/guides/age-prompt-guide) に分けてあります。`,
+二人の差を描く場合は [身長差プロンプト](/guides/height-difference-pair-prompt) と [身長差メーカー](/tools/height-difference-maker) です。一人を高く見せる書き方は [高身長プロンプト](/guides/tall-height-prompt-guide) です。体型全般の単語は [体型プロンプト](/guides/body-type-prompt-guide)、世代の単語は [年齢プロンプト](/guides/age-prompt-guide) に分けてあります。`,
       },
       {
         title: '低身長・小柄の英語タグ',
@@ -728,7 +728,7 @@ v0.1 カードは、\`close-up\`、\`upside-down\`、\`cowboy shot\` を使い�
 
 品質タグを何個も積むと良くなる、という仕様はカードにありません。ファインチューンによっては、品質タグの足しすぎと長すぎるネガティブが絵をぼかす、とモデルページに注意が書いてあります。読み込んだモデルのページにその注意があるなら、\`masterpiece, best quality\` 程度で止めてください。注意がないベースモデルでも、まずその二つから試し、足しても変わらなければ戻す、というやり方が安全です。
 
-\`amazing quality\` や \`very aesthetic\` は、v0.1 カードの対応リストには含まれていません。一部のファインチューンの作例では使われています。ベースの仕様としてこのページでは推奨しません。`,
+\`amazing quality\` や \`very aesthetic\` は、v0.1 カードの対応リストには含まれていません。一部のファインチューンの作例では使われています。ベースの仕様としてこのページでは推奨しません。モデル別の並びは [品質タグ一覧](/guides/quality-tags-prompt-guide) です。`,
       },
       {
         title: 'Danbooru タグと、自然言語',

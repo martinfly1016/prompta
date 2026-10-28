@@ -19,12 +19,8 @@ export const NOINDEX_PROMPT_SLUGS = [
   'cinematic-portrait-student-uniform',
   // Title says 学生服美少女 and the prompt includes "sexy".
   'school-uniform-freckles-joy',
-  // Description sells a 「セクシー」 curvy gym-wear look.
-  'curvy-pink-gym-wear-sporty',
   // Prompt tag is "(emo, sexy)".
   'emo-tattoo-piercing-subculture-accessories',
-  // Title says アニメ少女 and the prompt includes "cleavage".
-  'twin-color-wings-anime-girl',
 ] as const
 
 export const NOINDEX_TAG_SLUGS = [
