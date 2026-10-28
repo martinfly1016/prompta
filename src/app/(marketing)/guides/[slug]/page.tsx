@@ -9,6 +9,7 @@ import { SEO_BATCH_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10'
 import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
 import { SEO_BATCH_3_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-c'
 import { SEO_BATCH_4_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-d'
+import { SEO_BATCH_5_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-e'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -57,6 +58,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_2_GUIDE_CONTENT,
   ...SEO_BATCH_3_GUIDE_CONTENT,
   ...SEO_BATCH_4_GUIDE_CONTENT,
+  ...SEO_BATCH_5_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -297,7 +299,9 @@ ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日
 - \`by Studio Ghibli\` — ジブリ風
 - \`Artstation trending\` — Artstation 人気作風
 
-これらを 3-5 個組み合わせるのが基本テクニック。例：\`(masterpiece:1.2), (best quality:1.4), ultra-detailed, sharp focus, cinematic lighting\``,
+これらを 3-5 個組み合わせるのが基本テクニック。例：\`(masterpiece:1.2), (best quality:1.4), ultra-detailed, sharp focus, cinematic lighting\`
+
+<a href="/guides/quality-tags-prompt-guide" class="text-sky-600 hover:underline">品質タグをモデル別に詳しく → 品質タグ一覧</a>`,
       },
       {
         title: '強調と重み付け — 括弧と数値で意図を伝える',
@@ -1047,7 +1051,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 \`(worst quality:1.4), (low quality:1.4), normal quality, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry, deformed, disfigured, mutation, extra limbs\`
 
-このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。`,
+このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。 品質タグをネガティブに置くときのモデル別の並びは <a href="/guides/quality-tags-prompt-guide" class="text-sky-600 hover:underline">品質タグ一覧</a> です。同じタグをポジティブとネガティブの両方には置かないでください。`,
       },
       {
         title: '✨ 関連プロンプト集 — ネガティブプロンプトが効く実例',
@@ -1506,86 +1510,41 @@ white blouse navy skirt red ribbon, medium shot,
       },
       {
         title: 'メイド服プロンプト — 王道 / フレンチ / ヴィクトリアン / ゴシック全網羅',
-        content: `**メイド服プロンプト**は AI コスプレ生成の人気ジャンル 2 位。「maid」「maid uniform」「French maid」など複数の英単語で表現が異なり、ジャンル別にディテールが大きく変わります。
+        content: `メイド服は、黒いドレス、白いエプロン、カチューシャで形が決まります。種類、パーツ、色、男性のメイドと執事は、大人向けの英語タグとして別ページにまとめています。<a href="/guides/maid-outfit-prompt-guide" class="text-sky-600 hover:underline">メイド服の種類・パーツ別タグ → メイド服プロンプト</a>
 
-**1. 王道メイド服 — 白黒クラシック**
+ここにはクラシックとヴィクトリアンの短い作例だけを置きます。登場人物は成人のスタッフです。丈は長いスカートか、床までのドレスにします。
 
-\`\`\`
-1girl, classic maid uniform, black knee-length dress,
-white apron with frills, white frilled headband, white stockings,
-black mary jane shoes, holding tea tray, victorian mansion interior,
-soft warm lighting, full body shot,
-(maid uniform:1.2), (frilled apron:1.2)
-\`\`\`
-
-→ サンプル: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白メイドコスプレ</a>
-
-**2. フレンチメイド — フリル多めのクラシック**
+**1. クラシック — 白黒の長いドレス**
 
 \`\`\`
-1girl, French maid uniform, short black dress, white frilled apron,
-white lace headband, fishnet stockings, black high heels,
-duster in hand, modern apartment interior, glamorous lighting,
-(french maid:1.3), (short skirt:1.2), full body shot
+1 adult woman, maid, maid headdress, maid apron, frilled apron,
+black dress, long skirt, long sleeves, white apron, mary janes,
+holding a tea tray, mansion parlor, full body
 \`\`\`
 
-**3. ヴィクトリアンメイド — 長袖長スカート × クラシック**
+ネガティブ:
 
 \`\`\`
-1girl, victorian maid uniform, long black dress reaching floor,
-long sleeves with white cuffs, white pinafore apron,
-elegant white bonnet headpiece, button-up boots,
-holding silver tea tray, victorian dining room,
-candlelight, (victorian maid:1.3), full body shot,
-period drama aesthetic
+child, kid, toddler, baby, loli, shota, teen, underage, baby face,
+bad anatomy, bad hands, extra fingers, short skirt
 \`\`\`
 
-**4. ゴシックメイド — 黒レース × 退廃的**
+**2. ヴィクトリアン — 床までの長いドレス**
 
 \`\`\`
-1girl, gothic maid uniform, black lace dress with corset,
-black apron with red trim, gothic lolita headpiece,
-black thigh-high stockings, platform boots,
-dark mansion interior, dramatic side lighting,
-(gothic maid:1.3), (black lace:1.2), full body shot,
-dark aesthetic illustration
+1 adult woman, maid, long black dress, long skirt, long sleeves,
+white apron, maid headdress, boots,
+holding a tea tray, dining room, full body, soft daylight
 \`\`\`
 
-**5. メイドカフェ風 — ピンクや水色のかわいい系**
+ネガティブ:
 
 \`\`\`
-1girl, maid cafe uniform, pink and white dress, cute frilled apron,
-cat ear headband, knee-high white socks, pink mary jane shoes,
-heart-shaped apron pocket, cute pose with peace sign,
-maid cafe interior pink walls, bright lighting,
-(maid cafe:1.3), kawaii aesthetic, full body shot
+child, kid, toddler, baby, loli, shota, teen, underage, baby face,
+bad anatomy, bad hands, extra fingers, short skirt
 \`\`\`
 
-**6. メイド × 日常動作 — 掃除中のメイド**
-
-\`\`\`
-1girl, classic maid uniform, black dress white apron,
-holding broom and cleaning, kneeling pose,
-sunlight streaming through tall windows, dust particles in air,
-victorian mansion interior, slice of life,
-(maid uniform:1.2), full body shot, cel shading style
-\`\`\`
-
-→ サンプル: <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド・セルシェード</a>
-
-**メイド服特有のコツ**:
-
-- **基本 4 要素**: \`black dress\` + \`white apron\` + \`frilled headband\` + \`stockings\` で土台が完成
-- **ジャンル指定が最重要**: \`classic maid\` / \`french maid\` / \`victorian maid\` / \`gothic maid\` / \`maid cafe\` で印象が劇的に変化
-- **\`frilled\` \`frills\`** = フリル指定。AI のメイド服は基本フリルが少なく描かれがちなので強調必須
-- **ヘッドピース** = \`headband\` / \`bonnet\` / \`mob cap\` を選択（headband が一般的）
-- 短いスカート vs 長いスカート: フレンチは \`short skirt\`、ヴィクトリアンは \`long dress reaching floor\`
-- 小物: \`tea tray\` \`feather duster\` \`broom\` で「メイドらしさ」が引き立つ
-- アニメ系・実写系どちらも対応。**Realistic Vision** で実写コスプレ風、**Counterfeit / NovelAI** でアニメ風
-
-**ネガティブ（汎用）**: \`bad costume, mismatched colors, fake apron, plain dress, no frills, bad anatomy\`
-
-**ゴシックメイドの応用例**: <a href="/prompt/gothic-maiden-warrior-cosplay" class="text-sky-600 hover:underline">ゴシックメイデン × 戦士衣装</a> もメイド × ファンタジー融合の参考になります。`,
+作例: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白のメイド衣装</a> / <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド</a>`,
       },
       {
         title: '学校制服プロンプト — ブレザー / 夏服 / ダークアカデミア / 海外風',
@@ -1852,7 +1811,7 @@ mary jane shoes, victorian gothic aesthetic,
 **Stable Diffusion（実写風コスプレ）**（推奨度: ⭐⭐⭐）
 
 - 強み: 実写のコスプレ写真に最も近い仕上がり、ControlNet で参照画像活用可能、LoRA で特定衣装を完全再現
-- おすすめモデル: **ChilloutMix / Realistic Vision / BeautifulRealistic / Juggernaut XL**
+- おすすめモデル: **Realistic Vision / Juggernaut XL / BeautifulRealistic**
 - 品質タグ: \`masterpiece, best quality, ultra detailed, professional photo\`
 - ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, fake wig, cheap cosplay\`
 
@@ -1962,7 +1921,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
       },
       {
         q: 'コスプレ写真をリアル写真風にするには？',
-        a: 'モデル選択が最重要です。**ChilloutMix / BeautifulRealistic / Realistic Vision / Juggernaut XL** などの実写系 Stable Diffusion モデルを使い、プロンプトに `professional cosplay photography, 8K, photorealistic, skin detail, studio lighting, ring light` を追加。**Anime 系モデルでは原理的にリアル写真調は出ません**。さらにリアル感を出すには：（1）`ring light` をライティングに含める（コスプレ撮影定番）、（2）`studio backdrop` で背景をシンプルに、（3）`canon 5d mark iv, 50mm f/1.4` のようなカメラ機材タグを追加、（4）解像度 1024×1536 以上で生成。**ADetailer** で顔だけ自動再生成するとプロ撮影品質に近づきます。',
+        a: 'モデル選択が最重要です。**Realistic Vision / BeautifulRealistic / Juggernaut XL** などの実写系 Stable Diffusion モデルを使い、プロンプトに `professional cosplay photography, 8K, photorealistic, skin detail, studio lighting, ring light` を追加。**Anime 系モデルでは原理的にリアル写真調は出ません**。さらにリアル感を出すには：（1）`ring light` をライティングに含める（コスプレ撮影定番）、（2）`studio backdrop` で背景をシンプルに、（3）`canon 5d mark iv, 50mm f/1.4` のようなカメラ機材タグを追加、（4）解像度 1024×1536 以上で生成。**ADetailer** で顔だけ自動再生成するとプロ撮影品質に近づきます。',
       },
       {
         q: '小物（刀・帽子・翼・カチューシャなど）が消えてしまいます',
@@ -2110,7 +2069,7 @@ walking through park, autumn leaves, golden hour,
 
 - 重み付けは \`(slender:1.2)\` 〜 \`(slim:1.3)\` 程度が安全圏。1.4 超は骨と皮になる
 - アニメ系モデル（Anything V5 / Counterfeit など）はデフォルトが極端に細いため、\`(slender:0.9)\` でちょうど良い場合あり
-- リアル系（Realistic Vision / ChilloutMix）は **\`(slender:1.2-1.3)\`** で素直に効く
+- リアル系（Realistic Vision / Juggernaut XL）は **\`(slender:1.2-1.3)\`** で素直に効く
 - 服装は **\`knit sweater\`** \`blouse\` \`straight jeans\` \`wool coat\` など日常着で、体格が服の形に出るようにする
 
 **ネガティブプロンプト**: \`chubby, overweight, thick body, muscular, plus-size, fat, broad shoulders\``,
@@ -2323,6 +2282,7 @@ full body shot, slice of life illustration
 - **\`towering\` \`leggy\` \`long-legged\`** で高身長を強調
 - **\`petite\` \`small frame\` \`short adult\`** で小柄を強調。年齢は下げない
 - 一人の大人を低身長・小柄に描くタグ（子ども向けタグは使わない）は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a>
+- <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長を詳しく → 高身長プロンプト</a>
 - 2 人以上の身長差・体格差は専用ガイドが必要 → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> で 8 シチュエーション + 6 ポーズ + 15 サンプル公開中
 
 **ネガティブ（小柄→高身長変換防止）**: \`tall, towering, long legs, leggy\`
@@ -3572,7 +3532,7 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人のキャラを低く/高く見せたいとき → <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> / <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長プロンプト</a>。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
       },
       {
         title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
@@ -4202,7 +4162,7 @@ Use anime illustration style with a warm school gate background.
     sections: [
       {
         title: '体格差プロンプトとは',
-        content: `**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
+        content: `<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">体格差シミュレーション（身長差メーカー）</a> で、肩幅や身長の差をプロンプトにできます。**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
 
 すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> のモードを **体格差** に切り替えると、\`body size difference\`、\`build difference\`、\`broad shoulders versus narrow shoulders\` などを自動で追加できます。`,
       },
@@ -5681,7 +5641,7 @@ worst quality, low quality, blurry
       { q: 'ポーズ参考画像はどこから探すべきですか？', a: '**おすすめ順**: (1) **Pinterest** — 「BL pose reference」「two men reference」「shoujo manga pose」で日本語英語両方検索可。トレースして OK。(2) **Posemaniacs / Magic Poser** — 3D モデル人形を 2 体配置して任意のポーズを作れる無料ツール、ControlNet 入力に最適、(3) **PoseMy.art** — オンライン 3D ポーズエディタ、(4) **実写写真** — 友人 2 人並びの写真でも骨格情報として有効、(5) **既存の BL 漫画ページ** — 個人利用範囲ならトレース可能だが商用 NG。本ガイドの 30 ポーズは Pinterest 検索キーワードとしても使えるので、まずキーワード化して画像検索するのが近道。' },
       { q: 'アクション ポーズ（走る / 飛ぶ）で顔崩れを防ぐには？', a: '動的ポーズは AI が顔のディテールに使うリソースを動きに割くため崩壊率が上がる。**対策**: (1) ネガティブに `bad face, distorted face, blurred face` を必須追加、(2) `(detailed face:1.3)` の重み付けを通常より高く（1.2 → 1.3）、(3) ADetailer 拡張で各キャラの顔を独立に再生成（A1111 標準機能）、(4) 動きの「瞬間」を指定 — `mid-step` `pose frozen in motion` のように静止画的に書くと顔がブレない、(5) 解像度を 768x768 以上にする。これらすべて入れて動的ポーズの顔崩壊が体感 60% → 15% に下がります。' },
       { q: '静的 vs 動的ポーズの使い分けの目安は？', a: '**初心者なら静的ポーズから**入るのがおすすめ。AI 画像生成は「静止画 + 静的ポーズ」が最も成功率高い。順序: (1) 並ぶ・座る・見つめ合うなど**静的 BL ポーズで成功体験**を積む、(2) 慣れてきたら手をつなぐ・ハグなど**軽い接触ポーズ**にチャレンジ、(3) 最後にお姫様抱っこ・壁ドン・キスなど**接触強度の高いポーズ**へ、(4) 最終段階で「振り向く」「走る」など**動的ポーズ**。動的ポーズは ControlNet OpenPose 併用が必須です。各段階で崩壊率は約 2 倍ずつ上がるので、無理せず段階的に。' },
-      { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2boys, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `ChilloutMix`（注意: 一部 NSFW 寄り）、(5) **重み付け** — `(2boys:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
+      { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2boys, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `Juggernaut XL`、(5) **重み付け** — `(2boys:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
     ],
   },
   'image-to-video-ai-prompt-guide': {

@@ -45,6 +45,10 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'マルチカラー': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
   '背景': { slug: 'background-prompt-guide', title: '背景プロンプト一覧【場所別・コピペOK】' },
   '表情変更': { slug: 'stable-diffusion-expression-prompt', title: 'Stable Diffusion表情プロンプト【コピペOK】' },
+  'ネックレス': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
+  'ジュエリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
+  'アクセサリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
+  'スーツ': { slug: 'suit-lab-coat-prompt-guide', title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】' },
 }
 
 const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description: string }> = {
@@ -83,6 +87,10 @@ const TAG_META_OVERRIDE: Record<string, { title: string; description: string }> 
   '証明写真': {
     title: '証明写真プロンプト｜ChatGPT・Gemini用【コピペOK】',
     description: '証明写真をAIで作るプロンプト集。ChatGPT・Geminiに自撮りを渡して、履歴書・パスポート・マイナンバー・在留カード規格に近づける背景色やサイズ、服装の指示文をコピペで使えます。仕上がりが提出できるかは、発行元の指定で確認してください。',
+  },
+  'ぽっちゃり': {
+    title: '「ぽっちゃり」プロンプト作例集｜ふくよか・プラスサイズ',
+    description: 'ぽっちゃり・ふくよか・プラスサイズ体型の大人キャラのAIプロンプト作例集。plump・plus-size の使い分けと崩れ対策は、ぽっちゃりプロンプトの解説ガイドで紹介しています。',
   },
 }
 
