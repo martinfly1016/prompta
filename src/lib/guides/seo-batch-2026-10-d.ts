@@ -573,7 +573,7 @@ school uniform, ponytail
 | 4本 | \`quad tails\` | 二本より結び目が増える |
 | おさげ | \`low twintails\` または \`twin braids\` | 下ろした結びは low、編むなら twin braids。両方は書かない |
 
-おさげは日本語の中で、結ぶだけの場合と編む場合が混ざっています。絵にしたい方を一つ選んでください。`,
+おさげは日本語の中で、結ぶだけの場合と編む場合が混ざっています。絵にしたい方を一つ選んでください。編む場合の本数と位置は [編み込み・三つ編みプロンプト](/guides/braid-prompt-guide) です。`,
       },
       {
         title: '位置（高い・低い・サイド）の指定',
@@ -792,7 +792,7 @@ Midjourney でも同じ文が使えます。Stable Diffusion や NovelAI では 
       },
       {
         q: '三つ編みツインテールにしたいです',
-        a: '`twin braids` を髪色の直後に置いてください。`twintails` と同時に強くすると、編んだ束と結んだ束が両方出ます。飾るなら `hair bobbles` を一つ足します。',
+        a: '`twin braids` を髪色の直後に置いてください。`twintails` と同時に強くすると、編んだ束と結んだ束が両方出ます。飾るなら `hair bobbles` を一つ足します。本数と位置の一覧は [編み込み・三つ編みプロンプト](/guides/braid-prompt-guide) です。',
       },
     ],
   },

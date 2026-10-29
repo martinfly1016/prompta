@@ -10,6 +10,7 @@ import { SEO_BATCH_2_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-b'
 import { SEO_BATCH_3_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-c'
 import { SEO_BATCH_4_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-d'
 import { SEO_BATCH_5_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-e'
+import { SEO_BATCH_6_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-f'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -59,6 +60,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_3_GUIDE_CONTENT,
   ...SEO_BATCH_4_GUIDE_CONTENT,
   ...SEO_BATCH_5_GUIDE_CONTENT,
+  ...SEO_BATCH_6_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1086,7 +1088,9 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 さらに前髪（\`blunt bangs\` / \`side-swept bangs\` / \`parted bangs\`）と質感（\`silky\` / \`fluffy\` / \`glossy\`）を加えると精度が上がります。
 
-**重要ポイント**: 髪型は他の要素（服装・ポーズ）より**プロンプトの前方に書く**と優先されます。また \`(twin tails:1.2)\` のように重み付けを加えると AI が確実に認識しやすくなります。`,
+**重要ポイント**: 髪型は他の要素（服装・ポーズ）より**プロンプトの前方に書く**と優先されます。また \`(twin tails:1.2)\` のように重み付けを加えると AI が確実に認識しやすくなります。
+
+詳しいガイド: [前髪](/guides/bangs-prompt-guide) / [ロングヘア・ストレート](/guides/long-hair-prompt-guide) / [編み込み・三つ編み](/guides/braid-prompt-guide) / [ツインテール](/guides/twintail-prompt-guide) / [髪色](/guides/hair-color-prompt-guide)`,
       },
       {
         title: '女性キャラ定番ヘアスタイル 20 選とコピペ呪文',
@@ -1271,7 +1275,9 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 **水墨画風**:
 \`sumi-e, ink wash painting, traditional japanese art, minimalist\`
 
-画風キーワードは品質タグの**前**に書くと優先度が上がります。「anime style」とリアル系キーワード（photorealistic）は相性が悪いため混ぜないでください。`,
+画風キーワードは品質タグの**前**に書くと優先度が上がります。「anime style」とリアル系キーワード（photorealistic）は相性が悪いため混ぜないでください。
+
+アニメ以外の画風（厚塗り・水彩・油絵・ドット絵など）は [画風プロンプト一覧](/guides/art-style-prompt-guide) にまとめています。`,
       },
       {
         title: '表情・感情描写でキャラクターに命を吹き込む',
