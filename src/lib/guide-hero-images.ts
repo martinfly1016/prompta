@@ -449,5 +449,10 @@ export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | n
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-fantasy-knight-mage-NyEmvteVhQvsvvngD40Y6AejjgVNxK.jpg",
       "alt": "BL 関連ガイド・リソース — ファンタジー 騎士×魔法使いサンプル"
     }
-  ]
+  ],
+  "fantasy-outfit-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "composition-angle-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "new-year-card-ai-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "dress-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "eye-prompt-guide": [null, null, null, null, null, null, null, null, null]
 }

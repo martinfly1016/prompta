@@ -11,6 +11,9 @@ import { REVALIDATE_LIST_SECONDS } from '@/lib/cache-policy'
 
 const IMAGE_CATEGORIES = new Set(['hairstyle', 'clothing', 'cosplay', 'anime', 'color', 'costume', 'body-type', 'camera'])
 
+/** Hide school-uniform chips on category pages without deleting the tags. */
+const POPULAR_TAG_DISPLAY_DENYLIST = new Set(['セーラー服', '制服', '学生服', '女子高生', 'JK'])
+
 export const revalidate = REVALIDATE_LIST_SECONDS
 
 export async function generateStaticParams() {
@@ -63,7 +66,7 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
     getPromptsByCategoryPaginated(categorySlug, page),
     getTools(),
     getCategories(),
-    getPopularTagsByCategory(categorySlug, 6),
+    getPopularTagsByCategory(categorySlug, 8),
   ])
   if (!category) notFound()
   if (page > Math.max(totalPages, 1)) notFound()
@@ -71,7 +74,11 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
   const categoryTools = tools.filter(tool => prompts.some(p => p.toolSlug === tool.slug))
   const seoOverride = CATEGORY_SEO_OVERRIDES[category.slug]
   const h1Text = seoOverride?.seoH1 ?? `${category.name}プロンプト集`
-  const schema = generateCollectionPageSchema(`${category.name}プロンプト集`, category.description, `${SITE_CONFIG.url}/prompts/${category.slug}`, total)
+  const leadText = seoOverride?.seoLead ?? category.description
+  const visiblePopularTags = popularTags
+    .filter(tag => !POPULAR_TAG_DISPLAY_DENYLIST.has(tag.name) && !POPULAR_TAG_DISPLAY_DENYLIST.has(tag.slug))
+    .slice(0, 6)
+  const schema = generateCollectionPageSchema(`${category.name}プロンプト集`, leadText, `${SITE_CONFIG.url}/prompts/${category.slug}`, total)
   const categoryIntro = CATEGORY_INTROS[category.slug]
   const faqSchema = categoryIntro?.faqs?.length ? generateFaqSchema(categoryIntro.faqs) : null
 
@@ -92,7 +99,7 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
               <span className="text-4xl">{category.icon}</span>
               <h1 className="text-3xl font-bold text-gray-900">{h1Text}</h1>
             </div>
-            <p className="text-gray-600 leading-relaxed mb-4">{category.description}</p>
+            <p className="text-gray-600 leading-relaxed mb-4">{leadText}</p>
             {category.slug === 'body-type' && (
               <p className="text-sm text-gray-700 mb-4">
                 筋肉質・マッチョの段階と部位タグは{' '}
@@ -100,6 +107,15 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                   筋肉質・マッチョプロンプト
                 </Link>
                 に分けています。このページはスレンダー、大柄、男性の体型、小柄の作例です。
+              </p>
+            )}
+            {category.slug === 'camera' && (
+              <p className="text-sm text-gray-700 mb-4">
+                正面・斜め・全身など他の構図は{' '}
+                <Link href="/guides/composition-angle-prompt-guide" className="text-sky-600 hover:underline">
+                  構図・アングルのプロンプト一覧
+                </Link>
+                にまとめています。
               </p>
             )}
             <div className="flex items-center gap-3">
@@ -212,13 +228,13 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
         </div>
       </section>
 
-      {popularTags.length > 0 && (
+      {visiblePopularTags.length > 0 && (
         <section className="py-12 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-xl font-bold text-gray-900 mb-4">人気タグで絞り込む</h2>
             <p className="text-sm text-gray-500 mb-6">{category.name}プロンプトの中から、よく使われるテーマ別に絞り込めます。</p>
             <div className="flex flex-wrap gap-2">
-              {popularTags.map(tag => (
+              {visiblePopularTags.map(tag => (
                 <Link
                   key={tag.slug}
                   href={`/tag/${encodeURIComponent(tag.slug)}`}

@@ -18,7 +18,7 @@ export const SEO_BATCH_3_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 明るさは色名の前に足します。\`light\`、\`dark\`、\`pale\` です。\`light brown hair\` は明るい茶、\`dark blue hair\` は深い青、\`pale blonde hair\` は薄い金です。色を増やす前に、地の色を一つ決めてください。
 
-髪型の長さや結び方は [髪型プロンプト](/guides/hairstyle-prompt-guide)、色が服に移るときの BREAK と CutOff は [色プロンプト一覧](/guides/color-prompt-guide) です。作例は [髪色のナチュラルシミュレーション](/prompt/hair-color-natural-simulation)、タグは [髪型](/tag/髪型)、一覧は [髪型プロンプト集](/prompts/hairstyle) にあります。`,
+髪型の長さや結び方は [髪型プロンプト](/guides/hairstyle-prompt-guide)、色が服に移るときの BREAK と CutOff は [色プロンプト一覧](/guides/color-prompt-guide) です。作例は [髪色のナチュラルシミュレーション](/prompt/hair-color-natural-simulation)、タグは [髪型](/tag/髪型)、一覧は [髪型プロンプト集](/prompts/hairstyle) にあります。髪色と目の色を合わせるときは [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) を見て、色は髪と目で一つずつ決めてください。`,
       },
       {
         title: '単色の髪色一覧',
@@ -649,7 +649,7 @@ huge head, short legs, distorted perspective, extra limbs
 | 向いているもの | 床、机、街、座っている人 | 立ち姿、建物 |
 | 詳細 | このページ | [下からのアングル](/guides/low-angle-prompt-guide) |
 
-両方を同じ強さで書くと、カメラの高さが打ち消し合います。主にする方を一つにしてください。`,
+両方を同じ強さで書くと、カメラの高さが打ち消し合います。主にする方を一つにしてください。正面・斜め・全身など他の構図は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
       },
     ],
     faq: [

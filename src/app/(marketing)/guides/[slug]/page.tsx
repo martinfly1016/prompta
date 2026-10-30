@@ -11,6 +11,7 @@ import { SEO_BATCH_3_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-c'
 import { SEO_BATCH_4_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-d'
 import { SEO_BATCH_5_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-e'
 import { SEO_BATCH_6_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-f'
+import { SEO_BATCH_7_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-g'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -61,6 +62,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_4_GUIDE_CONTENT,
   ...SEO_BATCH_5_GUIDE_CONTENT,
   ...SEO_BATCH_6_GUIDE_CONTENT,
+  ...SEO_BATCH_7_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1433,7 +1435,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 | 和風コスプレ | miko costume, kimono, shrine maiden, hakama | その他定番 8 種 |
 | ファンタジー衣装 | fantasy armor, witch costume, gothic lolita | その他定番 8 種 |
 
-衣装名だけだと AI が省略しやすいので、**衣装名 + 必須パーツ + 撮影/画風**の 3 層で書くのが基本です。例: \`sailor uniform, sailor collar, pleated skirt, red ribbon, anime style\`。`,
+衣装名だけだと AI が省略しやすいので、**衣装名 + 必須パーツ + 撮影/画風**の 3 層で書くのが基本です。例: \`sailor uniform, sailor collar, pleated skirt, red ribbon, anime style\`。中世ヨーロッパ風のRPG衣装や騎士・魔法使いのパーツは [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide) に分けています。`,
       },
       {
         title: 'セーラー服プロンプト — 夏服 / 冬服 / 黒セーラー まで全パターン',
@@ -3098,7 +3100,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       },
       {
         title: '画像生成プロンプト集（Nano Banana 用）— 10 例文',
-        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。
+        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
 
 **人物・キャラ系**:
 
@@ -4332,7 +4334,7 @@ three characters in horizontal lineup, tall character on the left, medium charac
 
 **関係性 7 パターン**: カップル / 友達ペア / 兄弟姉妹 / 親子 / 漫画風二人構図（BL風 / 百合風）/ OC × 推しキャラ / ライバル対峙。
 
-全 30+ コピペテンプレートと英語プロンプト一覧で、すぐに使い始められます。**身長差プロンプト**を深く知りたい場合は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> も合わせてどうぞ。`,
+全 30+ コピペテンプレートと英語プロンプト一覧で、すぐに使い始められます。**身長差プロンプト**を深く知りたい場合は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> も合わせてどうぞ。1人の構図・アングルは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
       },
       {
         title: '二人構図プロンプトを構成する 5 つの要素',

@@ -151,7 +151,7 @@ export const SEO_BATCH_GUIDE_CONTENT: Record<string, GuideArticle> = {
 | from side | 横顔。表情は半分しか見えない |
 | upper body | 表情と姿勢の両方 |
 
-アングル自体は [下からのアングルプロンプト](/guides/low-angle-prompt-guide) にまとめてあります。顔のアップとローアングルを同時に強くすると、あごが不自然に伸びることがあります。どちらかを主、もう一方を弱くします。`,
+アングル自体は [下からのアングルプロンプト](/guides/low-angle-prompt-guide) にまとめてあります。顔のアップとローアングルを同時に強くすると、あごが不自然に伸びることがあります。どちらかを主、もう一方を弱くします。目の形・瞳の色は [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) です。`,
       },
       {
         title: 'コピペ例',
@@ -273,7 +273,7 @@ ${NEGATIVE_FACE}, extra face, multiple heads
 | cowboy shot | 太ももあたりまで |
 | close-up | 寄る |
 
-俯瞰のタグページは [俯瞰](/tag/俯瞰)、後ろ姿は [後ろ姿](/tag/後ろ姿) です。表情と視線の単語は [表情プロンプト](/guides/stable-diffusion-expression-prompt) に分けてあります。`,
+俯瞰のタグページは [俯瞰](/tag/俯瞰)、後ろ姿は [後ろ姿](/tag/後ろ姿) です。表情と視線の単語は [表情プロンプト](/guides/stable-diffusion-expression-prompt) に分けてあります。正面・斜め・全身など他の構図は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
       },
       {
         title: '距離とアングルは別のタグ',
@@ -360,7 +360,7 @@ bad anatomy, extra legs, distorted face, long neck, huge chin
 
 ここにあるのは服を着た状態で使える姿勢です。開脚や体の強調を目的にしたポーズは入れていません。手は最も崩れやすいので、ネガティブと一緒に使ってください。
 
-体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。`,
+体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。ショットサイズや体の向きは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
       },
       {
         title: '立つ・座る・寝転ぶ',

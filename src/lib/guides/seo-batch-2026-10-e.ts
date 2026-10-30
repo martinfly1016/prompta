@@ -20,7 +20,7 @@ export const SEO_BATCH_5_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 登場人物は大人のスタッフだけにします。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。学生服の場面と短い丈は使いません。それらを避ける語は、各作例のネガティブに入れます。
 
-コスプレ全般は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。髪は [髪型プロンプト](/guides/hairstyle-prompt-guide)、二つに分けた髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。
+コスプレ全般は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。髪は [髪型プロンプト](/guides/hairstyle-prompt-guide)、二つに分けた髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。
 
 **クラシック（白と黒、長い丈）**
 
@@ -1072,7 +1072,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
 
 成人の仕事着として、\`suit jacket, white dress shirt, necktie, trousers\` までを一組にします。\`formal\` はフォーマルさのタグです。これだけで袖の長さや襟の左右は決まりません。
 
-白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。
+白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。
 
 **パーツを書いたスーツ**
 
