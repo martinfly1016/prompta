@@ -129,7 +129,7 @@ export const CATEGORIES: Category[] = [
     slug: 'clothing',
     name: '服装',
     nameEn: 'Clothing',
-    description: 'AI画像生成で使える服装・ファッションプロンプト集。制服、メイド服、白無垢、スーツ、カジュアル、ファンタジー衣装などの指定方法を紹介。',
+    description: 'AI画像生成で使える服装・ファッションプロンプト集。ドレス、スーツ、カジュアル、メイド服、白無垢、ファンタジー衣装などの指定方法を紹介。',
     icon: '👗',
   },
   {
@@ -192,6 +192,8 @@ export interface CategorySeoOverride {
   seoTitle?: string
   seoH1?: string
   seoDescription?: string
+  /** Visible hero lead and CollectionPage description. Falls back to the DB category description. */
+  seoLead?: string
 }
 
 export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
@@ -201,9 +203,10 @@ export const CATEGORY_SEO_OVERRIDES: Record<string, CategorySeoOverride> = {
     seoDescription: 'コスプレプロンプトのコピペ集。セーラー服・メイド服・学校制服・和風・ファンタジー衣装まで、Stable Diffusion・NovelAI・Midjourney で使える呪文を画像付きで紹介。',
   },
   'clothing': {
-    seoTitle: '服装プロンプト集【制服・メイド服コピペ】',
-    seoH1: '服装プロンプト集｜制服・メイド服・ワンピース・スーツ',
-    seoDescription: '服装プロンプトのコピペ集。制服、メイド服、ワンピース、スーツを Stable Diffusion と Midjourney 向けの英語タグで紹介。成人向けの服装指定が中心です。',
+    seoTitle: '服装プロンプト集｜ドレス・スーツ・私服の英語呪文【コピペOK】',
+    seoH1: '服装プロンプト集｜ドレス・スーツ・カジュアル・ファンタジー衣装',
+    seoDescription: '服装プロンプトのコピペ集。カジュアル・ドレス・スーツ・ファンタジー衣装・和服を Stable Diffusion・NovelAI・Midjourney 向けの英語タグで紹介。成人キャラクター向けの服装指定と色滲みなどの崩れ対策も解説。',
+    seoLead: 'AI画像生成で使える服装・ファッションプロンプト集。ドレス、スーツ、カジュアル、ファンタジー衣装など、成人キャラクター向けの服装指定をまとめています。',
   },
   'body-type': {
     seoTitle: '体型プロンプト集｜スレンダー・大柄・男性体型【コピペOK】',
@@ -297,7 +300,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       '髪色の色滲みにはBREAK構文やCutOffで対策',
     ],
     faqs: [
-      { question: '女性向け髪型プロンプトのおすすめは？', answer: 'ロング系（long hair, very long hair, waist-length hair）、ツインテール系（twin tails, low twin tails）、ボブ・ショート系（short bob, pixie cut）、アップスタイル（ponytail, bun, double bun）の 4 グループを覚えておくと、ほぼすべての女性キャラ髪型がカバーできます。「1girl, [長さ], [スタイル], [色], [質感]」の順で書くと AI の解釈が安定します。' },
+      { question: '女性向け髪型プロンプトのおすすめは？', answer: 'ロング系（long hair, very long hair, waist-length hair）、ツインテール系（twin tails, low twin tails）、ボブ・ショート系（short bob, pixie cut）、アップスタイル（ponytail, bun, double bun）の 4 グループを覚えておくと、ほぼすべての女性キャラ髪型がカバーできます。「1 adult woman, [長さ], [スタイル], [色], [質感]」の順で書くと AI の解釈が安定します。' },
       { question: '髪型プロンプトは ChatGPT でも使えますか？', answer: 'ChatGPT 自体は画像生成ができませんが、DALL-E 3（ChatGPT の画像生成機能）や Gemini 2.5 Flash Image、Midjourney、Stable Diffusion で使えます。本ページの英語プロンプトはすべて Stable Diffusion・NovelAI 用の構文ですが、DALL-E に渡す場合は自然な英文章に書き換えると認識率が上がります（例: "A girl with long wavy blonde hair tied in a ponytail"）。' },
       { question: '自分に似合う髪型・髪色を AI で試せますか？', answer: 'はい。当サイトの「似合う髪色診断 AI」では、写真 1 枚で AI があなたのパーソナルカラーに合う髪色を 5 候補提案し、Nano Banana 2.1 で Before/After シミュレーション画像を生成します。ログインで 3 回無料（全ツール共通・1 回 1 ポイント）、写真は保存されません。' },
       { question: '前髪・もみあげ・後れ毛の細かい指定方法は？', answer: '前髪は「blunt bangs（ぱっつん）」「side-swept bangs（流し前髪）」「curtain bangs（センター分け）」「hime cut（姫カット）」など。もみあげは「sideburns, short sideburns」、後れ毛は「stray hair, hair strands」と書きます。これらは省略されがちなので (blunt bangs:1.2) のように重み付けすると確実です。' },
@@ -308,7 +311,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'clothing': {
     intro:
-      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「blouse」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy pleated skirt, knee-high socks, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。\n\n【よく探される服装プロンプト】実用需要が高いのは「メイド服」「セーラー服」「学校制服」「白無垢」「ビジネススーツ」「ファンタジー衣装」です。メイド服なら maid outfit, white apron, frilled headdress、セーラー服なら sailor uniform, pleated skirt、白無垢なら shiromuku, white wedding kimono, wataboshi hood のように、衣装名だけでなく必須パーツを 2〜4 個足すと再現性が上がります。\n\n【カジュアル・フォーマル・ファンタジー・コスチュームの4軸で整理する】服装プロンプトを体系的に覚えるには、日常系（casual：T-shirt, jeans, hoodie, sneakers）、フォーマル系（formal：suit, evening dress, tuxedo, high heels）、ファンタジー系（fantasy：medieval armor, mage robe, elf tunic, knight plate）、コスチューム系（costume：sailor uniform, maid outfit, kimono, cheerleader）の4軸で引き出しを作るのが効率的です。各軸ごとに10〜20個の英単語を覚えておけば、組み合わせで数百種類の衣装表現が可能になります。\n\n【BREAKコマンドで色滲み（color bleeding）を防ぐ】複数の服装要素に別々の色を指定すると、Stable Diffusionでは色が混ざってしまう「color bleeding」が起きやすく、例えば「red dress, blue jacket」が紫系に変色することがあります。これを防ぐには「red dress BREAK blue jacket」とプロンプトを分割するか、CutOff 拡張機能で「red:dress || blue:jacket」のように領域ごとに色を固定する方法が有効です。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」と書くとさらに安定します。\n\n【女性キャラ向けの定番パターン】女性キャラクター向けの服装では、トップス（blouse, cardigan, sweater, crop top）とボトムス（pleated skirt, tight skirt, jeans, hot pants）のバランス、足元（knee-high socks, pumps, sneakers）の選択、アクセサリー（ribbon, choker, earrings, hair ornament）の有無が印象を大きく左右します。「1 adult woman, white blouse, navy knee-length skirt, cardigan, loafers」のように「人数→上→下→足元→シーン」の順で書くと AI が解釈しやすくなります。',
+      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「blouse」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy knee-length skirt, cardigan, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。\n\n【よく探される服装プロンプト】実用需要が高いのは「ドレス」「ビジネススーツ」「メイド服」「白無垢・着物」「ファンタジー衣装」です。ドレスなら evening gown, long dress, satin、メイド服なら maid outfit, white apron, frilled headdress、白無垢なら shiromuku, white wedding kimono, wataboshi hood のように、衣装名だけでなく必須パーツを 2〜4 個足すと再現性が上がります。\n\n【カジュアル・フォーマル・ファンタジー・コスチュームの4軸で整理する】服装プロンプトを体系的に覚えるには、日常系（casual：T-shirt, jeans, hoodie, sneakers）、フォーマル系（formal：suit, evening dress, tuxedo, pumps）、ファンタジー系（fantasy：medieval armor, mage robe, elf tunic, knight plate）、コスチューム系（costume：maid outfit, kimono, nurse uniform（自然な英語）, chef uniform（自然な英語））の4軸で引き出しを作るのが効率的です。各軸ごとに10〜20個の英単語を覚えておけば、組み合わせで数百種類の衣装表現が可能になります。\n\n【BREAKコマンドで色滲み（color bleeding）を防ぐ】複数の服装要素に別々の色を指定すると、Stable Diffusionでは色が混ざってしまう「color bleeding」が起きやすく、例えば「red dress, blue jacket」が紫系に変色することがあります。これを防ぐには「red dress BREAK blue jacket」とプロンプトを分割するか、CutOff 拡張機能で「red:dress || blue:jacket」のように領域ごとに色を固定する方法が有効です。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」と書くとさらに安定します。\n\n【女性キャラ向けの定番パターン】女性キャラクター向けの服装では、トップス（blouse, cardigan, sweater, knit vest）とボトムス（long skirt, knee-length skirt, wide pants, jeans）のバランス、足元（pumps, sneakers, loafers）の選択、アクセサリー（scarf, earrings, hair ornament, handbag）の有無が印象を大きく左右します。「1 adult woman, white blouse, navy knee-length skirt, cardigan, loafers」のように「人数→上→下→足元→シーン」の順で書くと AI が解釈しやすくなります。',
     useCases: [
       'ファッションデザインのインスピレーション',
       'キャラクター設定資料の作成',
@@ -322,13 +325,14 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       'ネガティブに「nude, deformed clothes, extra sleeves」を追加',
     ],
     faqs: [
-      { question: '女性向け服装プロンプトのおすすめは？', answer: '日常系（T-shirt, jeans, hoodie, casual dress）、フォーマル系（cocktail dress, evening gown, business suit）、制服系（school uniform, sailor uniform, office uniform）、コスチューム系（maid outfit, kimono, traditional dress）の 4 ジャンルを覚えると、ほぼすべてカバーできます。「1girl, [トップス], [ボトムス], [足元], [アクセサリー]」の順で書くと AI が解釈しやすくなります。' },
-      { question: 'メイド服プロンプトの書き方は？', answer: '基本構文は「maid outfit, white apron, black dress, frilled headdress, knee-high socks, mary jane shoes」。クラシック寄りは「victorian maid outfit, long black dress」、現代寄りは「modern maid uniform, short dress」と書き分けます。コスプレ調なら「moe maid costume, anime style」、リアル調なら「professional maid uniform, photorealistic」と質感タグを補強してください。' },
+      { question: '女性向け服装プロンプトのおすすめは？', answer: '日常系（T-shirt, jeans, hoodie, casual dress）、フォーマル系（evening gown, long dress, business suit）、お仕事系（business suit, lab coat, chef uniform）、コスチューム系（maid outfit, kimono, fantasy outfit）の 4 ジャンルを覚えると、ほぼすべてカバーできます。「1 adult woman, [トップス], [ボトムス], [足元], [アクセサリー]」の順で書くと AI が解釈しやすくなります。年齢が若く見える場合はネガティブに child, teen を入れてください。' },
+      { question: 'メイド服プロンプトの書き方は？', answer: '基本構文は「maid outfit, white apron, black dress, frilled headdress, long black dress, white apron, black shoes」。クラシック寄りは「victorian maid outfit, long black dress」、現代寄りは「modern maid uniform, knee-length dress」と書き分けます。リアル調なら「professional maid uniform, photorealistic」と質感タグを補強してください。種類の表は<a href="/guides/maid-outfit-prompt-guide" class="text-sky-600 hover:underline">メイド服プロンプト</a>です。' },
       { question: '白無垢プロンプトの書き方は？', answer: '基本構文は「shiromuku, white wedding kimono, wataboshi hood, traditional japanese bridal outfit, elegant white silk fabric」。和装婚礼の雰囲気を強めるなら「japanese shrine, soft daylight, ceremonial pose」を追加します。普通の着物に寄ってしまう場合は「pure white kimono, bridal kimono, no colorful pattern」を強め、ネガティブに「colorful kimono, casual yukata」を入れてください。振袖・浴衣・袴を含む種類の書き方は<a href="/guides/kimono-prompt-guide" class="text-sky-600 hover:underline">着物プロンプト</a>にまとめています。' },
-      { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, stockings, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
+      { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, pumps, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
       { question: '色違いの服装で色滲み（color bleeding）を防ぐには？', answer: '複数の色を指定すると Stable Diffusion では色が混ざってしまうことがあります。「red dress BREAK blue jacket」のように BREAK で分割するか、CutOff 拡張機能で「red:dress || blue:jacket」と領域ごとに色を固定すると安定します。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」がさらに確実です。' },
-      { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現（セーラー服・メイド服・ナース服）、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・制服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
-      { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '「medieval armor, knight plate, chainmail」が騎士系、「mage robe, wizard hat, magical staff」が魔法使い系、「elf tunic, leather boots, archer quiver」がエルフ系、「dark sorceress dress, gothic ornaments」が女魔法使い系。Stable Diffusion なら Realistic Vision・Juggernaut XL、Midjourney なら「--style raw --ar 2:3」がファンタジー衣装の写実度を上げます。' },
+      { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・私服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
+      { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '騎士は medieval armor, knight plate、魔法使いは mage robe, wizard hat, magical staff、エルフは elf tunic のように、職業とパーツを分けて書きます。種類と、現代服に寄るときの直し方は<a href="/guides/fantasy-outfit-prompt-guide" class="text-sky-600 hover:underline">ファンタジー衣装プロンプト</a>にまとめています。' },
+      { question: 'ドレスの種類を英語で指定するには？', answer: 'evening gown（イブニング）、cocktail dress（カクテル、自然な英語）、ball gown（ボールガウン、自然な英語）、wedding dress（ウェディング）のように種類を一つ決め、丈は long dress で固定します。袖・素材・色の表は<a href="/guides/dress-prompt-guide" class="text-sky-600 hover:underline">ドレスプロンプト</a>です。' },
     ],
   },
 
@@ -449,7 +453,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'camera': {
     intro:
-      'カメラ・アングルプロンプトは、画像の構図と視点を決定づける、いわば「映像監督」的な役割を果たす要素です。「close-up」「medium shot」「full body shot」「wide shot」のような基本構図から、「low angle」「high angle」「dutch angle」「bird\'s eye view」といった視点指定、さらに「shallow depth of field」「bokeh」「cinematic composition」のような撮影技法まで、幅広く指示できます。\nMidjourneyは特にカメラ系プロンプトに強く、「shot on Sony A7IV, 85mm lens, f/1.4」のような実機材スペック指定にも反応します。Stable Diffusionでは「professional photography, dramatic lighting, rule of thirds」を併用すると、構図の安定性が大きく向上します。映画的な雰囲気を出したい場合は「cinematic still, anamorphic lens, film grain」が定番の組み合わせです。\n\n【コピペで使える構図テンプレート 10 選】すぐに使える実践的な呪文テンプレートです:\n1. ポートレート基本: 「close-up portrait, soft lighting, shallow depth of field, 85mm lens」\n2. 全身ショット: 「full body shot, standing pose, studio lighting, white background」\n3. シネマティック: 「cinematic still, anamorphic lens, dramatic lighting, film grain, 2.39:1 aspect ratio」\n4. 俯瞰: 「bird\'s eye view, top-down shot, aerial perspective, city below」\n5. ローアングル迫力: 「low angle shot, looking up, dramatic perspective, heroic pose」\n6. 横顔: 「side profile, rim lighting, dark background, dramatic shadows」\n7. 背面ショット: 「from behind, over the shoulder, looking at scenery, depth」\n8. 超接写: 「extreme close-up, macro shot, eyes detail, skin texture, 100mm macro lens」\n9. 群像構図: 「group shot, multiple characters, symmetrical composition, wide angle」\n10. ダッチアングル: 「dutch angle, tilted frame, dynamic composition, action scene」\n\n【ライティング 8 パターン — 雰囲気を劇的に変える】ライティングだけで画像の印象は 180 度変わります:\n- 「soft lighting」— 柔らかく自然、ポートレート向き\n- 「dramatic lighting」— 強い陰影、ドラマチック\n- 「rim lighting / backlight」— 被写体の輪郭が光る逆光\n- 「golden hour」— 夕暮れの暖かい自然光\n- 「studio lighting, three-point lighting」— プロの撮影スタジオ\n- 「neon lighting」— サイバーパンク・夜の繁華街\n- 「candle light, warm」— 暖かい室内の雰囲気\n- 「moonlight, cool blue」— 月明かりの冷たい光\n\n【レンズ・機材指定で差をつける（Midjourney 特に有効）】Midjourney はカメラ機材名に強く反応します。「shot on Canon 5D Mark IV, 50mm f/1.4」でリアルなボケ味、「shot on Fujifilm X-T4, 23mm f/1.4」でフィルム調の色味、「Leica M10, 35mm Summilux」で上品なドキュメンタリー風。Stable Diffusion ではレンズ効果は「depth of field, bokeh, f/1.4」のような一般的記述の方が安定します。',
+      'カメラ・アングルプロンプトは、画像の構図と視点を決定づける、いわば「映像監督」的な役割を果たす要素です。「close-up」「medium shot」「full body shot」「wide shot」のような基本構図から、「low angle」「high angle」「dutch angle」「bird\'s eye view」といった視点指定、さらに「shallow depth of field」「bokeh」「cinematic composition」のような撮影技法まで、幅広く指示できます。\nMidjourneyは特にカメラ系プロンプトに強く、「shot on Sony A7IV, 85mm lens, f/1.4」のような実機材スペック指定にも反応します。Stable Diffusionでは「professional photography, dramatic lighting, rule of thirds」を併用すると、構図の安定性が大きく向上します。映画的な雰囲気を出したい場合は「cinematic still, anamorphic lens, film grain」が定番の組み合わせです。\n\n【コピペで使える構図テンプレート 10 選】すぐに使える実践的な呪文テンプレートです:\n1. ポートレート基本: 「close-up portrait, soft lighting, shallow depth of field, 85mm lens」\n2. 全身ショット: 「full body shot, standing pose, studio lighting, white background」\n3. シネマティック: 「cinematic still, anamorphic lens, dramatic lighting, film grain, 2.39:1 aspect ratio」\n4. 俯瞰: 「bird\'s eye view, top-down shot, aerial perspective, city below」\n5. ローアングル迫力: 「low angle shot, looking up, dramatic perspective, heroic pose」\n6. 横顔: 「side profile, rim lighting, dark background, dramatic shadows」\n7. 背面ショット: 「from behind, over the shoulder, looking at scenery, depth」\n8. 超接写: 「extreme close-up, macro shot, eyes detail, skin texture, 100mm macro lens」\n9. 群像構図: 「group shot, multiple characters, symmetrical composition, wide angle」\n10. ダッチアングル: 「dutch angle, tilted frame, dynamic composition, action scene」\n\n【ライティング 8 パターン — 雰囲気を劇的に変える】ライティングだけで画像の印象は 180 度変わります:\n- 「soft lighting」— 柔らかく自然、ポートレート向き\n- 「dramatic lighting」— 強い陰影、ドラマチック\n- 「rim lighting / backlight」— 被写体の輪郭が光る逆光\n- 「golden hour」— 夕暮れの暖かい自然光\n- 「studio lighting, three-point lighting」— プロの撮影スタジオ\n- 「neon lighting」— サイバーパンク・夜の繁華街\n- 「candle light, warm」— 暖かい室内の雰囲気\n- 「moonlight, cool blue」— 月明かりの冷たい光\n\n【レンズ・機材指定で差をつける（Midjourney 特に有効）】Midjourney はカメラ機材名に強く反応します。「shot on Canon 5D Mark IV, 50mm f/1.4」でリアルなボケ味、「shot on Fujifilm X-T4, 23mm f/1.4」でフィルム調の色味、「Leica M10, 35mm Summilux」で上品なドキュメンタリー風。Stable Diffusion ではレンズ効果は「depth of field, bokeh, f/1.4」のような一般的記述の方が安定します。\n正面・斜め・全身など他の構図は、構図・アングルのプロンプト一覧にまとめています。',
     useCases: [
       '映画的・ドラマチックな構図のシーン作成',
       'ポートレート撮影風の人物画像',
@@ -980,6 +984,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '着物 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'fantasy-outfit-prompt-guide',
+    title: 'ファンタジー衣装プロンプト｜騎士・魔法使いの呪文【コピペOK】',
+    description: 'ファンタジー衣装のAIプロンプトを英語でコピペ。騎士の鎧・魔法使いのローブ・エルフや王族の衣装を職業別・種族別に一覧化し、パーツの組み合わせ方と、現代服に寄る・鎧が崩れるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'ファンタジー衣装 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'composition-angle-prompt-guide',
+    title: '構図・アングルのプロンプト一覧｜正面・斜め・全身【コピペOK】',
+    description: '構図・カメラアングルのAIプロンプトを英語でコピペ。全身・上半身・アップのショットサイズ、正面・斜め・横顔・後ろ姿の向き、目線、上から/下からの高さを一覧化し、組み合わせテンプレと「全身にならない・見切れる」直し方を Stable Diffusion・NovelAI・Midjourney 向けに解説。',
+    targetKeyword: '構図 プロンプト 一覧',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'new-year-card-ai-prompt-guide',
+    title: 'AI年賀状プロンプト2027｜未年の羊イラスト【コピペOK】',
+    description: '2027年（未年）の年賀状イラストをAIで作るためのプロンプト集。和風・水彩・切り絵・ドット絵など作風別のコピペ例を Stable Diffusion と ChatGPT・Gemini の自然文で紹介し、羊がヤギになる・文字が崩れるときの直し方とはがきサイズの注意点も解説。',
+    targetKeyword: '年賀状 AI プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'dress-prompt-guide',
+    title: 'ドレスプロンプト｜種類・色・丈の英語呪文一覧【コピペOK】',
+    description: 'ドレスのAIプロンプトを英語でコピペ。イブニングドレス・カクテルドレス・ウェディングドレス・ボールガウンなどの種類一覧と、丈・袖・素材・色の指定、パーティーや結婚式の作例、形が崩れる・普段着に寄るときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'ドレス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'eye-prompt-guide',
+    title: '目・瞳のプロンプト一覧｜色・形・ハイライト【コピペOK】',
+    description: '目・瞳のAIプロンプトを英語でコピペ。目の色・オッドアイ・グラデーション、つり目・たれ目・ジト目などの形、瞳孔やハイライト・まつげの指定を一覧化し、瞳が崩れる・色が変わるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '目 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1183,6 +1222,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'kimono-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'fantasy-outfit-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'dress-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'eye-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
+  },
+  'composition-angle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera'],
+  },
+  'new-year-card-ai-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['color', 'anime'],
   },
 }
 

@@ -181,7 +181,7 @@ school uniform, short skirt, photorealistic, painterly
         title: '和風・浮世絵・水墨画',
         content: `和の絵は、服と画材を別の層にします。服が着物でも、塗りがセルのままなら浮世絵にはなりません。浮世絵にするなら \`ukiyo-e\` を画風の位置に置き、輪郭と色面を優先します。水墨は sumi-e と自然な英語で、色をほぼ使いません。
 
-着物のパーツは [着物プロンプト](/guides/kimono-prompt-guide) です。この節は、同じ和服のまま版画や墨に寄せるときだけ使います。
+着物のパーツは [着物プロンプト](/guides/kimono-prompt-guide) です。この節は、同じ和服のまま版画や墨に寄せるときだけ使います。年賀状の浮世絵風は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
 
 **浮世絵**
 
@@ -1059,7 +1059,7 @@ school uniform, short skirt, hair over eyes, ponytail
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。子どもの行事の着物は扱いません。着崩した状態では書きません。衿の左右は、最後の節で確認する項目にしています。
 
-和服のコスプレ全般のうち、巫女は [コスプレプロンプト](/guides/cosplay-prompt-guide) に任せ、このページでは着物の種類を分けます。
+和服のコスプレ全般のうち、巫女は [コスプレプロンプト](/guides/cosplay-prompt-guide) に任せ、このページでは着物の種類を分けます。洋装のドレスは [ドレスプロンプト](/guides/dress-prompt-guide) です。
 
 **普段の着物**
 
@@ -1136,7 +1136,7 @@ school uniform, short skirt, dress, text
         title: '振袖・正月・初詣',
         content: `振袖は \`furisode\` です。袖の長さを固定するため \`long sleeves\` と \`wide sleeves\` を足します。髪飾りは \`kanzashi\` を一つです。簪の素材を増やすときは [アクセサリープロンプト](/guides/accessory-prompt-guide) を見て、このページでは本数を増やしません。
 
-正月の初詣は、自然な英語で shrine と書きます。\`furisode\` を残したまま \`yukata\` を足さないでください。
+正月の初詣は、自然な英語で shrine と書きます。\`furisode\` を残したまま \`yukata\` を足さないでください。年賀状の絵柄として使うときは [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
 
 \`\`\`
 1 adult woman, black hair, hair bun, kanzashi, furisode,
