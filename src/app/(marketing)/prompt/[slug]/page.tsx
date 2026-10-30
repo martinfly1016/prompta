@@ -66,7 +66,6 @@ const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'knight-armor-fantasy-2': ['fantasy-outfit-prompt-guide'],
   'knight-armor-fantasy-3': ['fantasy-outfit-prompt-guide'],
   'knight-princess-gold-cape': ['fantasy-outfit-prompt-guide'],
-  'witch-library-grey-hair-elegant': ['fantasy-outfit-prompt-guide'],
   'elf-warrior-braided-hair': ['fantasy-outfit-prompt-guide'],
   'elegant-dress-woman': ['dress-prompt-guide'],
   'formal-evening-gown': ['dress-prompt-guide'],

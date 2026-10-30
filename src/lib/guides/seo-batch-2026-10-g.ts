@@ -162,7 +162,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
 \`\`\`
 
-図書館の公開作例は [灰髪の魔女](/prompt/witch-library-grey-hair-elegant) です。タグは [魔法使い](/tag/魔法使い) です。男性の魔法使いは \`1 adult man, robe, holding staff\` から書き、\`witch hat\` は外しても成立します。帽子とフードを両方強くすると、頭の上で布が二重になります。`,
+タグは [魔法使い](/tag/魔法使い) です。男性の魔法使いは \`1 adult man, robe, holding staff\` から書き、\`witch hat\` は外しても成立します。帽子とフードを両方強くすると、頭の上で布が二重になります。`,
       },
       {
         title: '種族別の衣装',
