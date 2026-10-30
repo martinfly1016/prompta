@@ -49,6 +49,29 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'ジュエリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
   'アクセサリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
   'スーツ': { slug: 'suit-lab-coat-prompt-guide', title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】' },
+  '線画': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  '水彩': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  '厚塗り': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  '画風': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  '油絵': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  'ドット絵': { slug: 'art-style-prompt-guide', title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】' },
+  'ロングヘア': { slug: 'long-hair-prompt-guide', title: 'ロングヘアプロンプト｜ストレート・黒髪【コピペOK】' },
+  'ストレート': { slug: 'long-hair-prompt-guide', title: 'ロングヘアプロンプト｜ストレート・黒髪【コピペOK】' },
+  'ストレートヘア': { slug: 'long-hair-prompt-guide', title: 'ロングヘアプロンプト｜ストレート・黒髪【コピペOK】' },
+  '黒髪ロング': { slug: 'long-hair-prompt-guide', title: 'ロングヘアプロンプト｜ストレート・黒髪【コピペOK】' },
+  '編み込み': { slug: 'braid-prompt-guide', title: '編み込み・三つ編みプロンプト｜英語呪文一覧【コピペOK】' },
+  '三つ編み': { slug: 'braid-prompt-guide', title: '編み込み・三つ編みプロンプト｜英語呪文一覧【コピペOK】' },
+  'おさげ': { slug: 'braid-prompt-guide', title: '編み込み・三つ編みプロンプト｜英語呪文一覧【コピペOK】' },
+  '前髪': { slug: 'bangs-prompt-guide', title: '前髪プロンプト一覧｜ぱっつん・分け目の英語呪文【コピペOK】' },
+  'ぱっつん': { slug: 'bangs-prompt-guide', title: '前髪プロンプト一覧｜ぱっつん・分け目の英語呪文【コピペOK】' },
+  '姫カット': { slug: 'bangs-prompt-guide', title: '前髪プロンプト一覧｜ぱっつん・分け目の英語呪文【コピペOK】' },
+  '着物': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '白無垢': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '浴衣': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '和服': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '和装': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '袴': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
+  '振袖': { slug: 'kimono-prompt-guide', title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】' },
 }
 
 const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description: string }> = {
@@ -91,6 +114,18 @@ const TAG_META_OVERRIDE: Record<string, { title: string; description: string }> 
   'ぽっちゃり': {
     title: '「ぽっちゃり」プロンプト作例集｜ふくよか・プラスサイズ',
     description: 'ぽっちゃり・ふくよか・プラスサイズ体型の大人キャラのAIプロンプト作例集。plump・plus-size の使い分けと崩れ対策は、ぽっちゃりプロンプトの解説ガイドで紹介しています。',
+  },
+  '暗い': {
+    title: '「暗い部屋」プロンプト作例集｜薄暗い室内・夜の照明',
+    description: '暗い部屋・薄暗い室内・夜の間接照明のAIプロンプト作例集。英語タグの書き方と、暗くなりすぎるときの直し方は暗い部屋プロンプトの解説ガイドで紹介しています。',
+  },
+  'キス': {
+    title: '「キス」プロンプト作例集｜キス顔・キスシーン',
+    description: 'キス顔・キスシーンのAIプロンプト作例集。頬へのキスやキス待ち顔の英語タグと、顔が崩れるときの直し方はキスプロンプトの解説ガイドで紹介しています。',
+  },
+  '金髪': {
+    title: '「金髪」プロンプト作例集｜ブロンドヘアの英語タグ',
+    description: '金髪・ブロンドヘアのAIプロンプト作例集。blonde hair の色味の違いやメッシュ・インナーカラーとの組み合わせは、髪色プロンプトの解説ガイドで紹介しています。',
   },
 }
 

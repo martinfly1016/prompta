@@ -54,6 +54,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'bl-couple-hug-from-behind': ['hug-prompt-guide'],
+  'braid-sidelocks-body-markings': ['braid-prompt-guide'],
+  'french-braid-blonde-long-hair': ['braid-prompt-guide'],
+  'blue-braided-hair-pink-eyes': ['braid-prompt-guide'],
+  'straight-long-black-hair-glossy': ['long-hair-prompt-guide'],
+  'wedding-shiromuku-japanese': ['kimono-prompt-guide'],
+  'hair-color-natural-simulation': ['hair-color-prompt-guide'],
 }
 
 export default async function PromptDetailPage({ params }: Props) {

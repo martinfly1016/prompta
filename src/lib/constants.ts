@@ -308,7 +308,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'clothing': {
     intro:
-      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「school uniform」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy pleated skirt, knee-high socks, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。\n\n【よく探される服装プロンプト】実用需要が高いのは「メイド服」「セーラー服」「学校制服」「白無垢」「ビジネススーツ」「ファンタジー衣装」です。メイド服なら maid outfit, white apron, frilled headdress、セーラー服なら sailor uniform, sailor collar, pleated skirt、白無垢なら shiromuku, white wedding kimono, wataboshi hood のように、衣装名だけでなく必須パーツを 2〜4 個足すと再現性が上がります。\n\n【カジュアル・フォーマル・ファンタジー・コスチュームの4軸で整理する】服装プロンプトを体系的に覚えるには、日常系（casual：T-shirt, jeans, hoodie, sneakers）、フォーマル系（formal：suit, evening dress, tuxedo, high heels）、ファンタジー系（fantasy：medieval armor, mage robe, elf tunic, knight plate）、コスチューム系（costume：sailor uniform, maid outfit, kimono, cheerleader）の4軸で引き出しを作るのが効率的です。各軸ごとに10〜20個の英単語を覚えておけば、組み合わせで数百種類の衣装表現が可能になります。\n\n【BREAKコマンドで色滲み（color bleeding）を防ぐ】複数の服装要素に別々の色を指定すると、Stable Diffusionでは色が混ざってしまう「color bleeding」が起きやすく、例えば「red dress, blue jacket」が紫系に変色することがあります。これを防ぐには「red dress BREAK blue jacket」とプロンプトを分割するか、CutOff 拡張機能で「red:dress || blue:jacket」のように領域ごとに色を固定する方法が有効です。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」と書くとさらに安定します。\n\n【女性キャラ向けの定番パターン】女性キャラクター向けの服装では、トップス（blouse, cardigan, sweater, crop top）とボトムス（pleated skirt, tight skirt, jeans, hot pants）のバランス、足元（knee-high socks, thigh-high stockings, pumps, sneakers）の選択、アクセサリー（ribbon, choker, earrings, hair ornament）の有無が印象を大きく左右します。「1girl, white blouse, navy pleated skirt, knee-high socks, brown loafers, school uniform」のように「人数→上→下→足元→シーン」の順で書くと AI が解釈しやすくなります。',
+      '服装プロンプトは、キャラクターの世界観や時代設定、性格までを一目で伝える強力な表現手段です。AI画像生成では「dress」「suit」「blouse」「kimono」「hoodie」といった基本ワードに加え、素材（silk, denim, leather）、色、ディテール（lace trim, gold buttons, ripped jeans）を細かく指定することで、ファッション雑誌レベルの仕上がりを目指せます。\nStable Diffusionで特に効果的なのは、複数の衣装要素をカンマで区切って積み重ねる方法です。例えば「white blouse, navy pleated skirt, knee-high socks, brown loafers」のように構成すると、AIが各パーツを正確に組み立てられます。Midjourneyの場合は「--style raw」と組み合わせることで、過度に装飾的な解釈を避けてリアルな服装表現が可能になります。\n\n【よく探される服装プロンプト】実用需要が高いのは「メイド服」「セーラー服」「学校制服」「白無垢」「ビジネススーツ」「ファンタジー衣装」です。メイド服なら maid outfit, white apron, frilled headdress、セーラー服なら sailor uniform, pleated skirt、白無垢なら shiromuku, white wedding kimono, wataboshi hood のように、衣装名だけでなく必須パーツを 2〜4 個足すと再現性が上がります。\n\n【カジュアル・フォーマル・ファンタジー・コスチュームの4軸で整理する】服装プロンプトを体系的に覚えるには、日常系（casual：T-shirt, jeans, hoodie, sneakers）、フォーマル系（formal：suit, evening dress, tuxedo, high heels）、ファンタジー系（fantasy：medieval armor, mage robe, elf tunic, knight plate）、コスチューム系（costume：sailor uniform, maid outfit, kimono, cheerleader）の4軸で引き出しを作るのが効率的です。各軸ごとに10〜20個の英単語を覚えておけば、組み合わせで数百種類の衣装表現が可能になります。\n\n【BREAKコマンドで色滲み（color bleeding）を防ぐ】複数の服装要素に別々の色を指定すると、Stable Diffusionでは色が混ざってしまう「color bleeding」が起きやすく、例えば「red dress, blue jacket」が紫系に変色することがあります。これを防ぐには「red dress BREAK blue jacket」とプロンプトを分割するか、CutOff 拡張機能で「red:dress || blue:jacket」のように領域ごとに色を固定する方法が有効です。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」と書くとさらに安定します。\n\n【女性キャラ向けの定番パターン】女性キャラクター向けの服装では、トップス（blouse, cardigan, sweater, crop top）とボトムス（pleated skirt, tight skirt, jeans, hot pants）のバランス、足元（knee-high socks, pumps, sneakers）の選択、アクセサリー（ribbon, choker, earrings, hair ornament）の有無が印象を大きく左右します。「1 adult woman, white blouse, navy knee-length skirt, cardigan, loafers」のように「人数→上→下→足元→シーン」の順で書くと AI が解釈しやすくなります。',
     useCases: [
       'ファッションデザインのインスピレーション',
       'キャラクター設定資料の作成',
@@ -324,7 +324,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
     faqs: [
       { question: '女性向け服装プロンプトのおすすめは？', answer: '日常系（T-shirt, jeans, hoodie, casual dress）、フォーマル系（cocktail dress, evening gown, business suit）、制服系（school uniform, sailor uniform, office uniform）、コスチューム系（maid outfit, kimono, traditional dress）の 4 ジャンルを覚えると、ほぼすべてカバーできます。「1girl, [トップス], [ボトムス], [足元], [アクセサリー]」の順で書くと AI が解釈しやすくなります。' },
       { question: 'メイド服プロンプトの書き方は？', answer: '基本構文は「maid outfit, white apron, black dress, frilled headdress, knee-high socks, mary jane shoes」。クラシック寄りは「victorian maid outfit, long black dress」、現代寄りは「modern maid uniform, short dress」と書き分けます。コスプレ調なら「moe maid costume, anime style」、リアル調なら「professional maid uniform, photorealistic」と質感タグを補強してください。' },
-      { question: '白無垢プロンプトの書き方は？', answer: '基本構文は「shiromuku, white wedding kimono, wataboshi hood, traditional japanese bridal outfit, elegant white silk fabric」。和装婚礼の雰囲気を強めるなら「japanese shrine, soft daylight, ceremonial pose」を追加します。普通の着物に寄ってしまう場合は「pure white kimono, bridal kimono, no colorful pattern」を強め、ネガティブに「colorful kimono, casual yukata」を入れてください。' },
+      { question: '白無垢プロンプトの書き方は？', answer: '基本構文は「shiromuku, white wedding kimono, wataboshi hood, traditional japanese bridal outfit, elegant white silk fabric」。和装婚礼の雰囲気を強めるなら「japanese shrine, soft daylight, ceremonial pose」を追加します。普通の着物に寄ってしまう場合は「pure white kimono, bridal kimono, no colorful pattern」を強め、ネガティブに「colorful kimono, casual yukata」を入れてください。振袖・浴衣・袴を含む種類の書き方は<a href="/guides/kimono-prompt-guide" class="text-sky-600 hover:underline">着物プロンプト</a>にまとめています。' },
       { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, stockings, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
       { question: '色違いの服装で色滲み（color bleeding）を防ぐには？', answer: '複数の色を指定すると Stable Diffusion では色が混ざってしまうことがあります。「red dress BREAK blue jacket」のように BREAK で分割するか、CutOff 拡張機能で「red:dress || blue:jacket」と領域ごとに色を固定すると安定します。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」がさらに確実です。' },
       { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現（セーラー服・メイド服・ナース服）、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・制服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
@@ -361,7 +361,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'anime': {
     intro:
-      'アニメスタイルプロンプトは、日本のアニメ・マンガ調イラストをAIで生成するための核となるテクニックです。Stable Diffusionでは「anime style」「anime coloring」「manga style」「cel shading」といったベースキーワードに加え、特定の作画スタイル（90s anime, modern anime, ghibli style）を指定することで方向性を細かくコントロールできます。\nアニメ系モデル（Anything V5, Counterfeit, MeinaMix など）を使う場合、品質タグ「masterpiece, best quality, ultra detailed」とネガティブタグ「(worst quality, low quality:1.4), bad anatomy, bad hands」をテンプレ化しておくのが定番です。Midjourneyでは「niji 5」モードがアニメ表現に特化しており、「--niji 5 --style expressive」で鮮やかなアニメ風画像が得られます。\n\n【画像生成AIプロンプト例：アニメの基本形】最初に使うなら「1girl, original anime character, long silver hair, blue eyes, school uniform, standing in a classroom, anime style, cel shading, masterpiece, best quality」が安全です。ここから髪型・服装・背景・表情を差し替えるだけで、SNSアイコン、立ち絵、ライトノベル挿絵、ゲームキャラクター案に展開できます。\n\n【アニメキャラクター設計の呪文パターン】オリジナルキャラクターを描くには「1girl/1boy」＋ 外見特徴（髪色・髪型・目の色・服装）＋ ポーズ ＋ 背景 の 4 要素を順番に記述します。例: 「1girl, long silver hair, blue eyes, school uniform, sitting on window sill, sunset background, anime style」。人気の高いキャラ設定として、ツインテール×制服、銀髪×ファンタジー装備、ネコミミ×メイド服 は AI の再現性が特に高いです。\n\n【画風・年代指定のテクニック】「プロンプト 画風 アニメ」で探している場合は、まず画風タグをプロンプト前半に置きます。「90s anime」でレトロなセル画風、「modern anime」で最近の深夜アニメ風、「cel shading, flat color, bold outlines」でくっきりしたアニメ塗り、「watercolor anime background」で淡い背景になります。画風は品質タグより前に置くと優先度が上がります。\n\n【表情・感情描写で物語性を加える】キャラの表情は「smile, happy」のような単純な指定から、「gentle smile, looking at viewer, tears in eyes, blushing」のような複合表現まで幅広く対応しています。感情と状況を組み合わせると物語性が出ます: 「crying, rain, holding umbrella, melancholic expression」。NovelAI では emotion タグがかなり精密で、「(gentle smile:1.2), soft eyes, slight blush」のように重み付けすると表情の繊細さが増します。\n\n【モデル選びの決定版ガイド】Stable Diffusion のアニメ系モデルは進化が速く、用途に合った選択が重要です。Anything V5 は汎用的で初心者向け、Counterfeit は美麗な色彩表現、MeinaMix はリアル寄りのアニメ調、AnimagineXL は SDXL ベースの最新鋭。Midjourney なら niji 5（アニメ特化）、DALL-E 3 はアニメ風指定が可能ですがスタイルの制御は弱め。モデル比較は同じプロンプトで 3-4 モデル試して好みの絵柄を見つけるのが最速です。',
+      'アニメスタイルプロンプトは、日本のアニメ・マンガ調イラストをAIで生成するための核となるテクニックです。Stable Diffusionでは「anime style」「anime coloring」「manga style」「cel shading」といったベースキーワードに加え、特定の作画スタイル（90s anime, modern anime）を指定することで方向性を細かくコントロールできます。\nアニメ系モデル（Anything V5, Counterfeit, MeinaMix など）を使う場合、品質タグ「masterpiece, best quality, ultra detailed」とネガティブタグ「(worst quality, low quality:1.4), bad anatomy, bad hands」をテンプレ化しておくのが定番です。Midjourneyでは「niji 5」モードがアニメ表現に特化しており、「--niji 5 --style expressive」で鮮やかなアニメ風画像が得られます。\n\n【画像生成AIプロンプト例：アニメの基本形】最初に使うなら「1 adult woman, original anime character, long silver hair, blue eyes, casual jacket, standing on a city street, anime style, cel shading, masterpiece, best quality」が安全です。ここから髪型・服装・背景・表情を差し替えるだけで、SNSアイコン、立ち絵、ライトノベル挿絵、ゲームキャラクター案に展開できます。\n\n【アニメキャラクター設計の呪文パターン】オリジナルキャラクターを描くには「1 adult woman / 1 adult man」＋ 外見特徴（髪色・髪型・目の色・服装）＋ ポーズ ＋ 背景 の 4 要素を順番に記述します。例: 「1 adult woman, long silver hair, blue eyes, casual jacket, standing on a city street, sunset background, anime style」。再現しやすい組み合わせとして、ツインテール×ジャケット、銀髪×ファンタジー装備、ネコミミ×メイド服 があります。\n\n【画風・年代指定のテクニック】「プロンプト 画風 アニメ」で探している場合は、まず画風タグをプロンプト前半に置きます。「90s anime」でレトロなセル画風、「modern anime」で最近の深夜アニメ風、「cel shading, flat color, bold outlines」でくっきりしたアニメ塗り、「watercolor anime background」で淡い背景になります。画風は品質タグより前に置くと優先度が上がります。\n\n【表情・感情描写で物語性を加える】キャラの表情は「smile, happy」のような単純な指定から、「gentle smile, looking at viewer, tears in eyes, blushing」のような複合表現まで幅広く対応しています。感情と状況を組み合わせると物語性が出ます: 「crying, rain, holding umbrella, melancholic expression」。NovelAI では emotion タグがかなり精密で、「(gentle smile:1.2), soft eyes, slight blush」のように重み付けすると表情の繊細さが増します。\n\n【モデル選びの決定版ガイド】Stable Diffusion のアニメ系モデルは進化が速く、用途に合った選択が重要です。Anything V5 は汎用的で初心者向け、Counterfeit は美麗な色彩表現、MeinaMix はリアル寄りのアニメ調、AnimagineXL は SDXL ベースの最新鋭。Midjourney なら niji 5（アニメ特化）、DALL-E 3 はアニメ風指定が可能ですがスタイルの制御は弱め。モデル比較は同じプロンプトで 3-4 モデル試して好みの絵柄を見つけるのが最速です。',
     useCases: [
       'オリジナルキャラクターの設定画作成',
       '同人誌・Web漫画の参考素材',
@@ -377,7 +377,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       '画風は品質タグの前に書くと優先度が上がる',
     ],
     faqs: [
-      { question: '画像生成AIでアニメ風にする基本プロンプトは？', answer: 'まずは「anime style, cel shading, original anime character, masterpiece, best quality」を入れます。人物なら「1girl / 1boy」＋髪型＋目の色＋服装＋背景を足すと安定します。例: 「1girl, short bob hair, blue eyes, sailor uniform, classroom, anime style, cel shading, masterpiece, best quality」。' },
+      { question: '画像生成AIでアニメ風にする基本プロンプトは？', answer: 'まずは「anime style, cel shading, original anime character, masterpiece, best quality」を入れます。人物なら「1 adult woman / 1 adult man」＋髪型＋目の色＋服装＋背景を足すと安定します。例: 「1 adult woman, short bob hair, blue eyes, casual jacket, city street, anime style, cel shading, masterpiece, best quality」。' },
       { question: 'プロンプトでアニメの画風を変えるには？', answer: '画風タグを前半に置きます。レトロなら「90s anime, cel animation」、現代風なら「modern anime, clean line art」、水彩寄りなら「watercolor anime background」、マンガ調なら「manga style, screentone, black and white」。品質タグより前に置くと反映されやすくなります。' },
       { question: 'リアル寄りになってしまう時の対策は？', answer: 'ポジティブ側に「(anime style:1.2), cel shading, flat color, bold outlines」を入れ、ネガティブに「photorealistic, realistic, 3d render, live action」を追加します。Stable Diffusion ではアニメ系モデルを使うことも重要です。' },
     ],
@@ -945,6 +945,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '白衣 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'art-style-prompt-guide',
+    title: '画風プロンプト一覧｜絵柄・塗りの英語呪文【コピペOK】',
+    description: '画風・絵柄のAIプロンプトを英語でコピペ。アニメ塗り・厚塗り・水彩・油絵・線画・ドット絵・浮世絵などの一覧と、同じキャラで画風だけを変えるテンプレ、効かないときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '画風 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'long-hair-prompt-guide',
+    title: 'ロングヘアプロンプト｜ストレート・黒髪【コピペOK】',
+    description: 'ロングヘア・ストレートヘアのAIプロンプトを英語でコピペ。long hair / very long hair の長さの違い、黒髪ロング、姫カット、ウェーブ、まとめ髪へのアレンジ、髪が途切れる・溶けるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'ロングヘア プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'braid-prompt-guide',
+    title: '編み込み・三つ編みプロンプト｜英語呪文一覧【コピペOK】',
+    description: '編み込み・三つ編みのAIプロンプトを英語でコピペ。single braid・twin braids・side braid・french braid・crown braid の違い、前髪の編み込みやお団子・ポニーテールのアレンジ、三つ編みが前に垂れる・消えるときの直し方を Stable Diffusion・NovelAI 向けに解説。',
+    targetKeyword: '編み込み プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'bangs-prompt-guide',
+    title: '前髪プロンプト一覧｜ぱっつん・分け目の英語呪文【コピペOK】',
+    description: '前髪のAIプロンプトを英語でコピペ。ぱっつん（blunt bangs）、流し前髪、センター分け、M字バング、シースルー、片目隠れ、おでこ出しまでの一覧と、男性・女性・リアル写真風の作例、前髪が目にかかるときの直し方を NovelAI・Stable Diffusion 向けに解説。',
+    targetKeyword: '前髪 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'kimono-prompt-guide',
+    title: '着物プロンプト｜白無垢・浴衣・袴の英語呪文【コピペOK】',
+    description: '着物・和服のAIプロンプトを英語でコピペ。振袖・浴衣・袴・白無垢・羽織袴の種類一覧、帯や帯結び・髪飾り・履物のタグ、正月や夏祭り・神前式の作例、帯が消える・洋服に寄るときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '着物 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1126,6 +1161,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
     categories: ['hairstyle', 'color'],
   },
   'suit-lab-coat-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'art-style-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'color'],
+  },
+  'long-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
+  },
+  'braid-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
+  },
+  'bangs-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
+  },
+  'kimono-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['cosplay', 'clothing', 'costume'],
   },
