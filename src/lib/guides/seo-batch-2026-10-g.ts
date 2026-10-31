@@ -368,7 +368,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, revealing clothes, modern clothes, 
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。下から見上げる調整は [下からのアングル](/guides/low-angle-prompt-guide)、上から見下ろす調整は [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) に分けてあります。このページは、正面・斜め・全身を含む組み合わせの一覧です。
 
-立ち方そのものは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、二人の位置は [二人構図](/guides/two-person-composition-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [カメラアングル](/tag/カメラアングル) と [全身](/tag/全身) です。
+立ち方そのものは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、二人の位置は [二人構図](/guides/two-person-composition-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [カメラアングル](/tag/カメラアングル) と [全身](/tag/全身) です。光・影の付け方は [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。
 
 **四つの軸を一つずつ**
 
@@ -710,7 +710,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, cropped, out of frame
 
 縦横の考え方そのものは [9:16のプロンプト](/guides/image-aspect-ratio-916-prompt-guide) が近いです。年賀状は 9:16 より少し正方形に近い縦です。細長い画面のまま入稿すると、上下が切れます。
 
-住所、郵便番号、電話番号、本名はプロンプトに書きません。使う写真は、自分に権利があるものだけです。相手の写真を年賀状にするときは、その人の同意を取ってください。過去の季節に、生成AIで年賀状を作るキャンペーンがあったことはあります。今年も同じ企画が行われるとは、このページでは書きません。ロゴや企業名もプロンプトに入れません。`,
+住所、郵便番号、電話番号、本名はプロンプトに書きません。使う写真は、自分に権利があるものだけです。相手の写真を年賀状にするときは、その人の同意を取ってください。過去の季節に、生成AIで年賀状を作るキャンペーンがあったことはあります。今年も同じ企画が行われるとは、このページでは書きません。ロゴや企業名もプロンプトに入れません。年末のクリスマスカードは [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide) です。`,
       },
       {
         title: '基本テンプレ',

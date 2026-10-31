@@ -308,7 +308,7 @@ ChatGPT や Gemini の画像生成にネガティブ欄が無いときは、同�
 
 センチの数字は、モデルが巻尺で測る値にはなりません。大きい数字ほど高く、という相対のヒントにしかならないことが多いです。数字に頼らず、\`tall\` と全身と、比べる物を先に書いてください。
 
-このページは成人だけです。背を高くするために年齢を上げる必要はありませんが、成人であることは人数に書きます。低身長の反対側は [低身長・小柄プロンプト](/guides/short-height-petite-prompt)、体型全般は [体型プロンプト](/guides/body-type-prompt-guide) です。
+このページは成人だけです。背を高くするために年齢を上げる必要はありませんが、成人であることは人数に書きます。低身長の反対側は [低身長・小柄プロンプト](/guides/short-height-petite-prompt)、体型全般は [体型プロンプト](/guides/body-type-prompt-guide) です。男性の長身を髪型や服と一緒に書くときは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。
 
 **全身の基本**
 
@@ -1072,7 +1072,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
 
 成人の仕事着として、\`suit jacket, white dress shirt, necktie, trousers\` までを一組にします。\`formal\` はフォーマルさのタグです。これだけで袖の長さや襟の左右は決まりません。
 
-白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。
+白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。男性キャラのスーツ・私服の並べ方は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。
 
 **パーツを書いたスーツ**
 

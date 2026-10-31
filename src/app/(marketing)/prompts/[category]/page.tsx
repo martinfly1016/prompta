@@ -106,7 +106,11 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                 <Link href="/guides/muscular-prompt-guide" className="text-sky-600 hover:underline">
                   筋肉質・マッチョプロンプト
                 </Link>
-                に分けています。このページはスレンダー、大柄、男性の体型、小柄の作例です。
+                に分けています。このページはスレンダー、大柄、男性の体型、小柄の作例です。男性キャラの体型・髪型・服装は{' '}
+                <Link href="/guides/male-character-prompt-guide" className="text-sky-600 hover:underline">
+                  男性キャラのプロンプト一覧
+                </Link>
+                です。
               </p>
             )}
             {category.slug === 'camera' && (

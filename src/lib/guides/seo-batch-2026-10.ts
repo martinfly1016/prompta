@@ -360,7 +360,7 @@ bad anatomy, extra legs, distorted face, long neck, huge chin
 
 ここにあるのは服を着た状態で使える姿勢です。開脚や体の強調を目的にしたポーズは入れていません。手は最も崩れやすいので、ネガティブと一緒に使ってください。
 
-体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。ショットサイズや体の向きは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
+体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。ショットサイズや体の向きは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide)、男性キャラのポーズは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。`,
       },
       {
         title: '立つ・座る・寝転ぶ',

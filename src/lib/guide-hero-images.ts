@@ -454,5 +454,10 @@ export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | n
   "composition-angle-prompt-guide": [null, null, null, null, null, null, null, null, null],
   "new-year-card-ai-prompt-guide": [null, null, null, null, null, null, null, null, null],
   "dress-prompt-guide": [null, null, null, null, null, null, null, null, null],
-  "eye-prompt-guide": [null, null, null, null, null, null, null, null, null]
+  "eye-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "male-character-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "id-photo-ai-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "hand-finger-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "lighting-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "christmas-prompt-guide": [null, null, null, null, null, null, null, null, null]
 }

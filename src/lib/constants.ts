@@ -434,7 +434,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
 
   'body-type': {
     intro:
-      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。\n\n【身長系の呪文テクニック】身長は「tall」「short」だけでは AI に伝わりにくいため、「tall adult, long legs」や「short adult, small frame」のように身体的特徴を成人とセットで記述するのがコツです。2 人構図で身長差を出したいときは「height difference, tall man and short woman, looking down at her」のように関係性をセットで書くと安定します。数値指定（170cm など）は Stable Diffusion では機能しないため、相対的な形容詞で表現してください。\n\n【体格系（スレンダー/アスリート/ぽっちゃり）の使い分け】痩せ型は「slim, slender, thin」のうち「slender」が最もバランスの取れた細身表現で、「skinny」は骨ばった印象が強くなります。アスリート体型は「athletic build, toned body, muscular arms」、ぽっちゃり系は「chubby, plump, plus-size, healthy build」が定番。重み付けは (slender:1.2) 程度で十分で、1.4 を超えると体が崩壊しやすいので注意してください。\n\n【年齢感は20代から】このカテゴリの人物はすべて20歳以上の大人です。10代や、child、teenager、youthful は使いません。20代→「young adult, adult, healthy build, athletic」、30代→「adult in their thirties, curvy, healthy build」、40代以上→「mature adult, broader frame, soft silhouette」。小柄にしたいときも年齢は下げず、「short adult, small frame」と成人をセットで書きます。\n\n【ポーズ連携テクニック】体型とポーズはセットで指定すると説得力が増します。スレンダー体型×「elegant pose, hand on hip, walking」、筋肉質×「power stance, arms crossed」、小柄な大人×「short adult, standing, hands at sides」のように、体型の特性を活かすポーズを選ぶのがプロのテクニックです。\n\n【モデル別の体型挙動】リアル系モデル（Realistic Vision, Juggernaut XL）はデフォルトが標準〜やや細身で、体型指定への反応が素直です。アニメ系モデル（Anything V5, Counterfeit）はデフォルトが極端に細身のため、「curvy」「muscular」の効きが弱く、重み付けを 1.3 以上に上げる必要があります。NovelAI では Artist タグとの相性もあるため、体型が安定しないときはモデルやArtistを変えてみるのも有効な手段です。',
+      '体型プロンプトは、キャラクターの体格・プロポーション・ポーズを指定するための重要な要素で、リアル系・アニメ系どちらでも頻繁に使われます。Stable Diffusionでは「slim」「petite」「athletic」「muscular」「curvy」といった体型ワードに加え、身長感（tall, short）、姿勢（standing, sitting, dynamic pose）を組み合わせて指示します。\n体型表現の難所は手や指の崩れやすさで、これは現在のAI画像生成の最大の課題のひとつです。「detailed hands, perfect anatomy, correct proportions」を品質タグとして入れ、ネガティブには必ず「bad hands, extra fingers, missing fingers, bad anatomy, deformed」を入れるのが定石です。ポーズ指定では「contrapposto」「dynamic action pose」のような美術用語が高精度に認識されます。ControlNetを併用すると、参照画像から体型・ポーズを正確にコピーできます。\n\n【身長系の呪文テクニック】身長は「tall」「short」だけでは AI に伝わりにくいため、「tall adult, long legs」や「short adult, small frame」のように身体的特徴を成人とセットで記述するのがコツです。2 人構図で身長差を出したいときは「height difference, tall man and short woman, looking down at her」のように関係性をセットで書くと安定します。数値指定（170cm など）は Stable Diffusion では機能しないため、相対的な形容詞で表現してください。\n\n【体格系（スレンダー/アスリート/ぽっちゃり）の使い分け】痩せ型は「slim, slender, thin」のうち「slender」が最もバランスの取れた細身表現で、「skinny」は骨ばった印象が強くなります。アスリート体型は「athletic build, toned body, muscular arms」、ぽっちゃり系は「chubby, plump, plus-size, healthy build」が定番。重み付けは (slender:1.2) 程度で十分で、1.4 を超えると体が崩壊しやすいので注意してください。\n\n【年齢感は20代から】このカテゴリの人物はすべて20歳以上の大人です。10代や、child、teenager、youthful は使いません。20代→「young adult, adult, healthy build, athletic」、30代→「adult in their thirties, curvy, healthy build」、40代以上→「mature adult, broader frame, soft silhouette」。小柄にしたいときも年齢は下げず、「short adult, small frame」と成人をセットで書きます。\n\n【ポーズ連携テクニック】体型とポーズはセットで指定すると説得力が増します。スレンダー体型×「elegant pose, hand on hip, walking」、筋肉質×「power stance, arms crossed」、小柄な大人×「short adult, standing, hands at sides」のように、体型の特性を活かすポーズを選ぶのがプロのテクニックです。\n\n【モデル別の体型挙動】リアル系モデル（Realistic Vision, Juggernaut XL）はデフォルトが標準〜やや細身で、体型指定への反応が素直です。アニメ系モデル（Anything V5, Counterfeit）はデフォルトが極端に細身のため、「curvy」「muscular」の効きが弱く、重み付けを 1.3 以上に上げる必要があります。NovelAI では Artist タグとの相性もあるため、体型が安定しないときはモデルやArtistを変えてみるのも有効な手段です。男性キャラの体型・髪型・服装は、男性キャラのプロンプト一覧（/guides/male-character-prompt-guide）にまとめています。',
     useCases: [
       'キャラクターの基本デザイン設計',
       'ファッション撮影・ポートレート風の生成',
@@ -1019,6 +1019,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '目 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'male-character-prompt-guide',
+    title: '男性キャラのプロンプト一覧｜体型・髪型・服装【コピペOK】',
+    description: '男性キャラのAIプロンプトを英語でコピペ。細身・筋肉質・長身などの体型、顔立ちと年齢感、短髪・ウルフカットなどの髪型、スーツ・私服の服装、男性らしいポーズを一覧化し、女性っぽくなるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '男性 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'id-photo-ai-prompt-guide',
+    title: '証明写真のAIプロンプト｜ChatGPT・Gemini【コピペOK】',
+    description: '自分の写真を証明写真風に整えるAIプロンプトをコピペ。ChatGPT・Geminiで背景を白・青・グレーにする、スーツに着せ替える、髪や服の乱れを整える指示文と、サイズの目安・公的書類に使えないケース・プライバシーの注意点を解説。',
+    targetKeyword: '証明写真 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'hand-finger-prompt-guide',
+    title: '手・指のプロンプト一覧｜崩れ対策とポーズ【コピペOK】',
+    description: '手・指のAIプロンプトを英語でコピペ。指が多い・溶けるなどの崩れを防ぐネガティブと構図のコツ、腰に手・頬杖・ポケット・手を振る・ピース・指さし・物を持つなどの手のポーズを一覧化し、Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '手 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'lighting-prompt-guide',
+    title: '光・照明のプロンプト一覧｜逆光・影の呪文【コピペOK】',
+    description: '光・照明のAIプロンプトを英語でコピペ。逆光・リムライト・サイド光などの光の向き、柔らかい光と硬い光、夕焼け・木漏れ日・ネオンなどの光源、影の付け方と消し方を一覧化し、Stable Diffusion・NovelAI・Midjourney・ChatGPT 向けに解説。',
+    targetKeyword: '光 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'christmas-prompt-guide',
+    title: 'クリスマスのプロンプト一覧｜衣装・背景【コピペOK】',
+    description: 'クリスマスのAIプロンプトを英語でコピペ。サンタ衣装・冬コーデ、ツリーやイルミネーションの背景、プレゼントなどの小物、クリスマスカードやSNSアイコン向けの構図を一覧化し、ChatGPT・Geminiで自分の写真をクリスマス風にする指示文も解説。',
+    targetKeyword: 'クリスマス プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1240,6 +1275,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
     categories: ['camera'],
   },
   'new-year-card-ai-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['color', 'anime'],
+  },
+  'male-character-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['body-type', 'anime', 'clothing'],
+  },
+  'id-photo-ai-prompt-guide': {
+    tools: ['chatgpt', 'gemini'],
+    categories: ['photo-edit'],
+  },
+  'hand-finger-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'camera'],
+  },
+  'lighting-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera'],
+  },
+  'christmas-prompt-guide': {
     tools: ['chatgpt', 'gemini', 'stable-diffusion'],
     categories: ['color', 'anime'],
   },
