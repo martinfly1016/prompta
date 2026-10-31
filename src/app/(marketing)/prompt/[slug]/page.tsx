@@ -78,6 +78,18 @@ const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'futuristic-headdress-orange-eyes': ['eye-prompt-guide'],
   'full-body-warrior-stance-rear-view': ['composition-angle-prompt-guide'],
   'aerial-birds-eye-view-square': ['composition-angle-prompt-guide'],
+  'id-photo-chatgpt-japan-license': ['id-photo-ai-prompt-guide'],
+  'id-photo-asia-2-inch-blue': ['id-photo-ai-prompt-guide'],
+  'passport-id-photo-icao-compliant': ['id-photo-ai-prompt-guide'],
+  'linkedin-professional-headshot': ['id-photo-ai-prompt-guide'],
+  'studio-lighting-portrait-detailed': ['lighting-prompt-guide'],
+  'studio-lighting-portrait-detailed-tqeu': ['lighting-prompt-guide'],
+  'cinematic-lighting-fujifilm-setup': ['lighting-prompt-guide'],
+  'dramatic-red-light-blonde-portrait': ['lighting-prompt-guide'],
+  'colorful-paint-thoughtful-elderly-man': ['male-character-prompt-guide'],
+  'dark-fantasy-tavern-warrior': ['male-character-prompt-guide'],
+  'season-winter-outfit-swap': ['christmas-prompt-guide'],
+  'elegant-winter-couple-ornate-clothing': ['christmas-prompt-guide'],
 }
 
 export default async function PromptDetailPage({ params }: Props) {

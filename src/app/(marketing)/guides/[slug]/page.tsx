@@ -12,6 +12,7 @@ import { SEO_BATCH_4_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-d'
 import { SEO_BATCH_5_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-e'
 import { SEO_BATCH_6_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-f'
 import { SEO_BATCH_7_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-g'
+import { SEO_BATCH_8_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-h'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -63,6 +64,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_5_GUIDE_CONTENT,
   ...SEO_BATCH_6_GUIDE_CONTENT,
   ...SEO_BATCH_7_GUIDE_CONTENT,
+  ...SEO_BATCH_8_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -841,6 +843,8 @@ Use even lighting, a plain light background, centered composition, and a neutral
 Do not over-retouch the face, do not change age, no text, no logo.
 \`\`\`
 
+証明写真の手順と、公的書類に使えない場合の区別は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。
+
 関連ツール: <a href="/tools/personal-color-analysis" class="text-sky-600 hover:underline">パーソナルカラー診断AI</a>、<a href="/tools/hair-color-diagnosis" class="text-sky-600 hover:underline">似合う髪色診断AI</a>`,
       },
       {
@@ -1047,7 +1051,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         title: 'ネガティブプロンプトとは',
         content: `ネガティブプロンプトは、AI画像生成において「生成してほしくない要素」を指定する機能です。Stable DiffusionやMidjourneyなどの画像生成AIで使用され、出力品質を大幅に向上させる重要なテクニックです。
 
-例えば、人物画像を生成する際に「bad hands, extra fingers」をネガティブプロンプトに設定することで、手の描写が改善されます。`,
+例えば、人物画像を生成する際に「bad hands, extra fingers」をネガティブプロンプトに設定することで、手の描写が改善されます。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide) です。`,
       },
       {
         title: '汎用ネガティブプロンプト',
@@ -1963,7 +1967,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 
 各カテゴリで 4-5 個のコピペ可能テンプレートを公開、合計 **20+ シチュエーション**。実例は <a href="/prompts/body-type" class="text-sky-600 hover:underline">/prompts/body-type</a> に公開中で、すべてサンプル画像つきです。
 
-2 人以上の **身長差・体格差カップル** を描きたい場合は、姉妹ガイドの <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト作り方ガイド</a> を参照してください。すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長・関係性・ポーズを選ぶだけでコピペ用プロンプトを作れます。`,
+2 人以上の **身長差・体格差カップル** を描きたい場合は、姉妹ガイドの <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト作り方ガイド</a> を参照してください。すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で身長・関係性・ポーズを選ぶだけでコピペ用プロンプトを作れます。男性キャラの体型・髪型・服装は <a href="/guides/male-character-prompt-guide" class="text-sky-600 hover:underline">男性キャラのプロンプト一覧</a> です。`,
       },
       {
         title: 'なぜ AI は体型を指定しないと「同じような体つき」しか描かないのか',
@@ -3100,7 +3104,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       },
       {
         title: '画像生成プロンプト集（Nano Banana 用）— 10 例文',
-        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
+        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。クリスマスの絵は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、証明写真風の整え方は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。
 
 **人物・キャラ系**:
 
