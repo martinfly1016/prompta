@@ -227,7 +227,7 @@ ${NEGATIVE_FACE}, extra face, multiple heads
       },
       {
         title: '下からのアングル',
-        content: `低い位置から見上げるとき、安定して効きやすいのは \`from below\` です。\`low angle\` は広さのある言い方で、モデルによってはほぼ正面のままになることがあります。地面すれすれまで下げるなら \`worm's-eye view\` を足します。
+        content: `低い位置から見上げるとき、安定して効きやすいのは \`from below\` です。\`low angle\` は広さのある言い方で、モデルによってはほぼ正面のままになることがあります。地面すれすれまで下げるなら \`worm's-eye view\` を足します。目線の向きは [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide) です。
 
 | 英語タグ | 意味 | 効かせ方 |
 |---|---|---|

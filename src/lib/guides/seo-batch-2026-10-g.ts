@@ -486,7 +486,7 @@ cropped, from behind
 | 下 | \`looking down\` |
 | 振り返って見る | \`looking back\` |
 
-目の色や形は [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) です。視線の語と、つり目やハイライトは別の層なので、このページでは視線だけを決めます。表情の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt) です。
+目の色や形は [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) です。視線の語と、つり目やハイライトは別の層なので、このページでは視線だけを決めます。表情の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt) です。目線の向きは [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide) です。
 
 \`looking up\` は目の向きであり、カメラを下に置くことではありません。下からのカメラが欲しいときは \`from below\` を高さの位置に書き、視線は必要なときだけ足します。両方を強くすると、あごが伸びます。`,
       },
@@ -1639,7 +1639,9 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, asymmetrical eyes, deformed pupils,
 
 横顔で目の色を確認しないでください。\`profile\` では目が一つになり、オッドアイは判定できません。色の確認は \`straight-on\` か \`close-up\` に戻します。
 
-視線をそらす文は、"looking away from the camera" と自然な英語で足し、\`looking at viewer\` は同時に書きません。両方を残すと、また正面を向きます。`,
+視線をそらす文は、"looking away from the camera" と自然な英語で足し、\`looking at viewer\` は同時に書きません。両方を残すと、また正面を向きます。
+
+目線の向き・カメラ目線の指定は [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide) です。このページは目の形・色・ハイライトのままにします。`,
       },
     ],
     faq: [

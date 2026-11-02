@@ -662,8 +662,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'hairstyle-prompt-guide',
-    title: '髪型プロンプト【ツインテール・コピペOK】',
-    description: '髪型プロンプトの書き方。ツインテール、ロング、ボブ、髪色を英語タグでコピペできます。Stable Diffusion と Midjourney 向けの指定例と、髪が溶けるときの対処もまとめています。',
+    title: '髪型プロンプト一覧｜ボブ・ポニテ・お団子【コピペOK】',
+    description: '髪型のAIプロンプトを英語タグでコピペ。ショート・ボブ・ロング・ポニーテール・お団子・ウルフカットなどの指定例と、髪が溶ける・崩れるときの対処を Stable Diffusion・Midjourney 向けに解説。ツインテール・三つ編み・前髪は専用ガイドで詳しく紹介。',
     targetKeyword: '髪型 プロンプト 書き方',
     monthlySearchVolume: 2400,
   },
@@ -1054,6 +1054,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'クリスマス プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'gaze-direction-prompt-guide',
+    title: '目線・視線のプロンプト一覧｜カメラ目線【コピペOK】',
+    description: '目線・視線のAIプロンプトを英語でコピペ。カメラ目線（looking at viewer）、目をそらす、上目遣い、見下ろす、横目、相手を見るなどの指定例と、カメラ目線にならない・しすぎるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: '目線 プロンプト',
+    monthlySearchVolume: 880,
+  },
+  {
+    slug: 'chibi-deformed-prompt-guide',
+    title: 'デフォルメ・ちびキャラのプロンプト｜頭身指定【コピペOK】',
+    description: 'デフォルメ・ちびキャラのAIプロンプトを英語でコピペ。chibi・super deformed の使い方、2頭身・3頭身から8頭身までの頭身指定、ミニキャラのステッカー・アイコン化、崩れるときのネガティブを Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'デフォルメ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'skin-texture-prompt-guide',
+    title: '肌の質感プロンプト｜リアルな肌・色白【コピペOK】',
+    description: '肌の質感を整えるAIプロンプトを英語でコピペ。リアルな毛穴や自然な肌、のっぺり・プラスチック肌の直し方、色白・健康的な肌色の指定、アニメ塗りの肌、光の当て方まで Stable Diffusion・Midjourney・ChatGPT 向けに解説。',
+    targetKeyword: '肌の質感 プロンプト',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'figure-ai-prompt-guide',
+    title: 'フィギュア化プロンプト｜Gemini・ChatGPT【コピペOK】',
+    description: '写真やイラストをフィギュア化・ぬいぐるみ化するAIプロンプトをコピペ。Gemini（Nano Banana）・ChatGPT 向けに、1/7スケール風・箱入り・アクスタ・粘土・ペットのフィギュア化の指示文と、顔が変わる・背景が崩れるときの直し方、権利の注意点を解説。',
+    targetKeyword: 'フィギュア化 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'ai-illustration-prompt-list',
+    title: 'AIイラストの呪文一覧｜カテゴリ別プロンプト【コピペOK】',
+    description: 'AIイラストの呪文（プロンプト）をカテゴリ別に一覧化。品質・画風・構図・目線・表情・ポーズ・髪型・服装・体型・背景・光の基本タグと、そのままコピペできる例文、詳しい解説ページへのリンクを Stable Diffusion・NovelAI・ChatGPT 向けにまとめました。',
+    targetKeyword: 'aiイラスト 呪文',
+    monthlySearchVolume: 1900,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1297,6 +1332,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'christmas-prompt-guide': {
     tools: ['chatgpt', 'gemini', 'stable-diffusion'],
     categories: ['color', 'anime'],
+  },
+  'gaze-direction-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['camera'],
+  },
+  'chibi-deformed-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['anime', 'body-type'],
+  },
+  'skin-texture-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['photo-edit', 'camera'],
+  },
+  'figure-ai-prompt-guide': {
+    tools: ['chatgpt', 'gemini'],
+    categories: ['photo-edit'],
+  },
+  'ai-illustration-prompt-list': {
+    tools: ['chatgpt', 'stable-diffusion', 'midjourney', 'claude', 'dall-e'],
+    categories: [],
   },
 }
 

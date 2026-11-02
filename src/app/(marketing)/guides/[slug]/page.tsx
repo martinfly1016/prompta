@@ -13,6 +13,7 @@ import { SEO_BATCH_5_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-e'
 import { SEO_BATCH_6_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-f'
 import { SEO_BATCH_7_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-g'
 import { SEO_BATCH_8_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-h'
+import { SEO_BATCH_9_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-a'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -65,6 +66,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_6_GUIDE_CONTENT,
   ...SEO_BATCH_7_GUIDE_CONTENT,
   ...SEO_BATCH_8_GUIDE_CONTENT,
+  ...SEO_BATCH_9_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -77,7 +79,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
 
 例えば、ChatGPTに「メールを書いて」とだけ指示した場合、AIはどんなメールか判断できず、汎用的な文章を返します。しかし「取引先の田中部長に、来週の会議日程変更をお詫びする丁寧なビジネスメールを200文字程度で書いてください」と具体的に伝えれば、すぐに業務で使える文章が得られます。
 
-同じAIでも、プロンプトの違いだけで出力の有用性は10倍以上変わるとも言われています。`,
+同じAIでも、プロンプトの違いだけで出力の有用性は10倍以上変わるとも言われています。イラスト向けのカテゴリ別の呪文は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。`,
       },
       {
         title: 'プロンプトエンジニアリングとは',
@@ -255,7 +257,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
-ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。`,
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。`,
       },
       {
         title: '基本構文 — プロンプトを構成する 8 つの要素',
@@ -785,7 +787,7 @@ Prompta では、ChatGPTを「質問に答えるツール」ではなく、**画
       },
       {
         title: '画像生成で使えるChatGPTプロンプト',
-        content: `ChatGPT画像生成や DALL-E 系では、タグを並べるよりも「何を描くか」「どう見せるか」「何を避けるか」を自然文で指定すると安定します。
+        content: `ChatGPT画像生成や DALL-E 系では、タグを並べるよりも「何を描くか」「どう見せるか」「何を避けるか」を自然文で指定すると安定します。自分の写真をフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。
 
 **基本テンプレート**
 
@@ -1059,7 +1061,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 \`(worst quality:1.4), (low quality:1.4), normal quality, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry, deformed, disfigured, mutation, extra limbs\`
 
-このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。 品質タグをネガティブに置くときのモデル別の並びは <a href="/guides/quality-tags-prompt-guide" class="text-sky-600 hover:underline">品質タグ一覧</a> です。同じタグをポジティブとネガティブの両方には置かないでください。`,
+このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。 品質タグをネガティブに置くときのモデル別の並びは <a href="/guides/quality-tags-prompt-guide" class="text-sky-600 hover:underline">品質タグ一覧</a> です。同じタグをポジティブとネガティブの両方には置かないでください。肌の質感を整える語は <a href="/guides/skin-texture-prompt-guide" class="text-sky-600 hover:underline">肌の質感プロンプト</a> です。`,
       },
       {
         title: '✨ 関連プロンプト集 — ネガティブプロンプトが効く実例',
@@ -1132,7 +1134,9 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 成人を描くときは \`adult woman\` とブラウスなど大人の服を一緒に書きます。例: \`1 adult woman, black hair, low twintails, hair ribbon, white blouse, cafe, upper body\`
 
-<a href="/guides/twintail-prompt-guide" class="text-sky-600 hover:underline">ツインテールの種類・位置・長さ → ツインテールプロンプト</a>
+<a href="/guides/twintail-prompt-guide" class="text-sky-600 hover:underline">ツインテールの種類・位置・崩れ対策 → ツインテールのプロンプト</a>
+
+ロングの長さは <a href="/guides/long-hair-prompt-guide" class="text-sky-600 hover:underline">ロングヘアプロンプト</a>、編み込みは <a href="/guides/braid-prompt-guide" class="text-sky-600 hover:underline">編み込み・三つ編みプロンプト</a>、前髪の形は <a href="/guides/bangs-prompt-guide" class="text-sky-600 hover:underline">前髪プロンプト</a> です。
 
 **その他人気**:
 19. \`braid, french braid\` — 三つ編み
@@ -2295,6 +2299,7 @@ full body shot, slice of life illustration
 - **\`petite\` \`small frame\` \`short adult\`** で小柄を強調。年齢は下げない
 - 一人の大人を低身長・小柄に描くタグ（子ども向けタグは使わない）は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a>
 - <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長を詳しく → 高身長プロンプト</a>
+- 頭身の指定・デフォルメは <a href="/guides/chibi-deformed-prompt-guide" class="text-sky-600 hover:underline">デフォルメ・ちびキャラのプロンプト</a>
 - 2 人以上の身長差・体格差は専用ガイドが必要 → <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップル完全ガイド</a> で 8 シチュエーション + 6 ポーズ + 15 サンプル公開中
 
 **ネガティブ（小柄→高身長変換防止）**: \`tall, towering, long legs, leggy\`
@@ -2689,7 +2694,7 @@ CFGスケール 15+: 色が過飽和になりやすい → 不自然になるこ
 
 この5要素を意識すれば、漠然と「いい感じで書いて」と頼んで失敗する典型パターンを避けられます。本記事では、これら基礎を踏まえた上で、実践で効果を発揮する7つのコツとコピペで使えるテンプレート集を解説します。
 
-プロンプトの基礎を先に押さえたい方は、<a href="/guides/what-is-prompt" class="text-sky-600 hover:underline">プロンプトとは？AI初心者向け完全ガイド</a>を併せてお読みください。`,
+プロンプトの基礎を先に押さえたい方は、<a href="/guides/what-is-prompt" class="text-sky-600 hover:underline">プロンプトとは？AI初心者向け完全ガイド</a>を併せてお読みください。イラストのカテゴリ別の呪文は <a href="/guides/ai-illustration-prompt-list" class="text-sky-600 hover:underline">AIイラストの呪文一覧</a> です。`,
       },
       {
         title: '効果的なプロンプトを書く7つのコツ',
@@ -3104,7 +3109,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       },
       {
         title: '画像生成プロンプト集（Nano Banana 用）— 10 例文',
-        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。クリスマスの絵は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、証明写真風の整え方は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。
+        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。クリスマスの絵は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、証明写真風の整え方は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。自分の写真や自作キャラをフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。
 
 **人物・キャラ系**:
 

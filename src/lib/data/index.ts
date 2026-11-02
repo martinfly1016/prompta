@@ -159,6 +159,7 @@ const GUIDE_COPY_WINS = [
   'color-prompt-guide',
   'height-difference-illustration-composition-guide',
   'anime-prompt-guide',
+  'hairstyle-prompt-guide',
 ] as const
 
 function mergeGuides(

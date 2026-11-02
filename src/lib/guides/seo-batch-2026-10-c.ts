@@ -556,7 +556,7 @@ sitting at a desk, looking up at viewer, knit sweater, office
       },
       {
         title: '視線とポーズ',
-        content: `見下ろされている側の視線は \`looking up at viewer\` です。カメラの \`from above\` とセットにすると、「上から見られている」が絵になります。
+        content: `見下ろされている側の視線は \`looking up at viewer\` です。カメラの \`from above\` とセットにすると、「上から見られている」が絵になります。目線の向きは [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide) です。
 
 このページで使う姿勢は、床に座る、草の上、膝を抱える、手をこちらへ伸ばす、までです。
 
