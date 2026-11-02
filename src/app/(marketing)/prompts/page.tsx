@@ -47,6 +47,7 @@ export async function AllPromptsListing({ page }: { page: number }) {
           <div className="max-w-2xl mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">全プロンプト一覧</h1>
             <p className="text-gray-600">{total}件のプロンプトを掲載中。ツールやカテゴリで絞り込みできます。</p>
+            <p className="text-gray-600 mt-2">カテゴリ別の呪文の書き方 → <Link href="/guides/ai-illustration-prompt-list" className="text-sky-600 hover:underline">AIイラストの呪文一覧</Link></p>
           </div>
           <div className="flex flex-wrap gap-4 mb-8 pb-6 border-b border-gray-200">
             <div>

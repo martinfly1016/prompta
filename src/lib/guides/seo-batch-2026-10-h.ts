@@ -1067,7 +1067,7 @@ school uniform, short skirt, revealing clothes, bedroom
       },
       {
         title: '光の質',
-        content: `質は、硬い光か柔らかい光かです。両方を同じ強さにすると、影の境界が中途半端になります。
+        content: `質は、硬い光か柔らかい光かです。両方を同じ強さにすると、影の境界が中途半端になります。光が肌の質感にどう出るかは [肌の質感プロンプト](/guides/skin-texture-prompt-guide) です。
 
 \`soft lighting\` は境界の薄い光です。硬い光は hard light と自然な英語です。\`dramatic lighting\` は明暗の差が大きい光、\`cinematic lighting\` は画面全体の光の設計、\`studio lighting\` は撮影机の光です。\`studio lighting\` は自然な英語としても通ります。公式タグとして常に同じ結果になる、とは書きません。
 

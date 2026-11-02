@@ -19,7 +19,7 @@ export const SEO_BATCH_6_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 画風の語は、人物の直後か、品質の語より前に置きます。後ろに長く続くと、服や背景の指定に負けて、いつもの絵に戻ります。最初の一手は、層を一つ、語を一つです。効いたら次の層を足します。
 
-アニメ調そのものの書き方は [アニメプロンプト](/guides/anime-prompt-guide) に任せます。このページは、同じ人物のまま塗りや媒体だけを入れ替えるときの一覧です。品質の語の置き場所は [品質タグ](/guides/quality-tags-prompt-guide)、色の名前は [色プロンプト](/guides/color-prompt-guide) です。
+アニメ調そのものの書き方は [アニメプロンプト](/guides/anime-prompt-guide) に任せます。このページは、同じ人物のまま塗りや媒体だけを入れ替えるときの一覧です。頭身を下げたちび絵は [デフォルメ・ちびキャラのプロンプト](/guides/chibi-deformed-prompt-guide) です。品質の語の置き場所は [品質タグ](/guides/quality-tags-prompt-guide)、色の名前は [色プロンプト](/guides/color-prompt-guide) です。
 
 登場人物は大人だけです。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。学生の場面は使いません。
 
