@@ -700,7 +700,7 @@ outdoor, blue sky
 
 v0.1 カードの更新文には、v0.1（2024年5月に学習）、v1.0（2024年7月）、v1.1（2024年8月）、v2.0（2024年9月）、v3（2024年11月）、v-parameterization の v3.5、という名前が並んでいます。v2 以降のプロンプト仕様はこのページではカード本文を確認できていないので、書きません。読み込んだファイルのモデルカードを見てください。
 
-Stable Diffusion 全般の書き方は [Stable Diffusion プロンプト](/guides/stable-diffusion-prompt-guide)、ネガティブの基礎は [ネガティブプロンプト](/guides/negative-prompt-guide) です。`,
+Stable Diffusion 全般の書き方は [Stable Diffusion プロンプト](/guides/stable-diffusion-prompt-guide)、ネガティブの基礎は [ネガティブプロンプト](/guides/negative-prompt-guide) です。系統とライセンスの見方は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。`,
       },
       {
         title: 'タグの順番は、公式の固定順ではない',

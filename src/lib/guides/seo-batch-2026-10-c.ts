@@ -18,7 +18,14 @@ export const SEO_BATCH_3_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 明るさは色名の前に足します。\`light\`、\`dark\`、\`pale\` です。\`light brown hair\` は明るい茶、\`dark blue hair\` は深い青、\`pale blonde hair\` は薄い金です。色を増やす前に、地の色を一つ決めてください。
 
-髪型の長さや結び方は [髪型プロンプト](/guides/hairstyle-prompt-guide)、色が服に移るときの BREAK と CutOff は [色プロンプト一覧](/guides/color-prompt-guide) です。作例は [髪色のナチュラルシミュレーション](/prompt/hair-color-natural-simulation)、タグは [髪型](/tag/髪型)、一覧は [髪型プロンプト集](/prompts/hairstyle) にあります。髪色と目の色を合わせるときは [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) を見て、色は髪と目で一つずつ決めてください。`,
+髪型の長さや結び方は [髪型プロンプト](/guides/hairstyle-prompt-guide)、色が服に移るときの BREAK と CutOff は [色プロンプト一覧](/guides/color-prompt-guide) です。作例は [髪色のナチュラルシミュレーション](/prompt/hair-color-natural-simulation)、タグは [髪型](/tag/髪型)、一覧は [髪型プロンプト集](/prompts/hairstyle) にあります。髪色と目の色を合わせるときは [目・瞳のプロンプト一覧](/guides/eye-prompt-guide) を見て、色は髪と目で一つずつ決めてください。
+
+よく使う髪色は、次の二色を先に固定します。色名だけを置かず、\`hair\` まで書きます。
+
+| 日本語 | 英語タグ | 置き場所 |
+|---|---|---|
+| 金髪 | \`blonde hair\` | 人数の直後。\`blonde\` だけにしない |
+| 黒髪 | \`black hair\` | 人数の直後。光沢は \`shiny hair\` をうしろに |`,
       },
       {
         title: '単色の髪色一覧',

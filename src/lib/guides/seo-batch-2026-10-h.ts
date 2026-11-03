@@ -680,7 +680,7 @@ school uniform, short skirt, revealing clothes, hat, text, shadow
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。胸の前、脚の付け根、太ももの上には手を置きません。相手の体に手を置くのは、握手の節だけです。指を口に入れるポーズは書きません。
 
-立ち方の全般は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、顔の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt)、画面に入る体の範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。男性の立ち姿は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。作例の並びは [アニメプロンプト集](/prompts/anime) です。
+立ち方の全般は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、顔の感情は [表情プロンプト](/guides/stable-diffusion-expression-prompt)、画面に入る体の範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。男性の立ち姿は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。作例の並びは [アニメプロンプト集](/prompts/anime) です。骨格の参照で手の位置を寄せる手順は [ControlNetの使い方](/guides/controlnet-guide) です。
 
 手を直す記録は、変えた語を一つだけ残します。ネガティブを足した枚、\`upper body\` に変えた枚、ポーズを一つに減らした枚、を同じプロンプトにまとめないでください。良くなった理由が消えます。指が多い枚と、指が溶けて境界の無い枚は、直しが違います。多いときは単純なポーズに戻し、溶けているときは持つ物を一つにするか、手を画面の端に出します。同じ失敗の枚に、同じ修正を三回重ねても、原因の語は動きません。
 
