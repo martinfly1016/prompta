@@ -302,7 +302,7 @@ school uniform, short skirt, photorealistic, anime coloring
         title: 'ロングヘアプロンプトの基本',
         content: `「ロングヘア プロンプト」「ストレートヘア プロンプト」は、長さ、質感、前髪、色の順に書きます。長さを最後に置くと、服の指定に負けて肩で止まります。\`long hair\` を髪色の直後に置いてください。
 
-質感は straight hair のように長さのうしろです。前髪は [前髪プロンプト](/guides/bangs-prompt-guide)、色の名前の一覧は [髪色プロンプト](/guides/hair-color-prompt-guide) です。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、作例のタグは [ロングヘア](/tag/ロングヘア) です。
+質感は straight hair のように長さのうしろです。前髪は [前髪プロンプト](/guides/bangs-prompt-guide)、色の名前の一覧は [髪色プロンプト](/guides/hair-color-prompt-guide) です。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、作例のタグは [ロングヘア](/tag/ロングヘア) です。上半分だけ結ぶ書き方は [ハーフアップのプロンプト](/guides/half-up-hair-prompt-guide) です。
 
 登場人物は大人です。\`1 adult woman\` から書き、\`adult\` を残します。服はブラウスやジャケットなど、大人の日常着を一つ足します。
 
@@ -572,7 +572,7 @@ Do not change the person's age. Avoid: ${NEGATIVE_AGE}
 
 基本は \`braid\` です。一本なら \`single braid\`、二本なら \`twin braids\` に置き換えます。\`braid\` と \`twin braids\` を同じ強さで残すと、結びが二重になります。
 
-登場人物は大人です。\`1 adult woman\` から書き、服は大人のブラウスにします。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、長い髪との組み合わせは [ロングヘアプロンプト](/guides/long-hair-prompt-guide) です。
+登場人物は大人です。\`1 adult woman\` から書き、服は大人のブラウスにします。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、長い髪との組み合わせは [ロングヘアプロンプト](/guides/long-hair-prompt-guide) です。上だけを編んで下を下ろすときは [ハーフアップのプロンプト](/guides/half-up-hair-prompt-guide) です。
 
 **一本に決めた三つ編み**
 

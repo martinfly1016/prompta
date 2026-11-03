@@ -1448,6 +1448,30 @@ photorealistic
 \`\`\``,
       },
       {
+        title: 'ツール・モデル別の使い方',
+        content: `画風のタグを足す前に、どのモデルへ書くかを決めます。タグの列が通るモデルと、自然な文が通るモデルは違います。LoRA と ControlNet は、そのモデルにファイルを足す手順です。
+
+| やりたいこと | ページ |
+|---|---|
+| \`<lora:名前:強さ>\` と Load LoRA | [LoRAの使い方](/guides/stable-diffusion-lora-guide) |
+| 参照画像で姿勢や線を固定 | [ControlNetの使い方](/guides/controlnet-guide) |
+| SD1.5、SDXL、SD3.5、FLUX の違い | [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) |
+| \`{}\` と \`1.5::タグ::\` | [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) |
+
+\`\`\`
+1 adult woman, adult, black hair, white blouse, cardigan,
+upper body, simple background, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE}
+\`\`\`
+
+この行は、どのツールでも人数と服を残すための起点です。LoRA のタグや ControlNet の参照は、それぞれのページの手順で足します。NovelAI では強調の括弧を、Stable Diffusion の \`(tag:1.2)\` のまま貼らないでください。`,
+      },
+      {
         title: '構図・アングル・目線',
         content: `構図は、ショットの大きさ、カメラの高さ、体の向き、目線の四つです。四つを一度に強くすると、いつもの胸から上の正面に戻ります。
 
@@ -1522,7 +1546,7 @@ ${NEGATIVE_SKIN}
 | 前髪 | \`blunt bangs\` |
 | 黒髪 | \`black hair\` |
 
-詳しくは [髪型プロンプト](/guides/hairstyle-prompt-guide)、[ロングヘア](/guides/long-hair-prompt-guide)、[ツインテール](/guides/twintail-prompt-guide)、[編み込み](/guides/braid-prompt-guide)、[前髪](/guides/bangs-prompt-guide)、[髪色](/guides/hair-color-prompt-guide)、[パーソナルカラーと髪色](/guides/personal-color-hair-color) です。
+詳しくは [髪型プロンプト](/guides/hairstyle-prompt-guide)、[ロングヘア](/guides/long-hair-prompt-guide)、[ツインテール](/guides/twintail-prompt-guide)、[編み込み](/guides/braid-prompt-guide)、[前髪](/guides/bangs-prompt-guide)、[髪色](/guides/hair-color-prompt-guide)、[ハーフアップ](/guides/half-up-hair-prompt-guide)、[パーソナルカラーと髪色](/guides/personal-color-hair-color) です。
 
 \`\`\`
 1 adult woman, adult, black hair, long hair, blunt bangs,

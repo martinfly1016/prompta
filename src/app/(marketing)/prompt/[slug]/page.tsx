@@ -98,6 +98,9 @@ const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'dark-fantasy-tavern-warrior': ['male-character-prompt-guide'],
   'season-winter-outfit-swap': ['christmas-prompt-guide'],
   'elegant-winter-couple-ornate-clothing': ['christmas-prompt-guide'],
+  'pose-correct-face-forward': ['controlnet-guide'],
+  'ponytail-highlights-sidelocks': ['half-up-hair-prompt-guide'],
+  'blonde-bun-hairstyle-casual-bar': ['half-up-hair-prompt-guide'],
 }
 
 export default async function PromptDetailPage({ params }: Props) {

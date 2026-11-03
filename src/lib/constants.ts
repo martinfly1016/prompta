@@ -860,8 +860,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'hair-color-prompt-guide',
-    title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】',
-    description: '髪色プロンプトの英語タグ一覧。金髪・銀髪・黒髪などの単色から、メッシュ・インナーカラー・グラデーション・ツートンの書き方、髪の色が服や目に移る色滲みの防ぎ方までコピペ例で解説。',
+    title: '髪色プロンプト一覧｜金髪・黒髪・メッシュ【コピペOK】',
+    description: '髪色の AI プロンプトを英語タグでコピペ。金髪・黒髪・銀髪・赤髪・茶髪などの単色から、メッシュ・インナーカラー・グラデーション・ツートンの書き方、髪の色が服や目に移る色滲みの防ぎ方まで Stable Diffusion・NovelAI 向けに解説。',
     targetKeyword: '髪色 プロンプト',
     monthlySearchVolume: 0,
   },
@@ -1088,6 +1088,41 @@ export const GUIDES: Guide[] = [
     description: 'AIイラストの呪文（プロンプト）をカテゴリ別に一覧化。品質・画風・構図・目線・表情・ポーズ・髪型・服装・体型・背景・光の基本タグと、そのままコピペできる例文、詳しい解説ページへのリンクを Stable Diffusion・NovelAI・ChatGPT 向けにまとめました。',
     targetKeyword: 'aiイラスト 呪文',
     monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'stable-diffusion-lora-guide',
+    title: 'LoRAの使い方｜書き方・強さ・ComfyUI【コピペOK】',
+    description: 'Stable Diffusion の LoRA の使い方を解説。WebUI・Forge での `<lora:名前:強さ>` の書き方とトリガーワードの位置、強さの目安、ComfyUI の Load LoRA の繋ぎ方、複数 LoRA の併用、効かない・崩れるときの直し方までコピペ例付きで紹介。',
+    targetKeyword: 'stable diffusion lora 使い方',
+    monthlySearchVolume: 1300,
+  },
+  {
+    slug: 'controlnet-guide',
+    title: 'ControlNetの使い方｜OpenPose・Canny【初心者向け】',
+    description: 'ControlNet の使い方を初心者向けに解説。OpenPose・Canny・Depth・Lineart・Tile の違いと目的別の選び方、Forge・WebUI と ComfyUI での設定手順、強さと開始・終了ステップの目安、ポーズ指定や線画の色塗りに使えるプロンプト例、反映されないときの対処まで。',
+    targetKeyword: 'controlnet 使い方',
+    monthlySearchVolume: 4400,
+  },
+  {
+    slug: 'stable-diffusion-model-list',
+    title: 'Stable Diffusionモデル一覧｜アニメ・リアル別の選び方',
+    description: 'Stable Diffusion の主要モデルを一覧で整理。SD1.5・SDXL・SD3.5・FLUX の系統の違いと、アニメ向け（Animagine・Illustrious 系）・写真風の代表モデル、モデルごとの品質タグとプロンプトの書き方、入れ方、ライセンス確認のポイントまで解説。',
+    targetKeyword: 'stable diffusion モデル一覧',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'novelai-prompt-guide',
+    title: 'NovelAIの呪文の書き方｜強調・順番【コピペOK】',
+    description: 'NovelAI の呪文（プロンプト）の書き方を解説。品質・人物・髪・服・構図・背景の順番、`{}`・`[]` と数値強調 `1.5::タグ::` の使い方、キャラクタープロンプトで2人を描き分けるコツ、除外したい要素（Undesired Content）のテンプレまでコピペ例付き。',
+    targetKeyword: 'novelai 呪文',
+    monthlySearchVolume: 260,
+  },
+  {
+    slug: 'half-up-hair-prompt-guide',
+    title: 'ハーフアップのプロンプト｜英語・お団子【コピペOK】',
+    description: 'ハーフアップの AI プロンプトを英語タグでコピペ。基本の half updo から、お団子・編み込み・リボン・ワンサイドアップ・ツーサイドアップ、ロング・ボブ・男性の書き分け、ポニーテールになるときの直し方まで Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'ハーフアップ プロンプト',
+    monthlySearchVolume: 0,
   },
 ]
 
@@ -1352,6 +1387,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'ai-illustration-prompt-list': {
     tools: ['chatgpt', 'stable-diffusion', 'midjourney', 'claude', 'dall-e'],
     categories: [],
+  },
+  'stable-diffusion-lora-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'controlnet-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'stable-diffusion-model-list': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'novelai-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'half-up-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['hairstyle', 'anime', 'color'],
   },
 }
 

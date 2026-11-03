@@ -464,5 +464,10 @@ export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | n
   "chibi-deformed-prompt-guide": [null, null, null, null, null, null, null, null],
   "skin-texture-prompt-guide": [null, null, null, null, null, null, null, null],
   "figure-ai-prompt-guide": [null, null, null, null, null, null, null, null, null],
-  "ai-illustration-prompt-list": [null, null, null, null, null, null, null, null, null]
+  "ai-illustration-prompt-list": [null, null, null, null, null, null, null, null, null, null],
+  "stable-diffusion-lora-guide": [null, null, null, null, null, null, null, null, null],
+  "controlnet-guide": [null, null, null, null, null, null, null, null, null],
+  "stable-diffusion-model-list": [null, null, null, null, null, null, null, null, null],
+  "novelai-prompt-guide": [null, null, null, null, null, null, null, null],
+  "half-up-hair-prompt-guide": [null, null, null, null, null, null, null, null]
 }
