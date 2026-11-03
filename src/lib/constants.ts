@@ -1092,7 +1092,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'stable-diffusion-lora-guide',
     title: 'LoRAの使い方｜書き方・強さ・ComfyUI【コピペOK】',
-    description: 'Stable Diffusion の LoRA の使い方を解説。WebUI・Forge での `<lora:名前:強さ>` の書き方とトリガーワードの位置、強さの目安、ComfyUI の Load LoRA の繋ぎ方、複数 LoRA の併用、効かない・崩れるときの直し方までコピペ例付きで紹介。',
+    description: 'Stable Diffusion の LoRA の使い方を解説。WebUI・Forge での LoRA タグ（lora:名前:強さ）の書き方とトリガーワードの位置、強さの目安、ComfyUI の Load LoRA の繋ぎ方、複数 LoRA の併用、効かない・崩れるときの直し方までコピペ例付きで紹介。',
     targetKeyword: 'stable diffusion lora 使い方',
     monthlySearchVolume: 1300,
   },
@@ -1113,7 +1113,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'novelai-prompt-guide',
     title: 'NovelAIの呪文の書き方｜強調・順番【コピペOK】',
-    description: 'NovelAI の呪文（プロンプト）の書き方を解説。品質・人物・髪・服・構図・背景の順番、`{}`・`[]` と数値強調 `1.5::タグ::` の使い方、キャラクタープロンプトで2人を描き分けるコツ、除外したい要素（Undesired Content）のテンプレまでコピペ例付き。',
+    description: 'NovelAI の呪文（プロンプト）の書き方を解説。品質・人物・髪・服・構図・背景の順番、{}・[] と数値強調 1.5::タグ:: の使い方、キャラクタープロンプトで2人を描き分けるコツ、除外したい要素（Undesired Content）のテンプレまでコピペ例付き。',
     targetKeyword: 'novelai 呪文',
     monthlySearchVolume: 260,
   },

@@ -5937,6 +5937,34 @@ tiny subject, changed face, changed outfit, distorted body, extra limbs
   },
 }
 
+const GUIDE_INLINE_CODE_CLASS = 'px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono'
+const GUIDE_TABLE_CODE_CLASS = 'px-1 py-0.5 bg-gray-100 text-red-600 rounded text-xs font-mono'
+
+function escapeGuideHtmlText(value: string): string {
+  return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function jsonForHtmlScript(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, '\\u003c').replace(/>/g, '\\u003e')
+}
+
+/** Bold, inline code, and internal markdown links.
+ *  Escapes & < > in prose and inline code so tokens like `<lora:...>` stay visible.
+ *  Author-written <a>…</a> tags are left unchanged so existing pages keep their links. */
+function renderGuideInline(source: string, codeClass: string): string {
+  const preserved: string[] = []
+  const masked = source.replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, (anchor) => {
+    const token = `%%GUIDEHTML${preserved.length}%%`
+    preserved.push(anchor)
+    return token
+  })
+  const html = escapeGuideHtmlText(masked)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.+?)`/g, `<code class="${codeClass}">$1</code>`)
+    .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>')
+  return html.replace(/%%GUIDEHTML(\d+)%%/g, (_, index: string) => preserved[Number(index)] ?? '')
+}
+
 export default async function GuidePage({ params }: Props) {
   const resolvedParams = await params
   const guide = GUIDES.find(g => g.slug === resolvedParams.slug)
@@ -5976,11 +6004,11 @@ export default async function GuidePage({ params }: Props) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonForHtmlScript(howToSchema) }} />
       {faqSchema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonForHtmlScript(faqSchema) }}
         />
       )}
 
@@ -6076,11 +6104,7 @@ export default async function GuidePage({ params }: Props) {
                       // immediately after the header. Render as a real <table>.
                       const trimmed = paragraph.trim()
                       if (trimmed.startsWith('|') && /\n\|\s*-{3,}/.test(trimmed)) {
-                        const inlineMd = (s: string) =>
-                          s
-                            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/`(.+?)`/g, '<code class="px-1 py-0.5 bg-gray-100 text-red-600 rounded text-xs font-mono">$1</code>')
-                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>')
+                        const inlineMd = (s: string) => renderGuideInline(s, GUIDE_TABLE_CODE_CLASS)
                         const splitRow = (row: string) =>
                           row.replace(/^\||\|$/g, '').split('|').map(c => c.trim())
                         const rows = trimmed.split('\n').filter(r => r.trim().startsWith('|'))
@@ -6113,12 +6137,7 @@ export default async function GuidePage({ params }: Props) {
                       }
                       return (
                         <p key={j} className="mb-4" dangerouslySetInnerHTML={{
-                          __html: paragraph
-                            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono">$1</code>')
-                            // Convert markdown [text](/path) to anchor — content authors use this
-                            // style for internal site links inside guide section text.
-                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>')
+                          __html: renderGuideInline(paragraph, GUIDE_INLINE_CODE_CLASS),
                         }} />
                       )
                     })}
@@ -6141,10 +6160,7 @@ export default async function GuidePage({ params }: Props) {
                       <p
                         className="text-gray-700 text-sm leading-relaxed"
                         dangerouslySetInnerHTML={{
-                          __html: 'A. ' + item.a
-                            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-gray-100 text-red-600 rounded text-sm font-mono">$1</code>')
-                            .replace(/\[([^\]]+)\]\((\/[^)]+)\)/g, '<a href="$2" class="text-sky-600 hover:underline">$1</a>'),
+                          __html: 'A. ' + renderGuideInline(item.a, GUIDE_INLINE_CODE_CLASS),
                         }}
                       />
                     </div>
