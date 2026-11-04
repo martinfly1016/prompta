@@ -330,7 +330,7 @@ export const CATEGORY_INTROS: Record<string, CategoryIntro> = {
       { question: '白無垢プロンプトの書き方は？', answer: '基本構文は「shiromuku, white wedding kimono, wataboshi hood, traditional japanese bridal outfit, elegant white silk fabric」。和装婚礼の雰囲気を強めるなら「japanese shrine, soft daylight, ceremonial pose」を追加します。普通の着物に寄ってしまう場合は「pure white kimono, bridal kimono, no colorful pattern」を強め、ネガティブに「colorful kimono, casual yukata」を入れてください。振袖・浴衣・袴を含む種類の書き方は<a href="/guides/kimono-prompt-guide" class="text-sky-600 hover:underline">着物プロンプト</a>にまとめています。' },
       { question: 'ビジネススーツ・OL ファッションのプロンプトは？', answer: '「business suit, blazer, pencil skirt, blouse, pumps, high heels, office worker」が定番。色指定は「navy business suit」「grey pencil skirt」のように形容詞として書きます。OL リアル系では「Japanese office lady, formal suit, hair tied back, no excessive makeup, daylight office setting」が高品質。男性スーツは「business suit, tie, dress shirt, leather shoes, briefcase」。' },
       { question: '色違いの服装で色滲み（color bleeding）を防ぐには？', answer: '複数の色を指定すると Stable Diffusion では色が混ざってしまうことがあります。「red dress BREAK blue jacket」のように BREAK で分割するか、CutOff 拡張機能で「red:dress || blue:jacket」と領域ごとに色を固定すると安定します。Attention ウェイトと組み合わせて「(red dress:1.2) BREAK (blue jacket:1.2)」がさらに確実です。' },
-      { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は日常〜フォーマル〜カジュアル全般、「コスプレ」は特定キャラ・作品の衣装再現、「衣装（コスチューム）」は和服・甲冑・装飾品など特殊系を扱います。一般的なドレス・スーツ・私服を探すなら本ページ、特定キャラのコスチュームは「コスプレ」、和服・甲冑は「衣装」をご覧ください。' },
+      { question: '服装プロンプトはコスプレや衣装と何が違う？', answer: '本ページの「服装」は作例の並びです。一般的な服装のタグ一覧と書き方は<a href="/guides/clothing-prompt-guide" class="text-sky-600 hover:underline">服装プロンプト一覧</a>です。「コスプレ」は特定の衣装の部品、「衣装」は和服や甲冑など特殊な衣装です。' },
       { question: 'ファンタジー衣装プロンプトの書き方は？', answer: '騎士は medieval armor, knight plate、魔法使いは mage robe, wizard hat, magical staff、エルフは elf tunic のように、職業とパーツを分けて書きます。種類と、現代服に寄るときの直し方は<a href="/guides/fantasy-outfit-prompt-guide" class="text-sky-600 hover:underline">ファンタジー衣装プロンプト</a>にまとめています。' },
       { question: 'ドレスの種類を英語で指定するには？', answer: 'evening gown（イブニング）、cocktail dress（カクテル、自然な英語）、ball gown（ボールガウン、自然な英語）、wedding dress（ウェディング）のように種類を一つ決め、丈は long dress で固定します。袖・素材・色の表は<a href="/guides/dress-prompt-guide" class="text-sky-600 hover:underline">ドレスプロンプト</a>です。' },
     ],
@@ -1124,6 +1124,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'ハーフアップ プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'clothing-prompt-guide',
+    title: '服装プロンプト一覧｜英語の服・衣装の呪文【コピペOK】',
+    description: '服装の AI プロンプトを英語タグで一覧化。トップス・アウター・ボトムス・ワンピース・靴・帽子の呼び方から、素材・柄・色の指定、私服・オフィス・フォーマルのコーデ例、色が混ざる・服が変わるときの直し方まで Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    targetKeyword: 'stable diffusion 服装',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'stable-diffusion-commercial-use-guide',
+    title: 'Stable Diffusionの商用利用｜ライセンス別の確認点',
+    description: 'Stable Diffusion は商用利用できるのかを、SD1.5・SDXL・SD3.5・FLUX のライセンス別に整理。年間売上の条件、派生モデルや LoRA の確認方法、img2img の元画像の権利、著作権の考え方、Midjourney との違い、販売前のチェックリストまで解説。',
+    targetKeyword: 'stable diffusion 商用利用',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'prompt-symbols-guide',
+    title: 'プロンプトの記号の意味｜括弧・BREAK・重み一覧',
+    description: 'AI画像生成プロンプトの記号の意味を一覧で解説。丸括弧・角括弧・波括弧による強調と弱め、数値の重み付け、BREAK・AND・縦線・コロンの使い方、エスケープ、Stable Diffusion・ComfyUI・NovelAI・Midjourney での書き方の違いまでコピペ例付き。',
+    targetKeyword: 'プロンプト 記号',
+    monthlySearchVolume: 480,
+  },
+  {
+    slug: 'img2img-guide',
+    title: 'img2imgの使い方｜Denoising・inpaint【初心者向け】',
+    description: 'Stable Diffusion の img2img の使い方を初心者向けに解説。Denoising strength の目安、Resize mode の違い、inpaint で顔や手・服の色だけ直す方法、ラフや写真からイラストにする手順、ComfyUI での繋ぎ方、元画像の権利の注意点までプロンプト例付き。',
+    targetKeyword: 'stable diffusion img2img',
+    monthlySearchVolume: 480,
+  },
+  {
+    slug: 'stable-diffusion-sampler-guide',
+    title: 'Stable Diffusionのサンプラー｜CFG・ステップ数の目安',
+    description: 'Stable Diffusion のサンプラー（Sampling method）の違いと選び方を解説。Euler a・DPM++ 2M などの特徴、Schedule type、ステップ数と CFG スケールの目安、seed 値の固定、Hires. fix の設定、ComfyUI の KSampler での指定まで、モデル別の設定例付き。',
+    targetKeyword: 'stable diffusion sampling method',
+    monthlySearchVolume: 390,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1407,6 +1442,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'half-up-hair-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney'],
     categories: ['hairstyle', 'anime', 'color'],
+  },
+  'clothing-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'stable-diffusion-commercial-use-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'prompt-symbols-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'img2img-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'stable-diffusion-sampler-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
   },
 }
 

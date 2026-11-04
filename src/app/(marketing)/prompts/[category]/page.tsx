@@ -113,6 +113,15 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                 です。
               </p>
             )}
+            {category.slug === 'clothing' && (
+              <p className="text-sm text-gray-700 mb-4">
+                服装タグの一覧と書き方は{' '}
+                <Link href="/guides/clothing-prompt-guide" className="text-sky-600 hover:underline">
+                  服装プロンプト一覧
+                </Link>
+                です。
+              </p>
+            )}
             {category.slug === 'camera' && (
               <p className="text-sm text-gray-700 mb-4">
                 正面・斜め・全身など他の構図は{' '}
@@ -145,6 +154,15 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
         <section className="py-12 bg-white border-t border-gray-100">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">{category.name}プロンプトとは？</h2>
+            {category.slug === 'clothing' && (
+              <p className="text-gray-700 leading-relaxed mb-4">
+                服装タグの一覧と書き方は{' '}
+                <Link href="/guides/clothing-prompt-guide" className="text-sky-600 hover:underline">
+                  服装プロンプト一覧
+                </Link>
+                です。
+              </p>
+            )}
             <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-8">
               {CATEGORY_INTROS[category.slug].intro}
             </p>

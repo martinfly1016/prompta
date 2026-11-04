@@ -1457,6 +1457,10 @@ photorealistic
 | 参照画像で姿勢や線を固定 | [ControlNetの使い方](/guides/controlnet-guide) |
 | SD1.5、SDXL、SD3.5、FLUX の違い | [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) |
 | \`{}\` と \`1.5::タグ::\` | [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) |
+| 括弧、BREAK、重み | [プロンプトの記号の意味](/guides/prompt-symbols-guide) |
+| Denoising と inpaint | [img2imgの使い方](/guides/img2img-guide) |
+| サンプラー、CFG、ステップ | [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) |
+| 商用利用の確認順 | [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) |
 
 \`\`\`
 1 adult woman, adult, black hair, white blouse, cardigan,
@@ -1602,7 +1606,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | メイド | \`maid outfit\`, long dress |
 | 鎧 | \`armor\` |
 
-詳しくは [コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide) です。
+詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, cardigan, long skirt,

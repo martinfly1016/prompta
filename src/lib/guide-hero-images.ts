@@ -469,5 +469,10 @@ export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | n
   "controlnet-guide": [null, null, null, null, null, null, null, null, null],
   "stable-diffusion-model-list": [null, null, null, null, null, null, null, null, null],
   "novelai-prompt-guide": [null, null, null, null, null, null, null, null],
-  "half-up-hair-prompt-guide": [null, null, null, null, null, null, null, null]
+  "half-up-hair-prompt-guide": [null, null, null, null, null, null, null, null],
+  "clothing-prompt-guide": [null, null, null, null, null, null, null, null, null],
+  "stable-diffusion-commercial-use-guide": [null, null, null, null, null, null, null, null, null],
+  "prompt-symbols-guide": [null, null, null, null, null, null, null, null],
+  "img2img-guide": [null, null, null, null, null, null, null, null, null],
+  "stable-diffusion-sampler-guide": [null, null, null, null, null, null, null, null, null]
 }

@@ -15,6 +15,7 @@ import { SEO_BATCH_7_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-g'
 import { SEO_BATCH_8_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-h'
 import { SEO_BATCH_9_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-a'
 import { SEO_BATCH_10_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-b'
+import { SEO_BATCH_11_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-c'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -69,6 +70,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_8_GUIDE_CONTENT,
   ...SEO_BATCH_9_GUIDE_CONTENT,
   ...SEO_BATCH_10_GUIDE_CONTENT,
+  ...SEO_BATCH_11_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -259,7 +261,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
-ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。`,
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。`,
       },
       {
         title: '基本構文 — プロンプトを構成する 8 つの要素',
@@ -1055,7 +1057,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         title: 'ネガティブプロンプトとは',
         content: `ネガティブプロンプトは、AI画像生成において「生成してほしくない要素」を指定する機能です。Stable DiffusionやMidjourneyなどの画像生成AIで使用され、出力品質を大幅に向上させる重要なテクニックです。
 
-例えば、人物画像を生成する際に「bad hands, extra fingers」をネガティブプロンプトに設定することで、手の描写が改善されます。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide) です。NovelAI の除外欄への置き方は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。`,
+例えば、人物画像を生成する際に「bad hands, extra fingers」をネガティブプロンプトに設定することで、手の描写が改善されます。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide) です。NovelAI の除外欄への置き方は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧で弱める書き方は [プロンプトの記号の意味](/guides/prompt-symbols-guide) です。`,
       },
       {
         title: '汎用ネガティブプロンプト',
@@ -1420,7 +1422,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 
 **2. 衣装要素分解** — 例: \`twin teal hair, school uniform, black tie, detached sleeves\`。キャラ名を出さずに構成要素で描写する方式です。公開・販売する作品には圧倒的にこちらを推奨します。
 
-どちらの方式でも、**構成要素を分解して並べる**スキルは欠かせません。髪色・髪型・衣装のパーツ・小物・背景を「上から下へ」順に記述すると、AI が各要素を正確に組み立てやすくなります。
+どちらの方式でも、**構成要素を分解して並べる**スキルは欠かせません。髪色・髪型・衣装のパーツ・小物・背景を「上から下へ」順に記述すると、AI が各要素を正確に組み立てやすくなります。日常の私服やオフィスの服装タグは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 **本ガイドで扱う 5 つの定番ジャンル + 8 種のサブジャンル**:
 
@@ -2537,7 +2539,7 @@ child, teenager, underage
 **2. 個別色（特定パーツの色指定）**:
 - \`red dress, blue ribbon, green eyes, silver hair\`
 
-個別色を指定すると「色滲み（color bleeding）」が起きやすいのが最大の課題です。例えば「red dress, blue jacket」と書くと、赤と青が混ざって紫っぽくなることがあります。この対処法がこのガイドの本題です。`,
+個別色を指定すると「色滲み（color bleeding）」が起きやすいのが最大の課題です。例えば「red dress, blue jacket」と書くと、赤と青が混ざって紫っぽくなることがあります。この対処法がこのガイドの本題です。服の色が混ざるときの分け方は [服装プロンプト一覧](/guides/clothing-prompt-guide)、BREAK の記号は [プロンプトの記号の意味](/guides/prompt-symbols-guide) です。`,
       },
       {
         title: '色名プロンプト — 基本色から微妙なニュアンスまで',
