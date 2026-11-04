@@ -20,7 +20,7 @@ export const SEO_BATCH_5_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 登場人物は大人のスタッフだけにします。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。学生服の場面と短い丈は使いません。それらを避ける語は、各作例のネガティブに入れます。
 
-コスプレ全般は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。髪は [髪型プロンプト](/guides/hairstyle-prompt-guide)、二つに分けた髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。
+コスプレ全般は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。髪は [髪型プロンプト](/guides/hairstyle-prompt-guide)、二つに分けた髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。日常着のタグは [服装プロンプト一覧](/guides/clothing-prompt-guide) に分けています。
 
 **クラシック（白と黒、長い丈）**
 
@@ -802,7 +802,7 @@ Midjourney 向けのパラメータは [Midjourneyプロンプト](/guides/midjo
         title: 'アクセサリープロンプトの基本',
         content: `「ネックレス プロンプト」「アクセサリー プロンプト」は、小さな金属や石が顔や服に負ける、という失敗から始まります。書く順は、部位、素材、構図です。\`necklace\` だけでは鎖が服の模様になることがあります。\`gold necklace\` のように素材を付け、\`portrait\` か \`upper body\` で首元を大きくしてください。
 
-全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。
+全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。帽子やバッグを含む日常の服装は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 人物は成人です。ピアスは耳だけにします。首輪のような小物は扱いません。
 
@@ -1072,7 +1072,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
 
 成人の仕事着として、\`suit jacket, white dress shirt, necktie, trousers\` までを一組にします。\`formal\` はフォーマルさのタグです。これだけで袖の長さや襟の左右は決まりません。
 
-白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。男性キャラのスーツ・私服の並べ方は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。
+白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。男性キャラのスーツ・私服の並べ方は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。私服やコートを含む服装全般は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 **パーツを書いたスーツ**
 

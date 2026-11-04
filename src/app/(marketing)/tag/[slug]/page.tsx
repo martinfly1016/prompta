@@ -140,6 +140,11 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'ぬいぐるみ化': { slug: 'figure-ai-prompt-guide', title: 'フィギュア化プロンプト｜Gemini・ChatGPT【コピペOK】' },
   'アクスタ': { slug: 'figure-ai-prompt-guide', title: 'フィギュア化プロンプト｜Gemini・ChatGPT【コピペOK】' },
   'グッズ': { slug: 'figure-ai-prompt-guide', title: 'フィギュア化プロンプト｜Gemini・ChatGPT【コピペOK】' },
+  '服装プロンプト': { slug: 'clothing-prompt-guide', title: '服装プロンプト一覧｜英語の服・衣装の呪文【コピペOK】' },
+  '服装': { slug: 'clothing-prompt-guide', title: '服装プロンプト一覧｜英語の服・衣装の呪文【コピペOK】' },
+  'ファッション': { slug: 'clothing-prompt-guide', title: '服装プロンプト一覧｜英語の服・衣装の呪文【コピペOK】' },
+  '薄暗い': { slug: 'dark-room-prompt-guide', title: '暗い部屋プロンプト｜薄暗い室内・夜の照明の英語呪文【コピペOK】' },
+  '白衣': { slug: 'suit-lab-coat-prompt-guide', title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】' },
 }
 
 const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description: string }> = {

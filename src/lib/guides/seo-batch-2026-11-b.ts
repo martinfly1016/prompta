@@ -279,7 +279,7 @@ ChatGPT や Gemini、FLUX のように文で指示する画面に \`<lora:>\` �
 
 自分で学習する場合も、学習元の画像に権利があるなら、その条件に従います。学習手順の解説はここには置きません。読み込んだあとの書き方だけを、このページは担当します。
 
-チェックポイント側のライセンスも別です。LoRA が許可されていても、土台のモデルが非商用なら、生成物の扱いが制限されます。土台の確認は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) から、各モデルのカードへ進んでください。最新の条文は、公式ドキュメントと配布ページで確認してください。`,
+チェックポイント側のライセンスも別です。LoRA が許可されていても、土台のモデルが非商用なら、生成物の扱いが制限されます。土台の確認は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) から、各モデルのカードへ進んでください。最新の条文は、公式ドキュメントと配布ページで確認してください。商用に出す前の確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、括弧と LoRA タグの記号は [プロンプトの記号の意味](/guides/prompt-symbols-guide) です。`,
       },
     ],
     faq: [
@@ -314,7 +314,7 @@ ChatGPT や Gemini、FLUX のように文で指示する画面に \`<lora:>\` �
 
 役割を混ぜないでください。参照画像が姿勢を決めているのに、プロンプトへ同じ姿勢を三種類書くと、腕が平均の位置に戻ります。プロンプトに残すのは、服、髪、人数、画風、光です。姿勢の単語を全部消す必要はありません。参照と矛盾する姿勢だけを外します。
 
-人物は \`1 adult woman\` か \`1 adult man\`、二人なら \`2 adults\` から書き、\`adult\` を残します。服は閉じた日常着です。タグだけで姿勢を書く入口は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、画面に入る範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。参照のポーズ作例は [正面を向いたポーズ](/prompt/pose-correct-face-forward) です。
+人物は \`1 adult woman\` か \`1 adult man\`、二人なら \`2 adults\` から書き、\`adult\` を残します。服は閉じた日常着です。タグだけで姿勢を書く入口は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、画面に入る範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。参照のポーズ作例は [正面を向いたポーズ](/prompt/pose-correct-face-forward) です。画素を残して描き直す手順は [img2imgの使い方](/guides/img2img-guide) です。
 
 ControlNet のモデルは、チェックポイントのベースと一致させます。SD 1.5 用を SDXL に載せても、構造は乗りません。FLUX には、ControlNet とは別の Canny と Depth のモデルが公式リポジトリにあります。系統を混ぜないでください。土台の見分けは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。`,
       },
@@ -621,7 +621,7 @@ LoRA と同時に使うときは、ControlNet で姿勢が三枚安定してか�
 
 選ぶときに見るのは三つです。ベースの系統、タグか自然文か、ライセンス。星の数や人気の順位はこのページでは扱いません。配布ページの作例には成人向けが含まれることがあります。閲覧に注意してください。商用利用と、生成物の公開条件は、モデルごとのライセンスを必ず確認してください。
 
-人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。`,
+人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。確認の順番は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、サンプラーの目安は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) です。`,
       },
       {
         title: 'ベースモデルの系統',
@@ -896,7 +896,7 @@ VAE は、色が薄いときに、そのモデルのカードが指定するフ�
         title: '基本の順番',
         content: `「novelai 呪文」は、NovelAI の画像プロンプトです。Stable Diffusion と同じカンマ区切りでも、強調の記号と、二人を描き分ける欄が別です。このページは書き方の早見と、テーマ別の入口です。個別のタグの衝突は、各ガイドへ渡します。全体のカテゴリは [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list)、Stable Diffusion 側の順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。
 
-このページの型は、品質、人物、髪、服、構図、背景、光です。公式がこの順を必須にしているわけではありません。直すときに、どの層を触ったかが残るように分けています。品質の語はバージョンで違います。\`masterpiece\` や \`best quality\` の対応範囲は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。悪い側は [ネガティブプロンプト](/guides/negative-prompt-guide) と、このページの Undesired Content に置きます。
+このページの型は、品質、人物、髪、服、構図、背景、光です。公式がこの順を必須にしているわけではありません。直すときに、どの層を触ったかが残るように分けています。品質の語はバージョンで違います。\`masterpiece\` や \`best quality\` の対応範囲は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。悪い側は [ネガティブプロンプト](/guides/negative-prompt-guide) と、このページの Undesired Content に置きます。WebUI 側の括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide) にまとめています。
 
 本サイトでは成人のキャラクターを明示するため \`adult\` を入れた書き方で統一しています。公式ドキュメントの例にある \`1girl\` は使いません。
 

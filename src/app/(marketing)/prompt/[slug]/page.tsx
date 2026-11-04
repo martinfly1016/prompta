@@ -101,6 +101,8 @@ const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'pose-correct-face-forward': ['controlnet-guide'],
   'ponytail-highlights-sidelocks': ['half-up-hair-prompt-guide'],
   'blonde-bun-hairstyle-casual-bar': ['half-up-hair-prompt-guide'],
+  'business-suit-woman-8s35': ['clothing-prompt-guide'],
+  'uniform-medical-doctor-white-coat': ['suit-lab-coat-prompt-guide'],
 }
 
 export default async function PromptDetailPage({ params }: Props) {

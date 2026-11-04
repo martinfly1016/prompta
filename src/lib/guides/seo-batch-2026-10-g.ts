@@ -27,7 +27,7 @@ export const SEO_BATCH_7_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 登場人物は大人だけです。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。作品名、スタジオ名、実在の人物名は書きません。中世ヨーロッパ風のRPG、と場所の雰囲気で足ります。特定作品の衣装を要素に分ける考え方は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。
 
-アニメ塗りと写真の切り替えは [画風プロンプト](/guides/art-style-prompt-guide)、全身で見せる角度は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、立ち方は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。作例の並びは [服装プロンプト集](/prompts/clothing)、タグは [ファンタジー衣装](/tag/ファンタジー衣装) です。
+アニメ塗りと写真の切り替えは [画風プロンプト](/guides/art-style-prompt-guide)、全身で見せる角度は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、立ち方は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。作例の並びは [服装プロンプト集](/prompts/clothing)、タグは [ファンタジー衣装](/tag/ファンタジー衣装) です。現代の私服やコートのタグは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 **職業から背景までの型**
 
@@ -520,6 +520,34 @@ white shirt, simple background, depth of field
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 cropped, blurry
+\`\`\``,
+      },
+      {
+        title: 'ショットサイズ × 向き × 高さの組み合わせ早見表',
+        content: `大きさ、向き、高さは、別の節で一つずつ説明しています。この表は、三つを同時に見たときの起点だけです。下からの段の直しは [下からのアングル](/guides/low-angle-prompt-guide)、上からの段の直しは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) に残します。表の一行を、そのまま三つ同時に強くしないでください。足りない軸を一つ足します。
+
+| 大きさ | 向き | 高さ | 起点の語 |
+|---|---|---|---|
+| 全身 | 正面 | 目の高さ | \`full body\`, \`straight-on\`, \`facing viewer\` |
+| 上半身 | 斜め | 少し上 | \`upper body\`, three-quarter view, \`from above\` |
+| 肖像 | 横 | 目の高さ | \`portrait\`, \`from side\`, eye level |
+| 全身 | 後ろ | 少し下 | \`full body\`, \`from behind\`, \`from below\` |
+| 引き | 正面 | 少し上 | \`wide shot\`, \`straight-on\`, \`from above\` |
+
+eye level と three-quarter view は自然な英語です。公式タグとしては断定しません。高さを変えたのに全身が切れるときは、高さより先に \`full body\` を人物の直後へ戻します。
+
+**全身 × 正面 × 目の高さ**
+
+\`\`\`
+1 adult woman, adult, full body, straight-on, facing viewer, looking at viewer,
+standing, white blouse, long skirt, simple background
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+cropped
 \`\`\``,
       },
       {
@@ -1030,7 +1058,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, text, letters, extra person, school
 
 種類の語は人物の直後です。色を先に強くすると、形より色面が勝ち、袖の長さが無視されます。最初の一手は、種類を一つ、丈を一つです。効いたら素材か色を足します。
 
-登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。
+登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。日常のトップスやボトムスは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 **種類から装飾まで**
 
