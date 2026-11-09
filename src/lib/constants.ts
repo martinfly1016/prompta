@@ -620,8 +620,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'stable-diffusion-prompt-guide',
-    title: 'Stable Diffusionプロンプト書き方【コピペOK】',
-    description: 'Stable Diffusion プロンプトの書き方。品質タグ、構図、ネガティブプロンプト、BREAK と LoRA まで、コピペできる英語の呪文と実例で解説します。',
+    title: 'Stable Diffusionの呪文・プロンプト書き方【コピペOK】',
+    description: 'Stable Diffusion の呪文（プロンプト）の書き方を基本から解説。順番と区切り方、品質タグ、構図・表情・服装の指定、ネガティブプロンプト、強調の記号と BREAK、LoRA の書き方まで、そのままコピペできる英語の呪文例付き。',
     targetKeyword: 'stable diffusion プロンプト 書き方',
     monthlySearchVolume: 3600,
   },
@@ -1159,6 +1159,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'stable diffusion sampling method',
     monthlySearchVolume: 390,
   },
+  {
+    slug: 'comfyui-guide',
+    title: 'ComfyUIの使い方｜導入・ワークフロー【初心者向け】',
+    description: 'ComfyUI の使い方を初心者向けに解説。Desktop 版とポータブル版の導入、モデルの置き場所、基本ノードの繋ぎ方、プロンプトとネガティブの書き方、ワークフローの保存と読み込み、LoRA・img2img・高画質化の追加方法、赤いノードやエラーの直し方までコピペ例付き。',
+    targetKeyword: 'comfyui 使い方',
+    monthlySearchVolume: 4400,
+  },
+  {
+    slug: 'stable-diffusion-forge-guide',
+    title: 'Stable Diffusion Forgeの使い方｜Neo・導入手順',
+    description: 'Stable Diffusion WebUI Forge と Forge Neo の違い、AUTOMATIC1111 版との比較、インストール手順、モデルと LoRA の置き場所、txt2img の設定項目、プロンプトの書き方、拡張機能の注意点、起動しない・エラーが出るときの対処までコピペ例付きで解説。',
+    targetKeyword: 'stable diffusion forge',
+    monthlySearchVolume: 3600,
+  },
+  {
+    slug: 'ai-illustration-how-to-guide',
+    title: 'AIイラストの作り方｜初心者の手順とプロンプト例',
+    description: 'AIイラストの作り方を初心者向けに手順で解説。スマホで使える ChatGPT・Gemini と、PC で使う Stable Diffusion（Forge・ComfyUI）の選び方、プロンプトの組み立て方、アニメキャラやアイコンの作例、崩れたときの直し方、公開前に確認したい規約と著作権まで。',
+    targetKeyword: 'aiイラスト 作り方',
+    monthlySearchVolume: 1900,
+  },
+  {
+    slug: 'hires-fix-upscale-guide',
+    title: 'Hires. fixの使い方｜高画質化とアップスケーラー',
+    description: 'Stable Diffusion の Hires. fix の使い方と高画質化の方法を解説。Upscaler の選び方、Denoising strength と Hires steps の目安、img2img や Extras での拡大との違い、ComfyUI での繋ぎ方、崩れる・遅い・顔が変わるときの対処まで設定例とプロンプト付き。',
+    targetKeyword: 'stable diffusion hires fix',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'adetailer-face-fix-guide',
+    title: 'ADetailerの使い方｜顔が崩れるときの直し方',
+    description: 'Stable Diffusion で顔が崩れる原因と直し方を解説。全身で顔が小さいときの対策、プロンプトと設定の見直し、ADetailer のインストールとモデルの選び方、Denoising やマスクの設定の目安、Forge Neo・ComfyUI での使い方までコピペできるプロンプト例付き。',
+    targetKeyword: 'adetailer 使い方',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1460,6 +1495,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
   },
   'stable-diffusion-sampler-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'comfyui-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'stable-diffusion-forge-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'ai-illustration-how-to-guide': {
+    tools: ['chatgpt', 'stable-diffusion', 'midjourney', 'claude', 'dall-e'],
+    categories: [],
+  },
+  'hires-fix-upscale-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'adetailer-face-fix-guide': {
     tools: ['stable-diffusion'],
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
   },

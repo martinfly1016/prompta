@@ -545,7 +545,7 @@ Midjourney ではタグの重みを外し、\`full body, head to toe, standing b
 
 モデルによって、品質タグは学習データに入っている語だったり、ほとんど無視される語だったりします。このページはモデル別に、どの語がドキュメントやモデルカードにあるかを分けます。Stable Diffusion 全般の書き方と、すでに検索で上位にある品質のコピペは [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) のままです。このページは「品質タグ」という語と、NovelAI・Illustrious・Pony・SDXL・Flux の違いを担当します。
 
-ネガティブ側の基礎は [ネガティブプロンプト](/guides/negative-prompt-guide)、アニメの顔は [アニメプロンプト](/guides/anime-prompt-guide) です。系統ごとのカードの違いを見比べるときは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。`,
+ネガティブ側の基礎は [ネガティブプロンプト](/guides/negative-prompt-guide)、アニメの顔は [アニメプロンプト](/guides/anime-prompt-guide) です。系統ごとのカードの違いを見比べるときは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。拡大して細部を足す手順は [Hires. fix の使い方](/guides/hires-fix-upscale-guide) です。`,
       },
       {
         title: '基本の一覧',

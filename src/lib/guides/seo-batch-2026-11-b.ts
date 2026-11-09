@@ -20,7 +20,7 @@ export const SEO_BATCH_10_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 種類は、用途で分けると扱いやすいです。キャラクターの顔立ち、絵の塗り、決まった服、立ち方、背景の質感。一つのファイルが複数を同時に引っ張ることもあります。服の LoRA なのに背景まで変わる、という衝突は後ろの節で直します。学習の手順はこのページでは扱いません。学習は、配布されたファイルを読み込んでプロンプトに書くこととは別の作業です。
 
-人物を描く行は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、コート、スーツのように閉じた日常着を一つ。このページは成人だけです。土台の選び方は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、品質の語は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。
+人物を描く行は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、コート、スーツのように閉じた日常着を一つ。このページは成人だけです。土台の選び方は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、品質の語は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。ノードで読むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。
 
 LoRA は「足すファイル」で、プロンプトの文章そのものではありません。文章だけで画風を書くときの入口は [画風プロンプト](/guides/art-style-prompt-guide) です。Illustrious 系の土台に合わせるときは [Illustriousプロンプト](/guides/illustrious-prompt-guide) を先に読んで、LoRA のベースが同じ系統かを確認してください。
 
@@ -314,7 +314,7 @@ ChatGPT や Gemini、FLUX のように文で指示する画面に \`<lora:>\` �
 
 役割を混ぜないでください。参照画像が姿勢を決めているのに、プロンプトへ同じ姿勢を三種類書くと、腕が平均の位置に戻ります。プロンプトに残すのは、服、髪、人数、画風、光です。姿勢の単語を全部消す必要はありません。参照と矛盾する姿勢だけを外します。
 
-人物は \`1 adult woman\` か \`1 adult man\`、二人なら \`2 adults\` から書き、\`adult\` を残します。服は閉じた日常着です。タグだけで姿勢を書く入口は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、画面に入る範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。参照のポーズ作例は [正面を向いたポーズ](/prompt/pose-correct-face-forward) です。画素を残して描き直す手順は [img2imgの使い方](/guides/img2img-guide) です。
+人物は \`1 adult woman\` か \`1 adult man\`、二人なら \`2 adults\` から書き、\`adult\` を残します。服は閉じた日常着です。タグだけで姿勢を書く入口は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、画面に入る範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。参照のポーズ作例は [正面を向いたポーズ](/prompt/pose-correct-face-forward) です。画素を残して描き直す手順は [img2imgの使い方](/guides/img2img-guide) です。ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。
 
 ControlNet のモデルは、チェックポイントのベースと一致させます。SD 1.5 用を SDXL に載せても、構造は乗りません。FLUX には、ControlNet とは別の Canny と Depth のモデルが公式リポジトリにあります。系統を混ぜないでください。土台の見分けは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。`,
       },
@@ -621,7 +621,7 @@ LoRA と同時に使うときは、ControlNet で姿勢が三枚安定してか�
 
 選ぶときに見るのは三つです。ベースの系統、タグか自然文か、ライセンス。星の数や人気の順位はこのページでは扱いません。配布ページの作例には成人向けが含まれることがあります。閲覧に注意してください。商用利用と、生成物の公開条件は、モデルごとのライセンスを必ず確認してください。
 
-人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。確認の順番は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、サンプラーの目安は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) です。`,
+人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。確認の順番は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、サンプラーの目安は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) です。ファイルを置く画面は [ComfyUIの使い方](/guides/comfyui-guide) と [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。`,
       },
       {
         title: 'ベースモデルの系統',
