@@ -754,7 +754,7 @@ extra fingers, fused fingers, long legs, realistic proportions
 
 先頭は \`1 adult woman\` か \`1 adult man\` で、\`adult\` を残します。質感の語は、人数と \`portrait\` のあとに置きます。品質の語を先に何個も積むと、肌は平均の滑らかさに戻り、毛穴が消えます。
 
-肌の色は、描きたい色の名前です。色のあいだに優劣はありません。色白が正解、という並べ方はしません。色の名前そのものの一覧は [色プロンプト](/guides/color-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。
+肌の色は、描きたい色の名前です。色のあいだに優劣はありません。色白が正解、という並べ方はしません。色の名前そのものの一覧は [色プロンプト](/guides/color-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。拡大したときに質が変わる手順は [Hires. fix の使い方](/guides/hires-fix-upscale-guide) です。
 
 **ポートレートの型**
 
@@ -1385,7 +1385,7 @@ text, logo, watermark
     sections: [
       {
         title: '呪文の基本構成と順番',
-        content: `個別のプロンプト作例は [プロンプト一覧](/prompts) です。このページは、AIイラストの呪文をカテゴリに分けた入口です。一つのタグ集を全部貼るのではなく、何を制御するカテゴリかを先に選んで、詳しいガイドへ進みます。
+        content: `個別のプロンプト作例は [プロンプト一覧](/prompts) です。このページは、AIイラストの呪文をカテゴリに分けた入口です。一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide) です。一つのタグ集を全部貼るのではなく、何を制御するカテゴリかを先に選んで、詳しいガイドへ進みます。
 
 読み方は、次の順です。まずこの節の順番で全文を一つ保存します。次に、直したい箇所の節だけを開きます。髪型が溶けるなら髪型、目がカメラを向かないなら構図と目線、肌が平面なら顔の節、です。関係ない節のタグを同じ日に足すと、直した理由が残りません。各節の表は、そのカテゴリで最初に試す語だけです。段階や衝突の直し方は、表の下のガイドに分けてあります。ガイドを開かずに表の語を全部並べると、このページの入口としての意味が消えて、また長い呪文に戻ります。人を描く行は \`adult\` から始め、ネガティブには年齢の語を残します。動物や背景だけの行は、人の人数を書きません。
 
@@ -1453,6 +1453,11 @@ photorealistic
 
 | やりたいこと | ページ |
 |---|---|
+| 初めて一枚を作る手順 | [AIイラストの作り方](/guides/ai-illustration-how-to-guide) |
+| ノードの導入と基本のつなぎ | [ComfyUIの使い方](/guides/comfyui-guide) |
+| Forge と Forge Neo の導入 | [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) |
+| Hires. fix と拡大 | [Hires. fix の使い方](/guides/hires-fix-upscale-guide) |
+| 顔の崩れと ADetailer | [ADetailerの使い方](/guides/adetailer-face-fix-guide) |
 | \`<lora:名前:強さ>\` と Load LoRA | [LoRAの使い方](/guides/stable-diffusion-lora-guide) |
 | 参照画像で姿勢や線を固定 | [ControlNetの使い方](/guides/controlnet-guide) |
 | SD1.5、SDXL、SD3.5、FLUX の違い | [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) |

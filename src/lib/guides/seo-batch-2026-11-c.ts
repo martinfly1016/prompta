@@ -595,7 +595,7 @@ revealing clothes, extra clothes, extra sleeves
 
 このページは、許可の一覧表ではありません。確認する順番と、2026年11月時点に公式ページで読めた文の範囲を置いています。売上が条件に当たるか、登録が要るか、出力を商用に使ってよいかは、引用した文のあとに必ず原文を開いてください。原文とこの要約が違って見えたときは、原文を採ります。派生ファイルを混ぜた生成は、ベースの行だけでは判断できません。六つの確認を、生成の前に紙かメモへ書き、空欄が残るファイルは公開用のフォルダへ移しません。空欄のまま「たぶんベースと同じ」と書かないでください。たぶん、は後から原文を探せなくします。
 
-本ページは一般的な情報で、法的助言ではありません。重要な用途では規約原文や専門家に確認してください。ライセンスは改定されることがあるため、利用時点の原文を確認してください。下の表は 2026年11月時点に公式ページで読んだ範囲です。
+本ページは一般的な情報で、法的助言ではありません。重要な用途では規約原文や専門家に確認してください。ライセンスは改定されることがあるため、利用時点の原文を確認してください。下の表は 2026年11月時点に公式ページで読んだ範囲です。一枚を作ってから公開するまでの手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide) です。
 
 確認は、次の六つをこの順で見ます。飛ばすと、土台は許可でも、LoRA や元画像で止まります。
 
@@ -1211,7 +1211,7 @@ BREAK は大文字か
 
 最初の一枚は、Denoising strength だけを変えるための基準です。プロンプトを長くする前に、元画像と、0.4 の一枚と、0.6 の一枚を同じシードで残します。三枚の差が、その画像で強さがどのくらい効くかの物差しになります。物差しが無い状態で服の語を五個足すと、強さのせいなのか語のせいなのかが残りません。人物が写る画像では、完成図の人数を \`adult\` で書きます。ラフに人数が描いてあっても、プロンプト側の人数を省くと、清書の段階で人数が増減します。背景だけの画像では、人数の行を入れません。入れた行は、空の風景の端に人を足します。
 
-人物を描くときは \`adult\` を残します。元画像は、自分で撮影したもの、自分で作ったもの、使用が許されたものだけです。顔を他人と入れ替える使い方は書きません。姿勢を線で固定するなら [ControlNetの使い方](/guides/controlnet-guide)、服のタグは [服装プロンプト一覧](/guides/clothing-prompt-guide)、サンプラーは [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、ライセンスは [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。
+人物を描くときは \`adult\` を残します。元画像は、自分で撮影したもの、自分で作ったもの、使用が許されたものだけです。顔を他人と入れ替える使い方は書きません。姿勢を線で固定するなら [ControlNetの使い方](/guides/controlnet-guide)、服のタグは [服装プロンプト一覧](/guides/clothing-prompt-guide)、サンプラーは [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、ライセンスは [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。解像度を上げる手順は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔だけを検出して直すときは [ADetailerの使い方](/guides/adetailer-face-fix-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide) です。
 
 \`\`\`
 txt2img: プロンプトだけから始める
@@ -1536,7 +1536,7 @@ Denoising を 0.2 まで下げた枚は、元画像に近いほど、元の権�
 
 比較用のプロンプトは、成人一人か、人物のいない風景のどちらかに固定します。服はブラウスとカーディガン、またはジャケットとシャツのように閉じた一組です。サンプラーを変える日に服も変えると、手順の差が服の差に隠れます。良い組み合わせが見つかっても、その枚の sampler、schedule、steps、cfg、seed を画像の横に書いてから次へ進みます。書かないと、翌日には初期値の 7 と、ランダムな seed に戻って、同じ絵を探せなくなります。カードが別の数字を書いているモデルでは、このページの目安よりカードの一行を先にメモしてください。
 
-系統の違いは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、画像から直す強さは [img2imgの使い方](/guides/img2img-guide) です。括弧の倍率は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、品質の語は [品質タグ一覧](/guides/quality-tags-prompt-guide)、Illustrious のタグは [Illustriousプロンプト](/guides/illustrious-prompt-guide) です。
+系統の違いは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、画像から直す強さは [img2imgの使い方](/guides/img2img-guide) です。括弧の倍率は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、品質の語は [品質タグ一覧](/guides/quality-tags-prompt-guide)、Illustrious のタグは [Illustriousプロンプト](/guides/illustrious-prompt-guide) です。拡大の手順は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide) です。
 
 \`\`\`
 比べるときのルール
@@ -1658,7 +1658,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
         title: 'Hires. fix・VAE',
         content: `Hires. fix は、Features が、低い解像度で構図を作ってから拡大し、img2img に近い二度目の描画で細部を足す、と説明しています。欄の名前は、Upscale by（Scale by）、Hires steps、Denoising です。倍率の目安は 1.5 から始め、Denoising は軽い変更として 0.3 から 0.5 です。Hires steps は、一段目と同じか、それより少なめから試します。顔が崩れるときは Denoising を下げます。これは目安です。
 
-一段目の顔が決まっていない状態で Hires. fix をオンにすると、崩れた顔を拡大してから二度目の描画が走ります。先に Hires をオフにして、seed を固定した一段目を一枚残してください。その枚が安定してから、倍率 1.5 と Denoising 0.4 を一枚だけ足します。アップスケーラーの種類を同じ日に変えないでください。Latent と付いた名前と、画素のアップスケーラーは、拡大の仕方が違います。VAE を疑うのは、サンプラーも CFG も Hires も固定したまま、色だけが全体に薄い、または全体に飽和しているときです。顔の形が悪いだけのときに VAE を入れ替えると、原因がもう一つ増えます。カードが VAE のファイル名を書いているときだけ、その名前へ合わせます。
+一段目の顔が決まっていない状態で Hires. fix をオンにすると、崩れた顔を拡大してから二度目の描画が走ります。詳しくは [Hires. fix の使い方](/guides/hires-fix-upscale-guide)。先に Hires をオフにして、seed を固定した一段目を一枚残してください。その枚が安定してから、倍率 1.5 と Denoising 0.4 を一枚だけ足します。アップスケーラーの種類を同じ日に変えないでください。Latent と付いた名前と、画素のアップスケーラーは、拡大の仕方が違います。VAE を疑うのは、サンプラーも CFG も Hires も固定したまま、色だけが全体に薄い、または全体に飽和しているときです。顔の形が悪いだけのときに VAE を入れ替えると、原因がもう一つ増えます。カードが VAE のファイル名を書いているときだけ、その名前へ合わせます。
 
 \`\`\`
 Hires. fix

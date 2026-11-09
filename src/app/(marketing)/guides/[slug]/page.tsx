@@ -16,6 +16,7 @@ import { SEO_BATCH_8_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-10-h'
 import { SEO_BATCH_9_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-a'
 import { SEO_BATCH_10_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-b'
 import { SEO_BATCH_11_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-c'
+import { SEO_BATCH_12_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-d'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -71,6 +72,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_9_GUIDE_CONTENT,
   ...SEO_BATCH_10_GUIDE_CONTENT,
   ...SEO_BATCH_11_GUIDE_CONTENT,
+  ...SEO_BATCH_12_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -83,7 +85,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
 
 例えば、ChatGPTに「メールを書いて」とだけ指示した場合、AIはどんなメールか判断できず、汎用的な文章を返します。しかし「取引先の田中部長に、来週の会議日程変更をお詫びする丁寧なビジネスメールを200文字程度で書いてください」と具体的に伝えれば、すぐに業務で使える文章が得られます。
 
-同じAIでも、プロンプトの違いだけで出力の有用性は10倍以上変わるとも言われています。イラスト向けのカテゴリ別の呪文は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。`,
+同じAIでも、プロンプトの違いだけで出力の有用性は10倍以上変わるとも言われています。イラスト向けのカテゴリ別の呪文は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。イラストを一枚作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide) です。`,
       },
       {
         title: 'プロンプトエンジニアリングとは',
@@ -261,7 +263,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
-ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。`,
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。初めて一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide)、拡大は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。`,
       },
       {
         title: '基本構文 — プロンプトを構成する 8 つの要素',
@@ -1102,6 +1104,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 **重要ポイント**: 髪型は他の要素（服装・ポーズ）より**プロンプトの前方に書く**と優先されます。また \`(twin tails:1.2)\` のように重み付けを加えると AI が確実に認識しやすくなります。
 
+ツインテールの種類と書き方は<a href="/guides/twintail-prompt-guide">ツインテールのプロンプト</a>で詳しく解説
+
 詳しいガイド: [前髪](/guides/bangs-prompt-guide) / [ロングヘア・ストレート](/guides/long-hair-prompt-guide) / [編み込み・三つ編み](/guides/braid-prompt-guide) / [ツインテール](/guides/twintail-prompt-guide) / [髪色](/guides/hair-color-prompt-guide) / [ハーフアップ](/guides/half-up-hair-prompt-guide)`,
       },
       {
@@ -1133,6 +1137,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 16. \`double bun\` — ダブルお団子
 
 **ツインテール系**:
+ツインテールの種類と書き方は<a href="/guides/twintail-prompt-guide">ツインテールのプロンプト</a>で詳しく解説
 17. \`twin tails, twintails\` — ツインテール
 18. \`low twin tails\` — 低めツインテ
 

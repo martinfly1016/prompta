@@ -33,7 +33,7 @@ export const SEO_BATCH_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 このページは日常で使う表情だけを扱います。性的な表情タグは載せていません。結果はモデルとシードで変わるので、ここにあるタグは「よく使われる書き方」であり、特定の作例の再現レシピではありません。
 
-先に全体の書き方を見るなら [Stable Diffusion プロンプトの書き方](/guides/stable-diffusion-prompt-guide)、アニメ寄りの顔なら [アニメプロンプトガイド](/guides/anime-prompt-guide) をあわせて読んでください。実在の作例は [無表情から微笑み](/prompt/expression-neutral-to-subtle-smile)、[痛みの表情](/prompt/slender-tall-woman-pain-expression)、[怒りの立ち姿](/prompt/angry-tall-slender-illustration-pose) にあります。`,
+先に全体の書き方を見るなら [Stable Diffusion プロンプトの書き方](/guides/stable-diffusion-prompt-guide)、アニメ寄りの顔なら [アニメプロンプトガイド](/guides/anime-prompt-guide) をあわせて読んでください。実在の作例は [無表情から微笑み](/prompt/expression-neutral-to-subtle-smile)、[痛みの表情](/prompt/slender-tall-woman-pain-expression)、[怒りの立ち姿](/prompt/angry-tall-slender-illustration-pose) にあります。顔の範囲だけに表情を書き直すときは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。`,
       },
       {
         title: '笑顔・喜び',
