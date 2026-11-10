@@ -396,7 +396,7 @@ Gemini に写真を渡す回と、文章だけで新規に描く回は、プロ�
 
 履歴書や就活の写真は、応募先の指示に従ってください。本人と大きく違う加工は避けます。AIの写真がどこかで受理される、とはこのページでは書きません。
 
-タグの並びは [証明写真](/tag/証明写真)、写真を編集する作例の置き場は [写真加工プロンプト集](/prompts/photo-edit) です。文章で指示する型は [ChatGPTプロンプト](/guides/chatgpt-prompt-techniques) と [Geminiプロンプト集](/guides/gemini-prompt-collection) です。
+タグの並びは [証明写真](/tag/証明写真)、写真を編集する作例の置き場は [写真加工プロンプト集](/prompts/photo-edit) です。文章で指示する型は [ChatGPTプロンプト](/guides/chatgpt-prompt-techniques) と [Geminiプロンプト集](/guides/gemini-prompt-collection) です。画像が止まったときの上限の見方は [ChatGPTの画像生成](/guides/chatgpt-image-generation-guide) で、このページは証明写真の指示文だけを担当します。
 
 | やりたいこと | このページでの扱い |
 |---|---|

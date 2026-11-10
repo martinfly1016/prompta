@@ -28,7 +28,7 @@ WebUI や Forge は、txt2img の欄にプロンプトを書いて生成ボタ�
 | Forge / WebUI | txt2img と img2img の入力欄 | 欄が決まっている画面で書きたい |
 | 対話型のアプリ | 一つの文章 | スマホで文章のまま試したい |
 
-ノードの細部に入る前に、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、Forge の欄は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。初めて一枚を出す手順の全体は [AIイラストの作り方](/guides/ai-illustration-how-to-guide) です。
+ノードの細部に入る前に、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、Forge の欄は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。初めて一枚を出す手順の全体は [AIイラストの作り方](/guides/ai-illustration-how-to-guide) です。画面を選ぶところからなら [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) を先に読んで、このページはノードのつなぎだけを担当します。
 
 <a href="https://github.com/comfyanonymous/ComfyUI" rel="nofollow noopener" target="_blank" class="text-sky-600 hover:underline">ComfyUI の README</a> と、<a href="https://docs.comfy.org/get_started/first_generation" rel="nofollow noopener" target="_blank" class="text-sky-600 hover:underline">最初の一枚の公式チュートリアル</a> を、このページの手順と違って見えたときは公式を採ってください。`,
       },
@@ -369,7 +369,7 @@ Manager のメニュー名は、README が Manager ボタン、Install Custom No
 
 選び方は、今あるフォルダを壊さないことです。A1111 が入っている PC に Neo を重ねて同じ \`models\` を直接書き換えないでください。Neo の \`--model-ref\` は、そのフォルダを足すのではなく置き換えます。共有したいときは、README のそのフラグか、\`--forge-ref-a1111-home\` のように参照先を指す方法を、今の README で読んでからにしてください。参照の旗を、意味を確認せずに \`COMMANDLINE_ARGS\` へ貼ると、見ているフォルダが昨日と別になります。
 
-プロンプトの文章は、WebUI と Neo で同じ成人の書き方から始められます。違うのは、対応するモデルの一覧と、動く拡張です。文章を完成させてからソフトを選ぶと、起動できない日に文章まで捨てることになります。先にこのページのプロンプトをメモへ保存し、インストールは別の時間にやってください。`,
+プロンプトの文章は、WebUI と Neo で同じ成人の書き方から始められます。違うのは、対応するモデルの一覧と、動く拡張です。文章を完成させてからソフトを選ぶと、起動できない日に文章まで捨てることになります。先にこのページのプロンプトをメモへ保存し、インストールは別の時間にやってください。Forge と ComfyUI とブラウザのどれにするかまだ決めていないときは、[Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) で選んでから、このページの導入へ戻ってください。`,
       },
       {
         title: 'インストール',
@@ -672,7 +672,7 @@ URL を確認して Install
     sections: [
       {
         title: 'AIイラストができるまでの流れ',
-        content: `「aiイラスト 作り方」で必要なのは、道具の名前を並べることではなく、一枚を仕上げる順番です。このページは、目的を決めて、ツールを一つ選び、プロンプトを書き、数枚を比べ、崩れた箇所だけを直し、公開する前に権利を見る、という手順です。呪文のカテゴリ一覧は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list)、言葉の意味は [プロンプトとは](/guides/what-is-prompt) のままです。このページは作り方（手順）を担当します。
+        content: `「aiイラスト 作り方」で必要なのは、道具の名前を並べることではなく、一枚を仕上げる順番です。このページは、目的を決めて、ツールを一つ選び、プロンプトを書き、数枚を比べ、崩れた箇所だけを直し、公開する前に権利を見る、という手順です。呪文のカテゴリ一覧は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list)、言葉の意味は [プロンプトとは](/guides/what-is-prompt) のままです。このページは作り方（手順）を担当します。Stable Diffusion をどの画面で始めるかは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) にまとめ、ここでは一枚を仕上げる順番だけを書きます。
 
 順番は七つです。目的、ツール、文章、比較、修正、寸法、公開前の確認。同じ日に七つを動かさないでください。目的がアイコンなら、全身の構図はまだ書きません。
 
