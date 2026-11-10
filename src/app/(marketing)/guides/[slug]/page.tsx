@@ -17,6 +17,7 @@ import { SEO_BATCH_9_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-a'
 import { SEO_BATCH_10_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-b'
 import { SEO_BATCH_11_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-c'
 import { SEO_BATCH_12_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-d'
+import { SEO_BATCH_13_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-e'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -73,6 +74,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_10_GUIDE_CONTENT,
   ...SEO_BATCH_11_GUIDE_CONTENT,
   ...SEO_BATCH_12_GUIDE_CONTENT,
+  ...SEO_BATCH_13_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -263,7 +265,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
-ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。初めて一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide)、拡大は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。`,
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。初めて一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide)、拡大は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。どの画面を入れるかから決めたいときは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) が、ブラウザとローカルの選び方をまとめています。`,
       },
       {
         title: '基本構文 — プロンプトを構成する 8 つの要素',
@@ -736,7 +738,7 @@ prompta.jp の <a href="/prompts/camera" class="text-sky-600 hover:underline">/p
     sections: [
       {
         title: 'Midjourneyプロンプトの基本',
-        content: `Midjourneyは、Discordベースの画像生成AIツールです。プロンプトは自然な英語の文章で記述でき、Stable Diffusionよりも直感的に使えます。
+        content: `Midjourneyは、Discordベースの画像生成AIツールです。プロンプトは自然な英語の文章で記述でき、Stable Diffusionよりも直感的に使えます。Web 版の始め方、無料トライアルの有無、パラメータの位置は [Midjourneyの使い方](/guides/midjourney-how-to-guide) にまとめ、このページはプロンプトの書き方を担当します。
 
 基本構文：\`/imagine prompt: [画像の説明] --[パラメータ]\`
 
@@ -793,7 +795,7 @@ Prompta では、ChatGPTを「質問に答えるツール」ではなく、**画
       },
       {
         title: '画像生成で使えるChatGPTプロンプト',
-        content: `ChatGPT画像生成や DALL-E 系では、タグを並べるよりも「何を描くか」「どう見せるか」「何を避けるか」を自然文で指定すると安定します。自分の写真をフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。
+        content: `ChatGPT画像生成や DALL-E 系では、タグを並べるよりも「何を描くか」「どう見せるか」「何を避けるか」を自然文で指定すると安定します。自分の写真をフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。枚数の上限や、画像が出ないときの見方は [ChatGPTの画像生成](/guides/chatgpt-image-generation-guide) にまとめ、このページは用途別の文の型を担当します。
 
 **基本テンプレート**
 

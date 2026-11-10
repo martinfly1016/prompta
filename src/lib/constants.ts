@@ -1194,6 +1194,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'adetailer 使い方',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'stable-diffusion-getting-started-guide',
+    title: 'Stable Diffusionの使い方｜始め方・導入方法【初心者】',
+    description: 'Stable Diffusionの使い方を、ブラウザで試す方法と自分のPCへ入れる方法に分けて解説。Forge、ComfyUI、AUTOMATIC1111の選び方、インストールの概要、最初の一枚、アニメとイラストのプロンプト、無料で使うときの境界、起動しないときの確認順まで。2026年11月時点の公式READMEに沿った手順です。',
+    targetKeyword: 'stable diffusion 使い方',
+    monthlySearchVolume: 6600,
+  },
+  {
+    slug: 'lora-training-guide',
+    title: 'LoRA学習のやり方｜作り方とコツ',
+    description: 'Stable DiffusionでLoRAを学習させる手順を解説。権利がある画像の選び方、キャプションとトリガーワード、繰り返しとエポックと学習率の目安、kohya-ss sd-scriptsの実行例、過学習の見方、できたファイルの置き場所とプロンプトまで。使う側の書き方は別ページです。',
+    targetKeyword: 'stable diffusion 学習させる',
+    monthlySearchVolume: 2900,
+  },
+  {
+    slug: 'chatgpt-image-generation-guide',
+    title: 'ChatGPTの画像生成｜制限・使い方・プロンプト例',
+    description: 'ChatGPTの画像生成で上限に当たったときの見方を、2026年11月時点の公式ヘルプに沿って解説。枚数の固定値は公式ヘルプに無いこと、リセットの確認、画像が出ないときと遅いときの対処、コピペできるプロンプト、商用利用は規約を見ることをまとめます。',
+    targetKeyword: 'chatgpt 画像生成 制限',
+    monthlySearchVolume: 2400,
+  },
+  {
+    slug: 'sdxl-guide',
+    title: 'SDXLとは｜使い方・導入とプロンプトのコツ',
+    description: 'SDXLとは何かを、SD1.5やFLUXとの違い、1024前後の解像度、VAEとRefiner、ForgeとComfyUIへの入れ方、LoRAの系統、プロンプトの書き方まで解説。数値はStability AIのモデルカードと論文の記載に限ります。',
+    targetKeyword: 'stable diffusion xl',
+    monthlySearchVolume: 3600,
+  },
+  {
+    slug: 'midjourney-how-to-guide',
+    title: 'Midjourneyの使い方｜Web版・始め方【日本語】',
+    description: 'Midjourneyの使い方を、Web版のImagine barとDiscordの違い、始め方、無料トライアルの有無、縦横やバージョンやスタイル参照のパラメータ、スマホでの送信、日本語で書くときの注意まで公式ドキュメントに沿って解説。プロンプトの詳細は別ページです。',
+    targetKeyword: 'midjourney 使い方',
+    monthlySearchVolume: 18100,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1516,6 +1551,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   },
   'adetailer-face-fix-guide': {
     tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'stable-diffusion-getting-started-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'lora-training-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'chatgpt-image-generation-guide': {
+    tools: ['chatgpt', 'gemini'],
+    categories: [],
+  },
+  'sdxl-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'midjourney-how-to-guide': {
+    tools: ['midjourney'],
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
   },
 }

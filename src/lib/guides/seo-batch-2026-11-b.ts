@@ -18,7 +18,7 @@ export const SEO_BATCH_10_GUIDE_CONTENT: Record<string, GuideArticle> = {
         title: 'LoRA とは',
         content: `「stable diffusion lora 使い方」で最初に分けるのは、チェックポイントと LoRA です。チェックポイントは絵の土台になるモデル本体です。LoRA は、その土台に後から足す小さな追加ファイルで、画風、服、ポーズ、背景のような一部だけを寄せます。土台を入れ替えずに、差分だけをプロンプトから呼び出す、という役割です。
 
-種類は、用途で分けると扱いやすいです。キャラクターの顔立ち、絵の塗り、決まった服、立ち方、背景の質感。一つのファイルが複数を同時に引っ張ることもあります。服の LoRA なのに背景まで変わる、という衝突は後ろの節で直します。学習の手順はこのページでは扱いません。学習は、配布されたファイルを読み込んでプロンプトに書くこととは別の作業です。
+種類は、用途で分けると扱いやすいです。キャラクターの顔立ち、絵の塗り、決まった服、立ち方、背景の質感。一つのファイルが複数を同時に引っ張ることもあります。服の LoRA なのに背景まで変わる、という衝突は後ろの節で直します。学習の手順はこのページでは扱いません。学習は、配布されたファイルを読み込んでプロンプトに書くこととは別の作業です。自分でファイルを作るときは [LoRA学習のやり方](/guides/lora-training-guide) を開き、このページはできたファイルの書き方だけを担当します。
 
 人物を描く行は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、コート、スーツのように閉じた日常着を一つ。このページは成人だけです。土台の選び方は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide)、品質の語は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。ノードで読むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。
 
@@ -621,7 +621,7 @@ LoRA と同時に使うときは、ControlNet で姿勢が三枚安定してか�
 
 選ぶときに見るのは三つです。ベースの系統、タグか自然文か、ライセンス。星の数や人気の順位はこのページでは扱いません。配布ページの作例には成人向けが含まれることがあります。閲覧に注意してください。商用利用と、生成物の公開条件は、モデルごとのライセンスを必ず確認してください。
 
-人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。確認の順番は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、サンプラーの目安は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) です。ファイルを置く画面は [ComfyUIの使い方](/guides/comfyui-guide) と [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。`,
+人物の例は、どの系統でも同じ成人の肖像に揃えます。\`1 adult woman, adult\` から書き、服は白いブラウスとカーディガンです。比較するときに服まで変えると、モデルの差なのか服の差なのかが残りません。品質タグの詳細は [品質タグ一覧](/guides/quality-tags-prompt-guide)、アニメの顔の語は [アニメプロンプト](/guides/anime-prompt-guide)、塗りは [画風プロンプト](/guides/art-style-prompt-guide) です。確認の順番は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide)、サンプラーの目安は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide) です。ファイルを置く画面は [ComfyUIの使い方](/guides/comfyui-guide) と [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。SDXL の解像度、VAE、Refiner は [SDXLとは](/guides/sdxl-guide) に分け、このページは系統の見分けを担当します。`,
       },
       {
         title: 'ベースモデルの系統',
