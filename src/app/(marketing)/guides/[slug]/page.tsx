@@ -18,6 +18,7 @@ import { SEO_BATCH_10_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-b'
 import { SEO_BATCH_11_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-c'
 import { SEO_BATCH_12_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-d'
 import { SEO_BATCH_13_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-e'
+import { SEO_BATCH_14_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-f'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -75,6 +76,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_11_GUIDE_CONTENT,
   ...SEO_BATCH_12_GUIDE_CONTENT,
   ...SEO_BATCH_13_GUIDE_CONTENT,
+  ...SEO_BATCH_14_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1053,40 +1055,6 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         q: '画像生成 AI（Stable Diffusion / Midjourney）にも同じ考え方が当てはまりますか？',
         a: '部分的に当てはまります。Stable Diffusion はトークンベースの解釈なので「キーワード列挙」スタイルが今も主流ですが、Midjourney V6 以降や DALL-E 3 は自然言語の文脈理解力が高く、「シーン全体を描写する」スタイルの方が良い結果を生みます。テキスト AI ほど顕著ではないものの、文脈と意図を伝える発想は画像生成にも応用できます。',
       },
-    ],
-  },
-  'negative-prompt-guide': {
-    sections: [
-      {
-        title: 'ネガティブプロンプトとは',
-        content: `ネガティブプロンプトは、AI画像生成において「生成してほしくない要素」を指定する機能です。Stable DiffusionやMidjourneyなどの画像生成AIで使用され、出力品質を大幅に向上させる重要なテクニックです。
-
-例えば、人物画像を生成する際に「bad hands, extra fingers」をネガティブプロンプトに設定することで、手の描写が改善されます。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide) です。NovelAI の除外欄への置き方は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧で弱める書き方は [プロンプトの記号の意味](/guides/prompt-symbols-guide) です。`,
-      },
-      {
-        title: '汎用ネガティブプロンプト',
-        content: `ほぼすべての画像生成で使える基本ネガティブプロンプト：
-
-\`(worst quality:1.4), (low quality:1.4), normal quality, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry, deformed, disfigured, mutation, extra limbs\`
-
-このテンプレートをベースに、生成する画像の内容に応じて項目を追加・削除して使用します。 品質タグをネガティブに置くときのモデル別の並びは <a href="/guides/quality-tags-prompt-guide" class="text-sky-600 hover:underline">品質タグ一覧</a> です。同じタグをポジティブとネガティブの両方には置かないでください。肌の質感を整える語は <a href="/guides/skin-texture-prompt-guide" class="text-sky-600 hover:underline">肌の質感プロンプト</a> です。`,
-      },
-      {
-        title: '✨ 関連プロンプト集 — ネガティブプロンプトが効く実例',
-        content: `本ガイドのネガティブプロンプト技法をそのまま使えるサンプル集。高品質生成のテンプレとして。
-
-- [animeプロンプト基礎](/prompt/anime-prompt-f061b77b)
-- [美しいアニメ女性キャラクター](/prompt/anime-girl-space-03)
-- [セーラー服プリーツスカート黒髪](/prompt/sailor-uniform-pleated-skirt)
-- [ストレートロングの黒髪ヘアスタイル](/prompt/straight-long-black-hair-glossy)
-- [初音ミクの水墨画風イラスト](/prompt/hatsune-miku-ink-wash-japanese)
-- [スタジオライティングポートレート](/prompt/studio-lighting-portrait-detailed)
-
-→ [アニメ + 髪型 + 撮影系プロンプト集](/prompts/anime)`,
-      },
-    ],
-    faq: [
-      { q: 'ネガティブプロンプトは必須ですか？', a: '必須ではありませんが、使用することで画像品質が大幅に向上します。特にStable Diffusionでは、ネガティブプロンプトなしだと品質の低い画像が生成されやすいため、常に使用することを推奨します。' },
     ],
   },
   'hairstyle-prompt-guide': {
@@ -3120,7 +3088,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
       },
       {
         title: '画像生成プロンプト集（Nano Banana 用）— 10 例文',
-        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。クリスマスの絵は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、証明写真風の整え方は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。自分の写真や自作キャラをフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。
+        content: `Gemini 2.5 Flash Image（Nano Banana）の画像生成・編集プロンプトは、ChatGPT 画像生成と異なり**英語の自然文**で書くのが基本です。Stable Diffusion 系のタグ羅列より、シーンを文章で描写する方が認識率が高くなります。どの公式ツールでイラストを出すかは [AIイラスト生成ツールの選び方](/guides/ai-illustration-generator-guide) です。Geminiで年賀状を作るときの作風別の文は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。クリスマスの絵は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、証明写真風の整え方は [証明写真のAIプロンプト](/guides/id-photo-ai-prompt-guide) です。自分の写真や自作キャラをフィギュア風にする文は [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) です。
 
 **人物・キャラ系**:
 
@@ -4190,7 +4158,7 @@ Use anime illustration style with a warm school gate background.
     sections: [
       {
         title: '体格差プロンプトとは',
-        content: `<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">体格差シミュレーション（身長差メーカー）</a> で、肩幅や身長の差をプロンプトにできます。**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
+        content: `<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">体格差シミュレーション（身長差メーカー）</a> で、肩幅や身長の差をプロンプトにできます。**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉質・マッチョ単体の呪文は <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質プロンプト</a> です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
 
 すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> のモードを **体格差** に切り替えると、\`body size difference\`、\`build difference\`、\`broad shoulders versus narrow shoulders\` などを自動で追加できます。`,
       },
