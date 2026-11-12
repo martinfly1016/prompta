@@ -1460,6 +1460,10 @@ photorealistic
 | ChatGPT の画像と上限 | [ChatGPTの画像生成](/guides/chatgpt-image-generation-guide) |
 | Midjourney の Web での始め方 | [Midjourneyの使い方](/guides/midjourney-how-to-guide) |
 | ノードの導入と基本のつなぎ | [ComfyUIの使い方](/guides/comfyui-guide) |
+| ComfyUI Manager | [ComfyUI Managerの使い方](/guides/comfyui-manager-guide) |
+| A1111 の WebUI と日本語化 | [Stable Diffusion WebUIの使い方](/guides/stable-diffusion-webui-guide) |
+| どの公式ツールでイラストを出すか | [AIイラスト生成ツールの選び方](/guides/ai-illustration-generator-guide) |
+| VAE の置き場所と選択 | [Stable DiffusionのVAE](/guides/stable-diffusion-vae-guide) |
 | Forge と Forge Neo の導入 | [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) |
 | Hires. fix と拡大 | [Hires. fix の使い方](/guides/hires-fix-upscale-guide) |
 | 顔の崩れと ADetailer | [ADetailerの使い方](/guides/adetailer-face-fix-guide) |

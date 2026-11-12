@@ -641,10 +641,10 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'negative-prompt-guide',
-    title: 'ネガティブプロンプトテンプレ【NovelAI・SD】',
-    description: 'ネガティブプロンプトのコピペテンプレ。Stable Diffusion と NovelAI で、品質・手・顔の崩れを避ける書き方と、入れすぎないときの削り方を解説します。',
+    title: 'ネガティブプロンプトとは｜書き方・テンプレ【コピペOK】',
+    description: 'ネガティブプロンプトとは何かを、各ツールの書き方、定番テンプレ、手や指、文字、人数、強調、入れすぎたときの副作用まで解説。Stable Diffusion、NovelAI、Midjourney、自然文向けのコピペ例つき。',
     targetKeyword: 'ネガティブプロンプト',
-    monthlySearchVolume: 6600,
+    monthlySearchVolume: 2900,
   },
   {
     slug: 'prompt-language-game',
@@ -1229,6 +1229,35 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'midjourney 使い方',
     monthlySearchVolume: 18100,
   },
+  {
+    slug: 'comfyui-manager-guide',
+    title: 'ComfyUI Managerの使い方｜インストールと表示されない時',
+    description: 'ComfyUI Managerの入れ方と使い方を、Desktop、ポータブル、手動インストールに分けて解説。Managerボタン、カスタムノードと足りないノード、更新、security_level、表示されないときの確認と、成人向けのコピペ例まで。2026年11月時点の公式ドキュメントに沿っています。',
+    targetKeyword: 'comfyui manager',
+    monthlySearchVolume: 2900,
+  },
+  {
+    slug: 'stable-diffusion-webui-guide',
+    title: 'Stable Diffusion WebUIの使い方｜A1111の導入と日本語化',
+    description: 'Stable Diffusion WebUI（AUTOMATIC1111）の導入、起動、タブ、モデルの置き場所、日本語化、ForgeやComfyUIとの違いを解説。プロンプト例つき。2026年11月時点のREADMEと拡張の一覧に沿っています。',
+    targetKeyword: 'stable diffusion web ui',
+    monthlySearchVolume: 4400,
+  },
+  {
+    slug: 'ai-illustration-generator-guide',
+    title: 'AIイラスト生成ツールの選び方｜無料で試す方法とプロンプト',
+    description: 'AIイラストをどの公式ツールで生成するかを、自然文、アニメ調、細かい制御、商用の確認に分けて解説。ChatGPT、Gemini、Firefly、Canva、Midjourney、ローカルのStable Diffusion向けのコピペ例つき。料金と回数は公式で確認します。',
+    targetKeyword: 'ai イラスト 生成',
+    monthlySearchVolume: 18100,
+  },
+  {
+    slug: 'stable-diffusion-vae-guide',
+    title: 'Stable DiffusionのVAEとは｜入れ方・設定と選び方',
+    description: 'Stable DiffusionのVAEとは何かを、色がおかしくなる症状、modelsフォルダ、SD VAEとComfyUIのLoad VAE、SD1.5とSDXLの違いまで解説。公式のVAE名と、配布ページの指定を優先する選び方、プロンプト例つき。',
+    targetKeyword: 'stable diffusion vae',
+    // Semrush lookup pending 2026-11-11
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1571,6 +1600,22 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   },
   'midjourney-how-to-guide': {
     tools: ['midjourney'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'comfyui-manager-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'stable-diffusion-webui-guide': {
+    tools: ['stable-diffusion'],
+    categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'ai-illustration-generator-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion', 'midjourney'],
+    categories: [],
+  },
+  'stable-diffusion-vae-guide': {
+    tools: ['stable-diffusion'],
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
   },
 }

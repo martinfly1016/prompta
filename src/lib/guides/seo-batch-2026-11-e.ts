@@ -30,7 +30,7 @@ export const SEO_BATCH_13_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。風景、物、食べ物には人数を書きません。服は閉じた日常着です。カスタムノード・拡張機能・モデルは信頼できる配布元のものだけを入れてください。モデルは .safetensors 形式を選びます。
 
-一枚を仕上げる順番の全体は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、カテゴリの入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。`,
+一枚を仕上げる順番の全体は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、カテゴリの入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。欄のある元の画面と日本語化は [Stable Diffusion WebUIの使い方](/guides/stable-diffusion-webui-guide) です。どの公式ツールでイラストを出すかは [AIイラスト生成ツールの選び方](/guides/ai-illustration-generator-guide) です。`,
       },
       {
         title: '画面の選び方',
@@ -726,7 +726,7 @@ Avoid: text, watermark, a different person, child, underage.
 
 確認するときは、生成した会話を残し、どのアカウントで出したかをメモします。規約がアカウントの種類で分かれることがあるためです。他人の写真をアップロードして、その人の顔を商品に使う手順は書きません。自分の写真でも、提出先が加工を禁じている書類には使いません。
 
-上限で止まったあとに、同じ下書きを続ける場所は三つです。時刻まで待つ。FAQ が書くプランの更新を、料金表で自分で読む。別のツールへ、文だけを移す。別のツールの候補は、文章で直すなら [Geminiプロンプト集](/guides/gemini-prompt-collection)、自分の PC で枚数を管理するなら [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) です。Stable Diffusion の商用は、モデルごとにライセンスが違います。[Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) を、ChatGPT の規約の代わりにしないでください。
+上限で止まったあとに、同じ下書きを続ける場所は三つです。時刻まで待つ。FAQ が書くプランの更新を、料金表で自分で読む。別のツールへ、文だけを移す。別のツールの候補は、文章で直すなら [Geminiプロンプト集](/guides/gemini-prompt-collection)、自分の PC で枚数を管理するなら [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) です。公式の画像ツールを並べて選ぶときは [AIイラスト生成ツールの選び方](/guides/ai-illustration-generator-guide) です。Stable Diffusion の商用は、モデルごとにライセンスが違います。[Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) を、ChatGPT の規約の代わりにしないでください。
 
 \`\`\`
 移すときに残すもの
@@ -886,7 +886,7 @@ Seed: 固定
       },
       {
         title: 'VAE と Refiner',
-        content: `ベースのカードの Diffusers の例は、Refiner を読み込むときに \`vae=base.vae\` と、ベースの VAE を渡しています。Refiner は別の VAE を必須とは書いていません。同じリポジトリには、ファイル名に 0.9vae と付くチェックポイントがあります。差し替えの一つの公式手順が、カード本文の独立した節にはなっていません。色がおかしいときだけ、今使っているファイルがどの VAE を含むかを、ファイル名と配布ページで確認してください。コミュニティの修正 VAE の名前は、このページでは挙げません。
+        content: `VAE の置き場所と選択欄は [Stable DiffusionのVAE](/guides/stable-diffusion-vae-guide) です。この節は、SDXL のカードが書く範囲だけを残します。ベースのカードの Diffusers の例は、Refiner を読み込むときに \`vae=base.vae\` と、ベースの VAE を渡しています。Refiner は別の VAE を必須とは書いていません。同じリポジトリには、ファイル名に 0.9vae と付くチェックポイントがあります。差し替えの一つの公式手順が、カード本文の独立した節にはなっていません。色がおかしいときだけ、今使っているファイルがどの VAE を含むかを、ファイル名と配布ページで確認してください。コミュニティの修正 VAE の名前は、このページでは挙げません。
 
 学習側では、kohya の SDXL の文書が、fp16 のとき VAE が float16 で不安定になることがあるので \`--no_half_vae\`、と書いています。生成画面の「VAE を float32 で」という項目が、同じ注意に対応することがあります。項目名は版で違います。無い画面で、見知らぬ VAE ファイルを探さないでください。
 

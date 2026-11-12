@@ -280,22 +280,7 @@ ControlNet は、公式ノード文書に Load ControlNet Model があります�
         title: 'カスタムノードと ComfyUI-Manager',
         content: `足りないノードは、まず公式のテンプレートで同じ処理ができないかを見ます。カスタムノードは、第三者が足すプログラムです。カスタムノード・拡張機能・モデルは信頼できる配布元のものだけを入れてください。モデルは .safetensors 形式を選びます。
 
-ComfyUI 本体の README は、Manager を次の手順で有効にすると書いています。
-
-\`\`\`
-pip install -r manager_requirements.txt
-python main.py --enable-manager
-\`\`\`
-
-同じ README が案内している Manager の場所は <a href="https://github.com/Comfy-Org/ComfyUI-Manager" rel="nofollow noopener" target="_blank" class="text-sky-600 hover:underline">Comfy-Org/ComfyUI-Manager</a> です。いっぽう Manager リポジトリの README は、既存の ComfyUI へ足す方法として \`ComfyUI/custom_nodes\` で次を実行して再起動する、と書いています。
-
-\`\`\`
-git clone https://github.com/ltdrdata/ComfyUI-Manager comfyui-manager
-\`\`\`
-
-二つの README で手順が違います。今動かしている版の README を見て、片方だけを実行してください。両方を重ねると、フォルダが二重になることがあります。Manager の README は、実体が \`ComfyUI/custom_nodes/comfyui-manager\` にあること、中身を \`custom_nodes\` 直下に展開しないことを注意しています。
-
-Manager のメニュー名は、README が Manager ボタン、Install Custom Nodes、Install Models と書いています。このページが名前を出してよい追加は Manager 自身だけです。顔のノードは [ADetailerの使い方](/guides/adetailer-face-fix-guide) で、Impact Pack の FaceDetailer として別に確認します。それ以外の第三者ノードは、このページでは勧めません。
+入れ方、Manager ボタン、足りないノード、更新、表示されないときの確認は [ComfyUI Managerの使い方](/guides/comfyui-manager-guide) に分けました。このページは ComfyUI 本体の導入と、基本のつなぎだけを担当します。顔のノードは [ADetailerの使い方](/guides/adetailer-face-fix-guide) で、Impact Pack の FaceDetailer として別に確認します。それ以外の第三者ノードは、このページでは勧めません。
 
 インストールしたノードが消えたワークフローを開くと、ノードがエラー表示になることがあります。公式チュートリアルが名前を挙げている欠落は Required input missing と、Missing Models です。色が赤く見える場合もありますが、色の意味は版で違うので、表示された英文のノード名を先に読んでください。`,
       },
@@ -343,7 +328,7 @@ Manager のメニュー名は、README が Manager ボタン、Install Custom No
       },
       {
         q: 'カスタムノードはどこから入れますか',
-        a: 'ComfyUI-Manager だけを、今の版の README の手順で入れます。見知らぬ配布元のノードやモデルは入れないでください。モデルは .safetensors を選びます。',
+        a: '手順の全体は [ComfyUI Managerの使い方](/guides/comfyui-manager-guide) に分けています。見知らぬ配布元のノードやモデルは入れないでください。モデルは .safetensors を選びます。',
       },
     ],
   },
@@ -363,7 +348,7 @@ Manager のメニュー名は、README が Manager ボタン、Install Custom No
 
 バージョンによって表示名や仕様が違うことがあります。最新の手順は公式ドキュメント・README を確認してください。対応モデルは README の一覧で確認してください。Neo の README が名前を挙げている例には、発展的な SDXL、Flux.2-Klein の 4B と 9B（FLUX.2-Dev ではない、と注記）、Qwen-Image、Z-Image があります。同じ README の Removed Features には SD2 と SD3 が挙がっています。ここに無いモデルが動く、とは書きません。
 
-拡張機能は、A1111 用がそのまま動くとは限りません。Neo の README は、第三者の拡張の不具合は、拡張側が UI に合わせるものだ、と書いています。顔の自動補正は [ADetailerの使い方](/guides/adetailer-face-fix-guide) で、Neo 向けには別のフォークがあります。ノードで組みたいときは [ComfyUIの使い方](/guides/comfyui-guide) です。
+拡張機能は、A1111 用がそのまま動くとは限りません。Neo の README は、第三者の拡張の不具合は、拡張側が UI に合わせるものだ、と書いています。A1111 との違い、導入、日本語化の手順は [Stable Diffusion WebUIの使い方](/guides/stable-diffusion-webui-guide) に分けています。顔の自動補正は [ADetailerの使い方](/guides/adetailer-face-fix-guide) で、Neo 向けには別のフォークがあります。ノードで組みたいときは [ComfyUIの使い方](/guides/comfyui-guide) です。
 
 <a href="https://github.com/lllyasviel/stable-diffusion-webui-forge" rel="nofollow noopener" target="_blank" class="text-sky-600 hover:underline">Forge の README</a> と <a href="https://github.com/Haoming02/sd-webui-forge-classic" rel="nofollow noopener" target="_blank" class="text-sky-600 hover:underline">Forge Neo の README</a> が、このページと違って見えたときは公式を採ってください。
 
@@ -696,7 +681,7 @@ URL を確認して Install
       },
       {
         title: 'ツールの選び方',
-        content: `選ぶ基準は、スマホで文章のまま出したいか、PC でタグと設定を残したいか、です。料金と、無料で試せる回数は、サービスごとに違い、変更されるため公式で確認してください。このページでは金額も回数も書きません。
+        content: `選ぶ基準は、スマホで文章のまま出したいか、PC でタグと設定を残したいか、です。料金と、無料で試せる回数は、サービスごとに違い、変更されるため公式で確認してください。このページでは金額も回数も書きません。どの公式ツールを選ぶかの流れは [AIイラスト生成ツールの選び方](/guides/ai-illustration-generator-guide) です。このページは、選んだあとに一枚を仕上げる順番です。
 
 | 種類 | 例 | 向くとき |
 |---|---|---|
