@@ -19,7 +19,7 @@ export const SEO_BATCH_9_GUIDE_CONTENT: Record<string, GuideArticle> = {
         title: '目線は目線タグ・顔の向き・構図で決まる',
         content: `「目線 プロンプト」「視線 プロンプト」「カメラ目線 プロンプト」で最初に分けるのは、三つの層です。目がどこを見ているか、顔がどちらを向いているか、カメラがどこにあるか。三つを一つの語で済ませると、目だけがカメラを向いて首がねじれるか、顔は正面なのに目がどこも見ていない絵になります。
 
-目線の語は、顔の向きが決まってから足します。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、コート、スーツのように閉じた日常着を一つ。このページは成人の肖像だけです。目の形・色・ハイライトは [目・瞳のプロンプト一覧](/guides/eye-prompt-guide)、ショットの大きさは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) に渡します。
+目線の語は、顔の向きが決まってから足します。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、コート、スーツのように閉じた日常着を一つ。このページは成人の肖像だけです。目の形・色・ハイライトは [目・瞳のプロンプト一覧](/guides/eye-prompt-guide)、ショットの大きさは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) に渡します。レンズや、カメラを引く距離、動画のパンやドリーは [カメラのプロンプト](/guides/camera-lens-prompt-guide) です。カメラ目線は、このページのままです。
 
 比較するときは、髪と服と背景を固定して、目線の語だけを差し替えます。表情まで同時に動かすと、目が合ったのか口が動いたのかが残りません。モデルによって効きが弱いことがあります。そのときは目線の語を人数の近くへ戻し、背景の名詞を一つ減らしてください。
 
@@ -1391,7 +1391,7 @@ text, logo, watermark
 
 Stable Diffusion や NovelAI で崩れにくい順番は、品質、被写体、外見、服、ポーズ、構図、背景、光です。前にある語が残りやすいので、今回強調したいものだけを被写体の直後へ移します。全部を先頭にすると、どれが効いたのかが分かりません。
 
-品質の置き方は [品質タグ一覧](/guides/quality-tags-prompt-guide)、入れないものの書き方は [ネガティブプロンプト](/guides/negative-prompt-guide) です。プロンプトという言葉の意味は [プロンプトとは](/guides/what-is-prompt)、書き方の型は [プロンプトの書き方](/guides/prompt-writing-guide) です。文章で指示するときの型は [ChatGPTプロンプト](/guides/chatgpt-prompt-techniques)、言葉の使い方の話は [プロンプトはコードではない](/guides/prompt-language-game) です。
+品質の置き方は [品質タグ一覧](/guides/quality-tags-prompt-guide)、入れないものの書き方は [ネガティブプロンプト](/guides/negative-prompt-guide) です。プロンプトという言葉の意味は [プロンプトとは](/guides/what-is-prompt)、書き方の型は [プロンプトの書き方](/guides/prompt-writing-guide) です。画像を作る順番と例文は [画像生成AIのプロンプトの書き方](/guides/image-generation-prompt-guide) です。文章で指示するときの型は [ChatGPTプロンプト](/guides/chatgpt-prompt-techniques)、言葉の使い方の話は [プロンプトはコードではない](/guides/prompt-language-game) です。
 
 **全文の型**
 
@@ -1505,7 +1505,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | カメラ目線 | \`looking at viewer\` |
 | 目をそらす | \`looking away\` |
 
-詳しくは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、[見下ろす構図](/guides/high-angle-prompt-guide)、[下からのアングル](/guides/low-angle-prompt-guide)、[目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide)、[二人構図](/guides/two-person-composition-prompt-guide)、[縦横のプロンプト](/guides/image-aspect-ratio-916-prompt-guide) です。二人の身長差を絵の配置で見せるときは [身長差イラストの構図](/guides/height-difference-illustration-composition-guide) です。
+詳しくは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、[見下ろす構図](/guides/high-angle-prompt-guide)、[下からのアングル](/guides/low-angle-prompt-guide)、[目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide)、[二人構図](/guides/two-person-composition-prompt-guide)、[縦横のプロンプト](/guides/image-aspect-ratio-916-prompt-guide)、[カメラのプロンプト](/guides/camera-lens-prompt-guide) です。二人の身長差を絵の配置で見せるときは [身長差イラストの構図](/guides/height-difference-illustration-composition-guide) です。
 
 \`\`\`
 1 adult woman, adult, full body, facing viewer, looking at viewer,
@@ -1648,7 +1648,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | キス | \`kiss\` |
 | 壁に手 | \`hand on wall\` |
 
-詳しくは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、[手・指](/guides/hand-finger-prompt-guide)、[手をつなぐ](/guides/hand-holding-prompt-guide)、[ハグ](/guides/hug-prompt-guide)、[キス](/guides/kiss-prompt-guide)、[壁ドン](/guides/kabedon-prompt-guide)、[お姫様抱っこ](/guides/princess-carry-prompt-guide)、[BL構図](/guides/bl-composition-prompt-guide)、[BLポーズ](/guides/bl-pose-collection-guide) です。
+詳しくは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、[ダンスのプロンプト](/guides/dance-prompt-guide)、[手・指](/guides/hand-finger-prompt-guide)、[手をつなぐ](/guides/hand-holding-prompt-guide)、[ハグ](/guides/hug-prompt-guide)、[キス](/guides/kiss-prompt-guide)、[壁ドン](/guides/kabedon-prompt-guide)、[お姫様抱っこ](/guides/princess-carry-prompt-guide)、[BL構図](/guides/bl-composition-prompt-guide)、[BLポーズ](/guides/bl-pose-collection-guide) です。
 
 \`\`\`
 2 adults, 1 adult woman, 1 adult man, adult,
@@ -1676,7 +1676,7 @@ extra people
 | スタジオ | \`studio lighting\` |
 | 逆光 | \`backlighting\` |
 
-詳しくは [背景プロンプト](/guides/background-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
+詳しくは [背景プロンプト](/guides/background-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, upper body,

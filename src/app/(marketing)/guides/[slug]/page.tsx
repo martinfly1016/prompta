@@ -19,6 +19,7 @@ import { SEO_BATCH_11_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-c'
 import { SEO_BATCH_12_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-d'
 import { SEO_BATCH_13_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-e'
 import { SEO_BATCH_14_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-f'
+import { SEO_BATCH_15_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-g'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -77,6 +78,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_12_GUIDE_CONTENT,
   ...SEO_BATCH_13_GUIDE_CONTENT,
   ...SEO_BATCH_14_GUIDE_CONTENT,
+  ...SEO_BATCH_15_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -267,7 +269,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
-ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。初めて一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide)、拡大は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。どの画面を入れるかから決めたいときは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) が、ブラウザとローカルの選び方をまとめています。`,
+ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日本語」では機能しません。**英単語＋カンマ＋重み付け** が共通言語です。本ガイドでは、髪型・服装・体型・構図・照明など実際のユースケースごとに、コピペできるサンプルプロンプトを提示します。カテゴリ別の入口は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。画像生成全般の順番と、風景や商品の例は [画像生成AIのプロンプトの書き方](/guides/image-generation-prompt-guide) です。LoRA の書き方は [LoRAの使い方](/guides/stable-diffusion-lora-guide)、参照画像で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide)、モデルの系統は [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list)、NovelAI の強調は [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。括弧と BREAK は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、サンプラーと CFG は [Stable Diffusionのサンプラー](/guides/stable-diffusion-sampler-guide)、元画像から直す手順は [img2imgの使い方](/guides/img2img-guide)、ライセンスの確認順は [Stable Diffusionの商用利用](/guides/stable-diffusion-commercial-use-guide) です。初めて一枚を作る手順は [AIイラストの作り方](/guides/ai-illustration-how-to-guide)、ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide)、拡大は [Hires. fix の使い方](/guides/hires-fix-upscale-guide)、顔の崩れは [ADetailerの使い方](/guides/adetailer-face-fix-guide) です。どの画面を入れるかから決めたいときは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) が、ブラウザとローカルの選び方をまとめています。`,
       },
       {
         title: '基本構文 — プロンプトを構成する 8 つの要素',
@@ -2014,6 +2016,13 @@ full body shot, (best quality:1.4)
 | 小柄 | \`petite\` / \`small frame\` | 中 | 必ず \`adult\` とセット。\`tiny\` は子供っぽくなる |
 | 高身長 | \`tall\` / \`towering\` / \`leggy\` | 中〜強 | 数値 (190cm) より形容詞が確実 |
 
+**肩幅**は、体格の輪郭として一つだけ足します。部分的な形の強調はしません。顔のアップでは肩が画面に入らないので、全身か腰上で確認します。
+
+| 日本語 | 書き方 | 使い方 |
+|---|---|---|
+| 肩が広い | broad shoulders（自然な英語） | 細身や筋肉質と一緒に一つ |
+| 肩が狭い | narrow shoulders（自然な英語） | 華奢な輪郭。強くしすぎない |
+
 この感度表を基準に、後半セクションのテンプレートをカスタマイズしてください。`,
       },
       {
@@ -2673,7 +2682,7 @@ CFGスケール 15+: 色が過飽和になりやすい → 不自然になるこ
 
 この5要素を意識すれば、漠然と「いい感じで書いて」と頼んで失敗する典型パターンを避けられます。本記事では、これら基礎を踏まえた上で、実践で効果を発揮する7つのコツとコピペで使えるテンプレート集を解説します。
 
-プロンプトの基礎を先に押さえたい方は、<a href="/guides/what-is-prompt" class="text-sky-600 hover:underline">プロンプトとは？AI初心者向け完全ガイド</a>を併せてお読みください。イラストのカテゴリ別の呪文は <a href="/guides/ai-illustration-prompt-list" class="text-sky-600 hover:underline">AIイラストの呪文一覧</a> です。`,
+プロンプトの基礎を先に押さえたい方は、<a href="/guides/what-is-prompt" class="text-sky-600 hover:underline">プロンプトとは？AI初心者向け完全ガイド</a>を併せてお読みください。イラストのカテゴリ別の呪文は <a href="/guides/ai-illustration-prompt-list" class="text-sky-600 hover:underline">AIイラストの呪文一覧</a> です。画像を作る順番と例文は <a href="/guides/image-generation-prompt-guide" class="text-sky-600 hover:underline">画像生成AIのプロンプトの書き方</a> です。`,
       },
       {
         title: '効果的なプロンプトを書く7つのコツ',
@@ -4322,7 +4331,7 @@ three characters in horizontal lineup, tall character on the left, medium charac
 
 **関係性 7 パターン**: カップル / 友達ペア / 兄弟姉妹 / 親子 / 漫画風二人構図（BL風 / 百合風）/ OC × 推しキャラ / ライバル対峙。
 
-全 30+ コピペテンプレートと英語プロンプト一覧で、すぐに使い始められます。**身長差プロンプト**を深く知りたい場合は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> も合わせてどうぞ。1人の構図・アングルは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。`,
+全 30+ コピペテンプレートと英語プロンプト一覧で、すぐに使い始められます。**身長差プロンプト**を深く知りたい場合は <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差・体格差カップルの AI プロンプト完全ガイド</a> も合わせてどうぞ。1人の構図・アングルは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。画面の端の通行人や観客は [モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide) です。`,
       },
       {
         title: '二人構図プロンプトを構成する 5 つの要素',
@@ -5644,7 +5653,7 @@ worst quality, low quality, blurry
     sections: [
       {
         title: '画像から動画AI・動画生成AIプロンプトの基本型',
-        content: `画像から動画AIでは、「動画にして」だけでは意図通りに動きません。1枚の静止画を Kling / Runway / Pika / Luma / Gemini などに読み込ませる時は、**保持する要素**、**動かす要素**、**カメラ**、**禁止事項**を分けて書くと安定します。
+        content: `画像から動画AIでは、「動画にして」だけでは意図通りに動きません。1枚の静止画を Kling / Runway / Pika / Luma / Gemini などに読み込ませる時は、**保持する要素**、**動かす要素**、**カメラ**、**禁止事項**を分けて書くと安定します。カメラの動きの名前は [カメラのプロンプト](/guides/camera-lens-prompt-guide)、踊る動きは [ダンスのプロンプト](/guides/dance-prompt-guide) にまとめました。
 
 **基本テンプレート**
 

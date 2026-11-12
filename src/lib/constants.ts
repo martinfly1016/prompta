@@ -655,8 +655,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'cosplay-prompt-guide',
-    title: 'コスプレプロンプト集｜メイド服・巫女・ナース【コピペOK】',
-    description: 'コスプレプロンプト集。メイド服、巫女装束、ナース服に加え、セーラー服の夏服・冬服や学校制服を英語タグでコピペできます。Stable Diffusion・NovelAI・Midjourney 向け。',
+    title: 'コスプレ・コスチュームのプロンプト集｜メイド・巫女【コピペOK】',
+    description: 'コスプレとコスチュームのプロンプト集。メイド、巫女に加え、ハロウィン、ファンタジー、ヒーローなど大人の衣装を部品に分けて英語タグでコピペできます。Stable Diffusion、NovelAI、Midjourney 向け。',
     targetKeyword: 'コスプレ プロンプト',
     monthlySearchVolume: 480,
   },
@@ -676,8 +676,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'body-type-prompt-guide',
-    title: '体型プロンプトの書き方【コピペOK・英語付き】',
-    description: '体型プロンプトの英語タグをコピペで紹介。スレンダー、筋肉質、ぽっちゃり、小柄、高身長を Stable Diffusion と Midjourney 向けに、ネガティブプロンプトつきで解説します。',
+    title: '体型・体格のプロンプト一覧｜細身・ぽっちゃり・筋肉質【英語】',
+    description: '体型・体格のプロンプトを英語でコピペ。細身、痩せ型、ぽっちゃり、筋肉質、肩幅（広い・狭い）まで、大人の全身の輪郭として Stable Diffusion と Midjourney 向けに解説します。',
     targetKeyword: '体型 プロンプト 書き方',
     monthlySearchVolume: 390,
   },
@@ -1258,6 +1258,41 @@ export const GUIDES: Guide[] = [
     // Semrush lookup pending 2026-11-11
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'effect-prompt-guide',
+    title: 'エフェクトのプロンプト一覧｜光・魔法・キラキラ【コピペOK】',
+    description: 'エフェクトのプロンプトを、光、魔法陣、キラキラ、炎や水や雷や風、煙、ハートや漫画の効果線、動きと揺れ、レンズフレアなどの画面効果に分けて解説。コピペできる英語タグと自然文、入れすぎを抑えるネガティブつき。',
+    targetKeyword: 'エフェクト プロンプト',
+    monthlySearchVolume: 320,
+  },
+  {
+    slug: 'camera-lens-prompt-guide',
+    title: 'カメラのプロンプト｜距離・レンズ・カメラワーク一覧',
+    description: 'カメラのプロンプトを、距離、カメラを引く、レンズ、被写界深度、レンズフレア、フィルム写真、定点カメラ、枠の中の枠まで一覧化。動画生成AIのパン、ティルト、ドリー、ズームの書き方も公式の用語に沿って解説します。',
+    targetKeyword: 'プロンプト カメラ',
+    monthlySearchVolume: 260,
+  },
+  {
+    slug: 'mob-crowd-prompt-guide',
+    title: 'モブ・群衆のプロンプト｜背景の人物を自然に描く',
+    description: 'モブと群衆のプロンプトで、背景の通行人や観客を大人として自然に描く英語タグを解説。主役を残すピント、人数の抑え方、街や祭りや駅やライブ会場の型、顔が複製されるときのネガティブまでコピペ例つき。',
+    targetKeyword: 'モブ プロンプト',
+    monthlySearchVolume: 140,
+  },
+  {
+    slug: 'dance-prompt-guide',
+    title: 'ダンスのプロンプト集｜ポーズ・ジャンル別と動画用',
+    description: 'ダンスのプロンプトを、バレエ、ヒップホップ、ブレイクダンス、社交ダンス、ジャズ、日本の舞、舞台の大人の演目に分けて解説。着衣の衣装、動きの表現、二人の踊り、画像から動画にするときのカメラの言葉とコピペ例つき。',
+    targetKeyword: 'ダンス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'image-generation-prompt-guide',
+    title: '画像生成AIのプロンプトの書き方｜コツと例文【コピペOK】',
+    description: '画像生成AIのプロンプトの書き方を、主題から品質までの順番、タグと自然文の違い、人物や風景や食べ物や商品やアイコンの例文で解説。Stable Diffusion、Midjourney、ChatGPT、Gemini、NovelAI の違いと直し方もまとめます。',
+    targetKeyword: '画像生成 プロンプト',
+    monthlySearchVolume: 1600,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1617,6 +1652,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'stable-diffusion-vae-guide': {
     tools: ['stable-diffusion'],
     categories: ['hairstyle', 'clothing', 'anime', 'color', 'camera', 'body-type', 'costume', 'cosplay'],
+  },
+  'effect-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera', 'anime'],
+  },
+  'camera-lens-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
+  },
+  'mob-crowd-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera', 'anime'],
+  },
+  'dance-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera', 'anime'],
+  },
+  'image-generation-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['anime', 'camera'],
   },
 }
 
