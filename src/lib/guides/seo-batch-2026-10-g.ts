@@ -366,7 +366,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, revealing clothes, modern clothes, 
 
 順番は、ショット、高さ、向き、視線です。\`full body\` を後ろに置くと、\`close-up\` に負けて足が切れます。高さの \`from above\` と \`from below\` は同時に使いません。
 
-登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。下から見上げる調整は [下からのアングル](/guides/low-angle-prompt-guide)、上から見下ろす調整は [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) に分けてあります。このページは、正面・斜め・全身を含む組み合わせの一覧です。
+登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。下から見上げる調整は [下からのアングル](/guides/low-angle-prompt-guide)、上から見下ろす調整は [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) に分けてあります。距離、レンズ、動画のカメラワークは [カメラのプロンプト](/guides/camera-lens-prompt-guide) です。このページは、正面・斜め・全身を含む組み合わせの一覧です。
 
 立ち方そのものは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、二人の位置は [二人構図](/guides/two-person-composition-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [カメラアングル](/tag/カメラアングル) と [全身](/tag/全身) です。光・影の付け方は [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。
 

@@ -360,7 +360,7 @@ bad anatomy, extra legs, distorted face, long neck, huge chin
 
 ここにあるのは服を着た状態で使える姿勢です。開脚や体の強調を目的にしたポーズは入れていません。手は最も崩れやすいので、ネガティブと一緒に使ってください。
 
-体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。ショットサイズや体の向きは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide)、男性キャラのポーズは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。参照画像の骨格で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide) です。`,
+体型の単語は [体型プロンプト](/guides/body-type-prompt-guide)、二人の位置関係は [二人構図](/guides/two-person-composition-prompt-guide)、踊りのジャンルは [ダンスのプロンプト](/guides/dance-prompt-guide) です。下から見上げるカメラは [アングルプロンプト](/guides/low-angle-prompt-guide)、上から見下ろすカメラは [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) です。ショットサイズや体の向きは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。手・指のポーズと崩れ対策は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide)、男性キャラのポーズは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。参照画像の骨格で姿勢を固定する手順は [ControlNetの使い方](/guides/controlnet-guide) です。`,
       },
       {
         title: '立つ・座る・寝転ぶ',
@@ -493,7 +493,7 @@ long neck, twisted neck, extra knees
 
 人物のうしろに背景を付ける場合と、背景だけを描く場合ではネガティブが違います。写真から背景を消す・置き換える作業は生成とは別で、[背景削除](/prompt/background-removal-transparent-png) と [スタジオ背景への置き換え](/prompt/background-replace-studio-neutral) が写真加工側の実例です。
 
-色の指定そのものは [色プロンプト](/guides/color-prompt-guide)、タグの一覧は [背景](/tag/背景) です。室内を暗くする光源と、黒く潰さない書き方は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に分けてあります。`,
+色の指定そのものは [色プロンプト](/guides/color-prompt-guide)、タグの一覧は [背景](/tag/背景) です。室内を暗くする光源と、黒く潰さない書き方は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に分けてあります。うしろの通行人や観客は [モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide) です。`,
       },
       {
         title: '単色・スタジオ・ぼかし',

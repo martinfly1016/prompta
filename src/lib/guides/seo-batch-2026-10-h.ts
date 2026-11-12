@@ -1015,7 +1015,7 @@ Stable Diffusion に戻すときは、\`1 adult woman, v, hand on own hip, upper
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、服を着た状態にします。寝室の場面は使いません。肌を光らせる書き方もしません。
 
-暗い室内の一点だけを強くする手順は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に残します。このページは、向きと影の一覧です。場所そのものは [背景プロンプト](/guides/background-prompt-guide)、カメラの距離は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [逆光](/tag/逆光) です。
+暗い室内の一点だけを強くする手順は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に残します。このページは、向きと影の一覧です。粒子や魔法陣や効果線は [エフェクトのプロンプト](/guides/effect-prompt-guide) です。場所そのものは [背景プロンプト](/guides/background-prompt-guide)、カメラの距離は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [逆光](/tag/逆光) です。
 
 **向きを一つ、質を一つ**
 

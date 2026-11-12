@@ -657,7 +657,7 @@ URL を確認して Install
     sections: [
       {
         title: 'AIイラストができるまでの流れ',
-        content: `「aiイラスト 作り方」で必要なのは、道具の名前を並べることではなく、一枚を仕上げる順番です。このページは、目的を決めて、ツールを一つ選び、プロンプトを書き、数枚を比べ、崩れた箇所だけを直し、公開する前に権利を見る、という手順です。呪文のカテゴリ一覧は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list)、言葉の意味は [プロンプトとは](/guides/what-is-prompt) のままです。このページは作り方（手順）を担当します。Stable Diffusion をどの画面で始めるかは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) にまとめ、ここでは一枚を仕上げる順番だけを書きます。
+        content: `「aiイラスト 作り方」で必要なのは、道具の名前を並べることではなく、一枚を仕上げる順番です。このページは、目的を決めて、ツールを一つ選び、プロンプトを書き、数枚を比べ、崩れた箇所だけを直し、公開する前に権利を見る、という手順です。呪文のカテゴリ一覧は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list)、言葉の意味は [プロンプトとは](/guides/what-is-prompt) のままです。画像生成の順番と例文は [画像生成AIのプロンプトの書き方](/guides/image-generation-prompt-guide) です。このページは作り方（手順）を担当します。Stable Diffusion をどの画面で始めるかは [Stable Diffusionの使い方](/guides/stable-diffusion-getting-started-guide) にまとめ、ここでは一枚を仕上げる順番だけを書きます。
 
 順番は七つです。目的、ツール、文章、比較、修正、寸法、公開前の確認。同じ日に七つを動かさないでください。目的がアイコンなら、全身の構図はまだ書きません。
 

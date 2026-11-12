@@ -162,6 +162,8 @@ const GUIDE_COPY_WINS = [
   'hairstyle-prompt-guide',
   'stable-diffusion-prompt-guide',
   'negative-prompt-guide',
+  'body-type-prompt-guide',
+  'cosplay-prompt-guide',
 ] as const
 
 function mergeGuides(
