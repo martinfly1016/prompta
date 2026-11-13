@@ -1293,6 +1293,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '画像生成 プロンプト',
     monthlySearchVolume: 1600,
   },
+  {
+    slug: 'glasses-prompt-guide',
+    title: '眼鏡・メガネのプロンプト一覧｜種類・反射・ずれ【英語】',
+    description: '眼鏡とメガネのプロンプトを、丸や四角、リムレス、アンダーリム、赤縁、反射や曇り、直す・外す仕草、サングラスとゴーグルと片眼鏡まで解説。出ないときと顔に溶けるときの直し方、ChatGPTやGemini向けの自然文もコピペできます。',
+    targetKeyword: '眼鏡 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'landscape-prompt-guide',
+    title: '風景のプロンプト一覧｜自然・夜景・ファンタジー【コピペOK】',
+    description: '風景を主題にしたプロンプトを、山や海や森、田園と里山、夜景、ファンタジー、季節と天候、ワイドや俯瞰、絵画と写真の差で解説。人物の背景用ページとの違いと、コピペできる英語タグと自然文つき。',
+    targetKeyword: '風景 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'robot-mecha-prompt-guide',
+    title: 'ロボット・メカのプロンプト集｜人型・巨大ロボ・関節',
+    description: 'ロボットとメカのプロンプトを、人型、服を着た成人のアンドロイド、オリジナルの巨大ロボ、小さな機体、関節や目やアーム、金属と錆、コックピットと格納庫、壊れた機体まで解説。作品名は使わず、コピペできる英語タグと自然文つき。',
+    targetKeyword: 'ロボット プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'plush-toy-prompt-guide',
+    title: 'ぬいぐるみのプロンプト｜ぬいぐるみ化・抱く・素材別',
+    description: 'ぬいぐるみのプロンプトを、テディベアや動物、フェルトや編み物、縫い目、商品写真、自分の写真やペットのぬいぐるみ化、大人が大きなぬいぐるみを抱く構図まで解説。ChatGPTとGemini向けの自然文つき。',
+    targetKeyword: 'ぬいぐるみ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'snow-winter-prompt-guide',
+    title: '雪・冬のプロンプト一覧｜雪景色・冬服・雪加工',
+    description: '雪と冬のプロンプトを、降る雪と積もった雪、結晶、雪景色と街、冬の光、大人のコートやマフラーや手袋、雪遊び、自分の写真への雪加工まで解説。クリスマスや年賀状との違いと、コピペできる英語タグと自然文つき。',
+    targetKeyword: '雪 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1672,6 +1707,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'image-generation-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
     categories: ['anime', 'camera'],
+  },
+  'glasses-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['anime', 'clothing'],
+  },
+  'landscape-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
+  },
+  'robot-mecha-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['anime', 'cosplay'],
+  },
+  'plush-toy-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['photo-edit', 'anime'],
+  },
+  'snow-winter-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['clothing', 'camera'],
   },
 }
 

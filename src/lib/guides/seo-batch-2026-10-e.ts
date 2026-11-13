@@ -802,7 +802,7 @@ Midjourney 向けのパラメータは [Midjourneyプロンプト](/guides/midjo
         title: 'アクセサリープロンプトの基本',
         content: `「ネックレス プロンプト」「アクセサリー プロンプト」は、小さな金属や石が顔や服に負ける、という失敗から始まります。書く順は、部位、素材、構図です。\`necklace\` だけでは鎖が服の模様になることがあります。\`gold necklace\` のように素材を付け、\`portrait\` か \`upper body\` で首元を大きくしてください。
 
-全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。帽子やバッグを含む日常の服装は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
+全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。帽子やバッグを含む日常の服装は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。眼鏡の形、反射、ずれたかけ方は [眼鏡・メガネのプロンプト](/guides/glasses-prompt-guide) に分けました。このページはネックレスや指輪などの装身具です。
 
 人物は成人です。ピアスは耳だけにします。首輪のような小物は扱いません。
 

@@ -1015,7 +1015,7 @@ Stable Diffusion に戻すときは、\`1 adult woman, v, hand on own hip, upper
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、服を着た状態にします。寝室の場面は使いません。肌を光らせる書き方もしません。
 
-暗い室内の一点だけを強くする手順は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に残します。このページは、向きと影の一覧です。粒子や魔法陣や効果線は [エフェクトのプロンプト](/guides/effect-prompt-guide) です。場所そのものは [背景プロンプト](/guides/background-prompt-guide)、カメラの距離は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [逆光](/tag/逆光) です。
+暗い室内の一点だけを強くする手順は [暗い部屋プロンプト](/guides/dark-room-prompt-guide) に残します。このページは、向きと影の一覧です。粒子や魔法陣や効果線は [エフェクトのプロンプト](/guides/effect-prompt-guide) です。場所そのものは [背景プロンプト](/guides/background-prompt-guide)、カメラの距離は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。風景そのものを主題にしたときの光は [風景のプロンプト](/guides/landscape-prompt-guide) です。作例の並びは [カメラプロンプト集](/prompts/camera)、タグは [逆光](/tag/逆光) です。
 
 **向きを一つ、質を一つ**
 
@@ -1393,7 +1393,7 @@ Stable Diffusion に戻すときは、\`1 adult woman, backlighting, sunset, rim
 
 ミニスカや肌の露出が多い衣装は使いません。袖は長く、丈は足首まで、を衣装の条件にします。
 
-年始の挨拶絵は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide)、場所の語は [背景プロンプト](/guides/background-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。冬の服のタグは [冬服](/tag/冬服) です。
+年始の挨拶絵は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide)、場所の語は [背景プロンプト](/guides/background-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。冬の服のタグは [冬服](/tag/冬服) です。雪の降り方、冬の街、自分の写真への雪加工は [雪・冬のプロンプト](/guides/snow-winter-prompt-guide) です。このページはクリスマスの小物と衣装です。
 
 最初の一枚で見るのは、衣装が長袖か、背景が一つに読めるか、小物が手に持たせすぎていないか、です。赤いかどうかは、その次です。赤を先に強くすると、ツリーもコートも同じ色になり、形の差が消えます。人物を置く回と、置かない回は、プロンプトを分けて保存します。人数のタグが残ったまま「人は描かない」と書いても、端に人が残ることがあります。
 

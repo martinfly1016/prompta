@@ -22,7 +22,7 @@ export const SEO_BATCH_11_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 一回の生成で動かす服は、一部位だけです。トップスを変える日は、ボトムスと靴と背景を固定します。四部位を同時に書き換えると、袖が違って見えても、スカートの丈のせいなのかブラウスのせいなのかが残りません。表のタグは、その部位の最初の一手です。メモ欄に「公式タグとしては断定しない」とある語は、自然な英語として足し、効かなければ表の左列の短いタグへ戻します。戻すときに、効かなかった語を正向に残さないでください。残った語は、次の部位の比較を濁します。色は、形が三枚揃ってから一つ足します。色を先に強くすると、布の輪郭より色面が優先されます。
 
-種類ごとの入口は別にあります。ワンピースと夜のドレスは [ドレスプロンプト](/guides/dress-prompt-guide)、和服は [着物プロンプト](/guides/kimono-prompt-guide)、鎧やローブは [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide)、仕事のメイド服は [メイド服プロンプト](/guides/maid-outfit-prompt-guide)、スーツと白衣の部品は [スーツ・白衣プロンプト](/guides/suit-lab-coat-prompt-guide)、特定の衣装を部品に分ける考え方は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。作例の並びは [服装プロンプト集](/prompts/clothing) です。
+種類ごとの入口は別にあります。ワンピースと夜のドレスは [ドレスプロンプト](/guides/dress-prompt-guide)、和服は [着物プロンプト](/guides/kimono-prompt-guide)、鎧やローブは [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide)、仕事のメイド服は [メイド服プロンプト](/guides/maid-outfit-prompt-guide)、スーツと白衣の部品は [スーツ・白衣プロンプト](/guides/suit-lab-coat-prompt-guide)、特定の衣装を部品に分ける考え方は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。作例の並びは [服装プロンプト集](/prompts/clothing) です。雪の日のコート、マフラー、手袋の組み合わせは [雪・冬のプロンプト](/guides/snow-winter-prompt-guide) です。
 
 ネックレスや帽子の細かい素材は [アクセサリープロンプト](/guides/accessory-prompt-guide)、男性の髪と体型は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、色の名前は [色プロンプト](/guides/color-prompt-guide) です。括弧と BREAK の意味は [プロンプトの記号の意味](/guides/prompt-symbols-guide)、元画像を残して服だけ直す手順は [img2imgの使い方](/guides/img2img-guide) です。
 

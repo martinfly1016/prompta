@@ -1063,7 +1063,7 @@ ${NEGATIVE_SKIN}
     sections: [
       {
         title: 'フィギュア化で使う写真',
-        content: `「フィギュア化 プロンプト」「gemini フィギュア化 プロンプト」「ぬいぐるみ化 プロンプト」は、手元の写真や自作の絵を、立体の商品写真のように見せる指示です。使うのは、自分の写真、自分のペット、自分のオリジナルキャラだけです。他人、有名人、子どもの写真、既存のアニメやゲームのキャラクターは使いません。
+        content: `「フィギュア化 プロンプト」「gemini フィギュア化 プロンプト」「ぬいぐるみ化 プロンプト」は、手元の写真や自作の絵を、立体の商品写真のように見せる指示です。使うのは、自分の写真、自分のペット、自分のオリジナルキャラだけです。他人、有名人、子どもの写真、既存のアニメやゲームのキャラクターは使いません。布のぬいぐるみ、抱く構図、ぬいぐるみ化の文は [ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide) にまとめました。このページは塗装済みのフィギュアが中心です。
 
 向きは、全身か胸から上が写っていて、正面に近く、明るい写真が扱いやすいです。横を向いた写真や、顔が影の写真は、顔が別の人に置き換わりやすくなります。背景は単純な方が、台座や箱を足したときに崩れません。
 
@@ -1620,7 +1620,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | メイド | \`maid outfit\`, long dress |
 | 鎧 | \`armor\` |
 
-詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide) です。
+詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide)、[眼鏡・メガネ](/guides/glasses-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, cardigan, long skirt,
@@ -1676,7 +1676,7 @@ extra people
 | スタジオ | \`studio lighting\` |
 | 逆光 | \`backlighting\` |
 
-詳しくは [背景プロンプト](/guides/background-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
+詳しくは [背景プロンプト](/guides/background-prompt-guide)、[風景のプロンプト](/guides/landscape-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[雪・冬のプロンプト](/guides/snow-winter-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。人型や巨大なロボットは [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, upper body,
