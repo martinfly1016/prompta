@@ -752,7 +752,7 @@ Keep the subject large and centered. Plain background, soft daylight.
 Avoid: text, watermark, extra fingers, child, underage.
 \`\`\`
 
-文字を画像の中に入れる機能は、記事が「テキストを足す指示に従える」と書いています。長い文章は崩れやすいので、単語を一つから試します。崩れたら、画像の中の文字を諦め、あとから自分で載せてください。
+文字を画像の中に入れる機能は、記事が「テキストを足す指示に従える」と書いています。長い文章は崩れやすいので、単語を一つから試します。崩れたら、画像の中の文字を諦め、あとから自分で載せてください。ロゴの種類と、文字をあとから直す手順は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide) です。SNSやアプリのアイコンとして顔を中央に置く書き方は [アイコンのAIプロンプト](/guides/icon-prompt-guide) です。
 
 \`\`\`
 Create a simple poster with a ceramic cup and the single word HELLO in plain letters.

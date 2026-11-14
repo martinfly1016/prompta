@@ -1328,6 +1328,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '雪 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'flower-prompt-guide',
+    title: '花のプロンプト一覧｜種類・花畑・髪飾り【英語・コピペOK】',
+    description: '花のプロンプトを、一輪や花束や花畑、桜や藤や梅や蓮などの名前、背景の花びらと花のアーチ、大人の髪飾りや花冠、水彩や押し花や植物図まで解説。花びらが溶けるときの直し方と、コピペできる英語タグと自然文つき。',
+    targetKeyword: '花 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'hat-prompt-guide',
+    title: '帽子のプロンプト一覧｜種類・かぶり方・魔女帽子【英語】',
+    description: '帽子のプロンプトを、ベレーやキャップや魔女帽子などの種類、傾けてかぶる・後ろ向き・手に持つ、素材と色、髪との境目、消えるときの重みと範囲の再描画まで解説。大人の着衣の例と自然文つき。',
+    targetKeyword: '帽子 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'animal-pet-prompt-guide',
+    title: '動物・ペットのプロンプト集｜猫・犬・ChatGPT例',
+    description: '動物とペットのプロンプトを、猫の毛色や犬種、ポーズ、写真とイラストとちび、毛並み、大人の飼い主、自分のペット写真をChatGPTやGeminiで描く文、成人の擬人化まで解説。足が増えるときの直し方つき。',
+    targetKeyword: '動物 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'logo-prompt-guide',
+    title: 'ロゴ作成のAIプロンプト｜ChatGPT・Gemini例と注意点',
+    description: 'ロゴのAIプロンプトを、ワードマークやエンブレムなどの種類、フラットや和風のスタイル、白や透明の背景、タイトルロゴ、ChatGPTとGeminiへの頼み方、文字が崩れたあとの確認まで解説。既存ロゴの模倣は避け、商標は利用前に確認します。',
+    targetKeyword: 'ロゴ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'icon-prompt-guide',
+    title: 'アイコンのAIプロンプト｜SNS・自分の写真・アプリ用',
+    description: 'アイコンのAIプロンプトを、SNSのプロフィール、自分の写真をイラストにする頼み方、アニメや水彩、文字なしのアプリアイコン、ペットやゲームの道具、セットで揃えるコツまで解説。推奨サイズは各サービスの案内を確認します。',
+    targetKeyword: 'アイコン プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1727,6 +1762,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'snow-winter-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['clothing', 'camera'],
+  },
+  'flower-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['hairstyle', 'camera'],
+  },
+  'hat-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['clothing', 'costume'],
+  },
+  'animal-pet-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['photo-edit', 'anime'],
+  },
+  'logo-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: [],
+  },
+  'icon-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['anime', 'photo-edit'],
   },
 }
 
