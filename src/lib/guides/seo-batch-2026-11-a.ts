@@ -517,7 +517,7 @@ big eyes は年齢の指定ではありません。\`adult\` とネガティブ�
         title: 'ステッカー・アイコン・グッズ・マスコット',
         content: `用途が決まっていると、頭身は安定しやすくなります。ステッカーは \`sticker\` に、白いフチを white border と自然な英語で足します。公式タグとしては、フチの文を断定しません。公開作例は [ステッカーのポートレート](/prompt/sticker-die-cut-portrait) です。背景は \`white background\` にして、景色を書きません。
 
-アイコンは、胸から上か、顔の周りだけにします。全身のステッカーと、顔のアイコンを一つの文に混ぜると、体が切れた中途半端な枠になります。用途ごとにプロンプトを分けてください。
+アイコンは、胸から上か、顔の周りだけにします。全身のステッカーと、顔のアイコンを一つの文に混ぜると、体が切れた中途半端な枠になります。用途ごとにプロンプトを分けてください。頭身を下げる描き方はこのページです。SNSのプロフィールや、アプリのアイコンとしての使い方は [アイコンのAIプロンプト](/guides/icon-prompt-guide) に分けます。
 
 グッズの台紙に載せるなら、アクリルスタンドは acrylic stand と自然な英語です。フィギュアやぬいぐるみとしての仕上げは [フィギュア化プロンプト](/guides/figure-ai-prompt-guide) にまとめています。このページでは、平面のデフォルメ絵までです。
 
@@ -1620,7 +1620,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | メイド | \`maid outfit\`, long dress |
 | 鎧 | \`armor\` |
 
-詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide)、[眼鏡・メガネ](/guides/glasses-prompt-guide) です。
+詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide)、[眼鏡・メガネ](/guides/glasses-prompt-guide)、[花のプロンプト](/guides/flower-prompt-guide)、[帽子のプロンプト](/guides/hat-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, cardigan, long skirt,
@@ -1676,7 +1676,7 @@ extra people
 | スタジオ | \`studio lighting\` |
 | 逆光 | \`backlighting\` |
 
-詳しくは [背景プロンプト](/guides/background-prompt-guide)、[風景のプロンプト](/guides/landscape-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[雪・冬のプロンプト](/guides/snow-winter-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。人型や巨大なロボットは [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
+詳しくは [背景プロンプト](/guides/background-prompt-guide)、[風景のプロンプト](/guides/landscape-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[雪・冬のプロンプト](/guides/snow-winter-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。花を主題やアクセントにするときは [花のプロンプト](/guides/flower-prompt-guide)、毛のある動物やペットは [動物・ペットのプロンプト](/guides/animal-pet-prompt-guide)、名前と印は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide)、SNSやアプリの枠は [アイコンのAIプロンプト](/guides/icon-prompt-guide) です。人型や巨大なロボットは [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, upper body,

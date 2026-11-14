@@ -585,7 +585,7 @@ long neck, twisted neck, extra knees
 | window light | 窓光 |
 | backlighting | 逆光 |
 
-夕焼けのタグは [夕焼け](/tag/夕焼け) です。屋上や街を上から見せるときは、場所タグに [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) の \`from above\` や \`aerial view\` を足します。`,
+夕焼けのタグは [夕焼け](/tag/夕焼け) です。屋上や街を上から見せるときは、場所タグに [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) の \`from above\` や \`aerial view\` を足します。花畑や桜を人物のうしろに短く置くだけなら、この表の一語で足ります。花の名前、一輪、花びら、髪飾りまでを主題にするときは [花のプロンプト](/guides/flower-prompt-guide) です。`,
       },
       {
         title: '背景だけを描く',
