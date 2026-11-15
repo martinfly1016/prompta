@@ -140,7 +140,7 @@ school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
         title: '魔法使い・魔女',
         content: `魔法使いは、ローブ、帽子、杖の三つで足ります。\`robe\` は長い布です。\`witch hat\` はつばの広い帽子です。\`staff\` は持たせたいとき \`holding staff\` とセットにします。\`staff\` だけだと、杖が背中に浮くことがあります。
 
-効果の光は、杖の先か、床の円陣かのどちらかです。magic circle は自然な英語です。円陣と杖の光を両方強くすると、画面の中央が白く飛んで、ローブの色が消えます。色は青か金かを一つにしてください。魔導書を開くときは spellbook を自然な英語で書き、holding staff とは同時に強くしません。本と杖で手が二本分必要になり、指が融合します。帽子のつばが目を隠すときは、witch hat の重みを下げ、portrait ではなく upper body にして、顔の領域を確保します。男性の魔法使いは 1 adult man, robe, holding staff から書き、帽子は無くても成立します。
+効果の光は、杖の先か、床の円陣かのどちらかです。magic circle は自然な英語です。円陣と杖の光を両方強くすると、画面の中央が白く飛んで、ローブの色が消えます。色は青か金かを一つにしてください。魔導書を開くときは spellbook を自然な英語で書き、holding staff とは同時に強くしません。本と杖で手が二本分必要になり、指が融合します。帽子のつばが目を隠すときは、witch hat の重みを下げ、portrait ではなく upper body にして、顔の領域を確保します。つばの形、傾け方、ほかの帽子との違いは [帽子のプロンプト](/guides/hat-prompt-guide) です。このページでは、ローブと杖と一緒に置く帽子の語を一つにします。男性の魔法使いは 1 adult man, robe, holding staff から書き、帽子は無くても成立します。
 
 杖が棒になるときは、holding staff を robe の直後に置き、本や円陣は外します。持っているものが一つだと、手の形は残りやすいです。
 
