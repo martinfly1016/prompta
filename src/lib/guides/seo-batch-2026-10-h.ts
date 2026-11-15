@@ -1526,7 +1526,7 @@ school uniform, short skirt, revealing clothes, bedroom
         title: '小物とモチーフ',
         content: `小物は二つまでです。三つを同じ強さにすると、手が全部を持とうとして指が増えます。
 
-\`gift box\` は箱、\`candy cane\` は杖の砂糖菓子、\`holly\` はひいらぎです。ケーキは christmas cake、ジンジャーブレッドは gingerbread、食卓のキャンドルは candle on a table と自然な英語です。公式タグとしては断定しません。キャンドルは食卓に置き、寝室や浴室には置きません。
+\`gift box\` は箱、\`candy cane\` は杖の砂糖菓子、\`holly\` はひいらぎです。ケーキは christmas cake、ジンジャーブレッドは gingerbread、食卓のキャンドルは candle on a table と自然な英語です。公式タグとしては断定しません。ケーキそのものの盛りや角度は [料理・食べ物のプロンプト](/guides/food-prompt-guide) です。このページでは、クリスマスの食卓にケーキを一つ置くところまでです。キャンドルは食卓に置き、寝室や浴室には置きません。
 
 \`reindeer\` はトナカイ、\`snowflakes\` は雪の結晶です。トナカイを人と同時に大きく描くと、人が小さくなります。人を主にする回は、トナカイを背景の小物にしてください。
 

@@ -1363,6 +1363,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: 'アイコン プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'room-prompt-guide',
+    title: '部屋のプロンプト一覧｜明るい・豪華・配信部屋【英語】',
+    description: '部屋のプロンプトを、明るい部屋や豪華な部屋、和室、ワンルーム、配信部屋、窓のない部屋まで種類別に解説。家具と窓、広さ、室内のカメラ、部屋にいる大人、部屋だけの背景、家具が歪むときの直し方と、コピペできる英語タグと自然文つき。暗い室内は別ページです。',
+    targetKeyword: '部屋 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'food-prompt-guide',
+    title: '料理・食べ物のプロンプト集｜和食・スイーツ・調理シーン',
+    description: '料理と食べ物のプロンプトを、ラーメンや寿司やカレー、中華、鍋、おせち、ケーキやパフェの盛り付け、真上や斜めや接写、湯気、イラストと水彩、大人が調理する・運ぶ・差し出す場面まで解説。色や箸が崩れるときの直し方と自然文つき。',
+    targetKeyword: '料理 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'hoodie-prompt-guide',
+    title: 'パーカーのプロンプト｜フード・ジップ・オーバーサイズ',
+    description: 'パーカーのプロンプトを、プルオーバー、ジップ、オーバーサイズ、マウンテンパーカーとの違い、無地と文字なしの柄、フードの上げ下げ、長い袖、ジャケットの下の重ね着、色と素材まで解説。大人の着こなしと、フードや紐が崩れるときの直し方つき。',
+    targetKeyword: 'パーカー プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'coat-prompt-guide',
+    title: 'コートのプロンプト一覧｜ロング・ダッフル・肩掛け【英語】',
+    description: 'コートのプロンプトを、トレンチ、ロング、ダッフル、ピーコート、ダウン、ファーの縁、モッズ、チェスター、フード付き、肩掛けまで種類別に解説。前の開閉、風、冬の組み合わせ、大人の全身の例と、形が混ざるときの直し方つき。',
+    targetKeyword: 'コート プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'city-town-prompt-guide',
+    title: '街のプロンプト一覧｜住宅街・商店街・ファンタジー背景',
+    description: '街のプロンプトを、住宅街、商店街、繁華街、オフィス街、高層の建物、中華街風、古い町、ヨーロッパ風、ファンタジー、近未来の夜まで解説。時間と天候、路上や俯瞰や屋上、歩く大人、背景だけ、看板の文字と建物の歪みの直し方つき。',
+    targetKeyword: '街 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1782,6 +1817,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'icon-prompt-guide': {
     tools: ['chatgpt', 'gemini', 'stable-diffusion'],
     categories: ['anime', 'photo-edit'],
+  },
+  'room-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
+  },
+  'food-prompt-guide': {
+    tools: ['chatgpt', 'gemini', 'stable-diffusion'],
+    categories: ['camera'],
+  },
+  'hoodie-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['clothing', 'costume'],
+  },
+  'coat-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['clothing', 'costume'],
+  },
+  'city-town-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
   },
 }
 
