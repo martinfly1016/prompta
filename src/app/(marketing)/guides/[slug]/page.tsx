@@ -23,6 +23,7 @@ import { SEO_BATCH_15_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-g'
 import { SEO_BATCH_16_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-h'
 import { SEO_BATCH_17_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-i'
 import { SEO_BATCH_18_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-j'
+import { SEO_BATCH_19_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-k'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -85,6 +86,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_16_GUIDE_CONTENT,
   ...SEO_BATCH_17_GUIDE_CONTENT,
   ...SEO_BATCH_18_GUIDE_CONTENT,
+  ...SEO_BATCH_19_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
