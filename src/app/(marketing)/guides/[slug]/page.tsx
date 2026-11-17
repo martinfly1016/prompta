@@ -24,6 +24,7 @@ import { SEO_BATCH_16_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-h'
 import { SEO_BATCH_17_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-i'
 import { SEO_BATCH_18_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-j'
 import { SEO_BATCH_19_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-k'
+import { SEO_BATCH_20_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-l'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -87,6 +88,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_17_GUIDE_CONTENT,
   ...SEO_BATCH_18_GUIDE_CONTENT,
   ...SEO_BATCH_19_GUIDE_CONTENT,
+  ...SEO_BATCH_20_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -3290,7 +3292,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 - 高齢者介護・リハビリの現場でレクリエーション素材を必要としているスタッフ
 - 線画を出発点にデジタル彩色（クリスタ・Procreate）を学びたいイラスト学習者
 
-**AI 塗り絵の最大のメリット**は (1) **無料**（API 無料枠 + Stable Diffusion ローカル実行）、(2) **オリジナル**（市販品にない自由なテーマ）、(3) **難易度調整**（thick outline で簡単 / fine detail で本格）。一方デメリットは (a) 著作権リスクのあるキャラ（ポケモン・ディズニーなど）の生成は推奨されず、(b) 印刷向け解像度設定（300 DPI / A4 サイズ）に少しコツが必要な点です。本ガイドではこの 2 点を含め、すぐ使えるテンプレートと注意点を実例つきで解説します。`,
+**AI 塗り絵の最大のメリット**は (1) **無料**（API 無料枠 + Stable Diffusion ローカル実行）、(2) **オリジナル**（市販品にない自由なテーマ）、(3) **難易度調整**（thick outline で簡単 / fine detail で本格）。一方デメリットは (a) 著作権リスクのあるキャラ（ポケモン・ディズニーなど）の生成は推奨されず、(b) 印刷向け解像度設定（300 DPI / A4 サイズ）に少しコツが必要な点です。本ガイドではこの 2 点を含め、すぐ使えるテンプレートと注意点を実例つきで解説します。線の太さや、色を塗る前の線画全般は [線画のプロンプト](/guides/line-art-prompt-guide) です。このページは、塗り絵として印刷する線を担当します。`,
       },
       {
         title: '塗り絵プロンプトの基本テンプレート — どのツールでもこの型',

@@ -18,7 +18,7 @@ export const SEO_BATCH_17_GUIDE_CONTENT: Record<string, GuideArticle> = {
         title: '花は主題か、飾りか、背景かを分ける',
         content: `「花 プロンプト」「背景 花 プロンプト」「髪飾り 花 プロンプト」で探しているのは、花そのものを描く語と、うしろに置く語と、大人の髪や手元に一点だけ乗せる語です。検索では、髪飾りの花、藤、頭に花、背景の花、一輪、梅、たくさんの花、蓮が一緒に出ます。花束、花畑、接写、舞う花びら、花のアーチ、水彩、押し花、植物図、写真のように撮った花も、同じ依頼の中に入ります。
 
-このページは、花が主題のときと、花が髪や手元のアクセントのときを担当します。山や海や街が主役の景色は [風景のプロンプト](/guides/landscape-prompt-guide) です。人物のうしろに場所を短く置くときは [背景プロンプト](/guides/background-prompt-guide) です。役割は一行で分けます。景色のページは地形、背景のページは人物のうしろ、このページは花です。髪の長さと結びは [髪型プロンプト](/guides/hairstyle-prompt-guide)、ネックレスや簪の素材は [アクセサリープロンプト](/guides/accessory-prompt-guide)、塗りの媒体の全体は [画風プロンプト](/guides/art-style-prompt-guide)、着物の袖と帯は [着物プロンプト](/guides/kimono-prompt-guide) です。
+このページは、花が主題のときと、花が髪や手元のアクセントのときを担当します。山や海や街が主役の景色は [風景のプロンプト](/guides/landscape-prompt-guide) です。人物のうしろに場所を短く置くときは [背景プロンプト](/guides/background-prompt-guide) です。役割は一行で分けます。景色のページは地形、背景のページは人物のうしろ、このページは花です。髪の長さと結びは [髪型プロンプト](/guides/hairstyle-prompt-guide)、ネックレスや簪の素材は [アクセサリープロンプト](/guides/accessory-prompt-guide)、塗りの媒体の全体は [画風プロンプト](/guides/art-style-prompt-guide)、着物の袖と帯は [着物プロンプト](/guides/kimono-prompt-guide) です。花を水彩にする媒体の細目は [水彩のプロンプト](/guides/watercolor-prompt-guide) です。このページは、花の種類を担当します。
 
 花だけの枚には人数を書きません。人がいる枚は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、シャツ、ロングスカート、着物のように、閉じて丈のある日常着です。実在の人物、作品名、作者名は書きません。
 
@@ -1298,7 +1298,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, person, letters, text
         title: 'アイコンは使い方、ちびは頭身',
         content: `「アイコン プロンプト」「sns アイコン プロンプト」「ai アイコン プロンプト」で探しているのは、プロフィール、自分の写真、アプリ、ペット、ゲームの道具を、小さい枠で見えるように書くことです。検索では、AI のアイコン、イラストのアイコン、メッセージ用の丸い絵、アプリのアイコン、ChatGPT、生成AIが一緒に出ます。
 
-このページは、枠と余白と用途を担当します。頭と体の比率は [デフォルメ・ちびキャラ](/guides/chibi-deformed-prompt-guide) です。役割は一行で分けます。ちびのページは描き方、このページはアイコンとしての使い方です。塗りの名前は [画風プロンプト](/guides/art-style-prompt-guide)、顔の向きは [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide)、書類に出す写真は [証明写真プロンプト](/guides/id-photo-ai-prompt-guide) です。名前と印は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide)、ペットの種類と毛色は [動物・ペットのプロンプト](/guides/animal-pet-prompt-guide) です。
+このページは、枠と余白と用途を担当します。頭と体の比率は [デフォルメ・ちびキャラ](/guides/chibi-deformed-prompt-guide) です。役割は一行で分けます。ちびのページは描き方、このページはアイコンとしての使い方です。枠の中をドット絵にするときは [ドット絵のプロンプト](/guides/pixel-art-prompt-guide) です。塗りの名前は [画風プロンプト](/guides/art-style-prompt-guide)、顔の向きは [目線・視線のプロンプト一覧](/guides/gaze-direction-prompt-guide)、書類に出す写真は [証明写真プロンプト](/guides/id-photo-ai-prompt-guide) です。名前と印は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide)、ペットの種類と毛色は [動物・ペットのプロンプト](/guides/animal-pet-prompt-guide) です。
 
 人がいる枚は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はブラウス、カーディガン、シャツのように閉じた日常着です。胸から上で、顔を中央に置きます。実在の他人、作品のキャラクター、作者名は書きません。自分の写真を使うときだけ、本人の顔を残すよう頼んでください。
 

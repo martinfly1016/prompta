@@ -1266,7 +1266,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, logo, text
         title: "街は種類を一つに決める",
         content: `「街 プロンプト」「背景 街 プロンプト」で探しているのは、通りの種類と、時間と、見る位置です。検索では、住宅街、繁華街、商店街、中華街、ビルの並ぶ街、オフィス街、ファンタジーの街、背景としての街が一緒に出ます。夜の明かり、雨、夕日、路上、俯瞰、屋上も、同じ依頼の中に入ります。
 
-このページは、街と通りを主題にします。山や海や空が主役の景色は [風景のプロンプト](/guides/landscape-prompt-guide) です。役割は一行で分けます。風景のページは地形と空、このページは通りと建物の並びです。通りに停めた車、車内、電車や機関車は [車のプロンプト](/guides/car-vehicle-prompt-guide) です。このページは、通りと建物の並びを担当します。人物のうしろに場所を短く置くときは [背景プロンプト](/guides/background-prompt-guide)、遠くの通行人は [モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。
+このページは、街と通りを主題にします。山や海や空が主役の景色は [風景のプロンプト](/guides/landscape-prompt-guide) です。役割は一行で分けます。風景のページは地形と空、このページは通りと建物の並びです。通りに停めた車、車内、電車や機関車は [車のプロンプト](/guides/car-vehicle-prompt-guide) です。このページは、通りと建物の並びを担当します。建物の屋上、金網、貯水槽、屋上庭園は [屋上のプロンプト](/guides/rooftop-prompt-guide) です。人物のうしろに場所を短く置くときは [背景プロンプト](/guides/background-prompt-guide)、遠くの通行人は [モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。
 
 人のいない枚には人数を書きません。歩く枚は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。服はコート、シャツ、スラックス、ロングスカートのように閉じた日常着です。実在の都市名、店名、作品名、作者名は書きません。看板の文字も書きません。
 
