@@ -1059,7 +1059,7 @@ school uniform, short skirt, hair over eyes, ponytail
 
 登場人物は大人だけです。\`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。子どもの行事の着物は扱いません。着崩した状態では書きません。衿の左右は、最後の節で確認する項目にしています。
 
-和服のコスプレ全般のうち、巫女は [コスプレプロンプト](/guides/cosplay-prompt-guide) に任せ、このページでは着物の種類を分けます。洋装のドレスは [ドレスプロンプト](/guides/dress-prompt-guide) です。
+和服のコスプレ全般のうち、巫女は [コスプレプロンプト](/guides/cosplay-prompt-guide) に任せ、このページでは着物の種類を分けます。洋装のドレスは [ドレスプロンプト](/guides/dress-prompt-guide) です。白無垢や色打掛を式の場面、角隠し、綿帽子、新郎の並びまで書くときは [ウェディングのプロンプト](/guides/wedding-prompt-guide) です。このページは、着物の種類そのものを担当します。
 
 **普段の着物**
 

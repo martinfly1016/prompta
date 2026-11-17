@@ -1072,7 +1072,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
 
 成人の仕事着として、\`suit jacket, white dress shirt, necktie, trousers\` までを一組にします。\`formal\` はフォーマルさのタグです。これだけで袖の長さや襟の左右は決まりません。
 
-白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。男性キャラのスーツ・私服の並べ方は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。私服やコートを含む服装全般は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
+白衣は \`lab coat\` です。下に着るシャツを書かないと、白衣自体がワンピースになります。コスプレ全般の衣装の分け方は [コスプレプロンプト](/guides/cosplay-prompt-guide)、背の高さで全身を見せるときは [高身長プロンプト](/guides/tall-height-prompt-guide) です。ドレスの種類は [ドレスプロンプト](/guides/dress-prompt-guide) です。挙式のタキシード、モーニング、花嫁と並ぶ場面は [ウェディングのプロンプト](/guides/wedding-prompt-guide) です。このページは、仕事のスーツと白衣の部品を担当します。男性キャラのスーツ・私服の並べ方は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。私服やコートを含む服装全般は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
 
 **パーツを書いたスーツ**
 

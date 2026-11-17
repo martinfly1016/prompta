@@ -1398,6 +1398,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '街 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'wedding-prompt-guide',
+    title: 'ウェディングのプロンプト｜ドレス・白無垢・タキシード',
+    description: 'ウェディングのプロンプトを、肩から裾まで布があるドレスの形、ベールや花束、白無垢と色打掛、タキシードと紋付袴、チャペルや庭や神社の成人二人の場面まで解説。会場だけの背景と、ベールや指が崩れるときの直し方、文章で頼む例つき。',
+    targetKeyword: 'ウェディングドレス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'forest-prompt-guide',
+    title: '森のプロンプト一覧｜森の中・暗い森・夜の森【英語】',
+    description: '森のプロンプトを、深い森や竹林、針葉樹、秋、霧、密林、木漏れ日、夜の森、道や川や空き地、森を歩く大人、背景だけの森、光るキノコまで解説。木が平らになるときと暗すぎるときの直し方と、文章で頼む例つき。',
+    targetKeyword: '森 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'shoes-prompt-guide',
+    title: '靴のプロンプト一覧｜種類・厚底・ブーツ【英語】',
+    description: '靴のプロンプトを、スニーカーやローファー、パンプス、ブーツ、厚底、下駄や草履まで種類別に解説。全身で横から見せる書き方、印のない商品写真、服との合わせ、街や仕事や雨の大人の例と、左右が揃わないときの直し方つき。',
+    targetKeyword: '靴 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'magic-prompt-guide',
+    title: '魔法のプロンプト一覧｜属性・魔法陣・杖【英語】',
+    description: '魔法のプロンプトを、詠唱の姿勢、光の玉や魔法陣や手からの光、炎や氷などの属性、長い杖と短い杖、魔導書、大人のローブ、塔の書庫まで解説。光が顔を隠すときと手が崩れるときの直し方と、文章で頼む例つき。',
+    targetKeyword: '魔法 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'car-vehicle-prompt-guide',
+    title: '車のプロンプト一覧｜車内・スポーツカー・電車【英語】',
+    description: '車のプロンプトを、セダンやスポーツカー、ワゴン、バス、蒸気機関車、電車の室内まで種類別に解説。車内の大人、道路の流れ、夜の街、印のない模型、ChatGPTやGemini向けの文章と、車輪や文字が崩れるときの直し方つき。',
+    targetKeyword: '車 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1836,6 +1871,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   },
   'city-town-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
+  },
+  'wedding-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['clothing', 'costume'],
+  },
+  'forest-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['camera'],
+  },
+  'shoes-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['clothing', 'costume'],
+  },
+  'magic-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['costume', 'anime'],
+  },
+  'car-vehicle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['camera'],
   },
 }

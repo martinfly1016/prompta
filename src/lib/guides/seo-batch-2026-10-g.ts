@@ -27,7 +27,7 @@ export const SEO_BATCH_7_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 登場人物は大人だけです。人数は \`1 adult woman\` か \`1 adult man\` から書き、\`adult\` を残します。作品名、スタジオ名、実在の人物名は書きません。中世ヨーロッパ風のRPG、と場所の雰囲気で足ります。特定作品の衣装を要素に分ける考え方は [コスプレプロンプト](/guides/cosplay-prompt-guide) です。
 
-アニメ塗りと写真の切り替えは [画風プロンプト](/guides/art-style-prompt-guide)、全身で見せる角度は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、立ち方は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。作例の並びは [服装プロンプト集](/prompts/clothing)、タグは [ファンタジー衣装](/tag/ファンタジー衣装) です。現代の私服やコートのタグは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。現代の長いコートや、肩に掛ける外着は [コートのプロンプト](/guides/coat-prompt-guide) です。このページのマントは、職業の衣装の部品です。人型や巨大なロボットの装甲と関節は [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。このページは布と鎧の衣装です。
+アニメ塗りと写真の切り替えは [画風プロンプト](/guides/art-style-prompt-guide)、全身で見せる角度は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide)、立ち方は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。作例の並びは [服装プロンプト集](/prompts/clothing)、タグは [ファンタジー衣装](/tag/ファンタジー衣装) です。現代の私服やコートのタグは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。現代の長いコートや、肩に掛ける外着は [コートのプロンプト](/guides/coat-prompt-guide) です。このページのマントは、職業の衣装の部品です。ローブの上に乗せる詠唱、属性、魔法陣、杖の使い分けは [魔法のプロンプト](/guides/magic-prompt-guide) です。このページは、職業の衣装を担当します。人型や巨大なロボットの装甲と関節は [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。このページは布と鎧の衣装です。
 
 **職業から背景までの型**
 
@@ -1058,7 +1058,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, text, letters, extra person, school
 
 種類の語は人物の直後です。色を先に強くすると、形より色面が勝ち、袖の長さが無視されます。最初の一手は、種類を一つ、丈を一つです。効いたら素材か色を足します。
 
-登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。日常のトップスやボトムスは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。
+登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。日常のトップスやボトムスは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。結婚式のドレス、白無垢、タキシード、式の場面は [ウェディングのプロンプト](/guides/wedding-prompt-guide) です。このページは、式以外のドレスの種類と丈を担当します。
 
 **種類から装飾まで**
 
