@@ -489,7 +489,7 @@ long neck, twisted neck, extra knees
     sections: [
       {
         title: '背景プロンプトは場所を一つに決める',
-        content: `「背景 プロンプト」で必要なのは、人物のうしろに何が見えるかの英語です。場所を二つ同時に強くすると、教室なのに森が混ざる、といった絵になります。場所を一つ、時間か光を一つ、という順で足してください。このページは人物のうしろの場所です。風景そのものが主題の山や海や夜景は [風景のプロンプト](/guides/landscape-prompt-guide)、雪の降り方や冬の景色は [雪・冬のプロンプト](/guides/snow-winter-prompt-guide) です。室内の種類と家具は [部屋のプロンプト](/guides/room-prompt-guide)、住宅街や商店街やファンタジーの通りは [街のプロンプト](/guides/city-town-prompt-guide) です。森そのもの、暗い森、夜の森、木漏れ日は [森のプロンプト](/guides/forest-prompt-guide) です。このページでは、人物のうしろに森を短く置くところまでです。
+        content: `「背景 プロンプト」で必要なのは、人物のうしろに何が見えるかの英語です。場所を二つ同時に強くすると、教室なのに森が混ざる、といった絵になります。場所を一つ、時間か光を一つ、という順で足してください。このページは人物のうしろの場所です。風景そのものが主題の山や海や夜景は [風景のプロンプト](/guides/landscape-prompt-guide)、雪の降り方や冬の景色は [雪・冬のプロンプト](/guides/snow-winter-prompt-guide) です。室内の種類と家具は [部屋のプロンプト](/guides/room-prompt-guide)、住宅街や商店街やファンタジーの通りは [街のプロンプト](/guides/city-town-prompt-guide) です。森そのもの、暗い森、夜の森、木漏れ日は [森のプロンプト](/guides/forest-prompt-guide) です。このページでは、人物のうしろに森を短く置くところまでです。屋上をうしろに短く置くときも、場所は一つです。屋上の部品そのものは [屋上のプロンプト](/guides/rooftop-prompt-guide) です。
 
 人物のうしろに背景を付ける場合と、背景だけを描く場合ではネガティブが違います。写真から背景を消す・置き換える作業は生成とは別で、[背景削除](/prompt/background-removal-transparent-png) と [スタジオ背景への置き換え](/prompt/background-replace-studio-neutral) が写真加工側の実例です。
 

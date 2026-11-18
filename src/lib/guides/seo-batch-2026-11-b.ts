@@ -316,7 +316,7 @@ ChatGPT や Gemini、FLUX のように文で指示する画面に \`<lora:>\` �
 
 人物は \`1 adult woman\` か \`1 adult man\`、二人なら \`2 adults\` から書き、\`adult\` を残します。服は閉じた日常着です。タグだけで姿勢を書く入口は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt)、画面に入る範囲は [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。参照のポーズ作例は [正面を向いたポーズ](/prompt/pose-correct-face-forward) です。画素を残して描き直す手順は [img2imgの使い方](/guides/img2img-guide) です。ノードで組むときは [ComfyUIの使い方](/guides/comfyui-guide)、欄のある画面は [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。
 
-ControlNet のモデルは、チェックポイントのベースと一致させます。SD 1.5 用を SDXL に載せても、構造は乗りません。FLUX には、ControlNet とは別の Canny と Depth のモデルが公式リポジトリにあります。系統を混ぜないでください。土台の見分けは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。`,
+ControlNet のモデルは、チェックポイントのベースと一致させます。SD 1.5 用を SDXL に載せても、構造は乗りません。FLUX には、ControlNet とは別の Canny と Depth のモデルが公式リポジトリにあります。系統を混ぜないでください。土台の見分けは [Stable Diffusionモデル一覧](/guides/stable-diffusion-model-list) です。線画そのもののタグ、太い線と細い線、色を消す書き方は [線画のプロンプト](/guides/line-art-prompt-guide) です。このページは、参照画像で形を渡す手順を担当します。`,
       },
       {
         title: '種類と目的別の早見',

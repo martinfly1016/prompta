@@ -1433,6 +1433,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '車 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'line-art-prompt-guide',
+    title: '線画のプロンプト一覧｜太い線と細い線',
+    description: '線画のプロンプトを、太い線と細い線、白い背景、影を消すネガティブ、色の線、塗り絵の輪郭、大人の人物と物と背景だけ、ChatGPTやGeminiへの文章、自分の写真を線にする頼み方、ControlNetの線の前処理まで解説。灰色のにじみや途切れた線の直し方つき。',
+    targetKeyword: '線画 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'pixel-art-prompt-guide',
+    title: 'ドット絵のプロンプト｜スプライトとタイル',
+    description: 'ドット絵のプロンプトを、ピクセルアートや粗い粒と少し細かい粒の語感、限られた色、ディザ、大人のスプライト、道具のアイコン、背景タイル、斜め上の部屋まで解説。ChatGPTやGeminiの文章と、ぼやけた縁を画像編集で粒に揃える一般的な直し方つき。',
+    targetKeyword: 'ドット絵 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'thick-paint-prompt-guide',
+    title: '厚塗りのプロンプト｜筆致と光の英語',
+    description: '厚塗りのプロンプトを、アニメ塗りや水彩との違い、英語の筆致タグ、NovelAIとStable Diffusionと文章での頼み方、大人の肖像やファンタジー、静物、景色、光の組み合わせまで解説。色が濁るときと肌がのっぺりするときの直し方つき。',
+    targetKeyword: '厚塗り プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'watercolor-prompt-guide',
+    title: '水彩のプロンプト一覧｜透明水彩とにじみ',
+    description: '水彩のプロンプトを、透明水彩と不透明の違い、にじみと紙の質感、大人の肖像、花、景色、食べ物、動物、葉書、線と淡い塗りまで解説。写真に寄るときと紙目が消えるときの直し方と、文章で頼む例つき。',
+    targetKeyword: '水彩 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'rooftop-prompt-guide',
+    title: '屋上のプロンプト一覧｜夜景と屋上庭園',
+    description: '屋上のプロンプトを、金網や手すりや貯水槽や階段室の扉、屋上庭園やテラス、夕景や夜景や雨、大人の立ち姿や会話や休憩や屋上のカフェ、背景だけまで解説。柵が体に溶けるときと街のパースが歪むときの直し方つき。',
+    targetKeyword: '屋上 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1891,6 +1926,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   },
   'car-vehicle-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['camera'],
+  },
+  'line-art-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['anime', 'color'],
+  },
+  'pixel-art-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['anime', 'color'],
+  },
+  'thick-paint-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
+    categories: ['anime', 'color'],
+  },
+  'watercolor-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['anime', 'color'],
+  },
+  'rooftop-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
     categories: ['camera'],
   },
 }

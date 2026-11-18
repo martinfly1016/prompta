@@ -409,7 +409,7 @@ Gemini に自分の写真を渡す回は、新規に描く回とプロンプト�
 
 基本の並びは、人数、デフォルメ、全身、単純な背景です。背景が細かいと、頭身より小物が優先されて、体が普通の比率に戻ります。
 
-画風の媒体そのものは [画風プロンプト](/guides/art-style-prompt-guide)、アニメ塗りの全般は [アニメプロンプト](/guides/anime-prompt-guide) です。タグの入口は [ちび](/tag/ちび) です。
+画風の媒体そのものは [画風プロンプト](/guides/art-style-prompt-guide)、アニメ塗りの全般は [アニメプロンプト](/guides/anime-prompt-guide) です。頭身を下げたドットの絵は [ドット絵のプロンプト](/guides/pixel-art-prompt-guide) です。このページは、頭身を担当します。タグの入口は [ちび](/tag/ちび) です。
 
 **タグの型**
 
@@ -1433,7 +1433,7 @@ ChatGPT や Gemini では自然文、Stable Diffusion や NovelAI ではタグ�
 | 水彩 | watercolor（自然な英語） |
 | 線画 | \`lineart\` |
 
-詳しくは [画風プロンプト](/guides/art-style-prompt-guide)、[アニメプロンプト](/guides/anime-prompt-guide)、[Illustriousプロンプト](/guides/illustrious-prompt-guide)、[Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。色の名前は [色プロンプト](/guides/color-prompt-guide)、ツール側の書き方は [Midjourneyプロンプト](/guides/midjourney-prompt-guide) です。
+詳しくは [画風プロンプト](/guides/art-style-prompt-guide)、[アニメプロンプト](/guides/anime-prompt-guide)、[Illustriousプロンプト](/guides/illustrious-prompt-guide)、[Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。色の名前は [色プロンプト](/guides/color-prompt-guide)、ツール側の書き方は [Midjourneyプロンプト](/guides/midjourney-prompt-guide) です。線の太さは [線画のプロンプト](/guides/line-art-prompt-guide)、粒で描くときは [ドット絵のプロンプト](/guides/pixel-art-prompt-guide)、筆の厚みは [厚塗りのプロンプト](/guides/thick-paint-prompt-guide)、紙のにじみは [水彩のプロンプト](/guides/watercolor-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, anime style, cel shading, flat color,
@@ -1676,7 +1676,7 @@ extra people
 | スタジオ | \`studio lighting\` |
 | 逆光 | \`backlighting\` |
 
-詳しくは [背景プロンプト](/guides/background-prompt-guide)、[風景のプロンプト](/guides/landscape-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[雪・冬のプロンプト](/guides/snow-winter-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。花を主題やアクセントにするときは [花のプロンプト](/guides/flower-prompt-guide)、毛のある動物やペットは [動物・ペットのプロンプト](/guides/animal-pet-prompt-guide)、名前と印は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide)、SNSやアプリの枠は [アイコンのAIプロンプト](/guides/icon-prompt-guide) です。部屋の種類は [部屋のプロンプト](/guides/room-prompt-guide)、通りや街は [街のプロンプト](/guides/city-town-prompt-guide)、皿の料理は [料理・食べ物のプロンプト](/guides/food-prompt-guide) です。人型や巨大なロボットは [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。森の種類は [森のプロンプト](/guides/forest-prompt-guide)、詠唱と属性の魔法は [魔法のプロンプト](/guides/magic-prompt-guide)、車や電車は [車のプロンプト](/guides/car-vehicle-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
+詳しくは [背景プロンプト](/guides/background-prompt-guide)、[風景のプロンプト](/guides/landscape-prompt-guide)、[モブ・群衆のプロンプト](/guides/mob-crowd-prompt-guide)、[暗い部屋](/guides/dark-room-prompt-guide)、[光・照明](/guides/lighting-prompt-guide)、[エフェクトのプロンプト](/guides/effect-prompt-guide)、[雪・冬のプロンプト](/guides/snow-winter-prompt-guide)、[クリスマス](/guides/christmas-prompt-guide)、[年賀状](/guides/new-year-card-ai-prompt-guide)、[証明写真](/guides/id-photo-ai-prompt-guide)、[フィギュア化](/guides/figure-ai-prompt-guide)、[ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide)、[塗り絵](/guides/ai-coloring-page-prompt)、[画像から動画](/guides/image-to-video-ai-prompt-guide) です。花を主題やアクセントにするときは [花のプロンプト](/guides/flower-prompt-guide)、毛のある動物やペットは [動物・ペットのプロンプト](/guides/animal-pet-prompt-guide)、名前と印は [ロゴ作成のAIプロンプト](/guides/logo-prompt-guide)、SNSやアプリの枠は [アイコンのAIプロンプト](/guides/icon-prompt-guide) です。部屋の種類は [部屋のプロンプト](/guides/room-prompt-guide)、通りや街は [街のプロンプト](/guides/city-town-prompt-guide)、皿の料理は [料理・食べ物のプロンプト](/guides/food-prompt-guide) です。人型や巨大なロボットは [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。森の種類は [森のプロンプト](/guides/forest-prompt-guide)、詠唱と属性の魔法は [魔法のプロンプト](/guides/magic-prompt-guide)、車や電車は [車のプロンプト](/guides/car-vehicle-prompt-guide) です。建物の屋上は [屋上のプロンプト](/guides/rooftop-prompt-guide) です。男性のキャラ全体は [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide)、Gemini の文例は [Geminiプロンプト集](/guides/gemini-prompt-collection) です。この入口自身は [AIイラストの呪文一覧](/guides/ai-illustration-prompt-list) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, upper body,
