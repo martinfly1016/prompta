@@ -143,7 +143,7 @@ school uniform, short skirt, photorealistic, watercolor (medium)
 
 **漫画の一コマ**
 
-スクリーントーンは screentone、コマ割りは manga panel と、自然な英語で書きます。公式タグとしては断定しません。文字はネガティブの \`text\` で抑えます。吹き出しの中の文は書きません。
+スクリーントーンは screentone、コマ割りは manga panel と、自然な英語で書きます。公式タグとしては断定しません。文字はネガティブの \`text\` で抑えます。吹き出しの中の文は書きません。枠を足す日と、一枚絵が割れるのを止める日は [コマ割りのプロンプト](/guides/manga-panel-prompt-guide) です。
 
 \`\`\`
 1 adult woman, black hair, long hair, white blouse,
@@ -310,7 +310,7 @@ school uniform, short skirt, photorealistic, anime coloring
         title: 'ロングヘアプロンプトの基本',
         content: `「ロングヘア プロンプト」「ストレートヘア プロンプト」は、長さ、質感、前髪、色の順に書きます。長さを最後に置くと、服の指定に負けて肩で止まります。\`long hair\` を髪色の直後に置いてください。
 
-質感は straight hair のように長さのうしろです。前髪は [前髪プロンプト](/guides/bangs-prompt-guide)、色の名前の一覧は [髪色プロンプト](/guides/hair-color-prompt-guide) です。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、作例のタグは [ロングヘア](/tag/ロングヘア) です。上半分だけ結ぶ書き方は [ハーフアップのプロンプト](/guides/half-up-hair-prompt-guide) です。
+質感は straight hair のように長さのうしろです。前髪は [前髪プロンプト](/guides/bangs-prompt-guide)、色の名前の一覧は [髪色プロンプト](/guides/hair-color-prompt-guide) です。金髪の色味は [金髪のプロンプト](/guides/blonde-hair-prompt-guide) です。髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide)、作例のタグは [ロングヘア](/tag/ロングヘア) です。上半分だけ結ぶ書き方は [ハーフアップのプロンプト](/guides/half-up-hair-prompt-guide) です。
 
 登場人物は大人です。\`1 adult woman\` から書き、\`adult\` を残します。服はブラウスやジャケットなど、大人の日常着を一つ足します。
 
@@ -1096,7 +1096,7 @@ school uniform, short skirt, dress
 | 振袖 | \`furisode\` | \`long sleeves\`, \`wide sleeves\`, \`kanzashi\` |
 | 袴 | \`hakama\`, \`hakama skirt\` | 上の着物かブラウス |
 | 羽織 | \`haori\` | 着物の上。男性の礼装でも使う |
-| 巫女 | \`miko\` | 詳細は [コスプレプロンプト](/guides/cosplay-prompt-guide) |
+| 巫女 | \`miko\` | 部品と境内は [巫女のプロンプト](/guides/miko-prompt-guide)。衣装の入口は [コスプレプロンプト](/guides/cosplay-prompt-guide) |
 | 白無垢 | white wedding kimono | 自然な英語。shiromuku も自然な英語 |
 | 打ち掛け | uchikake | 自然な英語。白無垢の上に重ねるときだけ |
 | 小紋 | komon | 自然な英語。\`floral print\` と一緒に |

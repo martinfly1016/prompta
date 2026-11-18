@@ -802,56 +802,17 @@ Midjourney 向けのパラメータは [Midjourneyプロンプト](/guides/midjo
         title: 'アクセサリープロンプトの基本',
         content: `「ネックレス プロンプト」「アクセサリー プロンプト」は、小さな金属や石が顔や服に負ける、という失敗から始まります。書く順は、部位、素材、構図です。\`necklace\` だけでは鎖が服の模様になることがあります。\`gold necklace\` のように素材を付け、\`portrait\` か \`upper body\` で首元を大きくしてください。
 
-全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。帽子やバッグを含む日常の服装は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。眼鏡の形、反射、ずれたかけ方は [眼鏡・メガネのプロンプト](/guides/glasses-prompt-guide) に分けました。花の髪飾りと花冠は [花のプロンプト](/guides/flower-prompt-guide)、帽子の種類とかぶり方は [帽子のプロンプト](/guides/hat-prompt-guide) です。このページでは、花と帽子の名前は短く触れるだけにします。このページはネックレスや指輪などの装身具です。
+全身と同時に強くすると、石は点になります。まず胸から上です。素材の色が服に移るときは [色プロンプト](/guides/color-prompt-guide)、髪に付けるものは [髪型プロンプト](/guides/hairstyle-prompt-guide) と分けます。帽子やバッグを含む日常の服装は [服装プロンプト一覧](/guides/clothing-prompt-guide) です。眼鏡の形、反射、ずれたかけ方は [眼鏡・メガネのプロンプト](/guides/glasses-prompt-guide) に分けました。花の髪飾りと花冠は [花のプロンプト](/guides/flower-prompt-guide)、帽子の種類とかぶり方は [帽子のプロンプト](/guides/hat-prompt-guide) です。このページでは、花と帽子の名前は短く触れるだけにします。ネックレスの種類、素材、モチーフは [ネックレスのプロンプト](/guides/necklace-prompt-guide) です。このページはイヤリング、指輪、ブレスレット、髪飾りです。
 
 人物は成人です。ピアスは耳だけにします。首輪のような小物は扱いません。
 
-**金のネックレス、上半身**
-
-\`\`\`
-1 adult woman, portrait, upper body, gold necklace, pendant,
-white blouse, simple background, soft daylight, looking at viewer
-\`\`\`
-
-ネガティブ:
-
-\`\`\`
-${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt
-\`\`\`
-
-公開作例は [金のネックレス](/prompt/gold-necklace-vintage-6) です。タグの一覧は [ネックレス](/tag/ネックレス)、[ジュエリー](/tag/ジュエリー)、[アクセサリー](/tag/アクセサリー) です。`,
+金のネックレスの全文は [ネックレスのプロンプト](/guides/necklace-prompt-guide) に置いてあります。タグの一覧は [ネックレス](/tag/ネックレス)、[ジュエリー](/tag/ジュエリー)、[アクセサリー](/tag/アクセサリー) です。`,
       },
       {
         title: 'ネックレスとペンダント',
-        content: `名前がタグとして確かなのは \`necklace\` と \`pendant\` です。それ以外はこの表では自然な英語として書きます。
+        content: `首飾りの種類、長さ、モチーフ、素材、男性の鎖、二本までの重ね、人のいない商品写真は [ネックレスのプロンプト](/guides/necklace-prompt-guide) に分けました。このページでは表を繰り返しません。
 
-| 種類 | 書き方 | 注記 |
-|---|---|---|
-| ネックレス | \`necklace\` | 部位の基本タグ |
-| ペンダント | \`pendant\` | \`necklace\` と一緒に |
-| チェーン | chain necklace | 自然な英語 |
-| 真珠 | pearl necklace | 自然な英語。粒が服に溶けるときは \`portrait\` |
-| ロケット | locket | 自然な英語。開閉は書かない |
-| 十字架 | cross necklace | 自然な英語 |
-| 三日月・星・ハート | crescent pendant, star pendant, heart pendant | 自然な英語。一つだけ |
-| 重ね付け | layered necklaces | 自然な英語。二本まで。増やすと鎖が融合する |
-
-モチーフは一つです。十字架とハートと星を同時に強くすると、ペンダントの形が平均化されます。
-
-**真珠**
-
-\`\`\`
-1 adult woman, portrait, upper body, pearl necklace,
-black dress, long sleeves, simple background, soft daylight
-\`\`\`
-
-ネガティブ:
-
-\`\`\`
-${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt
-\`\`\``,
+ここでは、首飾りを足す前の順だけを残します。構図は胸から上、素材は一つ、モチーフは一つ、です。イヤリングや指輪と同時に全部を主題にすると、どれも小さくなります。首の飾りを今日の主題にする日は、ネックレスのページへ移ってください。`,
       },
       {
         title: 'チョーカー',
@@ -1056,7 +1017,7 @@ Midjourney では人の例から重みを外し、\`close-up portrait, gold neck
       },
     ],
     faq: [
-      { q: 'ネックレスを書いても描かれません', a: '`full body` を外し、`portrait` か `upper body` か `close-up` にします。`gold necklace` のように素材を付け、服は無地にしてください。重みは `(necklace:1.2)` から一つです。' },
+      { q: 'ネックレスを書いても描かれません', a: '種類、素材、胸から上の寄り、鎖が服に溶けるときの直し方は [ネックレスのプロンプト](/guides/necklace-prompt-guide) です。このページではイヤリング、指輪、髪飾りを担当します。' },
       { q: 'チョーカーとネックレスは同時に書けますか？', a: '同じ強さにすると首元で一本に融合します。`choker` か `necklace` の一方にしてください。リボンにするときは `ribbon` を一つだけ足します。' },
       { q: 'ピアスはどこに指定できますか？', a: '耳だけです。基本タグは `earrings` で、フープやスタッドは自然な英語で形を一つ足します。体や舌には使いません。耳が髪で隠れるときは、髪を耳より後ろにまとめてください。' },
       { q: 'アクセサリーを消すには？', a: 'ポジティブから `necklace` や `earrings` を消し、ネガティブに `jewelry, necklace, earrings` を入れます。一部だけ残すときは、消したい種類だけをネガティブに回してください。' },
@@ -1220,7 +1181,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, short skirt, evening gown, cropped feet
 \`\`\`
 
-スクラブの色は \`navy medical scrubs\` のように一つだけです。柄を増やすと、ポケットや襟の線が模様に溶けます。`,
+スクラブの色は \`navy medical scrubs\` のように一つだけです。柄を増やすと、ポケットや襟の線が模様に溶けます。上下のスクラブ、丈のある白いワンピース、キャップ、廊下で働く姿勢は [ナース服のプロンプト](/guides/nurse-uniform-prompt-guide) です。このページの白衣は、医師と研究者の外套のままです。`,
       },
       {
         title: 'シーン別のコピペ',

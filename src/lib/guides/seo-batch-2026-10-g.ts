@@ -1007,7 +1007,7 @@ standing, shrine, new year, full body, empty margin, no text
 Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, text, letters, school uniform, short skirt
 \`\`\`
 
-初詣の二人は、成人の二人です。手をつなぐ詳細は [二人構図](/guides/two-person-composition-prompt-guide) に任せ、年賀状では全身と余白を優先します。
+初詣の二人は、成人の二人です。手をつなぐ詳細は [二人構図](/guides/two-person-composition-prompt-guide) に任せ、年賀状では全身と余白を優先します。境内の装束そのものは [巫女のプロンプト](/guides/miko-prompt-guide) です。年賀状の文字は、装束のページでも画像の中には書きません。
 
 \`\`\`
 2 adults, 1 adult woman, 1 adult man, kimono, haori, hakama,
