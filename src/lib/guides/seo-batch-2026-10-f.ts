@@ -363,6 +363,8 @@ school uniform, short skirt, short hair, medium hair
         title: 'ストレートヘア',
         content: `ストレートは \`straight hair\` です。\`long hair, straight hair\` の順に置きます。毛先が内側に入る、外にはねる、は自然な英語で inward ends または flipped ends と一つだけ足します。公式タグとしては断定しません。
 
+直毛のボブ、男性、波を止める負向は [ストレートヘアのプロンプト](/guides/straight-hair-prompt-guide) です。この節は、ロングに直毛を足すところまでです。
+
 艶は silky、sleek、glossy と自然な英語で書きます。三つ並べると、光が面になって顔まで光ります。一つにして、光は soft daylight か window light のどちらか一方です。
 
 姫カットは \`hime cut\` です。前髪のぱっつんと、頬の横の毛がセットになっています。\`hime cut\` に \`blunt bangs\` を同じ強さで足すと、前髪が二重になります。前髪を細かく変えるときは [前髪プロンプト](/guides/bangs-prompt-guide) に任せ、\`hime cut\` は外します。
@@ -1014,7 +1016,7 @@ school uniform, short skirt, hair over eyes, hair over one eye
       },
       {
         title: '他の髪型との組み合わせ',
-        content: `前髪は、長さや結びとは別の層です。ロングは [ロングヘアプロンプト](/guides/long-hair-prompt-guide)、編み込みは [編み込みプロンプト](/guides/braid-prompt-guide)、二つに分ける髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide)、色は [髪色プロンプト](/guides/hair-color-prompt-guide) です。ボブは [髪型プロンプト](/guides/hairstyle-prompt-guide) の短い髪に、このページの形を一つ足します。
+        content: `前髪は、長さや結びとは別の層です。ロングは [ロングヘアプロンプト](/guides/long-hair-prompt-guide)、編み込みは [編み込みプロンプト](/guides/braid-prompt-guide)、二つに分ける髪型は [ツインテールプロンプト](/guides/twintail-prompt-guide)、色は [髪色プロンプト](/guides/hair-color-prompt-guide) です。ボブは [髪型プロンプト](/guides/hairstyle-prompt-guide) の短い髪に、このページの形を一つ足します。直毛に前髪を足すときの質感は [ストレートヘアのプロンプト](/guides/straight-hair-prompt-guide) です。
 
 結びと前髪を同時に変えるときは、結びを先に安定させてから前髪を足します。一度に両方を強くすると、前髪が結び目に吸い込まれます。
 

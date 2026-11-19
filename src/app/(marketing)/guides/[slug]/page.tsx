@@ -26,6 +26,7 @@ import { SEO_BATCH_18_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-j'
 import { SEO_BATCH_19_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-k'
 import { SEO_BATCH_20_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-l'
 import { SEO_BATCH_21_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-m'
+import { SEO_BATCH_22_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-n'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -91,6 +92,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_19_GUIDE_CONTENT,
   ...SEO_BATCH_20_GUIDE_CONTENT,
   ...SEO_BATCH_21_GUIDE_CONTENT,
+  ...SEO_BATCH_22_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1090,7 +1092,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 
 ツインテールの種類と書き方は<a href="/guides/twintail-prompt-guide">ツインテールのプロンプト</a>で詳しく解説
 
-詳しいガイド: [前髪](/guides/bangs-prompt-guide) / [ロングヘア・ストレート](/guides/long-hair-prompt-guide) / [編み込み・三つ編み](/guides/braid-prompt-guide) / [ツインテール](/guides/twintail-prompt-guide) / [髪色](/guides/hair-color-prompt-guide) / [ハーフアップ](/guides/half-up-hair-prompt-guide)`,
+詳しいガイド: [前髪](/guides/bangs-prompt-guide) / [ロングヘア・ストレート](/guides/long-hair-prompt-guide) / [編み込み・三つ編み](/guides/braid-prompt-guide) / [ツインテール](/guides/twintail-prompt-guide) / [髪色](/guides/hair-color-prompt-guide) / [ハーフアップ](/guides/half-up-hair-prompt-guide) / [ストレートヘア](/guides/straight-hair-prompt-guide) / [黒髪](/guides/black-hair-prompt-guide) / [ショートヘア](/guides/short-hair-prompt-guide)`,
       },
       {
         title: '女性キャラ定番ヘアスタイル 20 選とコピペ呪文',
@@ -1112,6 +1114,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 9. \`short bob\` — ショートボブ
 10. \`pixie cut\` — ピクシーカット
 11. \`very short hair, buzz cut\` — ベリーショート
+
+短い髪の種類、成人の男女の書き分け、伸びたときの直しは [ショートヘアのプロンプト](/guides/short-hair-prompt-guide) です。この一覧は入口で、種類がぶつかるときは先のページで一つに絞ります。
 
 **アップスタイル系**:
 12. \`ponytail\` — ポニーテール
@@ -1139,6 +1143,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         title: '髪色指定 — 単色からグラデーション・インナーカラーまで',
         content: `**基本色**: blonde, brunette, black hair, red hair, silver hair, blue hair, pink hair, purple hair, green hair, white hair
 
+黒髪の濃さ、光、マッシュは [黒髪のプロンプト](/guides/black-hair-prompt-guide) です。この節は、色の名前を並べる入口です。
+
 **具体的な色名で精度を上げる**:
 - 赤系: crimson, scarlet, auburn, ginger, copper
 - 青系: navy blue, cerulean, azure, teal
@@ -1165,6 +1171,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
       {
         title: '髪の動き・質感表現で画像のクオリティを上げる',
         content: `髪型の「名前」だけでなく「動き」と「質感」を加えると、画像のクオリティが劇的に向上します。
+
+直毛のツヤ、分け目、風、波を止める負向は [ストレートヘアのプロンプト](/guides/straight-hair-prompt-guide) です。この節は、質感の名前を並べる入口です。
 
 **質感キーワード**:
 - \`silky, smooth\` — 絹のような滑らかさ（ストレート向き）

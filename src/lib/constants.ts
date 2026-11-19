@@ -1503,6 +1503,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '巫女 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'straight-hair-prompt-guide',
+    title: 'ストレートヘアのプロンプト｜ツヤ髪・ロング・ボブ',
+    description: 'ストレートヘアのプロンプトを、ツヤのある直毛、ロングとボブ、姫カット、分け目、成人の男性、波を止める負向まで解説。髪が背景に溶けるときと、顔にかかるときの直し方つき。',
+    targetKeyword: 'ストレートヘア プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'black-hair-prompt-guide',
+    title: '黒髪のプロンプト一覧｜黒髪ロング・ボブ・マッシュ',
+    description: '黒髪のプロンプトを、真っ黒や青みや暗い茶、ロングやボブやマッシュ、内側の色、光で細部を残す書き方まで解説。灰色になるときや、顔が若く見えるときの直し方つき。',
+    targetKeyword: '黒髪 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'short-hair-prompt-guide',
+    title: 'ショートヘアのプロンプト一覧｜種類と男女別',
+    description: 'ショートヘアのプロンプトを、ピクシーやボブやウルフ、成人の女性と男性の刈り込み、前髪と色、直毛と波まで解説。髪が伸びるときと、耳や首が見えないときの直し方つき。',
+    targetKeyword: 'ショートヘア プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'blackboard-prompt-guide',
+    title: '黒板のプロンプト｜黒板アート・チョーク文字',
+    description: '黒板のプロンプトを、緑の板とチョーク画、カフェのメニュー、大学の講義室、黒板消し、文字をあとから足す手順まで解説。文字が崩れるときと、絵の具になるときの直し方つき。',
+    targetKeyword: '黒板 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'armor-knight-prompt-guide',
+    title: '鎧・騎士のプロンプト｜西洋甲冑と鎧武者',
+    description: '鎧と騎士のプロンプトを、板金や革や鎖、成人の女性の騎士、甲冑と鎧武者、色と場面まで解説。肩当てが揃わないときと、板が体に溶けるときの直し方つき。',
+    targetKeyword: '鎧 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -2002,6 +2037,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'miko-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'straight-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'black-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'short-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'blackboard-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['anime', 'camera'],
+  },
+  'armor-knight-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['costume', 'cosplay', 'clothing'],
   },
 }
 

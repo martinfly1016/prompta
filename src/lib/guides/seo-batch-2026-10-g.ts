@@ -84,57 +84,9 @@ school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
       },
       {
         title: '騎士・鎧のパーツ',
-        content: `鎧は、全身を覆うか、動きやすい軽装かを先に分けます。\`full armor\` は板金で体の線を覆う方です。軽装は light armor と自然な英語で、革と布が残ります。両方を同じ強さにすると、金属の量が平均になります。
+        content: `鎧の部品、板金と革、成人の女性の騎士、甲冑は [鎧・騎士のプロンプト](/guides/armor-knight-prompt-guide) に分けました。このページは、職業の衣装の入口です。騎士を選ぶ日は、\`knight\` と \`armor\` を職業の直後に置いてから、部品のページへ移ってください。
 
-軽装にしたいときは full armor を外し、light armor を自然な英語で書きます。革は leather armor と自然な英語で一つ足すと、板金より布と革が残ります。すね当ては greaves、靴の上の金属は sabaton と自然な英語です。どちらも公式タグとしては断定しません。兜を書くと、目と口が隠れます。表情が要る肖像では knight helmet を外し、pauldrons と cape だけを残してください。肩当てを左右で別の形にすると、モデルは平均を取って、片方の形がもう片方へ溶けます。色は銀か黒かを、鎧全体で一つにします。金を混ぜると、光の位置が決まらず、全体が黄ばみます。
-
-板金が布に戻ったら、full armor を前に戻し、装飾の金を一旦外します。金の模様は、金属の種類が決まってから足します。
-
-左右が非対称な鎧は、部品を armor と cape に戻してから、pauldrons だけを足して再生成します。非対称のまま重みを上げても揃いません。
-
-部品は一度に二つまで足します。兜、肩、マント、篭手を全部強くすると、左右が非対称になったり、肩の板が胸の前で融合したりします。競合する記事でも、騎士として読ませるには兜・鎧・マント・すね当てのセットが要る、と整理されています。すね当ては greaves と自然な英語です。公式タグとしては断定しません。まずは \`armor\` と \`cape\` です。
-
-| 部品 | 書き方 | 置き方 |
-|---|---|---|
-| 鎧全体 | \`armor\`, \`full armor\` | 職業の直後 |
-| 篭手 | \`gauntlets\` | 手の前。剣と同時に強くしない |
-| 肩当て | \`pauldrons\` | 一つ。左右別色にしない |
-| マント | \`cape\` | 肩から。\`cloak\` と両方強くしない |
-| フード付き外套 | \`cloak\`, \`hood\` | 軽装・盗賊向き |
-| 兜 | knight helmet（自然な英語） | 顔を見せるなら外す |
-| 盾 | \`shield\` | 片手。剣と同時なら \`holding sword\` は弱く |
-
-肌の露出が多い鎧は使いません。使わない語は bikini armor と revealing armor です。ネガティブには \`revealing clothes\` を入れます。
-
-**全身の板金**
-
-\`\`\`
-1 adult woman, knight, full armor, silver armor, gauntlets, pauldrons, cape,
-standing, castle gate, full body, fantasy
-\`\`\`
-
-ネガティブ:
-
-\`\`\`
-${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
-\`\`\`
-
-姫騎士は、成人の騎士に冠の小さい形を足した呼び方です。年齢を下げる語は入れません。
-
-\`\`\`
-1 adult woman, knight, silver armor, tiara, cape,
-standing, castle courtyard, full body, fantasy
-\`\`\`
-
-ネガティブ:
-
-\`\`\`
-${NEGATIVE_BODY}, ${NEGATIVE_AGE},
-school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
-\`\`\`
-
-ティアラの素材は [アクセサリープロンプト](/guides/accessory-prompt-guide) です。公開作例は [金のマントの騎士](/prompt/knight-princess-gold-cape) と [鎧の騎士](/prompt/knight-armor-fantasy-0) です。タグは [鎧](/tag/鎧) です。兜を書くと顔の情報が減ります。表情が要るときは knight helmet を外し、\`upper body\` に切り替えます。`,
+全身を覆う板金か、動きやすい軽装かは、鎧のページで一つにします。両方をこのページで強くすると、金属の量が平均になります。兜、肩当て、マント、籠手の細目もあちらです。肌の出る形と、壊れた板は使いません。表情が要る肖像では兜を外し、\`upper body\` にします。魔法使いのローブと杖は、次の節に残します。人型の機械の装甲は [ロボット・メカのプロンプト](/guides/robot-mecha-prompt-guide) です。`,
       },
       {
         title: '魔法使い・魔女',
@@ -297,7 +249,7 @@ school uniform, short skirt, revealing clothes, modern clothes, t-shirt, jeans
 
 Midjourney の縦長で足が切れるときも、タグ側と同じく、全身と靴を文に残してから縦横を指定します。
 
-鎧が融合する、左右が揃わないときは、部品を減らします。\`gauntlets\` と \`pauldrons\` と兜を一度に外し、\`armor, cape\` に戻してから、一つずつ戻します。全身より \`upper body\` の方が、肩の板は揃いやすいです。
+鎧が融合する、左右が揃わないときは、部品を減らします。細目は [鎧・騎士のプロンプト](/guides/armor-knight-prompt-guide) です。\`gauntlets\` と \`pauldrons\` と兜を一度に外し、\`armor, cape\` に戻してから、一つずつ戻します。全身より \`upper body\` の方が、肩の板は揃いやすいです。
 
 武器の持ち方が違うときは、\`holding sword\` か \`holding staff\` を手の描写の位置に置きます。sword だけだと地面に刺さります。手の指が増えるときは、ネガティブの \`bad hands, extra fingers\` を残したまま、盾を外してください。盾と剣を同時に強くすると、手が一本に融合します。
 
