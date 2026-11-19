@@ -103,7 +103,11 @@ jobs:
         run: npx playwright install-deps chromium
 
       - name: Build Next.js
+        # Guide pages are typechecked as one graph. The default ~2GB heap
+        # OOMs during "Checking validity of types" (paid-flow on batch 21).
         run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
 
       - name: Start server (background)
         run: |

@@ -38,7 +38,7 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'ローアングル': { slug: 'low-angle-prompt-guide', title: '下からのアングルプロンプト【コピペOK】' },
   'カメラアングル': { slug: 'composition-angle-prompt-guide', title: '構図・アングルのプロンプト一覧｜正面・斜め・全身【コピペOK】' },
   '俯瞰': { slug: 'high-angle-prompt-guide', title: '見下ろす構図・俯瞰プロンプト｜上からのアングル【コピペOK】' },
-  '金髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜金髪・黒髪・メッシュ【コピペOK】' },
+  '金髪': { slug: 'blonde-hair-prompt-guide', title: '金髪のプロンプト一覧｜プラチナ・アッシュ・ハニー' },
   '黒髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜金髪・黒髪・メッシュ【コピペOK】' },
   '赤髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜金髪・黒髪・メッシュ【コピペOK】' },
   '銀髪': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜金髪・黒髪・メッシュ【コピペOK】' },
@@ -47,9 +47,9 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'マルチカラー': { slug: 'hair-color-prompt-guide', title: '髪色プロンプト一覧｜メッシュ・インナーカラー【コピペOK】' },
   '背景': { slug: 'background-prompt-guide', title: '背景プロンプト一覧【場所別・コピペOK】' },
   '表情変更': { slug: 'stable-diffusion-expression-prompt', title: 'Stable Diffusion表情プロンプト【コピペOK】' },
-  'ネックレス': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
-  'ジュエリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
-  'アクセサリー': { slug: 'accessory-prompt-guide', title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】' },
+  'ネックレス': { slug: 'necklace-prompt-guide', title: 'ネックレスのプロンプト一覧｜種類・素材・モチーフ' },
+  'ジュエリー': { slug: 'accessory-prompt-guide', title: 'アクセサリーのプロンプト一覧｜イヤリング・指輪・髪飾り' },
+  'アクセサリー': { slug: 'accessory-prompt-guide', title: 'アクセサリーのプロンプト一覧｜イヤリング・指輪・髪飾り' },
   'スーツ': { slug: 'suit-lab-coat-prompt-guide', title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】' },
   '線画': { slug: 'line-art-prompt-guide', title: '線画のプロンプト一覧｜太い線と細い線' },
   '水彩': { slug: 'watercolor-prompt-guide', title: '水彩のプロンプト一覧｜透明水彩とにじみ' },
@@ -198,7 +198,7 @@ const TAG_META_OVERRIDE: Record<string, { title: string; description: string }> 
   },
   '金髪': {
     title: '「金髪」プロンプト作例集｜ブロンドヘアの英語タグ',
-    description: '金髪・ブロンドヘアのAIプロンプト作例集。blonde hair の色味の違いやメッシュ・インナーカラーとの組み合わせは、髪色プロンプトの解説ガイドで紹介しています。',
+    description: '金髪・ブロンドヘアのAIプロンプト作例集。プラチナやアッシュなどの色味は金髪のプロンプト、メッシュとインナーカラーは髪色プロンプトの解説ガイドで紹介しています。',
   },
 }
 

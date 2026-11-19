@@ -25,6 +25,7 @@ import { SEO_BATCH_17_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-i'
 import { SEO_BATCH_18_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-j'
 import { SEO_BATCH_19_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-k'
 import { SEO_BATCH_20_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-l'
+import { SEO_BATCH_21_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-m'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -89,6 +90,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_18_GUIDE_CONTENT,
   ...SEO_BATCH_19_GUIDE_CONTENT,
   ...SEO_BATCH_20_GUIDE_CONTENT,
+  ...SEO_BATCH_21_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1443,7 +1445,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 **1. 王道セーラー服 — 関東風白セーラー × 紺スカート**
 
 \`\`\`
-1girl, sailor uniform, white sailor blouse, navy pleated skirt,
+1 adult woman, adult, sailor uniform, white sailor blouse, navy pleated skirt,
 red ribbon, sailor collar, knee-high white socks, brown loafers,
 school hallway, soft natural lighting, full body shot,
 (masterpiece:1.2), (best quality:1.4)
@@ -1454,18 +1456,18 @@ school hallway, soft natural lighting, full body shot,
 **2. 夏セーラー服 — 半袖白セーラー**
 
 \`\`\`
-1girl, summer sailor uniform, short sleeves white sailor blouse,
+1 adult woman, adult, summer sailor uniform, short sleeves white sailor blouse,
 navy pleated skirt, blue ribbon, sailor collar, knee-high socks,
 sunny school rooftop, blue sky, full body shot,
 (summer uniform:1.2), (white sailor:1.2)
 \`\`\`
 
-**ネガティブ**: \`long sleeves, winter uniform, dark colors\`
+**ネガティブ**: \`long sleeves, winter uniform, dark colors, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **3. 冬セーラー服 — 長袖紺色**
 
 \`\`\`
-1girl, winter sailor uniform, long sleeves navy sailor blouse,
+1 adult woman, adult, winter sailor uniform, long sleeves navy sailor blouse,
 navy pleated skirt, white scarf, sailor collar, dark tights, boots,
 snowy school path, cold lighting, full body shot,
 (winter uniform:1.2), (long sleeves:1.2)
@@ -1474,7 +1476,7 @@ snowy school path, cold lighting, full body shot,
 **4. 黒セーラー服 — 関西風 / 個性派**
 
 \`\`\`
-1girl, black sailor uniform, black sailor blouse with white collar,
+1 adult woman, adult, black sailor uniform, black sailor blouse with white collar,
 black pleated skirt, white ribbon, knee-high black socks, loafers,
 modern school courtyard, evening lighting, full body shot,
 (black sailor:1.3), gothic school aesthetic
@@ -1483,7 +1485,7 @@ modern school courtyard, evening lighting, full body shot,
 **5. ツインテール × セーラー服 — 王道アイドル組合せ**
 
 \`\`\`
-1girl, blonde twintails hair, sailor uniform, white sailor blouse,
+1 adult woman, adult, blonde twintails hair, sailor uniform, white sailor blouse,
 navy pleated skirt, red ribbon, knee-high socks, loafers,
 classroom window light, full body shot, soft anime illustration,
 (twintails:1.2), (sailor uniform:1.2)
@@ -1494,7 +1496,7 @@ classroom window light, full body shot, soft anime illustration,
 **6. 読書するセーラー服 — 落ち着いた構図**
 
 \`\`\`
-1girl, sailor uniform, sitting by window reading book,
+1 adult woman, adult, sailor uniform, sitting by window reading book,
 soft afternoon light streaming in, peaceful expression,
 white blouse navy skirt red ribbon, medium shot,
 (sailor uniform:1.2), shoujo manga aesthetic
@@ -1511,7 +1513,7 @@ white blouse navy skirt red ribbon, medium shot,
 - 夏服 / 冬服は **\`short sleeves\`** / **\`long sleeves\`** を必ず明示
 - アニメ系モデル（NovelAI / Counterfeit）が最も得意。実写系（Realistic Vision）でも自然に出る
 
-**ネガティブプロンプト（汎用）**: \`fake wig, cheap cosplay, wrinkled clothes, mismatched uniform, bad anatomy\`
+**ネガティブプロンプト（汎用）**: \`fake wig, cheap cosplay, wrinkled clothes, mismatched uniform, bad anatomy, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 全 8 件のセーラー服 prompt + サンプル画像は <a href="/tag/%E3%82%BB%E3%83%BC%E3%83%A9%E3%83%BC%E6%9C%8D" class="text-sky-600 hover:underline">/tag/セーラー服</a> で公開中。`,
       },
@@ -1560,7 +1562,7 @@ bad anatomy, bad hands, extra fingers, short skirt
 **1. ブレザー制服 — 王道日本の高校制服**
 
 \`\`\`
-1girl, school blazer uniform, navy blazer with school emblem,
+1 adult woman, adult, school blazer uniform, navy blazer with school emblem,
 white blouse, red plaid tartan skirt pleated, school tie,
 knee-high white socks, brown loafers, school hallway,
 warm afternoon light, full body shot,
@@ -1572,7 +1574,7 @@ warm afternoon light, full body shot,
 **2. 夏制服 — 半袖ブラウス × プリーツスカート**
 
 \`\`\`
-1girl, summer school uniform, short sleeves white blouse,
+1 adult woman, adult, summer school uniform, short sleeves white blouse,
 gray pleated skirt, school tie, knee socks, loafers,
 sunny school courtyard, cherry blossoms,
 full body shot, (summer uniform:1.2),
@@ -1584,7 +1586,7 @@ slice of life anime style
 **3. ダークアカデミア制服 — 海外名門校風**
 
 \`\`\`
-1girl, dark academia school uniform, dark green blazer,
+1 adult woman, adult, dark academia school uniform, dark green blazer,
 white blouse, brown plaid skirt, brown knee-high socks,
 oxford shoes, holding leather-bound books,
 old library with tall shelves, golden hour through stained glass,
@@ -1596,7 +1598,7 @@ old library with tall shelves, golden hour through stained glass,
 **4. 海外風セーラー × ブレザー混合 — 英国系**
 
 \`\`\`
-1girl, british school uniform, navy blazer with red trim,
+1 adult woman, adult, british school uniform, navy blazer with red trim,
 white shirt with red tie, gray plaid skirt, knee-high socks,
 oxford shoes, school crest on blazer, autumn campus,
 full body shot, (british uniform:1.2),
@@ -1606,7 +1608,7 @@ boarding school aesthetic
 **5. 体操服 — 学校体育用**
 
 \`\`\`
-1girl, school gym uniform, white t-shirt with school name,
+1 adult woman, adult, school gym uniform, white t-shirt with school name,
 navy bloomers or red gym shorts, white sneakers,
 gym class background or athletic field,
 energetic pose, full body shot,
@@ -1616,7 +1618,7 @@ energetic pose, full body shot,
 **6. 制服 × ネクタイを解いた疲れた放課後**
 
 \`\`\`
-1girl, school uniform, untied loose necktie, partially unbuttoned blouse,
+1 adult woman, adult, school uniform, untied loose necktie, partially unbuttoned blouse,
 slight messy hair, tired expression, sitting on classroom desk,
 sunset light through window, casual after-school atmosphere,
 (school uniform:1.2), shoujo manga style, medium shot
@@ -1633,7 +1635,7 @@ sunset light through window, casual after-school atmosphere,
 - **季節別**: 夏は \`short sleeves\` \`summer uniform\`、冬は \`long sleeves\` \`winter blazer\` \`scarf\`
 - 海外風は \`british uniform\` \`american prep school\` \`dark academia\` を併用すると雰囲気変わる
 
-**ネガティブ（汎用）**: \`casual clothes, no tie, no skirt, mismatched colors, bad uniform\`
+**ネガティブ（汎用）**: \`casual clothes, no tie, no skirt, mismatched colors, bad uniform, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **さらに**: ポートレート系の制服プロンプトは <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a> / <a href="/prompt/pleated-miniskirt-cosplay-girl" class="text-sky-600 hover:underline">プリーツミニスカ × 制服</a> を参考に。
 
@@ -1645,21 +1647,25 @@ sunset light through window, casual after-school atmosphere,
 
 **1. 巫女装束**
 \`\`\`
-1girl, miko costume, white haori, red hakama, shrine maiden,
+1 adult woman, adult, miko costume, white haori, red hakama, shrine maiden,
 holding offering, traditional shrine, full body shot,
 (miko:1.2), traditional japanese style
 \`\`\`
 
+巫女服の部品と境内は <a href="/guides/miko-prompt-guide" class="text-sky-600 hover:underline">巫女のプロンプト</a> に分けています。
+
 **2. ナース服**
 \`\`\`
-1girl, nurse uniform, white cap, white apron, pastel blue scrubs,
+1 adult woman, adult, nurse uniform, white cap, white apron, pastel blue scrubs,
 stethoscope around neck, hospital corridor,
 (nurse uniform:1.2), full body shot
 \`\`\`
 
+仕事着としてのスクラブと丈のある白いワンピースは <a href="/guides/nurse-uniform-prompt-guide" class="text-sky-600 hover:underline">ナース服のプロンプト</a> に分けています。
+
 **3. チアリーダー**
 \`\`\`
-1girl, cheerleader uniform, pleated cheer skirt, pom-poms,
+1 adult woman, adult, cheerleader uniform, pleated cheer skirt, pom-poms,
 crop top, sneakers, ribbon ponytail, gym floor,
 energetic jumping pose, (cheerleader:1.2), full body shot
 \`\`\`
@@ -1674,7 +1680,7 @@ cherry blossom park, soft warm lighting,
 
 **5. 魔女コスチューム**
 \`\`\`
-1girl, witch costume, pointy black hat, black cloak with stars,
+1 adult woman, adult, witch costume, pointy black hat, black cloak with stars,
 broomstick in hand, gothic black dress, knee-high boots,
 moonlit forest, mysterious atmosphere,
 (witch:1.2), fantasy illustration
@@ -1698,7 +1704,7 @@ medieval castle courtyard, dramatic lighting,
 
 **8. ゴシックロリータ**
 \`\`\`
-1girl, gothic lolita dress, black dress with white lace,
+1 adult woman, adult, gothic lolita dress, black dress with white lace,
 frilled petticoat, ribbon choker, knee-high stockings,
 mary jane shoes, victorian gothic aesthetic,
 (gothic lolita:1.3), full body shot
@@ -1751,10 +1757,10 @@ mary jane shoes, victorian gothic aesthetic,
 - \`ring light\` — コスプレ撮影の定番
 
 **定番ネガティブプロンプト**:
-\`low quality, bad anatomy, bad hands, fake wig, cheap cosplay, wrinkled clothes, mismatched uniform\`
+\`low quality, bad anatomy, bad hands, fake wig, cheap cosplay, wrinkled clothes, mismatched uniform, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 これらを組み合わせた完成形のサンプル：
-\`1girl, sailor uniform, sailor collar, pleated skirt, knee-high socks, twin tails black hair, red ribbon, professional cosplay photo, studio lighting, medium shot, soft lighting, (masterpiece:1.2), best quality\``,
+\`1 adult woman, adult, sailor uniform, sailor collar, pleated skirt, knee-high socks, twin tails black hair, red ribbon, professional cosplay photo, studio lighting, medium shot, soft lighting, (masterpiece:1.2), best quality\``,
       },
       {
         title: '困った時の対処法 — よくある衣装崩壊と修正法',
@@ -1763,20 +1769,20 @@ mary jane shoes, victorian gothic aesthetic,
 **問題 1: セーラー服が長袖で出てしまう / 制服が冬服化する**
 
 - **対処**: \`short sleeves\` \`summer uniform\` \`white sailor uniform\` を明示
-- **ネガティブ**: \`long sleeves, winter uniform, dark navy, scarf\`
+- **ネガティブ**: \`long sleeves, winter uniform, dark navy, scarf, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 - **逆に冬服が欲しい時**: \`long sleeves, winter uniform, navy sailor, white scarf\` を強調
 
 **問題 2: メイド服のエプロンが消える / 質素になる**
 
 - **対処**: \`(white apron:1.3), (frilled apron:1.2), lace trim\` を強調
 - **対処**: \`classic maid\` \`victorian maid\` のジャンルキーワードを必ず併用（指定無しだと AI が「普通のドレス」を出しがち）
-- **ネガティブ**: \`plain dress, no apron, casual clothes\`
+- **ネガティブ**: \`plain dress, no apron, casual clothes, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **問題 3: 学校制服が私服化する（ブレザーがジャケットに）**
 
 - **対処**: \`(school uniform:1.2), (school blazer:1.2), school tie\` を強調
 - **対処**: \`school emblem\` \`school crest\` で胸の校章を追加すると一気に制服らしくなる
-- **ネガティブ**: \`casual blazer, business suit, regular jacket, no tie\`
+- **ネガティブ**: \`casual blazer, business suit, regular jacket, no tie, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **問題 4: 色滲み — リボンの色がスカートに広がる**
 
@@ -1800,7 +1806,7 @@ mary jane shoes, victorian gothic aesthetic,
 
 - **対処**: モデル切替を確認。Counterfeit / MeinaMix などアニメ専用へ
 - **対処**: \`anime style, illustration, flat shading, cel shading\` をポジティブに追加
-- **ネガティブ**: \`photorealistic, realistic skin, real photo\`
+- **ネガティブ**: \`photorealistic, realistic skin, real photo, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **ControlNet 活用法（最も確実）**
 
@@ -1820,14 +1826,14 @@ mary jane shoes, victorian gothic aesthetic,
 - 強み: 実写のコスプレ写真に最も近い仕上がり、ControlNet で参照画像活用可能、LoRA で特定衣装を完全再現
 - おすすめモデル: **Realistic Vision / Juggernaut XL / BeautifulRealistic**
 - 品質タグ: \`masterpiece, best quality, ultra detailed, professional photo\`
-- ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, fake wig, cheap cosplay\`
+- ネガ: \`(worst quality:1.4), (low quality:1.4), bad anatomy, fake wig, cheap cosplay, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **Stable Diffusion（アニメ調コスプレ）**（推奨度: ⭐⭐⭐）
 
 - 強み: アニメ調イラストのコスプレ表現、Danbooru タグ（\`serafuku\`, \`maid\`, \`pleated skirt\`）が機能
 - おすすめモデル: **Counterfeit V3 / MeinaMix / Anything V5 / NovelAI Animagine XL**
 - 品質タグ: \`masterpiece, best quality, highres, anime illustration\`
-- ネガ: \`(worst quality, low quality:1.4), bad anatomy, extra fingers, fused fingers\`
+- ネガ: \`(worst quality, low quality:1.4), bad anatomy, extra fingers, fused fingers, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
 **NovelAI**（推奨度: ⭐⭐⭐ アニメ用途）
 
@@ -1912,7 +1918,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
       },
       {
         q: 'セーラー服が長袖で出てしまいます。夏服にするには？',
-        a: '`short sleeves` `summer uniform` `white sailor uniform` を明示し、**ネガティブに `long sleeves, winter uniform, navy sailor, scarf`** を必ず入れる。AI のデフォルトは「冬服紺色 + 長袖」の傾向があるため、夏服を出すには両方向（ポジティブで夏要素強調 + ネガティブで冬要素排除）の指定が必要。色も明示するとさらに安定：`white blouse, navy pleated skirt, blue ribbon` で関東風夏服、`black sailor blouse, white collar` で関西黒セーラー。',
+        a: '`short sleeves` `summer uniform` `white sailor uniform` を明示し、**ネガティブに `long sleeves, winter uniform, navy sailor, scarf, child, kid, toddler, baby, loli, shota, teen, underage, baby face`** を必ず入れる。AI のデフォルトは「冬服紺色 + 長袖」の傾向があるため、夏服を出すには両方向（ポジティブで夏要素強調 + ネガティブで冬要素排除）の指定が必要。色も明示するとさらに安定：`white blouse, navy pleated skirt, blue ribbon` で関東風夏服、`black sailor blouse, white collar` で関西黒セーラー。',
       },
       {
         q: 'メイド服を AI が出してくれない / 普通のドレスになる',
@@ -1936,7 +1942,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
       },
       {
         q: 'ツインテール × セーラー服のような組合せがうまく描けません',
-        a: '**順序ルールが重要**: 髪型 → 衣装 → 小物の順で前半に置く。例: `1girl, twintails blonde hair, sailor uniform, white blouse, navy pleated skirt, red ribbon, knee-high socks` のように髪型を先頭近くに。**重み付け併用**: `(twintails:1.2)` で髪型を強調しつつ `(sailor uniform:1.2)` でセーラー服を確保 — 両方 1.2 程度の同等重みが綺麗。**髪色**との組合せ: ブロンド `blonde twintails`、黒 `black twintails`、ピンク `pink twintails`。アニメ系モデル（Counterfeit / NovelAI）が圧倒的に得意。サンプル: <a href="/prompt/twintail-blonde-sailor-outfit" class="text-sky-600 hover:underline">ツインテール × ブロンドセーラー</a> がそのままコピペ可能なテンプレです。',
+        a: '**順序ルールが重要**: 髪型 → 衣装 → 小物の順で前半に置く。例: `1 adult woman, adult, twintails blonde hair, sailor uniform, white blouse, navy pleated skirt, red ribbon, knee-high socks` のように髪型を先頭近くに。**重み付け併用**: `(twintails:1.2)` で髪型を強調しつつ `(sailor uniform:1.2)` でセーラー服を確保 — 両方 1.2 程度の同等重みが綺麗。**髪色**との組合せ: ブロンド `blonde twintails`、黒 `black twintails`、ピンク `pink twintails`。アニメ系モデル（Counterfeit / NovelAI）が圧倒的に得意。サンプル: <a href="/prompt/twintail-blonde-sailor-outfit" class="text-sky-600 hover:underline">ツインテール × ブロンドセーラー</a> がそのままコピペ可能なテンプレです。',
       },
     ],
   },

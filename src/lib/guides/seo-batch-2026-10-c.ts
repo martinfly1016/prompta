@@ -24,7 +24,7 @@ export const SEO_BATCH_3_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 | 日本語 | 英語タグ | 置き場所 |
 |---|---|---|
-| 金髪 | \`blonde hair\` | 人数の直後。\`blonde\` だけにしない |
+| 金髪 | \`blonde hair\` | 人数の直後。\`blonde\` だけにしない。色味の細目は [金髪のプロンプト](/guides/blonde-hair-prompt-guide) |
 | 黒髪 | \`black hair\` | 人数の直後。光沢は \`shiny hair\` をうしろに |`,
       },
       {
@@ -73,7 +73,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
       },
       {
         title: '金髪・銀髪・白髪の違い',
-        content: `この四つは隣り合っています。欲しい色の隣をネガティブに入れると、寄りが減ります。
+        content: `この四つは隣り合っています。欲しい色の隣をネガティブに入れると、寄りが減ります。プラチナ、アッシュ、ハニーなど金の色味は [金髪のプロンプト](/guides/blonde-hair-prompt-guide) に分けました。この節は、金と銀と白の境界だけを見ます。
 
 | 英語タグ | 見え方 | 寄りやすい方向 |
 |---|---|---|

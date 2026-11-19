@@ -937,8 +937,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'accessory-prompt-guide',
-    title: 'ネックレス・アクセサリープロンプト｜英語一覧【コピペOK】',
-    description: 'ネックレス・イヤリング・指輪・ブレスレット・髪飾りのAIプロンプトを英語でコピペ。種類・素材・モチーフ別の一覧、小さなアクセサリーを描き込ませる構図、アクセサリーを消すネガティブを Stable Diffusion・NovelAI・Midjourney 向けに解説。',
+    title: 'アクセサリーのプロンプト一覧｜イヤリング・指輪・髪飾り',
+    description: 'アクセサリーのプロンプトを、イヤリング、指輪、ブレスレット、髪飾り、ティアラまで解説。ネックレスの種類と素材は別ページに分け、小さな飾りを胸から上で見せる構図と、飾りを消すネガティブもまとめます。',
     targetKeyword: 'ネックレス プロンプト',
     monthlySearchVolume: 0,
   },
@@ -1468,6 +1468,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '屋上 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'manga-panel-prompt-guide',
+    title: 'コマ割りのプロンプト｜漫画の作り方と防止法',
+    description: 'コマ割りのプロンプトを、枠と余白を足す書き方と、一枚絵が割れるときに止めるネガティブ、縦横とコマごとの距離、白黒と吹き出しをあとから足す手順まで解説。一コマずつ作って編集で並べる流れと、顔が混ざるときの直し方つき。',
+    targetKeyword: 'コマ割り プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'necklace-prompt-guide',
+    title: 'ネックレスのプロンプト一覧｜種類・素材・モチーフ',
+    description: 'ネックレスのプロンプトを、チェーンや真珠、十字架、金や銀、細い鎖と豪華な一本、成人の男性、二本までの重ね、胸から上の寄り、人のいない商品写真まで解説。鎖が服に溶けるときの直し方つき。',
+    targetKeyword: 'ネックレス プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'blonde-hair-prompt-guide',
+    title: '金髪のプロンプト一覧｜プラチナ・アッシュ・ハニー',
+    description: '金髪のプロンプトを、プラチナやアッシュ、ハニーなどの色味、髪型や目の色との組み合わせ、毛先と根元、成人の男性、光の当て方まで解説。黄ばむときや白く飛ぶときの直し方つき。',
+    targetKeyword: '金髪 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'nurse-uniform-prompt-guide',
+    title: 'ナース服のプロンプト｜スクラブとナースキャップ',
+    description: 'ナース服のプロンプトを、上下のスクラブと膝丈以上の白いワンピース、キャップや名札、聴診器やクリップボード、廊下や受付で働く成人の姿勢まで解説。標章を正向に書かない注意と、丈が短くなるときの直し方つき。',
+    targetKeyword: 'ナース服 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'miko-prompt-guide',
+    title: '巫女のプロンプト｜巫女服と神社の英語',
+    description: '巫女のプロンプトを、白い上衣と赤い袴、千早、足袋と草履、架空の境内や季節、神楽と二人の場面まで解説。袴がスカートになるときと衿の右前の直し方つき。',
+    targetKeyword: '巫女 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -1947,6 +1982,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'rooftop-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt'],
     categories: ['camera'],
+  },
+  'manga-panel-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['anime', 'camera'],
+  },
+  'necklace-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['clothing', 'color'],
+  },
+  'blonde-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'nurse-uniform-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['cosplay', 'clothing', 'costume'],
+  },
+  'miko-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['cosplay', 'clothing', 'costume'],
   },
 }
 

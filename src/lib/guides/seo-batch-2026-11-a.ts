@@ -1433,7 +1433,7 @@ ChatGPT や Gemini では自然文、Stable Diffusion や NovelAI ではタグ�
 | 水彩 | watercolor（自然な英語） |
 | 線画 | \`lineart\` |
 
-詳しくは [画風プロンプト](/guides/art-style-prompt-guide)、[アニメプロンプト](/guides/anime-prompt-guide)、[Illustriousプロンプト](/guides/illustrious-prompt-guide)、[Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。色の名前は [色プロンプト](/guides/color-prompt-guide)、ツール側の書き方は [Midjourneyプロンプト](/guides/midjourney-prompt-guide) です。線の太さは [線画のプロンプト](/guides/line-art-prompt-guide)、粒で描くときは [ドット絵のプロンプト](/guides/pixel-art-prompt-guide)、筆の厚みは [厚塗りのプロンプト](/guides/thick-paint-prompt-guide)、紙のにじみは [水彩のプロンプト](/guides/watercolor-prompt-guide) です。
+詳しくは [画風プロンプト](/guides/art-style-prompt-guide)、[アニメプロンプト](/guides/anime-prompt-guide)、[Illustriousプロンプト](/guides/illustrious-prompt-guide)、[Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。色の名前は [色プロンプト](/guides/color-prompt-guide)、ツール側の書き方は [Midjourneyプロンプト](/guides/midjourney-prompt-guide) です。線の太さは [線画のプロンプト](/guides/line-art-prompt-guide)、粒で描くときは [ドット絵のプロンプト](/guides/pixel-art-prompt-guide)、筆の厚みは [厚塗りのプロンプト](/guides/thick-paint-prompt-guide)、紙のにじみは [水彩のプロンプト](/guides/watercolor-prompt-guide) です。漫画の枠を足すときと、一枚絵が割れるのを止めるときは [コマ割りのプロンプト](/guides/manga-panel-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, anime style, cel shading, flat color,
@@ -1564,7 +1564,7 @@ ${NEGATIVE_SKIN}
 | 前髪 | \`blunt bangs\` |
 | 黒髪 | \`black hair\` |
 
-詳しくは [髪型プロンプト](/guides/hairstyle-prompt-guide)、[ロングヘア](/guides/long-hair-prompt-guide)、[ツインテール](/guides/twintail-prompt-guide)、[編み込み](/guides/braid-prompt-guide)、[前髪](/guides/bangs-prompt-guide)、[髪色](/guides/hair-color-prompt-guide)、[ハーフアップ](/guides/half-up-hair-prompt-guide)、[パーソナルカラーと髪色](/guides/personal-color-hair-color) です。
+詳しくは [髪型プロンプト](/guides/hairstyle-prompt-guide)、[ロングヘア](/guides/long-hair-prompt-guide)、[ツインテール](/guides/twintail-prompt-guide)、[編み込み](/guides/braid-prompt-guide)、[前髪](/guides/bangs-prompt-guide)、[髪色](/guides/hair-color-prompt-guide)、[金髪のプロンプト](/guides/blonde-hair-prompt-guide)、[ハーフアップ](/guides/half-up-hair-prompt-guide)、[パーソナルカラーと髪色](/guides/personal-color-hair-color) です。
 
 \`\`\`
 1 adult woman, adult, black hair, long hair, blunt bangs,
@@ -1620,7 +1620,7 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
 | メイド | \`maid outfit\`, long dress |
 | 鎧 | \`armor\` |
 
-詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ウェディングのプロンプト](/guides/wedding-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide)、[眼鏡・メガネ](/guides/glasses-prompt-guide)、[花のプロンプト](/guides/flower-prompt-guide)、[帽子のプロンプト](/guides/hat-prompt-guide)、[パーカーのプロンプト](/guides/hoodie-prompt-guide)、[コートのプロンプト](/guides/coat-prompt-guide)、[靴のプロンプト](/guides/shoes-prompt-guide) です。
+詳しくは [服装プロンプト一覧](/guides/clothing-prompt-guide)、[コスプレプロンプト](/guides/cosplay-prompt-guide)、[メイド服](/guides/maid-outfit-prompt-guide)、[スーツ・白衣](/guides/suit-lab-coat-prompt-guide)、[ナース服のプロンプト](/guides/nurse-uniform-prompt-guide)、[巫女のプロンプト](/guides/miko-prompt-guide)、[着物](/guides/kimono-prompt-guide)、[ドレス](/guides/dress-prompt-guide)、[ウェディングのプロンプト](/guides/wedding-prompt-guide)、[ファンタジー衣装](/guides/fantasy-outfit-prompt-guide)、[アクセサリー](/guides/accessory-prompt-guide)、[ネックレスのプロンプト](/guides/necklace-prompt-guide)、[眼鏡・メガネ](/guides/glasses-prompt-guide)、[花のプロンプト](/guides/flower-prompt-guide)、[帽子のプロンプト](/guides/hat-prompt-guide)、[パーカーのプロンプト](/guides/hoodie-prompt-guide)、[コートのプロンプト](/guides/coat-prompt-guide)、[靴のプロンプト](/guides/shoes-prompt-guide) です。
 
 \`\`\`
 1 adult woman, adult, white blouse, cardigan, long skirt,
