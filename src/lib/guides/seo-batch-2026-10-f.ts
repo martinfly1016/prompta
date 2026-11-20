@@ -676,7 +676,7 @@ school uniform, short skirt, twin braids, ponytail
       },
       {
         title: 'まとめ髪のアレンジ',
-        content: `編んだあとに結ぶ形は、\`braided bun\` か \`braided ponytail\` のどちらか一つです。両方を書くと、お団子とテールが同時に出ます。半分だけ上げて編む形は half up braid と自然な英語です。\`ponytail\` とは同時に強くしません。
+        content: `編んだあとに結ぶ形は、\`braided bun\` か \`braided ponytail\` のどちらか一つです。両方を書くと、お団子とテールが同時に出ます。結んだ束の高さや長さは [ポニーテールのプロンプト](/guides/ponytail-prompt-guide) です。このページでは、編むことを残します。半分だけ上げて編む形は half up braid と自然な英語です。\`ponytail\` とは同時に強くしません。
 
 リボンは \`hair ribbon\` を一つ、編み目の根元か毛先に足します。髪飾りの素材は [アクセサリープロンプト](/guides/accessory-prompt-guide) です。和装の簪と一緒にするときは [着物プロンプト](/guides/kimono-prompt-guide) を見て、リボンと簪を同じ強さにしないでください。
 
@@ -1146,7 +1146,7 @@ school uniform, short skirt, dress, text
         title: '振袖・正月・初詣',
         content: `振袖は \`furisode\` です。袖の長さを固定するため \`long sleeves\` と \`wide sleeves\` を足します。髪飾りは \`kanzashi\` を一つです。簪の素材を増やすときは [アクセサリープロンプト](/guides/accessory-prompt-guide) を見て、このページでは本数を増やしません。
 
-正月の初詣は、自然な英語で shrine と書きます。\`furisode\` を残したまま \`yukata\` を足さないでください。年賀状の絵柄として使うときは [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
+正月の初詣は、自然な英語で shrine と書きます。境内の部品そのものは [神社のプロンプト](/guides/shrine-prompt-guide) です。\`furisode\` を残したまま \`yukata\` を足さないでください。年賀状の絵柄として使うときは [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。
 
 \`\`\`
 1 adult woman, black hair, hair bun, kanzashi, furisode,

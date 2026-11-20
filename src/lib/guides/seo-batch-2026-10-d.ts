@@ -722,7 +722,7 @@ school uniform, ponytail
       },
       {
         title: '崩れやすい点とネガティブ',
-        content: `一本のポニーテールになる、左右で本数や長さが違う、髪が背景の色と溶ける、がよく起きます。
+        content: `一本のポニーテールになる、左右で本数や長さが違う、髪が背景の色と溶ける、がよく起きます。一本に結ぶ高さや長さは [ポニーテールのプロンプト](/guides/ponytail-prompt-guide) です。このページでは、左右二つを残します。
 
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},

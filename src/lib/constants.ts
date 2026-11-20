@@ -1538,6 +1538,41 @@ export const GUIDES: Guide[] = [
     targetKeyword: '鎧 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'ponytail-prompt-guide',
+    title: 'ポニーテールのプロンプト｜種類・位置・長さ',
+    description: 'ポニーテールのプロンプトを、高い結びと低い結び、横の結び、短い束と長い束、リボン、前髪と色、成人の男性の束と髷まで解説。正面で束が消えるときと、左右に分かれるときの直し方つき。',
+    targetKeyword: 'ポニーテール プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'space-prompt-guide',
+    title: '宇宙のプロンプト｜宇宙船・宇宙空間・飛行士',
+    description: '宇宙のプロンプトを、星空や星雲、宇宙船の外と船内、ステーション、成人の飛行士、友好的な宇宙人と猫まで解説。星がうるさくなるときと、ヘルメットの面が曇るときの直し方つき。',
+    targetKeyword: '宇宙 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'sitting-pose-prompt-guide',
+    title: '座り方のプロンプト一覧｜椅子・正座・あぐら',
+    description: '座り方のプロンプトを、椅子と床、正座とあぐら、斜め座り、膝を抱える形、ベンチに並ぶ成人二人まで解説。体が浮くときと、足が折れるときの直し方、猫の香箱の例つき。',
+    targetKeyword: '座り方 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'rain-prompt-guide',
+    title: '雨のプロンプト｜雨の日・傘・雨上がり',
+    description: '雨のプロンプトを、小雨と本降り、透明な傘と赤い傘、夜の路面、窓の雨粒、雨上がりの虹と紫陽花まで解説。筋が傷に見えるときと、傘の形が崩れるときの直し方つき。',
+    targetKeyword: '雨 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'shrine-prompt-guide',
+    title: '神社のプロンプト｜鳥居・参道・本殿の背景',
+    description: '神社のプロンプトを、鳥居と参道と本殿、灯籠や狛犬、寺との書き分け、季節、着物の参拝まで解説。鳥居の形が崩れるときと、絵馬の文字を書かせない手順つき。',
+    targetKeyword: '神社 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -2057,6 +2092,26 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'armor-knight-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['costume', 'cosplay', 'clothing'],
+  },
+  'ponytail-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'space-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['camera', 'anime'],
+  },
+  'sitting-pose-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['body-type', 'camera', 'anime'],
+  },
+  'rain-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['camera', 'clothing'],
+  },
+  'shrine-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['camera', 'costume'],
   },
 }
 
