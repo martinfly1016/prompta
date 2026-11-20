@@ -25,7 +25,7 @@ export const SEO_BATCH_3_GUIDE_CONTENT: Record<string, GuideArticle> = {
 | 日本語 | 英語タグ | 置き場所 |
 |---|---|---|
 | 金髪 | \`blonde hair\` | 人数の直後。\`blonde\` だけにしない。色味の細目は [金髪のプロンプト](/guides/blonde-hair-prompt-guide) |
-| 黒髪 | \`black hair\` | 人数の直後。光沢は \`shiny hair\` をうしろに |`,
+| 黒髪 | \`black hair\` | 人数の直後。光沢は \`shiny hair\` をうしろに。濃さと髪型は [黒髪のプロンプト](/guides/black-hair-prompt-guide) |`,
       },
       {
         title: '単色の髪色一覧',
@@ -33,7 +33,7 @@ export const SEO_BATCH_3_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 | 日本語 | 英語タグ | 注記 |
 |---|---|---|
-| 黒髪 | black hair | 光沢を足すなら \`shiny hair\`。青みは別色になる |
+| 黒髪 | black hair | 光沢を足すなら \`shiny hair\`。青みは別色になる。濃さは [黒髪のプロンプト](/guides/black-hair-prompt-guide) |
 | 茶髪 | brown hair | 明るさは \`light\` / \`dark\` |
 | 金髪 | blonde hair | 黄ばむときは次の節 |
 | プラチナブロンド | platinum blonde hair | \`blonde hair\` より白い。弱いときは \`pale blonde hair\` |
