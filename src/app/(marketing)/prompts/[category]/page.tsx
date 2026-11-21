@@ -119,6 +119,10 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                 <Link href="/guides/clothing-prompt-guide" className="text-sky-600 hover:underline">
                   服装プロンプト一覧
                 </Link>
+                です。普段着やカジュアルコーデは{' '}
+                <Link href="/guides/casual-outfit-prompt-guide" className="text-sky-600 hover:underline">
+                  私服・カジュアルのプロンプト
+                </Link>
                 です。
               </p>
             )}
@@ -159,6 +163,10 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                 服装タグの一覧と書き方は{' '}
                 <Link href="/guides/clothing-prompt-guide" className="text-sky-600 hover:underline">
                   服装プロンプト一覧
+                </Link>
+                です。普段着の組み合わせは{' '}
+                <Link href="/guides/casual-outfit-prompt-guide" className="text-sky-600 hover:underline">
+                  私服・カジュアルのプロンプト
                 </Link>
                 です。
               </p>

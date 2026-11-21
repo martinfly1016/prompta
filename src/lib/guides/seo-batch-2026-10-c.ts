@@ -112,37 +112,18 @@ blonde hair, yellow hair, elderly, wrinkles
       },
       {
         title: 'メッシュ・インナーカラー・毛先カラー',
-        content: `地の色を先に書き、そのあとでアクセントを一つ足します。アクセントを先にすると、全体がその色になります。
+        content: `筋、内側の色、毛先の色は、地の色のうしろに一つだけ足します。置き方の表、前髪だけの筋、男性の筋、色が服へ移るときの分け方は、専用のページにまとめています。
 
-| 日本語 | 英語タグ | 書き方 |
+<a href="/guides/mesh-inner-color-hair-prompt-guide" class="text-sky-600 hover:underline">詳しくはメッシュ・インナーカラーのプロンプト</a>
+
+このページは単色の入口のままです。\`streaked hair\` は筋、\`colored inner hair\` は内側、\`colored tips\` は毛先、の短い語として使われることがあります。公式タグとしては断定しません。地を先に書き、アクセントは一つです。
+
+| 日本語 | 短い語 | 詳しいページ |
 |---|---|---|
-| メッシュ | streaked hair | 地の色、次に筋の色。例: \`black hair, streaked hair, blonde streaks\` |
-| インナーカラー | colored inner hair | 表は地の色、内側に別色。\`black hair, colored inner hair, red inner hair\` |
-| 毛先カラー | colored tips | 毛先だけ。\`black hair, colored tips, blue tips\` |
-| ツートン（太めの分け） | two-tone hair | 二色を明示。\`two-tone hair, black hair, white hair\` |
-
-メッシュが全体に広がるときは、筋の色の重みを下げ、\`streaked hair\` を地の色より後ろに置きます。内側の色が見えないときは、\`hair over shoulder\` や横向きで、内側が見える角度にします。
-
-**黒髪に金のメッシュ**
-
-\`\`\`
-1 adult woman, black hair, streaked hair, blonde streaks,
-long hair, looking at viewer, upper body, white blouse
-\`\`\`
-
-**インナーカラー（表は黒、内側は赤）**
-
-\`\`\`
-1 adult woman, black hair, colored inner hair, red inner hair,
-hair tucked behind ear, looking at viewer, portrait
-\`\`\`
-
-**毛先だけ青**
-
-\`\`\`
-1 adult woman, black hair, colored tips, blue tips,
-long hair, upper body, looking at viewer, grey sweater
-\`\`\``,
+| メッシュ | \`streaked hair\` | メッシュ・インナーカラー |
+| インナーカラー | \`colored inner hair\` | 同上 |
+| 毛先 | \`colored tips\` | 同上 |
+`,
       },
       {
         title: 'グラデーション・ツートン・マルチカラー',

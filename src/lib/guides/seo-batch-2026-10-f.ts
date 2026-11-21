@@ -820,7 +820,7 @@ Avoid: ${NEGATIVE_AGE}
         title: '前髪プロンプトの基本',
         content: `「前髪 プロンプト」は、\`bangs\` だけでは形が決まりません。形、量、透け、分け目を一つずつ足し、髪全体の長さと一緒に書きます。前髪だけを最後に置くと、長さの指定に負けて眉までしか残りません。\`bangs\` は長さの直後です。
 
-長さのページは [ロングヘアプロンプト](/guides/long-hair-prompt-guide)、髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide) です。目の形と一緒に調整するときは [表情プロンプト](/guides/stable-diffusion-expression-prompt) を見て、前髪のタグと目を隠すタグを同時に強くしないでください。
+長さのページは [ロングヘアプロンプト](/guides/long-hair-prompt-guide)、髪型の全体は [髪型プロンプト](/guides/hairstyle-prompt-guide) です。前髪だけに筋を入れる書き方は [メッシュ・インナーカラーのプロンプト](/guides/mesh-inner-color-hair-prompt-guide) です。目の形と一緒に調整するときは [表情プロンプト](/guides/stable-diffusion-expression-prompt) を見て、前髪のタグと目を隠すタグを同時に強くしないでください。
 
 登場人物は大人です。\`1 adult woman\` から書き、\`adult\` を残します。
 

@@ -25,10 +25,10 @@ const TAG_TO_GUIDE: Record<string, { slug: string; title: string }> = {
   'カップル': { slug: 'two-person-composition-prompt-guide', title: 'カップルポーズ・二人構図のAIプロンプト完全ガイド' },
   '壁ドン': { slug: 'kabedon-prompt-guide', title: '壁ドンプロンプト｜身長差・視点別の英語呪文【コピペOK】' },
   'キス': { slug: 'kiss-prompt-guide', title: 'キスプロンプト集｜キス顔・頬キス・キス待ちの英語呪文【コピペOK】' },
-  'ハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
-  'バックハグ': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
-  '抱き合う': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
-  '後ろから抱きつく': { slug: 'hug-prompt-guide', title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】' },
+  'ハグ': { slug: 'hug-prompt-guide', title: '抱きつく・ハグのプロンプト｜抱きしめる・密着' },
+  'バックハグ': { slug: 'hug-prompt-guide', title: '抱きつく・ハグのプロンプト｜抱きしめる・密着' },
+  '抱き合う': { slug: 'hug-prompt-guide', title: '抱きつく・ハグのプロンプト｜抱きしめる・密着' },
+  '後ろから抱きつく': { slug: 'hug-prompt-guide', title: '抱きつく・ハグのプロンプト｜抱きしめる・密着' },
   '暗い': { slug: 'dark-room-prompt-guide', title: '暗い部屋プロンプト｜薄暗い室内・夜の照明の英語呪文【コピペOK】' },
   '低身長': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
   '小柄': { slug: 'short-height-petite-prompt', title: '低身長・小柄プロンプト｜大人の小柄キャラの英語呪文【コピペOK】' },
@@ -156,7 +156,7 @@ const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description
   },
   'カップル': {
     slug: 'hug-prompt-guide',
-    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    title: '抱きつく・ハグのプロンプト｜抱きしめる・密着',
     description: '抱き合う、バックハグ、後ろから抱きつくときの腕の位置を英語タグでまとめています。',
   },
   '二人構図': {
@@ -166,12 +166,12 @@ const TAG_ALSO_GUIDES: Record<string, { slug: string; title: string; description
   },
   'お姫様抱っこ': {
     slug: 'hug-prompt-guide',
-    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    title: '抱きつく・ハグのプロンプト｜抱きしめる・密着',
     description: '抱きしめる・バックハグはこちら。',
   },
   'BL': {
     slug: 'hug-prompt-guide',
-    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
+    title: '抱きつく・ハグのプロンプト｜抱きしめる・密着',
     description: '後ろから抱きつく構図と、腕を回す位置の英語タグです。',
   },
 }
