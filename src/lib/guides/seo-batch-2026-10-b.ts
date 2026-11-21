@@ -347,139 +347,317 @@ ${NEGATIVE_CHILD}, french kiss, tongue, saliva, open mouth
   'hug-prompt-guide': {
     sections: [
       {
-        title: 'ハグは、誰が誰のどこに腕を回すかで決まる',
-        content: `「ハグ プロンプト」「抱き合う」「バックハグ」「後ろから抱きつく」は、腕の位置を書かないと、ただ二人が近く立っている絵になります。\`hug\` を入れたうえで、腰・背中・肩・首のどれに腕を回すかを一つ指定してください。
+        title: '抱きつくは、腕の位置で決まる',
+        content: `「抱きつく プロンプト」「抱き合う」「抱きしめる」「ハグ プロンプト」「後ろから抱きつく」「密着 プロンプト」は、腕の位置を書かないと、ただ二人が近く立っている絵になります。\`hug\` を入れたうえで、腕、背中、肩のどれに触れるかを一つ指定してください。
 
-このページは服を着た大人のハグです。カップル、友人、大人の家族（大人のきょうだい、大人の親子）を扱います。未成年の見た目はネガティブに回します。ぬいぐるみを抱く書き方は [ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide) です。このページは人同士のハグです。
+このページは服を着た大人の抱擁です。カップル、友人、大人の家族（大人のきょうだい、大人の親子）を扱います。未成年の見た目はネガティブに回します。ぬいぐるみを抱く書き方は [ぬいぐるみのプロンプト](/guides/plush-toy-prompt-guide) です。このページは人同士の抱擁です。
 
-二人の構図全般は [カップルポーズ](/guides/two-person-composition-prompt-guide)、後ろからの作例は [BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind)、ポーズの基礎は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。壁に手をつく近い距離は [壁ドンプロンプト](/guides/kabedon-prompt-guide)、タグの一覧は [ハグ](/tag/ハグ) です。`,
+二人の構図全般は [カップルポーズ](/guides/two-person-composition-prompt-guide)、後ろからの作例は [BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind)、ポーズの基礎は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。壁に手をつく近い距離は [壁ドンプロンプト](/guides/kabedon-prompt-guide)、指を絡める書き方は [恋人繋ぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide)、口元が触れる距離は [キスプロンプト](/guides/kiss-prompt-guide) です。このページでは口元は重ねません。タグの一覧は [ハグ](/tag/ハグ) です。
+
+2026年11月時点の書き方です。モデルとバージョンによって、同じ語の効きは違います。表の長い句は自然な英語で、公式タグとしては断定しません。`,
       },
       {
-        title: 'ハグの種類',
-        content: `Danbooru 系では \`hug\` が基本で、\`hugging\` や \`embrace\` は近い意味として使われます。種類は一つにします。
+        title: '抱きつく、抱きしめる、抱き合う',
+        content: `日本語では、相手に体を預ける動きが抱きつく、両腕で包む動きが抱きしめる、両方が腕を回す動きが抱き合う、と分かれます。英語も一つにします。短い語と、文で説明する語を同じ強さにすると、腕の高さが平均になります。
 
-| 英語タグ | 意味 | 補足 |
-|---|---|---|
-| hug | 抱きしめる | 最初の一手 |
-| mutual hug | お互いが抱き返す | 両方が腕を回している |
-| hug from behind | 後ろから抱きつく | バックハグ。横顔が見える角度とセット |
-| waist hug | 腰に腕を回す | 腕の高さを腰に固定しやすい |
-| arm hug | 腕や肩に抱きつく | 体の正面まで密着しない。成功率はモデル依存 |
-| side hug | 横から肩を抱く | 友人向き。正面の密着より弱い |
-| imminent hug | 抱きつく直前 | まだ腕が届いていない |
-| incoming hug | 画面のこちらへ抱きついてくる | 一人が前に出る |
-| group hug | 三人以上 | 人数を別に書かないと三人に寄りやすい |
-| cheek-to-cheek | 頬を寄せる | ハグと併用すると顔の位置が決まる |
-| heads together | 頭を寄せる | 密着の補助 |
-| head on shoulder | 肩に頭を預ける | 座ったハグと相性が良い |
-| glomp | 飛びつく | 動きが大きい。腕が増えやすい |
-| standing | 立ったまま | 全身で確認する |
-| sitting | 座って | ソファと書くと場所が決まる |
-| princess carry | お姫様抱っこ | ハグではない。混同しやすいので同時に強くしない |
+| 日本語 | 短い語 | 自然な英語 | 扱い |
+|---|---|---|---|
+| 抱きつく、ハグ | \`hug\` | a hug | 最初の一手 |
+| 抱き合う | \`mutual hug\` | hugging each other | 両方が腕を回す |
+| 抱きしめる | \`embrace\` | an embrace | 近い意味。公式タグとしては断定しない |
+| 後ろから | \`hug from behind\` | hug from behind | バックハグ。横から見る |
+| 飛びつく | \`glomp\` | a running hug | 動きが大きい。腕が増えやすい |
+| 腕に抱きつく | \`arm hug\` | hugging an arm | 体の正面までは寄せない |
+| 腰に腕 | \`waist hug\` | arms around the waist | 腰の高さ。服の上から |
+| 肩に腕 | \`side hug\` | an arm around the shoulder | 友人向き |
 
-お姫様抱っこの構図は [カップルポーズ](/guides/two-person-composition-prompt-guide) にあります。足が地面から離れる書き方は [お姫様抱っこプロンプト](/guides/princess-carry-prompt-guide)、指を絡める恋人繋ぎは [恋人繋ぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide) です。このページの例は、足が地面かソファにあるハグに限っています。`,
-      },
-      {
-        title: '腕を回す位置',
-        content: `腕タグは「片腕」と「両腕」で別です。\`arm\` は片腕、\`arms\` は両腕、として書かれることが多いです。欲しいのは通常、両腕です。
+\`hug\`、\`mutual hug\`、\`hug from behind\`、\`arm hug\`、\`waist hug\`、\`side hug\`、\`glomp\` は短い語として使われることがあります。公式タグとしては断定しません。embrace は自然な英語です。
 
-| 英語タグ | 意味 |
-|---|---|
-| arms around waist | 両腕を腰に回す |
-| arm around waist | 片腕を腰に回す |
-| arms around back | 両腕を背中に回す |
-| arm around back | 片腕を背中に回す |
-| arms around shoulder | 両腕を肩に回す |
-| arm around shoulder | 片腕を肩に回す。横からの友人ハグ |
-| arms around neck | 両腕を首に回す |
-| arm around neck | 片腕を首に回す |
-| hands on another's back | 相手の背中に手を置く |
-| hands resting on the arms around one's waist | 腰に回された腕の上に、前の人の手を重ねる |
-| chin on shoulder | 肩のあたりに顎をのせる。バックハグの補助 |
+お姫様抱っこは \`princess carry\` で、抱擁ではありません。足が地面から離れる書き方は [お姫様抱っこプロンプト](/guides/princess-carry-prompt-guide) です。このページの例は、足が地面かソファにある抱擁に限っています。
 
-一箇所だけにしてください。\`arms around neck, arms around waist\` を同じ強さで書くと、腕が二組できます。
-
-指まで指定すると手は崩れやすくなります。まず腕の高さだけを決め、指はネガティブで守ってください。手の基礎は [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。`,
-      },
-      {
-        title: 'バックハグ・後ろから抱きつく',
-        content: `\`hug from behind\` だけだと、二人ともカメラに背を向けることがあります。\`behind\` が「後ろ姿」として読まれるためです。横から見て、前にいる人の顔と、後ろの人の腕が両方分かるようにします。
-
-入れるものは次の四つです。
-
-1. \`hug from behind\`
-2. \`arms around waist\`（後ろの人の腕）
-3. \`from side\` または \`three-quarter view\`
-4. 前の人の反応を一つ（\`hands resting over the other person's hands\`、\`leaning back\`、\`closed eyes\` のどれか）
-
-顔を両方見せたいときは \`from side\` を優先し、\`from behind\` というカメラタグは足しません。カメラの \`from behind\` とポーズの \`hug from behind\` は別の語です。
-
-作例は [BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind) です。身長差を足すなら [身長差プロンプト](/guides/height-difference-pair-prompt) の「高い人が低い人を包む」構図と組み合わせてください。`,
-      },
-      {
-        title: 'カップル・友人・大人の家族',
-        content: `同じ \`hug\` でも、関係の単語で距離と表情が変わります。関係は一つだけ書きます。
-
-| 関係 | 英語タグ | 距離の目安 |
-|---|---|---|
-| カップル | couple, romantic | 腰か背中に両腕。顔が近い |
-| 友人 | friends, casual | 肩に片腕。全身で並ぶ |
-| 大人のきょうだい | adult siblings, family | 肩か背中。明るい表情 |
-| 大人の親子 | adult parent and adult child, family | 肩に腕。二人とも成人と書く |
-| 仲間 | teammates, side hug | 肩を組む程度 |
-
-家族に子どもを混ぜないでください。\`adult parent and adult child\` は、子どもに見えない大人二人、という意味で使います。\`child\` はネガティブに入れます。
-
-服装を関係に合わせると安定します。カップルは私服かフォーマル、友人はカジュアル、家族は部屋着。服を書かないと、モデルが体の接触だけで画面を埋めます。必ず \`fully clothed\` を入れてください。`,
-      },
-      {
-        title: 'コピペ例',
-        content: `**向かい合って抱き合う**
+**向かい合って抱き合う**
 
 \`\`\`
-1 adult woman and 1 adult man, couple, mutual hug,
+1 adult woman and 1 adult man, adult, couple, mutual hug,
 arms around back, closed eyes, standing, full body,
 fully clothed, from side, soft daylight
 \`\`\`
 
-**バックハグ**
+ネガティブ:
 
 \`\`\`
-2 adults, couple, hug from behind, arms around waist,
-from side, the front person leaning back slightly,
-hands resting over the arms at the waist, upper body,
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+`,
+      },
+      {
+        title: '腕に抱きつく',
+        content: `腕に抱きつくは、相手の胴ではなく、片方の腕に自分の両腕を回す動きです。\`arm hug\` を一つ置き、腰と首の語は消しません。同時に残すと、腕が二組できます。
+
+\`arm\` は片腕、\`arms\` は両腕、として書かれることが多いです。抱きつく側の両腕は \`arms\`、抱かれる側の片腕は \`arm\` です。両方を同じ強さの around waist にすると、腰への抱擁に戻ります。
+
+| 英語 | 意味 |
+|---|---|
+| \`arm hug\` | 腕に抱きつく。短い語 |
+| hugging the other person's arm | 自然な英語。公式タグとしては断定しない |
+| \`arms around shoulder\` | 両腕を肩に回す。腕への抱きつきより広い |
+| \`arm around shoulder\` | 片腕を肩に回す。友人の横 |
+
+指まで指定すると手は崩れやすくなります。まず腕の高さだけを決め、指はネガティブで守ってください。手の基礎は [手・指のプロンプト一覧](/guides/hand-finger-prompt-guide) です。
+
+**相手の腕に抱きつく。全身**
+
+\`\`\`
+2 adults, 1 adult woman and 1 adult man, adult, couple,
+arm hug, hugging the other person's arm, standing, full body,
+fully clothed, from side, soft daylight, white blouse, long skirt, shirt, long trousers
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+`,
+      },
+      {
+        title: '背中に抱きつく、後ろから',
+        content: `\`hug from behind\` だけだと、二人ともカメラに背を向けることがあります。\`behind\` が後ろ姿として読まれるためです。横から見て、前にいる人の横顔と、後ろの人の腕が両方分かるようにします。
+
+入れるものは次の四つです。
+
+1. \`hug from behind\`
+2. \`arms around waist\`（後ろの人の腕。服の上から）
+3. \`from side\`
+4. 前の人の反応を一つ（\`hands resting over the arms at the waist\` か \`closed eyes\` の一方）
+
+顔を両方見せたいときは \`from side\` を優先し、カメラの \`from behind\` は足しません。カメラの \`from behind\` とポーズの \`hug from behind\` は別の語です。
+
+男性の背中に抱きつくときは、前に \`1 adult man\`、後ろに \`1 adult woman\` と役割を一文で書きます。人数は \`2 adults\` を先頭に残します。
+
+**後ろから。腰に腕**
+
+\`\`\`
+2 adults, adult, couple, hug from behind, arms around waist,
+from side, hands resting over the arms at the waist, upper body,
 fully clothed, warm indoor light
 \`\`\`
 
-**友人の肩ハグ**
+ネガティブ:
 
 \`\`\`
-2 adults, friends, side hug, arm around shoulder,
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+
+**女性が、男性の背中に抱きつく**
+
+\`\`\`
+2 adults, 1 adult man and 1 adult woman, adult,
+hug from behind, the woman hugging the man's back, arms around waist,
+from side, full body, standing, fully clothed,
+shirt, long trousers, white blouse, long skirt, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+
+身長の差を足すなら [身長差プロンプト](/guides/height-difference-pair-prompt) の、高い人が低い人を包む構図と組み合わせてください。数値で作るときは [身長差メーカー](/tools/height-difference-maker) です。`,
+      },
+      {
+        title: '強さ、肩、抱き寄せる',
+        content: `強く抱きしめると、優しく抱きしめるは、別の文です。両方を同じ強さにすると、腕の力が平均になります。自然な英語では、gentle embrace が優しく、a firm embrace が強く、です。公式タグとしては断定しません。どちらも服の上からで、足は地面につけます。
+
+肩を抱くは \`arm around shoulder\` を一つ。抱き寄せるは pulling closer を自然な英語で、肩の腕と一緒に一つだけ足します。腰の語を同時に強くすると、腕の高さが二つになります。
+
+| 日本語 | 自然な英語 | 同時にしないもの |
+|---|---|---|
+| 優しく抱きしめる | gentle embrace | firm embrace |
+| 強く抱きしめる | a firm embrace | gentle embrace |
+| 肩を抱く | \`arm around shoulder\` | \`arms around waist\` |
+| 抱き寄せる | pulling closer | 肩の腕が決まってから一つ |
+
+**優しく。肩**
+
+\`\`\`
+2 adults, 1 adult woman and 1 adult man, adult, couple,
+gentle embrace, arms around shoulder, standing, full body,
+fully clothed, from side, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+
+**強く。背中に両腕。服の上から**
+
+\`\`\`
+2 adults, 1 adult woman and 1 adult man, adult, couple,
+a firm embrace, arms around back, standing, full body,
+fully clothed, from side, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+
+**肩を抱いて、少し近づける**
+
+\`\`\`
+2 adults, adult, friends, arm around shoulder, pulling closer,
+standing, full body, fully clothed, from side, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+`,
+      },
+      {
+        title: '頭を寄せる密着',
+        content: `「密着」「密着する」「体を密着させる」を、このページでは頭と頬と肩の距離として書きます。肩を並べる、頬と頬、頭を肩に預ける、互いの腕が背中にある近い抱擁、までです。このページは性的なポーズを扱いません。胸を合わせる書き方、押しつける書き方、脚を絡める書き方、またがる書き方、横になって重ねる書き方は入れません。
+
+短い語では \`cheek-to-cheek\`、\`heads together\`、\`head on shoulder\`、\`mutual hug\` が使われることがあります。公式タグとしては断定しません。close mutual hug は自然な英語です。四つを同じ強さにすると、顔の位置が平均で溶けます。今日足すのは一つです。
+
+座らせるときはソファと書き、全身か上半身かを一つにします。場所の語を増やしても、頭の位置は決まりません。
+
+| 見せ方 | 書き方 |
+|---|---|
+| 頬を寄せる | \`cheek-to-cheek\` |
+| 頭を寄せる | \`heads together\` |
+| 肩に頭 | \`head on shoulder\` |
+| 近い抱き合い | close mutual hug |
+
+**頬を寄せた、近い抱き合い**
+
+\`\`\`
+2 adults, 1 adult woman and 1 adult man, adult, couple,
+close mutual hug, cheek-to-cheek, heads together,
+standing, upper body, fully clothed, from side, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+
+**ソファで、頭を肩に預ける**
+
+\`\`\`
+2 adults, adult, couple, sitting on a sofa, hug,
+head on shoulder, arms around shoulder, fully clothed,
+upper body, warm lamp, closed eyes
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
+\`\`\`
+`,
+      },
+      {
+        title: '関係と、身長の差',
+        content: `同じ \`hug\` でも、関係の単語で距離と表情が変わります。関係は一つだけ書きます。
+
+| 関係 | 英語 | 距離の目安 |
+|---|---|---|
+| カップル | couple | 背中か肩に両腕。顔が近い |
+| 友人 | friends | 肩に片腕。全身で並ぶ |
+| 大人のきょうだい | adult siblings, family | 肩か背中。明るい表情 |
+| 大人の親子 | adult parent and adult daughter, family | 肩に腕。二人とも成人と書く |
+
+家族に子どもを混ぜないでください。\`adult parent and adult daughter\` は、子どもに見えない大人二人、という意味で使います。年齢を下げる語はネガティブに入れます。
+
+服装を関係に合わせると安定します。カップルは普段着か、閉じたフォーマル、友人はカジュアル、家族は部屋着。服を書かないと、モデルが体の接触だけで画面を埋めます。必ず \`fully clothed\` を入れてください。普段着の部品は [私服・カジュアルのプロンプト](/guides/casual-outfit-prompt-guide) から一つだけ借ります。
+
+頭の高さが違う二人は、抱擁の語が決まってから [身長差プロンプト](/guides/height-difference-pair-prompt) を開きます。このページの腕の行を残し、身長の行だけを足してください。二人の位置の入口は [二人構図](/guides/two-person-composition-prompt-guide) です。
+
+**友人の肩**
+
+\`\`\`
+2 adults, adult, friends, side hug, arm around shoulder,
 standing, full body, fully clothed, casual clothes,
 both smiling, city street, daytime
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
 \`\`\`
 
 **大人のきょうだい**
 
 \`\`\`
-2 adults, adult siblings, family, hug,
+2 adults, adult, adult siblings, family, hug,
 arms around shoulder, standing, full body,
 fully clothed, living room, soft daylight, gentle smile
 \`\`\`
 
-**座って、頭を預ける**
+ネガティブ:
 
 \`\`\`
-2 adults, couple, sitting on a sofa, hug,
-head on shoulder, arms around shoulder, fully clothed,
-upper body, warm lamp, closed eyes
+${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
+conjoined, merged bodies, ${NEGATIVE_CHILD}
 \`\`\`
 
-三人以上は \`group hug\` と人数（\`3 adults\`）を両方書き、ネガティブに \`extra person\` は入れません。人数が足りないときだけ、人数タグの重みを 1.2 にしてください。`,
+三人以上は \`group hug\` と人数（\`3 adults\`）を両方書き、ネガティブに余分な一人は入れません。人数が足りないときだけ、人数の重みを 1.2 にしてください。数字は目安です。`,
       },
       {
-        title: '腕が増えるときと、ネガティブ',
-        content: `ハグで一番多い失敗は腕の本数です。ポジティブで腕の高さを一つに決め、ネガティブで余分な腕と、子ども向けの見た目を外します。
+        title: 'NovelAI の接頭辞と、文章',
+        content: `ChatGPT や Gemini には、誰が誰を、どこに腕を回して抱くか、を一つの文にします。二人とも成人で、服を着ていることを同じ文に残します。
+
+**自然文**
+
+\`\`\`
+Two adults, a woman and a man, fully clothed, standing and hugging each other.
+Their arms are around each other's shoulders. Soft daylight, from the side, full body.
+Both are adults.
+\`\`\`
+
+ネガティブ欄があるツールでは、次を足します。
+
+\`\`\`
+${NEGATIVE_BODY}, missing arms, fused arms, ${NEGATIVE_CHILD}
+\`\`\`
+
+NovelAI の V4 以降では、複数キャラクターがやり取りするとき、各キャラクターのプロンプトに \`source#\`、\`target#\`、\`mutual#\` を動作の語の前に付けられます。公式ドキュメントでは、抱きしめる側に \`source#hug\`、抱きしめられる側に \`target#hug\`、互いに抱き合うときは両方に \`mutual#hug\`、と案内されています。この記法は常に意図どおりに動作するとは限らない、とも書かれています。2026年11月時点の案内です。バージョンによって表示名や仕様が違うことがあります。最新の手順は <a href="https://docs.novelai.net/ja/image/multiplecharacters/" rel="nofollow noopener" target="_blank">複数キャラクターの公式ドキュメント</a> を確認してください。
+
+公式の例文は別の主語を使っています。このページでは成人だけを書きます。接頭辞はベースの文ではなく、それぞれのキャラクターの欄に置きます。
+
+**キャラクター欄に分ける例**
+
+\`\`\`
+base: 2 adults, indoors, soft daylight, fully clothed
+character 1: adult woman, white blouse, long skirt, source#hug
+character 2: adult man, shirt, long trousers, target#hug
+\`\`\`
+
+効かないときは、接頭辞を外して、自然な英語の hug from behind を一人ずつに戻します。接頭辞と自然文を同じ強さで重ねると、腕が増えます。`,
+      },
+      {
+        title: '腕が増えるとき',
+        content: `抱擁で一番多い失敗は腕の本数です。ポジティブで腕の高さを一つに決め、ネガティブで余分な腕と、子ども向けの見た目を外します。
 
 \`\`\`
 ${NEGATIVE_BODY}, missing arms, fused arms, extra hands,
@@ -488,22 +666,24 @@ conjoined, merged bodies, ${NEGATIVE_CHILD}
 
 症状ごとの直し方です。
 
-- 二人とも背中しか見えない: \`from side\` を足し、カメラの \`from behind\` を外す。
-- 腕が腰と首の両方にある: 腕タグを一つに減らす。
-- 前の人の手が消える: \`hands resting over the arms at the waist\` を一文で足す。タグを増やしすぎない。
-- 体が溶けて一人に見える: \`2 adults\` を先頭に戻し、\`from side, full body\` にする。
-- 子どもに見える: \`adult\` を人数の直後へ。上のネガティブを確認する。
-- お姫様抱っこになる: \`princess carry, carrying, feet off the ground\` をネガティブに入れる。
+- 二人とも背中しか見えない。\`from side\` を足し、カメラの \`from behind\` を外す。
+- 腕が腰と首の両方にある。腕の高さを一つに減らす。
+- 前の人の手が消える。\`hands resting over the arms at the waist\` を一文で足す。語を増やしすぎない。
+- 体が溶けて一人に見える。\`2 adults\` を先頭に戻し、\`from side, full body\` にする。
+- 子どもに見える。\`adult\` を人数の直後へ。上のネガティブを確認する。
+- お姫様抱っこになる。\`princess carry\` をネガティブに入れる。足は地面に残す。
+- 顔が近すぎて口元が重なる。抱擁の語を残し、口元の語は足さない。口元はキスのページです。
 
-重みは \`(hug from behind:1.2)\` から試し、腕タグと同時に 1.4 へ上げないでください。上げるのは一つだけです。`,
+重みは \`(hug from behind:1.2)\` から試し、腕の語と同時に 1.4 へ上げないでください。上げるのは一つだけです。数字は目安です。`,
       },
     ],
     faq: [
-      { q: 'hug と hug from behind はどう使い分けますか？', a: '正面や横から抱き合うときは `hug` または `mutual hug` です。後ろから回り込むときは `hug from behind` と `arms around waist` と `from side` をセットにしてください。`behind` だけだと後ろ姿になります。' },
-      { q: 'arm around waist と arms around waist の違いは？', a: '`arm` は片腕、`arms` は両腕として使われることが多いです。通常のハグは `arms around waist` か `arms around back` を一つ選んでください。両方同時には書きません。' },
-      { q: '友人とカップルでタグを変える必要はありますか？', a: '変えた方が距離が安定します。カップルは `couple` と腰か背中、友人は `friends` と `arm around shoulder` です。関係タグを二つ重ねないでください。' },
-      { q: '家族のハグに子どもを描けますか？', a: 'このページでは描きません。大人のきょうだい、または大人の親子として `adult` を書き、ネガティブに `child, kid, toddler, baby, loli, shota, teen, underage, baby face` を入れてください。' },
-      { q: '既存のバックハグ作例はどこにありますか？', a: '[BL カップルの後ろからハグ](/prompt/bl-couple-hug-from-behind) が公開プロンプトです。二人構図の他のポーズは [カップルポーズ](/guides/two-person-composition-prompt-guide) にまとめてあります。' },
+      { q: '抱きつくの英語は何ですか？', a: '短い語では hug が最初の一手です。両方が腕を回すなら mutual hug、後ろからなら hug from behind、腕に抱きつくなら arm hug です。抱きしめるは embrace と自然な英語で書けます。公式タグとしては断定しません。一つだけ選んでください。' },
+      { q: '密着させるにはどう書きますか？', a: 'このページでは cheek-to-cheek、heads together、head on shoulder、close mutual hug の一つです。肩を並べる、頬を寄せる、頭を肩に預ける、近い抱擁までで、性的なポーズは書きません。四つを同時に強くすると顔が溶けます。' },
+      { q: 'hug と hug from behind はどう使い分けますか？', a: '正面や横から抱き合うときは hug または mutual hug です。後ろから回り込むときは hug from behind と arms around waist と from side をセットにしてください。behind だけだと後ろ姿になります。' },
+      { q: 'arm around waist と arms around waist の違いは？', a: 'arm は片腕、arms は両腕として使われることが多いです。通常の抱擁は arms around waist か arms around back か arm around shoulder を一つ選んでください。両方同時には書きません。' },
+      { q: '家族の抱擁に子どもを描けますか？', a: 'このページでは描きません。大人のきょうだい、または大人の親子として adult を書き、ネガティブに child, kid, toddler, baby, loli, shota, teen, underage, baby face を入れてください。' },
+      { q: 'NovelAI の source#hug は必ず効きますか？', a: '公式ドキュメントでは、抱きしめる側に source#hug、抱きしめられる側に target#hug、互いに抱き合うときは mutual#hug と案内されています。常に意図どおりになるとは限らない、とも書かれています。効かないときは接頭辞を外して、自然な英語に戻してください。' },
     ],
   },
 

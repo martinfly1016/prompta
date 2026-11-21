@@ -839,9 +839,9 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'hug-prompt-guide',
-    title: 'ハグ・抱き合うプロンプト｜バックハグ等の英語呪文【コピペOK】',
-    description: 'ハグ、抱き合う、バックハグ、後ろから抱きつく英語プロンプト。腕の位置、カップル・友人・大人の家族の書き方とネガティブを解説します。',
-    targetKeyword: 'ハグ プロンプト',
+    title: '抱きつく・ハグのプロンプト｜抱きしめる・密着',
+    description: '抱きつく、抱き合う、抱きしめる、後ろから、腕に抱きつく、肩を抱く、密着の英語プロンプト。服を着た大人のカップル、友人、家族の書き方を解説します。',
+    targetKeyword: '抱きつく プロンプト',
     monthlySearchVolume: 0,
   },
   {
@@ -916,8 +916,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'maid-outfit-prompt-guide',
-    title: 'メイド服プロンプト｜種類別の英語呪文【コピペOK】',
-    description: 'メイド服のAIプロンプトを英語タグでコピペ。クラシック・ヴィクトリアン・和風・ゴシック・メイドカフェ風の種類一覧、カチューシャやエプロンなどパーツ別タグ、執事との二人構図、崩れ対策を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    title: 'メイド服のプロンプト一覧｜種類・パーツ・ポーズ',
+    description: 'メイド服とメイドのプロンプト。種類、パーツ、給仕のポーズ、髪型、靴、帽子を、長い丈の成人スタッフとして英語で解説します。',
     targetKeyword: 'メイド服 プロンプト',
     monthlySearchVolume: 0,
   },
@@ -945,7 +945,7 @@ export const GUIDES: Guide[] = [
   {
     slug: 'suit-lab-coat-prompt-guide',
     title: 'スーツ・白衣プロンプト｜仕事服の英語呪文【コピペOK】',
-    description: 'スーツ・白衣のAIプロンプトを英語でコピペ。ビジネススーツ（男性・女性）、スリーピース、パンツスーツ、医師・研究者の白衣、スクラブの作例と、ネクタイや襟が崩れるときの直し方を Stable Diffusion・NovelAI・ChatGPT 向けに解説。',
+    description: '白衣のプロンプトとスーツの書き方。医師・研究者の白衣、ビジネススーツ、スリーピース、パンツスーツ、スクラブと、ネクタイや襟が崩れるときの直し方を解説します。',
     targetKeyword: '白衣 プロンプト',
     monthlySearchVolume: 0,
   },
@@ -1573,6 +1573,20 @@ export const GUIDES: Guide[] = [
     targetKeyword: '神社 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'mesh-inner-color-hair-prompt-guide',
+    title: 'メッシュ・インナーカラーのプロンプト｜髪色の英語',
+    description: 'メッシュとインナーカラーのプロンプト。黒髪に赤メッシュ、前髪だけの筋、毛先カラー、ツートンの英語と、色が服に移るときの分け方を解説します。',
+    targetKeyword: 'メッシュ プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'casual-outfit-prompt-guide',
+    title: '私服・カジュアルのプロンプト｜普段着コーデ',
+    description: '私服とカジュアルな服装のプロンプト。普段着、カジュアルコーデ、オフィスカジュアル、ビジネスカジュアルを、上から靴までの順で書く英語を解説します。',
+    targetKeyword: '私服 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -2112,6 +2126,14 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'shrine-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['camera', 'costume'],
+  },
+  'mesh-inner-color-hair-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
+  },
+  'casual-outfit-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['clothing', 'costume'],
   },
 }
 

@@ -28,6 +28,7 @@ import { SEO_BATCH_20_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-l'
 import { SEO_BATCH_21_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-m'
 import { SEO_BATCH_22_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-n'
 import { SEO_BATCH_23_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-o'
+import { SEO_BATCH_24_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-p'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -95,6 +96,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_21_GUIDE_CONTENT,
   ...SEO_BATCH_22_GUIDE_CONTENT,
   ...SEO_BATCH_23_GUIDE_CONTENT,
+  ...SEO_BATCH_24_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1428,7 +1430,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 **本ガイドで扱う 5 つの定番ジャンル + 8 種のサブジャンル**:
 
 - 🎓 **セーラー服プロンプト** — 夏服 / 冬服 / 黒セーラー / 関東風 / 関西風 / ツインテール × セーラー
-- 🍵 **メイド服プロンプト** — 王道メイド / ヴィクトリアン / フレンチ / ゴシック / カフェ風
+- 🍵 **メイド服プロンプト** — 種類とパーツは [メイド服プロンプト](/guides/maid-outfit-prompt-guide)
 - 🏫 **学校制服プロンプト** — ブレザー / 夏制服 / ダークアカデミア / 海外風 / 体操服
 - ⛩️ その他定番 8 種 — 巫女 / ナース / チア / 着物 / 魔女 / バニー / 甲冑 / ゴスロリ
 - 📸 衣装ディテール × 撮影 × ツール別 × 困った時の対処法
@@ -1530,32 +1532,25 @@ white blouse navy skirt red ribbon, medium shot,
 全 8 件のセーラー服 prompt + サンプル画像は <a href="/tag/%E3%82%BB%E3%83%BC%E3%83%A9%E3%83%BC%E6%9C%8D" class="text-sky-600 hover:underline">/tag/セーラー服</a> で公開中。`,
       },
       {
-        title: 'メイド服プロンプト — 王道 / フレンチ / ヴィクトリアン / ゴシック全網羅',
-        content: `メイド服は、黒いドレス、白いエプロン、カチューシャで形が決まります。種類、パーツ、色、男性のメイドと執事は、大人向けの英語タグとして別ページにまとめています。<a href="/guides/maid-outfit-prompt-guide" class="text-sky-600 hover:underline">メイド服の種類・パーツ別タグ → メイド服プロンプト</a>
+        title: 'メイド服は専用のページへ',
+        content: `メイド服の種類、パーツ、色、ポーズ、髪型、靴、帽子は、成人のスタッフ向けの専用ページにまとめています。このページはコスプレ全体の入口のままです。
 
-ここにはクラシックとヴィクトリアンの短い作例だけを置きます。登場人物は成人のスタッフです。丈は長いスカートか、床までのドレスにします。
+<a href="/guides/maid-outfit-prompt-guide" class="text-sky-600 hover:underline">詳しくはメイド服プロンプト</a>
 
-**1. クラシック — 白黒の長いドレス**
+丈は長いスカートか、床までのドレスです。ここには部品の対応だけを残します。
 
-\`\`\`
-1 adult woman, maid, maid headdress, maid apron, frilled apron,
-black dress, long skirt, long sleeves, white apron, mary janes,
-holding a tea tray, mansion parlor, full body
-\`\`\`
+| 部品 | 短い語 |
+|---|---|
+| ドレス | \`maid\`, \`long skirt\` |
+| エプロン | \`apron\`, \`frilled apron\` |
+| 頭 | \`maid headdress\` |
 
-ネガティブ:
-
-\`\`\`
-child, kid, toddler, baby, loli, shota, teen, underage, baby face,
-bad anatomy, bad hands, extra fingers, short skirt
-\`\`\`
-
-**2. ヴィクトリアン — 床までの長いドレス**
+**長い丈の一例**
 
 \`\`\`
-1 adult woman, maid, long black dress, long skirt, long sleeves,
-white apron, maid headdress, boots,
-holding a tea tray, dining room, full body, soft daylight
+1 adult woman, adult, maid, maid headdress, frilled apron,
+black dress, long skirt, long sleeves, white apron,
+holding a tea tray, full body, standing
 \`\`\`
 
 ネガティブ:
@@ -1564,8 +1559,7 @@ holding a tea tray, dining room, full body, soft daylight
 child, kid, toddler, baby, loli, shota, teen, underage, baby face,
 bad anatomy, bad hands, extra fingers, short skirt
 \`\`\`
-
-作例: <a href="/prompt/maid-costume-3d-render" class="text-sky-600 hover:underline">黒白のメイド衣装</a> / <a href="/prompt/maid-cleaning-cel-shade-style" class="text-sky-600 hover:underline">掃除中のメイド</a>`,
+`,
       },
       {
         title: '学校制服プロンプト — ブレザー / 夏服 / ダークアカデミア / 海外風',
@@ -1934,7 +1928,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
       },
       {
         q: 'メイド服を AI が出してくれない / 普通のドレスになる',
-        a: '**3 つの原因** があります。（1）**ジャンル指定の欠如**: `maid uniform` だけだと「黒いドレス」と解釈される。`classic maid` `french maid` `victorian maid` を必ず併用。（2）**エプロンが消える**: `(white apron:1.3), (frilled apron:1.2), lace trim` で強調。AI のメイド服はエプロンが質素になりやすい。（3）**カチューシャ / ヘッドピース不足**: `frilled headband` `white mob cap` `lace bonnet` を追加。さらに `holding tea tray` `feather duster` などの小物を加えると「メイドらしさ」が引き立つ。アニメ系モデルなら `maid` Danbooru タグが最も強力。',
+        a: '種類、エプロン、カチューシャ、長い丈の書き方は [メイド服プロンプト](/guides/maid-outfit-prompt-guide) にまとめています。このページでは入口だけを残しています。エプロンと頭の飾りを人数の直後に戻し、丈は長いスカートにしてください。',
       },
       {
         q: '制服とセーラー服の違いは？プロンプトでどう使い分ける？',

@@ -457,7 +457,7 @@ long hair, very long hair, blonde hair, grey hair, extra people
         title: '内側の色と、光',
         content: `黒の地に、別の色を足す日は、地を先に書きます。内側の色か、細い筋か、のうち一つです。両方を同じ強さにすると、頭の中ほどで色が平均になります。
 
-内側の色は、\`colored inner hair\` が短い語として使われることがあります。公式タグとしては断定しません。効かなければ、自然な英語で inner color と、色を一つ足します。筋の深さは髪色のページに残します。このページでは、地が黒であるときの内側だけを書きます。筋を細かく分け始めたら、[髪色プロンプト](/guides/hair-color-prompt-guide) へ移ってください。
+内側の色は、\`colored inner hair\` が短い語として使われることがあります。公式タグとしては断定しません。効かなければ、自然な英語で inner color と、色を一つ足します。筋の深さは [メッシュ・インナーカラーのプロンプト](/guides/mesh-inner-color-hair-prompt-guide) です。このページでは、地が黒であるときの内側だけを書きます。筋を細かく分け始めたら、そちらへ移ってください。
 
 黒は、光がないと一枚の影になります。光は、色が安定してから一つです。縁の光は rim light、髪の細い光は hair highlights、と自然な英語で書きます。公式タグとしては断定しません。向きの一覧は [光・照明のプロンプト](/guides/lighting-prompt-guide) です。両方を同じ強さにすると、輪郭が白く飛んで、黒と白髪の区別が消えます。背景は明るい無地にします。夜の場面で全体を暗くすると、髪の形が背景に溶けます。
 
@@ -628,7 +628,7 @@ long hair, grey hair, blonde hair, extra people
       },
       {
         q: '金髪のページとどう分けますか',
-        a: '金の濃さは金髪のページ、黒の濃さはこのページです。メッシュやインナーカラーの深さは髪色のページです。地の色を二つ同じ強さにすると、頭の中ほどで色が平均になります。',
+        a: '金の濃さは金髪のページ、黒の濃さはこのページです。メッシュやインナーカラーの深さはメッシュ・インナーカラーのページです。地の色を二つ同じ強さにすると、頭の中ほどで色が平均になります。',
       },
       {
         q: '顔が若く見えます',
@@ -801,7 +801,7 @@ long hair, very long hair, ponytail, extra people
 
 前髪の形は [前髪プロンプト](/guides/bangs-prompt-guide) から一つ借ります。\`blunt bangs\` は短い語として使われることがあります。公式タグとしては断定しません。短い髪に厚い前髪を同じ強さで足すと、目が隠れます。目を見せる日は、前髪を眉の上で止める文を一つ足すか、前髪の語を外します。
 
-色は一つです。黒は [黒髪のプロンプト](/guides/black-hair-prompt-guide)、金は [金髪のプロンプト](/guides/blonde-hair-prompt-guide)、ほかの色は [髪色プロンプト](/guides/hair-color-prompt-guide) です。このページでは \`black hair\` か \`blonde hair\` かを人数の直後に残し、色味の形容はそれぞれのページへ戻します。
+色は一つです。黒は [黒髪のプロンプト](/guides/black-hair-prompt-guide)、金は [金髪のプロンプト](/guides/blonde-hair-prompt-guide)、ほかの色は [髪色プロンプト](/guides/hair-color-prompt-guide) です。筋や内側の色は [メッシュ・インナーカラーのプロンプト](/guides/mesh-inner-color-hair-prompt-guide) です。このページでは \`black hair\` か \`blonde hair\` かを人数の直後に残し、色味の形容はそれぞれのページへ戻します。
 
 癖も一つです。直毛は \`straight hair\`。ゆるい波は \`wavy hair\`。両方を残すと、毛先だけが別の髪型になります。直毛の細目はストレートのページです。短い直毛の日は、波の語を負向へ回します。
 
