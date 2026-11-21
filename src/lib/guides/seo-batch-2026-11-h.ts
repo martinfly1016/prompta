@@ -1632,7 +1632,7 @@ extra arms, extra people, live cat
         title: '雪と冬は層を一つずつ足す',
         content: `「雪 プロンプト」「冬 プロンプト」「雪 加工 ai プロンプト」で探しているのは、降る雪と積もった雪、結晶、雪の景色と街、冬の光、白い息、大人の冬服、雪遊び、そして自分の写真に雪を足す編集です。12月に向かって、季節の絵を先に用意したい検索です。
 
-このページは、雪と冬の組み合わせを担当します。クリスマスの電飾と赤の衣装は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、年賀状の賀詞は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。コートの部品の一般は [服装プロンプト一覧](/guides/clothing-prompt-guide)、人物のうしろの場所は [背景プロンプト](/guides/background-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。景色そのものを主題にする広い構図は [風景のプロンプト](/guides/landscape-prompt-guide) です。このページの雪景色は、雪の降り方と積もり方が主題です。コートの丈、ダッフルやダウンや肩に掛ける着方は [コートのプロンプト](/guides/coat-prompt-guide) です。このページでは、雪と一緒に着る冬服を一つ選ぶところまでです。
+このページは、雪と冬の組み合わせを担当します。クリスマスの電飾と赤の衣装は [クリスマスのプロンプト一覧](/guides/christmas-prompt-guide)、年賀状の賀詞は [AI年賀状プロンプト](/guides/new-year-card-ai-prompt-guide) です。コートの部品の一般は [服装プロンプト一覧](/guides/clothing-prompt-guide)、人物のうしろの場所は [背景プロンプト](/guides/background-prompt-guide)、光の向きは [光・照明のプロンプト一覧](/guides/lighting-prompt-guide) です。景色そのものを主題にする広い構図は [風景のプロンプト](/guides/landscape-prompt-guide) です。このページの雪景色は、雪の降り方と積もり方が主題です。雨の日、傘、雨上がりは [雨のプロンプト](/guides/rain-prompt-guide) です。このページは雪を残します。コートの丈、ダッフルやダウンや肩に掛ける着方は [コートのプロンプト](/guides/coat-prompt-guide) です。このページでは、雪と一緒に着る冬服を一つ選ぶところまでです。
 
 人物を置くときは大人だけです。\`1 adult woman\` か \`1 adult man\`、または \`2 adults\` から書き、\`adult\` を残します。服はコート、マフラー、手袋、ニット、スラックス、ブーツのように、閉じた冬の服で全身を覆います。年少者の雪遊びは書きません。人がいない景色には人数を書きません。
 

@@ -27,6 +27,7 @@ import { SEO_BATCH_19_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-k'
 import { SEO_BATCH_20_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-l'
 import { SEO_BATCH_21_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-m'
 import { SEO_BATCH_22_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-n'
+import { SEO_BATCH_23_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-o'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -93,6 +94,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_20_GUIDE_CONTENT,
   ...SEO_BATCH_21_GUIDE_CONTENT,
   ...SEO_BATCH_22_GUIDE_CONTENT,
+  ...SEO_BATCH_23_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -1121,6 +1123,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 12. \`ponytail\` — ポニーテール
 13. \`high ponytail\` — 高めポニテ
 14. \`side ponytail\` — サイドポニテ
+
+高さ、長さ、リボン、後ろから束を見せる書き方は [ポニーテールのプロンプト](/guides/ponytail-prompt-guide) です。この一覧は入口で、結びの位置を一つに絞るときは先のページです。
 15. \`bun, hair bun\` — お団子
 16. \`double bun\` — ダブルお団子
 

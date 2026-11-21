@@ -390,6 +390,8 @@ bad anatomy, extra legs, distorted face, long neck, huge chin
 | fighting stance | 構える | 格闘。武器は別タグ |
 | yoga pose | ヨガの姿勢 | 具体名を足すと安定 |
 
+椅子、床、正座、あぐら、斜めに座る、膝を抱える座り方の細目は [座り方のプロンプト](/guides/sitting-pose-prompt-guide) です。このページは立つ・座る・歩くの入口で、足の形を一つに絞るときは先のページを開きます。
+
 公開作例: [岩の上に座る](/prompt/sitting-pose-rocky-ledge-relaxed)、[短縮法の座り](/prompt/foreshortening-sitting-pose-technique)、[自信のある立ち姿](/prompt/slender-shirt-confident-pose)、[戦士の後ろ姿](/prompt/full-body-warrior-stance-rear-view)、[正面を向いた姿勢の修正](/prompt/pose-correct-face-forward)。`,
       },
       {
@@ -585,7 +587,7 @@ long neck, twisted neck, extra knees
 | window light | 窓光 |
 | backlighting | 逆光 |
 
-夕焼けのタグは [夕焼け](/tag/夕焼け) です。屋上や街を上から見せるときは、場所タグに [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) の \`from above\` や \`aerial view\` を足します。花畑や桜を人物のうしろに短く置くだけなら、この表の一語で足ります。花の名前、一輪、花びら、髪飾りまでを主題にするときは [花のプロンプト](/guides/flower-prompt-guide) です。`,
+夕焼けのタグは [夕焼け](/tag/夕焼け) です。屋上や街を上から見せるときは、場所タグに [見下ろす構図・俯瞰](/guides/high-angle-prompt-guide) の \`from above\` や \`aerial view\` を足します。花畑や桜を人物のうしろに短く置くだけなら、この表の一語で足ります。花の名前、一輪、花びら、髪飾りまでを主題にするときは [花のプロンプト](/guides/flower-prompt-guide) です。神社の鳥居や参道や本殿を主題にするときは [神社のプロンプト](/guides/shrine-prompt-guide) です。この表の \`shrine\` は、人物のうしろに短く置くときだけです。雨の降り方、傘、雨上がりは [雨のプロンプト](/guides/rain-prompt-guide) です。この表の \`rain\` は、天気を一つ足すところまでです。`,
       },
       {
         title: '背景だけを描く',
@@ -617,6 +619,10 @@ from side, full body, muted colors
 \`\`\`
 
 場所を変えたあとに体の線が変わるのは、背景タグが体型タグより強く勝っているサインです。体型を守るなら [体型プロンプト](/guides/body-type-prompt-guide) の単語を人物の直後に戻してください。`,
+      },
+      {
+        title: '宇宙は専用のページで書く',
+        content: `宇宙船、船内、宇宙ステーション、宇宙飛行士、星雲や銀河の背景は [宇宙のプロンプト](/guides/space-prompt-guide) にまとめました。このページでは、人物のうしろに星空を短く置くところまでです。\`starry sky\` を一つ、場所はそれ以上増やしません。宇宙船の形や船内の通路まで書く日は、先のページへ移ってください。`,
       },
       {
         title: 'ネガティブと、背景が勝ってしまうとき',

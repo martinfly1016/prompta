@@ -224,6 +224,34 @@ const TAG_GUIDE_CTA_COPY: Record<string, { label: string; description: string }>
     label: '体格差の出し方を先に読む',
     description: '筋肉質 × 小柄、騎士 × 魔法使いなど、身長差と体格差を分けて指定するコツを解説しています。',
   },
+  '壁ドン': {
+    label: '詳しい書き方ガイド',
+    description: '壁ドンの英語タグ、する側とされる側、身長差と視点の書き方を解説しています。',
+  },
+  '金髪': {
+    label: '詳しい書き方ガイド',
+    description: 'プラチナ、アッシュ、ハニーなど金髪の色味と、黄ばむときの直し方を解説しています。',
+  },
+  'お姫様抱っこ': {
+    label: '詳しい書き方ガイド',
+    description: 'お姫様抱っこの英語タグと、腕や脚が崩れるときの直し方を解説しています。',
+  },
+  'ネックレス': {
+    label: '詳しい書き方ガイド',
+    description: 'チェーン、真珠、素材の書き方と、鎖が服に溶けるときの直し方を解説しています。',
+  },
+  '証明写真': {
+    label: '詳しい書き方ガイド',
+    description: 'ChatGPT と Gemini で証明写真風に整えるときの背景色、服装、注意点を解説しています。',
+  },
+  'キス': {
+    label: '詳しい書き方ガイド',
+    description: '頬へのキスやキス待ちの顔の英語タグと、顔が崩れるときの直し方を解説しています。',
+  },
+  '黒髪': {
+    label: '詳しい書き方ガイド',
+    description: '黒髪ロング、ボブ、マッシュと、灰色になるときの直し方を解説しています。',
+  },
 }
 
 const TAG_TO_TOOL: Record<string, { href: string; label: string; title: string; description: string }> = {
