@@ -102,7 +102,15 @@ const PROMPT_GUIDE_PINS: Record<string, string[]> = {
   'ponytail-highlights-sidelocks': ['half-up-hair-prompt-guide'],
   'blonde-bun-hairstyle-casual-bar': ['half-up-hair-prompt-guide'],
   'business-suit-woman-8s35': ['clothing-prompt-guide'],
+  'uniform-medical-doctor': ['suit-lab-coat-prompt-guide'],
   'uniform-medical-doctor-white-coat': ['suit-lab-coat-prompt-guide'],
+}
+
+function isDoctorLabCoatPrompt(slug: string): boolean {
+  return slug === 'uniform-medical-doctor'
+    || slug === 'uniform-medical-doctor-white-coat'
+    || slug.includes('medical-doctor')
+    || slug.includes('lab-coat')
 }
 
 export default async function PromptDetailPage({ params }: Props) {
@@ -175,6 +183,15 @@ export default async function PromptDetailPage({ params }: Props) {
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">{prompt.title}</h1>
             <p className="text-gray-600 leading-relaxed">{prompt.description}</p>
+            {isDoctorLabCoatPrompt(prompt.slug) && (
+              <p className="mt-4 rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-gray-800">
+                白衣のパーツと英語の書き方は{' '}
+                <Link href="/guides/suit-lab-coat-prompt-guide#hakui" className="font-semibold text-sky-700 hover:underline">
+                  詳しい書き方ガイド
+                </Link>
+                にまとめています。
+              </p>
+            )}
             {(() => {
               const verified = getVerifiedTools(prompt.slug)
               if (verified.length === 0) return null

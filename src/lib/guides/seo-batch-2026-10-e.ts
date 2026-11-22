@@ -230,20 +230,85 @@ school uniform, short skirt
 \`\`\``,
       },
       {
-        title: 'ポーズと構図',
-        content: `衣装のパーツを見せるなら \`full body\` です。顔とカチューシャだけなら \`cowboy shot\` か上半身にします。両方を強くすると、頭が大きくなり丈が切れます。
+        title: 'メイドのポーズ',
+        content: `衣装のパーツを見せるなら \`full body\` と \`standing\` です。低い角度は使いません。顔とカチューシャだけを見る日は上半身にします。全身と上半身を同じ強さにすると、頭が大きくなり丈が切れます。
 
-| 構図・動作 | 英語 | 注記 |
+動作は一つです。盆を持つ、お茶を注ぐ、お辞儀、カーテシー、を同時に強くすると、手が二組できます。
+
+| 動作 | 書き方 | 注記 |
 |---|---|---|
-| 全身 | \`full body\` | 靴まで入れる。最初の構図 |
-| 膝上 | \`cowboy shot\` | 表情とエプロン。丈は切れやすい |
-| 横 | \`from side\` | 盆とエプロンの重なりが見える |
-| お辞儀 | \`bowing\` | タグとして足せる。盆と同時だと手が崩れやすい |
-| カーテシー | \`curtsy\` | 自然な英語。公式タグとは書かない |
+| 盆を持つ | holding a tea tray | 自然な英語。立つ、全身 |
+| お茶を注ぐ | pouring tea | 自然な英語。盆と同時に強くしない |
+| お辞儀 | \`bowing\` | 短い語として使われることがある |
+| カーテシー | \`curtsy\` | 自然な英語。公式タグとしては断定しない |
+| 全身 | \`full body\`, \`standing\` | 靴まで入れる |
 
-お辞儀を足すときは、ティータイムの例の \`standing\` を \`bowing\` に一つだけ替えます。カーテシーは \`curtsy, full body, long skirt\` と自然な英語で足し、短い丈の語は入れません。
+\`bowing\` は公式タグとしては断定しません。カーテシーは膝を軽く曲げる挨拶で、丈は \`long skirt\` か \`knee-length skirt\` のままです。短い丈の語は入れません。
 
-ポーズの立ち方そのものは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。腕が溶けるときは、持つ物を \`tea tray\` か箒の一方だけにしてください。`,
+**盆を持って立つ**
+
+\`\`\`
+1 adult woman, adult, maid, maid headdress, frilled apron,
+black dress, long skirt, long sleeves, white apron,
+holding a tea tray, full body, standing, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+school uniform, short skirt
+\`\`\`
+
+**カーテシー。全身、長い丈**
+
+\`\`\`
+1 adult woman, adult, maid, maid headdress, white apron,
+long skirt, long sleeves, curtsy, full body, standing,
+mansion parlor, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+school uniform, short skirt
+\`\`\`
+
+ポーズの立ち方そのものは [ポーズプロンプト](/guides/stable-diffusion-pose-prompt) です。腕が溶けるときは、持つ物を盆か急須の一方だけにしてください。`,
+      },
+      {
+        title: '髪型、靴、帽子',
+        content: `頭、靴、帽子は、衣装の行が三枚そろってから一つ足します。三つを同じ強さにすると、カチューシャと帽子が二重になります。
+
+髪型の種類は [髪型プロンプト](/guides/hairstyle-prompt-guide)、靴の種類は [靴のプロンプト](/guides/shoes-prompt-guide)、帽子の種類は [帽子のプロンプト](/guides/hat-prompt-guide) です。このページでは、メイドの衣装と一緒に残すものだけを書きます。
+
+| 部位 | 書き方 | 同時にしないもの |
+|---|---|---|
+| まとめ髪 | \`hair bun\` | 帽子とカチューシャの両方 |
+| 長い髪 | \`long hair\` | 短い髪の語 |
+| 靴 | \`mary janes\` | ブーツと同時に強くしない |
+| ブーツ | \`boots\` | カチューシャは残してよい |
+| 頭の布 | mob cap | 自然な英語。\`maid headdress\` と一方 |
+
+\`mary janes\` と \`boots\` と \`hair bun\` は短い語として使われることがあります。公式タグとしては断定しません。mob cap は自然な英語です。
+
+**お団子と、甲にストラップのある靴**
+
+\`\`\`
+1 adult woman, adult, maid, black hair, hair bun, maid headdress,
+long skirt, long sleeves, white apron, mary janes,
+full body, standing, soft daylight
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+school uniform, short skirt, hat
+\`\`\`
+
+カチューシャが帽子に溶けるときは、mob cap を消して \`maid headdress\` だけに戻します。靴が見えないときは、\`full body\` を残し、上半身の語を消します。`,
       },
       {
         title: '崩れやすい点とネガティブ',
@@ -1127,7 +1192,7 @@ school uniform, short skirt, asymmetrical clothes, cropped feet
       },
       {
         title: '白衣',
-        content: `\`lab coat\` は、下の服の上に羽織るコートです。\`white dress shirt\` とズボン、または膝丈のスカートを先に書き、そのあとに \`lab coat\` を置きます。聴診器は \`stethoscope\` と書きます。
+        content: `<a id="hakui"></a>白衣（医師・研究者の外套）は、この節です。\`lab coat\` は、下の服の上に羽織るコートです。\`white dress shirt\` とズボン、または膝丈のスカートを先に書き、そのあとに \`lab coat\` を置きます。聴診器は \`stethoscope\` と書きます。
 
 医師は病院の廊下、研究者は実験室、薬剤師は薬局のカウンター、と場所を一つだけ変えます。職業名は自然な英語です。\`doctor\`、\`researcher\`、\`pharmacist\` を全部同時に強くすると、部屋が混ざります。
 
