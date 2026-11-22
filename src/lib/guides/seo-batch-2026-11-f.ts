@@ -799,6 +799,121 @@ Seed を固定: WebUI または Forge
 CFG を上げると、条件への寄りが強くなります。寄りが強いときに負向が長いと、避けたい形の輪郭だけが残ることがあります。その日は CFG を初期値の付近へ戻し、負向は短くしてから、もう一枚だけ出します。初期値は画面とモデルで違います。A1111 の CFG Scale の初期値は 7.0 です。これは目安で、最適な倍率ではありません。`,
       },
       {
+        title: 'コピペ用テンプレ早見表',
+        content: `「ネガティブプロンプト テンプレ」「ネガティブプロンプト コピペ」で最初に要るのは、長い一覧ではなく、用途ごとの短い行です。下の五つは、Stable Diffusion の負向欄へそのまま貼る最小の行です。モデルの配布ページが別の行を指定しているときは、そちらを優先し、年齢の語だけは残します。五つを同時に連結しないでください。今日の症状は一つです。
+
+手と指の直し方の全体は [手・指のプロンプト](/guides/hand-finger-prompt-guide)、品質の語を正向へ置く場所は [品質タグ一覧](/guides/quality-tags-prompt-guide) です。
+
+汎用（最小）:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE}
+\`\`\`
+
+人物（人数を増やしたくないとき）:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra people, duplicate, multiple views
+\`\`\`
+
+手・指:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, missing fingers, fused fingers, poorly drawn hands
+\`\`\`
+
+背景・風景（人を出したくないとき）:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+people, person, text, watermark
+\`\`\`
+
+文字・透かし:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+text, watermark, signature, username, logo, letters
+\`\`\`
+
+二人の絵では、extra people を残し、一人の絵では複数人の語を足しすぎないでください。背景の絵では、正向から人数を消してから、人の行を負向に置きます。`,
+      },
+      {
+        title: 'NovelAI のネガティブ（除外したい要素）',
+        content: `NovelAI の欄の名前は、除外したい要素です。公式ドキュメントは、プロンプトと除外したい要素が同じ入力欄の別のタブにあり、入力欄の下へ分けて表示することもできる、と書いています。2026年11月時点の案内です。バージョンによって表示名や仕様が違うことがあります。最新の手順は <a href="https://docs.novelai.net/ja/image/undesiredcontent/" rel="nofollow noopener" target="_blank">公式の除外したい要素</a> を確認してください。
+
+プリセットは、プロンプト欄の下部から選び、自分で書いたタグと組み合わせられます。公式は、推奨の設定が既定で有効だと書いています。日本語のドキュメントに出る名前は、軽い、強い、人間に重点を置く、ケモノに重点を置く、です。モデル名はドキュメントの表記に合わせ、NAIDiffusion V4.5 Full と NAIDiffusion V5 Full を分けます。中身は版で違います。下は、2026年11月に公式ページへ書かれていた行の引用です。画面の行と違うときは、画面を優先してください。
+
+軽い（V4.5 Full）:
+
+\`\`\`
+lowres, artistic error, scan artifacts, worst quality, bad quality, jpeg artifacts, multiple views, very displeasing, too many watermarks, negative space, blank page
+\`\`\`
+
+強い（V4.5 Full）:
+
+\`\`\`
+lowres, artistic error, film grain, scan artifacts, worst quality, bad quality, jpeg artifacts, very displeasing, chromatic aberration, dithering, halftone, screentone, multiple views, logo, too many watermarks, negative space, blank page
+\`\`\`
+
+人間に重点を置く（V4.5 Full）:
+
+\`\`\`
+lowres, artistic error, film grain, scan artifacts, worst quality, bad quality, jpeg artifacts, very displeasing, chromatic aberration, dithering, halftone, screentone, multiple views, logo, too many watermarks, negative space, blank page, @_@, mismatched pupils, glowing eyes, bad anatomy
+\`\`\`
+
+軽い（V5 Full）:
+
+\`\`\`
+lowres, bad hands, bad anatomy, artistic error, sepia, white haze, worst quality, very displeasing, jpeg artifacts, 0::ai-generated::
+\`\`\`
+
+V5 Full の強い、と V5 Curated、は上の V4.5 Full とは行が違います。同じ「軽い」でも、V5 Full の軽いには bad hands と bad anatomy が入り、V4.5 Full の軽いには入りません。版をまたいで貼り替えないでください。ケモノに重点を置く行は、人の肖像の既定にはしません。人を描く日は、人間に重点を置くか、軽い、のどちらかを残します。
+
+プリセットを切ったときの汎用は、このページの短い行です。公式のプリセットの代わりに、体と年齢と手を自分で置きます。
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, missing fingers, text, watermark
+\`\`\`
+
+強調は、公式の Strengthening & Weakening が、\`{ }\` で注意を 1.05 倍、\`[ ]\` で 1.05 で割る、と説明しています。重ねると、その倍率が掛かった回数だけ強くなります。除外したい要素の欄では、\`{ }\` の中ほど避けられ、\`[ ]\` の中は避け方が弱くなります。数値の強調は V4 以降で、\`1.5::rain ::\` のように書き、弱める数値は 0.0 から 1.0 です。負の数値は V4.5 以降で、\`-1::hat ::\` のように、特定のものを外す書き方としてドキュメントが説明しています。これは WebUI の \`(tag:1.2)\` とは記号が違います。詳細は <a href="https://docs.novelai.net/ja/image/strengthening-weakening/" rel="nofollow noopener" target="_blank">公式の強調</a> と [NovelAIの呪文の書き方](/guides/novelai-prompt-guide) です。2026年11月時点の説明で、画面と違うときは画面を優先してください。
+
+人の作例では、正向に \`adult\` を残し、除外欄にも年齢の語を残します。プリセットの行に年齢の語が無くても、このサイトの作例では足します。`,
+      },
+      {
+        title: 'SD 1.5 と SDXL、Midjourney、自然文',
+        content: `Stable Diffusion 1.5 の作例では、品質の語を負向へ長く並べることがありました。SDXL や Illustrious では、その長い列がカードの指定と違うことがあります。新しい系統では、品質の語は正向へ短く置き、負向は体、指、文字、年齢に留めた方が合いやすいことがあります。これは倍率の話ではなく、カードを先に読む、という順番です。カードに推奨の負向があれば、それを優先し、年齢の語だけは残します。同じ語を正向と負向の両方には置かないでください。
+
+除外用の追加ファイル（埋め込み）は、モデルの配布ページが名前を指定しているときだけ使います。このページでは、ファイルの配布先を書きません。名前だけで探すと、別の系統のファイルを読むことがあります。
+
+SDXL 向けに短くした行:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE}
+\`\`\`
+
+Illustrious の品質の並びは [Illustriousプロンプト](/guides/illustrious-prompt-guide)、SDXL の解像度は [SDXLとは](/guides/sdxl-guide)、タグの順番は [Stable Diffusionプロンプト](/guides/stable-diffusion-prompt-guide) です。
+
+Midjourney には負向の欄がありません。公式の No パラメータは、文章の末尾の \`--no\` です。公式は、\`--no\` がマルチプロンプトの重み -0.5 と同じだと書いています。語はカンマで続けます。公式は、\`--no\` のうしろが単語ごとに読まれるので、服をまとめて消す長い句は避け、着てほしい服は正向に書く、と注意しています。パラメータは末尾です。2026年11月時点の説明は <a href="https://docs.midjourney.com/hc/en-us/articles/32173351982093-No" rel="nofollow noopener" target="_blank">公式の No</a> を確認してください。
+
+\`\`\`
+quiet lakeside at morning, pine trees, soft mist --no people, text
+\`\`\`
+
+ChatGPT と Gemini には、Stable Diffusion と同じ負向欄がありません。避けたいものは、文の中に「〜は入れないで」と書きます。
+
+\`\`\`
+Draw 1 adult man, clearly an adult, in a buttoned shirt and trousers, upper body, plain background.
+Do not add another person. Do not add text or a watermark. Do not change the shirt into bare skin.
+Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}
+\`\`\`
+
+自然文の「入れない」と、タグの負向を同じ強さでつなぐと、同じ禁止が二回入ることがあります。そのモデルが読む方だけを残してください。`,
+      },
+      {
         title: 'どこに書くか',
         content: `AUTOMATIC1111 の README は、Negative prompt を、見たくないものを書く別のテキスト欄だと説明しています。txt2img と img2img の、正向の下にあります。Forge は WebUI の上に載る、と Forge の README が説明しているので、同じ欄が残っていることが多いです。見出しが違うときは、今の画面の欄を使ってください。導入は [Stable Diffusion WebUIの使い方](/guides/stable-diffusion-webui-guide) と [Stable Diffusion Forgeの使い方](/guides/stable-diffusion-forge-guide) です。
 

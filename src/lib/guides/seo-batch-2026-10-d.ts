@@ -807,7 +807,7 @@ Midjourney でも同じ文が使えます。Stable Diffusion や NovelAI では 
 
 このページは服を着た大人の、ファッションと日常の書き方です。体の部位を強調する語、水着、下着、肌の露出は入れません。顔、全体のシルエット、服のゆとりで表します。
 
-他の体型（細身、筋肉、小柄）は [体型プロンプト](/guides/body-type-prompt-guide)、作例のタグは [ぽっちゃり](/tag/ぽっちゃり)、一覧は [体型プロンプト集](/prompts/body-type) です。`,
+他の体型（細身、筋肉、小柄）は [体型プロンプト](/guides/body-type-prompt-guide)、男性の段は [男性の体型プロンプト](/guides/male-body-type-prompt-guide)、作例のタグは [ぽっちゃり](/tag/ぽっちゃり)、一覧は [体型プロンプト集](/prompts/body-type) です。`,
       },
       {
         title: '強さ別の英語タグ',

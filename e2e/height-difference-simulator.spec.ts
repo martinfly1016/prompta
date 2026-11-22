@@ -126,7 +126,7 @@ test.describe('height difference simulator', () => {
     })
 
     await page.goto('/tools/height-difference-maker/simulate')
-    await expect(page).toHaveTitle(/身長差シミュレーター｜体格差の構図を確認して写真から生成/)
+    await expect(page).toHaveTitle(/身長差・体格差シミュレーター｜二人の構図を確認/)
     await page.getByTestId('height-sim-confirm').click()
     await page.getByTestId('height-sim-file-a').setInputFiles(photoPath)
     await page.getByTestId('height-sim-file-b').setInputFiles(photoPath)

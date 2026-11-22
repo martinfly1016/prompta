@@ -641,8 +641,8 @@ export const GUIDES: Guide[] = [
   },
   {
     slug: 'negative-prompt-guide',
-    title: 'ネガティブプロンプトとは｜書き方・テンプレ【コピペOK】',
-    description: 'ネガティブプロンプトとは何かを、各ツールの書き方、定番テンプレ、手や指、文字、人数、強調、入れすぎたときの副作用まで解説。Stable Diffusion、NovelAI、Midjourney、自然文向けのコピペ例つき。',
+    title: 'ネガティブプロンプトのテンプレ｜NovelAI・SD汎用【コピペOK】',
+    description: 'ネガティブプロンプトのテンプレと汎用のコピペ例。NovelAIの除外したい要素、Stable Diffusion、Midjourneyの--no、文字や手を短く足す書き方を解説します。',
     targetKeyword: 'ネガティブプロンプト',
     monthlySearchVolume: 2900,
   },
@@ -1587,6 +1587,27 @@ export const GUIDES: Guide[] = [
     targetKeyword: '私服 プロンプト',
     monthlySearchVolume: 0,
   },
+  {
+    slug: 'male-body-type-prompt-guide',
+    title: '男性の体型プロンプト｜細身・がっしり・大柄の英語',
+    description: '男性の体型プロンプトを、細身、普通、がっしり、大柄、ふくよかまで、服を着た成人の輪郭として英語で解説します。身長や肩幅との分け方、二人の体格差へ渡す手順つき。',
+    targetKeyword: '男性 体型 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'backlight-prompt-guide',
+    title: '逆光・順光のプロンプト｜英語とシルエット・補正',
+    description: '逆光と順光のプロンプトを、英語の向き、シルエット、顔が暗いときの補助光、逆光を防ぐ負向、明るさの輪まで解説します。成人の肖像と、人のいない景色の例つき。',
+    targetKeyword: '逆光 プロンプト',
+    monthlySearchVolume: 0,
+  },
+  {
+    slug: 'male-hairstyle-prompt-guide',
+    title: '男性の髪型プロンプト一覧｜前髪・ウルフ・短髪',
+    description: '男性の髪型プロンプトを、短髪、前髪、ウルフ、ツーブロック、オールバック、センター分けまで、成人男性の英語として解説します。伸びるときと、前髪が消えるときの直し方つき。',
+    targetKeyword: '男性 髪型 プロンプト',
+    monthlySearchVolume: 0,
+  },
 ]
 
 // Guide ↔ Tool/Category mapping for internal linking
@@ -2134,6 +2155,18 @@ export const GUIDE_RELATIONS: Record<string, { tools: string[]; categories: stri
   'casual-outfit-prompt-guide': {
     tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
     categories: ['clothing', 'costume'],
+  },
+  'male-body-type-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['body-type', 'clothing'],
+  },
+  'backlight-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['camera', 'color'],
+  },
+  'male-hairstyle-prompt-guide': {
+    tools: ['stable-diffusion', 'midjourney', 'chatgpt', 'gemini'],
+    categories: ['hairstyle', 'color'],
   },
 }
 
