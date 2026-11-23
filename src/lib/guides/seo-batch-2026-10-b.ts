@@ -62,7 +62,7 @@ cm の数字（例: 150cm）は、モデルが実寸として守るとは限り�
 やってはいけない書き方:
 
 - 年齢を下げて身長を下げる。\`petite\` の代わりに若い年齢を書かない。
-- \`girl\` や \`boy\` だけで成人を省略する。モデルによっては未成年の見た目に寄ります。Danbooru 系で人数タグが必要なときは、\`1girl\` に \`adult\` を必ず添え、下のネガティブを入れます。
+- \`girl\` や \`boy\` だけで成人を省略する。モデルによっては未成年の見た目に寄ります。人数は \`1woman, adult, mature female\` か \`1man, adult, mature male\` と書き、下のネガティブを入れます。
 - \`tiny\` と \`chibi\` を同時に強くする。頭身がデフォルメになります。`,
       },
       {
@@ -197,7 +197,7 @@ ${NEGATIVE_CHILD}, chibi, school uniform
 | upper body | 上半身 | 顔と手が画面に残る |
 | close-up | 顔のアップ | 唇は見えるが、手が画面外に出やすい |
 
-人数は \`1 adult woman and 1 adult man\`、\`2 adult women\`、\`2 adult men\` のように成人で書きます。Danbooru 系のモデルは \`1girl\` や \`1boy\` の人数タグに反応しやすいので、使う場合は \`adult\` を添え、子ども向けタグをネガティブに入れてください。
+人数は \`1 adult woman and 1 adult man\`、\`2 adult women\`、\`2 adult men\`、または \`1woman, adult, mature female\` と \`1man, adult, mature male\` のように成人で書きます。子ども向けタグはネガティブに入れてください。
 
 横からの構図の単語は [下からのアングル](/guides/low-angle-prompt-guide) にもあります。キスではローアングルより \`from side\` を優先します。`,
       },
@@ -884,13 +884,13 @@ Stable Diffusion 全般の書き方は [Stable Diffusion プロンプト](/guide
       },
       {
         title: 'タグの順番は、公式の固定順ではない',
-        content: `v0.1 カードの公開作例は、\`1boy\` や \`1girl\` から始まり、品質タグは付いていないか、末尾の \`masterpiece\` だけです。カードは「品質タグを先頭に置け」とは書いていません。
+        content: `v0.1 カードの公開作例は人数タグから始まり、品質タグは付いていないか、末尾の \`masterpiece\` だけです。このサイトのテンプレでは \`1woman\` と \`1man\` を使います。カードは「品質タグを先頭に置け」とは書いていません。
 
 一方で、Illustrious 系のファインチューンでは、品質タグを先頭、構図を末尾にする書き方が広く使われています。順番を変えても結果がほぼ変わらなかった、という公開の比較もあります。それは特定のファインチューンとシードの話で、すべてのチェックポイントの仕様ではありません。
 
 編集しやすい並びとして、このページのテンプレは次の順にしています。公式の必須順ではなく、直すときにどこを触るか分かるように分けたものです。
 
-1. 人数（\`1girl\` や \`1boy\`）。成人を描くなら \`adult\` を添える。
+1. 人数（\`1woman, adult, mature female\` または \`1man, adult, mature male\`）。
 2. 髪・目など、見た目のタグ。
 3. 服装。
 4. ポーズと表情。
@@ -975,7 +975,7 @@ v0.1 カードは、基本モデルにデフォルトの画風がない、と書
 **成人の上半身（タグ中心）**
 
 \`\`\`
-1girl, adult, young adult, long black hair, brown eyes,
+1woman, adult, mature female, young adult, long black hair, brown eyes,
 white blouse, dark skirt, sitting, gentle smile,
 looking at viewer, indoors, window light,
 upper body, masterpiece, best quality
@@ -984,7 +984,7 @@ upper body, masterpiece, best quality
 **成人の全身（短い文を一つ混ぜる）**
 
 \`\`\`
-1boy, adult, short hair, coat, standing, full body,
+1man, adult, mature male, short hair, coat, standing, full body,
 standing beside a door that reaches his shoulders,
 simple background, masterpiece, best quality
 \`\`\`
@@ -992,7 +992,7 @@ simple background, masterpiece, best quality
 **背景を少し描き込む**
 
 \`\`\`
-1girl, adult, casual clothes, walking, city street, overcast,
+1woman, adult, mature female, casual clothes, walking, city street, overcast,
 from side, full body, masterpiece, best quality
 \`\`\`
 

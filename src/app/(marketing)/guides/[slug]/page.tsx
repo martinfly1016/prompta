@@ -285,7 +285,7 @@ AIは2025年までの学習データに基づいて回答するため、最新�
 
 **例：**
 
-\`beautiful girl, long hair, white dress, in garden, (masterpiece:1.2), (best quality:1.4), soft lighting, bokeh background\`
+\`beautiful adult woman, long hair, white dress, in garden, (masterpiece:1.2), (best quality:1.4), soft lighting, bokeh background\`
 
 順序が重要な理由は、SDが**プロンプト前方のキーワードに強い重みを置く**ため。最も伝えたい要素（主題・スタイル）を先頭に、修飾要素（背景・照明）を後方に配置します。
 
@@ -367,7 +367,7 @@ ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日
 
 **BREAK キーワード（一部 UI で対応）：**
 
-\`a girl, red hair BREAK a boy, blue eyes\`
+\`an adult woman, red hair BREAK an adult man, blue eyes\`
 
 → AI に「区切り」を伝え、2 つの要素を独立して処理。混色防止に有効。`,
       },
@@ -386,7 +386,7 @@ ChatGPT や Claude のような文章生成AIとは違い、SDは「自然な日
 
 - プロンプト方針：アニメ用語・danbooru タグを活用
 - 必須タグ：\`anime style, masterpiece, best quality, illustration\`
-- danbooru タグ例：\`1girl, solo, long_hair, school_uniform\`（アンダーバー区切り）
+- danbooru タグ例：\`1woman, adult, mature female, solo, long hair, blouse\`（アンダーバー区切り）
 - スタイル強調：\`(anime screencap:1.2), kawaii, manga style\`
 
 **3. ファンタジー / アート系モデル（Dreamshaper, Deliberate, Realistic Vision Fantasy）**
@@ -453,7 +453,7 @@ prompta.jp で公開している Stable Diffusion プロンプトは <a href="/t
 **現代カジュアル：**
 
 - \`white t-shirt\`, \`blue jeans\`, \`hoodie\`, \`sneakers\`
-- \`oversized sweater\`, \`crop top\`, \`high-waisted skirt\`
+- \`oversized sweater\`, \`knit sweater\`, \`long skirt\`
 - \`denim jacket\`, \`leather jacket\`, \`bomber jacket\`
 
 **フォーマル：**
@@ -466,12 +466,13 @@ prompta.jp で公開している Stable Diffusion プロンプトは <a href="/t
 
 - \`fantasy armor\`, \`mage robe\`, \`elven dress\`, \`knight in shining armor\`
 - \`cyberpunk outfit\`, \`sci-fi suit\`, \`mecha pilot suit\`
-- \`magical girl uniform\`, \`gothic lolita\`
+- \`adult mage costume\`, \`gothic dress\`
 
-**学校・制服：**
+**制服コスプレ（着る人は大人）：**
 
-- \`school uniform\`, \`sailor uniform\`, \`blazer uniform\`
-- \`japanese high school uniform\`, \`college blazer\`
+- \`adult woman, cosplay, sailor uniform\`
+- \`adult woman, cosplay, blazer uniform\`
+- 学生や未成年にはしない。詳細はコスプレガイド
 
 **実例プロンプト（フォーマル・スーツ）：**
 
@@ -788,7 +789,7 @@ Midjourneyの特徴は、アーティスティックな解釈力にあります�
 - [グリーン肌キャラクター カラー表現](/prompt/green-skin-character-colorful-hat)
 - [青黄トカゲ・王族キャラ](/prompt/royal-creature-blue-yellow-mj)
 - [オレンジジャケット・サイバーパンク街](/prompt/cyberpunk-street-jacket-mj)
-- [花髪・水彩画風 女の子ポートレート](/prompt/flower-hair-watercolor-girl-mj)
+- [花髪・水彩画風 大人の女性ポートレート](/prompt/flower-hair-watercolor-girl-mj)
 - [白と金のドレス赤髪女性ポートレート](/prompt/white-gold-dress-red-haired-portrait)
 
 → [Midjourney 全プロンプト集](/tools/midjourney)`,
@@ -1015,7 +1016,7 @@ Do not over-retouch the face, do not change age, no text, no logo.
 
 同じ言葉なのに、意味は完全に変わります。言葉の意味は辞書的な定義ではなく、その時の「**状況**」と「**目的**」によって決まるのです。
 
-これは、AIへのプロンプトにも全く同じことが言えます。「箇条書きで」という指示も、ビジネスメールの中なのか、技術ドキュメントの中なのか、子供向け教材の中なのかで、求められる粒度・トーン・構造は完全に変わります。文脈なしのルールは無力なのです。`,
+これは、AIへのプロンプトにも全く同じことが言えます。「箇条書きで」という指示も、ビジネスメールの中なのか、技術ドキュメントの中なのか、入門教材の中なのかで、求められる粒度・トーン・構造は完全に変わります。文脈なしのルールは無力なのです。`,
       },
       {
         title: 'OpenAIとAnthropicの公式ガイドラインが証明する「後期哲学」',
@@ -1199,8 +1200,8 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 - \`hair over one eye\` — 片目に髪がかかる（ミステリアス）
 
 **おすすめ組み合わせ**:
-\`1girl, long silver hair, silky, flowing hair, wind, soft lighting\` — 風にたなびく銀髪美人
-\`1girl, short messy hair, bedhead, morning light, pajamas\` — 寝起きの自然な可愛さ
+\`1woman, adult, mature female, long silver hair, silky, flowing hair, wind, soft lighting\` — 風にたなびく銀髪美人
+\`1woman, adult, mature female, short messy hair, bedhead, morning light, pajamas\` — 寝起きの自然な可愛さ
 
 **品質安定のネガティブ**: \`bad hair, ugly hair, bald spot, hair clipping through body\``,
       },
@@ -1227,18 +1228,18 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 髪飾りは AI が省略しがちなため、**(hair ribbon:1.3)** のように重み付け 1.3 以上を推奨します。複数の髪飾りを同時に指定すると競合しやすいので、1-2 個に絞るのがコツ。
 
 実践テンプレート：
-\`1girl, long black hair, hime cut, (red hair ribbon:1.3), blunt bangs, school uniform, gentle smile, cherry blossom background, anime style, masterpiece\``,
+\`1woman, adult, mature female, long black hair, hime cut, (red hair ribbon:1.3), blunt bangs, white blouse, long skirt, gentle smile, cafe background, anime style, masterpiece\``,
       },
       {
         title: '✨ 関連プロンプト集 — すぐ試せる髪型サンプル',
         content: `本ガイドで紹介した髪型表現テクニックを使ったプロンプトです。クリックで詳細ページに移動、ログイン後にサイト内で実行できます。
 
 - [ストレートロングの黒髪ヘアスタイル](/prompt/straight-long-black-hair-glossy)
-- [ツインテール金髪セーラームーン風美少女](/prompt/twintail-blonde-sailor-outfit)
+- [ツインテール金髪の大人の女性](/prompt/twintail-blonde-sailor-outfit)
 - [赤髪ビジネスウーマン 正装スーツ](/prompt/red-hair-business-suit-portrait)
 - [レトロ風ツートンカラーヘア](/prompt/two-tone-red-white-retro-hair)
 - [魔法のエルフ戦士 編み込み髪型](/prompt/elf-warrior-braided-hair)
-- [花髪・水彩画風 女の子ポートレート](/prompt/flower-hair-watercolor-girl-mj)
+- [花髪・水彩画風 大人の女性ポートレート](/prompt/flower-hair-watercolor-girl-mj)
 
 → [全ての髪型プロンプト一覧（カテゴリページ）](/prompts/hairstyle)`,
       },
@@ -1278,7 +1279,7 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
         title: '画風・年代指定 — レトロからモダンまで',
         content: `プロンプトに画風キーワードを加えると、年代や作画スタイルを狙い撃ちできます：
 
-**90s アニメ風**（エヴァ・セーラームーン調）:
+**90s アニメ風**（90年代のセルアニメ調）:
 \`90s anime, retro anime, cel animation, thick outlines, saturated colors\`
 
 **モダンアニメ風**（深夜アニメ調）:
@@ -1353,16 +1354,16 @@ NovelAI では表情タグが特に精密で、\`(gentle smile:1.2)\` のよう�
 \`1 adult woman, brown hair, ponytail, brown eyes, white blouse, navy skirt, standing on a city street, sunset, anime style, masterpiece, best quality\`
 
 **2. ファンタジー魔法使い**:
-\`1girl, long silver hair, purple eyes, mage robe, glowing staff, floating runes, magical aura, dark fantasy, castle background, detailed, anime style\`
+\`1woman, adult, mature female, long silver hair, purple eyes, mage robe, glowing staff, floating runes, magical aura, dark fantasy, castle background, detailed, anime style\`
 
 **3. サイバーパンクキャラ**:
-\`1boy, short white hair, cyberpunk, neon jacket, futuristic city, rain, reflections, dark atmosphere, detailed lighting, anime style\`
+\`1man, adult, mature male, short white hair, cyberpunk, neon jacket, futuristic city, rain, reflections, dark atmosphere, detailed lighting, anime style\`
 
 **4. 日常系キャラ（カフェ）**:
-\`1girl, short bob, blonde hair, casual outfit, hoodie, sitting at cafe, coffee cup, warm lighting, cozy atmosphere, slice of life, anime style\`
+\`1woman, adult, mature female, short bob, blonde hair, casual outfit, hoodie, sitting at cafe, coffee cup, warm lighting, cozy atmosphere, slice of life, anime style\`
 
 **5. バトルシーン**:
-\`1girl, red hair, twin tails, dynamic pose, sword slash, action lines, dramatic angle, battle scene, fire effects, (anime style:1.2), masterpiece\`
+\`1woman, adult, mature female, red hair, twin tails, dynamic pose, sword slash, action lines, dramatic angle, battle scene, fire effects, (anime style:1.2), masterpiece\`
 
 各テンプレートの構成は「人物 → 外見 → 服装 → ポーズ → 背景 → スタイル → 品質」の順です。要素を差し替えるだけで無限のバリエーションが作れます。`,
       },
@@ -1436,7 +1437,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 - 🎓 **セーラー服プロンプト** — 夏服 / 冬服 / 黒セーラー / 関東風 / 関西風 / ツインテール × セーラー
 - 🍵 **メイド服プロンプト** — 種類とパーツは [メイド服プロンプト](/guides/maid-outfit-prompt-guide)
 - 🏫 **学校制服プロンプト** — ブレザー / 夏制服 / ダークアカデミア / 海外風 / 体操服
-- ⛩️ その他定番 8 種 — 巫女 / ナース / チア / 着物 / 魔女 / バニー / 甲冑 / ゴスロリ
+- ⛩️ その他定番 8 種 — 巫女 / ナース / チア / 着物 / 魔女 / バニー / 甲冑 / ゴシックドレス
 - 📸 衣装ディテール × 撮影 × ツール別 × 困った時の対処法
 
 各セクションでコピペ可能な英語プロンプトと、関連する <a href="/prompts/cosplay" class="text-sky-600 hover:underline">prompta.jp 公開 prompt</a>（サンプル画像つき）をリンクしています。`,
@@ -1452,7 +1453,7 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 | メイド服 プロンプト | maid outfit, white apron, frilled headdress | メイド服テンプレ |
 | 制服 プロンプト | school uniform, blazer, pleated skirt, school tie | 学校制服テンプレ |
 | 和風コスプレ | miko costume, kimono, shrine maiden, hakama | その他定番 8 種 |
-| ファンタジー衣装 | fantasy armor, witch costume, gothic lolita | その他定番 8 種 |
+| ファンタジー衣装 | fantasy armor, witch costume, gothic dress | その他定番 8 種 |
 
 衣装名だけだと AI が省略しやすいので、**衣装名 + 必須パーツ + 撮影/画風**の 3 層で書くのが基本です。例: \`sailor uniform, sailor collar, pleated skirt, red ribbon, anime style\`。中世ヨーロッパ風のRPG衣装や騎士・魔法使いのパーツは [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide) に分けています。`,
       },
@@ -1463,9 +1464,9 @@ Stable Diffusion や NovelAI では、上のテンプレートの英語タグに
 **1. 王道セーラー服 — 関東風白セーラー × 紺スカート**
 
 \`\`\`
-1 adult woman, adult, sailor uniform, white sailor blouse, navy pleated skirt,
+1 adult woman, adult, cosplay, sailor uniform, white sailor blouse, navy pleated skirt,
 red ribbon, sailor collar, knee-high white socks, brown loafers,
-school hallway, soft natural lighting, full body shot,
+photo studio, costume event, soft lighting, full body shot,
 (masterpiece:1.2), (best quality:1.4)
 \`\`\`
 
@@ -1474,9 +1475,9 @@ school hallway, soft natural lighting, full body shot,
 **2. 夏セーラー服 — 半袖白セーラー**
 
 \`\`\`
-1 adult woman, adult, summer sailor uniform, short sleeves white sailor blouse,
+1 adult woman, adult, cosplay, summer sailor uniform, short sleeves white sailor blouse,
 navy pleated skirt, blue ribbon, sailor collar, knee-high socks,
-sunny school rooftop, blue sky, full body shot,
+bright photo studio, costume event, full body shot,
 (summer uniform:1.2), (white sailor:1.2)
 \`\`\`
 
@@ -1485,27 +1486,27 @@ sunny school rooftop, blue sky, full body shot,
 **3. 冬セーラー服 — 長袖紺色**
 
 \`\`\`
-1 adult woman, adult, winter sailor uniform, long sleeves navy sailor blouse,
+1 adult woman, adult, cosplay, winter sailor uniform, long sleeves navy sailor blouse,
 navy pleated skirt, white scarf, sailor collar, dark tights, boots,
-snowy school path, cold lighting, full body shot,
+photo studio, cool lighting, costume event, full body shot,
 (winter uniform:1.2), (long sleeves:1.2)
 \`\`\`
 
 **4. 黒セーラー服 — 関西風 / 個性派**
 
 \`\`\`
-1 adult woman, adult, black sailor uniform, black sailor blouse with white collar,
+1 adult woman, adult, cosplay, black sailor uniform, black sailor blouse with white collar,
 black pleated skirt, white ribbon, knee-high black socks, loafers,
-modern school courtyard, evening lighting, full body shot,
-(black sailor:1.3), gothic school aesthetic
+photo studio, evening lighting, costume event, full body shot,
+(black sailor:1.3), studio costume photo
 \`\`\`
 
 **5. ツインテール × セーラー服 — 王道アイドル組合せ**
 
 \`\`\`
-1 adult woman, adult, blonde twintails hair, sailor uniform, white sailor blouse,
+1 adult woman, adult, cosplay, blonde twintails hair, sailor uniform, white sailor blouse,
 navy pleated skirt, red ribbon, knee-high socks, loafers,
-classroom window light, full body shot, soft anime illustration,
+studio window light, photo studio, costume event, full body shot, soft anime illustration,
 (twintails:1.2), (sailor uniform:1.2)
 \`\`\`
 
@@ -1514,10 +1515,10 @@ classroom window light, full body shot, soft anime illustration,
 **6. 読書するセーラー服 — 落ち着いた構図**
 
 \`\`\`
-1 adult woman, adult, sailor uniform, sitting by window reading book,
+1 adult woman, adult, cosplay, sailor uniform, sitting by window reading book,
 soft afternoon light streaming in, peaceful expression,
 white blouse navy skirt red ribbon, medium shot,
-(sailor uniform:1.2), shoujo manga aesthetic
+(sailor uniform:1.2), romantic manga aesthetic
 \`\`\`
 
 → サンプル: <a href="/prompt/sailor-uniform-window-reading" class="text-sky-600 hover:underline">窓辺で読書するセーラー服</a>
@@ -1552,7 +1553,7 @@ white blouse navy skirt red ribbon, medium shot,
 **長い丈の一例**
 
 \`\`\`
-1 adult woman, adult, maid, maid headdress, frilled apron,
+1 adult woman, adult, cosplay, maid, maid headdress, frilled apron,
 black dress, long skirt, long sleeves, white apron,
 holding a tea tray, full body, standing
 \`\`\`
@@ -1569,12 +1570,12 @@ bad anatomy, bad hands, extra fingers, short skirt
         title: '学校制服プロンプト — ブレザー / 夏服 / ダークアカデミア / 海外風',
         content: `**学校制服プロンプト**はセーラー服と並ぶ人気ジャンル。**ブレザー / セーラー服 / 体操服 / ダークアカデミア / 海外風 / 昭和レトロ**など多様なバリエーションが描けます。
 
-**1. ブレザー制服 — 王道日本の高校制服**
+**1. ブレザー制服 — 大人の衣装**
 
 \`\`\`
-1 adult woman, adult, school blazer uniform, navy blazer with school emblem,
+1 adult woman, adult, cosplay, school blazer uniform, navy blazer with school emblem,
 white blouse, red plaid tartan skirt pleated, school tie,
-knee-high white socks, brown loafers, school hallway,
+knee-high white socks, brown loafers, photo studio, costume event,
 warm afternoon light, full body shot,
 (school blazer:1.2), (plaid skirt:1.2)
 \`\`\`
@@ -1584,19 +1585,19 @@ warm afternoon light, full body shot,
 **2. 夏制服 — 半袖ブラウス × プリーツスカート**
 
 \`\`\`
-1 adult woman, adult, summer school uniform, short sleeves white blouse,
+1 adult woman, adult, cosplay, summer school uniform, short sleeves white blouse,
 gray pleated skirt, school tie, knee socks, loafers,
-sunny school courtyard, cherry blossoms,
+photo studio, costume event, soft daylight,
 full body shot, (summer uniform:1.2),
 slice of life anime style
 \`\`\`
 
-→ サンプル: <a href="/prompt/school-uniform-freckles-joy" class="text-sky-600 hover:underline">制服 × 笑顔のそばかす少女</a>
+→ サンプル: <a href="/prompt/school-uniform-freckles-joy" class="text-sky-600 hover:underline">制服 × 笑顔のそばかすの大人の女性</a>
 
 **3. ダークアカデミア制服 — 海外名門校風**
 
 \`\`\`
-1 adult woman, adult, dark academia school uniform, dark green blazer,
+1 adult woman, adult, cosplay, dark academia school uniform, dark green blazer,
 white blouse, brown plaid skirt, brown knee-high socks,
 oxford shoes, holding leather-bound books,
 old library with tall shelves, golden hour through stained glass,
@@ -1608,46 +1609,44 @@ old library with tall shelves, golden hour through stained glass,
 **4. 海外風セーラー × ブレザー混合 — 英国系**
 
 \`\`\`
-1 adult woman, adult, british school uniform, navy blazer with red trim,
+1 adult woman, adult, cosplay, british school uniform, navy blazer with red trim,
 white shirt with red tie, gray plaid skirt, knee-high socks,
-oxford shoes, school crest on blazer, autumn campus,
+oxford shoes, crest on blazer, photo studio, costume event,
 full body shot, (british uniform:1.2),
-boarding school aesthetic
+studio costume photo
 \`\`\`
 
-**5. 体操服 — 学校体育用**
+**5. 体操服 — ジャージの全身**
 
 \`\`\`
-1 adult woman, adult, school gym uniform, white t-shirt with school name,
-navy bloomers or red gym shorts, white sneakers,
-gym class background or athletic field,
-energetic pose, full body shot,
-(gym uniform:1.2), (athletic:1.2)
+1 adult woman, adult, cosplay, track jacket, long pants,
+white sneakers, fully clothed, standing pose,
+photo studio, costume event, full body shot
 \`\`\`
 
-**6. 制服 × ネクタイを解いた疲れた放課後**
+**6. 制服 × ネクタイを整えたスタジオ撮影**
 
 \`\`\`
-1 adult woman, adult, school uniform, untied loose necktie, partially unbuttoned blouse,
-slight messy hair, tired expression, sitting on classroom desk,
-sunset light through window, casual after-school atmosphere,
-(school uniform:1.2), shoujo manga style, medium shot
+1 adult woman, adult, cosplay, school uniform, necktie neatly tied,
+white blouse buttoned, long pleated skirt, loafers, fully clothed,
+standing, neutral expression, photo studio, costume event,
+(school uniform:1.2), full body shot
 \`\`\`
 
-→ サンプル: <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">解いたネクタイ × 制服</a>
+→ サンプル: <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">整えたネクタイの制服コスプレ</a>
 
 **学校制服特有のコツ**:
 
-- **ブレザー vs セーラー**: 「日本の私立高校」イメージなら \`school blazer\`、「中学・伝統校」なら \`sailor uniform\` を選ぶ
+- **ブレザー vs セーラー**: ブレザーの衣装なら \`school blazer\`、伝統的なセーラー服の衣装なら \`sailor uniform\`。着る人は大人の女性
 - **\`plaid skirt\`** = タータンチェックスカート、ブレザー制服の定番
 - **色配色**: \`navy blazer\` + \`red plaid\` / \`gray blazer\` + \`green plaid\` など 2 色組合せが最も自然
 - **ネクタイ vs リボン**: \`school tie\` = ネクタイ、\`bow ribbon\` = リボン
 - **季節別**: 夏は \`short sleeves\` \`summer uniform\`、冬は \`long sleeves\` \`winter blazer\` \`scarf\`
-- 海外風は \`british uniform\` \`american prep school\` \`dark academia\` を併用すると雰囲気変わる
+- 海外風は \`british uniform\` \`dark academia\` を衣装イベントのスタジオ写真として併用する
 
 **ネガティブ（汎用）**: \`casual clothes, no tie, no skirt, mismatched colors, bad uniform, child, kid, toddler, baby, loli, shota, teen, underage, baby face\`
 
-**さらに**: ポートレート系の制服プロンプトは <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a> / <a href="/prompt/pleated-miniskirt-cosplay-girl" class="text-sky-600 hover:underline">プリーツミニスカ × 制服</a> を参考に。
+**さらに**: ポートレート系の制服プロンプトは <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a> / <a href="/prompt/pleated-miniskirt-cosplay-girl" class="text-sky-600 hover:underline">プリーツスカートの制服コスプレ</a> を参考に。
 
 全 8 件の学校制服 prompt + サンプル画像は <a href="/tag/%E5%88%B6%E6%9C%8D" class="text-sky-600 hover:underline">/tag/制服</a> で公開中、すべて「ここで試す」でサイト内実行可能。`,
       },
@@ -1657,7 +1656,7 @@ sunset light through window, casual after-school atmosphere,
 
 **1. 巫女装束**
 \`\`\`
-1 adult woman, adult, miko costume, white haori, red hakama, shrine maiden,
+1 adult woman, adult, cosplay, miko costume, white haori, red hakama, shrine maiden,
 holding offering, traditional shrine, full body shot,
 (miko:1.2), traditional japanese style
 \`\`\`
@@ -1666,7 +1665,7 @@ holding offering, traditional shrine, full body shot,
 
 **2. ナース服**
 \`\`\`
-1 adult woman, adult, nurse uniform, white cap, white apron, pastel blue scrubs,
+1 adult woman, adult, cosplay, nurse uniform, white cap, white apron, pastel blue scrubs,
 stethoscope around neck, hospital corridor,
 (nurse uniform:1.2), full body shot
 \`\`\`
@@ -1675,14 +1674,14 @@ stethoscope around neck, hospital corridor,
 
 **3. チアリーダー**
 \`\`\`
-1 adult woman, adult, cheerleader uniform, pleated cheer skirt, pom-poms,
-crop top, sneakers, ribbon ponytail, gym floor,
-energetic jumping pose, (cheerleader:1.2), full body shot
+1 adult woman, adult, cosplay, cheer costume, long-sleeve top, long skirt, pom-poms,
+sneakers, ribbon ponytail, fully clothed, standing pose,
+photo studio, costume event, full body shot
 \`\`\`
 
 **4. 着物**
 \`\`\`
-1woman, elegant kimono, floral pattern, wide obi,
+1woman, adult, mature female, elegant kimono, floral pattern, wide obi,
 wooden geta sandals, traditional hairstyle with kanzashi,
 cherry blossom park, soft warm lighting,
 (kimono:1.2), traditional japanese woman style
@@ -1690,34 +1689,32 @@ cherry blossom park, soft warm lighting,
 
 **5. 魔女コスチューム**
 \`\`\`
-1 adult woman, adult, witch costume, pointy black hat, black cloak with stars,
+1 adult woman, adult, cosplay, witch costume, pointy black hat, black cloak with stars,
 broomstick in hand, gothic black dress, knee-high boots,
 moonlit forest, mysterious atmosphere,
 (witch:1.2), fantasy illustration
 \`\`\`
 
-**6. バニーガール**
+**6. バニー耳の衣装**
 \`\`\`
-1woman, bunny girl costume, black leotard with bunny tail,
-black bunny ears headband, fishnet stockings, black high heels,
-casino lounge interior, glamorous lighting,
-(bunny girl:1.3), full body shot, photorealistic
+1woman, adult, mature female, cosplay, bunny-ear headband, long black dress,
+long sleeves, long skirt, tights, black heels, fully clothed,
+photo studio, costume event, standing pose, full body shot
 \`\`\`
 
 **7. ファンタジー甲冑**
 \`\`\`
-1woman, fantasy knight armor, silver plate armor,
+1woman, adult, mature female, fantasy knight armor, silver plate armor,
 red cape, sword in hand, metal gauntlets,
 medieval castle courtyard, dramatic lighting,
 (fantasy armor:1.3), full body shot, concept art
 \`\`\`
 
-**8. ゴシックロリータ**
+**8. ゴシックドレス**
 \`\`\`
-1 adult woman, adult, gothic lolita dress, black dress with white lace,
-frilled petticoat, ribbon choker, knee-high stockings,
-mary jane shoes, victorian gothic aesthetic,
-(gothic lolita:1.3), full body shot
+1 adult woman, adult, cosplay, gothic dress, black dress with white lace,
+long sleeves, long skirt, ribbon, knee-high boots,
+photo studio, fully clothed, standing pose, full body shot
 \`\`\`
 
 **さらに参考になるコスプレサンプル**:
@@ -1725,7 +1722,7 @@ mary jane shoes, victorian gothic aesthetic,
 - <a href="/prompt/alice-in-wonderland-cosplay" class="text-sky-600 hover:underline">不思議の国のアリス風コスプレ</a>
 - <a href="/prompt/warhammer-40k-chaos-witch-cosplay" class="text-sky-600 hover:underline">ウォーハンマー40K ケイオスウィッチ</a>
 - <a href="/prompt/dragon-princess-zelda-dress" class="text-sky-600 hover:underline">竜姫ゼルダ青目ドレス</a>
-- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫娘 × 夜の路地裏</a>
+- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫耳コスプレの大人の女性</a>
 
 → <a href="/prompts/cosplay" class="text-sky-600 hover:underline">全てのコスプレプロンプト集</a>`,
       },
@@ -1859,7 +1856,7 @@ mary jane shoes, victorian gothic aesthetic,
 
 **DALL-E 3 (ChatGPT 内)**（推奨度: ⭐⭐）
 
-- 強み: 自然な日本語指示が効く（「日本の高校のセーラー服を着た女子高生」）
+- 強み: 自然な日本語指示が効く（「衣装イベントでセーラー服を着た大人の女性」）
 - 弱み: NSFW フィルター厳しめ、フリルの多い衣装がブロックされやすい
 - 工夫: 「コスプレ写真の作品撮り風」のように**目的を文脈化**するとフィルター回避
 
@@ -1889,7 +1886,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 - <a href="/prompt/sailor-uniform-window-reading" class="text-sky-600 hover:underline">窓辺で読書するセーラー服</a>
 - <a href="/prompt/school-uniform-pleated-skirt" class="text-sky-600 hover:underline">学校制服 × プリーツスカート</a>
 - <a href="/prompt/dark-academia-school-uniform" class="text-sky-600 hover:underline">ダークアカデミア制服</a>
-- <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">解いたネクタイ × 制服</a>
+- <a href="/prompt/untied-necktie-uniform-girl" class="text-sky-600 hover:underline">整えたネクタイの制服コスプレ</a>
 - <a href="/prompt/cinematic-portrait-student-uniform" class="text-sky-600 hover:underline">シネマティック制服ポートレート</a>
 
 **メイド系**:
@@ -1903,7 +1900,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 - <a href="/prompt/alice-in-wonderland-cosplay" class="text-sky-600 hover:underline">不思議の国のアリス</a>
 - <a href="/prompt/warhammer-40k-chaos-witch-cosplay" class="text-sky-600 hover:underline">ウォーハンマー40K ケイオスウィッチ</a>
 - <a href="/prompt/dragon-princess-zelda-dress" class="text-sky-600 hover:underline">竜姫ゼルダ青目ドレス</a>
-- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫娘 × 夜の路地裏</a>
+- <a href="/prompt/cat-girl-night-alley-cosplay" class="text-sky-600 hover:underline">猫耳コスプレの大人の女性</a>
 
 **カテゴリ別一覧**:
 
@@ -1936,11 +1933,11 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
       },
       {
         q: '制服とセーラー服の違いは？プロンプトでどう使い分ける？',
-        a: '**「制服」は包括ワード**で、ブレザー制服 / セーラー服 / 体操服など全てを含みます。プロンプトでは具体性を出したいので使い分けを推奨。**ブレザー制服**: `school blazer uniform, plaid skirt, school tie` — 私立高校・大学などモダンな雰囲気。**セーラー服**: `sailor uniform, sailor collar, pleated skirt, ribbon` — 伝統校・中学校・90 年代風。**両方含む英訳**: `Japanese high school uniform` で AI に判断を任せる手もあるが、結果がブレやすい。「日本の制服全般」を AI に伝えるなら `school uniform, Japanese style` が無難。',
+        a: '**「制服」は包括ワード**で、ブレザー制服 / セーラー服 / 体操服など全てを含みます。プロンプトでは具体性を出したいので使い分けを推奨。**ブレザー制服**: `adult woman, cosplay, school blazer uniform, plaid skirt, school tie` — 大人の衣装。**セーラー服**: `adult woman, cosplay, sailor uniform, sailor collar, pleated skirt, ribbon` — 伝統的なセーラー服の衣装。**両方**: `adult woman, cosplay, school uniform, Japanese style`。学生や未成年にはしない。',
       },
       {
         q: '学校制服の年代別（昭和 / 平成 / 令和）バリエーションは？',
-        a: '日本の制服文化は時代で大きく変わります。**昭和（〜1989）**: `1970s school uniform, sailor uniform, long pleated skirt below knee, white socks` — 長めスカート + 白ソックス。**平成初期（1990s-2000s）**: `1990s school uniform, short pleated skirt, loose socks, blazer with tie` — ルーズソックス + 短いスカート（コギャル世代）。**平成後期〜令和**: `modern Japanese school uniform, blazer with pleated skirt, knee-high socks, neat appearance` — ブレザー主流、清潔感重視。**令和**: `modern school uniform with ribbon tie, tablet computer, contemporary Japanese student` — 多様性配慮・パンツスタイル選択肢も。年代キーワードを足すだけで雰囲気が一変します。',
+        a: '日本の制服文化は時代で大きく変わります。着る人は大人の女性です。**昭和（〜1989）**: `1970s sailor costume, adult woman, long pleated skirt below knee, white socks` — 長めスカート + 白ソックス。**1990年代**: `1990s blazer costume, adult woman, knee-length skirt, blouse, necktie` — 丈は膝丈、全身を布で覆う。**令和**: `modern blazer costume, adult woman, long skirt or long trousers, ribbon tie` — パンツスタイルも選べます。学生にはしない。',
       },
       {
         q: 'コスプレ写真をリアル写真風にするには？',
@@ -2601,14 +2598,14 @@ soft daylight, upper body, simple background
 **インストール**: Extensions タブ → Install from URL → CutOff のリポジトリ URL を貼って Install
 
 **基本的な使い方**:
-プロンプト: \`1girl, red dress, blue ribbon, green eyes\`
+プロンプト: \`1woman, adult, mature female, red dress, blue ribbon, green eyes\`
 CutOff Target tokens: \`red, blue, green\`
 CutOff Weight: 1.0（デフォルト）
 
 これにより「red」はドレスだけ、「blue」はリボンだけ、「green」は目だけに固定されます。
 
 **実践例**:
-\`1girl, white blouse, navy pleated skirt, red ribbon, brown loafers\`
+\`1woman, adult, mature female, white blouse, navy pleated skirt, red ribbon, brown loafers\`
 → CutOff targets: \`white, navy, red, brown\`
 → 各色が各パーツにのみ適用され、混色を防止
 
@@ -2627,10 +2624,10 @@ CutOff Weight: 1.0（デフォルト）
 各セグメントが独立して解釈されるため、色の干渉が大幅に減ります。
 
 **衣装の上下で色分け**:
-\`1girl, (red jacket:1.2) BREAK (blue pleated skirt:1.2) BREAK (white shoes:1.1)\`
+\`1woman, adult, mature female, (red jacket:1.2) BREAK (blue pleated skirt:1.2) BREAK (white shoes:1.1)\`
 
 **キャラクター + 背景で色分離**:
-\`beautiful girl in yellow dress BREAK purple and pink sunset sky, city skyline\`
+\`beautiful adult woman in yellow dress BREAK purple and pink sunset sky, city skyline\`
 
 **BREAK の注意点**:
 - 各セグメントに重み付け \`(keyword:1.2)\` を加えると効果が安定
@@ -2813,7 +2810,7 @@ AIには文脈が見えていません。「30代女性向けの美容ブログ�
 Negative: {除外要素}
 \`\`\`
 
-例: \`1girl, long wavy blonde hair, white dress, in garden, soft lighting, bokeh background, (masterpiece:1.2), (best quality:1.4)\`
+例: \`1woman, adult, mature female, long wavy blonde hair, white dress, in garden, soft lighting, bokeh background, (masterpiece:1.2), (best quality:1.4)\`
 
 SD向けの詳細は<a href="/guides/stable-diffusion-prompt-guide" class="text-sky-600 hover:underline">Stable Diffusion プロンプト書き方ガイド</a>、ChatGPT特化は<a href="/guides/chatgpt-prompt-techniques" class="text-sky-600 hover:underline">ChatGPT プロンプト術</a>を参照してください。`,
       },
@@ -3216,7 +3213,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
         title: '学習・教育プロンプト集 — 10 例文',
         content: `Gemini の長文対応と多言語能力は学習用途で特に強みを発揮します。
 
-1. **概念解説（小学生でも分かるように）**: \`「[難解な概念]」を小学校 5 年生でも理解できる言葉で、200 字以内で説明してください。比喩を 1 つ含めてください。\`
+1. **概念解説（初めて聞く人にも分かるように）**: \`「[難解な概念]」を初めて聞く人でも理解できる言葉で、200 字以内で説明してください。比喩を 1 つ含めてください。\`
 
 2. **学習計画作成**: \`[目標、例: TOEIC 800 点]を 6 ヶ月で達成するための週単位学習計画を作成してください。現在のレベル: [入力]、平日の学習時間: [入力]時間。週ごとに目標、教材、テスト方法を明記。\`
 
@@ -3303,7 +3300,7 @@ AIモデルは数ヶ月ごとに新バージョンが出ます（GPT-4 → GPT-4
 
 **こんな人におすすめ**:
 
-- 子供の習い事・自宅学習用に好きなキャラの塗り絵を作りたい保護者
+- 自宅で簡単な線画の塗り絵を作りたい人
 - 大人の塗り絵（コロリアージュ）で癒し・脳トレを楽しみたい方
 - 高齢者介護・リハビリの現場でレクリエーション素材を必要としているスタッフ
 - 線画を出発点にデジタル彩色（クリスタ・Procreate）を学びたいイラスト学習者
@@ -3330,10 +3327,10 @@ color, grayscale, shadow, gradient, realistic photo, complex background, text, w
 
 - \`black and white coloring page\` — 塗り絵であることを明示。これがないと普通のイラストになる
 - \`clean line art\` — はっきりした線、塗り絵に必須
-- \`thick outline\` — 太い線（子供向け・高齢者向けに最適）。本格派は \`fine detail line art\` に置換
+- \`thick outline\` — 太い線（線を太く読みやすくするとき）。本格派は \`fine detail line art\` に置換
 - \`no shading, no grayscale\` — 灰色の陰影を排除（塗り絵では塗る人が陰影を付けるので不要）
 - \`white background\` — 余計な背景を排除し、印刷向けに最適化
-- \`suitable for [audience]\` — \`adults\` / \`children\` / \`seniors\` / \`beginners\` で対象を明示
+- \`suitable for [audience]\` — \`adults\` / \`seniors\` / \`beginners\` で対象を明示
 
 **具体例**:
 
@@ -3344,7 +3341,7 @@ black and white coloring page of beautiful cherry blossoms in a Japanese garden,
 この型に当てはめれば、花・動物・風景・マンダラ・幾何学模様など何でも塗り絵化できます。`,
       },
       {
-        title: 'テーマ別プロンプト例 30 — 大人向け・子供向け・高齢者向け',
+        title: 'テーマ別プロンプト例 30 — 大人向け・簡単な線画・高齢者向け',
         content: `**大人向け塗り絵（コロリアージュ・治癒系）— 細かい線で集中力 UP**:
 
 1. \`black and white coloring page of intricate mandala pattern with floral motifs, fine line art, printable, complex symmetry, white background, no shading, suitable for adults\`
@@ -3353,13 +3350,13 @@ black and white coloring page of beautiful cherry blossoms in a Japanese garden,
 4. \`black and white coloring page of art nouveau style peacock with elaborate feathers, fine line art, printable, decorative pattern, white background, no shading, suitable for adults\`
 5. \`black and white coloring page of forest animals — deer, owl, fox — in a magical woodland, clean line art, printable, whimsical, white background, no shading, suitable for adults\`
 
-**子供向け塗り絵 — 太い線・シンプル**:
+**簡単な線画 — 太い線・シンプル**:
 
-6. \`black and white coloring page of a friendly cartoon dinosaur in a jungle, clean line art, printable, thick outline, simple composition, white background, no shading, suitable for children\`
-7. \`black and white coloring page of cute sea animals — fish, octopus, turtle, starfish — in the ocean, clean line art, printable, thick outline, white background, no shading, suitable for children\`
-8. \`black and white coloring page of a shinkansen bullet train on a track with mountains, clean line art, printable, thick outline, white background, no shading, suitable for children\`
-9. \`black and white coloring page of various fruits — apple, banana, strawberry, grape — on a table, clean line art, printable, thick outline, white background, no shading, suitable for children\`
-10. \`black and white coloring page of seasonal events — Christmas tree with presents — clean line art, printable, thick outline, white background, no shading, suitable for children\`
+6. \`black and white coloring page of a friendly cartoon dinosaur in a jungle, clean line art, printable, thick outline, simple composition, white background, no shading, simple line art for a general audience\`
+7. \`black and white coloring page of cute sea animals — fish, octopus, turtle, starfish — in the ocean, clean line art, printable, thick outline, white background, no shading, simple line art for a general audience\`
+8. \`black and white coloring page of a shinkansen bullet train on a track with mountains, clean line art, printable, thick outline, white background, no shading, simple line art for a general audience\`
+9. \`black and white coloring page of various fruits — apple, banana, strawberry, grape — on a table, clean line art, printable, thick outline, white background, no shading, simple line art for a general audience\`
+10. \`black and white coloring page of seasonal events — Christmas tree with presents — clean line art, printable, thick outline, white background, no shading, simple line art for a general audience\`
 
 **高齢者向け塗り絵 — 大きな線・見やすい構図**:
 
@@ -3390,15 +3387,15 @@ black and white coloring page of beautiful cherry blossoms in a Japanese garden,
 23. \`black and white coloring page of European old town street with cafe and lamp post, clean line art, printable, white background, no shading\`
 24. \`black and white coloring page of Mt. Fuji with cherry trees in foreground, clean line art, printable, Japanese landscape, white background, no shading\`
 
-**乗り物・機械（子供向け）**:
+**乗り物・機械（簡単な線画）**:
 
-25. \`black and white coloring page of various vehicles — car, bus, truck, ambulance — on a road, clean line art, printable, thick outline, white background, no shading, suitable for children\`
+25. \`black and white coloring page of various vehicles — car, bus, truck, ambulance — on a road, clean line art, printable, thick outline, white background, no shading, simple line art for a general audience\`
 
 **昆虫・自然**:
 
 26. \`black and white coloring page of butterflies and dragonflies in a garden, clean line art, printable, white background, no shading\`
 
-**ケーキ・スイーツ（女の子向け）**:
+**ケーキ・スイーツ**:
 
 27. \`black and white coloring page of decorated cakes, donuts, macarons on a stand, clean line art, printable, white background, no shading\`
 
@@ -3500,7 +3497,7 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
 | やりたいこと | NG プロンプト | OK プロンプト |
 |---|---|---|
 | かわいいモンスター | \`cute pokemon style monster\` | \`cute fantasy creature with big eyes and small wings\` |
-| 魔法少女風 | \`magical girl like sailor moon\` | \`original magical girl character with star wand and ribbons\` |
+| 魔法使いの衣装 | \`adult woman in an original magical costume, long dress\` | \`original adult woman with a star wand, long dress, and ribbons\` |
 | ロボットヒーロー | \`gundam style robot\` | \`futuristic mecha warrior with armor plates\` |
 | 動物キャラ | \`mickey mouse style mouse\` | \`friendly cartoon mouse with round ears\` |
 
@@ -3511,7 +3508,7 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
 - 食べ物（果物・スイーツ・料理）
 - 幾何学模様（マンダラ・タイル・パターン）
 - 季節イベント（クリスマスツリー・桜・紅葉）
-- オリジナルキャラ（「赤毛の少年」「翼のある妖精」など特徴を自分で組む）
+- オリジナルキャラ（「赤毛の大人」「翼のある妖精」など特徴を自分で組む）
 
 **法的グレーの避け方**: 「〇〇風」「〇〇 inspired」も避けるのが無難。完全オリジナルの特徴（色・髪型・服装）を自分で組み立てて Negative Prompt に \`copyrighted character, anime character\` を入れれば安心です。
 
@@ -3519,12 +3516,12 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
       },
       {
         title: '✨ 関連プロンプト集 — 即印刷できる塗り絵サンプル',
-        content: `本ガイドのテンプレートで実際に生成した塗り絵プロンプトです。子供向け・大人向け・高齢者向け・季節物まで。コピペで A4 印刷可。
+        content: `本ガイドのテンプレートで実際に生成した塗り絵プロンプトです。簡単な線画・大人向け・高齢者向け・季節物まで。コピペで A4 印刷可。
 
 - [マンダラ花柄 大人の塗り絵](/prompt/mandala-floral-coloring-page-adults)
 - [薔薇の花束 大人の塗り絵](/prompt/rose-bouquet-coloring-page-adults)
-- [かわいい恐竜 子供の塗り絵](/prompt/cute-dinosaur-coloring-page-kids)
-- [海の生き物 子供の塗り絵](/prompt/sea-animals-coloring-page-kids)
+- [かわいい恐竜の塗り絵](/prompt/cute-dinosaur-coloring-page-kids)
+- [海の生き物の塗り絵](/prompt/sea-animals-coloring-page-kids)
 - [大きな花 高齢者向け塗り絵](/prompt/large-flowers-coloring-page-seniors)
 - [桜と禅の塗り絵プロンプト](/prompt/cherry-blossom-zen-coloring-page)
 
@@ -3535,9 +3532,9 @@ DALL-E 3 は \`1024×1792\` 縦長で生成可。これをそのままダウン�
       { q: 'AI 塗り絵は本当に無料で作れますか？', a: 'はい。Stable Diffusion はローカル PC で実行すれば完全無料（電気代のみ）、生成枚数も無制限。DALL-E 3 は ChatGPT Plus（月 $20）または Bing Image Creator（無料、1 日数十枚）で使えます。Midjourney のみ月 $10〜の有料サブスクが必要。**初心者には Bing Image Creator（DALL-E 3 ベース、無料）が最もハードル低い**です。当ガイドのテンプレートはどのツールでも共通で使えます。' },
       { q: 'AI 塗り絵プロンプトを日本語で書いても大丈夫ですか？', a: '基本的に**英語推奨**です。Stable Diffusion / DALL-E / Midjourney のいずれも英語データで学習されているため、英語プロンプトの方が精度が高くなります。本ガイドのテンプレートは英語ですが、コピペするだけで使えるので英語が苦手でも問題ありません。どうしても日本語で書きたい場合は ChatGPT に「以下の塗り絵を作りたいので英語プロンプトに翻訳して: [日本語の内容]」と頼むのが最速です。' },
       { q: '生成した塗り絵は商用利用できますか？', a: 'ツールによります。**Stable Diffusion**（オープンソース）は生成物の権利が制限なく利用者に帰属し商用利用 OK。**DALL-E 3**（OpenAI）は ChatGPT Plus / API ユーザーには商用利用権が付与されています（規約要確認）。**Midjourney** は有料プラン（$10〜）で商用利用権付き、無料トライアルでは商用 NG。ただし**既存キャラ（ポケモン等）を含む生成物は商用 NG**。安全テーマ（花・動物・幾何学）+ オリジナルキャラのみが商用安全です。' },
-      { q: '子供と一緒に塗り絵を作りたい場合、どのツールが安全ですか？', a: '**Bing Image Creator**（DALL-E 3 ベース、無料）が最も安全です。OpenAI の Safety Filter が強く、不適切な内容を弾いてくれます。Stable Diffusion ローカル版はフィルタなしで何でも生成できるため、子供と一緒に使うなら避けたほうが無難。Midjourney は Discord 経由でパブリック投稿される（プライベートプラン以外）ため、子供の前で使う場合は注意が必要です。本ガイドのテンプレートをそのまま Bing Image Creator に貼り付ければ、安全に塗り絵が量産できます。' },
+      { q: '家族で塗り絵を作るとき、どのツールが安全ですか？', a: '**Bing Image Creator**（DALL-E 3 ベース、無料）が最も安全です。OpenAI の Safety Filter が強く、不適切な内容を弾いてくれます。Stable Diffusion ローカル版はフィルタなしで何でも生成できるため、共有の場では避けたほうが無難。Midjourney は Discord 経由でパブリック投稿される（プライベートプラン以外）ため、画面を共有するときは注意が必要です。本ガイドのテンプレートをそのまま Bing Image Creator に貼り付ければ、安全に塗り絵が量産できます。' },
       { q: '高齢者介護のレクリエーション素材として使えますか？', a: 'はい、まさに最適な用途です。本ガイドのテンプレートで \`suitable for seniors\` \`very thick outline\` \`very simple composition\` を含めれば、高齢者向けに見やすく塗りやすい塗り絵が生成できます。**昭和風の風景**（懐かしさが認知症介護で有効）、**季節の花**（春は桜、夏はあじさい、秋は紅葉、冬は梅）、**簡単な動物**（猫・犬・うさぎ）など、回想法と組み合わせると効果的。介護施設での集団レクリエーションなら、テーマを月替わりで AI 生成しておくと素材費 0 円で済みます。' },
-      { q: '線画の太さや細かさをどう調整すればいいですか？', a: '**太さ**は \`thick outline\`（太い、子供・高齢者向け）/ \`medium outline\`（中、一般向け）/ \`fine line art\`（細い、本格コロリアージュ向け）の 3 段階で指定。**細かさ**（線の密度）は \`simple composition\` / \`moderate detail\` / \`intricate detail\` で調整。例: 高齢者向けなら \`thick outline + very simple composition\`、コロリアージュ大人向けなら \`fine line art + intricate detail\`。失敗例として \`thick outline + intricate detail\` の組み合わせは線が潰れてしまうので避けてください。Stable Diffusion で更に細かく調整するなら CFG Scale を 9-11 に上げて指示を強く反映させる手も有効です。' },
+      { q: '線画の太さや細かさをどう調整すればいいですか？', a: '**太さ**は \`thick outline\`（太い、線を太くしたいとき）/ \`medium outline\`（中、一般向け）/ \`fine line art\`（細い、本格コロリアージュ向け）の 3 段階で指定。**細かさ**（線の密度）は \`simple composition\` / \`moderate detail\` / \`intricate detail\` で調整。例: 高齢者向けなら \`thick outline + very simple composition\`、コロリアージュ大人向けなら \`fine line art + intricate detail\`。失敗例として \`thick outline + intricate detail\` の組み合わせは線が潰れてしまうので避けてください。Stable Diffusion で更に細かく調整するなら CFG Scale を 9-11 に上げて指示を強く反映させる手も有効です。' },
     ],
   },
 
@@ -3608,7 +3605,7 @@ Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:u
 
 **身長差を描かせるには、最低でも以下の 3 要素を明示する必要があります**:
 
-1. **人数指定**: \`2girls\` / \`2boys\` / \`1boy and 1girl\` など danbooru タグスタイルで明示
+1. **人数指定**: \`2women, adult, mature female\` / \`2men, adult, mature male\` / \`1man and 1woman, adult\` など danbooru タグスタイルで明示
 2. **身長差そのもの**: \`height difference\` / \`tall and short\` / \`size difference\` を **重み付け 1.3-1.4 で強調**
 3. **具体的な高さ表現**: \`tall man around 188cm\` / \`petite woman about 158cm\` のように **数値や形容詞**で各キャラを定量化
 
@@ -3633,10 +3630,10 @@ same height, same size, equal height, identical body proportions
         title: '身長差プロンプトを構成する 6 つの要素',
         content: `効果的な身長差プロンプトは以下 6 要素の組み合わせです：
 
-1. **人数指定（必須）** — \`2girls\`, \`2boys\`, \`1boy and 1girl\`, \`3 characters\`
+1. **人数指定（必須）** — \`2women, adult, mature female\`, \`2men, adult, mature male\`, \`1man and 1woman, adult\`, \`3 characters\`
 2. **身長差キーワード（必須）** — \`height difference\`, \`tall and short\`, \`size difference\`, \`stark size contrast\`
 3. **各キャラの定量化** — \`tall man around 185cm\`, \`petite woman about 158cm\`
-4. **関係性の文脈** — \`couple\`, \`siblings\`, \`parent and child\`, \`adventure party\`, \`band members\`
+4. **関係性の文脈** — \`couple\`, \`siblings\`, \`adult family\`, \`adventure party\`, \`band members\`
 5. **ポーズ・アクション** — \`standing side by side\`, \`holding hands\`, \`looking up at\`, \`embracing\`
 6. **構図指定** — \`full body shot\`, \`side angle\`, \`low angle to emphasize height\`
 
@@ -3645,7 +3642,7 @@ same height, same size, equal height, identical body proportions
 **実例（BL カップル）**:
 
 \`\`\`
-2boys, height difference, tall handsome man around 190cm with dark hair,
+2men, adult, mature male, height difference, tall handsome man around 190cm with dark hair,
 shorter cute man around 165cm with light brown hair,
 standing close together, looking at each other,
 (height difference:1.3), full body shot, anime illustration style,
@@ -3655,9 +3652,9 @@ standing close together, looking at each other,
 **実例（ファンタジー）**:
 
 \`\`\`
-1tall knight and 1small mage, dramatic size difference,
+1 adult knight and 1 adult mage, dramatic size difference,
 massive armored knight around 210cm with cape,
-petite hooded mage around 150cm with staff,
+adult petite hooded mage around 150cm with staff,
 torch-lit dungeon, side lighting, (size difference:1.4),
 full body shot, fantasy concept art, (masterpiece:1.3)
 \`\`\``,
@@ -3669,7 +3666,7 @@ full body shot, fantasy concept art, (masterpiece:1.3)
 **1. BL カップル — 高身長攻め × 低身長受け**
 
 \`\`\`
-2boys, tall handsome man 195cm, shorter cute man 165cm,
+2men, adult, mature male, tall handsome man 195cm, shorter cute man 165cm,
 height difference, standing side by side, soft expressions,
 modern casual outfits, cafe background, full body shot,
 (height difference:1.3), BL romance illustration
@@ -3680,9 +3677,9 @@ modern casual outfits, cafe background, full body shot,
 **2. 百合カップル — 長身お姉さん × 小柄妹系**
 
 \`\`\`
-2girls, tall girl 178cm long dark hair, petite girl 155cm short pastel hair,
+2women, adult, mature female, tall adult woman 178cm long dark hair, petite adult woman 155cm short pastel hair,
 height difference, taller one patting smaller one's head,
-school uniforms, afternoon window light, full body shot,
+long coats and dresses, fully clothed, afternoon window light, full body shot,
 (height difference:1.3), yuri illustration style
 \`\`\`
 
@@ -3691,60 +3688,60 @@ school uniforms, afternoon window light, full body shot,
 **3. 男女恋人 — 王道タッパ差**
 
 \`\`\`
-1boy and 1girl, tall man 188cm, petite woman 160cm, height difference,
+1man and 1woman, adult, tall man 188cm, petite woman 160cm, height difference,
 holding hands, autumn city street, golden hour, full body shot,
 (height difference:1.3), photorealistic illustration
 \`\`\`
 
 → サンプル: <a href="/prompt/height-diff-hetero-couple-classic" class="text-sky-600 hover:underline">height-diff-hetero-couple-classic</a>
 
-**4. 兄妹 — お兄ちゃんと妹**
+**4. 大人の兄妹**
 
 \`\`\`
-1boy and 1girl, tall older brother 178cm in high school uniform,
-short younger sister 130cm in elementary school uniform,
+1man and 1woman, adult, tall older brother 185cm in a coat and trousers,
+adult younger sister 160cm in a blouse and long skirt,
 walking together, holding hands, cherry blossoms,
-(height difference:1.3), siblings, family illustration
+(height difference:1.3), adult siblings, family illustration
 \`\`\`
 
 → サンプル: <a href="/prompt/height-diff-siblings-brother-sister" class="text-sky-600 hover:underline">height-diff-siblings-brother-sister</a>
 
-**5. 親子 — お父さんと小さい娘**
+**5. 大人の親子**
 
 \`\`\`
-1man and 1child, loving father 178cm, small daughter 110cm,
-walking through autumn park, holding hands, warm sunlight,
+1adult man and 1adult woman, loving father 185cm, adult daughter 160cm,
+both adults, walking through autumn park, holding hands, warm sunlight,
 (height difference:1.4), family bonding photography style
 \`\`\`
 
-→ サンプル: <a href="/prompt/height-diff-parent-child-hand-holding" class="text-sky-600 hover:underline">height-diff-parent-child-hand-holding</a>
+→ サンプル: <a href="/prompt/height-diff-parent-child-hand-holding" class="text-sky-600 hover:underline">大人の親子 — 手をつなぐ</a>
 
 **6. ファンタジー — 巨大騎士 × 小柄魔法使い**
 
 \`\`\`
-1tall knight and 1small mage, massive armored knight 210cm with cape,
-petite hooded mage 150cm with staff, torch-lit dungeon,
+1 adult knight and 1 adult mage, massive armored knight 210cm with cape,
+adult petite hooded mage 150cm with staff, torch-lit dungeon,
 (height difference:1.4), (size difference:1.3),
 full body shot, fantasy concept art
 \`\`\`
 
 → サンプル: <a href="/prompt/height-diff-fantasy-knight-mage" class="text-sky-600 hover:underline">height-diff-fantasy-knight-mage</a>
 
-**7. 学園もの — 先輩 × 後輩**
+**7. 大人の先輩と後輩**
 
 \`\`\`
-2girls, tall third-year senpai 180cm sailor uniform red ribbon,
-shorter first-year kohai 158cm same uniform blue ribbon,
-walking from school, golden hour, cherry trees,
-(height difference:1.3), school slice-of-life anime style
+2women, adult, mature female, tall adult woman 180cm, long coat, red ribbon,
+shorter adult woman 158cm, long coat, blue ribbon,
+walking in a city park, golden hour, cherry trees,
+(height difference:1.3), slice-of-life illustration
 \`\`\`
 
-→ サンプル: <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">height-diff-senpai-kohai-school</a>
+→ サンプル: <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">大人の先輩と後輩</a>
 
 **8. メカ × パイロット — 極端なスケール対比**
 
 \`\`\`
-1pilot and 1mecha robot, young pilot 160cm in pilot suit,
+1 adult pilot and 1 mecha robot, adult pilot 160cm in pilot suit,
 massive mecha 18 meters tall glossy white blue armor,
 giant hangar interior, low angle camera, dramatic backlight,
 (size difference:1.5), sci-fi anime illustration
@@ -3761,9 +3758,9 @@ giant hangar interior, low angle camera, dramatic backlight,
 **1. 王道 — 男女逆身長差カップル**
 
 \`\`\`
-1boy and 1girl, tall woman around 180cm, shorter man around 165cm,
+1man and 1woman, adult, tall woman around 180cm, shorter man around 165cm,
 reverse height difference, taller woman than man,
-woman looking down slightly at boyfriend, casual modern outfits,
+woman looking down slightly at her partner, casual modern outfits,
 full body shot, (height difference:1.3), (woman taller:1.3),
 romantic illustration
 \`\`\`
@@ -3780,10 +3777,10 @@ walking together, full body shot, photorealistic style,
 **3. 姉さん女房 — 包容力ヒロイン**
 
 \`\`\`
-1boy and 1girl, mature taller woman 175cm elegant dress,
-younger looking shorter man 170cm slightly cute, soft expressions,
+1man and 1woman, adult, mature taller woman 175cm elegant dress,
+adult shorter man 170cm slightly cute, soft expressions,
 woman patting man's head, indoor warm lighting,
-(reverse height difference:1.4), shoujo manga aesthetic
+(reverse height difference:1.4), romantic manga aesthetic
 \`\`\`
 
 **逆身長差を確実に出す 3 つのコツ**:
@@ -3827,20 +3824,20 @@ walking side by side, romantic atmosphere, full body shot,
 **3. 騎士 × 魔法使い — ファンタジー的極端体格差**
 
 \`\`\`
-1massive armored knight and 1petite robed mage,
+1massive armored knight and 1 adult petite robed mage,
 knight 200cm bulky plate armor thick build,
 mage 150cm thin slender body inside oversized robe,
 standing in stone hall, torch lighting, (body size difference:1.5),
 (size contrast:1.4), fantasy concept art, full body shot
 \`\`\`
 
-**4. お兄さん × 妹 — 大人体格 × 子供体格**
+**4. 大人の兄妹 — 体格の差**
 
 \`\`\`
-1adult man and 1child girl, well-built adult brother 180cm,
-small thin elementary school sister 130cm,
+1adult man and 1adult woman, well-built adult brother 185cm,
+adult sister 160cm in a blouse and long skirt,
 walking together holding hands, autumn park,
-(adult body and child body contrast:1.4), full body shot,
+(body size difference:1.4), full body shot,
 slice of life illustration
 \`\`\`
 
@@ -3873,7 +3870,7 @@ slice of life illustration
 
 **3. ハグ — 包み込む抱擁**
 
-高い方が小柄な相手を包む。少女漫画・BL 定番。
+高い方が小柄な相手を包む。恋愛漫画・BL 定番。
 
 \`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
 
@@ -3885,7 +3882,7 @@ slice of life illustration
 
 高身長キャラが壁に手をつき、小柄キャラを見下ろす。
 
-\`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, shoujo manga style\`
+\`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, romantic manga style\`
 
 → サンプル: <a href="/prompt/height-diff-couple-kabedon-looking-up" class="text-sky-600 hover:underline">height-diff-couple-kabedon-looking-up</a>。手と壁の書き分けは <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドンプロンプト</a> です。
 
@@ -3897,13 +3894,13 @@ slice of life illustration
 
 **6. キス — 身長差ならではの上下視線が交差する瞬間**
 
-身長差カップル定番のキスシーン。高い方が屈み、低い方が爪先立ちで見上げる視線の交差が物語性を生む。少女漫画・BL・百合いずれも頻出構図。
+身長差カップル定番のキスシーン。高い方が屈み、低い方が爪先立ちで見上げる視線の交差が物語性を生む。恋愛漫画・BL・百合いずれも頻出構図。
 
 \`\`\`
 2people kissing, tall character leaning down to kiss,
 shorter character on tiptoe looking up with eyes closed,
 close-up romantic shot, soft warm rim lighting,
-(height difference:1.3), shoujo manga kiss scene, intimate atmosphere
+(height difference:1.3), romantic manga kiss scene, intimate atmosphere
 \`\`\`
 
 **バリエーション** — 額キス（高い方が額にキス）も人気: \`tall character kissing shorter's forehead, shorter character blushing looking up\`。頬・額・手・キス待ちのタグは <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> にまとめています。
@@ -3964,7 +3961,7 @@ close-up romantic shot, soft warm rim lighting,
         title: 'ツール別の身長差表現の違い — SD / Midjourney / DALL-E',
         content: `**Stable Diffusion**（推奨度: ⭐⭐⭐）
 
-- 強み: \`(height difference:1.3)\` のような重み付けが効く、ControlNet で完璧に制御可能、danbooru タグ（\`2girls\` 等）が機能する
+- 強み: \`(height difference:1.3)\` のような重み付けが効く、ControlNet で完璧に制御可能、danbooru タグ（\`2women, adult, mature female\` 等）が機能する
 - 弱み: 二人構図で顔・手の崩壊率が高い、初期 seed で大きく結果が変わる
 - 推奨モデル: anime 用なら Counterfeit / MeinaMix、リアル用なら Realistic Vision
 
@@ -4009,7 +4006,7 @@ prompta.jp の身長差プロンプト集は SDXL ベースで動作確認済み
 
 - <a href="/prompt/height-diff-siblings-brother-sister" class="text-sky-600 hover:underline">兄妹 — お兄ちゃんと妹</a>
 - <a href="/prompt/height-diff-parent-child-hand-holding" class="text-sky-600 hover:underline">親子 — 手をつなぐ日常</a>
-- <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">先輩 × 後輩 — 部活帰り</a>
+- <a href="/prompt/height-diff-senpai-kohai-school" class="text-sky-600 hover:underline">大人の先輩と後輩</a>
 
 **ファンタジー・SF**:
 
@@ -4055,31 +4052,31 @@ full body shot, sharp focus, (masterpiece:1.2), (best quality:1.4)
 
 **■ シチュエーション別**
 
-**1. BL カップル**: \`2boys, tall handsome man 195cm, shorter cute man 165cm, height difference, standing side by side, soft expressions, modern casual outfits, cafe background, full body shot, (height difference:1.3), BL romance illustration\`
+**1. BL カップル**: \`2men, adult, mature male, tall handsome man 195cm, shorter cute man 165cm, height difference, standing side by side, soft expressions, modern casual outfits, cafe background, full body shot, (height difference:1.3), BL romance illustration\`
 
-**2. 百合カップル**: \`2girls, tall girl 178cm long dark hair, petite girl 155cm short pastel hair, height difference, taller one patting smaller one's head, school uniforms, afternoon window light, full body shot, (height difference:1.3), yuri illustration\`
+**2. 百合カップル**: \`2women, adult, mature female, tall adult woman 178cm long dark hair, petite adult woman 155cm short pastel hair, height difference, taller one patting smaller one's head, long coats and dresses, fully clothed, afternoon window light, full body shot, (height difference:1.3), yuri illustration\`
 
-**3. 男女恋人**: \`1boy and 1girl, tall man 188cm, petite woman 160cm, height difference, holding hands, autumn city street, golden hour, full body shot, (height difference:1.3), photorealistic illustration\`
+**3. 男女恋人**: \`1man and 1woman, adult, tall man 188cm, petite woman 160cm, height difference, holding hands, autumn city street, golden hour, full body shot, (height difference:1.3), photorealistic illustration\`
 
-**4. 逆身長差（女が高い）**: \`1boy and 1girl, tall woman 180cm, shorter man 165cm, reverse height difference, woman looking down at boyfriend, casual outfits, (woman taller:1.3), romantic illustration\`
+**4. 逆身長差（女が高い）**: \`1man and 1woman, adult, tall woman 180cm, shorter man 165cm, reverse height difference, woman looking down at her partner, casual outfits, (woman taller:1.3), romantic illustration\`
 
-**5. 兄妹**: \`1boy and 1girl, tall older brother 178cm high school uniform, short younger sister 130cm elementary uniform, walking holding hands, cherry blossoms, (height difference:1.3), siblings\`
+**5. 兄妹**: \`1man and 1woman, adult, tall older brother 185cm in a coat and trousers, adult younger sister 160cm in a blouse and long skirt, walking holding hands, cherry blossoms, (height difference:1.3), adult siblings\`
 
-**6. 親子**: \`1man and 1child, loving father 178cm, small daughter 110cm, walking through autumn park, holding hands, warm sunlight, (height difference:1.4), family bonding\`
+**6. 親子**: \`1adult man and 1adult woman, loving father 185cm, adult daughter 160cm, both adults, walking through autumn park, holding hands, warm sunlight, (height difference:1.4), family bonding\`
 
-**7. ファンタジー**: \`1tall knight and 1small mage, massive armored knight 210cm cape, petite hooded mage 150cm staff, torch-lit dungeon, (height difference:1.4), (size difference:1.3), fantasy concept art\`
+**7. ファンタジー**: \`1 adult knight and 1 adult mage, massive armored knight 210cm cape, adult petite hooded mage 150cm staff, torch-lit dungeon, (height difference:1.4), (size difference:1.3), fantasy concept art\`
 
-**8. 先輩×後輩**: \`2girls, tall third-year senpai 180cm sailor uniform red ribbon, shorter first-year kohai 158cm same uniform blue ribbon, walking from school, golden hour, cherry trees, (height difference:1.3), school anime\`
+**8. 先輩×後輩**: \`2women, adult, mature female, tall adult woman 180cm, long coat, red ribbon, shorter adult woman 158cm, long coat, blue ribbon, walking in a city park, golden hour, cherry trees, (height difference:1.3), illustration\`
 
-**9. メカ×パイロット**: \`1pilot and 1mecha robot, young pilot 160cm pilot suit, massive mecha 18 meters tall glossy white blue armor, giant hangar interior, low angle, dramatic backlight, (size difference:1.5), sci-fi anime\`
+**9. メカ×パイロット**: \`1 adult pilot and 1 mecha robot, adult pilot 160cm pilot suit, massive mecha 18 meters tall glossy white blue armor, giant hangar interior, low angle, dramatic backlight, (size difference:1.5), sci-fi anime\`
 
 **■ ポーズ別**
 
 **並び立ち**: \`standing side by side, full body shot, even spacing, looking forward\`
 **手をつなぐ**: \`holding hands, looking at each other, slight side angle, full body shot\`
 **ハグ**: \`tall character embracing shorter one, shorter one resting head on taller's chest, intimate close shot\`
-**壁ドン**: \`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, shoujo manga style\`
-**キス**: \`2people kissing, tall character leaning down, shorter character on tiptoe eyes closed, close-up romantic, soft warm lighting, (height difference:1.3), shoujo manga kiss\`
+**壁ドン**: \`kabe-don pose, tall character's hand on wall, shorter character looking up flushed, low angle shot, romantic manga style\`
+**キス**: \`2people kissing, tall character leaning down, shorter character on tiptoe eyes closed, close-up romantic, soft warm lighting, (height difference:1.3), romantic manga kiss\`
 **見上げる × 見下ろす**: \`shorter character looking up at taller one with soft expression, taller one looking down gently, close shot\`
 
 **■ 推奨ネガティブプロンプト（汎用）**
@@ -4107,12 +4104,12 @@ man towering over woman
       { q: 'ChatGPTで身長差プロンプトを作れますか？', a: '作れます。ChatGPT に「高い人物は188cm、低い人物は158cm、全身構図で明確な身長差が見える画像生成プロンプトを英語で作って」と依頼してください。ただし、Stable Diffusion 用なら `2 characters`, `(height difference:1.35)`, `same height` をネガティブに入れるなど、画像生成モデル向けの調整が必要です。Prompta の身長差メーカーはこの変換を自動で行います。' },
       { q: '「身長差」「体格差」「体型差」の違いは？プロンプトでの使い分けは？', a: '日本語の SNS / pixiv / X では **3 語ともほぼ同義**で使われており、AI 画像生成プロンプトとしてはどれを書いても同じ結果になります。ただし**ニュアンス**には微妙な違いがあります。**身長差 (height difference)**: 純粋に「背の高さ」の差を指す最も明確な語。英語プロンプトでは `height difference` が定訳。**体格差 (build / size difference)**: 身長 + 骨格 + 筋肉量を含む「体つき全体」の差。「巨大な騎士 × 小柄な魔法使い」「筋肉質 × ガリ細」のような構図に最適。英語では `size difference` `build difference`。**体型差 (body type difference)**: 体格差とほぼ同義だが、より「プロポーション・シルエット」寄り。「ぽっちゃり × スレンダー」「グラマラス × ボーイッシュ」のような対比に向く。英語では `body type contrast`。**実用結論**: 検索する時は好きな語で OK、本ガイドは 3 語すべてに対応しています。プロンプトを書く時は `height difference, size difference, body type contrast` の 3 つを並列で入れると最も確実に「2 人の差」が描かれます。' },
       { q: 'プロンプトに身長 cm を書いても効きますか？', a: '**Stable Diffusion / Midjourney は数値そのものを正確には理解しません**が、「188cm」「150cm」のような表記は AI が「大きい数字 = 高い、小さい数字 = 低い」という相対比較として処理してくれます。完全な精度は出ませんが、書かないより書いたほうが効果あり。**より確実な方法**は `tall around 185cm` のように形容詞 + 数値で挟むこと、または `tall and short` `dramatic height difference` のような明示的キーワードを併用することです。DALL-E 3 は自然言語の理解力が高いため、cm 表記の効きが比較的良いです。' },
-      { q: '「2girls / 2boys」の指定は必須ですか？', a: 'Stable Diffusion（特にアニメ系モデル）では**ほぼ必須**です。danbooru タグで学習されているため、`2girls` `2boys` `1boy and 1girl` `3 characters` のような人数指定がないと、AI は「カップル」と書いても 1 人だけ描いたり、4 人描いたりと不安定。Midjourney と DALL-E 3 では自然言語で「two characters」「a couple」と書けば理解しますが、それでも明示したほうが安定します。' },
+      { q: '「2women / 2men」の指定は必須ですか？', a: 'Stable Diffusion（特にアニメ系モデル）では**ほぼ必須**です。danbooru タグで学習されているため、`2women, adult, mature female` `2men, adult, mature male` `1man and 1woman, adult` `3 characters` のような人数指定がないと、AI は「カップル」と書いても 1 人だけ描いたり、4 人描いたりと不安定。Midjourney と DALL-E 3 では自然言語で「two characters」「a couple」と書けば理解しますが、それでも明示したほうが安定します。' },
       { q: 'ControlNet で身長差を確実に出すには？', a: '**ControlNet OpenPose Preprocessor** を使うのが最強の方法です。手順: (1) 身長差のある 2 人が並んで立つ参考画像（実写でも 3D モデルでも OK）を用意。(2) Stable Diffusion WebUI の ControlNet タブで参考画像を読み込み、Preprocessor を `openpose_full` または `openpose`、Model を `control_v11p_sd15_openpose` に設定。(3) プロンプトは本ガイドのテンプレを使用、CFG Scale 7-9。(4) 生成すると参考画像の骨格通りに 2 人が描かれ、身長差が完全に再現されます。**実写の身長差カップル写真**を Pinterest 等で探して参考にすると、自然な比例が出やすいです。' },
       { q: 'ネガティブプロンプトで「同身長」を防ぐには？', a: '推奨ネガティブ: `same height, equal height, identical body proportions, same size, similar height`。これに加えて品質ネガティブ（`worst quality, low quality, bad anatomy, bad hands`）と二人構図特化ネガティブ（`extra arms, extra legs, fused body, conjoined twins, merged figures`）を組み合わせると安定。**全文例**: `(worst quality:1.4), (low quality:1.4), same height, equal height, identical proportions, bad anatomy, bad hands, extra arms, fused bodies, blurry`。これだけで身長差が出る確率が体感 30% → 70% に上がります。' },
-      { q: 'Midjourney と Stable Diffusion で身長差表現の違いは？', a: '**Midjourney** は narrative-style（文章プロンプト）が得意で、「a tall man and a petite woman standing together with a clear height difference」のような自然な指示がよく効く。`--ar 9:16` で縦長アスペクト比にすると身長差が強調されやすい。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能もなし。**Stable Diffusion** は重み付け `(height difference:1.4)` で精密に制御でき、ControlNet OpenPose で完璧な骨格指定が可能。danbooru タグ `2girls` `2boys` で確実に人数が固定できる。**結論**: クオリティ重視で気軽に → Midjourney、本格制御 → Stable Diffusion + ControlNet。' },
+      { q: 'Midjourney と Stable Diffusion で身長差表現の違いは？', a: '**Midjourney** は narrative-style（文章プロンプト）が得意で、「a tall man and a petite woman standing together with a clear height difference」のような自然な指示がよく効く。`--ar 9:16` で縦長アスペクト比にすると身長差が強調されやすい。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能もなし。**Stable Diffusion** は重み付け `(height difference:1.4)` で精密に制御でき、ControlNet OpenPose で完璧な骨格指定が可能。danbooru タグ `2women, adult, mature female` `2men, adult, mature male` で確実に人数が固定できる。**結論**: クオリティ重視で気軽に → Midjourney、本格制御 → Stable Diffusion + ControlNet。' },
       { q: '3 人以上の身長バラバラ構図のコツは？', a: '3 人組以上は **(1) 各々の身長を明記、(2) 立ち位置を明記、(3) `character lineup` キーワード追加** が鉄則。例: `three characters in horizontal lineup, tall character (left, 188cm), medium character (middle, 168cm), short character (right, 152cm), even spacing, character design sheet style`。**着物・制服など全身が見える衣装**を揃えると身長差が視覚的に伝わりやすい。ControlNet OpenPose があれば 3 人骨格を一気に固定できるので失敗率激減。サンプル: <a href="/prompt/height-diff-trio-mixed-heights" class="text-sky-600 hover:underline">3 人組 — バラバラ身長グループ</a>。' },
-      { q: 'キャラの顔だけ似て体格は変えたい場合は？', a: '**LoRA + 身長差プロンプト**の組み合わせがベスト。手順: (1) キャラ LoRA（顔特徴）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `height difference, tall version (a) and short version (b)` のように同キャラの 2 体型を明示、(3) 体型形容詞（`muscular`, `petite`, `slim`）を別々に割り当てる。**もう一つの方法**: img2img で既存キャラのフェイス画像をベースに、prompt で体格だけ変更（Denoising Strength 0.4-0.6 で顔保持）。ファンアート常套手段の「**身長差パロディ**」（推しキャラが小学生化する等）も同じ原理です。' },
+      { q: 'キャラの顔だけ似て体格は変えたい場合は？', a: '**LoRA + 身長差プロンプト**の組み合わせがベスト。手順: (1) キャラ LoRA（顔特徴）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `height difference, tall version (a) and short version (b)` のように同キャラの 2 体型を明示、(3) 体型形容詞（`muscular`, `petite`, `slim`）を別々に割り当てる。**もう一つの方法**: img2img で既存キャラのフェイス画像をベースに、prompt で体格だけ変更（Denoising Strength 0.4-0.6 で顔保持）。ファンアート常套手段の「**身長差パロディ**」（同キャラの大人の体格違い）も同じ原理です。' },
       { q: 'BL / 百合カップル特有の身長差表現は？', a: 'BL / 百合カップルでは「**役割の視覚的記号化**」が重要です。BL なら「**高身長攻め × 低身長受け**」(`tall seme around 195cm, shorter uke around 165cm`) が定番。「攻め × 受け」を直接書くより `dominant tall partner` / `gentle shorter partner` のような英語表現のほうが安全（NSFW フィルター回避）。**百合** なら「**長身お姉さん × 小柄妹系**」(`tall onee-san type, petite imouto type`) の構図がファンアートで頻出。ポーズも BL は「壁ドン」「ハグ」「頭を撫でる」、百合は「お姫様抱っこ」「頭ぽんぽん」が定番。本ガイドでは <a href="/prompt/height-diff-bl-couple-tall-short" class="text-sky-600 hover:underline">BL カップル</a> と <a href="/prompt/height-diff-yuri-couple-tall-petite" class="text-sky-600 hover:underline">百合カップル</a> のテンプレを公開中、コピペで使えます。' },
     ],
   },
@@ -4129,7 +4126,7 @@ man towering over woman
 | モード | 身長差 |
 | 関係性 | 推しカップル / VTuber デュオ / 先輩後輩 |
 | ポーズ | 見上げる・見下ろす / 手をつなぐ / ハグ |
-| 画風 | anime illustration / shoujo manga style |
+| 画風 | anime illustration / romantic manga style |
 | 背景 | school gate / cafe / idol stage |
 
 生成された英語プロンプトに、推しの髪型、服装、表情、関係性を追加すると「推しとの身長差」らしい絵になります。`,
@@ -4186,7 +4183,7 @@ Use anime illustration style with a warm school gate background.
     faq: [
       { q: '推しとの身長差 AI は無料で作れますか？', a: 'はい。Prompta の <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> は無料でプロンプトを作成できます。生成自体は Stable Diffusion、Midjourney、ChatGPT 画像生成など利用するツールの料金体系に従います。' },
       { q: '推しキャラの名前を入れてもいいですか？', a: '個人利用の範囲では名前をメモとして入れても構いませんが、画像生成では外見特徴を具体的に書く方が安定します。髪型、服装、表情、色、身長差を明示してください。' },
-      { q: '夢絵風にするには？', a: '`romantic tension`, `gentle eye contact`, `holding hands`, `soft shoujo manga style` のような関係性と画風を追加します。身長差は `clear height difference` と `full body shot` を必ず入れてください。' },
+      { q: '夢絵風にするには？', a: '`romantic tension`, `gentle eye contact`, `holding hands`, `soft romantic manga style` のような関係性と画風を追加します。身長差は `clear height difference` と `full body shot` を必ず入れてください。' },
     ],
   },
   'body-size-difference-prompt-guide': {
@@ -4222,18 +4219,18 @@ same height, bad anatomy, fused bodies, extra arms, blurry
         content: `**BL 体格差**
 
 \`\`\`
-2boys, protective taller partner with broad shoulders around 190cm,
+2men, adult, mature male, protective taller partner with broad shoulders around 190cm,
 shorter gentle partner around 165cm with slim build,
 clear build difference, taller one embracing the shorter one,
-full body shot, shoujo manga style, (body size difference:1.35)
+full body shot, romantic manga style, (body size difference:1.35)
 \`\`\`
 
 **ファンタジー体格差**
 
 \`\`\`
-1 massive armored knight and 1 small mage,
+1 massive armored knight and 1 adult mage,
 huge knight around 210cm, heavy armor, broad silhouette,
-petite mage around 150cm, slim robe, holding staff,
+adult petite mage around 150cm, slim robe, holding staff,
 dramatic size contrast, torch-lit dungeon, fantasy concept art,
 (size difference:1.45), full body shot
 \`\`\`
@@ -4297,7 +4294,7 @@ tall character embracing the shorter one, shorter one resting head on taller cha
 **5. 壁ドン**
 
 \`\`\`
-kabe-don pose, taller character hand on wall, shorter character looking up, shoujo manga composition
+kabe-don pose, taller character hand on wall, shorter character looking up, romantic manga composition
 \`\`\`
 
 手と壁の書き方は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドンプロンプト</a> です。
@@ -4363,7 +4360,7 @@ three characters in horizontal lineup, tall character on the left, medium charac
         title: '二人構図プロンプトを構成する 5 つの要素',
         content: `効果的な二人構図プロンプトは以下 5 要素の組み合わせです：
 
-1. **人数指定（必須）** — \`2girls\` / \`2boys\` / \`1boy and 1girl\` / \`2 people\` / \`couple\` などで人数を明示
+1. **人数指定（必須）** — \`2women, adult, mature female\` / \`2men, adult, mature male\` / \`1man and 1woman, adult\` / \`2 people\` / \`couple\` などで人数を明示
 2. **関係性** — \`couple\` / \`friends\` / \`siblings\` / \`rivals\` / \`lovers\` — 雰囲気を決定づける最重要キーワード
 3. **ポーズ・アクション** — \`holding hands\` / \`hugging\` / \`princess carry\` / \`kabe-don pose\` などの動作
 4. **視線** — \`looking at each other\` / \`looking up\` / \`eyes closed\` / \`gazing away\` — 感情を表現する
@@ -4382,7 +4379,7 @@ three characters in horizontal lineup, tall character on the left, medium charac
 **例（カップル並び立ち）**:
 
 \`\`\`
-1boy and 1girl, romantic couple, standing side by side holding hands,
+1man and 1woman, adult, romantic couple, standing side by side holding hands,
 looking at each other with soft smiles, casual modern outfits,
 city street at golden hour, full body shot,
 (romantic atmosphere:1.2), photorealistic illustration
@@ -4391,7 +4388,7 @@ city street at golden hour, full body shot,
 **例（友達 2 人 / 並び座り）**:
 
 \`\`\`
-2girls, best friends, sitting on park bench side by side laughing,
+2women, adult, mature female, best friends, sitting on park bench side by side laughing,
 looking at each other, casual summer outfits, sunny afternoon,
 medium shot, (friendly atmosphere:1.2), slice of life anime
 \`\`\``,
@@ -4403,7 +4400,7 @@ medium shot, (friendly atmosphere:1.2), slice of life anime
 **1. カップル（男女恋人）— 王道ロマンス**
 
 \`\`\`
-1boy and 1girl, romantic couple, holding hands while walking,
+1man and 1woman, adult, romantic couple, holding hands while walking,
 soft loving expressions, casual date outfits, autumn city street,
 golden hour lighting, full body shot, (couple atmosphere:1.2),
 photorealistic illustration
@@ -4412,7 +4409,7 @@ photorealistic illustration
 **2. 友達ペア — カジュアル日常**
 
 \`\`\`
-2girls, best friends, walking together laughing,
+2women, adult, mature female, best friends, walking together laughing,
 matching casual outfits, sunny park, full body shot,
 (friendship atmosphere:1.2), slice of life anime
 \`\`\`
@@ -4420,16 +4417,16 @@ matching casual outfits, sunny park, full body shot,
 **3. 兄弟姉妹 — 家族的な距離感**
 
 \`\`\`
-1boy and 1girl, older brother and younger sister, walking holding hands,
-brother in school uniform tall, sister in elementary uniform small,
+1man and 1woman, adult, older brother and adult younger sister, walking holding hands,
+brother in a coat and trousers, sister in a blouse and long skirt,
 cherry blossoms, warm afternoon, full body shot,
-(sibling bond:1.2), family illustration
+(sibling bond:1.2), adult family illustration
 \`\`\`
 
 **4. 漫画風二人構図（BL風 / 男性 2 人）— 構図素材**
 
 \`\`\`
-2boys, close friends with romantic tension,
+2men, adult, mature male, close friends with romantic tension,
 standing facing each other, soft eye contact,
 modern casual outfits, indoor warm lighting, medium shot,
 (emotional composition:1.2), manga illustration reference
@@ -4440,10 +4437,10 @@ modern casual outfits, indoor warm lighting, medium shot,
 **5. 漫画風二人構図（百合風 / 女性 2 人）— 構図素材**
 
 \`\`\`
-2girls, deep bond between two girls,
+2women, adult, mature female, deep bond between two adult women,
 standing close together gentle smiles,
-school uniforms, afternoon sunlight, full body shot,
-(emotional composition:1.2), shoujo manga aesthetic
+long coats and dresses, fully clothed, afternoon sunlight, full body shot,
+(emotional composition:1.2), romantic manga aesthetic
 \`\`\`
 
 **6. OC × 推しキャラ構図（夢絵風 / 自插ペア）— 構図参考**
@@ -4500,13 +4497,13 @@ close intimate shot, soft warm lighting, (hug pose:1.3)
 
 **4. お姫様抱っこ（月間 880 件検索）— ロマンチック頂点**
 
-少女漫画・BL・百合いずれも超定番ポーズ。男女・同性問わず映える。
+恋愛漫画・BL・百合いずれも超定番ポーズ。男女・同性問わず映える。
 
 \`\`\`
 1 person princess carry, taller character holding lighter one
 in arms, lighter character with one arm around taller's neck,
 both looking at each other softly, full body shot,
-(princess carry pose:1.4), shoujo manga style
+(princess carry pose:1.4), romantic manga style
 \`\`\`
 
 お姫様抱っこを詳しく → <a href="/guides/princess-carry-prompt-guide" class="text-sky-600 hover:underline">お姫様抱っこプロンプト</a>
@@ -4517,7 +4514,7 @@ both looking at each other softly, full body shot,
 kabe-don pose, taller character's hand on wall,
 shorter character with back against wall looking up flushed,
 low angle shot, dramatic lighting, (kabe-don pose:1.4),
-shoujo manga style
+romantic manga style
 \`\`\`
 
 手の位置と壁の指定は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドン専用ガイド</a> です。
@@ -4541,7 +4538,7 @@ close shot, soft eye contact lighting,
 2 people kissing, taller character leaning down,
 shorter character on tiptoe looking up with eyes closed,
 close-up romantic shot, soft warm rim lighting,
-(kiss scene:1.3), shoujo manga aesthetic
+(kiss scene:1.3), romantic manga aesthetic
 \`\`\`
 
 **バリエーション** — 額キス（more SFW）: \`tall character kissing shorter character's forehead, shorter blushing\` / 頬キス: \`gentle kiss on cheek\` / 手の甲キス: \`kiss on the back of hand\`。頬・額・手・キス待ちのタグ一覧は <a href="/guides/kiss-prompt-guide" class="text-sky-600 hover:underline">キスプロンプト</a> です。
@@ -4553,7 +4550,7 @@ close-up romantic shot, soft warm rim lighting,
 \`\`\`
 2 characters standing back to back, arms crossed,
 serious cool expressions, dynamic poses, dramatic lighting,
-full body shot, (back to back pose:1.3), shounen anime style
+full body shot, (back to back pose:1.3), action manga style
 \`\`\``,
       },
       {
@@ -4605,11 +4602,11 @@ full body shot, (back to back pose:1.3), shounen anime style
         title: 'シチュエーション別 — 背景・服装で関係性を強化する',
         content: `同じポーズ × 関係性でも、背景・服装で印象は劇的に変わります。
 
-**学校シーン** — 制服 × 教室 / 校門 / 体育館
+**スタジオシーン** — 大人の衣装 × 撮影
 
 \`\`\`
-2 students, school uniforms, classroom afternoon golden light,
-sunset through windows, slice of life anime aesthetic
+2 adults, long coats, fully clothed, photo studio, warm afternoon light,
+soft window light, slice of life illustration
 \`\`\`
 
 **街角シーン** — カジュアル × 都市背景
@@ -4682,7 +4679,7 @@ soft natural lighting, photorealistic style, candid moment capture
         title: 'ツール別の注意点 — SD / Midjourney / DALL-E でカップル構図を描き分ける',
         content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
 
-- **強み**: \`2girls\` \`2boys\` などの danbooru タグで人数固定が確実、ControlNet OpenPose で 2 人骨格を完全制御可能、重み付けで関係性ワードを強調できる
+- **強み**: \`2women, adult, mature female\` \`2men, adult, mature male\` などの danbooru タグで人数固定が確実、ControlNet OpenPose で 2 人骨格を完全制御可能、重み付けで関係性ワードを強調できる
 - **弱み**: 二人構図で顔・手の崩壊率が高い、ポーズが破綻しやすい
 - **対策**: ADetailer で各キャラの顔を独立に再生成、解像度を 768x768 以上、ControlNet 必須
 - **推奨**: anime 用 → Counterfeit / MeinaMix / AnythingV5、リアル系 → Realistic Vision
@@ -4781,15 +4778,15 @@ worst quality, low quality, blurry
 
 **■ 関係性別 7 パターン**
 
-**カップル**: \`1boy and 1girl, romantic couple, holding hands walking, soft loving expressions, casual date outfits, autumn city golden hour, full body shot, (couple atmosphere:1.2), photorealistic\`
+**カップル**: \`1man and 1woman, adult, romantic couple, holding hands walking, soft loving expressions, casual date outfits, autumn city golden hour, full body shot, (couple atmosphere:1.2), photorealistic\`
 
-**友達ペア**: \`2girls, best friends, walking together laughing, matching casual outfits, sunny park, full body shot, (friendship atmosphere:1.2), slice of life anime\`
+**友達ペア**: \`2women, adult, mature female, best friends, walking together laughing, matching casual outfits, sunny park, full body shot, (friendship atmosphere:1.2), slice of life anime\`
 
-**兄弟姉妹**: \`1boy and 1girl, older brother and younger sister walking holding hands, brother school uniform tall, sister elementary uniform small, cherry blossoms, full body shot, (sibling bond:1.2), family illustration\`
+**大人の兄妹**: \`1man and 1woman, adult, older brother and adult younger sister walking holding hands, brother in a coat and trousers, sister in a blouse and long skirt, cherry blossoms, full body shot, (sibling bond:1.2), adult family illustration\`
 
-**漫画風二人構図（男性 2 人）**: \`2boys, close friends with romantic tension, standing facing each other soft eye contact, modern casual outfits, indoor warm lighting, medium shot, (emotional composition:1.2), manga reference\`
+**漫画風二人構図（男性 2 人）**: \`2men, adult, mature male, close friends with romantic tension, standing facing each other soft eye contact, modern casual outfits, indoor warm lighting, medium shot, (emotional composition:1.2), manga reference\`
 
-**漫画風二人構図（女性 2 人）**: \`2girls, deep bond between two girls, standing close gentle smiles, school uniforms, afternoon sunlight, full body shot, (emotional composition:1.2), shoujo aesthetic\`
+**漫画風二人構図（女性 2 人）**: \`2women, adult, mature female, deep bond between two adult women, standing close gentle smiles, long coats and dresses, fully clothed, afternoon sunlight, full body shot, (emotional composition:1.2), romantic manga aesthetic\`
 
 **OC × 推しキャラ**: \`1original character and 1existing character pair, standing close natural distance, casual modern outfits, indoor setting, full body shot, (character pair composition:1.2), trace reference\`
 
@@ -4803,15 +4800,15 @@ worst quality, low quality, blurry
 
 **ハグ**: \`2 people embracing, taller embracing shorter from behind, shorter resting head on taller's shoulder, close intimate shot, soft warm lighting, (hug pose:1.3)\`
 
-**お姫様抱っこ**: \`1 person princess carry, taller character holding lighter one in arms, lighter character one arm around taller's neck, both looking at each other softly, full body shot, (princess carry pose:1.4), shoujo manga\`
+**お姫様抱っこ**: \`1 person princess carry, taller character holding lighter one in arms, lighter character one arm around taller's neck, both looking at each other softly, full body shot, (princess carry pose:1.4), romantic manga\`
 
-**壁ドン**: \`kabe-don pose, taller character's hand on wall, shorter against wall looking up flushed, low angle shot, dramatic lighting, (kabe-don pose:1.4), shoujo manga\`
+**壁ドン**: \`kabe-don pose, taller character's hand on wall, shorter against wall looking up flushed, low angle shot, dramatic lighting, (kabe-don pose:1.4), romantic manga\`
 
 **見上げる × 見下ろす**: \`2 people facing each other, shorter looking up at taller with soft expression, taller looking down gently, close shot, soft eye contact lighting, (looking up composition:1.3)\`
 
-**キス**: \`2 people kissing, taller leaning down, shorter on tiptoe eyes closed, close-up romantic shot, soft warm rim lighting, (kiss scene:1.3), shoujo aesthetic\`
+**キス**: \`2 people kissing, taller leaning down, shorter on tiptoe eyes closed, close-up romantic shot, soft warm rim lighting, (kiss scene:1.3), romantic manga aesthetic\`
 
-**背中合わせ**: \`2 characters standing back to back, arms crossed, serious cool expressions, dynamic poses, dramatic lighting, full body shot, (back to back pose:1.3), shounen anime\`
+**背中合わせ**: \`2 characters standing back to back, arms crossed, serious cool expressions, dynamic poses, dramatic lighting, full body shot, (back to back pose:1.3), action manga\`
 
 **■ 推奨ネガティブプロンプト（二人構図汎用）**
 
@@ -4853,10 +4850,10 @@ worst quality, low quality, blurry
     faq: [
       { q: '構図 / ポーズ / アングル の違いは？', a: '**構図（コンポジション）**は画面全体の組み立て方（どこに何を配置するか）、**ポーズ**はキャラクターの体の動き（手をつなぐ・ハグなど）、**アングル**はカメラ位置（ロー・ハイ・サイド）です。プロンプトでは「構図ワード（composition）」「ポーズワード（pose / action）」「アングルワード（angle / shot）」を**別個に指定すると制御が効きやすい**。例: `(emotional composition:1.2), holding hands pose, three-quarter view angle`。3 つを混同せず分けて書くのが上達のコツです。' },
       { q: '2 人がくっつきすぎ / 離れすぎる時の対処は？', a: '距離を明示するワードを追加してください。**くっつきすぎる場合**: `with small gap between them` / `standing close but not touching` / `slight distance between figures`。**離れすぎる場合**: `shoulders touching` / `bodies close together` / `arms in contact`。ネガティブにも対称ワードを追加（くっつきすぎ防止: `bodies overlapping, merged figures` / 離れすぎ防止: `wide gap between figures, distant figures`）。Stable Diffusion なら ControlNet OpenPose で 2 人骨格の位置を完全制御するのが最も確実です。' },
-      { q: '同性カップル（BL / 百合）の構図プロンプトはどう書く？', a: '**BL 構図**は `2boys, close friends with romantic tension, emotional bond between two men` のような中立表現の方が NSFW フィルターを回避しやすい。「BL」字面語を直接書くと DALL-E などでブロックされやすいので、`emotional composition` / `manga reference` / `shoujo aesthetic` のような言い換えがおすすめ。**百合構図**は `2girls, deep bond between two girls, gentle smiles` で十分。BL / 百合いずれも本ガイドの **8 ポーズ × 関係性別 7 パターン** がそのまま使えます。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト完全ガイド</a> の BL / 百合カップル section をご覧ください。' },
+      { q: '同性カップル（BL / 百合）の構図プロンプトはどう書く？', a: '**BL 構図**は `2men, adult, mature male, close friends with romantic tension, emotional bond between two men` のような中立表現の方が NSFW フィルターを回避しやすい。「BL」字面語を直接書くと DALL-E などでブロックされやすいので、`emotional composition` / `manga reference` / `romantic manga aesthetic` のような言い換えがおすすめ。**百合構図**は `2women, adult, mature female, deep bond between two adult women, gentle smiles` で十分。BL / 百合いずれも本ガイドの **8 ポーズ × 関係性別 7 パターン** がそのまま使えます。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差プロンプト完全ガイド</a> の BL / 百合カップル section をご覧ください。' },
       { q: '自分（OC）と推しキャラの二人構図を作りたい場合は？', a: '**LoRA + 二人構図プロンプト**の組み合わせがベスト。手順: (1) 推しキャラの LoRA（pixiv や CivitAI で配布されているもの）を `<lora:character-name:0.7>` で適用、(2) プロンプトに `1original character and 1existing character pair` のように 2 種を明示、(3) OC 側の特徴を自然言語で詳細指定（髪色 / 目色 / 服装 / 体型）。**もう一つの方法**: img2img で「自分の写真 + 推しキャラ LoRA」を入力、Denoising Strength 0.4-0.6 で顔保持しつつイラスト化。トレース素材として使う場合は `trace reference illustration` をプロンプトに追加すると線画寄りに出ます。' },
       { q: '顔・手の崩壊を防ぐベストプラクティスは？', a: '二人構図は単体生成の 5-10 倍崩壊しやすいので**対策を最初から仕込む**のが鉄則。**顔**: `(detailed face:1.2), (detailed eyes:1.2)` を両キャラ別個に書く + ADetailer 拡張で各キャラの顔を再生成 + 解像度 768x768 以上（512 では崩壊）。**手**: ネガティブに `bad hands, extra fingers, missing fingers, fused fingers` 必須 + Hand Refiner ControlNet 使用 + クローズアップを避け full body shot で手を画面の小さい部分に追い込む。**全身**: ネガティブに `fused bodies, extra arms, extra legs, conjoined twins, merged figures` 追加。これらすべて入れて初回成功率が 30% → 70% に上がります。' },
-      { q: 'Midjourney と Stable Diffusion でカップル構図表現の違いは？', a: '**Midjourney** は narrative（文章）style が得意で「two people walking together in autumn sunlight, romantic mood」のような自然な指示が効く。`--ar 4:5` または `--ar 3:4`（縦長気味）で 2 人を画面に収めやすい。`--style raw` でフォトリアル感が出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能なし。**Stable Diffusion** は重み付け `(holding hands:1.3)` で精密制御 + ControlNet OpenPose で 2 人骨格を完全固定 + danbooru タグ `2girls` `2boys` で人数固定が確実。**結論**: クオリティ重視・カップル写真風 → Midjourney、本格制御 → SD + ControlNet。' },
+      { q: 'Midjourney と Stable Diffusion でカップル構図表現の違いは？', a: '**Midjourney** は narrative（文章）style が得意で「two people walking together in autumn sunlight, romantic mood」のような自然な指示が効く。`--ar 4:5` または `--ar 3:4`（縦長気味）で 2 人を画面に収めやすい。`--style raw` でフォトリアル感が出る。ただし重み付け制御が SD ほど精密でなく、ControlNet 相当の機能なし。**Stable Diffusion** は重み付け `(holding hands:1.3)` で精密制御 + ControlNet OpenPose で 2 人骨格を完全固定 + danbooru タグ `2women, adult, mature female` `2men, adult, mature male` で人数固定が確実。**結論**: クオリティ重視・カップル写真風 → Midjourney、本格制御 → SD + ControlNet。' },
       { q: 'ネガティブプロンプトの推奨は？', a: '二人構図向け汎用ネガティブの推奨セット: `bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra arms, extra legs, fused bodies, conjoined twins, merged figures, looking at camera, awkward pose, stiff pose, worst quality, low quality, blurry`。これに加えて目的別追加: **カメラ目線回避**: `looking at camera` / **特定ポーズ強制時の崩壊回避**: ポーズ別 NG ワード（キスシーンで顔崩れ → `distorted face, fused lips`、お姫様抱っこで腕崩壊 → `awkward arm position, broken arms`）。Stable Diffusion なら EasyNegative や bad-hands-5 のような **embedding ネガティブ**も併用すると効果絶大。' },
       { q: '動的シーン（キス・ハグ）が固くなる / 不自然になる時の対処は？', a: '「動きを表現するワード」を**追加**してください。**キス**: `kissing in motion, gentle leaning forward, soft moment captured` / **ハグ**: `embracing with emotion, gentle squeeze, warm closeness` / **手をつなぐ**: `hands gently intertwined, natural finger interlock`。さらに **動作の質感**ワード（`tender` / `gentle` / `passionate` / `intimate`）を入れると感情が乗る。**カメラ設定**でも改善: `candid moment` / `lifestyle photography` / `documentary style` を加えると「ポーズ撮り」っぽさが消える。Midjourney なら `--style raw` も効果的です。' },
     ],
@@ -4885,7 +4882,7 @@ BL イラストは「ただ男性 2 人を並べただけ」では成立しま�
         title: 'BL 構図プロンプトを構成する 5 要素',
         content: `効果的な BL 構図プロンプトは以下 5 要素の組み合わせです：
 
-1. **人数指定（必須）** — \`2boys\` / \`1boy and 1boy\` / \`two male characters\` で**必ず男性 2 人**を明示
+1. **人数指定（必須）** — \`2men, adult, mature male\` / \`1man, adult, mature male and 1man, adult, mature male\` / \`two male characters\` で**必ず男性 2 人**を明示
 2. **関係性ワード** — \`close friends with romantic tension\` / \`emotional bond between two men\` / \`intimate male pair\` — **「BL」字面語を直接使わない**のがコツ（NSFW フィルター回避）
 3. **ポーズ・接触** — \`standing close together\` / \`hand on shoulder\` / \`leaning down\` / \`embracing\` などで身体的距離を制御
 4. **視線** — \`looking at each other\` / \`gentle eye contact\` / \`looking up softly\` — 感情を伝える最強の要素
@@ -4894,7 +4891,7 @@ BL イラストは「ただ男性 2 人を並べただけ」では成立しま�
 **基本テンプレート**（コピペ用）:
 
 \`\`\`
-2boys, {relationship}, {pose}, {gaze description},
+2men, adult, mature male, {relationship}, {pose}, {gaze description},
 {outfit / setting}, full body shot, (intimate composition:1.2),
 (masterpiece:1.2), (best quality:1.4)
 \`\`\`
@@ -4902,7 +4899,7 @@ BL イラストは「ただ男性 2 人を並べただけ」では成立しま�
 **実例（カフェで並び立ち）**:
 
 \`\`\`
-2boys, close friends with emotional bond, standing side by side,
+2men, adult, mature male, close friends with emotional bond, standing side by side,
 soft eye contact toward each other, casual modern outfits in earth tones,
 warm cafe interior, full body shot, three-quarter view,
 warm indoor lighting, (intimate composition:1.2), slice-of-life anime
@@ -4919,7 +4916,7 @@ warm indoor lighting, (intimate composition:1.2), slice-of-life anime
 **1. 並び立ち — カフェシーン（基礎）**
 
 \`\`\`
-2boys, close friends with emotional bond, standing side by side
+2men, adult, mature male, close friends with emotional bond, standing side by side
 in warm cafe interior, soft eye contact, casual modern outfits,
 warm indoor lighting, full body shot, (intimate composition:1.2),
 slice-of-life anime
@@ -4932,7 +4929,7 @@ slice-of-life anime
 **2. 手をつなぐ — 公園散歩**
 
 \`\`\`
-2boys, walking through autumn park gently holding hands fingers
+2men, adult, mature male, walking through autumn park gently holding hands fingers
 interlocked, deep emotional bond, soft warm expressions,
 falling autumn leaves, golden hour, side-angle full body shot,
 (hand holding:1.3), (intimate gesture:1.2), anime illustration
@@ -4945,7 +4942,7 @@ falling autumn leaves, golden hour, side-angle full body shot,
 **3. ハグ — 後ろからの抱きしめ**
 
 \`\`\`
-2boys, back-hug pose, taller character 185cm embracing shorter
+2men, adult, mature male, back-hug pose, taller character 185cm embracing shorter
 168cm from behind, shorter leaning back with closed eyes soft smile,
 home outfits, warm indoor evening lighting, close intimate shot,
 (back hug pose:1.4), (intimate composition:1.3)
@@ -4958,36 +4955,36 @@ home outfits, warm indoor evening lighting, close intimate shot,
 **4. お姫様抱っこ — ファンタジー**
 
 \`\`\`
-2boys, princess carry pose, taller stronger character 190cm holding
+2men, adult, mature male, princess carry pose, taller stronger character 190cm holding
 lighter character 165cm in arms, lighter with arm around taller's
 neck, both looking softly, fantasy castle hall warm torch light,
-(princess carry pose:1.4), (height difference:1.3), shoujo manga
+(princess carry pose:1.4), (height difference:1.3), romantic manga
 \`\`\`
 
 <a href="/prompt/bl-couple-princess-carry-rescue" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-princess-carry-rescue-AzHs139eySpKmAWUl63XL7pYHk11Hz.jpg" alt="BL お姫様抱っこ 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
 → サンプル: <a href="/prompt/bl-couple-princess-carry-rescue" class="text-sky-600 hover:underline">BL お姫様抱っこ</a>
 
-**5. 壁ドン — 学校廊下**
+**5. 壁ドン — オフィスの廊下**
 
 \`\`\`
-2boys, kabe-don pose in sunlit school hallway, taller 185cm hand on
-wall above shorter 168cm's shoulder, shorter looking up flushed,
-dark school uniforms, low camera angle, (kabe-don pose:1.4),
-(tension atmosphere:1.3), shoujo manga emotional
+2men, adult, mature male, kabe-don pose in a sunlit office hallway, taller 185cm hand on
+wall above shorter 168cm's shoulder, shorter looking up,
+dark tailored suits, fully clothed, low camera angle, (kabe-don pose:1.4),
+(tension atmosphere:1.3), romantic manga
 \`\`\`
 
-<a href="/prompt/bl-couple-kabedon-school" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kabedon-school-OwIsUiLzzUi8D303vom3wNAprN6Ioa.jpg" alt="BL 学校壁ドン 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
+<a href="/prompt/bl-couple-kabedon-school" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kabedon-school-OwIsUiLzzUi8D303vom3wNAprN6Ioa.jpg" alt="BL オフィスの壁ドン 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
 
-→ サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL 学校壁ドン</a>。オフィスや室内での書き方は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドン専用ガイド</a> です。
+→ サンプル: <a href="/prompt/bl-couple-kabedon-school" class="text-sky-600 hover:underline">BL オフィスの壁ドン</a>。オフィスや室内での書き方は <a href="/guides/kabedon-prompt-guide" class="text-sky-600 hover:underline">壁ドン専用ガイド</a> です。
 
 **6. キス — 屈むキス**
 
 \`\`\`
-2boys, romantic kiss scene, taller 188cm leaning down to kiss
+2men, adult, mature male, romantic kiss scene, taller 188cm leaning down to kiss
 shorter 168cm on tiptoe with eyes closed, side-view profile shot,
 warm rim lighting from sunset window, (kiss scene:1.4),
-(height difference:1.3), shoujo manga aesthetic
+(height difference:1.3), romantic manga aesthetic
 \`\`\`
 
 <a href="/prompt/bl-couple-kiss-leaning-down" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-kiss-leaning-down-YGxnDQcVUSu7jZmQcadiG5mMJrRGmA.jpg" alt="BL 屈んでキス 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
@@ -4997,10 +4994,10 @@ warm rim lighting from sunset window, (kiss scene:1.4),
 **7. 見上げる × 見下ろす — 視線対面**
 
 \`\`\`
-2boys, standing close facing each other, shorter 168cm looking up
+2men, adult, mature male, standing close facing each other, shorter 168cm looking up
 at taller 188cm with soft questioning expression, taller looking
 down gently protective, close mid-shot slight low angle, library
-background, (looking up composition:1.4), emotional shoujo manga
+background, (looking up composition:1.4), emotional romantic manga
 \`\`\`
 
 <a href="/prompt/bl-couple-looking-up-tension" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-looking-up-tension-HaZCDqTFpLHXU9T2np94Tk4we6SQrT.jpg" alt="BL 見上げる対面 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
@@ -5010,10 +5007,10 @@ background, (looking up composition:1.4), emotional shoujo manga
 **8. 額をつける — 親密シーン**
 
 \`\`\`
-2boys, foreheads gently touching, both eyes softly closed tender
+2men, adult, mature male, foreheads gently touching, both eyes softly closed tender
 expressions, hands on each other's shoulders, close intimate
 three-quarter shot, soft warm rim lighting from window,
-(forehead touch:1.4), (emotional intimacy:1.3), shoujo manga
+(forehead touch:1.4), (emotional intimacy:1.3), romantic manga
 \`\`\`
 
 <a href="/prompt/bl-couple-forehead-touch-private" class="block my-3"><img src="https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/prompts/bl-couple-forehead-touch-private-HvQQhibG5tyAiryVjRNP3kxcPFRSL9.jpg" alt="BL 額をつける親密 生成例" loading="lazy" class="rounded-xl border border-gray-200 shadow-sm w-full max-w-md mx-auto block hover:shadow-md transition-shadow" /></a>
@@ -5031,18 +5028,18 @@ three-quarter shot, soft warm rim lighting from window,
         title: 'シチュエーション別 — 背景・服装で関係性を強化する',
         content: `同じポーズでも、シチュエーション（背景・服装）を変えるだけで全く違う物語になります。
 
-**学園 BL** — 制服 × 教室 / 廊下 / 部活
+**室内の大人** — スーツ × オフィス
 
 \`\`\`
-2boys in dark school uniforms, classroom or hallway setting,
-afternoon sunlight through windows, slice-of-life youth aesthetic,
-sakura petals optional, anime style
+2men, adult, mature male, dark tailored suits, fully clothed, office interior,
+afternoon sunlight through windows, slice-of-life aesthetic,
+anime style
 \`\`\`
 
 **大人 BL（オフィス / スーツ）** — ビジネス系の落ち着いた緊張感
 
 \`\`\`
-2boys in business suits, modern office interior, blinds with
+2men, adult, mature male in business suits, modern office interior, blinds with
 striped lighting, mature composed expressions, quiet emotional
 tension between them, sophisticated adult BL aesthetic
 \`\`\`
@@ -5054,7 +5051,7 @@ tension between them, sophisticated adult BL aesthetic
 **ファンタジー BL** — 中世 / 異世界
 
 \`\`\`
-2boys in medieval fantasy setting, knight in plate armor + mage
+2men, adult, mature male in medieval fantasy setting, knight in plate armor + mage
 in robes / two warriors / royal and guard pair, ancient hall or
 forest, magical lighting, fantasy concept art illustration
 \`\`\`
@@ -5066,7 +5063,7 @@ forest, magical lighting, fantasy concept art illustration
 **現代日常 BL** — カフェ / 自宅 / 街中
 
 \`\`\`
-2boys in casual modern outfits, warm cafe / cozy apartment /
+2men, adult, mature male in casual modern outfits, warm cafe / cozy apartment /
 city street, natural lighting, slice-of-life moment, soft
 intimate atmosphere, anime daily life aesthetic
 \`\`\`
@@ -5078,7 +5075,7 @@ intimate atmosphere, anime daily life aesthetic
 **サイバーパンク BL** — 未来都市 / ネオン
 
 \`\`\`
-2boys in futuristic outfits with neon accents, cyberpunk city
+2men, adult, mature male in futuristic outfits with neon accents, cyberpunk city
 with rain reflections, holographic ads, dramatic backlight,
 sci-fi BL illustration
 \`\`\`
@@ -5086,14 +5083,14 @@ sci-fi BL illustration
 **ダーク BL** — 不穏 / ノワール
 
 \`\`\`
-2boys, mature serious atmosphere, dark interior with strong
+2men, adult, mature male, mature serious atmosphere, dark interior with strong
 shadows, contrast lighting, noir aesthetic, mysterious tension
 between characters
 \`\`\``,
       },
       {
         title: 'NSFW フィルター回避 — 中立表現で SFW のまま BL 構図を出す',
-        content: `Stable Diffusion / Midjourney / DALL-E はいずれも**安全フィルター**を持っており、「BL」「yaoi」「gay couple」「boys love」などの**直接的なジャンル名や明示的な恋愛表現は警告されたり結果が劣化**する場合があります。
+        content: `Stable Diffusion / Midjourney / DALL-E はいずれも**安全フィルター**を持っており、「BL」「yaoi」「gay couple」などの**直接的なジャンル名や明示的な恋愛表現は警告されたり結果が劣化**する場合があります。
 
 **回避策**: 関係性は**中立的な英語表現**で書く。
 
@@ -5108,11 +5105,11 @@ between characters
 
 **ポイント**: ポーズや視線で関係性を表現すれば、明示語なしでも BL らしい絵が出ます。
 
-**実例**: 「kiss scene」だけだと NSFW 判定されやすいが、「**soft kiss with eyes closed, tender expression, shoujo manga aesthetic**」と書けば抒情シーンとして許容されることが多い。
+**実例**: 「kiss scene」だけだと NSFW 判定されやすいが、「**soft kiss with eyes closed, tender expression, romantic manga aesthetic**」と書けば抒情シーンとして許容されることが多い。
 
 **SD（ローカル / NSFW モデル使用時）**: フィルター気にせず BL 用語を直接使える。ただし danbooru タグ \`yaoi\` は学習データ依存で結果が荒くなりがちなので、本ガイドの中立表現でも OK。
 
-**DALL-E 3 で注意**: 「2 boys kissing」のような直接表現は厳しい。「two close friends sharing a quiet moment with their foreheads touching」のような言い換えで通る場合が多い。
+**DALL-E 3 で注意**: 「二人でキスしている」のような直接表現は厳しい。「two close friends sharing a quiet moment with their foreheads touching」のような言い換えで通る場合が多い。
 
 **ネガティブプロンプト推奨**:
 
@@ -5126,9 +5123,9 @@ explicit content, nudity, suggestive pose, worst quality, low quality
         title: 'ツール別の BL 構図の出しやすさ — SD / Midjourney / DALL-E 比較',
         content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
 
-- **強み**: \`2boys\` の danbooru タグで男性 2 人を確実に固定、ControlNet OpenPose で 2 人骨格を完全制御、重み付けで関係性ワードを強調可能、anime BL モデル（\`AnythingV5\` / \`Counterfeit\` / \`Anim4gine\`）が豊富
+- **強み**: \`2men, adult, mature male\` の danbooru タグで男性 2 人を確実に固定、ControlNet OpenPose で 2 人骨格を完全制御、重み付けで関係性ワードを強調可能、anime BL モデル（\`AnythingV5\` / \`Counterfeit\` / \`Anim4gine\`）が豊富
 - **弱み**: 二人構図で顔・手の崩壊率が高い、男性同士なのに女性化することがある（特に SDXL 系）
-- **対策**: \`2boys, male only, no women\` をプロンプトに明示 + ネガティブに \`1girl, woman, female\` 追加 + ADetailer で顔再生成 + 解像度 768x768 以上
+- **対策**: \`2men, adult, mature male, male only, no women\` をプロンプトに明示 + ネガティブに \`1girl, woman, female\` 追加 + ADetailer で顔再生成 + 解像度 768x768 以上
 - **推奨モデル**: \`Anim4gine\` / \`MeinaMix\` / \`Counterfeit V3\` / \`Anything V5\` / SDXL なら \`Animagine XL\`
 
 **Midjourney（推奨度: ⭐⭐）**
@@ -5157,7 +5154,7 @@ prompta.jp の BL 構図 12 prompt は **SDXL（fal.ai fast-sdxl）ベースで�
 
 **問題 1: 片方または両方が女性化してしまう（SDXL あるある）**
 
-- **対処**: \`2boys, male only, both characters are male, masculine features\` を**前半に**配置
+- **対処**: \`2men, adult, mature male, male only, both characters are male, masculine features\` を**前半に**配置
 - **対処**: ネガティブに \`1girl, woman, female, feminine, breasts\` 必須
 - **対処**: 体型ワード（\`broad shoulders\`, \`flat chest\`, \`adam's apple\`）で性別を補強
 
@@ -5207,31 +5204,31 @@ worst quality, low quality, blurry
 
 **■ 8 ポーズ別**
 
-**1. カフェ並び立ち**: \`2boys, close friends with emotional bond, standing side by side in warm cafe, soft eye contact, casual modern outfits, full body shot, three-quarter view, (intimate composition:1.2), slice-of-life anime\`
+**1. カフェ並び立ち**: \`2men, adult, mature male, close friends with emotional bond, standing side by side in warm cafe, soft eye contact, casual modern outfits, full body shot, three-quarter view, (intimate composition:1.2), slice-of-life anime\`
 
-**2. 公園手つなぎ**: \`2boys, walking through autumn park gently holding hands fingers interlocked, deep emotional bond, soft warm expressions, falling autumn leaves, golden hour, side-angle full body shot, (hand holding:1.3), (intimate gesture:1.2)\`
+**2. 公園手つなぎ**: \`2men, adult, mature male, walking through autumn park gently holding hands fingers interlocked, deep emotional bond, soft warm expressions, falling autumn leaves, golden hour, side-angle full body shot, (hand holding:1.3), (intimate gesture:1.2)\`
 
-**3. 後ろからハグ**: \`2boys, back-hug pose, taller 185cm embracing shorter 168cm from behind, shorter leaning back closed eyes soft smile, home outfits, warm indoor evening lighting, close intimate shot, (back hug pose:1.4), (intimate composition:1.3)\`
+**3. 後ろからハグ**: \`2men, adult, mature male, back-hug pose, taller 185cm embracing shorter 168cm from behind, shorter leaning back closed eyes soft smile, home outfits, warm indoor evening lighting, close intimate shot, (back hug pose:1.4), (intimate composition:1.3)\`
 
-**4. お姫様抱っこ**: \`2boys, princess carry, taller 190cm holding lighter 165cm in arms, lighter with arm around taller's neck, fantasy castle hall warm torch light, (princess carry pose:1.4), (height difference:1.3), shoujo manga\`
+**4. お姫様抱っこ**: \`2men, adult, mature male, princess carry, taller 190cm holding lighter 165cm in arms, lighter with arm around taller's neck, fantasy castle hall warm torch light, (princess carry pose:1.4), (height difference:1.3), romantic manga\`
 
-**5. 学校壁ドン**: \`2boys, kabe-don pose in sunlit school hallway, taller 185cm hand on wall above shorter's shoulder, shorter looking up flushed, dark school uniforms, low camera angle, (kabe-don pose:1.4), (tension atmosphere:1.3)\`
+**5. オフィスの壁ドン**: \`2men, adult, mature male, kabe-don pose in sunlit office hallway, taller 185cm hand on wall above shorter's shoulder, shorter looking up flushed, dark tailored suits, fully clothed, low camera angle, (kabe-don pose:1.4), (tension atmosphere:1.3)\`
 
-**6. 屈んでキス**: \`2boys, romantic kiss scene, taller 188cm leaning down to kiss shorter 168cm on tiptoe eyes closed, side-view profile, warm rim lighting from sunset window, (kiss scene:1.4), (height difference:1.3), shoujo manga\`
+**6. 屈んでキス**: \`2men, adult, mature male, romantic kiss scene, taller 188cm leaning down to kiss shorter 168cm on tiptoe eyes closed, side-view profile, warm rim lighting from sunset window, (kiss scene:1.4), (height difference:1.3), romantic manga\`
 
-**7. 見上げる対面**: \`2boys, standing close facing each other, shorter 168cm looking up at taller 188cm with soft questioning expression, taller looking down gently protective, close mid-shot, library background, (looking up composition:1.4)\`
+**7. 見上げる対面**: \`2men, adult, mature male, standing close facing each other, shorter 168cm looking up at taller 188cm with soft questioning expression, taller looking down gently protective, close mid-shot, library background, (looking up composition:1.4)\`
 
-**8. 額をつける**: \`2boys, foreheads gently touching, both eyes softly closed tender expressions, hands on each other's shoulders, close intimate shot, soft warm rim lighting, (forehead touch:1.4), (emotional intimacy:1.3)\`
+**8. 額をつける**: \`2men, adult, mature male, foreheads gently touching, both eyes softly closed tender expressions, hands on each other's shoulders, close intimate shot, soft warm rim lighting, (forehead touch:1.4), (emotional intimacy:1.3)\`
 
 **■ 応用 4 シーン**
 
-**9. 背中合わせ（ライバル）**: \`2boys, back to back arms crossed, serious cool determined expressions, similar heights, contrasting outfits (dark black/red + white/silver), dramatic backlight, (back to back pose:1.4), shounen anime\`
+**9. 背中合わせ（ライバル）**: \`2men, adult, mature male, back to back arms crossed, serious cool determined expressions, similar heights, contrasting outfits (dark black/red + white/silver), dramatic backlight, (back to back pose:1.4), action manga\`
 
-**10. カフェ肩寄り**: \`2boys, sitting close at window cafe table, shorter 170cm leaning head softly on taller 185cm's shoulder, taller looking down soft smile, coffee cups, warm sunlight, medium close-up side angle, (shoulder lean pose:1.3)\`
+**10. カフェ肩寄り**: \`2men, adult, mature male, sitting close at window cafe table, shorter 170cm leaning head softly on taller 185cm's shoulder, taller looking down soft smile, coffee cups, warm sunlight, medium close-up side angle, (shoulder lean pose:1.3)\`
 
-**11. オフィス スーツ**: \`2boys in business suits standing in modern office, one leaning against desk, other close in front, calm composed expressions quiet emotional tension, dark charcoal and navy suits, blinds striped lighting, (mature composition:1.3), (subtle tension:1.2)\`
+**11. オフィス スーツ**: \`2men, adult, mature male in business suits standing in modern office, one leaning against desk, other close in front, calm composed expressions quiet emotional tension, dark charcoal and navy suits, blinds striped lighting, (mature composition:1.3), (subtle tension:1.2)\`
 
-**12. 騎士×魔法使い**: \`2boys, medieval fantasy, tall armored knight 190cm protectively behind robed mage 168cm, knight in silver/blue plate armor with sword, mage in deep purple robes with grimoire, ancient stone hall blue magical light, (fantasy duo composition:1.3), (height difference:1.2)\`
+**12. 騎士×魔法使い**: \`2men, adult, mature male, medieval fantasy, tall armored knight 190cm protectively behind robed mage 168cm, knight in silver/blue plate armor with sword, mage in deep purple robes with grimoire, ancient stone hall blue magical light, (fantasy duo composition:1.3), (height difference:1.2)\`
 
 **■ 推奨ネガティブ（BL 構図汎用）**
 
@@ -5275,13 +5272,13 @@ worst quality, low quality, blurry
       },
     ],
     faq: [
-      { q: 'BL 構図と一般的なカップル構図の違いは何ですか？', a: '**技術的にはほぼ同じ**ですが、**SDXL / DALL-E の安全フィルター**が「2 boys」「BL」「yaoi」など特定の組み合わせに反応しやすく、男性 2 人の親密構図は女性 2 人や男女より結果が崩れやすい傾向があります。具体的な違い: (1) 男性のままで描かれる確率を上げるため `2boys, male only, masculine features` を強調 + ネガティブに `1girl, woman` 追加が必要、(2) 「BL」「yaoi」字面を避けて中立的な関係性表現（`emotional bond between two men`）を使う、(3) anime BL モデル（`Anim4gine` / `Counterfeit` 等）を使うと出やすい。基本構図は <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図 hub guide</a> と共通。' },
-      { q: '「2boys」と「BL」をプロンプトに直接書く必要は？', a: '**`2boys` は強く推奨**（人数固定のため）、**`BL` は不要**（むしろ書かないほうが安全）。`2boys` は Stable Diffusion の anime モデルで danbooru タグとして学習されており、これがないと男性 1 人や男女になる確率が上がる。一方 `BL` `yaoi` `gay` のような直接ジャンル名は (1) DALL-E / SDXL safety filter で警告される、(2) 学習データのバイアスで NSFW 寄りに引っ張られる、というデメリットがあるので**中立表現**（`emotional bond between two men` 等）の方が SFW BL 構図が安定して出ます。' },
+      { q: 'BL 構図と一般的なカップル構図の違いは何ですか？', a: '**技術的にはほぼ同じ**ですが、**SDXL / DALL-E の安全フィルター**が「男性二人の親密な組み合わせ」「BL」「yaoi」など特定の組み合わせに反応しやすく、男性 2 人の親密構図は女性 2 人や男女より結果が崩れやすい傾向があります。具体的な違い: (1) 男性のままで描かれる確率を上げるため `2men, adult, mature male, male only, masculine features` を強調 + ネガティブに `1girl, woman` 追加が必要、(2) 「BL」「yaoi」字面を避けて中立的な関係性表現（`emotional bond between two men`）を使う、(3) anime BL モデル（`Anim4gine` / `Counterfeit` 等）を使うと出やすい。基本構図は <a href="/guides/two-person-composition-prompt-guide" class="text-sky-600 hover:underline">二人構図 hub guide</a> と共通。' },
+      { q: '「2men」と「BL」をプロンプトに直接書く必要は？', a: '**`2men, adult, mature male` は強く推奨**（人数固定のため）、**`BL` は不要**（むしろ書かないほうが安全）。`2men, adult, mature male` は Stable Diffusion の anime モデルで danbooru タグとして学習されており、これがないと男性 1 人や男女になる確率が上がる。一方 `BL` `yaoi` `gay` のような直接ジャンル名は (1) DALL-E / SDXL safety filter で警告される、(2) 学習データのバイアスで NSFW 寄りに引っ張られる、というデメリットがあるので**中立表現**（`emotional bond between two men` 等）の方が SFW BL 構図が安定して出ます。' },
       { q: 'NSFW フィルターでブロックされた時はどう対処しますか？', a: '**3 段階の対処法**: (1) **直接表現を中立表現に置換** — `kiss` → `gentle moment with foreheads touching`、`couple` → `close companions`、`BL` → `emotional male pair`。(2) **ネガティブを強化** — `explicit content, nudity, suggestive pose, intimate physical contact` を追加。(3) **ツールを変える** — DALL-E 3 で詰まったら Stable Diffusion（ローカル / fal.ai）に切り替える。SD はモデルや設定によりフィルター強度を選べる。prompta.jp の <a href="/tag/BL" class="text-sky-600 hover:underline">/tag/BL</a> 12 件は全て fal SDXL で safety filter ON のまま通った中立表現の実例なので、迷ったら本ガイドの英語テンプレをそのままコピーがおすすめ。' },
       { q: '攻め × 受けを視覚的に表現するベストプラクティスは？', a: '「攻め」「受け」を直接書かず、**身長差・体格差・ポーズ・視線**で表現するのが SD でも DALL-E でも安全で効果的。**攻め役**の典型: `taller protective character around 185-195cm, broader shoulders, confident expression, leaning down or looking down gently`。**受け役**の典型: `shorter gentler character around 165-170cm, slimmer build, soft expression, looking up or being held`。**身長差を 15-25cm**に設定するとはっきり攻め受けが伝わる。深掘りは <a href="/guides/height-difference-pair-prompt" class="text-sky-600 hover:underline">身長差カップルガイド</a> の「BL カップル」section をご覧ください。' },
-      { q: '大人 BL（オフィス・スーツ系）のプロンプトのコツは？', a: '大人 BL は **(1) 衣装の質感、(2) 表情の落ち着き、(3) 照明** が肝心。テンプレ: `2boys in tailored business suits, mature adult features around late 20s to 30s, modern office or upscale bar, charcoal/navy/black suits, blinds casting striped lighting, calm composed expressions with quiet emotional tension, sophisticated adult BL aesthetic, photorealistic or detailed anime illustration`。学園 BL とは別物 — 「mature」「adult」「composed」「sophisticated」をプロンプトに必ず入れる。実例: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィス スーツ姿</a>。' },
-      { q: 'ファンタジー BL（騎士×魔法使い等）構図の応用例は？', a: '中世ファンタジー世界観は **(1) 衣装で役割を明示、(2) 体格差で力関係を示す、(3) 背景で世界観を構築** がポイント。テンプレ: `2boys in medieval fantasy setting, tall armored knight 190cm in plate armor with sword + robed mage 168cm with grimoire / royal prince + loyal guard / paladin + dark sorcerer, ancient hall or magical forest, mysterious lighting, fantasy concept art illustration`。組み合わせ例: 騎士×魔法使い / 王子×護衛 / 聖騎士×闇魔法使い / 勇者×旅商人。実例: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>。' },
-      { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2boys` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（1 ポイント / 回）。' },
+      { q: '大人 BL（オフィス・スーツ系）のプロンプトのコツは？', a: '大人 BL は **(1) 衣装の質感、(2) 表情の落ち着き、(3) 照明** が肝心。テンプレ: `2men, adult, mature male in tailored business suits, mature adult features around late 20s to 30s, modern office or upscale bar, charcoal/navy/black suits, blinds casting striped lighting, calm composed expressions with quiet emotional tension, sophisticated adult BL aesthetic, photorealistic or detailed anime illustration`。学園 BL とは別物 — 「mature」「adult」「composed」「sophisticated」をプロンプトに必ず入れる。実例: <a href="/prompt/bl-couple-business-suit-office" class="text-sky-600 hover:underline">BL オフィス スーツ姿</a>。' },
+      { q: 'ファンタジー BL（騎士×魔法使い等）構図の応用例は？', a: '中世ファンタジー世界観は **(1) 衣装で役割を明示、(2) 体格差で力関係を示す、(3) 背景で世界観を構築** がポイント。テンプレ: `2men, adult, mature male in medieval fantasy setting, tall armored knight 190cm in plate armor with sword + robed mage 168cm with grimoire / royal prince + loyal guard / paladin + dark sorcerer, ancient hall or magical forest, mysterious lighting, fantasy concept art illustration`。組み合わせ例: 騎士×魔法使い / 王子×護衛 / 聖騎士×闇魔法使い / 勇者×旅商人。実例: <a href="/prompt/bl-couple-fantasy-knight-mage" class="text-sky-600 hover:underline">BL 騎士×魔法使い</a>。' },
+      { q: 'Midjourney と Stable Diffusion でどちらが BL 構図に強いですか？', a: '**結論**: クオリティ重視・アート性 → **Midjourney（特に Niji 6）**、本格制御・量産 → **Stable Diffusion + anime BL モデル**。**Midjourney Niji 6** はアニメ BL 構図に学習データが豊富で、narrative プロンプトで関係性を理解、`--ar 4:5` で 2 人を画面に収めやすい。ただし重み付け制御弱 + ControlNet 相当なし。**Stable Diffusion** は `2men, adult, mature male` で人数確実固定、ControlNet OpenPose で 2 人骨格完全制御、anime BL モデル（Anim4gine / Counterfeit V3 / Animagine XL）が SDXL ベースで動作。**初心者推奨**: まず Midjourney Niji 6 で 1 枚試して、気に入った構図を SD + ControlNet で量産する流れがおすすめ。prompta.jp の 12 件 BL prompt は fal SDXL で動作確認済み、各 prompt の「🚀 ここで試す」でサイト内実行可能（1 ポイント / 回）。' },
     ],
   },
   'bl-pose-collection-guide': {
@@ -5321,7 +5318,7 @@ worst quality, low quality, blurry
         title: 'BL ポーズプロンプトを構成する 4 要素',
         content: `BL ポーズプロンプトは構図プロンプトと違い、**ポーズ部分のみを抽出**して柔軟に組み合わせるのが特徴。4 要素を意識すれば応用が効きます。
 
-1. **人数指定（必須）** — \`2boys\` / \`two male characters\` を**最初**に明記
+1. **人数指定（必須）** — \`2men, adult, mature male\` / \`two male characters\` を**最初**に明記
 2. **身体の動き（メイン）** — \`hands gently intertwined\` / \`leaning down to whisper\` / \`brushing hair behind ear\`
 3. **視線・表情（補助）** — \`looking at each other softly\` / \`gentle eye contact\` / \`gaze averted shyly\`
 4. **接触の質感（オプション）** — \`fingers barely touching\` / \`firm grip\` / \`light brush of fingertips\`
@@ -5329,14 +5326,14 @@ worst quality, low quality, blurry
 **応用テンプレート**（背景は別途追加）:
 
 \`\`\`
-2boys, {pose action}, {gaze description}, {touch quality},
+2men, adult, mature male, {pose action}, {gaze description}, {touch quality},
 (intimate pose:1.2), (best quality:1.4), (masterpiece:1.2)
 \`\`\`
 
 **実例**（手繋ぎ・基本）:
 
 \`\`\`
-2boys, gently holding hands with fingers interlocked,
+2men, adult, mature male, gently holding hands with fingers interlocked,
 looking at each other with soft expressions, light touch quality,
 (intimate pose:1.2), anime illustration
 \`\`\`
@@ -5357,27 +5354,27 @@ looking at each other with soft expressions, light touch quality,
 
 **■ 接触なし（友達距離 〜 微妙な緊張感）**
 
-**1. 並ぶだけ**: \`2boys standing apart with small gap between them, neutral facing forward\` — 友達・知人〜緊張感ある関係性まで広く適用
+**1. 並ぶだけ**: \`2men, adult, mature male standing apart with small gap between them, neutral facing forward\` — 友達・知人〜緊張感ある関係性まで広く適用
 
-**2. 視線越し**: \`2boys looking at each other across a small distance, no physical contact, charged silence between them\` — 出会い直後・緊張感シーン
+**2. 視線越し**: \`2men, adult, mature male looking at each other across a small distance, no physical contact, charged silence between them\` — 出会い直後・緊張感シーン
 
-**3. 同方向を見る**: \`2boys side by side looking off in the same direction, parallel pose, contemplative atmosphere\` — 共有感・思考の同調
+**3. 同方向を見る**: \`2men, adult, mature male side by side looking off in the same direction, parallel pose, contemplative atmosphere\` — 共有感・思考の同調
 
 **■ 接触あり（軽い触れ合い）**
 
-**4. 肩が触れる**: \`2boys standing close enough that shoulders are barely touching, soft awareness in expressions\` — 親密さの一歩前
+**4. 肩が触れる**: \`2men, adult, mature male standing close enough that shoulders are barely touching, soft awareness in expressions\` — 親密さの一歩前
 
-**5. 指先で触れる**: \`2boys with fingertips lightly touching the other's hand, hesitant gentle contact\` — ロマンス萌芽期
+**5. 指先で触れる**: \`2men, adult, mature male with fingertips lightly touching the other's hand, hesitant gentle contact\` — ロマンス萌芽期
 
-**6. 軽くポンと**: \`2boys, one gently patting the other's shoulder, casual friendly intimate gesture\` — 兄弟分・コンビ・上司部下感
+**6. 軽くポンと**: \`2men, adult, mature male, one gently patting the other's shoulder, casual friendly intimate gesture\` — 兄弟分・コンビ・上司部下感
 
-**7. 髪に触れる**: \`2boys, one tucking a stray hair behind the other's ear, gentle intimate gesture, soft expression\` — 萌え定番アクション
+**7. 髪に触れる**: \`2men, adult, mature male, one tucking a stray hair behind the other's ear, gentle intimate gesture, soft expression\` — 萌え定番アクション
 
 **■ 密着（強い親密性）**
 
-**8. 体を密着して立つ**: \`2boys standing pressed close together, shoulders and arms touching, comfortable mutual closeness\` — 安心感ある親密関係
+**8. 体を密着して立つ**: \`2men, adult, mature male standing pressed close together, shoulders and arms touching, comfortable mutual closeness\` — 安心感ある親密関係
 
-**9. 後ろから寄りかかる**: \`2boys, shorter character leaning back against taller's chest with closed eyes, taller wrapping arms gently around\` — 強い親密性
+**9. 後ろから寄りかかる**: \`2men, adult, mature male, shorter character leaning back against taller's chest with closed eyes, taller wrapping arms gently around\` — 強い親密性
 
 **密着系の NSFW フィルター回避コツ**: 「intimate」「embracing」は OK だが「erotic」「sensual」は警告される。本ガイドは全部 SFW 表現に統一してあります。`,
       },
@@ -5387,31 +5384,31 @@ looking at each other with soft expressions, light touch quality,
 
 **■ 立つ系**
 
-**10. ハグして立つ**: \`2boys, taller standing behind shorter wrapping arms around chest, shorter resting head back on taller's shoulder, both with eyes softly closed\` — back-hug pose
+**10. ハグして立つ**: \`2men, adult, mature male, taller standing behind shorter wrapping arms around chest, shorter resting head back on taller's shoulder, both with eyes softly closed\` — back-hug pose
 
-**11. 振り返るポーズ**: \`2boys, taller character turning back over shoulder to look at shorter following behind, walking pose mid-step, expectant expression\` — 振り向き美男
+**11. 振り返るポーズ**: \`2men, adult, mature male, taller character turning back over shoulder to look at shorter following behind, walking pose mid-step, expectant expression\` — 振り向き美男
 
-**12. ポケットに手**: \`2boys casually standing with hands in pants pockets, slightly slouched relaxed pose, looking at each other with soft smirks\` — クール大人 BL
+**12. ポケットに手**: \`2men, adult, mature male casually standing with hands in pants pockets, slightly slouched relaxed pose, looking at each other with soft smirks\` — クール大人 BL
 
 **■ 座る系**
 
-**13. ソファで並んで座る**: \`2boys sitting close together on a sofa, shoulders touching, both relaxed leaning back, casual home atmosphere\` — 日常 BL
+**13. ソファで並んで座る**: \`2men, adult, mature male sitting close together on a sofa, shoulders touching, both relaxed leaning back, casual home atmosphere\` — 日常 BL
 
-**14. 膝に頭を乗せる**: \`2boys, shorter character lying on a couch with head resting in taller's lap, taller gently stroking shorter's hair, peaceful expression\` — 萌え頂点
+**14. 膝に頭を乗せる**: \`2men, adult, mature male, shorter character lying on a couch with head resting in taller's lap, taller gently stroking shorter's hair, peaceful expression\` — 萌え頂点
 
-**15. テーブル越しに見つめ合う**: \`2boys sitting across a small table looking intently at each other, hands resting near each other on the table top, intense quiet moment\` — 食事シーン定番
+**15. テーブル越しに見つめ合う**: \`2men, adult, mature male sitting across a small table looking intently at each other, hands resting near each other on the table top, intense quiet moment\` — 食事シーン定番
 
 **■ 歩く・走る**
 
-**16. 横を並んで歩く**: \`2boys walking side by side at the same pace, casual conversation pose, gentle smiles\` — 自然な日常感
+**16. 横を並んで歩く**: \`2men, adult, mature male walking side by side at the same pace, casual conversation pose, gentle smiles\` — 自然な日常感
 
-**17. 手を引いて走る**: \`2boys running, taller character pulling shorter by the hand with an excited grin, shorter struggling to keep up laughing\` — 動的ロマンス
+**17. 手を引いて走る**: \`2men, adult, mature male running, taller character pulling shorter by the hand with an excited grin, shorter struggling to keep up laughing\` — 動的ロマンス
 
 **■ 寝る系**
 
-**18. ベッドで隣り合う**: \`2boys lying side by side on a bed facing each other, fully clothed pajamas, gentle conversation pose, soft warm lighting\` — 同棲 BL 必須（SFW で安全）
+**18. ベッドで隣り合う**: \`2men, adult, mature male lying side by side on a bed facing each other, fully clothed pajamas, gentle conversation pose, soft warm lighting\` — 同棲 BL 必須（SFW で安全）
 
-**19. 抱き枕**: \`2boys, shorter character clinging to taller as if hugging a pillow in sleep, both peacefully asleep, soft morning light\` — 萌えシーン頂点`,
+**19. 抱き枕**: \`2men, adult, mature male, shorter character clinging to taller as if hugging a pillow in sleep, both peacefully asleep, soft morning light\` — 萌えシーン頂点`,
       },
       {
         title: '関係性別ポーズ集 — 攻め × 受け / 対等 / 兄弟分',
@@ -5419,37 +5416,37 @@ looking at each other with soft expressions, light touch quality,
 
 **■ 攻め × 受け（権力傾斜あり）**
 
-**20. 攻めが見下ろす**: \`2boys, taller dominant character (around 185-195cm) looking down at shorter softer character (around 165-170cm), shorter looking up\` — 王道タッパ差
+**20. 攻めが見下ろす**: \`2men, adult, mature male, taller dominant character (around 185-195cm) looking down at shorter softer character (around 165-170cm), shorter looking up\` — 王道タッパ差
 
-**21. 攻めが守る**: \`2boys, taller protective character standing slightly in front of shorter character, shorter peeking out from behind taller's shoulder\` — シェルター構図
+**21. 攻めが守る**: \`2men, adult, mature male, taller protective character standing slightly in front of shorter character, shorter peeking out from behind taller's shoulder\` — シェルター構図
 
-**22. 攻めが押し倒し風（座位）**: \`2boys on couch, taller character leaning forward over shorter, hands on either side of shorter's shoulders, gentle teasing expression\`（NSFW 回避: full clothing maintained）
+**22. 攻めが押し倒し風（座位）**: \`2men, adult, mature male on couch, taller character leaning forward over shorter, hands on either side of shorter's shoulders, gentle teasing expression\`（NSFW 回避: full clothing maintained）
 
 **■ 対等（バディ・ライバル）**
 
-**23. 背中合わせ**: \`2 boys standing back to back arms crossed, similar heights, both with confident equal expressions, dynamic pose\` — バディ最強構図
+**23. 背中合わせ**: \`2 adult men standing back to back arms crossed, similar heights, both with confident equal expressions, dynamic pose\` — バディ最強構図
 
-**24. 拳をぶつけ合う**: \`2boys, fist bump pose, both grinning with mutual respect, slight low angle\` — 兄弟分・チームメイト
+**24. 拳をぶつけ合う**: \`2men, adult, mature male, fist bump pose, both grinning with mutual respect, slight low angle\` — 兄弟分・チームメイト
 
-**25. 肩を組む**: \`2boys, both with arm around each other's shoulder in a friendly bro pose, walking together, casual cheerful atmosphere\` — 友情 BL
+**25. 肩を組む**: \`2men, adult, mature male, both with arm around each other's shoulder in a friendly bro pose, walking together, casual cheerful atmosphere\` — 友情 BL
 
 **■ 兄弟分・先輩後輩**
 
-**26. 頭ぽんぽん**: \`2boys, taller character gently patting the top of shorter character's head, shorter looking up with mildly annoyed but secretly pleased expression\` — 兄貴系ポーズ
+**26. 頭ぽんぽん**: \`2men, adult, mature male, taller character gently patting the top of shorter character's head, shorter looking up with mildly annoyed but secretly pleased expression\` — 兄貴系ポーズ
 
-**27. 教える姿勢**: \`2boys, taller character leaning over shorter's shoulder pointing at something they're both looking at, shorter listening attentively\` — 先輩 × 後輩定番`,
+**27. 教える姿勢**: \`2men, adult, mature male, taller character leaning over shorter's shoulder pointing at something they're both looking at, shorter listening attentively\` — 先輩 × 後輩定番`,
       },
       {
         title: '手の使い方 — BL ポーズ特有の繊細な表現',
         content: `BL イラストの感情表現で最も重要なのが「**手**」。同じ二人でも手の使い方で関係性が劇的に変わる。
 
-**28. 指を絡める手繋ぎ**: \`2boys with fingers interlocked tightly holding hands, intimate grip\` — 強い繋がり
+**28. 指を絡める手繋ぎ**: \`2men, adult, mature male with fingers interlocked tightly holding hands, intimate grip\` — 強い繋がり
 
-**29. 軽く触れる手繋ぎ**: \`2boys, lightly resting hand on top of the other's hand without gripping, hesitant gentle contact\` — 関係性発展期
+**29. 軽く触れる手繋ぎ**: \`2men, adult, mature male, lightly resting hand on top of the other's hand without gripping, hesitant gentle contact\` — 関係性発展期
 
-**30. 頬を撫でる**: \`2boys, one cupping the other's cheek with gentle hand, looking softly into eyes, intimate close-up\` — ロマンス頂点
+**30. 頬を撫でる**: \`2men, adult, mature male, one cupping the other's cheek with gentle hand, looking softly into eyes, intimate close-up\` — ロマンス頂点
 
-**31. 髪を撫でる / 整える**: \`2boys, one running fingers through the other's hair gently, the other relaxing into the touch\` — 親密ジェスチャー
+**31. 髪を撫でる / 整える**: \`2men, adult, mature male, one running fingers through the other's hair gently, the other relaxing into the touch\` — 親密ジェスチャー
 
 **手の崩壊を防ぐコツ**:
 - ネガティブに必須: \`bad hands, extra fingers, missing fingers, fused fingers, deformed hands\`
@@ -5469,13 +5466,13 @@ looking at each other with soft expressions, light touch quality,
 
 **■ 視線パターン**
 
-**32. 見つめ合い（強）**: \`2boys with intense locked eye contact, neither breaking gaze, charged silent moment between them\`
+**32. 見つめ合い（強）**: \`2men, adult, mature male with intense locked eye contact, neither breaking gaze, charged silent moment between them\`
 
-**33. 見上げる**: \`2boys, shorter looking up at taller with soft questioning expression, taller looking down protectively\` — 月間 1,600 件需要
+**33. 見上げる**: \`2men, adult, mature male, shorter looking up at taller with soft questioning expression, taller looking down protectively\` — 月間 1,600 件需要
 
-**34. 目を逸らす（照れ）**: \`2boys, one shyly looking away with reddened cheeks, the other watching with a soft amused smile\`
+**34. 目を逸らす（照れ）**: \`2men, adult, mature male, one shyly looking away with reddened cheeks, the other watching with a soft amused smile\`
 
-**35. 横目でちらり**: \`2boys, one stealing a sideways glance at the other from the corner of his eye, subtle longing expression\`
+**35. 横目でちらり**: \`2men, adult, mature male, one stealing a sideways glance at the other from the corner of his eye, subtle longing expression\`
 
 **■ 表情パターン**
 
@@ -5495,11 +5492,11 @@ looking at each other with soft expressions, light touch quality,
         title: '服装と関係性のヒント — 衣装で関係性を物語る',
         content: `衣装は背景と同じくらい関係性を物語る要素。BL ポーズと組み合わせると一気に深みが出る。
 
-**■ 制服（学園 BL）**
+**■ 揃えた普段着（大人の二人）**
 
-- \`matching school uniforms\` — 同級生
-- \`different school uniforms\` — 違う学校 / 部活違い
-- \`one in club uniform, the other in regular school uniform\` — 先輩 × 後輩 / 部活違いカップル
+- \`matching long coats and trousers, fully clothed\` — 同僚
+- \`different coat colors\` — 別々の普段着
+- \`one in a long coat, the other in a knit sweater and trousers\` — 大人の先輩と後輩
 
 **■ スーツ（大人 BL）**
 
@@ -5531,7 +5528,7 @@ looking at each other with soft expressions, light touch quality,
         title: 'ツール別の出しやすさ — ControlNet OpenPose 活用法',
         content: `**Stable Diffusion（推奨度: ⭐⭐⭐）**
 
-- 強み: \`2boys\` + ポーズワードで安定、ControlNet OpenPose で参考画像から骨格コピー、anime BL モデル豊富（Anim4gine / Counterfeit V3 / Animagine XL）
+- 強み: \`2men, adult, mature male\` + ポーズワードで安定、ControlNet OpenPose で参考画像から骨格コピー、anime BL モデル豊富（Anim4gine / Counterfeit V3 / Animagine XL）
 - 弱み: 接触ポーズで手・腕の融合多発、男性 → 女性化のバイアス
 - **対策**: ネガティブに \`1girl, woman, feminine, breasts\` 必須、ADetailer で顔再生成、解像度 768x768 以上、Hand Refiner ControlNet
 
@@ -5600,7 +5597,7 @@ shorter character clinging to taller as if hugging a pillow in sleep
 \`\`\`
 taller dominant character looking down at shorter softer character
 taller protective character standing slightly in front of shorter
-2 boys standing back to back arms crossed, similar heights
+2 adult men standing back to back arms crossed, similar heights
 fist bump pose, both grinning with mutual respect
 both with arm around each other's shoulder in a friendly bro pose
 taller gently patting the top of shorter's head
@@ -5669,10 +5666,10 @@ worst quality, low quality, blurry
       { q: 'ポーズと構図の違いは何ですか？', a: '**ポーズ**はキャラクター個別の身体の動き・姿勢（手をつなぐ / 髪を撫でる / 振り向く）、**構図**は画面全体の組み立て（背景・距離・カメラ角度）です。本ガイドは「ポーズワードのみ」を抽出して 30 種類以上収録した辞書的リソース。背景や服装は <a href="/guides/bl-composition-prompt-guide" class="text-sky-600 hover:underline">BL 構図完全ガイド</a> と組み合わせて使ってください。これにより「30 ポーズ × 96 構図 = 2,880 通り」の BL シーンが量産可能です。' },
       { q: '密着系ポーズで NSFW フィルターを回避するには？', a: '**3 段階の対処法**: (1) **キーワードを中立化** — `embracing` → `holding gently`、`intimate` → `quietly close`、`erotic`/`sensual` は使わない、(2) **服装を明示** — `fully clothed pajamas` `casual outfits` のように衣装を明記して脱衣を防ぐ、(3) **シーンを穏やかに** — 密着系は「sleep」「rest」「comfort」と組み合わせると安全。本ガイドの 30 ポーズはすべて SFW 中立表現で書かれているのでそのままコピペが推奨。' },
       { q: 'ControlNet OpenPose で 2 人骨格を制御する具体的手順は？', a: '手順: (1) 参考画像を用意（Pinterest「BL pose reference」「two men pose」検索 / 実写の友人 2 人並び写真でも可）、(2) Stable Diffusion WebUI の ControlNet タブで参考画像を読み込み、Preprocessor を `openpose_full` または `openpose`、Model を `control_v11p_sd15_openpose` に設定、(3) プロンプトは本ガイドのポーズワード + 構図ガイドの背景・服装を結合、(4) CFG Scale 7-9、Sampling Steps 25-30 で生成。**注意**: SDXL ベースなら ControlNet も SDXL 版（OpenPose SDXL）を使う。これで骨格コピー + プロンプトでの BL 表現味付けの最強コンボが成立します。' },
-      { q: 'ポーズ参考画像はどこから探すべきですか？', a: '**おすすめ順**: (1) **Pinterest** — 「BL pose reference」「two men reference」「shoujo manga pose」で日本語英語両方検索可。トレースして OK。(2) **Posemaniacs / Magic Poser** — 3D モデル人形を 2 体配置して任意のポーズを作れる無料ツール、ControlNet 入力に最適、(3) **PoseMy.art** — オンライン 3D ポーズエディタ、(4) **実写写真** — 友人 2 人並びの写真でも骨格情報として有効、(5) **既存の BL 漫画ページ** — 個人利用範囲ならトレース可能だが商用 NG。本ガイドの 30 ポーズは Pinterest 検索キーワードとしても使えるので、まずキーワード化して画像検索するのが近道。' },
+      { q: 'ポーズ参考画像はどこから探すべきですか？', a: '**おすすめ順**: (1) **Pinterest** — 「BL pose reference」「two men reference」「romantic manga pose」で日本語英語両方検索可。トレースして OK。(2) **Posemaniacs / Magic Poser** — 3D モデル人形を 2 体配置して任意のポーズを作れる無料ツール、ControlNet 入力に最適、(3) **PoseMy.art** — オンライン 3D ポーズエディタ、(4) **実写写真** — 友人 2 人並びの写真でも骨格情報として有効、(5) **既存の BL 漫画ページ** — 個人利用範囲ならトレース可能だが商用 NG。本ガイドの 30 ポーズは Pinterest 検索キーワードとしても使えるので、まずキーワード化して画像検索するのが近道。' },
       { q: 'アクション ポーズ（走る / 飛ぶ）で顔崩れを防ぐには？', a: '動的ポーズは AI が顔のディテールに使うリソースを動きに割くため崩壊率が上がる。**対策**: (1) ネガティブに `bad face, distorted face, blurred face` を必須追加、(2) `(detailed face:1.3)` の重み付けを通常より高く（1.2 → 1.3）、(3) ADetailer 拡張で各キャラの顔を独立に再生成（A1111 標準機能）、(4) 動きの「瞬間」を指定 — `mid-step` `pose frozen in motion` のように静止画的に書くと顔がブレない、(5) 解像度を 768x768 以上にする。これらすべて入れて動的ポーズの顔崩壊が体感 60% → 15% に下がります。' },
       { q: '静的 vs 動的ポーズの使い分けの目安は？', a: '**初心者なら静的ポーズから**入るのがおすすめ。AI 画像生成は「静止画 + 静的ポーズ」が最も成功率高い。順序: (1) 並ぶ・座る・見つめ合うなど**静的 BL ポーズで成功体験**を積む、(2) 慣れてきたら手をつなぐ・ハグなど**軽い接触ポーズ**にチャレンジ、(3) 最後にお姫様抱っこ・壁ドン・キスなど**接触強度の高いポーズ**へ、(4) 最終段階で「振り向く」「走る」など**動的ポーズ**。動的ポーズは ControlNet OpenPose 併用が必須です。各段階で崩壊率は約 2 倍ずつ上がるので、無理せず段階的に。' },
-      { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2boys, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `Juggernaut XL`、(5) **重み付け** — `(2boys:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
+      { q: '男性キャラを「女性化」させないコツは？（SDXL 系で頻発）', a: 'SDXL 系モデルは学習データのバイアスで男性 2 人指定でも女性化しやすい。**回避策**: (1) `2men, adult, mature male, male only, both characters are male, masculine features` を**プロンプト前半**に強調、(2) ネガティブに `1girl, woman, female, feminine, breasts, long eyelashes (excessive)` を必須、(3) 体型ワードを明示 — `broad shoulders, flat chest, adam\'s apple, defined jawline`、(4) **男性向けモデル**を選ぶ — anime BL なら `Anim4gine` / `Counterfeit V3` / `Animagine XL`、リアル系なら `Realistic Vision` / `Juggernaut XL`、(5) **重み付け** — `(2men, adult, mature male:1.4)` のように人数指定にも重みを乗せる。これらすべて入れて女性化率が体感 40% → 5% 以下に下がります。' },
     ],
   },
   'image-to-video-ai-prompt-guide': {
