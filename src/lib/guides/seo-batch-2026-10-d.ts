@@ -423,7 +423,7 @@ school uniform, extra fingers, extra hands, floating hand, extra person
       },
       {
         title: '身長差・BL・百合で使う',
-        content: `身長差は、頭の高さを見せるために \`cowboy shot\` か \`full body\` を一度だけ試します。手が見えなくなったら \`cowboy shot\` に戻してください。体の大きさの差は [体格差プロンプト](/guides/body-size-difference-prompt-guide)、二人の頭の高さは [身長差プロンプト](/guides/height-difference-pair-prompt) です。
+        content: `身長差は、頭の高さを見せるために \`cowboy shot\` か \`full body\` を一度だけ試します。手が見えなくなったら \`cowboy shot\` に戻してください。体の大きさの差は [体格差プロンプト](/guides/body-size-difference-prompt-guide)、二人の頭の高さは [身長差プロンプト](/guides/height-difference-pair-prompt)、並びの構図は [身長差イラストの構図](/guides/height-difference-illustration-composition-guide) です。
 
 親子、保護者と子ども、きょうだいの年齢差では書きません。二人とも成人です。
 
@@ -480,6 +480,96 @@ school uniform
 手だけの専用ガイドはないので、品質タグの削り方は [ネガティブプロンプト](/guides/negative-prompt-guide) と併用してください。ネガティブを長くするより、ポジティブの手タグを減らした方が先に効くことが多いです。`,
       },
       {
+        title: '指の絡め方が強いときと、別の触れ方',
+        content: `\`interlocked fingers\` は、指を深く絡める恋人つなぎ（恋人つなぎ）です。絵が親密に寄りすぎるときは、この語を外し、\`holding hands\` と \`side-by-side\` に戻します。体を詰める語は足しません。横に並ぶだけで、手のひらは合ったまま、指の絡みは弱くなります。恥じらいのある手つなぎは、この並びです。二人の位置の入口は [二人構図](/guides/two-person-composition-prompt-guide)、口元まで寄せる距離は [キスプロンプト](/guides/kiss-prompt-guide)、腕で包む距離は [ハグプロンプト](/guides/hug-prompt-guide) です。
+
+触れ方は一つです。指を絡める、手のひらを合わせる、手を引く、袖を持つ、背中合わせ、を同じ強さにすると、手が二組になります。
+
+| 触れ方 | 英語 | 注記 |
+|---|---|---|
+| 指を絡める | \`interlocked fingers\` | 強い。寄りすぎたら外す |
+| 手のひら | \`holding hands, side-by-side\` | 絡め方を弱めるときの戻り先 |
+| 手を引く | leading by the hand | 自然な英語。公式タグとしては断定しない |
+| 袖を持つ | holding the other's sleeve | 布を一つ。強く引っ張る語は書かない |
+| 背中合わせ | standing back to back | 手は隠れやすい。見えないときは横並びに戻す |
+
+**恥じらいのある並び**
+
+\`\`\`
+2 adults, adult couple, holding hands, side-by-side,
+walking, park, long coat, cowboy shot, from side
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, fused fingers, extra hands, floating hand
+\`\`\`
+
+**友人の手のひら**
+
+\`\`\`
+2 adults, friends, holding hands, side-by-side,
+city sidewalk, coat, daytime, cowboy shot, from side
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, fused fingers, extra hands, floating hand
+\`\`\`
+
+**手を引いて振り返る**
+
+\`\`\`
+2 adults, walking, leading by the hand, looking back,
+long coat, city street, cowboy shot, from side
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, fused fingers, extra hands, floating hand
+\`\`\`
+
+leading by the hand は自然な英語です。主観で手前に手だけを出す書き方は、前の節の \`pov\` です。この例は、二人とも画面に残します。
+
+**袖を持つ**
+
+布はコートの袖です。肌をつかむ語は書きません。力を込める語も書きません。
+
+\`\`\`
+2 adults, friends, holding the other's sleeve,
+standing, long coat, park, cowboy shot, from side
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, fused fingers, extra hands, floating hand
+\`\`\`
+
+**背中合わせ**
+
+\`\`\`
+2 adults, friends, standing back to back, holding hands,
+park, long coat, full body, daytime
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+extra fingers, fused fingers, extra hands, floating hand
+\`\`\`
+
+背中合わせは、つないだ手が胴体のうしろに隠れます。指の形を確認する回は、\`from side\` の \`holding hands\` に戻してください。全身で頭の高さを見る日は [身長差イラストの構図](/guides/height-difference-illustration-composition-guide) です。`,
+      },
+      {
         title: 'ChatGPT・Gemini・Midjourney で書く場合',
         content: `自然文では、「指を絡める」と「手のひらを合わせる」を明示します。恋人繋ぎも恋人つなぎも、英語では指を絡める方です。
 
@@ -527,6 +617,10 @@ Midjourney では、同じ英文のうしろに画角のパラメータを足せ
         a: '手のひらでつなぐのは `holding hands`、指を絡める恋人繋ぎ・恋人つなぎは `interlocked fingers` です。並んで歩くなら `walking, side-by-side` を足してください。',
       },
       {
+        q: '指の絡め方が強すぎます',
+        a: '`interlocked fingers` を外し、`holding hands` と `side-by-side` に戻してください。体を詰める語は足しません。横に並ぶだけで、手のひらは合ったまま絡みは弱くなります。',
+      },
+      {
         q: '手をつないで歩く後ろ姿にしたいです',
         a: 'カメラの `from behind` と `walking, holding hands` を書けます。後ろ姿では手が背中に隠れやすいので、まずは `from side` で手が見えるかを確認してください。',
       },
@@ -538,6 +632,21 @@ Midjourney では、同じ英文のうしろに画角のパラメータを足せ
       {
         title: 'ツインテールプロンプトの基本',
         content: `「ツインテール プロンプト」の基本タグは \`twintails\` です。一語が Danbooru で使われる形で、\`twin tails\` と分けて書いても通ることが多いです。髪色の直後に置いてください。色より前だと、リボンや服の色まで髪になります。
+
+位置と種類の早見です。強くするのは一つです。高い・低い、編む、上だけ結ぶ、を同時に置くと、結び目が二箇所できます。
+
+| 呼び方 | 英語 | 位置の目安 |
+|---|---|---|
+| 基本 | \`twintails\` | 左右二つ。高さはモデル任せ |
+| ロー | \`low twintails\` | 耳より下 |
+| ハイ | high-set twintails | 耳より上。\`high twintails\` は公式タグとして断定しない |
+| サイド | side twintails | 耳の横。片側だけは \`side ponytail\` で、ツインテールではない |
+| ハーフ | \`two side up\` | 上だけ結び、残りは下ろす |
+| 三つ編み | \`twin braids\` | 二本とも編む。結ぶだけとは別 |
+| 長い | \`long twintails\` | 胸より下 |
+| 短い | \`short twintails\` | 肩より上で終わる |
+
+一本に結ぶ高さは [ポニーテールのプロンプト](/guides/ponytail-prompt-guide)、編み目の本数は [編み込みプロンプト](/guides/braid-prompt-guide)、前髪の形は [前髪プロンプト](/guides/bangs-prompt-guide)、上半分だけまとめる別の結びは [ハーフアップのプロンプト](/guides/half-up-hair-prompt-guide) です。入口の一覧は [髪型プロンプト](/guides/hairstyle-prompt-guide) のままです。
 
 ツインテールは幼く見えやすいので、成人の指定と服装で年齢感を固定する。人数は \`1 adult woman\`、服はブラウス、ジャケット、ニット、コート、日常着、ステージ衣装のように、大人の服を一つ書きます。学生服は入れません。
 
@@ -597,7 +706,55 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, ponytail, side ponytail
 \`\`\`
 
-左右を揃えたいときは \`from front\` を足します。横顔だと、奥の一本が髪の塊に溶けます。`,
+左右を揃えたいときは \`from front\` を足します。横顔だと、奥の一本が髪の塊に溶けます。
+
+**高い位置**
+
+\`high twintails\` が無視されるときは、high-set twintails に書き換えます。どちらも公式タグとしては断定しません。
+
+\`\`\`
+1 adult woman, black hair, long hair, high-set twintails, hair ribbon,
+blouse, cafe, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, low twintails
+\`\`\`
+
+**ハーフ（上だけ結ぶ）**
+
+\`\`\`
+1 adult woman, brown hair, long hair, two side up,
+knit sweater, office, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, twintails
+\`\`\`
+
+\`two side up\` の日は \`twintails\` を正向から外します。両方あると、結んだ束と下ろした束が二重になります。
+
+**三つ編み**
+
+\`\`\`
+1 adult woman, dark hair, twin braids, hair bobbles,
+coat, city street, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, twintails
+\`\`\`
+
+編む手順の細目は [編み込みプロンプト](/guides/braid-prompt-guide) です。このページでは、左右二つであることを残します。`,
       },
       {
         title: '長さ・太さ（長い・短い・細い）の指定',
@@ -631,7 +788,25 @@ blouse, cafe, upper body, from front
 \`\`\`
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, ponytail, very long hair
-\`\`\``,
+\`\`\`
+
+**肩のあたりで終わる**
+
+\`short twintails\` より少し長く、胸までは届かせないときの目安です。very long hair は入れません。
+
+\`\`\`
+1 adult woman, black hair, twintails, shoulder-length hair,
+blouse, cafe, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, very long hair
+\`\`\`
+
+shoulder-length hair は自然な英語です。公式タグとしては断定しません。短くなりすぎたら \`short twintails\` を外し、この語だけを残してください。`,
       },
       {
         title: '髪飾り（リボン・シュシュ・ヘアゴム）',
@@ -719,6 +894,56 @@ knit sweater, office, upper body, from front, calm expression
 ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, ponytail
 \`\`\``,
+      },
+      {
+        title: '髪色とツインテール',
+        content: `色は一つです。結びの位置が決まってから、人数の直後へ色を置きます。金と黒を同じ強さにすると、メッシュになります。単色の全体は [髪色プロンプト](/guides/hair-color-prompt-guide)、黒の濃さは [黒髪のプロンプト](/guides/black-hair-prompt-guide)、金の色味は [金髪のプロンプト](/guides/blonde-hair-prompt-guide) です。このページでは、色を一つ借りて、ツインテールのうしろに残します。
+
+服は白か紺の無地にします。髪と同じ色の服は、境界が消えます。分け方は [色プロンプト](/guides/color-prompt-guide) です。
+
+**黒髪のロー**
+
+\`\`\`
+1 adult woman, black hair, low twintails, hair scrunchie,
+white blouse, cafe, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, blonde hair
+\`\`\`
+
+**金髪のロング**
+
+\`\`\`
+1 adult woman, blonde hair, long twintails, hair ribbon,
+navy coat, city street, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, black hair
+\`\`\`
+
+**銀のショート**
+
+\`\`\`
+1 adult woman, silver hair, short twintails,
+grey blouse, office, upper body, from front
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+ponytail, very long hair
+\`\`\`
+
+色を変える日は、結びの語を固定したまま、色の一語だけを差し替えます。前髪の形を同じ日に変えないでください。前髪は [前髪プロンプト](/guides/bangs-prompt-guide) です。`,
       },
       {
         title: '崩れやすい点とネガティブ',
