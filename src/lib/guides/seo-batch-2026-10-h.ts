@@ -23,7 +23,7 @@ export const SEO_BATCH_8_GUIDE_CONTENT: Record<string, GuideArticle> = {
 
 アニメ塗りと写真では、同じ順番を使います。イラストは \`male focus\` を前に置いた方が、顔が中性に寄りにくいです。写真は、navy suit のように色と素材を自然な英語で足した方が、布の質が出ます。Midjourney は重みの括弧を外し、全身なら文の末尾で縦横を指定します。
 
-作例の並びは [体型プロンプト集](/prompts/body-type)、体型の単語そのものは [体型プロンプト](/guides/body-type-prompt-guide) です。2人の体格差・身長差は [体格差プロンプト](/guides/body-size-difference-prompt-guide) に渡します。このページでは一人だけを書きます。ショットの大きさは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。
+作例の並びは [体型プロンプト集](/prompts/body-type)、体型の単語そのものは [体型プロンプト](/guides/body-type-prompt-guide)、男性の段の詳細は [男性の体型プロンプト](/guides/male-body-type-prompt-guide)、髪型の一覧は [男性の髪型プロンプト](/guides/male-hairstyle-prompt-guide) です。2人の体格差・身長差は [体格差プロンプト](/guides/body-size-difference-prompt-guide) に渡します。このページでは一人だけを書きます。ショットの大きさは [構図・アングルのプロンプト一覧](/guides/composition-angle-prompt-guide) です。
 
 比較するときは、服と背景を固定して、体型か髪かの一方だけを差し替えます。両方を動かすと、顔が変わった理由が残りません。気に入った枚は、タグの順番を崩さずにコピーし、次の一語だけを足してください。先頭の人数が後ろに回っている枚は、服がどれだけ正しくても一度捨てます。人数を戻してから、同じ服でもう一度出します。メモには、変えた語の名前だけを残すと、次の日に同じ顔へ戻れます。
 
@@ -1043,7 +1043,7 @@ school uniform, short skirt, revealing clothes, bedroom
       },
       {
         title: '光の向き',
-        content: `向きは一つです。順光と逆光を同じ強さにすると、影の位置が平均になって、どちらにも見えません。
+        content: `向きは一つです。順光と逆光を同じ強さにすると、影の位置が平均になって、どちらにも見えません。逆光、順光、シルエット、顔が暗いときの補正は [逆光・順光のプロンプト](/guides/backlight-prompt-guide) に分けてあります。この節は向きの一覧のままです。
 
 順光、つまり正面からの光は front lighting と自然な英語です。逆光は \`backlighting\` です。横からの光は side lighting、頭上は top lighting、下からは underlighting と自然な英語です。公式タグとしては断定しません。下からの光は、顔が不自然に明るくなり、ホラー寄りに見えやすいです。肖像では、先に side lighting を試してください。
 

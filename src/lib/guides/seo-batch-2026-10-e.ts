@@ -373,7 +373,7 @@ ChatGPT や Gemini の画像生成にネガティブ欄が無いときは、同�
 
 センチの数字は、モデルが巻尺で測る値にはなりません。大きい数字ほど高く、という相対のヒントにしかならないことが多いです。数字に頼らず、\`tall\` と全身と、比べる物を先に書いてください。
 
-このページは成人だけです。背を高くするために年齢を上げる必要はありませんが、成人であることは人数に書きます。低身長の反対側は [低身長・小柄プロンプト](/guides/short-height-petite-prompt)、体型全般は [体型プロンプト](/guides/body-type-prompt-guide) です。男性の長身を髪型や服と一緒に書くときは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。頭身を上げる指定は [デフォルメ・ちびキャラのプロンプト](/guides/chibi-deformed-prompt-guide) です。
+このページは成人だけです。背を高くするために年齢を上げる必要はありませんが、成人であることは人数に書きます。低身長の反対側は [低身長・小柄プロンプト](/guides/short-height-petite-prompt)、体型全般は [体型プロンプト](/guides/body-type-prompt-guide)、男性の幅と高さの分け方は [男性の体型プロンプト](/guides/male-body-type-prompt-guide) です。男性の長身を髪型や服と一緒に書くときは [男性キャラのプロンプト一覧](/guides/male-character-prompt-guide) です。頭身を上げる指定は [デフォルメ・ちびキャラのプロンプト](/guides/chibi-deformed-prompt-guide) です。
 
 **全身の基本**
 

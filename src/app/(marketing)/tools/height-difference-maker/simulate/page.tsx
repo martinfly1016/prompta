@@ -3,10 +3,11 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { HeightDifferenceSimulator } from '@/components/tools/HeightDifferenceSimulator'
+import { HeightDifferenceSimulatorGuide } from '@/components/tools/HeightDifferenceSimulatorGuide'
 
-const PAGE_TITLE = '身長差シミュレーター｜体格差の構図を確認して写真から生成'
+const PAGE_TITLE = '身長差・体格差シミュレーター｜二人の構図を確認'
 const PAGE_DESCRIPTION =
-  '二人の身長・体型・ポーズを動かして体格差と身長差の構図を確認し、確定した設定のまま写真からAI画像を生成します。推しカップル、見上げる構図、壁ドンに対応。'
+  '身長差シミュレーターと体格差シミュレーター。二人の頭の位置、肩幅、見上げる目線をシルエットで確認し、身長差メーカーのプロンプトへつなげます。構図の確認はブラウザ上ででき、写真からの生成は1回1ポイントです。'
 
 export const metadata: Metadata = {
   title: PAGE_TITLE,
@@ -42,7 +43,7 @@ export default function HeightDifferenceSimulatorPage() {
           <div className="max-w-3xl mb-6">
             <p className="text-sm font-semibold text-sky-700 mb-2">体格差・身長差の構図を見てから生成</p>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight mb-3">
-              身長差シミュレーター
+              身長差・体格差シミュレーター
             </h1>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
               二人の身長と体型を動かすと、同じ床の上の並びがすぐ変わります。構図を確定してから写真を添付すると、その身長差・ポーズ・フレームを指示に含めて画像を生成します。
@@ -67,6 +68,8 @@ export default function HeightDifferenceSimulatorPage() {
           </p>
         </div>
       </section>
+
+      <HeightDifferenceSimulatorGuide />
     </>
   )
 }

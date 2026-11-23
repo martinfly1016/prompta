@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 import { SITE_CONFIG } from '@/lib/constants'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { HeightDifferenceMaker } from '@/components/tools/HeightDifferenceMaker'
+import { NEGATIVE_AGE } from '@/lib/guides/seo-batch-2026-10'
 
-const TOOL_TITLE = '体格差シミュレーション・身長差メーカー｜推しの体格差AI画像'
+const TOOL_TITLE = '身長差メーカー・体格差シミュレーション｜目線と構図'
+const NEGATIVE_LINE = `bad anatomy, bad hands, extra fingers, missing fingers, extra arms, extra legs, fused bodies, blurry, lowres, text, watermark, signature, ${NEGATIVE_AGE}`
 
 export const metadata: Metadata = {
   title: TOOL_TITLE,
@@ -180,7 +182,7 @@ export default function HeightDifferenceMakerPage() {
               {[
                 {
                   title: '人数を必ず固定する',
-                  body: '2girls、2boys、1boy and 1girl、3 characters のように人数を先頭に置くと、単体化や人数崩れを防ぎやすくなります。',
+                  body: '2 adults と、1 adult man や 1 adult woman のように、成人の人数を先頭に置くと、単体化や人数崩れを防ぎやすくなります。',
                 },
                 {
                   title: '差分キーワードを重ねる',
@@ -240,6 +242,52 @@ export default function HeightDifferenceMakerPage() {
                 <p className="text-sm text-gray-600">BL・百合・男女・ファンタジーなど、画像付きの実例プロンプトを確認できます。</p>
               </Link>
             </div>
+          </div>
+        </section>
+
+        <section className="py-8 bg-white border-t border-gray-100">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <h2 className="text-xl font-bold text-gray-900">身長差メーカーの使い方（目線・カップル・座る・キス）</h2>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              フォームのポーズは、並んで立つ、手をつなぐ、見上げる・見下ろす、ハグ、壁ドン、キス直前、背中合わせ、設定資料、です。座る姿勢はフォームにありません。座った差の文は、立った文をコピーしたあとに、椅子の語を自分で足します。頭の線を先に見たいときは{' '}
+              <Link href="/tools/height-difference-maker/simulate" className="text-sky-700 font-medium hover:underline">身長差シミュレーター</Link>
+              で、同じセンチのシルエットを確認してから戻ってください。登場人物は成人だけ、服は閉じた日常着です。
+            </p>
+            <h3 className="text-base font-bold text-gray-900">見上げる目線</h3>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{`2 adults, 1 adult man, 1 adult woman, adult,
+height difference, the man around 180cm, the woman around 160cm,
+the shorter adult looks up, the taller adult looks down gently,
+long coat, buttoned shirt, trousers, long skirt,
+standing, full body, simple background`}</pre>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{NEGATIVE_LINE}</pre>
+            <h3 className="text-base font-bold text-gray-900">カップルが手をつなぐ</h3>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{`2 adults, 1 adult man, 1 adult woman, adult,
+romantic couple, height difference, holding hands,
+the man around 175cm, the woman around 158cm,
+coat, blouse, long skirt, trousers,
+standing, full body, city street at night`}</pre>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{NEGATIVE_LINE}</pre>
+            <h3 className="text-base font-bold text-gray-900">椅子に座る差（フォーム外の足し方）</h3>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              シミュレーターは立った姿勢だけです。下は、立った差を見たあとに、同じ成人二人をベンチへ座らせる文です。座ると、見える差は立ったときより小さくなりやすいので、センチは目安のまま残します。
+            </p>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{`2 adults, 1 adult man, 1 adult woman, adult,
+height difference, sitting side by side on a bench,
+the man around 178cm, the woman around 160cm,
+coat, buttoned shirt, trousers, long skirt,
+full bodies visible, simple park background`}</pre>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{NEGATIVE_LINE}</pre>
+            <h3 className="text-base font-bold text-gray-900">キスの直前</h3>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{`2 adults, 1 adult man, 1 adult woman, adult,
+height difference, almost kissing, the taller adult leans down,
+the shorter adult stands on tiptoe, faces close but not touching,
+coat, blouse, long skirt, trousers, full body, simple background`}</pre>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{NEGATIVE_LINE}</pre>
+            <h3 className="text-base font-bold text-gray-900">文章で頼む</h3>
+            <pre className="overflow-x-auto rounded-lg bg-gray-50 border border-gray-200 p-3 text-xs text-gray-800 whitespace-pre-wrap">{`Draw 2 adults, one adult man around 182cm and one adult woman around 155cm, both fully clothed in long coats.
+They stand on the same floor. The shorter adult looks up, the taller adult looks down.
+Full body, plain background. Do not add a third person.
+Negative: ${NEGATIVE_LINE}`}</pre>
           </div>
         </section>
 

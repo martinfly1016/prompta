@@ -110,7 +110,11 @@ export async function CategoryListing({ category: categorySlug, page }: { catego
                 <Link href="/guides/male-character-prompt-guide" className="text-sky-600 hover:underline">
                   男性キャラのプロンプト一覧
                 </Link>
-                です。
+                です。細身・がっしり・大柄の英語は{' '}
+                <Link href="/guides/male-body-type-prompt-guide" className="text-sky-600 hover:underline">
+                  男性の体型プロンプト
+                </Link>
+                に分けています。
               </p>
             )}
             {category.slug === 'clothing' && (

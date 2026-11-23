@@ -29,6 +29,7 @@ import { SEO_BATCH_21_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-m'
 import { SEO_BATCH_22_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-n'
 import { SEO_BATCH_23_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-o'
 import { SEO_BATCH_24_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-p'
+import { SEO_BATCH_25_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-q'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -97,6 +98,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_22_GUIDE_CONTENT,
   ...SEO_BATCH_23_GUIDE_CONTENT,
   ...SEO_BATCH_24_GUIDE_CONTENT,
+  ...SEO_BATCH_25_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -607,7 +609,7 @@ prompta.jp の <a href="/prompts/camera" class="text-sky-600 hover:underline">/p
       },
       {
         title: 'ネガティブプロンプト完全版 — 品質と意図ズレを防ぐ',
-        content: `ネガティブプロンプトは、生成結果から**除外したい要素**を指定します。Stable Diffusion で品質を担保する**最重要テクニック**。
+        content: `ネガティブプロンプトは、生成結果から**除外したい要素**を指定します。Stable Diffusion で品質を担保する**最重要テクニック**。コピペ用のテンプレ、NovelAI の除外したい要素、SDXL で短くする考え方は <a href="/guides/negative-prompt-guide" class="text-sky-600 hover:underline">ネガティブプロンプトのテンプレ</a> にまとめています。この節は Stable Diffusion 向けの入口です。
 
 **汎用品質ネガティブ（ほぼ全プロンプトに使う）：**
 
@@ -1088,11 +1090,13 @@ AIの進化は「前期（論理）」から「後期（言語ゲーム）」へ
 **3. 色**: \`blonde\` / \`black hair\` / \`silver hair\` / \`pink hair\` / \`blue hair\`
 
 基本テンプレート：
-\`1girl, long wavy blonde hair, blue eyes, blunt bangs, hair ribbon\`
+\`1 adult woman, adult, long wavy blonde hair, blue eyes, blunt bangs\`
 
 さらに前髪（\`blunt bangs\` / \`side-swept bangs\` / \`parted bangs\`）と質感（\`silky\` / \`fluffy\` / \`glossy\`）を加えると精度が上がります。
 
 **重要ポイント**: 髪型は他の要素（服装・ポーズ）より**プロンプトの前方に書く**と優先されます。また \`(twin tails:1.2)\` のように重み付けを加えると AI が確実に認識しやすくなります。
+
+**髪型別の詳しいガイド**: <a href="/guides/twintail-prompt-guide">ツインテール</a> / <a href="/guides/ponytail-prompt-guide">ポニーテール</a> / <a href="/guides/braid-prompt-guide">三つ編み</a> / <a href="/guides/bangs-prompt-guide">前髪</a> / <a href="/guides/male-hairstyle-prompt-guide">男性の髪型</a> / <a href="/guides/short-hair-prompt-guide">ショートヘア</a>
 
 ツインテールの種類と書き方は<a href="/guides/twintail-prompt-guide">ツインテールのプロンプト</a>で詳しく解説
 
@@ -1960,7 +1964,7 @@ prompta.jp のコスプレプロンプト集は SDXL ベースで動作確認済
 
 何も指定せずに「an adult woman」「an adult man」とだけ書くと、AI は学習データの平均値 — つまり「**やや痩せ型でモデル体型の若い大人**」 — に収束します。スレンダー / カーヴィ / 筋肉質 / ぽっちゃり / 小柄 / 高身長 など多様な体型を描き分けるには、明示的なキーワード指定が必須です。
 
-このガイドの作例はすべて **20歳以上の大人** です。人数は \`1 adult woman\` または \`1 adult man\` と書き、10代・child・teenager は使いません。
+このガイドの作例はすべて **20歳以上の大人** です。人数は \`1 adult woman\` または \`1 adult man\` と書き、10代・child・teenager は使いません。男性の細身から大柄までの段は <a href="/guides/male-body-type-prompt-guide" class="text-sky-600 hover:underline">男性の体型プロンプト</a> です。
 
 **こんな人におすすめ**:
 
@@ -3559,7 +3563,7 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人のキャラを低く/高く見せたいとき → <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> / <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長プロンプト</a>。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。並びのシルエットは <a href="/tools/height-difference-maker/simulate" class="text-sky-600 hover:underline">身長差シミュレーター</a> で確認できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人のキャラを低く/高く見せたいとき → <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> / <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長プロンプト</a>。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
       },
       {
         title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
@@ -4189,7 +4193,7 @@ Use anime illustration style with a warm school gate background.
     sections: [
       {
         title: '体格差プロンプトとは',
-        content: `<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">体格差シミュレーション（身長差メーカー）</a> で、肩幅や身長の差をプロンプトにできます。**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉質・マッチョ単体の呪文は <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質プロンプト</a> です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
+        content: `<a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">体格差シミュレーション（身長差メーカー）</a> で、肩幅や身長の差をプロンプトにできます。頭の線は <a href="/tools/height-difference-maker/simulate" class="text-sky-600 hover:underline">身長差シミュレーター</a> で見てから文にしてください。**体格差プロンプト** は、身長だけでなく肩幅、筋肉量、骨格、横幅、全体ボリュームの差を AI 画像生成で出すための書き方です。身長差が「縦の差」なら、体格差は「縦 + 横 + 筋肉量の差」です。筋肉質・マッチョ単体の呪文は <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質プロンプト</a> です。筋肉の強さそのものは <a href="/guides/muscular-prompt-guide" class="text-sky-600 hover:underline">筋肉質・マッチョプロンプト</a> で段階に分けています。
 
 すぐ作る場合は <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> のモードを **体格差** に切り替えると、\`body size difference\`、\`build difference\`、\`broad shoulders versus narrow shoulders\` などを自動で追加できます。`,
       },
