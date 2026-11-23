@@ -179,7 +179,7 @@ ${NEGATIVE_CHILD}, chibi, school uniform
 
 キスには二種類あります。二人の顔が触れるキスと、一人がカメラに向かって口をすぼめるキス待ちの顔です。検索語の「キス顔」は後者を指すことが多いです。
 
-表情の単語は [表情プロンプト](/guides/stable-diffusion-expression-prompt)、二人の距離感は [カップルポーズ](/guides/two-person-composition-prompt-guide)、背の差で届かせる構図は [身長差プロンプト](/guides/height-difference-pair-prompt) です。タグの一覧は [キス](/tag/キス) です。`,
+表情の単語は [表情プロンプト](/guides/stable-diffusion-expression-prompt)、二人の距離感は [カップルポーズ](/guides/two-person-composition-prompt-guide)、つないだ手の指は [恋人つなぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide)、背の差で届かせる構図は [身長差プロンプト](/guides/height-difference-pair-prompt) です。タグの一覧は [キス](/tag/キス) です。このページでは口元まで寄せます。手の形は、手つなぎのガイドに残してください。`,
       },
       {
         title: '二人のキスの基本',

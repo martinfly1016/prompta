@@ -242,30 +242,7 @@ export const GUIDE_HERO_IMAGES: Record<string, ({ url: string; alt: string } | n
       "alt": "体型×服装×ポーズの組み合わせで説得力を出す - prompta.jp ガイド挿絵"
     }
   ],
-  "color-prompt-guide": [
-    {
-      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-0-8ISAsg8Eq0N3kRde6RsCJqmz7DXnEC.jpg",
-      "alt": "色指定の基本 — 全体トーンと個別色の使い分け - prompta.jp ガイド挿絵"
-    },
-    {
-      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-1-gczFqjveks5VhfngGPvCdvd3VDPZDM.jpg",
-      "alt": "色名プロンプト — 基本色から微妙なニュアンスまで - prompta.jp ガイド挿絵"
-    },
-    // New「色合い・色調」section has no hero. Keep later images on their sections.
-    null,
-    {
-      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-2-oQ7WV7o77xj0XRKI44jtKZVE6k4ikz.jpg",
-      "alt": "CutOff 拡張機能で部分色指定をマスターする - prompta.jp ガイド挿絵"
-    },
-    {
-      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-3-0ofEin0O5BQhCOWsE1It49xYql85yI.jpg",
-      "alt": "BREAK コマンドで色の干渉を分離する - prompta.jp ガイド挿絵"
-    },
-    {
-      "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/color-prompt-guide/section-4-Jy4B9CiSSLTtac3dFpXAqtwRvNMs9a.jpg",
-      "alt": "シネマティック・カラーグレーディングで映画的な色彩を出す - prompta.jp ガイド挿絵"
-    }
-  ],
+  "color-prompt-guide": [null, null, null, null, null, null, null, null, null],
   "prompt-writing-guide": [
     {
       "url": "https://rpvq9pdoasbva5wm.public.blob.vercel-storage.com/guides/prompt-writing-guide/section-0-7kcQnDn8s766LMSlYBoqxAd8Pc4Cf8.jpg",

@@ -1010,7 +1010,7 @@ Negative: ${NEGATIVE_BODY}, ${NEGATIVE_AGE}, text, letters, extra person, school
 
 種類の語は人物の直後です。色を先に強くすると、形より色面が勝ち、袖の長さが無視されます。最初の一手は、種類を一つ、丈を一つです。効いたら素材か色を足します。
 
-登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。日常のトップスやボトムスは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。結婚式のドレス、白無垢、タキシード、式の場面は [ウェディングのプロンプト](/guides/wedding-prompt-guide) です。このページは、式以外のドレスの種類と丈を担当します。
+登場人物は大人だけです。\`1 adult woman\` から書き、\`adult\` を残します。男性の礼服と並べるときは \`1 adult man\` を足します。一覧の作例は [服装プロンプト集](/prompts/clothing)、タグは [ドレス](/tag/ドレス) です。日常のトップスやボトムスは [服装プロンプト一覧](/guides/clothing-prompt-guide) です。結婚式のドレス、白無垢、タキシード、式の場面は [ウェディングのプロンプト](/guides/wedding-prompt-guide) です。このページは、式以外のドレスの種類と丈を担当します。ファンタジーの長いドレス、夜会のボールガウン、袖のあるサマードレス、頭の布のヘッドドレスは、うしろの節にコピペを置きます。
 
 **種類から装飾まで**
 
@@ -1128,7 +1128,7 @@ high neckline が無視されるときは、\`long sleeves\` を先に残し、�
 レースの範囲を書きたいときは、自然な英語で lace hem のように場所を一つ足します。場所を書かない \`lace\` は、モデルによって袖まで広がることがあります。`,
       },
       {
-        title: '色と柄',
+        title: '色別のドレス',
         content: `色は、ドレスの語の直前に一つ置きます。\`white dress\`、\`black dress\`、\`red dress\` はタグとして安定しやすいです。紺は navy dress、金は gold dress と自然な英語です。公式タグとして断定するのは白、黒、赤の三つです。
 
 白、黒、赤は、タグとして dress の前に置くと残りやすいです。紺と金は、navy dress、gold dress と自然な英語です。金はハイライトと混ざって、布の範囲が分かりにくくなります。金を使うときは、背景を暗い単色にしてください。グラデーションは、上をどの色、下をどの色、と一つずつ書きます。方向を書かない gradient dress は、モデルによって左右のグラデーションになり、丈の形が歪みます。花柄は、花の種類を一つまでにしてください。バラと桜を同時に書くと、柄が平均になって、どちらにも見えない模様になります。柄が床に移ったときは、floral print を外して無地に戻し、色が安定してから柄を弱く戻します。髪の色と服の色を同じ語にしないでください。境界が消えます。
@@ -1140,6 +1140,32 @@ high neckline が無視されるときは、\`long sleeves\` を先に残し、�
 赤と白を一枚で比べるときは、プロンプトを二つに分けます。一枚の中に white dress と red dress を残さないでください。
 
 グラデーションは gradient dress と自然な英語です。始点と終点を書くなら、[色プロンプト](/guides/color-prompt-guide) の順に合わせて、服と背景の色を混ぜないでください。花柄は floral print と自然な英語です。\`floral print\` を強くすると、顔や床まで花が移ることがあります。そのときは柄を外し、無地に戻します。
+
+色の名前の早見は [色プロンプト](/guides/color-prompt-guide) です。このページでは、ドレスの名詞の前に色を一つ置きます。系統を変える日は、種類と丈を固定したまま、色の一語だけを差し替えます。
+
+| 色 | 書き方 | 戻り先 |
+|---|---|---|
+| 白 | \`white dress\` | 赤が混ざったら赤の語を外す |
+| 紺 | navy dress | 自然な英語。黒に寄るときは背景を明るくする |
+| 深紅 | burgundy dress | 自然な英語。桃に寄るときは pink を外す |
+| 緑 | green dress | 夜会の深い緑は、うしろのボールガウン例 |
+| 金の刺繍 | gold embroidery | 布全体を金にしない。刺繍だけ |
+
+**深紅のロング**
+
+\`\`\`
+1 adult woman, burgundy dress, long dress, long sleeves,
+standing, full body, simple background
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, t-shirt, jeans
+\`\`\`
+
+burgundy は自然な英語です。公式タグとしては断定しません。桃になるときは、pink が残っていないかを消し、burgundy dress を種類の直後に戻してください。
 
 **白いロング**
 
@@ -1158,7 +1184,7 @@ school uniform, short skirt, short dress, red dress
 白を維持するときは、背景の赤を強くしないでください。ネガティブの \`red dress\` は、この白い例だけの除けです。赤いドレスが欲しい回では外します。公開作例の立ち姿は [エレガントなドレス](/prompt/elegant-dress-woman) です。`,
       },
       {
-        title: 'シーン別のテンプレ',
+        title: 'ファンタジー・夜会・サマードレス',
         content: `シーンは、場所を一つ足すだけです。場所の名詞を増やすと、ドレスの形が負けます。ファンタジーの城は [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide) と役割を分け、このページでは布のドレスを主にします。
 
 場所は、ドレスの種類が決まってから一語だけ足します。パーティーは室内の夜、結婚式は式のホール、舞踏会は ballroom、外出は通り、城は castle hall です。どれも自然な英語を含みます。式のホールに花とキャンドルと窓を全部書くと、人が小さくなります。花を足すなら、背景ではなく手に持つ一つ、までにしてください。結婚式の男性は tuxedo を一つ、シャツと靴はスーツのガイドに任せます。このページで男性の部品を増やすと、花嫁の丈が負けます。ファンタジーの城では、鎧の語を混ぜません。冠を足すなら circlet を一つ、マントを足すなら cape を一つです。鎧とドレスを同じ強さにすると、布が金属に溶けます。
@@ -1231,11 +1257,93 @@ ${NEGATIVE_BODY}, ${NEGATIVE_AGE},
 school uniform, short skirt, short dress, revealing clothes, modern clothes, t-shirt, jeans
 \`\`\`
 
-雪の城の公開作例は [雪の女王のガウン](/prompt/snow-queen-fantasy-gown)、海の長いドレスは [マーメイドのガウン](/prompt/mermaid-ocean-kingdom-gown) です。どちらも丈は \`long dress\` で固定します。`,
+雪の城の公開作例は [雪の女王のガウン](/prompt/snow-queen-fantasy-gown)、海の長いドレスは [マーメイドのガウン](/prompt/mermaid-ocean-kingdom-gown) です。どちらも丈は \`long dress\` で固定します。
+
+**ファンタジー（長い袖）**
+
+鎧と布を同じ強さにしません。金属の部品が欲しい日は [ファンタジー衣装プロンプト](/guides/fantasy-outfit-prompt-guide) へ移り、この節は布のドレスだけです。王女の装いは、冠と長い袖と、床までの丈までです。エルフは耳の形を一つ、魔法使いは杖を一つ、まで足します。肩や背中を大きく開ける形は書きません。
+
+\`\`\`
+1 adult woman, elf, long dress, long sleeves, circlet,
+leaf embroidery, standing, full body, forest clearing
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, modern clothes, t-shirt, jeans
+\`\`\`
+
+\`\`\`
+1 adult man, wizard, long robe, long sleeves, navy,
+standing, full body, castle hall
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, modern clothes, t-shirt, jeans
+\`\`\`
+
+leaf embroidery と wizard と long robe は自然な英語です。公式タグとしては断定しません。ローブが短い外套になるときは、long sleeves を直後に戻します。
+
+**豪華な夜会**
+
+ボールガウンは、スカートの量です。色は一つ、刺繍は一つにします。金を布全体にすると、ハイライトと境界が消えます。
+
+\`\`\`
+1 adult woman, ball gown, long dress, long sleeves, deep green,
+gold embroidery, standing, full body, ballroom
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, t-shirt, jeans
+\`\`\`
+
+deep green と gold embroidery は自然な英語です。刺繍が床まで広がったら、gold embroidery を外し、deep green の無地に戻してから、腰に一つだけ戻します。
+
+**サマードレス（長い丈、袖あり）**
+
+昼の一枚です。丈は long dress、袖は long sleeves を残します。軽い布でも、肩を出す形にはしません。花柄は一つまでです。
+
+\`\`\`
+1 adult woman, summer dress, long dress, long sleeves, floral print,
+standing, full body, garden path, daytime
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, evening gown, t-shirt, jeans
+\`\`\`
+
+summer dress は自然な英語です。夜のホールの語が残っていると、布が厚くなります。昼の回は evening gown を正向から外してください。`,
       },
       {
-        title: '髪型・アクセサリーと合わせる',
+        title: '髪型・ヘッドドレスと合わせる',
         content: `髪とドレスは別の層です。アップにするなら hair up、長く下ろすなら [ロングヘアプロンプト](/guides/long-hair-prompt-guide) の \`long hair\` を一つ足します。両方を強くすると、結んだ髪と下ろした髪が同時に出ます。
+
+頭に布や花を一つ載せるときは、headdress と自然な英語で書きます。公式タグとしては断定しません。カチューシャやエプロンのある仕事着の頭飾りは [メイド服プロンプト](/guides/maid-outfit-prompt-guide) です。このページでは、ドレスと一緒に残す布のヘッドドレスだけです。冠の \`circlet\` と同時に強くすると、頭の上に金属が二段になります。
+
+\`\`\`
+1 adult woman, long dress, long sleeves, fabric headdress,
+hair up, standing, full body, simple background
+\`\`\`
+
+ネガティブ:
+
+\`\`\`
+${NEGATIVE_BODY}, ${NEGATIVE_AGE},
+short skirt, short dress, circlet
+\`\`\`
+
+fabric headdress は自然な英語です。頭の布が見えないときは、構図を portrait にして確認し、丈の確認は full body の別プロンプトに残します。
 
 髪を変えるときは、ドレスの種類と丈を固定したまま、髪型の語だけを差し替えます。アップとロングを見比べるのが目的なら、色と袖は同じにします。ネックレスは、肖像で確認し、全身で消えていないかを別の一枚で見ます。一枚の全身で、石の形まで両立させようとすると、どちらも中途半端になります。ティアラは額、冠は頭の上、です。同時に書くと金属が二段になります。和服や仕事着やエプロンの服と、ドレスを一枚に混ぜないでください。比較したいときは、プロンプトを別に保存します。一つのプロンプトの中に kimono と evening gown が残っていると、袖が両方の形を平均します。髪飾りの詳細は髪型のガイド、石の詳細はアクセサリーのガイドです。
 

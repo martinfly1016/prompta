@@ -30,6 +30,7 @@ import { SEO_BATCH_22_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-n'
 import { SEO_BATCH_23_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-o'
 import { SEO_BATCH_24_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-p'
 import { SEO_BATCH_25_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-q'
+import { SEO_BATCH_26_GUIDE_CONTENT } from '@/lib/guides/seo-batch-2026-11-r'
 import { PromptGrid } from '@/components/prompt/PromptGrid'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CodeBlock } from '@/components/ui/CodeBlock'
@@ -99,6 +100,7 @@ const GUIDE_CONTENT: Record<string, { sections: Array<{ title: string; content: 
   ...SEO_BATCH_23_GUIDE_CONTENT,
   ...SEO_BATCH_24_GUIDE_CONTENT,
   ...SEO_BATCH_25_GUIDE_CONTENT,
+  ...SEO_BATCH_26_GUIDE_CONTENT,
   'what-is-prompt': {
     sections: [
       {
@@ -2532,164 +2534,6 @@ child, teenager, underage
       },
     ],
   },
-  'color-prompt-guide': {
-    sections: [
-      {
-        title: '色指定の基本 — 全体トーンと個別色の使い分け',
-        content: `AI画像生成での色指定は、大きく2つのレベルに分かれます：
-
-**1. 全体トーン（画像全体の雰囲気）**:
-- \`pastel colors\` — 淡くて柔らかい色使い
-- \`vivid colors\` — 鮮やかで力強い
-- \`monochrome\` — 白黒
-- \`sepia tone\` — 古写真風の暖色
-- \`warm colors\` / \`cool colors\` — 暖色系 / 寒色系
-- \`cinematic color grading\` — 映画的な色補正
-
-**2. 個別色（特定パーツの色指定）**:
-- \`red dress, blue ribbon, green eyes, silver hair\`
-
-個別色を指定すると「色滲み（color bleeding）」が起きやすいのが最大の課題です。例えば「red dress, blue jacket」と書くと、赤と青が混ざって紫っぽくなることがあります。この対処法がこのガイドの本題です。服の色が混ざるときの分け方は [服装プロンプト一覧](/guides/clothing-prompt-guide)、BREAK の記号は [プロンプトの記号の意味](/guides/prompt-symbols-guide) です。`,
-      },
-      {
-        title: '色名プロンプト — 基本色から微妙なニュアンスまで',
-        content: `基本10色（red, blue, green, yellow, pink, purple, white, black, orange, brown）はどのモデルでも安定して認識されます。
-
-**より精度の高い色名**:
-- 赤系: crimson（深紅）, scarlet（緋色）, coral（サンゴ色）, ruby（ルビー色）
-- 青系: navy（紺）, cerulean（空色）, azure（蒼）, teal（青緑）, cobalt（コバルト）
-- 緑系: emerald（エメラルド）, mint（ミント）, sage（セージ）, olive（オリーブ）
-- 紫系: lavender（ラベンダー）, violet（スミレ）, magenta（マゼンタ）
-- 暖色系: amber（琥珀）, gold（金）, peach（桃色）, cream（クリーム）
-
-**和風の色名**も意外と認識します:
-- 桜色 → \`sakura pink\` で柔らかいピンク
-- 藍色 → \`indigo blue\` で深い青
-- 朱色 → \`vermillion\` で朱赤
-- 鶯色 → \`olive green, warm\` で暖かい緑
-
-色の精度を上げるには「color」を挟むのがコツ: \`azalea color hair\` のように書くと AI が色として認識しやすくなります。髪に載せる色の一覧は <a href="/guides/hair-color-prompt-guide" class="text-sky-600 hover:underline">髪色プロンプト一覧</a> です。`,
-      },
-      {
-        title: '色合い・色調（トーン）のプロンプト',
-        content: `色名とは別に、画面全体の調子を先に置くと、パステルやくすみが一枚の絵に揃いやすくなります。個別の \`red dress\` より前に、トーンを一つだけ書いてください。
-
-| 日本語 | 英語タグ | 出やすい印象 |
-|---|---|---|
-| パステル | pastel colors | 薄く、彩度が下がる |
-| くすみ・ミュート | muted colors | 灰が混ざった落ち着いた色 |
-| ビビッド | vivid colors | 彩度が高い |
-| モノクロ | monochrome | 白黒に寄る |
-| セピア | sepia | 古い写真の茶色 |
-| 暖色 | warm colors | 赤・橙・黄が勝つ |
-| 寒色 | cool colors | 青・紫が勝つ |
-| クリーム色 | cream, ivory | 白に黄みが入る。\`beige\` より色名として安定しやすい |
-
-**クリーム色の服**
-
-\`\`\`
-1 adult woman, cream blouse, ivory skirt, muted colors,
-soft daylight, upper body, simple background
-\`\`\`
-
-トーンを二つ同時に強くすると、パステルなのにビビッド、のように打ち消し合います。一つに決めてから、服や髪の色名を足してください。人物を描くときはネガティブに \`child, kid, teen, underage, loli, shota\` を入れてください。`,
-      },
-      {
-        title: 'CutOff 拡張機能で部分色指定をマスターする',
-        content: `CutOff は Stable Diffusion WebUI の拡張機能で、プロンプト中の色指定を特定の対象に「固定」する機能です。
-
-**インストール**: Extensions タブ → Install from URL → CutOff のリポジトリ URL を貼って Install
-
-**基本的な使い方**:
-プロンプト: \`1girl, red dress, blue ribbon, green eyes\`
-CutOff Target tokens: \`red, blue, green\`
-CutOff Weight: 1.0（デフォルト）
-
-これにより「red」はドレスだけ、「blue」はリボンだけ、「green」は目だけに固定されます。
-
-**実践例**:
-\`1girl, white blouse, navy pleated skirt, red ribbon, brown loafers\`
-→ CutOff targets: \`white, navy, red, brown\`
-→ 各色が各パーツにのみ適用され、混色を防止
-
-**注意点**:
-- CutOff Weight を 1.5 以上にすると画像が崩れやすい
-- 色数が多すぎると（5色以上）効果が弱くなる
-- Regional Prompter と併用するとさらに精度が上がる`,
-      },
-      {
-        title: 'BREAK コマンドで色の干渉を分離する',
-        content: `BREAK はプロンプトを独立したセグメントに区切る構文です。CutOff をインストールしたくない場合の代替手段として有効です。
-
-**基本構文**:
-\`red dress BREAK blue sky BREAK green trees\`
-
-各セグメントが独立して解釈されるため、色の干渉が大幅に減ります。
-
-**衣装の上下で色分け**:
-\`1girl, (red jacket:1.2) BREAK (blue pleated skirt:1.2) BREAK (white shoes:1.1)\`
-
-**キャラクター + 背景で色分離**:
-\`beautiful girl in yellow dress BREAK purple and pink sunset sky, city skyline\`
-
-**BREAK の注意点**:
-- 各セグメントに重み付け \`(keyword:1.2)\` を加えると効果が安定
-- BREAK を使いすぎる（4つ以上）と構図が崩れることがある
-- 「AND」構文（A AND B）とは異なる動作。BREAK は解釈を分離、AND はブレンドです`,
-      },
-      {
-        title: 'シネマティック・カラーグレーディングで映画的な色彩を出す',
-        content: `映画やドラマの色合いを再現するカラーグレーディング技法は、作品全体の質感を劇的に変えます。
-
-**ハリウッド定番 — Orange & Teal**:
-\`cinematic color grading, orange and teal, warm skin tones, cool shadows, film grain\`
-→ 人物を暖色（オレンジの肌色）、背景を寒色（ティールの影）に分離する技法
-
-**レトロ・フィルム風**:
-\`film photography, kodak portra 400, soft grain, slightly desaturated, warm highlights\`
-
-**ダーク・ムーディ**:
-\`dark moody, low key lighting, deep shadows, (dark:1.2), muted colors, noir style\`
-
-**パステル・ドリーミー**:
-\`pastel colors, soft lighting, dreamy atmosphere, (pastel:1.2), kawaii aesthetic\`
-
-**CFG スケールと色の関係**:
-CFGスケール 7-8: 色が柔らかく自然 → パステルや写真的な表現向き
-CFGスケール 10-12: 色が鮮明でプロンプトに忠実 → 強い色指定向き
-CFGスケール 15+: 色が過飽和になりやすい → 不自然になることが多い
-
-ステップ数も色に影響します。20-30ステップが安定圏、50+は色がくすむことがあります。`,
-      },
-      {
-        title: '✨ 関連プロンプト集 — カラーパレット実例',
-        content: `本ガイドのカラー指定テクニックを使ったプロンプトです。ネオン・サイバーパンク・モノクロ・パステルまで色彩設計の幅広い実例。
-
-- [ネオン・サイバーパンク色彩表現](/prompt/neon-cyberpunk-1)
-- [AI 色彩表現プロンプト](/prompt/color-theme-13)
-- [グリーン肌キャラクター カラー表現](/prompt/green-skin-character-colorful-hat)
-- [モノクロ・グレースケール映像スタイル](/prompt/monochrome-theme-14)
-- [工筆画風の鮮やかなミネラルカラー](/prompt/gongbi-painting-mineral-pigment-colors)
-- [夕焼け川・森景色 色彩カラー](/prompt/sunset-river-forest-color-mj)
-
-→ [全てのカラープロンプト](/prompts/color)`,
-      },
-    ],
-    faq: [
-      {
-        q: 'CutOff と BREAK はどちらを使うべきですか？',
-        a: '両方使えるなら CutOff の方が精度が高いです。CutOff はトークン単位で色を固定するため、BREAK より細かい制御が可能です。ただし CutOff は拡張機能のインストールが必要で、一部のモデル（SDXL等）では未対応の場合もあります。BREAK はインストール不要で汎用的に使えるため、まず BREAK で試してダメなら CutOff を導入する、という順序がおすすめです。',
-      },
-      {
-        q: '髪の色が服に染み出します。対処法は？',
-        a: '「red hair, white dress」のように対照的な色を使うと染み出しが起きやすいです。対処: (1) BREAK で分離「(red hair:1.2) BREAK (white dress:1.2)」、(2) CutOff で Target tokens に「red, white」を指定、(3) ネガティブに「color bleeding, miscolored」を入れる、(4) Regional Prompter で髪と服の領域を分離、の4つの手段があります。',
-      },
-      {
-        q: 'モノクロ画像の一部だけカラーにできますか？',
-        a: 'img2img の Inpaint 機能を使います。まず「monochrome, grayscale」で全体をモノクロ生成し、次に Inpaint でカラーにしたい部分をマスクして「red lips, color」などで部分着色します。Stable Diffusion WebUI の Inpaint 機能が最も手軽です。',
-      },
-    ],
-  },
   'prompt-writing-guide': {
     sections: [
       {
@@ -3563,7 +3407,7 @@ BL カップル、百合カップル、男女恋人、兄妹、親子、先輩×
 
 実例は <a href="/tag/身長差" class="text-sky-600 hover:underline">/tag/身長差</a> に 15 件公開、すべてサンプル画像つきです。
 
-**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。並びのシルエットは <a href="/tools/height-difference-maker/simulate" class="text-sky-600 hover:underline">身長差シミュレーター</a> で確認できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人のキャラを低く/高く見せたいとき → <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> / <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長プロンプト</a>。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。`,
+**📏 すぐ作りたい場合**: <a href="/tools/height-difference-maker" class="text-sky-600 hover:underline">身長差メーカー</a> で、身長・関係性・ポーズを選ぶだけで Stable Diffusion / Midjourney / ChatGPT 画像生成向けの英語プロンプトを無料作成できます。並びのシルエットは <a href="/tools/height-difference-maker/simulate" class="text-sky-600 hover:underline">身長差シミュレーター</a> で確認できます。体格差ツールとしても使え、ネガティブプロンプトも自動生成します。一人のキャラを低く/高く見せたいとき → <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> / <a href="/guides/tall-height-prompt-guide" class="text-sky-600 hover:underline">高身長プロンプト</a>。一人だけを大人の低身長・小柄にする書き方は <a href="/guides/short-height-petite-prompt" class="text-sky-600 hover:underline">低身長・小柄プロンプト</a> です。指を絡める歩き方は <a href="/guides/hand-holding-prompt-guide" class="text-sky-600 hover:underline">恋人つなぎ・手をつなぐプロンプト</a> です。このページは頭の高さです。`,
       },
       {
         title: '身長差プロンプト作り方 — 身長差メーカーで推しとの身長差を作る',
@@ -4288,6 +4132,8 @@ shorter character looking up, taller character looking down gently, soft eye con
 holding hands, walking together, side angle, full body composition
 \`\`\`
 
+指を絡める書き方は [恋人つなぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide) です。このテンプレは、身長差が見える距離までです。
+
 **4. ハグ**
 
 \`\`\`
@@ -4342,6 +4188,10 @@ three characters in horizontal lineup, tall character on the left, medium charac
       {
         title: '二人構図プロンプトとは — AIで二人のキャラクターを自然に描く必須テクニック',
         content: `**二人構図プロンプト**とは、Stable Diffusion・Midjourney・DALL-E などの AI 画像生成ツールで「**2 人のキャラクターを 1 枚の絵に自然な関係性で配置する**」ための指示文です。
+
+**恋人つなぎ（指を絡める）は専用ガイドへ**
+
+指を絡める恋人つなぎ、手のひらでつなぐ歩き方、袖を持つ触れ方は [恋人つなぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide) にまとめています。このページは、二人の位置です。指の形は、向こうのガイドで書いてください。
 
 カップルポーズ、友達 2 人、兄妹、BL 風二人構図、百合風二人構図、OC × 推しキャラ構図、ライバル対峙シーン — どんな関係性であれ、2 人を同じ画面に描く時は**単体キャラ生成とは別のテクニック**が必要になります。
 
@@ -4486,7 +4336,9 @@ even spacing, both looking forward, neutral composition
 slight side angle, full body shot, (intimate gesture:1.2)
 \`\`\`
 
-恋人繋ぎを詳しく → <a href="/guides/hand-holding-prompt-guide" class="text-sky-600 hover:underline">恋人繋ぎ・手をつなぐプロンプト</a>
+**恋人つなぎ（指を絡める）は専用ガイドへ**
+
+この節の \`holding hands\` は、二人の距離の入口です。指を絡める恋人つなぎ、絡め方を弱める横並び、手を引く、袖を持つ、背中合わせは [恋人つなぎ・手をつなぐプロンプト](/guides/hand-holding-prompt-guide) にコピペがあります。指の本数までこのページでは書きません。
 
 **3. ハグ — 包み込む抱擁**
 
